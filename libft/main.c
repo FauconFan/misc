@@ -1,5 +1,5 @@
 #include "libft.h"
-#include <ctype.h>
+#include <string.h>
 
 int 	main(void)
 {
@@ -10,6 +10,9 @@ int 	main(void)
 
 	// ft_putchar(ft_tolower('B'));
 	// ft_putnbr(ft_strlen("coucou"));
-	ft_putnbr(ft_atoi("   -2147483648"));
+	ft_putnbr(ft_strncmp("ouia", "oui", 3));
+	ft_putchar('\n');
+	ft_putnbr(strncmp("ouia", "oui", 3));
+	ft_putchar('\n');
 	return 0;
 }

@@ -6,6 +6,8 @@
 /*** PARTIE 1 ***/
 
 size_t	ft_strlen(char const *str);
+int 	ft_strcmp(char *s1, char *s2);
+int 	ft_strncmp(char *s1, char *s2, size_t size);
 int 	ft_atoi(char *nptr);
 int 	ft_isalnum(int c);
 int 	ft_isdigit(int c);

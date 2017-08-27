@@ -6,6 +6,8 @@ PARTIE2_FOLDER = Partie2/
 BIN_FOLDER = bin/
 
 PARTIE1 = 	$(PARTIE1_FOLDER)ft_strlen.c \
+			$(PARTIE1_FOLDER)ft_strcmp.c \
+			$(PARTIE1_FOLDER)ft_strncmp.c \
 			$(PARTIE1_FOLDER)ft_atoi.c \
 			$(PARTIE1_FOLDER)ft_isalnum.c \
 			$(PARTIE1_FOLDER)ft_isalpha.c \
@@ -15,6 +17,8 @@ PARTIE1 = 	$(PARTIE1_FOLDER)ft_strlen.c \
 			$(PARTIE1_FOLDER)ft_toupper.c \
 			$(PARTIE1_FOLDER)ft_tolower.c
 PARTIE1_OBJ = 	$(BIN_FOLDER)ft_strlen.o \
+				$(BIN_FOLDER)ft_strcmp.o \
+				$(BIN_FOLDER)ft_strncmp.o \
 				$(BIN_FOLDER)ft_atoi.o \
 				$(BIN_FOLDER)ft_isalnum.o \
 				$(BIN_FOLDER)ft_isdigit.o \
