@@ -2,19 +2,26 @@
 NAME = libft.exe
 GCC = gcc -Wall -Wextra -Werror
 PARTIE2_FOLDER = Partie2/
-PARTIE2 = $(PARTIE2_FOLDER)ft_putchar.c
-FILES_O = ft_putchar.o
+BIN_FOLDER = bin/
+PARTIE2 = 	$(PARTIE2_FOLDER)ft_putchar.c \
+			$(PARTIE2_FOLDER)ft_putstr.c
+FILES_O = 	$(BIN_FOLDER)ft_putchar.o \
+			$(BIN_FOLDER)ft_putstr.o \
+			
 
-all: $(NAME)
+all: bin $(NAME)
 
-$(NAME): $(FILES_O) main.o
+$(NAME): $(FILES_O) $(BIN_FOLDER)main.o
 	$(GCC) $? -o $(NAME)
 
-$(FILES_O): $(PARTIE2)
-	$(GCC) -c $?
+$(BIN_FOLDER)%.o: $(PARTIE2_FOLDER)%.c
+	$(GCC) -c $? -o $@
 
-main.o: main.c
-	$(GCC) -c $?
+$(BIN_FOLDER)main.o: main.c
+	$(GCC) -c $? -o $@
+
+bin:
+	mkdir -p $(BIN_FOLDER)
 
 clean:
 	rm -f $(FILES_O)

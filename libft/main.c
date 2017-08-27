@@ -2,6 +2,6 @@
 
 int 	main(void)
 {
-	ft_putchar('o');
+	ft_putstr("coucou\n");
 	return 0;
 }
