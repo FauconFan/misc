@@ -1,6 +1,14 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <string.h>
+
+/*** PARTIE 1 ***/
+
+size_t	ft_strlen(char const *str);
+
+/*** PARTIE 2 ***/
+
 void	ft_putchar(char c);
 void	ft_putstr(char const *str);
 void	ft_putendl(char const *str);
