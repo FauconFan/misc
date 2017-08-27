@@ -8,7 +8,8 @@ int 	main(void)
 	// ft_putendl_fd("cou", 1);
 	// ft_putnbr_fd(0, 1);
 
-	ft_putchar(ft_tolower('B'));
+	// ft_putchar(ft_tolower('B'));
 	// ft_putnbr(ft_strlen("coucou"));
+	ft_putnbr(ft_isascii('e'));
 	return 0;
 }

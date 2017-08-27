@@ -28,8 +28,8 @@
  - [ ] ft_isalpha
  - [ ] ft_isdigit
  - [ ] ft_isalnum
- - [ ] ft_isascii
- - [ ] ft_isprint
+ - [x] ft_isascii
+ - [x] ft_isprint
  - [x] ft_toupper
  - [x] ft_tolower
 
