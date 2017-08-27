@@ -52,9 +52,9 @@
  - [ ] ft_strsplit
  - [ ] ft_stritoa
  - [x] ft_putchar
- - [ ] ft_putstr
- - [ ] ft_putendl
- - [ ] ft_putnbr
+ - [x] ft_putstr
+ - [x] ft_putendl
+ - [x] ft_putnbr
  - [ ] ft_putchar_fd
  - [ ] ft_putstr_fd
  - [ ] ft_putendl_fd
