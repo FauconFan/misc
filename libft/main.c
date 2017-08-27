@@ -10,6 +10,6 @@ int 	main(void)
 
 	// ft_putchar(ft_tolower('B'));
 	// ft_putnbr(ft_strlen("coucou"));
-	ft_putnbr(ft_isascii('e'));
+	ft_putnbr(ft_atoi("   -2147483648"));
 	return 0;
 }
