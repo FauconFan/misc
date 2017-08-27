@@ -1,4 +1,5 @@
 #include "libft.h"
+#include <ctype.h>
 
 int 	main(void)
 {
@@ -7,6 +8,7 @@ int 	main(void)
 	// ft_putendl_fd("cou", 1);
 	// ft_putnbr_fd(0, 1);
 
-	ft_putnbr(ft_strlen("coucou"));
+	ft_putchar(ft_tolower('B'));
+	// ft_putnbr(ft_strlen("coucou"));
 	return 0;
 }

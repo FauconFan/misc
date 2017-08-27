@@ -5,8 +5,12 @@ PARTIE1_FOLDER = Partie1/
 PARTIE2_FOLDER = Partie2/
 BIN_FOLDER = bin/
 
-PARTIE1 = 	$(PARTIE1_FOLDER)ft_strlen.c
-PARTIE1_OBJ = 	$(BIN_FOLDER)ft_strlen.o
+PARTIE1 = 	$(PARTIE1_FOLDER)ft_strlen.c \
+			$(PARTIE1_FOLDER)ft_toupper.c \
+			$(PARTIE1_FOLDER)ft_tolower.c
+PARTIE1_OBJ = 	$(BIN_FOLDER)ft_strlen.o \
+				$(BIN_FOLDER)ft_toupper.o \
+				$(BIN_FOLDER)ft_tolower.o
 
 PARTIE2 = 	$(PARTIE2_FOLDER)ft_putchar.c \
 			$(PARTIE2_FOLDER)ft_putstr.c \

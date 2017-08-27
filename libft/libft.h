@@ -6,6 +6,8 @@
 /*** PARTIE 1 ***/
 
 size_t	ft_strlen(char const *str);
+int		ft_toupper(int c);
+int		ft_tolower(int c);
 
 /*** PARTIE 2 ***/
 
