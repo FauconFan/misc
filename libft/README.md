@@ -20,8 +20,8 @@
  - [ ] ft_strlcat
  - [ ] ft_strchr
  - [ ] ft_strrchr
- - [ ] ft_strstr
- - [ ] ft_strnstr
+ - [x] ft_strstr
+ - [x] ft_strnstr
  - [x] ft_strcmp
  - [x] ft_strncmp
  - [x] ft_atoi
