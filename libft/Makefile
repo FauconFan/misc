@@ -9,6 +9,9 @@ PARTIE1 = 	$(PARTIE1_FOLDER)ft_memset.c \
 			$(PARTIE1_FOLDER)ft_bzero.c \
 			$(PARTIE1_FOLDER)ft_memchr.c \
 			$(PARTIE1_FOLDER)ft_strlen.c \
+			$(PARTIE1_FOLDER)ft_strdup.c \
+			$(PARTIE1_FOLDER)ft_strcpy.c \
+			$(PARTIE1_FOLDER)ft_strncpy.c \
 			$(PARTIE1_FOLDER)ft_strcat.c \
 			$(PARTIE1_FOLDER)ft_strncat.c \
 			$(PARTIE1_FOLDER)ft_strlcat.c \
@@ -30,6 +33,9 @@ PARTIE1_OBJ = 	$(BIN_FOLDER)ft_memset.o \
 				$(BIN_FOLDER)ft_bzero.o \
 				$(BIN_FOLDER)ft_memchr.o \
 				$(BIN_FOLDER)ft_strlen.o \
+				$(BIN_FOLDER)ft_strdup.o \
+				$(BIN_FOLDER)ft_strcpy.o \
+				$(BIN_FOLDER)ft_strncpy.o \
 				$(BIN_FOLDER)ft_strcat.o \
 				$(BIN_FOLDER)ft_strncat.o \
 				$(BIN_FOLDER)ft_strlcat.o \

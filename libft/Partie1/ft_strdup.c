@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-char	*strdup(const char *s)
+char	*ft_strdup(const char *s)
 {
 	unsigned int	len;
 	char			*res;

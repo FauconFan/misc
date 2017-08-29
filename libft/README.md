@@ -13,8 +13,8 @@
  - [ ] ft_memcmp
  - [x] ft_strlen
  - [x] ft_strdup
- - [ ] ft_strcpy
- - [ ] ft_strncpy
+ - [x] ft_strcpy
+ - [x] ft_strncpy
  - [x] ft_strcat
  - [x] ft_strncat
  - [x] ft_strlcat
