@@ -15,10 +15,9 @@ int 	main(void)
 	// ft_putnbr(strncmp("ouia", "oui", 3));
 	// ft_putchar('\n');
 	char	*s1 = "ouijecocoucou";
-	char	*s2 = "cou";
 
-	ft_putendl("---FT_STRNSTR---");
-	ft_putendl((char *)ft_strnstr(s1, s2, 9));
+	ft_putendl("---FT_STRRCHR---");
+	ft_putendl(ft_strrchr(s1, 'a'));
 	// ft_putendl("---STRNSTR---");
 	// ft_putendl((char *)strnstr(s1, s2));
 	return 0;
