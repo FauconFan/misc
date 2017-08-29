@@ -1,5 +1,6 @@
 #include "libft.h"
 #include <string.h>
+#include <stdlib.h>
 
 int 	main(void)
 {
@@ -15,6 +16,8 @@ int 	main(void)
 	// ft_putnbr(strncmp("ouia", "oui", 3));
 	// ft_putchar('\n');
 
+	free(ft_memalloc(18));
+	ft_putnbr(sizeof(char));
 	// ft_strcpy(s1, "ok");
 	// ft_putendl("---STRNSTR---");
 	// ft_putendl((char *)strnstr(s1, s2));
