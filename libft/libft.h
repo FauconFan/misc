@@ -48,6 +48,7 @@ int		ft_tolower(int c);
 /*** PARTIE 2 ***/
 
 void	*ft_memalloc(size_t size);
+void	ft_memdel(void **ap);
 
 void	ft_putchar(char c);
 void	ft_putstr(char const *str);

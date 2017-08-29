@@ -36,7 +36,7 @@
 ### Partie 2
 
  - [x] ft_memalloc
- - [ ] ft_memdel
+ - [x] ft_memdel
  - [ ] ft_strnew
  - [ ] ft_strdel
  - [ ] ft_strclr

@@ -63,6 +63,7 @@ PARTIE1_OBJ = 	$(BIN_FOLDER)ft_memset.o \
 				$(BIN_FOLDER)ft_tolower.o
 
 PARTIE2 = 	$(PARTIE2_FOLDER)ft_memalloc.c \
+			$(PARTIE2_FOLDER)ft_memdel.c \
 			$(PARTIE2_FOLDER)ft_putchar.c \
 			$(PARTIE2_FOLDER)ft_putstr.c \
 			$(PARTIE2_FOLDER)ft_putendl.c \
@@ -72,6 +73,7 @@ PARTIE2 = 	$(PARTIE2_FOLDER)ft_memalloc.c \
 			$(PARTIE2_FOLDER)ft_putendl_fd.c \
 			$(PARTIE2_FOLDER)ft_putnbr_fd.c
 PARTIE2_OBJ =	$(BIN_FOLDER)ft_memalloc.o \
+				$(BIN_FOLDER)ft_memdel.o \
 				$(BIN_FOLDER)ft_putchar.o \
 				$(BIN_FOLDER)ft_putstr.o \
 				$(BIN_FOLDER)ft_putendl.o \
