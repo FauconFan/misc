@@ -16,7 +16,8 @@ int 	main(void)
 	// ft_putnbr(strncmp("ouia", "oui", 3));
 	// ft_putchar('\n');
 
-	free(ft_memalloc(18));
+	char	*s = ft_strnew(18);
+	ft_strdel(&s);
 	ft_putnbr(sizeof(char));
 	// ft_strcpy(s1, "ok");
 	// ft_putendl("---STRNSTR---");

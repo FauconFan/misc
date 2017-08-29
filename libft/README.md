@@ -38,7 +38,7 @@
  - [x] ft_memalloc
  - [x] ft_memdel
  - [x] ft_strnew
- - [ ] ft_strdel
+ - [x] ft_strdel
  - [ ] ft_strclr
  - [ ] ft_striter
  - [ ] ft_striteri
