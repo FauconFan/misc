@@ -7,8 +7,8 @@
  - [x] ft_memset
  - [x] ft_bzero
  - [x] ft_memcpy
- - [ ] ft_memccpy
- - [ ] ft_memmove
+ - [x] ft_memccpy
+ - [x] ft_memmove
  - [x] ft_memchr
  - [x] ft_memcmp
  - [x] ft_strlen
