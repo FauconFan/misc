@@ -5,7 +5,7 @@
 ### Partie 1
 
  - [ ] ft_memset
- - [ ] ft_bzero
+ - [x] ft_bzero
  - [ ] ft_memcpy
  - [ ] ft_memccpy
  - [ ] ft_memmove
