@@ -9,7 +9,7 @@
  - [ ] ft_memcpy
  - [ ] ft_memccpy
  - [ ] ft_memmove
- - [ ] ft_memchr
+ - [x] ft_memchr
  - [ ] ft_memcmp
  - [x] ft_strlen
  - [x] ft_strdup

@@ -16,9 +16,7 @@ int 	main(void)
 	// ft_putchar('\n');
 	char	s1[50] = "ouais";
 
-	ft_putnbr(ft_strlcat(s1, "cou", 5));
-	ft_putendl("");
-	ft_putendl(s1);
+	ft_putendl(ft_memchr(s1, 'u', 5));
 	// ft_putendl("---STRNSTR---");
 	// ft_putendl((char *)strnstr(s1, s2));
 	return 0;
