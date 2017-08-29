@@ -4,7 +4,7 @@
 
 ### Partie 1
 
- - [ ] ft_memset
+ - [x] ft_memset
  - [x] ft_bzero
  - [ ] ft_memcpy
  - [ ] ft_memccpy
