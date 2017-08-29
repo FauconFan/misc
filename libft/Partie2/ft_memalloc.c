@@ -8,6 +8,8 @@ void	*ft_memalloc(size_t size)
 
 	index = 0;
 	tmp = (char *)malloc(sizeof(size));
+	if (tmp == NULL)
+		return (NULL);
 	while (index < size)
 	{
 		tmp[index] = 0;
