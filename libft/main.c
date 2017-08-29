@@ -14,10 +14,11 @@ int 	main(void)
 	// ft_putchar('\n');
 	// ft_putnbr(strncmp("ouia", "oui", 3));
 	// ft_putchar('\n');
-	char	*s1 = "ouijecocoucou";
+	char	s1[50] = "ouais";
 
-	ft_putendl("---FT_STRRCHR---");
-	ft_putendl(ft_strrchr(s1, 'a'));
+	ft_putnbr(ft_strlcat(s1, "cou", 5));
+	ft_putendl("");
+	ft_putendl(s1);
 	// ft_putendl("---STRNSTR---");
 	// ft_putendl((char *)strnstr(s1, s2));
 	return 0;
