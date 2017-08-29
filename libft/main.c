@@ -14,7 +14,6 @@ int 	main(void)
 	// ft_putchar('\n');
 	// ft_putnbr(strncmp("ouia", "oui", 3));
 	// ft_putchar('\n');
-	char	s1[50] = "ouais";
 
 	ft_strcpy(s1, "ok");
 	ft_putendl(s1);

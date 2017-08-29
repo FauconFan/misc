@@ -8,6 +8,7 @@ BIN_FOLDER = bin/
 PARTIE1 = 	$(PARTIE1_FOLDER)ft_memset.c \
 			$(PARTIE1_FOLDER)ft_bzero.c \
 			$(PARTIE1_FOLDER)ft_memchr.c \
+			$(PARTIE1_FOLDER)ft_memcmp.c \
 			$(PARTIE1_FOLDER)ft_strlen.c \
 			$(PARTIE1_FOLDER)ft_strdup.c \
 			$(PARTIE1_FOLDER)ft_strcpy.c \
@@ -32,6 +33,7 @@ PARTIE1 = 	$(PARTIE1_FOLDER)ft_memset.c \
 PARTIE1_OBJ = 	$(BIN_FOLDER)ft_memset.o \
 				$(BIN_FOLDER)ft_bzero.o \
 				$(BIN_FOLDER)ft_memchr.o \
+				$(BIN_FOLDER)ft_memcmp.o \
 				$(BIN_FOLDER)ft_strlen.o \
 				$(BIN_FOLDER)ft_strdup.o \
 				$(BIN_FOLDER)ft_strcpy.o \
