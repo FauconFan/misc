@@ -2,6 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+void	f(char *s)
+{
+	*s = *s + 1;
+}
+
 int 	main(void)
 {
 	// ft_putchar_fd('o', 1);
@@ -16,9 +21,9 @@ int 	main(void)
 	// ft_putnbr(strncmp("ouia", "oui", 3));
 	// ft_putchar('\n');
 
-	char	*s = ft_strnew(18);
-	ft_strdel(&s);
-	ft_putnbr(sizeof(char));
+	char	s1[50] = "coucou";
+	ft_striter(s1, f);
+	ft_putendl(s1);
 	// ft_strcpy(s1, "ok");
 	// ft_putendl("---STRNSTR---");
 	// ft_putendl((char *)strnstr(s1, s2));

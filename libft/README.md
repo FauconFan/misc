@@ -40,8 +40,8 @@
  - [x] ft_strnew
  - [x] ft_strdel
  - [x] ft_strclr
- - [ ] ft_striter
- - [ ] ft_striteri
+ - [x] ft_striter
+ - [x] ft_striteri
  - [ ] ft_strmap
  - [ ] ft_strmapi
  - [ ] ft_strequ

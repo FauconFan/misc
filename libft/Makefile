@@ -67,6 +67,8 @@ PARTIE2 = 	$(PARTIE2_FOLDER)ft_memalloc.c \
 			$(PARTIE2_FOLDER)ft_strnew.c \
 			$(PARTIE2_FOLDER)ft_strdel.c \
 			$(PARTIE2_FOLDER)ft_strclr.c \
+			$(PARTIE2_FOLDER)ft_striter.c \
+			$(PARTIE2_FOLDER)ft_striteri.c \
 			$(PARTIE2_FOLDER)ft_putchar.c \
 			$(PARTIE2_FOLDER)ft_putstr.c \
 			$(PARTIE2_FOLDER)ft_putendl.c \
@@ -80,6 +82,8 @@ PARTIE2_OBJ =	$(BIN_FOLDER)ft_memalloc.o \
 				$(BIN_FOLDER)ft_strnew.o \
 				$(BIN_FOLDER)ft_strdel.o \
 				$(BIN_FOLDER)ft_strclr.o \
+				$(BIN_FOLDER)ft_striter.o \
+				$(BIN_FOLDER)ft_striteri.o \
 				$(BIN_FOLDER)ft_putchar.o \
 				$(BIN_FOLDER)ft_putstr.o \
 				$(BIN_FOLDER)ft_putendl.o \
