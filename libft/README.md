@@ -49,7 +49,7 @@
  - [x] ft_strsub
  - [x] ft_strjoin
  - [x] ft_strtrim
- - [ ] ft_strsplit
+ - [x] ft_strsplit
  - [x] ft_stritoa
  - [x] ft_putchar
  - [x] ft_putstr

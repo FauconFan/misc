@@ -17,7 +17,13 @@ int 	main(void)
 	// ft_putchar('\n');
 
 	// ft_putendl(ft_strtrim("  coucou je mappelle jojo      "));
-	ft_putendl(ft_itoa(213));
+	char	**res = ft_strsplit("  oui jaime beaucoup les pikachu  ", ' ');
+	int		index = 0;
+	while (res[index])
+	{
+		ft_putendl(res[index]);
+		index++;
+	}
 	// ft_strcpy(s1, "ok");
 	// ft_putendl("---STRNSTR---");
 	// ft_putendl((char *)strnstr(s1, s2));

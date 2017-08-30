@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <string.h>
-#include "libft.h"
 
 static size_t		ft_log_pos(int n)
 {
