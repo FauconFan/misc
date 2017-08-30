@@ -21,9 +21,7 @@ int 	main(void)
 	// ft_putnbr(strncmp("ouia", "oui", 3));
 	// ft_putchar('\n');
 
-	char	s1[50] = "coucou";
-	ft_striter(s1, f);
-	ft_putendl(s1);
+	ft_putendl(ft_strsub("coucou", 2, 4));
 	// ft_strcpy(s1, "ok");
 	// ft_putendl("---STRNSTR---");
 	// ft_putendl((char *)strnstr(s1, s2));
