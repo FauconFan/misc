@@ -21,7 +21,7 @@ int 	main(void)
 	// ft_putnbr(strncmp("ouia", "oui", 3));
 	// ft_putchar('\n');
 
-	ft_putendl(ft_strsub("coucou", 2, 4));
+	ft_putendl(ft_strjoin("coucou", " je mappelle jojo !"));
 	// ft_strcpy(s1, "ok");
 	// ft_putendl("---STRNSTR---");
 	// ft_putendl((char *)strnstr(s1, s2));
