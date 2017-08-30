@@ -44,8 +44,8 @@
  - [x] ft_striteri
  - [x] ft_strmap
  - [x] ft_strmapi
- - [ ] ft_strequ
- - [ ] ft_strnequ
+ - [x] ft_strequ
+ - [x] ft_strnequ
  - [ ] ft_strsub
  - [ ] ft_strjoin
  - [ ] ft_strtrim
