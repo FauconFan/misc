@@ -48,7 +48,7 @@
  - [x] ft_strnequ
  - [x] ft_strsub
  - [x] ft_strjoin
- - [ ] ft_strtrim
+ - [x] ft_strtrim
  - [ ] ft_strsplit
  - [ ] ft_stritoa
  - [x] ft_putchar
