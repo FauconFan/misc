@@ -111,7 +111,7 @@ PARTIE2_OBJ =	$(BIN_FOLDER)ft_memalloc.o \
 				$(BIN_FOLDER)ft_putendl_fd.o \
 				$(BIN_FOLDER)ft_putnbr_fd.o
 
-FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ) $(BIN_FOLDER)main.o
+FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ)
 
 all: bin $(NAME)
 
@@ -123,9 +123,6 @@ $(BIN_FOLDER)%.o: $(PARTIE1_FOLDER)%.c
 	$(GCC) -c $? -o $@
 
 $(BIN_FOLDER)%.o: $(PARTIE2_FOLDER)%.c
-	$(GCC) -c $? -o $@
-
-$(BIN_FOLDER)main.o: main.c
 	$(GCC) -c $? -o $@
 
 bin:
