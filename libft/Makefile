@@ -1,4 +1,4 @@
-NAME = libft.exe
+NAME = libft.a
 GCC = gcc -Wall -Wextra -Werror -I ./
 
 PARTIE1_FOLDER = Partie1/
@@ -116,7 +116,8 @@ FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ) $(BIN_FOLDER)main.o
 all: bin $(NAME)
 
 $(NAME): $(FILES_O)
-	$(GCC) $^ -o $(NAME)
+	ar rc $(NAME) $^
+	ranlib $(NAME)
 
 $(BIN_FOLDER)%.o: $(PARTIE1_FOLDER)%.c
 	$(GCC) -c $? -o $@
