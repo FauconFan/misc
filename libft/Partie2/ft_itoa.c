@@ -17,38 +17,10 @@ static size_t		ft_log(int n)
 	return (ft_log_pos(n));
 }
 
-static int			get_higher_rank(int n)
-{
-	if (n < 10)
-		return (n);
-	return (get_higher_rank(n / 10));
-}
-
-static int			get_next(int n)
-{
-	int		tmp;
-	size_t	log;
-
-	log = 1;
-	tmp = n;
-	while (tmp >= 10)
-	{
-		tmp = tmp / 10;
-		log++;
-	}
-	tmp = get_higher_rank(n);
-	while (log != 1)
-	{
-		tmp *= 10;
-		log--;
-	}
-	return (n - tmp);
-}
-
 char				*ft_itoa(int n)
 {
 	char	*res;
-	size_t	index;
+	int		index;
 	size_t	len;
 
 	len = ft_log(n);
@@ -67,11 +39,13 @@ char				*ft_itoa(int n)
 		index++;
 		n *= -1;
 	}
-	while (n)
+	index = (int)len - 1;
+	while (index >= 0)
 	{
-		res[index] = get_higher_rank(n) + '0';
-		index++;
-		n = get_next(n);
+		res[index] = n % 10 + '0';
+		index--;
+		n /= 10;
 	}
+	res[len] = 0;
 	return (res);
 }
