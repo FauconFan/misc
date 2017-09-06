@@ -2,11 +2,11 @@ NAME = test.exe
 FLAGS = -Wall -Wextra -Werror -I ./includes/
 LIB = -L./lib/ -lft -lperso
 
-FILES_O = main.o
+FILES_O = main.o partie1.o partie2.o tools.o
 
 all: $(NAME)
 
-$(NAME): main.o 
+$(NAME): $(FILES_O)
 	gcc $(FLAGS) $^ $(LIB) -o $(NAME)
 
 %.o: %.c

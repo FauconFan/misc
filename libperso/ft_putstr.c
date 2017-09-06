@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-void	my_putstr(char *s)
+void	libperso_putstr(char *s)
 {
 	int		length;
 
@@ -10,17 +10,17 @@ void	my_putstr(char *s)
 	write(1, s, length);
 }
 
-void	my_putstrlen(char *s, int len)
+void	libperso_putstrlen(char *s, int len)
 {
 	write(1, s, len);
 }
 
-void	my_putchar(char c)
+void	libperso_putchar(char c)
 {
 	write(1, &c, 1);
 }
 
-void	my_clrsrc(void)
+void	clrsrc(void)
 {
-	my_putstr("\033[H\033[2J");
+	libperso_putstr("\033[H\033[2J");
 }

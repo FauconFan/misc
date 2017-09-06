@@ -1,13 +1,13 @@
 #include "libperso.h"
 
-static void		my_putcolor(char *s)
+static void		libperso_putcolor(char *s)
 {
-	my_putstr("\033[");
-	my_putstr(s);
-	my_putchar('m');
+	libperso_putstr("\033[");
+	libperso_putstr(s);
+	libperso_putchar('m');
 }
 
-void			my_putcol(char *color, char *text)
+void			libperso_putcol(char *color, char *text)
 {
 	int		index;
 
@@ -16,15 +16,15 @@ void			my_putcol(char *color, char *text)
 		index++;
 	if (index >= 1 && text[index - 1] == '\n')
 	{
-		my_putcolor(color);
-		my_putstrlen(text, index - 1);
-		my_putcolor("0");
-		my_putchar('\n');
+		libperso_putcolor(color);
+		libperso_putstrlen(text, index - 1);
+		libperso_putcolor("0");
+		libperso_putchar('\n');
 	}
 	else
 	{
-		my_putcolor(color);
-		my_putstr(text);
-		my_putcolor("0");
+		libperso_putcolor(color);
+		libperso_putstr(text);
+		libperso_putcolor("0");
 	}
 }

@@ -10,11 +10,14 @@
 # define CYAN "36"
 # define WHITE "37"
 
-void	my_putstr(char *s);
-void	my_putstrlen(char *s, int len);
-void	my_putchar(char c);
-void	my_clrsrc(void);
+void	libperso_putstr(char *s);
+void	libperso_putstrlen(char *s, int len);
+void	libperso_putchar(char c);
+void	clrsrc(void);
 
-void	my_putcol(char *color, char *text);
+void	libperso_putcol(char *color, char *text);
+void	h1(char *s);
+void	h2(char *s);
+void	h3(char *s);
 
 #endif

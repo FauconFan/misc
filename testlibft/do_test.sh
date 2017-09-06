@@ -7,3 +7,7 @@ make -C ../libperso/
 cp ../libperso/libperso.a ./lib/
 cp ../libperso/libperso.h ./includes/
 make fclean -C ../libperso/
+
+make re
+./test.exe
+make fclean

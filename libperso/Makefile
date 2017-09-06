@@ -1,7 +1,7 @@
 NAME = libperso.a
 FLAGS = -Wall -Wextra -Werror -I ./
 
-FILES_O = ft_putstr.o ft_putcolor.o
+FILES_O = ft_putstr.o ft_putcolor.o ft_puttitle.o
 
 all: $(NAME)
 
