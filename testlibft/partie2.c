@@ -4,62 +4,38 @@
 
 void	test_mem2(void)
 {
-	libperso_putcol(CYAN, "ft_memalloc => ");
-	no();
-	libperso_putcol(CYAN, "ft_memdel => ");
-	no();
+	test_notimplemented("ft_memalloc => ");
+	test_notimplemented("ft_memdel => ");
 }
 
 void	test_str2(void)
 {
-	libperso_putcol(CYAN, "ft_strnew => ");
-	no();
-	libperso_putcol(CYAN, "ft_strdel => ");
-	no();
-	libperso_putcol(CYAN, "ft_strclr => ");
-	no();
-	libperso_putcol(CYAN, "ft_striter => ");
-	no();
-	libperso_putcol(CYAN, "ft_striteri => ");
-	no();
-	libperso_putcol(CYAN, "ft_strmap => ");
-	no();
-	libperso_putcol(CYAN, "ft_strmapi => ");
-	no();
-	libperso_putcol(CYAN, "ft_strequ => ");
-	no();
-	libperso_putcol(CYAN, "ft_strnequ => ");
-	no();
-	libperso_putcol(CYAN, "ft_strsub => ");
-	no();
-	libperso_putcol(CYAN, "ft_strjoin => ");
-	no();
-	libperso_putcol(CYAN, "ft_strtrim => ");
-	no();
-	libperso_putcol(CYAN, "ft_strsplit => ");
-	no();
-	libperso_putcol(CYAN, "ft_stritoa => ");
-	no();
+	test_notimplemented("ft_strnew => ");
+	test_notimplemented("ft_strdel => ");
+	test_notimplemented("ft_strclr => ");
+	test_notimplemented("ft_striter => ");
+	test_notimplemented("ft_striteri => ");
+	test_notimplemented("ft_strmap => ");
+	test_notimplemented("ft_strmapi => ");
+	test_notimplemented("ft_strequ => ");
+	test_notimplemented("ft_strnequ => ");
+	test_notimplemented("ft_strsub => ");
+	test_notimplemented("ft_strjoin => ");
+	test_notimplemented("ft_strtrim => ");
+	test_notimplemented("ft_strsplit => ");
+	test_notimplemented("ft_stritoa => ");
 }
 
 void	test_put(void)
 {
-	libperso_putcol(CYAN, "ft_putchar => ");
-	no();
-	libperso_putcol(CYAN, "ft_putstr => ");
-	no();
-	libperso_putcol(CYAN, "ft_putendl => ");
-	no();
-	libperso_putcol(CYAN, "ft_putnbr => ");
-	no();
-	libperso_putcol(CYAN, "ft_putchar_fd => ");
-	no();
-	libperso_putcol(CYAN, "ft_putstr_fd => ");
-	no();
-	libperso_putcol(CYAN, "ft_putendl_fd => ");
-	no();
-	libperso_putcol(CYAN, "ft_putnbr_fd => ");
-	no();
+	test_notimplemented("ft_putchar => ");
+	test_notimplemented("ft_putstr => ");
+	test_notimplemented("ft_putendl => ");
+	test_notimplemented("ft_putnbr => ");
+	test_notimplemented("ft_putchar_fd => ");
+	test_notimplemented("ft_putstr_fd => ");
+	test_notimplemented("ft_putendl_fd => ");
+	test_notimplemented("ft_putnbr_fd => ");
 }
 
 void	test_partie2(void)

@@ -4,70 +4,42 @@
 
 void	test_mem(void)
 {
-	libperso_putcol(CYAN, "ft_memset => ");
-	no();
-	libperso_putcol(CYAN, "ft_bzero => ");
-	no();
-	libperso_putcol(CYAN, "ft_memcpy => ");
-	no();
-	libperso_putcol(CYAN, "ft_memccpy => ");
-	no();
-	libperso_putcol(CYAN, "ft_memmove => ");
-	no();
-	libperso_putcol(CYAN, "ft_memchr => ");
-	no();
-	libperso_putcol(CYAN, "ft_memcmp => ");
-	no();
+	test_notimplemented("ft_memset => ");
+	test_notimplemented("ft_bzero => ");
+	test_notimplemented("ft_memcpy => ");
+	test_notimplemented("ft_memccpy => ");
+	test_notimplemented("ft_memmove => ");
+	test_notimplemented("ft_memchr => ");
+	test_notimplemented("ft_memcmp => ");
 }
 
 void	test_str(void)
 {
-	libperso_putcol(CYAN, "ft_strlen => ");
-	no();
-	libperso_putcol(CYAN, "ft_strdup => ");
-	no();
-	libperso_putcol(CYAN, "ft_strcpy => ");
-	no();
-	libperso_putcol(CYAN, "ft_strncpy => ");
-	no();
-	libperso_putcol(CYAN, "ft_strcat => ");
-	no();
-	libperso_putcol(CYAN, "ft_strncat => ");
-	no();
-	libperso_putcol(CYAN, "ft_strlcat => ");
-	no();
-	libperso_putcol(CYAN, "ft_strchr => ");
-	no();
-	libperso_putcol(CYAN, "ft_strrchr => ");
-	no();
-	libperso_putcol(CYAN, "ft_strstr => ");
-	no();
-	libperso_putcol(CYAN, "ft_strnstr => ");
-	no();
-	libperso_putcol(CYAN, "ft_strcmp => ");
-	no();
-	libperso_putcol(CYAN, "ft_strncmp => ");
-	no();
+	test_notimplemented("ft_strlen => ");
+	test_notimplemented("ft_strdup => ");
+	test_notimplemented("ft_strcpy => ");
+	test_notimplemented("ft_strncpy => ");
+	test_notimplemented("ft_strcat => ");
+	test_notimplemented("ft_strncat => ");
+	test_notimplemented("ft_strlcat => ");
+	test_notimplemented("ft_strchr => ");
+	test_notimplemented("ft_strrchr => ");
+	test_notimplemented("ft_strstr => ");
+	test_notimplemented("ft_strnstr => ");
+	test_notimplemented("ft_strcmp => ");
+	test_notimplemented("ft_strncmp => ");
 }
 
 void	test_is_to(void)
 {
-	libperso_putcol(CYAN, "ft_atoi => ");
-	no();
-	libperso_putcol(CYAN, "ft_isalpha => ");
-	no();
-	libperso_putcol(CYAN, "ft_isdigit => ");
-	no();
-	libperso_putcol(CYAN, "ft_isalnum => ");
-	no();
-	libperso_putcol(CYAN, "ft_isascii => ");
-	no();
-	libperso_putcol(CYAN, "ft_isprint => ");
-	no();
-	libperso_putcol(CYAN, "ft_toupper => ");
-	no();
-	libperso_putcol(CYAN, "ft_tolower => ");
-	no();
+	test_notimplemented("ft_atoi => ");
+	test_notimplemented("ft_isalpha => ");
+	test_notimplemented("ft_isdigit => ");
+	test_notimplemented("ft_isalnum => ");
+	test_notimplemented("ft_isascii => ");
+	test_notimplemented("ft_isprint => ");
+	test_notimplemented("ft_toupper => ");
+	test_notimplemented("ft_tolower => ");
 }
 
 void	test_partie1(void)
