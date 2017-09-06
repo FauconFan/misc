@@ -1,6 +1,6 @@
 #include "libft.h"
 
-int		ft_atoi(char *nptr)
+int		ft_atoi(char const *nptr)
 {
 	int		res;
 	int		sign;

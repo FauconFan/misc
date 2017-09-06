@@ -31,10 +31,10 @@ char	*ft_strstr(const char *haystack, const char *needle);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
 
-int 	ft_strcmp(char *s1, char *s2);
-int 	ft_strncmp(char *s1, char *s2, size_t size);
+int 	ft_strcmp(char const *s1, char const *s2);
+int 	ft_strncmp(char const *s1, char const *s2, size_t size);
 
-int 	ft_atoi(char *nptr);
+int 	ft_atoi(char const *nptr);
 
 int 	ft_isalnum(int c);
 int 	ft_isdigit(int c);

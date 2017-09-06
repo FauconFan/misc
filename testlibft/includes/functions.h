@@ -16,6 +16,12 @@ void 				test_str(void);
 void 				test_is_to(void);
 
 void				test_ft_strlen(void);
+void				test_ft_strchr(void);
+void				test_ft_strrchr(void);
+void				test_ft_strcmp(void);
+void				test_ft_strncmp(void);
+
+void				test_ft_atoi(void);
 void				test_ft_isalpha(void);
 void				test_ft_isdigit(void);
 void				test_ft_isalnum(void);
