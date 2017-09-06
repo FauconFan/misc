@@ -10,3 +10,4 @@ make fclean -C ../libperso/
 
 make re
 ./test.exe
+make fclean
