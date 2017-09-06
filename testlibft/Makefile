@@ -19,8 +19,12 @@ TOOLS_FILES =	$(FOLDER_TOOLS)tools.c \
 TOOLS_OBJ =	$(FOLDER_BIN)tools.o \
 			$(FOLDER_BIN)s_answer.o
 
-TEST_FILES = $(FOLDER_TEST)ft_strlen.c
-TEST_OBJ = $(FOLDER_BIN)ft_strlen.o
+TEST_FILES = 	$(FOLDER_TEST)ft_strlen.c \
+				$(FOLDER_TEST)ft_teststr1.c \
+				$(FOLDER_TEST)ft_teststr2.c
+TEST_OBJ = 	$(FOLDER_BIN)ft_strlen.o \
+			$(FOLDER_BIN)ft_teststr1.o \
+			$(FOLDER_BIN)ft_teststr2.o
 
 FILES_O = $(MAIN_OBJ) $(TOOLS_OBJ) $(TEST_OBJ)
 

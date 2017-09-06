@@ -1,6 +1,7 @@
 #include "libft.h"
 #include "libperso.h"
 #include "functions.h"
+#include "s_answer.h"
 
 void	do_test(void (*f1)(void), void (*f2)(void), void (*f3)(void))
 {
@@ -29,4 +30,19 @@ void	test_notimplemented(char *function_name)
 {
 	libperso_putcol(CYAN, function_name);
 	libperso_putcol(MAGENTA, "\tTest not implemented yet\n");
+}
+
+void	do_testchr1(t_answer *ans, int (*function_test)(int), int (*function_real)(int),
+	void (*test)(t_answer *, int (*)(int), int (*)(int), int c))
+{
+	int 	index;
+
+	index = 0;
+	while (index < 128)
+	{
+		test(ans, function_test, function_real, index);
+		index++;
+	}
+	test(ans, function_test, function_real, 500);
+	test(ans, function_test, function_real, 10000);
 }

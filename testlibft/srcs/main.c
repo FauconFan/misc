@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <ctype.h>
+#include <stdio.h>
 #include "libft.h"
 #include "libperso.h"
 #include "functions.h"

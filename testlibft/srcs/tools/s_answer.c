@@ -27,7 +27,7 @@ void		ans_failed(t_answer *ans)
 	ans->is_test_passed = TEST_FAILED;
 }
 
-void		print_result(t_answer *ans)
+void		print_n_free_result(t_answer *ans)
 {
 	if (ans->is_test_passed == TEST_PASSED)
 	{
@@ -43,9 +43,5 @@ void		print_result(t_answer *ans)
 		libperso_putcol(RED, ft_itoa(ans->nb_test - 1));
 		libperso_putcol(RED, ") => KO\n");
 	}
-}
-
-void		free_answer(t_answer *ans)
-{
 	free(ans);
 }

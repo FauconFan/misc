@@ -1,6 +1,8 @@
 #ifndef FUNCTIONS_H
 # define FUNCTIONS_H
 
+# include "s_answer.h"
+
 # define TEST_PASSED 42
 # define TEST_FAILED 0
 
@@ -14,6 +16,15 @@ void 				test_str(void);
 void 				test_is_to(void);
 
 void				test_ft_strlen(void);
+void				test_ft_isascii(void);
+void				test_ft_isprint(void);
+void				test_ft_toupper(void);
+void				test_ft_tolower(void);
+
+void				do_testchr1(t_answer *ans,
+						int (*function_test)(int),
+						int (*function_real)(int),
+						void (*test)(t_answer *, int (*)(int), int (*)(int), int c));
 
 // PARTIE 2
 

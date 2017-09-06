@@ -36,10 +36,10 @@ void	test_is_to(void)
 	test_notimplemented("ft_isalpha => ");
 	test_notimplemented("ft_isdigit => ");
 	test_notimplemented("ft_isalnum => ");
-	test_notimplemented("ft_isascii => ");
-	test_notimplemented("ft_isprint => ");
-	test_notimplemented("ft_toupper => ");
-	test_notimplemented("ft_tolower => ");
+	test_ft_isascii();
+	test_ft_isprint();
+	test_ft_toupper();
+	test_ft_tolower();
 }
 
 void	test_partie1(void)
