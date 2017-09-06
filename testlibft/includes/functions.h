@@ -16,6 +16,9 @@ void 				test_str(void);
 void 				test_is_to(void);
 
 void				test_ft_strlen(void);
+void				test_ft_isalpha(void);
+void				test_ft_isdigit(void);
+void				test_ft_isalnum(void);
 void				test_ft_isascii(void);
 void				test_ft_isprint(void);
 void				test_ft_toupper(void);

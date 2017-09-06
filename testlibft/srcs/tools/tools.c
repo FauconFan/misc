@@ -38,11 +38,9 @@ void	do_testchr1(t_answer *ans, int (*function_test)(int), int (*function_real)(
 	int 	index;
 
 	index = 0;
-	while (index < 128)
+	while (index < 255)
 	{
 		test(ans, function_test, function_real, index);
 		index++;
 	}
-	test(ans, function_test, function_real, 500);
-	test(ans, function_test, function_real, 10000);
 }

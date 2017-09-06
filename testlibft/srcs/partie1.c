@@ -33,9 +33,9 @@ void	test_str(void)
 void	test_is_to(void)
 {
 	test_notimplemented("ft_atoi => ");
-	test_notimplemented("ft_isalpha => ");
-	test_notimplemented("ft_isdigit => ");
-	test_notimplemented("ft_isalnum => ");
+	test_ft_isalpha();
+	test_ft_isdigit();
+	test_ft_isalnum();
 	test_ft_isascii();
 	test_ft_isprint();
 	test_ft_toupper();

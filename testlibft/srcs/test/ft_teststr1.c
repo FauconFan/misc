@@ -10,7 +10,16 @@ static void		test(t_answer *ans, int (*function_test)(int), int (*function_real)
 	if (function_test(c) == function_real(c))
 		ans_success(ans);
 	else
+	{
+		libperso_putcol(MAGENTA, "int : ");
+		libperso_putcol(MAGENTA, ft_itoa(c));
+		libperso_putcol(MAGENTA, " <=> function_test : ");
+		libperso_putcol(MAGENTA, ft_itoa(function_test(c)));
+		libperso_putcol(MAGENTA, " and function_real : ");
+		libperso_putcol(MAGENTA, ft_itoa(function_real(c)));
+		libperso_putcol(MAGENTA, "\n");
 		ans_failed(ans);
+	}
 }
 
 void			test_ft_toupper(void)
