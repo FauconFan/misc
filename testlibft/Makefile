@@ -24,12 +24,14 @@ TEST_FILES = 	$(FOLDER_TEST)ft_strlen.c \
 				$(FOLDER_TEST)ft_strcmp.c \
 				$(FOLDER_TEST)ft_teststr1.c \
 				$(FOLDER_TEST)ft_teststr2.c \
+				$(FOLDER_TEST)ft_memetcompagnie.c \
 				$(FOLDER_TEST)ft_atoi.c
 TEST_OBJ = 	$(FOLDER_BIN)ft_strlen.o \
 			$(FOLDER_BIN)ft_strchr.o \
 			$(FOLDER_BIN)ft_strcmp.o \
 			$(FOLDER_BIN)ft_teststr1.o \
 			$(FOLDER_BIN)ft_teststr2.o \
+			$(FOLDER_BIN)ft_memetcompagnie.o \
 			$(FOLDER_BIN)ft_atoi.o
 
 FILES_O = $(MAIN_OBJ) $(TOOLS_OBJ) $(TEST_OBJ)

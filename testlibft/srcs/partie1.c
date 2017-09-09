@@ -4,8 +4,8 @@
 
 void	test_mem(void)
 {
-	test_notimplemented("ft_memset => ");
-	test_notimplemented("ft_bzero => ");
+	test_ft_memset();
+	test_notimplementable("ft_bzero");
 	test_notimplemented("ft_memcpy => ");
 	test_notimplemented("ft_memccpy => ");
 	test_notimplemented("ft_memmove => ");
@@ -16,7 +16,7 @@ void	test_mem(void)
 void	test_str(void)
 {
 	test_ft_strlen();
-	test_notimplemented("ft_strdup => ");
+	test_notimplementable("ft_strdup");
 	test_notimplemented("ft_strcpy => ");
 	test_notimplemented("ft_strncpy => ");
 	test_notimplemented("ft_strcat => ");

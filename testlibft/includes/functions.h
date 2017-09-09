@@ -9,6 +9,8 @@
 void				test_partie1(void);
 void				test_partie2(void);
 
+void				test_ft_memset(void);
+
 // PARTIE 1
 
 void 				test_mem(void);
