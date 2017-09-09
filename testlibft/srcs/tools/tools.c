@@ -32,6 +32,12 @@ void	test_notimplemented(char *function_name)
 	libperso_putcol(MAGENTA, "\tTest not implemented yet\n");
 }
 
+void	test_notimplementable(char *function_name)
+{
+	libperso_putcol(CYAN, function_name);
+	libperso_putcol(YELLOW, "\tCouldn't be tested... Look at the code.\n");
+}
+
 void	do_testchr1(t_answer *ans, int (*function_test)(int), int (*function_real)(int),
 	void (*test)(t_answer *, int (*)(int), int (*)(int), int c))
 {

@@ -40,7 +40,7 @@ void			test_ft_strrchr(void)
 {
 	t_answer	*ans;
 
-	ans = init_answer("ft_strchr");
+	ans = init_answer("ft_strrchr");
 	test(ans, &ft_strrchr, &strrchr, "cou", 'u');
 	test(ans, &ft_strrchr, &strrchr, "cou", 'q');
 	test(ans, &ft_strrchr, &strrchr, "coucou", 'c');

@@ -45,5 +45,6 @@ void				do_test(void (*f1)(void), void (*f2)(void), void (*f3)(void));
 void				test_passed(char *function_name);
 void				test_failed(char *function_name);
 void				test_notimplemented(char *function_name);
+void				test_notimplementable(char *function_name);
 
 #endif
