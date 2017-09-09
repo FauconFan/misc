@@ -1,6 +1,6 @@
 #include <string.h>
 
-int		ft_strncmp(char const *s1, char const *s2, size_t size)
+int		ft_strncmp(const char *s1, const char *s2, size_t size)
 {
 	if (size == 0)
 		return (0);
