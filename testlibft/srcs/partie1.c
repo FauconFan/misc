@@ -45,5 +45,10 @@ void	test_is_to(void)
 void	test_partie1(void)
 {
 	h1(" PARTIE 1 ");
-	do_test(&test_mem, &test_str, &test_is_to);
+	test_mem();
+	ft_putchar('\n');
+	test_str();
+	ft_putchar('\n');
+	test_is_to();
+	press_chr();
 }

@@ -20,4 +20,6 @@ void	h1(char *s);
 void	h2(char *s);
 void	h3(char *s);
 
+void	press_chr(void);
+
 #endif

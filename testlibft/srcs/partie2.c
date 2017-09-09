@@ -41,5 +41,10 @@ void	test_put(void)
 void	test_partie2(void)
 {
 	h1(" PARTIE 2 ");
-	do_test(&test_mem2, &test_str2, &test_put);
+	test_mem2();
+	ft_putchar('\n');
+	test_str2();
+	ft_putchar('\n');
+	test_put();
+	press_chr();
 }
