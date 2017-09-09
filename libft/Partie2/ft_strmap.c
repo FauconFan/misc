@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char	*ft_strmap(char const *s, char (*f)(char))
+char	*ft_strmap(const char *s, char (*f)(char))
 {
 	unsigned int 	index;
 	char			*res;
