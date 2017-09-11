@@ -11,5 +11,7 @@ int		ft_strnequ(const char *s1, const char *s2, size_t n)
 			return (1);
 		index++;
 	}
+	if (index == n)
+		return (1);
 	return (0);
 }

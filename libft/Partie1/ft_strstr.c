@@ -5,6 +5,8 @@ char	*ft_strstr(const char *haystack, const char *needle)
 	int		index;
 
 	index = 0;
+	if (*haystack == 0 && *needle == 0)
+		return ((char *)haystack);
 	if (haystack == 0 || *haystack == 0)
 		return (NULL);
 	if (needle == 0 || *needle == 0)

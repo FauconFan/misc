@@ -34,15 +34,11 @@ char				*ft_itoa(int n)
 		return (res);
 	}
 	else if (n < 0)
-	{
 		res[0] = '-';
-		index++;
-		n *= -1;
-	}
 	index = (int)len - 1;
-	while (index >= 0)
+	while (n)
 	{
-		res[index] = n % 10 + '0';
+		res[index] = (n % 10) * ((n < 0) ? -1 : 1) + '0';
 		index--;
 		n /= 10;
 	}

@@ -14,7 +14,7 @@ char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 	index = 0;
 	while (s[index])
 	{
-		res[index] = f(res[index], index);
+		res[index] = f(index, s[index]);
 		index++;
 	}
 	res[index] = 0;

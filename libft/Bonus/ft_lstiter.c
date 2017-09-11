@@ -2,6 +2,9 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	(void)lst;
-	(void)f;
+	if (lst != NULL)
+	{
+		f(lst);
+		ft_lstiter(lst->next, f);
+	}
 }

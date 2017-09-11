@@ -29,7 +29,7 @@ char		*ft_strtrim(const char *s)
 	real_size = 0;
 	index = 0;
 	if (check_only_blank((char *)s) == 0)
-		return (NULL);
+		return ("");
 	while (is_blank(*tmp))
 		tmp++;
 	while (tmp[real_size])
