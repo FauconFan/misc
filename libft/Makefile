@@ -3,6 +3,7 @@ GCC = gcc -Wall -Wextra -Werror -I ./
 
 PARTIE1_FOLDER = Partie1/
 PARTIE2_FOLDER = Partie2/
+BONUS_FOLDER = Bonus/
 BIN_FOLDER = bin/
 
 PARTIE1 = 	$(PARTIE1_FOLDER)ft_memset.c \
@@ -111,7 +112,20 @@ PARTIE2_OBJ =	$(BIN_FOLDER)ft_memalloc.o \
 				$(BIN_FOLDER)ft_putendl_fd.o \
 				$(BIN_FOLDER)ft_putnbr_fd.o
 
-FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ)
+BONUS = $(BONUS_FOLDER)ft_lstnew.c \
+		$(BONUS_FOLDER)ft_lstdelone.c \
+		$(BONUS_FOLDER)ft_lstdel.c \
+		$(BONUS_FOLDER)ft_lstadd.c \
+		$(BONUS_FOLDER)ft_lstiter.c \
+		$(BONUS_FOLDER)ft_lstmap.c
+BONUS_OBJ = $(BIN_FOLDER)ft_lstnew.o \
+			$(BIN_FOLDER)ft_lstdelone.o \
+			$(BIN_FOLDER)ft_lstdel.o \
+			$(BIN_FOLDER)ft_lstadd.o \
+			$(BIN_FOLDER)ft_lstiter.o \
+			$(BIN_FOLDER)ft_lstmap.o
+
+FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ) $(BONUS_OBJ)
 
 all: bin $(NAME)
 
@@ -123,6 +137,9 @@ $(BIN_FOLDER)%.o: $(PARTIE1_FOLDER)%.c
 	$(GCC) -c $? -o $@
 
 $(BIN_FOLDER)%.o: $(PARTIE2_FOLDER)%.c
+	$(GCC) -c $? -o $@
+
+$(BIN_FOLDER)%.o: $(BONUS_FOLDER)%.c
 	$(GCC) -c $? -o $@
 
 bin:
