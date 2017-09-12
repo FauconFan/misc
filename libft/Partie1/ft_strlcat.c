@@ -1,15 +1,6 @@
 #include <string.h>
+#include "libft.h"
 #define POSONLY(x) ((x < 0) ? 0 : x)
-
-static size_t	str_len(char *s)
-{
-	size_t		index;
-
-	index = 0;
-	while (s[index])
-		index++;
-	return (index);
-}
 
 size_t			ft_strlcat(char *dest, char *src, size_t nb)
 {
@@ -18,8 +9,8 @@ size_t			ft_strlcat(char *dest, char *src, size_t nb)
 	size_t				length[2];
 	size_t				res;
 
-	length[0] = str_len(dest);
-	length[1] = str_len(src);
+	length[0] = ft_strlen(dest);
+	length[1] = ft_strlen(src);
 	res = (nb < length[0]) ? length[1] + nb : length[1] + length[0];
 	beg_i_d = nb - length[0];
 	beg_i_d = (beg_i_d < 0) ? 0 : beg_i_d;

@@ -3,6 +3,12 @@
 
 # include <string.h>
 
+# define CODE_ISALNUM	0x00000008
+# define CODE_ISALPHA 	0x00000400
+# define CODE_ISASCII	0x00000001
+# define CODE_ISDIGIT	0x00000800
+# define CODE_ISPRINT	0x00004000
+
 /*** PARTIE 1 ***/
 
 void					*ft_memset(void *s, int c, size_t n);

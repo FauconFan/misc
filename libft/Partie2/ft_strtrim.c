@@ -34,11 +34,8 @@ char		*ft_strtrim(const char *s)
 		tmp++;
 	while (tmp[real_size])
 		real_size++;
-	real_size--;
-	while (is_blank(tmp[real_size]))
-		real_size--;
-	real_size++;
-	if ((res = (char *)malloc(sizeof(char) * (real_size + 1))) == NULL)
+	while (is_blank(tmp[--real_size]));
+	if ((res = (char *)malloc(sizeof(char) * (++real_size + 1))) == NULL)
 		return (NULL);
 	while (index < real_size)
 	{

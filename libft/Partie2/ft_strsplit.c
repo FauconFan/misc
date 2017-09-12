@@ -47,9 +47,8 @@ char			**ft_strsplit(char const *s, char c)
 	char 	**res;
 	int 	length_word;
 
-	tmp = (char *)s;
-	length_tot = len_words(tmp, c);
-	tmp = ignorechr(tmp, c);
+	length_tot = len_words((char *)s, c);
+	tmp = ignorechr((char *)s, c);
 	index[0] = 0;
 	if ((res = (char **)malloc(sizeof(char *) * (length_tot + 1))) == NULL)
 		return (NULL);

@@ -1,4 +1,6 @@
+#include "libft.h"
+
 int		ft_isprint(int c)
 {
-	return ((c >= 32 && c < 127) ? 16384 : 0);
+	return ((c >= 32 && c < 127) ? CODE_ISDIGIT : 0);
 }

@@ -1,4 +1,6 @@
+#include "libft.h"
+
 int		ft_isalpha(int c)
 {
-	return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) ? 1024 : 0);
+	return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) ? CODE_ISALPHA : 0);
 }
