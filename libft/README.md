@@ -62,4 +62,4 @@
 
 ## FONCTIONS BONUS
 
-A remplir
+Toutes les fonctions relatives aux listes (du bonus de 42)
