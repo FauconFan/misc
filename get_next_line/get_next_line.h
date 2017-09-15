@@ -6,12 +6,15 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 14:06:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/09/15 08:37:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# define BUFF_SIZE 			10
+# define INIT_PROG_BUFF 	""
 
 int		get_next_line(const int fd, char **line);
 
