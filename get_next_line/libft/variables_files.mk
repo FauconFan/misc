@@ -121,9 +121,11 @@ MyBONUS = 	$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strpos.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strrpos.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strcpos.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strcrpos.c \
+			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strconcat.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_putnbrl.c
 MyBONUS_OBJ = 	$(BIN_FOLDER)ft_strpos.o \
 				$(BIN_FOLDER)ft_strrpos.o \
 				$(BIN_FOLDER)ft_strcpos.o \
 				$(BIN_FOLDER)ft_strcrpos.o \
+				$(BIN_FOLDER)ft_strconcat.o \
 				$(BIN_FOLDER)ft_putnbrl.o

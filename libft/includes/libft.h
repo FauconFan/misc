@@ -105,6 +105,8 @@ int						ft_strrpos(char *big, char *little);
 int						ft_strcpos(char *s, int c);
 int						ft_strcrpos(char *s, int c);
 
+char					*ft_strconcat(char *s1, char *s2);
+
 void					ft_putnbrl(int c);
 
 #endif
