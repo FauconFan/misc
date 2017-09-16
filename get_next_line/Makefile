@@ -5,18 +5,18 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/09/12 14:07:46 by jpriou            #+#    #+#              #
-#    Updated: 2017/09/15 10:08:52 by jpriou           ###   ########.fr        #
+#    Created: 2017/09/15 18:43:28 by jpriou            #+#    #+#              #
+#    Updated: 2017/09/15 18:44:08 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = test
-FLAGS = -g -Wall -Wextra -Werror -I ./libft/includes/
+FLAGS = -Wall -Wextra -Werror -I ./libft/includes/
 LIB = -Llibft -lft
 
 FILES_OBJ = get_next_line.o main.o
 
-all: lib $(NAME) exec
+all: lib $(NAME)
 
 $(NAME) : $(FILES_OBJ)
 	gcc $(FLAGS) $^ $(LIB) -o $(NAME)
@@ -32,9 +32,6 @@ fclean : clean
 	make fclean -C libft
 
 re : fclean all
-
-exec :
-	./$(NAME) README.txt
 
 lib :
 	make -C libft
