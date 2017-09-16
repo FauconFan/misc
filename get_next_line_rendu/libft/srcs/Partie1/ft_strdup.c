@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 14:57:51 by jpriou           ###   ########.fr       */
+/*   Created: 2017/09/11 16:58:55 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:46:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include <stdlib.h>
 
-# define BUFF_SIZE 			25
-# define INIT_PROG_BUFF 	0
+char	*ft_strdup(const char *s)
+{
+	unsigned int	len;
+	char			*res;
 
-# define MAX(x, y)			((x < y) ? y : x)
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+	len = 0;
+	res = 0;
+	while (s[len])
+		len++;
+	res = (char *)malloc(sizeof(char) * (len + 1));
+	len = 0;
+	while (s[len])
+	{
+		res[len] = s[len];
+		len++;
+	}
+	res[len] = 0;
+	return (res);
+}

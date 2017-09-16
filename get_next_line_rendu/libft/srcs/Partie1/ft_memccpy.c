@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 14:57:51 by jpriou           ###   ########.fr       */
+/*   Created: 2017/09/12 11:49:37 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:45:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include <string.h>
 
-# define BUFF_SIZE 			25
-# define INIT_PROG_BUFF 	0
+void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
+{
+	char	*s1;
+	char	*s2;
+	size_t	index;
 
-# define MAX(x, y)			((x < y) ? y : x)
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+	s1 = (char *)dest;
+	s2 = (char *)src;
+	index = 0;
+	while (index < n)
+	{
+		s1[index] = s2[index];
+		if (s1[index] == (char)c)
+			return ((void *)(s1 + index + 1));
+		index++;
+	}
+	return (0);
+}

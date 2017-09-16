@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 14:57:51 by jpriou           ###   ########.fr       */
+/*   Created: 2017/09/12 11:42:10 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:44:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include <string.h>
 
-# define BUFF_SIZE 			25
-# define INIT_PROG_BUFF 	0
+void	ft_bzero(void *s, size_t n)
+{
+	char	*d;
 
-# define MAX(x, y)			((x < y) ? y : x)
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+	d = (char *)s;
+	while (n > 0)
+	{
+		*d = 0;
+		d++;
+		n--;
+	}
+}

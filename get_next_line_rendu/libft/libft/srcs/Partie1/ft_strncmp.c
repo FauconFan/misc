@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 14:57:51 by jpriou           ###   ########.fr       */
+/*   Created: 2017/09/11 22:18:29 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:46:18 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include <string.h>
 
-# define BUFF_SIZE 			25
-# define INIT_PROG_BUFF 	0
+int		ft_strncmp(const char *s1, const char *s2, size_t size)
+{
 
-# define MAX(x, y)			((x < y) ? y : x)
+	if (size == 0)
+		return (0);
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	while (*(unsigned char *)s1 == *(unsigned char *)s2)
+	{
+		if (*(unsigned char *)s1 == 0)
+			return (0);
+		if (size == 1)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
+		size--;
+	}
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+}

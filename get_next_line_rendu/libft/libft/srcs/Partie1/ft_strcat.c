@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 14:57:51 by jpriou           ###   ########.fr       */
+/*   Created: 2017/09/11 16:58:55 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:45:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+char	*ft_strcat(char *dest, const char *src)
+{
+	int	index[2];
 
-# define BUFF_SIZE 			25
-# define INIT_PROG_BUFF 	0
-
-# define MAX(x, y)			((x < y) ? y : x)
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+	index[0] = 0;
+	index[1] = 0;
+	if (src == 0 || *src == 0)
+		return (dest);
+	if (dest == 0)
+		return (0);
+	while (dest[index[0]])
+		index[0]++;
+	while (src[index[1]])
+	{
+		dest[index[0] + index[1]] = src[index[1]];
+		index[1]++;
+	}
+	dest[index[0] + index[1]] = 0;
+	return (dest);
+}

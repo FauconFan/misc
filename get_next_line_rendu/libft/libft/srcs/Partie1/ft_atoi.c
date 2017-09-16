@@ -1,42 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:25:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 15:42:06 by jpriou           ###   ########.fr       */
+/*   Created: 2017/09/12 12:11:36 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:44:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include "libft.h"
-#include "get_next_line.h"
 
-int		main(int argc, char **argv)
+static int	ft_isspace(char c)
 {
-	char	*tmp;
+	return (c == ' ' || c == '\n' || c == '\t' ||
+			c == '\f' || c == '\v' || c == '\r');
+}
 
-	if (argc == 1)
+int			ft_atoi(char const *nptr)
+{
+	int		res;
+	int		sign;
+
+	res = 0;
+	sign = 1;
+	while (ft_isspace(*nptr))
+		nptr++;
+	if (*nptr == 0)
+		return (0);
+	else if (*nptr == '+')
+		nptr++;
+	else if (*nptr == '-')
 	{
-		tmp = 0;
-		get_next_line(0, &tmp);
-		ft_putendl(tmp);
+		nptr++;
+		sign = -1;
 	}
-	else
+	while (ft_isdigit(*nptr))
 	{
-		int fd = open(argv[1], O_RDONLY);
-		tmp = 0;
-		while (get_next_line(fd, &tmp) != 0)
-		{
-			ft_putendl(tmp);
-		}
-		if (tmp != 0)
-			ft_putendl(tmp);
-		close(fd);
+		res = res * 10 - (*nptr - '0');
+		nptr++;
 	}
-	return (0);
+	return (-res * sign);
 }

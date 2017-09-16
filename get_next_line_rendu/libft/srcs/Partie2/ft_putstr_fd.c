@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 14:57:51 by jpriou           ###   ########.fr       */
+/*   Created: 2017/08/29 15:14:02 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:47:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include <unistd.h>
 
-# define BUFF_SIZE 			25
-# define INIT_PROG_BUFF 	0
+void	ft_putstr_fd(char const *str, int fd)
+{
+	int	length;
 
-# define MAX(x, y)			((x < y) ? y : x)
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+	length = 0;
+	if (str == 0)
+	{
+		ft_putstr_fd("(null)", fd);
+		return ;
+	}
+	while (str[length])
+		length++;
+	write(fd, str, length);
+}

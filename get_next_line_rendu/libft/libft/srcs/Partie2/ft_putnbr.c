@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 14:57:51 by jpriou           ###   ########.fr       */
+/*   Created: 2017/08/27 22:13:47 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:47:01 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include <unistd.h>
+#include "libft.h"
 
-# define BUFF_SIZE 			25
-# define INIT_PROG_BUFF 	0
+static void		ft_putnbrrecu(int nb)
+{
+	if (nb == 0)
+		return ;
+	ft_putnbrrecu(nb / 10);
+	ft_putchar(-(nb % 10) + '0');
+}
 
-# define MAX(x, y)			((x < y) ? y : x)
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+void			ft_putnbr(int nb)
+{
+	if (nb == 0)
+	{
+		ft_putchar('0');
+		return ;
+	}
+	else if(nb < 0)
+		ft_putchar('-');
+	else
+		nb *= -1;
+	ft_putnbrrecu(nb);
+}

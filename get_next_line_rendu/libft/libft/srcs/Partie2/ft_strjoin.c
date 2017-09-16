@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:25:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 15:42:06 by jpriou           ###   ########.fr       */
+/*   Created: 2017/09/09 15:22:47 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:47:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "libft.h"
-#include "get_next_line.h"
 
-int		main(int argc, char **argv)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char	*tmp;
+	unsigned int	len1;
+	unsigned int	len2;
+	char			*res;
 
-	if (argc == 1)
+	len1 = 0;
+	len2 = 0;
+	while (s1[len1])
+		len1++;
+	while (s2[len2])
+		len2++;
+	if ((res = (char *)malloc(sizeof(char) * (len1 + len2 + 1))) == NULL)
+		return (NULL);
+	len1 = 0;
+	len2 = 0;
+	while (s1[len1])
 	{
-		tmp = 0;
-		get_next_line(0, &tmp);
-		ft_putendl(tmp);
+		res[len1] = s1[len1];
+		len1++;
 	}
-	else
+	while (s2[len2])
 	{
-		int fd = open(argv[1], O_RDONLY);
-		tmp = 0;
-		while (get_next_line(fd, &tmp) != 0)
-		{
-			ft_putendl(tmp);
-		}
-		if (tmp != 0)
-			ft_putendl(tmp);
-		close(fd);
+		res[len1 + len2] = s2[len2];
+		len2++;
 	}
-	return (0);
+	res[len1 + len2] = 0;
+	return (res);
 }

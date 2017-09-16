@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 14:57:51 by jpriou           ###   ########.fr       */
+/*   Created: 2017/09/11 21:59:53 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/12 13:46:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include <string.h>
 
-# define BUFF_SIZE 			25
-# define INIT_PROG_BUFF 	0
+static char	*ft_strrchr_recu(const char *s, int c, const char *res_actu)
+{
+	if (s == 0 || *s == 0)
+		return ((c == '\0') ? (char *)s : (char *)res_actu);
+	if (*s == c)
+		return (ft_strrchr_recu(s + 1, c, s));
+	return (ft_strrchr_recu(s + 1, c, res_actu));
+}
 
-# define MAX(x, y)			((x < y) ? y : x)
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+char		*ft_strrchr(const char *s, int c)
+{
+	return (ft_strrchr_recu(s, c, NULL));
+}
