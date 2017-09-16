@@ -106,6 +106,7 @@ int						ft_strcpos(char *s, int c);
 int						ft_strcrpos(char *s, int c);
 
 char					*ft_strconcat(char *s1, char *s2);
+char					*ft_strconcat_n_free(char *s1, char *s2);
 
 void					ft_putnbrl(int c);
 
