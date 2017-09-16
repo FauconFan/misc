@@ -6,10 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/16 12:05:33 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 12:06:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/09/16 13:02:23 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
 char	*ft_strconcat_n_free(char *s1, char *s2)
