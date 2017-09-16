@@ -5,7 +5,19 @@
 		[
 			[
 				"ft",
-				"ft_isspace"
+				"ft_strrpos_recu"
+			],
+			[
+				"ft_str",
+				"ft_strcrpos"
+			],
+			[
+				"M",
+				"MyBonus"
+			],
+			[
+				"My",
+				"MYBONUS_FOLDER"
 			],
 			[
 				"c",
@@ -163,6 +175,51 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/home/pepe/Documents/42/libft/Makefile",
+			"settings":
+			{
+				"buffer_size": 1695,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pepe/Documents/42/libft/includes/libft.h",
+			"settings":
+			{
+				"buffer_size": 3462,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pepe/Documents/42/libft/srcs/MyBonus/ft_strconcat.c",
+			"settings":
+			{
+				"buffer_size": 1073,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pepe/Documents/42/libft/srcs/MyBonus/ft_strconcat_n_free.c",
+			"settings":
+			{
+				"buffer_size": 1122,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pepe/Documents/42/libft/variables_files.mk",
+			"settings":
+			{
+				"buffer_size": 5286,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -212,10 +269,19 @@
 	},
 	"expanded_folders":
 	[
-		"/home/pepe/Documents/42/libft"
+		"/home/pepe/Documents/42/libft",
+		"/home/pepe/Documents/42/libft/srcs",
+		"/home/pepe/Documents/42/libft/srcs/MyBonus"
 	],
 	"file_history":
 	[
+		"/home/pepe/Documents/42/libft/srcs/MyBonus/ft_putnbrl.c",
+		"/home/pepe/Documents/42/libft/srcs/MyBonus/ft_strpos.c",
+		"/home/pepe/Documents/42/libft/srcs/MyBonus/ft_strcpos.c",
+		"/home/pepe/Documents/42/libft/srcs/MyBonus/ft_strcrpos.c",
+		"/home/pepe/Documents/42/libft/srcs/MyBonus/ft_strrpos.c",
+		"/home/pepe/Documents/42/libft/README.md",
+		"/home/pepe/Documents/42/libft/Partie1/ft_strchr.c",
 		"/home/pepe/Documents/42/sublime_projects/get_next_line.sublime-project",
 		"/home/pepe/Documents/42/sublime_projects/libft.sublime-project",
 		"/home/pepe/Documents/42/libft/Partie2/ft_itoa.c",
@@ -255,7 +321,6 @@
 		"/home/pepe/Documents/42/libft/Partie1/ft_memmove.c",
 		"/home/pepe/Documents/42/libft/Partie1/ft_memset.c",
 		"/home/pepe/Documents/42/libft/Partie1/ft_strcat.c",
-		"/home/pepe/Documents/42/libft/Partie1/ft_strchr.c",
 		"/home/pepe/Documents/42/libft/Partie1/ft_strcmp.c",
 		"/home/pepe/Documents/42/libft/Partie1/ft_strcpy.c",
 		"/home/pepe/Documents/42/libft/Partie1/ft_strdup.c",
@@ -313,7 +378,6 @@
 		"/home/pepe/Documents/42/libperso/ft_putcolor.c",
 		"/home/pepe/Documents/42/libperso/ft_puttitle.c",
 		"/home/pepe/Documents/42/testlibft/includes/tools.c",
-		"/home/pepe/Documents/42/libft/README.md",
 		"/home/pepe/Documents/42/libft/Makefile",
 		"/home/pepe/Documents/42/libft/auteur",
 		"/home/pepe/Documents/42/libft/my_strlcat.c",
@@ -323,7 +387,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -363,8 +427,149 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/home/pepe/Documents/42/libft/Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1695,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								892,
+								892
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/pepe/Documents/42/libft/includes/libft.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3462,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2664,
+								2664
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 729.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/pepe/Documents/42/libft/srcs/MyBonus/ft_strconcat.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1073,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								891,
+								891
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/pepe/Documents/42/libft/srcs/MyBonus/ft_strconcat_n_free.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1122,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								911,
+								911
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/pepe/Documents/42/libft/variables_files.mk",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5286,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5252,
+								5252
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1576.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -374,7 +579,7 @@
 	},
 	"input":
 	{
-		"height": 31.0
+		"height": 35.0
 	},
 	"layout":
 	{
@@ -416,6 +621,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"strch",
+				"Partie1/ft_strchr.c"
+			]
 		],
 		"width": 0.0
 	},
@@ -427,7 +636,7 @@
 		[
 			[
 				"",
-				"~/Documents/42/sublime_projects/libft.sublime-project"
+				"~/Documents/42/sublime_projects/get_next_line.sublime-project"
 			]
 		],
 		"width": 380.0

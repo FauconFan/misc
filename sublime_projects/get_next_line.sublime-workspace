@@ -4,6 +4,50 @@
 		"selected_items":
 		[
 			[
+				"rea",
+				"read_buf"
+			],
+			[
+				"ret",
+				"ret_read"
+			],
+			[
+				"size",
+				"size_buff_actu"
+			],
+			[
+				"si",
+				"size_buff_actu"
+			],
+			[
+				"re",
+				"read_buf"
+			],
+			[
+				"new",
+				"new_prog_bug"
+			],
+			[
+				"ch",
+				"check_and_parse_break_line"
+			],
+			[
+				"place",
+				"place_newline"
+			],
+			[
+				"de",
+				"debug"
+			],
+			[
+				"read",
+				"read_buf"
+			],
+			[
+				"buf",
+				"buf_tmp"
+			],
+			[
 				"ft",
 				"ft_isspace"
 			],
@@ -18,10 +62,6 @@
 			[
 				"co",
 				"content"
-			],
-			[
-				"si",
-				"sizeof"
 			],
 			[
 				"t",
@@ -128,14 +168,6 @@
 				"get_next"
 			],
 			[
-				"size",
-				"size_t"
-			],
-			[
-				"re",
-				"real_size"
-			],
-			[
 				"h",
 				"haystack"
 			],
@@ -163,6 +195,42 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/home/pepe/Documents/42/get_next_line/get_next_line.c",
+			"settings":
+			{
+				"buffer_size": 4292,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pepe/Documents/42/get_next_line/README.txt",
+			"settings":
+			{
+				"buffer_size": 181,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pepe/Documents/42/get_next_line/main.c",
+			"settings":
+			{
+				"buffer_size": 1269,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pepe/Documents/42/get_next_line/get_next_line.h",
+			"settings":
+			{
+				"buffer_size": 1049,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -216,6 +284,14 @@
 	],
 	"file_history":
 	[
+		"/home/pepe/Documents/42/get_next_line/Makefile",
+		"/home/pepe/Documents/42/get_next_line/libft/srcs/Partie2/ft_strnew.c",
+		"/home/pepe/Documents/42/get_next_line/libft/includes/libft.h",
+		"/home/pepe/Documents/42/sublime_projects/get_next_line.sublime-workspace",
+		"/home/pepe/Documents/42/sublime_projects/get_next_line.sublime-project",
+		"/home/pepe/Documents/42/get_next_line/get_next_line.c",
+		"/home/pepe/Documents/42/get_next_line/get_next_line.h",
+		"/home/pepe/Documents/42/get_next_line/main.c",
 		"/home/pepe/Documents/42/libft/Bonus/ft_lstadd.c",
 		"/home/pepe/Documents/42/libft/Bonus/ft_lstdel.c",
 		"/home/pepe/Documents/42/libft/Bonus/ft_lstdelone.c",
@@ -274,10 +350,7 @@
 		"/home/pepe/Documents/42/libft/Partie1/ft_tolower.c",
 		"/home/pepe/Documents/42/libft/Partie1/ft_toupper.c",
 		"/home/pepe/Documents/42/libft/Partie1/ft_atoi.c",
-		"/home/pepe/Documents/42/get_next_line/get_next_line.c",
 		"/home/pepe/.config/sublime-text-3/Packages/User/42-headers.sublime-settings",
-		"/home/pepe/Documents/42/get_next_line/main.c",
-		"/home/pepe/Documents/42/get_next_line/get_next_line.h",
 		"/home/pepe/Documents/42/get_next_line/README.txt",
 		"/home/pepe/Documents/42/libft/libft.h",
 		"/home/pepe/Documents/42/libft/main.c",
@@ -321,7 +394,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -335,6 +408,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"get_next_line",
 			"*));",
 			"ft_putstr",
 			"ft_bzero",
@@ -361,8 +435,123 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/home/pepe/Documents/42/get_next_line/get_next_line.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4292,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1574,
+								1574
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 172.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/pepe/Documents/42/get_next_line/README.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 181,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								39,
+								39
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/pepe/Documents/42/get_next_line/main.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1269,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								996,
+								996
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/pepe/Documents/42/get_next_line/get_next_line.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1049,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								993,
+								993
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -414,6 +603,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"strne",
+				"libft/srcs/Partie2/ft_strnew.c"
+			]
 		],
 		"width": 0.0
 	},
@@ -425,7 +618,7 @@
 		[
 			[
 				"",
-				"~/Documents/42/get_next_line/get_next_line.sublime-workspace"
+				"~/Documents/42/sublime_projects/libft.sublime-project"
 			]
 		],
 		"width": 380.0
