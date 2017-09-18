@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 14:57:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/09/18 19:22:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 
 # define MAX(x, y)			((x < y) ? y : x)
 
-int		get_next_line(const int fd, char **line);
+int							get_next_line(const int fd, char **line);
+
+typedef struct 				s_elem
+{
+	int 					fd;
+	char 					*buf_fd;
+}							t_elem;
 
 #endif

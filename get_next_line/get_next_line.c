@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:42:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/16 15:28:57 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/09/19 00:51:53 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,27 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "get_next_line.h"
+
+static char	**get_previous_fd(t_list **prog_buf, const int fd)
+{
+	t_list *tmp_list;
+	t_elem *tmp_elem;
+
+	tmp_list = *prog_buf;
+	while (tmp_list)
+	{
+		if (((t_elem *)tmp_list->content)->fd == (int)fd)
+			return (&(((t_elem *)tmp_list->content)->buf_fd));
+		tmp_list = tmp_list->next;
+	}
+	if ((tmp_elem = (t_elem *)malloc(sizeof(t_elem))) == NULL)
+		return (0);
+	tmp_elem->fd = (int)fd;
+	tmp_elem->buf_fd = INIT_PROG_BUFF;
+	tmp_list = ft_lstnew((void const *)tmp_elem, sizeof(tmp_elem));
+	ft_lstadd(prog_buf, tmp_list);
+	return (&(((t_elem *)tmp_list->content)->buf_fd));
+}
 
 static int	check_previous_fd_in_prog_buf(char **prog_buf, char **read_buf)
 {
@@ -42,12 +63,24 @@ static int	check_previous_fd_in_prog_buf(char **prog_buf, char **read_buf)
 	return (-1);
 }
 
-static int 	check_and_parse_break_line(char **original, char **prog_buf)
+static int 	check_and_parse_break_line(char **original, char **prog_buf, int ret_read)
 {
 	int 	place_newline;
 	char	*new_original;
 	char 	*new_prog_bug;
 
+	if (ret_read < BUFF_SIZE)
+	{
+		new_original = ft_strnew(ret_read + (*prog_buf == INIT_PROG_BUFF) ? 0 : ft_strlen(*prog_buf));
+		ft_strcpy(new_original, *original);
+		ft_strncat(new_original, *prog_buf, ret_read);
+		new_prog_bug = ft_strnew(0);
+		free(*original);
+		free(*prog_buf);
+		*original = new_original;
+		*prog_buf = new_prog_bug;
+		return (2);
+	}
 	place_newline = ft_strcpos(*original, '\n');
 	if (place_newline == -1)
 		return (0);
@@ -85,25 +118,31 @@ static int	read_extend_if_necessary(const int fd, char **buf, int *size_buff_act
 	{
 		ft_strcat(*buf, buf_tmp);
 	}
-	return (1);
+	return (rt);
 }
 
 int			get_next_line(const int fd, char **line)
 {
-	static char		*prog_buf = INIT_PROG_BUFF;
+	static t_list	*prog_buf_list = INIT_PROG_BUFF;
+	char 			**prog_buf;
 	int 			ret_read;
 	int 			size_buff_actu;
+	int 			code_check_parse;
 
 	if ((int)fd < 0 || line == 0)
 		return (-1);
-	size_buff_actu = check_previous_fd_in_prog_buf(&prog_buf, line);
+	prog_buf = get_previous_fd(&prog_buf_list, fd);
+	size_buff_actu = check_previous_fd_in_prog_buf(prog_buf, line);
 	if (size_buff_actu == -1)
 		return (1);
 	ret_read = 0;
 	while ((ret_read = read_extend_if_necessary(fd, line, &size_buff_actu)) != 0)
 	{
-		if (check_and_parse_break_line(line, &prog_buf) != 0)
+		code_check_parse = check_and_parse_break_line(line, prog_buf, ret_read);
+		if (code_check_parse == 1)
 			return (1);
+		else if (code_check_parse == 2)
+			return (0);
 	}
 	if (ret_read == -1)
 		return (-1);
