@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:42:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/19 00:51:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/09/19 08:07:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,9 @@ static int	check_previous_fd_in_prog_buf(char **prog_buf, char **read_buf)
 	}
 	if ((place_newline = ft_strcpos(*prog_buf, '\n')) == -1)
 	{
-		if (ft_strlen(*prog_buf) < BUFF_SIZE)
-			ft_strcpy((*read_buf = ft_strnew(BUFF_SIZE)), *prog_buf);
-		else
-			*read_buf = *prog_buf;
+		*read_buf = *prog_buf;
 		*prog_buf = INIT_PROG_BUFF;
-		return (MAX(ft_strlen(*read_buf), BUFF_SIZE));
+		return (ft_strlen(*read_buf));
 	}
 	*read_buf = ft_strnew(place_newline);
 	ft_strncpy(*read_buf, *prog_buf, place_newline);
@@ -63,34 +60,40 @@ static int	check_previous_fd_in_prog_buf(char **prog_buf, char **read_buf)
 	return (-1);
 }
 
-static int 	check_and_parse_break_line(char **original, char **prog_buf, int ret_read)
+static int 	check_and_parse_break_line(char **original, char **prog_buf, int ret_read, int size_buff_actu)
 {
 	int 	place_newline;
 	char	*new_original;
 	char 	*new_prog_bug;
 
+	ft_putendl("OUI");
 	if (ret_read < BUFF_SIZE)
 	{
-		new_original = ft_strnew(ret_read + (*prog_buf == INIT_PROG_BUFF) ? 0 : ft_strlen(*prog_buf));
-		ft_strcpy(new_original, *original);
-		ft_strncat(new_original, *prog_buf, ret_read);
-		new_prog_bug = ft_strnew(0);
-		free(*original);
-		free(*prog_buf);
+			ft_putendl(*prog_buf);
+	ft_putnbrl(((*prog_buf == INIT_PROG_BUFF) ? 0 : ft_strlen(*prog_buf)));
+	ft_putendl(*original);
+	ft_putnbrl(ret_read);
+	ft_putnbrl(size_buff_actu);
+		new_original = ft_strnew(BUFF_SIZE);
+		ft_strncat(new_original, *original, ret_read);
 		*original = new_original;
-		*prog_buf = new_prog_bug;
 		return (2);
 	}
+	ft_putendl("NON");
 	place_newline = ft_strcpos(*original, '\n');
 	if (place_newline == -1)
 		return (0);
+	ft_putendl("ahhaha");
 	new_original = ft_strnew(place_newline);
 	ft_strncpy(new_original, *original, (unsigned int)place_newline);
 	new_prog_bug = ft_strconcat((*prog_buf == INIT_PROG_BUFF) ? "" : *prog_buf, (*original) + place_newline + 1);
+	ft_putendl(*original);
 	free(*original);
+	ft_putendl("ahhaha");
 	free(*prog_buf);
 	*original = new_original;
 	*prog_buf = new_prog_bug;
+	ft_putendl("coucou");
 	return (1);
 }
 
@@ -138,7 +141,7 @@ int			get_next_line(const int fd, char **line)
 	ret_read = 0;
 	while ((ret_read = read_extend_if_necessary(fd, line, &size_buff_actu)) != 0)
 	{
-		code_check_parse = check_and_parse_break_line(line, prog_buf, ret_read);
+		code_check_parse = check_and_parse_break_line(line, prog_buf, ret_read, size_buff_actu);
 		if (code_check_parse == 1)
 			return (1);
 		else if (code_check_parse == 2)

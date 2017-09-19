@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:25:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/19 00:51:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/09/19 08:27:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		main(int argc, char **argv)
 		const int fd2 = open(argv[2], O_RDONLY);
 		int index = 0;
 		tmp = 0;
-		while (index < 7)
+		while (index < 6)
 		{
 			get_next_line(fd1, &tmp);
 			ft_putendl(tmp);

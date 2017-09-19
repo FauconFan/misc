@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/18 19:22:43 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/09/19 07:53:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # define BUFF_SIZE 			25
 # define INIT_PROG_BUFF 	0
-
-# define MAX(x, y)			((x < y) ? y : x)
 
 int							get_next_line(const int fd, char **line);
 
