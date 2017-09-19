@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/19 21:40:35 by jpriou            #+#    #+#             */
+/*   Updated: 2017/09/19 22:13:53 by jpriou           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -107,6 +119,9 @@ int						ft_strcrpos(char *s, int c);
 
 char					*ft_strconcat(char *s1, char *s2);
 char					*ft_strconcat_n_free(char *s1, char *s2);
+
+int						ft_strparse(char ***res, char *str, char c);
+int						ft_strparse_n_free(char ***res, char *str, char c);
 
 void					ft_putnbrl(int c);
 
