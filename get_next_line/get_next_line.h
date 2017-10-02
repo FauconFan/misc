@@ -14,14 +14,8 @@
 # define GET_NEXT_LINE_H
 
 # define BUFF_SIZE 			25
-# define INIT_PROG_BUFF 	0
+# define MAX_FD				20
 
-int							get_next_line(const int fd, char **line);
-
-typedef struct 				s_elem
-{
-	int 					fd;
-	char 					*buf_fd;
-}							t_elem;
+int 			get_next_line(const int fd, char **line);
 
 #endif

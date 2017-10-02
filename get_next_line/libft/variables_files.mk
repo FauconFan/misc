@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    variables_files.mk                                 :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
+#    Updated: 2017/09/19 21:40:28 by jpriou           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 PARTIE1 = 	$(SRCS_FOLDER)$(PARTIE1_FOLDER)ft_memset.c \
 			$(SRCS_FOLDER)$(PARTIE1_FOLDER)ft_bzero.c \
 			$(SRCS_FOLDER)$(PARTIE1_FOLDER)ft_memcpy.c \
@@ -121,13 +133,13 @@ MyBONUS = 	$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strpos.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strrpos.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strcpos.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strcrpos.c \
-			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strconcat.c \
-			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strconcat_n_free.c \
+			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strparse.c \
+			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strparse_n_free.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_putnbrl.c
 MyBONUS_OBJ = 	$(BIN_FOLDER)ft_strpos.o \
 				$(BIN_FOLDER)ft_strrpos.o \
 				$(BIN_FOLDER)ft_strcpos.o \
 				$(BIN_FOLDER)ft_strcrpos.o \
-				$(BIN_FOLDER)ft_strconcat.o \
-				$(BIN_FOLDER)ft_strconcat_n_free.o \
+				$(BIN_FOLDER)ft_strparse.o \
+				$(BIN_FOLDER)ft_strparse_n_free.o \
 				$(BIN_FOLDER)ft_putnbrl.o
