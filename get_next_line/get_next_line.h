@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # define BUFF_SIZE 			25
-# define MAX_FD				20
+# define MAX_FD				200
 
 int 			get_next_line(const int fd, char **line);
 
