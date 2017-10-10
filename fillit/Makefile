@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 17:08:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/10/10 14:16:23 by jpriou           ###   ########.fr        #
+#    Updated: 2017/10/10 15:50:58 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,12 @@ BIN_FOLDER = bin/
 
 FILES_CODE = $(SRC_FOLDER)main.c \
 			 $(SRC_FOLDER)init.c \
-			 $(SRC_FOLDER)piece_tetris.c
+			 $(SRC_FOLDER)piece_tetris.c \
+			 $(SRC_FOLDER)piece_tetris_utils.c
 FILES_OBJ = $(BIN_FOLDER)main.o \
 			$(BIN_FOLDER)init.o \
-			$(BIN_FOLDER)piece_tetris.o
+			$(BIN_FOLDER)piece_tetris.o \
+			$(BIN_FOLDER)piece_tetris_utils.o
 
 all : bin lib $(NAME)
 
