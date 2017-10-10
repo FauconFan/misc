@@ -6,15 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 18:24:12 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 15:52:42 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/10 16:53:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "piece_tetris.h"
-#include "piece_tetris_utils.h"
-#include "init.h"
-#include "libft.h"
 
 /**
  *	Create new piece with a initialized is, it does nothing for rep...

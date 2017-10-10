@@ -6,13 +6,15 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 15:50:21 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 15:55:09 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/10 16:23:36 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "piece_tetris.h"
-#include "libft.h"
+#include "piece_tetris_utils.h"
 
+/**
+ *	this method remove every grouped '.' unseless on the left.
+ */
 static void 	simplify_piece_verti(t_piece_tetris *piece)
 {
 	int 	index;
@@ -32,6 +34,9 @@ static void 	simplify_piece_verti(t_piece_tetris *piece)
 	}
 }
 
+/**
+ *	this method remove every single '.' useless on the top
+ */
 static void 	simplify_piece_horiz(t_piece_tetris *piece)
 {
 	char 	*tmp;

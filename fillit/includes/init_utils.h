@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   piece_tetris_utils.h                               :+:      :+:    :+:   */
+/*   init_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/10 15:51:44 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 16:23:16 by jpriou           ###   ########.fr       */
+/*   Created: 2017/10/10 16:04:30 by jpriou            #+#    #+#             */
+/*   Updated: 2017/10/10 16:21:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIECE_TETRIS_UTILS_H
-# define PIECE_TETRIS_UTILS_H
+#ifndef INIT_UTILS_H
+# define INIT_UTILS_H
 
+# include <stdlib.h>
 # include "piece_tetris.h"
 # include "libft.h"
+# include "init.h"
 
-void 			simplify_piece(t_piece_tetris *piece);
+t_piece_tetris		**init_pieces();
+void				print_pieces(t_piece_tetris **pieces);
+void				free_pieces(t_piece_tetris **pieces);
 
 #endif

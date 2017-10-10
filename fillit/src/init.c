@@ -6,18 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:55:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 12:55:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/10 16:55:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "init.h"
-#include "libft.h"
-#include "piece_tetris.h"
 
 /**
  *	Die function if there is an error, often this function is called with ERROR
@@ -127,15 +120,24 @@ static char		*read_one_piece(int fd)
 	return (buf);
 }
 
-int 			init(char *name_file)
+t_piece_tetris	**init(char *name_file)
 {
-	int fd;
-	t_piece_tetris	*tmp;
+	int 			fd;
+	t_piece_tetris	**pieces;
+	char 			c;
+	int 			index;
 
 	if ((fd = open(name_file, O_RDONLY)) <= 2)
 		die(ERROR);
-	tmp = init_piece((read_one_piece(fd)));
-	print_piece(tmp);
-	free_piece(tmp);
-	return (1);
+	pieces = init_pieces();
+	pieces[0] = init_piece(read_one_piece(fd));
+	index = 1;
+	while (read(fd, &c, 1) == 1)
+	{
+		if (c != '\n')
+			die(ERROR);
+		pieces[index] = init_piece(read_one_piece(fd));
+		index++;
+	}
+	return (pieces);
 }
