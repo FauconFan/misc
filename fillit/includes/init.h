@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:56:09 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 16:21:38 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/10 17:05:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 # define ERROR		"error"
 
-void				die(char *str);
 t_piece_tetris		**init(char *name_file);
 
 #endif

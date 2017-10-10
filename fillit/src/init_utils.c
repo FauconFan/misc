@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 16:04:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 16:53:19 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/10 17:04:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,22 @@ void				free_pieces(t_piece_tetris **pieces)
 		index++;
 	}
 	free(pieces);
+}
+
+/**
+ *	Die function if there is an error, often this function is called with ERROR
+ *	String constant.
+ */
+void			die(char *str)
+{
+	ft_putendl(str);
+	exit(1);
+}
+
+/**
+ *	Check is a couple is in the buffer - map
+ */
+int 			is_in_buf(int x, int y)
+{
+	return (x >= 0 && x < 4 && y >= 0 && y < 4);
 }

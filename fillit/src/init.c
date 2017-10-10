@@ -6,29 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:55:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 16:55:48 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/10 17:04:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "init.h"
-
-/**
- *	Die function if there is an error, often this function is called with ERROR
- *	String constant.
- */
-void			die(char *str)
-{
-	ft_putendl(str);
-	exit(1);
-}
-
-/**
- *	Check is a couple is in the buffer - map
- */
-static int 		is_in_buf(int x, int y)
-{
-	return (x >= 0 && x < 4 && y >= 0 && y < 4);
-}
 
 /**
  *	Count if the cases of a specific (x, y) coords is neared too (beuh)
@@ -100,7 +82,7 @@ static char		*read_one_piece(int fd)
 
 	buf = ft_strnew(20);
 	if (read(fd, buf, 20) < 20)
-		return (0);
+		die(ERROR);
 	index[0] = 0;
 	while (index[0] < 4)
 	{
