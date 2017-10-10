@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 17:08:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/10/10 17:15:37 by jpriou           ###   ########.fr        #
+#    Updated: 2017/10/10 18:01:49 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,19 @@ SRC_FOLDER = src/
 BIN_FOLDER = bin/
 
 FILES_CODE = $(SRC_FOLDER)main.c \
+			 $(SRC_FOLDER)main_utils.c \
 			 $(SRC_FOLDER)map.c \
+			 $(SRC_FOLDER)map_utils.c \
+			 $(SRC_FOLDER)solver.c \
 			 $(SRC_FOLDER)init.c \
 			 $(SRC_FOLDER)init_utils.c \
 			 $(SRC_FOLDER)piece_tetris.c \
 			 $(SRC_FOLDER)piece_tetris_utils.c
 FILES_OBJ = $(BIN_FOLDER)main.o \
+			$(BIN_FOLDER)main_utils.o \
 			$(BIN_FOLDER)map.o \
+			$(BIN_FOLDER)map_utils.o \
+			$(BIN_FOLDER)solver.o \
 			$(BIN_FOLDER)init.o \
 			$(BIN_FOLDER)init_utils.o \
 			$(BIN_FOLDER)piece_tetris.o \
