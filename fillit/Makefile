@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 17:08:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/10/10 12:29:13 by jpriou           ###   ########.fr        #
+#    Updated: 2017/10/10 14:16:23 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,6 @@ clean :
 
 fclean : clean
 	rm -rf $(NAME)
-	make -C fclean $(L_FT)
+	make fclean -C $(L_FT)
 
 re : fclean all
