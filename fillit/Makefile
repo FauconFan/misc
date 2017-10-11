@@ -6,14 +6,14 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 17:08:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/10/11 13:16:43 by jpriou           ###   ########.fr        #
+#    Updated: 2017/10/11 15:25:47 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 L_FT = libft/
 
 NAME = fillit
-FLAGS = -g -ggdb -Wall -Wextra -Werror -I libft/includes -I includes/
+FLAGS = -g -I libft/includes -I includes/
 LIBS = -L$(L_FT) -lft
 CC = gcc
 

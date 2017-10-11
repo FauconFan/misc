@@ -6,19 +6,19 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/11 12:32:37 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/11 14:30:36 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/11 14:46:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIECE_TETRIS_SIMP_H
 # define PIECE_TETRIS_SIMP_H
 
-typedef struct 			s_piece_tetris_simp
+typedef struct 					s_piece_tetris_simp
 {
-	char 				id;
-	short				x[4];
-	short 				y[4];
-}						t_piece_tetris_simp;
+	char 						id;
+	short						x[4];
+	short 						y[4];
+}								t_piece_tetris_simp;
 
 # include <stdlib.h>
 # include "init.h"

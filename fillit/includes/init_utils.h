@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 16:04:30 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/11 13:18:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/11 14:46:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # include "libft.h"
 # include "init.h"
 
-void				die(char *str);
-int 				is_in_buf(int x, int y);
-t_piece_tetris_simp		**init_pieces();
-void				print_pieces(t_piece_tetris_simp **pieces);
-void				free_pieces(t_piece_tetris_simp **pieces);
+void						die(char *str);
+int 						is_in_buf(int x, int y);
+t_piece_tetris_simp			**init_pieces();
+void						print_pieces(t_piece_tetris_simp **pieces);
+void						free_pieces(t_piece_tetris_simp **pieces);
 
 #endif
