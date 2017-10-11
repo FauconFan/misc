@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 17:21:21 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 17:26:05 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/11 13:19:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int 	get_good_size(int number_pieces)
 	return (count);
 }
 
-int 	get_number_of_pieces(t_piece_tetris **tab)
+int 	get_number_of_pieces(t_piece_tetris_simp **tab)
 {
 	int 	res;
 

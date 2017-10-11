@@ -6,18 +6,18 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 16:04:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 17:04:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/11 14:29:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "init_utils.h"
 
-t_piece_tetris		**init_pieces()
+t_piece_tetris_simp		**init_pieces()
 {
-	t_piece_tetris	**res;
+	t_piece_tetris_simp	**res;
 	int 	index;
 
-	if ((res = (t_piece_tetris **)malloc(sizeof(t_piece_tetris *) * 26)) == NULL)
+	if ((res = (t_piece_tetris_simp **)malloc(sizeof(t_piece_tetris_simp *) * 26)) == NULL)
 		die("Wrong malloc !");
 	index = 0;
 	while (index < SIZE_MAX)
@@ -28,7 +28,7 @@ t_piece_tetris		**init_pieces()
 	return (res);
 }
 
-void				print_pieces(t_piece_tetris **pieces)
+void				print_pieces(t_piece_tetris_simp **pieces)
 {
 	int 	index;
 
@@ -36,12 +36,12 @@ void				print_pieces(t_piece_tetris **pieces)
 	while (index < SIZE_MAX)
 	{
 		if (pieces[index] != 0)
-			print_piece(pieces[index]);
+			print_piece_simp(pieces[index]);
 		index++;
 	}
 }
 
-void				free_pieces(t_piece_tetris **pieces)
+void				free_pieces(t_piece_tetris_simp **pieces)
 {
 	int 	index;
 
@@ -49,7 +49,7 @@ void				free_pieces(t_piece_tetris **pieces)
 	while (index < SIZE_MAX)
 	{
 		if (pieces[index] != 0)
-			free_piece(pieces[index]);
+			free_piece_simp(pieces[index]);
 		index++;
 	}
 	free(pieces);

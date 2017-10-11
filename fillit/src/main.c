@@ -6,22 +6,21 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:11:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 17:30:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/11 14:29:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main_utils.h"
 #include "init.h"
 #include "init_utils.h"
-#include "piece_tetris.h"
-#include "piece_tetris_utils.h"
+#include "piece_tetris_simp.h"
 #include "map.h"
 #include "solver.h"
 
 int 	main(int argc, char **argv)
 {
-	t_piece_tetris	**pieces;
-	t_map			*map;
+	t_piece_tetris_simp	**pieces;
+	t_map				*map;
 
 	if (argc != 2)
 		die("Usage : ./fillit [input_file]");

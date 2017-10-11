@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:55:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 17:04:43 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/11 14:31:11 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,23 +102,23 @@ static char		*read_one_piece(int fd)
 	return (buf);
 }
 
-t_piece_tetris	**init(char *name_file)
+t_piece_tetris_simp	**init(char *name_file)
 {
-	int 			fd;
-	t_piece_tetris	**pieces;
-	char 			c;
-	int 			index;
+	int 					fd;
+	t_piece_tetris_simp		**pieces;
+	char 					c;
+	int 					index;
 
 	if ((fd = open(name_file, O_RDONLY)) <= 2)
 		die(ERROR);
 	pieces = init_pieces();
-	pieces[0] = init_piece(read_one_piece(fd));
+	pieces[0] = init_piece_simp(read_one_piece(fd));
 	index = 1;
 	while (read(fd, &c, 1) == 1)
 	{
 		if (c != '\n')
 			die(ERROR);
-		pieces[index] = init_piece(read_one_piece(fd));
+		pieces[index] = init_piece_simp(read_one_piece(fd));
 		index++;
 	}
 	return (pieces);

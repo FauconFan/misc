@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:56:09 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 17:05:21 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/11 14:26:35 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@
 # include <unistd.h>
 # include "init_utils.h"
 # include "libft.h"
-# include "piece_tetris.h"
-# include "piece_tetris_utils.h"
+# include "piece_tetris_simp.h"
 
 # define ERROR		"error"
 
-t_piece_tetris		**init(char *name_file);
+t_piece_tetris_simp		**init(char *name_file);
 
 #endif
