@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 17:19:07 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/11 17:17:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/12 10:59:47 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ void 	solve_fillit(t_map *map, t_piece_tetris_simp **pieces)
 		map = new_map(size_actu + 1);
 	}
 	print_map(map);
+	free_map(map);
 }

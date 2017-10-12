@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:11:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/11 17:15:54 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/12 11:03:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int 	main(int argc, char **argv)
 	pieces = init(argv[1]);
 	map = new_map(get_good_size(get_number_of_pieces(pieces)));
 	solve_fillit(map, pieces);
-	free_map(map);
 	free_pieces(pieces);
 	return (0);
 }
