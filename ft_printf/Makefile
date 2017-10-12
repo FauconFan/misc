@@ -5,44 +5,45 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/10/09 17:08:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/10/12 17:17:15 by jpriou           ###   ########.fr        #
+#    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
+#    Updated: 2017/10/12 21:31:37 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = test_printf
+
 L_FT = libft/
 
-NAME = fillit
-FLAGS = -Wall -Wextra -Werror -I libft/includes -I includes/
+FLAGS = -g -Wall -Wextra -Werror -I libft/includes -I includes/
 LIBS = -L$(L_FT) -lft
 CC = gcc
 
-SRC_FOLDER = src/
-BIN_FOLDER = bin/
+SRC_FOLDER 				= src/
+BIN_FOLDER 				= bin/
+STRING_BUFFER_FOLDER 	= string_buffer/
 
-FILES_CODE = $(SRC_FOLDER)main.c \
-			 $(SRC_FOLDER)main_utils.c \
-			 $(SRC_FOLDER)map.c \
-			 $(SRC_FOLDER)map_utils.c \
-			 $(SRC_FOLDER)solver.c \
-			 $(SRC_FOLDER)init.c \
-			 $(SRC_FOLDER)init_utils.c \
-			 $(SRC_FOLDER)piece_tetris_simp.c
-FILES_OBJ =	$(patsubst $(SRC_FOLDER)%.c,$(BIN_FOLDER)%.o,$(FILES_CODE))
+TEST_FILE 					= 	$(SRC_FOLDER)main.c
+STRING_BUFFER_SRC 			= 	$(SRC_FOLDER)$(STRING_BUFFER_FOLDER)string_buffer.c \
+								$(SRC_FOLDER)$(STRING_BUFFER_FOLDER)string_buffer_utils.c
+
+TEST_OBJ 					= 	$(patsubst $(SRC_FOLDER)%.c,$(BIN_FOLDER)%.o,$(TEST_FILE))
+STRING_BUFFER_OBJ 			= 	$(patsubst $(SRC_FOLDER)$(STRING_BUFFER_FOLDER)%.c,$(BIN_FOLDER)%.o,$(STRING_BUFFER_SRC))
+
+FILES_OBJ 					= $(TEST_OBJ) $(STRING_BUFFER_SRC)
 
 all : bin lib $(NAME)
-
-bin :
-	mkdir -p $(BIN_FOLDER)
-
-lib :
-	make -C $(L_FT)
 
 $(NAME) : $(FILES_OBJ)
 	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
 
-$(BIN_FOLDER)%.o : $(SRC_FOLDER)%.c 
+$(TEST_OBJ) : $(TEST_FILE)
 	$(CC) -c $(FLAGS) $? -o $@
+
+lib :
+	make -C $(L_FT)
+
+bin :
+	mkdir -p $(BIN_FOLDER)
 
 clean :
 	rm -rf $(BIN_FOLDER)
