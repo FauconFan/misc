@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:55:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/11 14:31:11 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/12 11:24:50 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,7 @@ t_piece_tetris_simp	**init(char *name_file)
 		pieces[index] = init_piece_simp(read_one_piece(fd));
 		index++;
 	}
+	if (close(fd) != 0)
+		die(ERROR);
 	return (pieces);
 }
