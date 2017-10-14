@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 16:04:30 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/11 14:46:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/14 10:45:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 # include "piece_tetris_simp.h"
-# include "libft.h"
 # include "init.h"
 
 void						die(char *str);

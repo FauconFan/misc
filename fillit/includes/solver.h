@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 17:19:13 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/11 17:16:03 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/14 10:46:17 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "init_utils.h"
 # include "map.h"
 # include "piece_tetris_simp.h"
-# include "libft.h"
 # include "map_utils.h"
 
 void 	 solve_fillit(t_map *map, t_piece_tetris_simp **pieces);

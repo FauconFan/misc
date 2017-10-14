@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/11 12:32:37 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/11 14:46:30 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/10/14 10:46:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct 					s_piece_tetris_simp
 
 # include <stdlib.h>
 # include "init.h"
-# include "libft.h"
 
 # define INIT_ID	'A'
 # define SIZE_MAX	26
