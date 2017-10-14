@@ -1,8 +1,0 @@
-Credentials cache: API:4B29F850-3B21-4094-A201-B0B79DFFCE35
-        Principal: jpriou@42.FR
-
-  Issued                Expires               Principal
-Jul 31 09:11:04 2017  Aug  7 09:11:04 2017  krbtgt/42.FR@42.FR
-Jul 31 09:11:06 2017  Aug  7 09:11:04 2017  ldap/ldap-proxy.42.fr@42.FR
-Jul 31 09:11:07 2017  Aug  7 09:11:04 2017  HTTP/student-storage-1.42.fr@42.FR
-Jul 31 11:14:52 2017  Aug  7 09:11:04 2017  host/vgs-fn1.42.fr@42.FR
