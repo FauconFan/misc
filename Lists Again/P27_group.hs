@@ -1,3 +1,4 @@
+ -- Copied from the solution
 combination :: Int -> [a] -> [([a],[a])]
 combination 0 xs = [([],xs)]
 combination n [] = []
