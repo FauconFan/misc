@@ -18,3 +18,6 @@ prime_factors_mult :: Int -> [(Int, Int)]
 prime_factors_mult 0 = []
 prime_factors_mult 1 = []
 prime_factors_mult x = [(n, m) | n <- (listPrimeErathosthemeRecu 2 x []), let m = nbDivisible x n, m /= 0]
+
+totient :: Int -> Int
+totient m = product [(p - 1) * p ^ (c - 1) | (p, c) <- prime_factors_mult m]
