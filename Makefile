@@ -15,7 +15,7 @@ RENDU_DIR = rendu/
 42_COMMANDEMENTS_DIR = 42_commandements/
 42_COMMANDEMENTS_RENDU_DIR = $(RENDU_DIR)$(42_COMMANDEMENTS_DIR)
 
-LIBFT_DIR = libft/
+LIBFT_DIR = libft
 LIBFT_RENDU_DIR = $(RENDU_DIR)$(LIBFT_DIR)
 
 GET_NEXT_LINE_DIR = get_next_line/
@@ -37,14 +37,14 @@ rendu_42_commandements : memo
 
 rendu_libft : memo
 	mkdir -p $(LIBFT_RENDU_DIR)
-	cp -R $(LIBFT_DIR)* $(LIBFT_RENDU_DIR)
+	cp -R $(LIBFT_DIR)/* $(LIBFT_RENDU_DIR)
 
 rendu_fillit : memo
 	mkdir -p $(FILLIT_RENDU_DIR)
 	cp -R $(LIBFT_DIR) $(FILLIT_RENDU_DIR)
-	cp -R $(FILLIT_DIR)src/						$(FILLIT_RENDU_DIR)
-	cp -R $(FILLIT_DIR)includes/						$(FILLIT_RENDU_DIR)
-	cp -R $(FILLIT_DIR)Makefile						$(FILLIT_RENDU_DIR)
+	cp -R $(FILLIT_DIR)src						$(FILLIT_RENDU_DIR)
+	cp -R $(FILLIT_DIR)includes					$(FILLIT_RENDU_DIR)
+	cp -R $(FILLIT_DIR)Makefile					$(FILLIT_RENDU_DIR)
 
 rendu_get_next_line : memo
 	mkdir -p $(GET_NEXT_LINE_RENDU_DIR)

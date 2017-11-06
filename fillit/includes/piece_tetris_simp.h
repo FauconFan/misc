@@ -24,7 +24,7 @@ typedef struct 					s_piece_tetris_simp
 # include "init.h"
 
 # define INIT_ID	'A'
-# define SIZE_MAX	26
+# define SIZE_MAXX	26
 
 t_piece_tetris_simp				*init_piece_simp(char *str);
 void 							print_piece_simp(t_piece_tetris_simp *piece);

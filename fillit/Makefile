@@ -15,7 +15,7 @@ L_FT = libft/
 NAME = fillit
 FLAGS = -Wall -Wextra -Werror -I libft/includes -I includes/
 LIBS = -L$(L_FT) -lft
-CC = gcc
+CC = clang
 
 SRC_FOLDER = src/
 BIN_FOLDER = bin/
