@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/10 19:06:31 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/06 18:10:12 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/06 23:21:07 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,9 @@ RENDU_DIR = rendu/
 
 42_COMMANDEMENTS_DIR = 42_commandements/
 42_COMMANDEMENTS_RENDU_DIR = $(RENDU_DIR)$(42_COMMANDEMENTS_DIR)
+
+PISCINE_RELOADED_DIR = Piscine_Reloaded
+PISCINE_RELOADED_RENDU_DIR = $(RENDU_DIR)$(PISCINE_RELOADED_DIR)
 
 LIBFT_DIR = libft
 LIBFT_RENDU_DIR = $(RENDU_DIR)$(LIBFT_DIR)
@@ -34,6 +37,10 @@ all :
 rendu_42_commandements : memo
 	mkdir -p $(42_COMMANDEMENTS_RENDU_DIR)
 	cp $(42_COMMANDEMENTS_DIR)turn_in $(42_COMMANDEMENTS_RENDU_DIR)
+
+rendu_piscine_reloaded : memo
+	mkdir -p $(PISCINE_RELOADED_RENDU_DIR)
+	cp -R $(PISCINE_RELOADED_DIR)/* $(PISCINE_RELOADED_RENDU_DIR)
 
 rendu_libft : memo
 	mkdir -p $(LIBFT_RENDU_DIR)
