@@ -33,7 +33,7 @@ all :
 
 rendu_42_commandements : memo
 	mkdir -p $(42_COMMANDEMENTS_RENDU_DIR)
-	cp $(42_COMMANDEMENTS_DIR)rendu $(42_COMMANDEMENTS_RENDU_DIR)
+	cp $(42_COMMANDEMENTS_DIR)turn_in $(42_COMMANDEMENTS_RENDU_DIR)
 
 rendu_libft : memo
 	mkdir -p $(LIBFT_RENDU_DIR)
