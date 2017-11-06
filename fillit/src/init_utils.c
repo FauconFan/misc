@@ -23,7 +23,7 @@ t_piece_tetris_simp		**init_pieces()
 		die("Wrong malloc !");
 	}
 	index = 0;
-	while (index < SIZE_MAX + 1)
+	while (index < SIZE_MAXX + 1)
 	{
 		res[index] = 0;
 		index++;
@@ -36,7 +36,7 @@ void				print_pieces(t_piece_tetris_simp **pieces)
 	int 	index;
 
 	index = 0;
-	while (index < SIZE_MAX)
+	while (index < SIZE_MAXX)
 	{
 		if (pieces[index] != 0)
 			print_piece_simp(pieces[index]);
@@ -49,7 +49,7 @@ void				free_pieces(t_piece_tetris_simp **pieces)
 	int 	index;
 
 	index = 0;
-	while (index < SIZE_MAX + 1)
+	while (index < SIZE_MAXX + 1)
 	{
 		if (pieces[index] != 0)
 			free_piece_simp(pieces[index]);
