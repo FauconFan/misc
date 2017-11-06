@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/10/12 21:31:37 by jpriou           ###   ########.fr        #
+#    Updated: 2017/10/13 08:26:23 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,21 +22,25 @@ SRC_FOLDER 				= src/
 BIN_FOLDER 				= bin/
 STRING_BUFFER_FOLDER 	= string_buffer/
 
-TEST_FILE 					= 	$(SRC_FOLDER)main.c
+TEST_FILE 					= 	$(SRC_FOLDER)main.c \
+								$(SRC_FOLDER)ft_printf.c
 STRING_BUFFER_SRC 			= 	$(SRC_FOLDER)$(STRING_BUFFER_FOLDER)string_buffer.c \
 								$(SRC_FOLDER)$(STRING_BUFFER_FOLDER)string_buffer_utils.c
 
 TEST_OBJ 					= 	$(patsubst $(SRC_FOLDER)%.c,$(BIN_FOLDER)%.o,$(TEST_FILE))
 STRING_BUFFER_OBJ 			= 	$(patsubst $(SRC_FOLDER)$(STRING_BUFFER_FOLDER)%.c,$(BIN_FOLDER)%.o,$(STRING_BUFFER_SRC))
 
-FILES_OBJ 					= $(TEST_OBJ) $(STRING_BUFFER_SRC)
+FILES_OBJ 					= $(TEST_OBJ) $(STRING_BUFFER_OBJ)
 
 all : bin lib $(NAME)
 
 $(NAME) : $(FILES_OBJ)
 	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
 
-$(TEST_OBJ) : $(TEST_FILE)
+$(BIN_FOLDER)%.o : $(SRC_FOLDER)%.c
+	$(CC) -c $(FLAGS) $? -o $@
+
+$(BIN_FOLDER)%.o : $(SRC_FOLDER)$(STRING_BUFFER_FOLDER)%.c
 	$(CC) -c $(FLAGS) $? -o $@
 
 lib :

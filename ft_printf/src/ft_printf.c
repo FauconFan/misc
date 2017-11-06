@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/13 08:20:20 by jpriou           ###   ########.fr       */
+/*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
+/*   Updated: 2017/10/13 08:33:49 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
-#include "string_buffer.h"
 #include "ft_printf.h"
-
-int 	main(void)
+ 
+int 	ft_printf(char *str, ...)
 {
-	t_string_buffer *test;
-	char 			*str;
+	ft_putstr(str);
+	va_list va;
 
-	test = new_string_buffer();
-	sb_append(test, "Coucou");
-	sb_append(test, " Je m'appelle Jean-Michel !");
-	str = sb_to_string_and_free_all(test);
-	//ft_putstr(str);
-	free(str);
-	ft_printf("coucou", "oui");
+	va_start(va, str);
+	ft_putstr(va_arg(va, char *));
+	va_end(va);
 	return (0);
 }

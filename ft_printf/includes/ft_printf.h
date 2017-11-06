@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/13 08:20:20 by jpriou           ###   ########.fr       */
+/*   Created: 2017/10/13 08:09:18 by jpriou            #+#    #+#             */
+/*   Updated: 2017/10/13 08:23:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
-#include "string_buffer.h"
-#include "ft_printf.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-int 	main(void)
-{
-	t_string_buffer *test;
-	char 			*str;
+# include <stdarg.h>
+# include "libft.h"
 
-	test = new_string_buffer();
-	sb_append(test, "Coucou");
-	sb_append(test, " Je m'appelle Jean-Michel !");
-	str = sb_to_string_and_free_all(test);
-	//ft_putstr(str);
-	free(str);
-	ft_printf("coucou", "oui");
-	return (0);
-}
+int 	ft_printf(char *str, ...);
+
+#endif
