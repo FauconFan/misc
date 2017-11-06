@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/10 19:06:31 by jpriou            #+#    #+#              #
-#    Updated: 2017/10/21 15:44:29 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/06 18:10:12 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ all :
 
 rendu_42_commandements : memo
 	mkdir -p $(42_COMMANDEMENTS_RENDU_DIR)
-	cp $(42_COMMANDEMENTS_DIR)rendu $(42_COMMANDEMENTS_RENDU_DIR)
+	cp $(42_COMMANDEMENTS_DIR)turn_in $(42_COMMANDEMENTS_RENDU_DIR)
 
 rendu_libft : memo
 	mkdir -p $(LIBFT_RENDU_DIR)
