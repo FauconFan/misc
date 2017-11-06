@@ -12,17 +12,17 @@
 
 #include <string.h>
 
- char	*ft_strchr(const char *s, int c)
- {
- 	if (s == NULL)
- 		return (NULL);
- 	while (*s)
- 	{
- 		if (*s == c)
- 			return ((char *)s);
- 		s++;
- 	}
- 	if (c == '\0')
- 		return ((char *)s);
- 	return (NULL);
- }
+char	*ft_strchr(const char *s, int c)
+{
+	if (s == NULL)
+		return (NULL);
+	while (*s)
+	{
+		if (*s == c)
+			return ((char *)s);
+		s++;
+	}
+	if (c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
