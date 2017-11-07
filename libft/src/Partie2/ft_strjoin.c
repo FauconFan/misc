@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 15:22:47 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:47:30 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 14:47:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	len2 = 0;
 	while (s1[len1])
 	{
-		res[len1] = s1[len1];
-		len1++;
+		res[len1] = s1[len1++];
 	}
 	while (s2[len2])
 	{

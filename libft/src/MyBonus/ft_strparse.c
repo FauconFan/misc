@@ -6,22 +6,38 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:44:41 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/19 22:11:49 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 14:57:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-int		ft_strparse(char ***res, char *str, char c)
+static int	ft_getnb_words(char *str, char c)
 {
+	int		index;
 	int		nb_words;
-	int 	index;
-	int		place;
 
 	index = 0;
 	nb_words = 1;
-	while (str[index] && (str[index] != c || ++nb_words) && ++index);
+	while (str[index])
+	{
+		if (str[index] == c)
+		{
+			nb_words++;
+		}
+		index++;
+	}
+	return (nb_words);
+}
+
+int			ft_strparse(char ***res, char *str, char c)
+{
+	int		nb_words;
+	int		index;
+	int		place;
+
+	nb_words = ft_getnb_words(str, c);
 	if ((*res = (char **)malloc(sizeof(char *) * (nb_words + 1))) == NULL)
 		return (-1);
 	(*res)[nb_words] = 0;

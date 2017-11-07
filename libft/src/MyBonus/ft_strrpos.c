@@ -6,13 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 10:54:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/15 11:00:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 14:57:06 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_strrpos_recu(char *big, char *little, int res_actu, int nbcara_actu)
+static int		ft_strrpos_recu
+	(char *big, char *little, int res_actu, int nbcara_actu)
 {
 	int		index;
 
@@ -27,7 +28,8 @@ static int		ft_strrpos_recu(char *big, char *little, int res_actu, int nbcara_ac
 			index++;
 		}
 		if (little[index] == 0)
-			return (ft_strrpos_recu(big + 1, little, nbcara_actu, nbcara_actu + 1));
+			return (
+				ft_strrpos_recu(big + 1, little, nbcara_actu, nbcara_actu + 1));
 	}
 	return (ft_strrpos_recu(big + 1, little, res_actu, nbcara_actu + 1));
 }

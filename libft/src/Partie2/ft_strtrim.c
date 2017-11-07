@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:28:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:47:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 14:49:17 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,13 @@ char		*ft_strtrim(const char *s)
 		tmp++;
 	while (tmp[real_size])
 		real_size++;
-	while (is_blank(tmp[--real_size]));
+	real_size--;
+	while (is_blank(tmp[real_size]))
+		real_size--;
 	if ((res = (char *)malloc(sizeof(char) * (++real_size + 1))) == NULL)
 		return (NULL);
 	while (index < real_size)
-	{
-		res[index] = tmp[index];
-		index++;
-	}
+		res[index] = tmp[index++];
 	res[index] = 0;
 	return (res);
 }

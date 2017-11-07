@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:24:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:47:43 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 14:50:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ static int		len_word(char *s, char c)
 
 char			**ft_strsplit(char const *s, char c)
 {
-	int 	length_tot;
-	int 	index[2];
-	char 	*tmp;
-	char 	**res;
-	int 	length_word;
+	int		length_tot;
+	int		index[2];
+	char	*tmp;
+	char	**res;
+	int		length_word;
 
 	length_tot = len_words((char *)s, c);
 	tmp = ignorechr((char *)s, c);
@@ -68,12 +68,12 @@ char			**ft_strsplit(char const *s, char c)
 	{
 		index[1] = 0;
 		length_word = len_word(tmp, c);
-		if ((res[index[0]] = (char *)malloc(sizeof(char) * (length_word + 1))) == NULL)
+		if ((res[index[0]] =
+			(char *)malloc(sizeof(char) * (length_word + 1))) == NULL)
 			return (NULL);
 		while (index[1] < length_word)
 			res[index[0]][index[1]++] = *(tmp++);
-		res[index[0]][index[1]] = 0;
-		index[0]++;
+		res[index[0]++][index[1]] = 0;
 		tmp = ignorechr(tmp, c);
 	}
 	res[index[0]] = 0;

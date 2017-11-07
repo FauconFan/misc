@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 10:43:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/15 10:54:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 14:58:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_strpos(char *big, char *little)
 {
-	int 	index[2];
+	int		index[2];
 
 	if (ft_strlen(big) < ft_strlen(little))
 		return (-1);

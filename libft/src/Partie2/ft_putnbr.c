@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 22:13:47 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:47:01 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 14:46:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			ft_putnbr(int nb)
 		ft_putchar('0');
 		return ;
 	}
-	else if(nb < 0)
+	else if (nb < 0)
 		ft_putchar('-');
 	else
 		nb *= -1;
