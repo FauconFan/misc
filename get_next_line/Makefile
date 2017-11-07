@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 18:43:28 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/07 18:05:21 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/07 18:06:34 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,3 @@ re : fclean all
 
 lib :
 	make -C libft
-
-#rule to recopy libft
-cpylib:
-	rm -rf libft/
-	cp -r ../libft .
