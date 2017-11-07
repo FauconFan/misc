@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/07 18:21:10 by jpriou            #+#    #+#             */
-/*   Updated: 2017/08/12 08:45:21 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 15:19:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ char	*ft_strdup(char *src)
 	length = 0;
 	while (*(src + length))
 		length++;
-	res = (char*)malloc(length + 1);
+	res = (char *)malloc(length + 1);
+	if (res == NULL)
+		return (0);
 	index = 0;
 	while (index < length)
 	{
