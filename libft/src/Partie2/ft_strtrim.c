@@ -6,19 +6,19 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:28:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 14:49:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 16:03:20 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <string.h>
 
-static int	is_blank(char c)
+static int		is_blank(char c)
 {
 	return (c == ' ' || c == '\n' || c == '\t');
 }
 
-static int	check_only_blank(char *tmp)
+static int		check_only_blank(char *tmp)
 {
 	while (*tmp)
 	{
@@ -29,7 +29,21 @@ static int	check_only_blank(char *tmp)
 	return (0);
 }
 
-char		*ft_strtrim(const char *s)
+static size_t	true_size(char *s)
+{
+	size_t	real_size;
+
+	real_size = 0;
+	while (s[real_size])
+		real_size++;
+	real_size--;
+	while (is_blank(s[real_size]))
+		real_size--;
+	real_size++;
+	return (real_size);
+}
+
+char			*ft_strtrim(const char *s)
 {
 	char	*tmp;
 	char	*res;
@@ -38,21 +52,19 @@ char		*ft_strtrim(const char *s)
 
 	tmp = (char *)s;
 	res = 0;
-	real_size = 0;
 	index = 0;
 	if (check_only_blank((char *)s) == 0)
 		return ("");
 	while (is_blank(*tmp))
 		tmp++;
-	while (tmp[real_size])
-		real_size++;
-	real_size--;
-	while (is_blank(tmp[real_size]))
-		real_size--;
-	if ((res = (char *)malloc(sizeof(char) * (++real_size + 1))) == NULL)
+	real_size = true_size(tmp);
+	if ((res = (char *)malloc(sizeof(char) * (real_size + 1))) == NULL)
 		return (NULL);
 	while (index < real_size)
-		res[index] = tmp[index++];
+	{
+		res[index] = tmp[index];
+		index++;
+	}
 	res[index] = 0;
 	return (res);
 }
