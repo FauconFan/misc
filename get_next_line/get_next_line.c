@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:42:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/19 08:07:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 18:44:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static void 	fill_line(char **line, char **buff_prog)
 int 			get_next_line(const int fd, char **line)
 {
 	static char 	*buff_prog[MAX_FD];
+	static int 		ret[MAX_FD];
 	char			*tmp;
 	char 			buff[BUFF_SIZE + 1];
-	static int 		ret[MAX_FD];
 
 	if (fd < 0 || line == 0)
 		return (-1);

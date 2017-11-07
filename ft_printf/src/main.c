@@ -6,11 +6,12 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/13 08:20:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 18:27:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "libft.h"
 #include "string_buffer.h"
 #include "ft_printf.h"
@@ -26,6 +27,7 @@ int 	main(void)
 	str = sb_to_string_and_free_all(test);
 	//ft_putstr(str);
 	free(str);
-	ft_printf("coucou", "oui");
+	//ft_printf("coucou", "oui");
+	printf("allo:%s", "coucou");
 	return (0);
 }
