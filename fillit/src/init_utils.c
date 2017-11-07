@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 16:04:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/12 10:58:06 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 12:38:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_piece_tetris_simp		**init_pieces()
 	int 	index;
 
 	if ((res = (t_piece_tetris_simp **)
-		malloc(sizeof(t_piece_tetris_simp *) * (SIZE_MAX + 1))) == NULL)
+		malloc(sizeof(t_piece_tetris_simp *) * (SIZE_MAXX + 1))) == NULL)
 	{
 		die("Wrong malloc !");
 	}

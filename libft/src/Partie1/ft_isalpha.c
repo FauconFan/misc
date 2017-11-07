@@ -14,6 +14,10 @@
 
 int		ft_isalpha(int c)
 {
+<<<<<<< HEAD
 	return (((c >= 'a' && c <= 'z') ||
 		(c >= 'A' && c <= 'Z')) ? CODE_ISALPHA : 0);
+=======
+	return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) ? CODE_ISALPHA : 0);
+>>>>>>> 2a098b5b5d985b9368218f676957b37709fcc1be
 }
