@@ -6,12 +6,12 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/07 14:43:27 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/07 16:46:39 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-GCC = gcc -Wall -Wextra -Werror -I ./includes/
+GCC = gcc -Wall -Wextra -Werror -I ./
 
 SRCS_FOLDER = src/
 PARTIE1_FOLDER = Partie1/

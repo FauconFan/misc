@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:40:35 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 15:09:23 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/07 17:11:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 # define LIBFT_H
 
 # include <string.h>
-
-# define CODE_ISALNUM	0x00000008
-# define CODE_ISALPHA 	0x00000400
-# define CODE_ISASCII	0x00000001
-# define CODE_ISDIGIT	0x00000800
-# define CODE_ISPRINT	0x00004000
 
 /*
 ** PARTIE 1
