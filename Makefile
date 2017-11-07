@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/10 19:06:31 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/06 23:21:07 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/07 16:17:31 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FILLIT_RENDU_DIR = $(RENDU_DIR)$(FILLIT_DIR)
 all :
 	@echo "This makefile is not a makefile he is more a bash script file"
 	@echo "make rendu_42_commandements"
+	@echo "make rendu_piscine_reloaded"
 	@echo "make rendu_libft"
 	@echo "make rendu_fillit"
 	@echo "make rendu_get_next_line"
@@ -68,3 +69,5 @@ gource :
 
 clean :
 	rm -rf $(RENDU_DIR)
+
+fclean : clean
