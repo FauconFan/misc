@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/07 16:46:39 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/07 23:22:58 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,8 +99,8 @@ FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ) $(BONUS_OBJ) $(MyBONUS_OBJ)
 all: bin $(NAME)
 
 $(NAME): $(FILES_O)
-	ar rc $(NAME) $^
-	ranlib $(NAME)
+	ar rc $@ $^
+	ranlib $@
 
 $(BIN_FOLDER)%.o: $(SRCS_FOLDER)$(PARTIE1_FOLDER)%.c
 	$(GCC) -c $? -o $@
@@ -125,4 +125,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all $(NAME) clean fclean re
+.PHONY: all clean fclean re
