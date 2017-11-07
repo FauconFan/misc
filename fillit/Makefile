@@ -6,14 +6,14 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 17:08:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/10/12 17:17:15 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/07 18:04:59 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 L_FT = libft/
 
 NAME = fillit
-FLAGS = -Wall -Wextra -Werror -I libft/includes -I includes/
+FLAGS = -Wall -Wextra -Werror -I libft/ -I includes/
 LIBS = -L$(L_FT) -lft
 CC = clang
 

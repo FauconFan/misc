@@ -6,12 +6,12 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 18:43:28 by jpriou            #+#    #+#              #
-#    Updated: 2017/09/19 07:48:18 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/07 18:05:21 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = test
-FLAGS = -Wall -Wextra -Werror -I ./libft/includes/
+FLAGS = -Wall -Wextra -Werror -I ./libft/
 LIB = -Llibft -lft
 
 FILES_OBJ = get_next_line.o main.o

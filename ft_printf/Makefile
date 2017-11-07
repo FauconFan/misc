@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/10/13 08:26:23 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/07 18:04:02 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = test_printf
 
 L_FT = libft/
 
-FLAGS = -g -Wall -Wextra -Werror -I libft/includes -I includes/
+FLAGS = -g -Wall -Wextra -Werror -I libft/ -I includes/
 LIBS = -L$(L_FT) -lft
 CC = gcc
 
