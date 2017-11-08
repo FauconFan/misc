@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/08 13:34:15 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/08 17:52:41 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,12 +96,12 @@ MyBONUS_OBJ = 	$(patsubst $(SRCS_FOLDER)$(MYBONUS_FOLDER)%.c,$(BIN_FOLDER)%.o,$(
 
 FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ) $(BONUS_OBJ) $(MyBONUS_OBJ)
 
-all: bin $(NAME).a
+all: $(NAME).a
 
 $(NAME): all
 
-$(NAME).a: $(FILES_O)
-	ar rc $@ $^
+$(NAME).a: bin $(FILES_O)
+	ar rc $@ $(FILES_O)
 	ranlib $@
 
 $(BIN_FOLDER)%.o: $(SRCS_FOLDER)$(PARTIE1_FOLDER)%.c
