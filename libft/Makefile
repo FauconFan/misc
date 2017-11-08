@@ -6,11 +6,11 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/07 23:22:58 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/08 12:21:41 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME = libft
 GCC = gcc -Wall -Wextra -Werror -I ./
 
 SRCS_FOLDER = src/
@@ -96,9 +96,11 @@ MyBONUS_OBJ = 	$(patsubst $(SRCS_FOLDER)$(MYBONUS_FOLDER)%.c,$(BIN_FOLDER)%.o,$(
 
 FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ) $(BONUS_OBJ) $(MyBONUS_OBJ)
 
-all: bin $(NAME)
+all: bin $(NAME).a
 
-$(NAME): $(FILES_O)
+$(NAME): all
+
+$(NAME).a: $(FILES_O)
 	ar rc $@ $^
 	ranlib $@
 
@@ -121,8 +123,8 @@ clean:
 	rm -f $(FILES_O)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME).a
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: $(NAME) all clean fclean re
