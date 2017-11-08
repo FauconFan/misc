@@ -6,20 +6,21 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:55:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/12 11:24:50 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 17:33:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "init.h"
 
-/**
- *	Count if the cases of a specific (x, y) coords is neared too (beuh)
- */
-static int 		number_sides(char *str, int x, int y)
+/*
+**	Count if the cases of a specific (x, y) coords is neared too (beuh)
+*/
+
+static int			number_sides(char *str, int x, int y)
 {
-	int 	res;
-	int 	i;
-	int 	j;
+	int		res;
+	int		i;
+	int		j;
 
 	res = 0;
 	i = x - 1;
@@ -35,15 +36,16 @@ static int 		number_sides(char *str, int x, int y)
 	return (res);
 }
 
-/**
- *	Check if we have exactly 4 members for a piece and if the piece is uniform.
- *	Number of connections is 6 or 8.
- */
-static void		check_number(char *str)
+/*
+**	Check if we have exactly 4 members for a piece and if the piece is uniform.
+**	Number of connections is 6 or 8.
+*/
+
+static void			check_number(char *str)
 {
-	int 	compteur_member;
-	int 	index[2];
-	int 	tmp;
+	int		compteur_member;
+	int		index[2];
+	int		tmp;
 
 	compteur_member = 0;
 	tmp = 0;
@@ -66,19 +68,20 @@ static void		check_number(char *str)
 		die(ERROR);
 }
 
-/**
- *	Read one piece from fd
- *	Check if we have something else than '#' and '.'
- *	Check if we have '\n' every 4 modulo 5 character
- *	Call check_number to check the rest.
- *	
- *	return a string (char *) with 20 characters (+ '\0')
- */
-static char		*read_one_piece(int fd)
+/*
+**	Read one piece from fd
+**	Check if we have something else than '#' and '.'
+**	Check if we have '\n' every 4 modulo 5 character
+**	Call check_number to check the rest.
+**
+**	return a string (char *) with 20 characters (+ '\0')
+*/
+
+static char			*read_one_piece(int fd)
 {
 	char	*buf;
-	int 	index[2];
-	char 	c;
+	int		index[2];
+	char	c;
 
 	buf = ft_strnew(20);
 	if (read(fd, buf, 20) < 20)
@@ -104,10 +107,10 @@ static char		*read_one_piece(int fd)
 
 t_piece_tetris_simp	**init(char *name_file)
 {
-	int 					fd;
+	int						fd;
 	t_piece_tetris_simp		**pieces;
-	char 					c;
-	int 					index;
+	char					c;
+	int						index;
 
 	if ((fd = open(name_file, O_RDONLY)) <= 2)
 		die(ERROR);

@@ -6,15 +6,15 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 17:19:07 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/12 10:59:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 18:08:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solver.h"
 
-static int 	try_backtracking_solve(t_map *map, t_piece_tetris_simp **pieces)
+static int	try_backtracking_solve(t_map *map, t_piece_tetris_simp **pieces)
 {
-	int 	index[2];
+	int		index[2];
 
 	if (*pieces == 0)
 		return (1);
@@ -38,9 +38,9 @@ static int 	try_backtracking_solve(t_map *map, t_piece_tetris_simp **pieces)
 	return (0);
 }
 
-void 	solve_fillit(t_map *map, t_piece_tetris_simp **pieces)
+void		solve_fillit(t_map *map, t_piece_tetris_simp **pieces)
 {
-	int 	size_actu;
+	int		size_actu;
 
 	while (try_backtracking_solve(map, pieces) == 0)
 	{

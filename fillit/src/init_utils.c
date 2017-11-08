@@ -6,16 +6,16 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 16:04:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 12:38:34 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 17:59:08 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "init_utils.h"
 
-t_piece_tetris_simp		**init_pieces()
+t_piece_tetris_simp		**init_pieces(void)
 {
 	t_piece_tetris_simp	**res;
-	int 	index;
+	int					index;
 
 	if ((res = (t_piece_tetris_simp **)
 		malloc(sizeof(t_piece_tetris_simp *) * (SIZE_MAXX + 1))) == NULL)
@@ -31,9 +31,9 @@ t_piece_tetris_simp		**init_pieces()
 	return (res);
 }
 
-void				print_pieces(t_piece_tetris_simp **pieces)
+void					print_pieces(t_piece_tetris_simp **pieces)
 {
-	int 	index;
+	int		index;
 
 	index = 0;
 	while (index < SIZE_MAXX)
@@ -44,9 +44,9 @@ void				print_pieces(t_piece_tetris_simp **pieces)
 	}
 }
 
-void				free_pieces(t_piece_tetris_simp **pieces)
+void					free_pieces(t_piece_tetris_simp **pieces)
 {
-	int 	index;
+	int		index;
 
 	index = 0;
 	while (index < SIZE_MAXX + 1)
@@ -58,20 +58,22 @@ void				free_pieces(t_piece_tetris_simp **pieces)
 	free(pieces);
 }
 
-/**
- *	Die function if there is an error, often this function is called with ERROR
- *	String constant.
- */
-void			die(char *str)
+/*
+**	Die function if there is an error, often this function is called with ERROR
+**	String constant.
+*/
+
+void					die(char *str)
 {
 	ft_putendl(str);
 	exit(1);
 }
 
-/**
- *	Check is a couple is in the buffer - map
- */
-int 			is_in_buf(int x, int y)
+/*
+**	Check is a couple is in the buffer - map
+*/
+
+int						is_in_buf(int x, int y)
 {
 	return (x >= 0 && x < 4 && y >= 0 && y < 4);
 }

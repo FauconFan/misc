@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 17:06:15 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/10 17:16:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 18:01:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_map	*new_map(int size)
 {
 	t_map	*res;
-	int 	index[2];
+	int		index[2];
 
 	if ((res = (t_map *)malloc(sizeof(t_map))) == NULL)
 		die("Wrong Malloc !");
@@ -39,7 +39,7 @@ t_map	*new_map(int size)
 
 void	print_map(t_map *map)
 {
-	int 	index;
+	int		index;
 
 	index = 0;
 	while (index < map->size)
@@ -49,9 +49,9 @@ void	print_map(t_map *map)
 	}
 }
 
-void 	free_map(t_map *map)
+void	free_map(t_map *map)
 {
-	int 	index;
+	int		index;
 
 	index = 0;
 	while (index < map->size)

@@ -6,18 +6,18 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 17:11:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/12 11:03:48 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 18:22:35 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "piece_tetris_simp.h"
 #include "main_utils.h"
 #include "init.h"
 #include "init_utils.h"
-#include "piece_tetris_simp.h"
 #include "map.h"
 #include "solver.h"
 
-int 	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_piece_tetris_simp	**pieces;
 	t_map				*map;

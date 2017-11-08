@@ -6,25 +6,25 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 17:06:20 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/14 10:46:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 18:14:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
 # define MAP_H
 
-typedef struct 		s_map
+# include <stdlib.h>
+# include "init_utils.h"
+# include "libft.h"
+
+typedef struct		s_map
 {
-	char 			**map;
+	char			**map;
 	int				size;
 }					t_map;
 
-#include <stdlib.h>
-#include "init_utils.h"
-#include "libft.h"
-
 t_map				*new_map(int size);
 void				print_map(t_map *map);
-void 				free_map(t_map *map);
+void				free_map(t_map *map);
 
 #endif

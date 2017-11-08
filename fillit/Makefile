@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 17:08:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/07 18:04:59 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/08 18:18:49 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ FILES_CODE = $(SRC_FOLDER)main.c \
 			 $(SRC_FOLDER)piece_tetris_simp.c
 FILES_OBJ =	$(patsubst $(SRC_FOLDER)%.c,$(BIN_FOLDER)%.o,$(FILES_CODE))
 
-all : bin lib $(NAME)
+all : $(NAME)
 
 bin :
 	mkdir -p $(BIN_FOLDER)
@@ -38,8 +38,8 @@ bin :
 lib :
 	make -C $(L_FT)
 
-$(NAME) : $(FILES_OBJ)
-	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
+$(NAME) : bin lib $(FILES_OBJ)
+	$(CC) $(FLAGS) $(FILES_OBJ) -o $(NAME) $(LIBS)
 
 $(BIN_FOLDER)%.o : $(SRC_FOLDER)%.c 
 	$(CC) -c $(FLAGS) $? -o $@
