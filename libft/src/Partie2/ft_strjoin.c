@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 15:22:47 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 15:52:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 13:41:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char					*ft_strjoin(const char *s1, const char *s2)
 	unsigned int	len2;
 	char			*res;
 
+	if (s1 == 0 || s2 == 0)
+		return (0);
 	if ((res = (char *)malloc(sizeof(char) *
 		(ft_strlen(s1) + ft_strlen(s2) + 1))) == NULL)
 		return (NULL);

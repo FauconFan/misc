@@ -6,12 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 15:22:33 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:47:14 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 13:40:38 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int		ft_strequ(const char *s1, const char *s2)
 {
+	if (s1 == 0 || s2 == 0)
+		return (-1);
 	while (*s1 == *s2)
 	{
 		if (*s1 == 0)

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 22:44:49 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 14:47:32 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 13:40:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 	unsigned int	index;
 	char			*res;
 
+	if (s == 0)
+		return (0);
 	index = 0;
 	while (s[index])
 		index++;

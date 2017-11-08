@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:24:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 14:50:37 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 17:02:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ static char		*ignoreword(char *s, char c)
 	return (s);
 }
 
-static int		len_words(char *s, char c)
+static int		len_words(char *s, char c, int *num)
 {
 	int		res;
 
+	*num = 0;
 	res = 0;
 	s = ignorechr(s, c);
 	while (*s)
@@ -41,10 +42,11 @@ static int		len_words(char *s, char c)
 	return (res);
 }
 
-static int		len_word(char *s, char c)
+static int		len_word(char *s, char c, int *num)
 {
 	int		length;
 
+	*num = 0;
 	length = 0;
 	while (s[length] && s[length] != c)
 		length++;
@@ -54,20 +56,20 @@ static int		len_word(char *s, char c)
 char			**ft_strsplit(char const *s, char c)
 {
 	int		length_tot;
+	int		length_word;
 	int		index[2];
 	char	*tmp;
 	char	**res;
-	int		length_word;
 
-	length_tot = len_words((char *)s, c);
+	if (s == 0)
+		return (0);
+	length_tot = len_words((char *)s, c, index);
 	tmp = ignorechr((char *)s, c);
-	index[0] = 0;
 	if ((res = (char **)malloc(sizeof(char *) * (length_tot + 1))) == NULL)
 		return (NULL);
 	while (index[0] < length_tot)
 	{
-		index[1] = 0;
-		length_word = len_word(tmp, c);
+		length_word = len_word(tmp, c, index + 1);
 		if ((res[index[0]] =
 			(char *)malloc(sizeof(char) * (length_word + 1))) == NULL)
 			return (NULL);

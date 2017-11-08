@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 16:58:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:45:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 12:45:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ char	*ft_strcat(char *dest, const char *src)
 
 	index[0] = 0;
 	index[1] = 0;
-	if (src == 0 || *src == 0)
+	if (*src == 0)
 		return (dest);
-	if (dest == 0)
-		return (0);
 	while (dest[index[0]])
 		index[0]++;
 	while (src[index[1]])

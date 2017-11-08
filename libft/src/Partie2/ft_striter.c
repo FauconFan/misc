@@ -6,12 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 09:41:47 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:47:23 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 15:39:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	ft_striter(char *s, void (*f)(char *))
 {
+	if (s == 0 || f == 0)
+		return ;
 	while (*s)
 	{
 		f(s);

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/07 18:21:10 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 15:19:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 12:32:40 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ char	*ft_strdup(char *src)
 	length = 0;
 	while (*(src + length))
 		length++;
-	res = (char *)malloc(length + 1);
-	if (res == NULL)
+	if ((res = (char *)malloc(length + 1)) == NULL)
 		return (0);
 	index = 0;
 	while (index < length)

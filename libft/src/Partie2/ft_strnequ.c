@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 22:42:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:47:39 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 13:40:47 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int		ft_strnequ(const char *s1, const char *s2, size_t n)
 {
 	size_t	index;
 
+	if (s1 == 0 || s2 == 0)
+		return (-1);
 	index = 0;
 	while (s1[index] == s2[index] && index < n)
 	{

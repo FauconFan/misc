@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 09:49:11 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 14:41:03 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 14:42:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int			ft_atoi(char const *nptr)
 	{
 		res = res * 10 - (*nptr - '0');
 		nptr++;
+		if (res > 0)
+			return ((sign == 1) ? -1 : 0);
 	}
 	return (-res * sign);
 }

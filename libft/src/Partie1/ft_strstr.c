@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 22:54:45 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:46:31 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 14:17:32 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*ft_strstr(const char *haystack, const char *needle)
 	index = 0;
 	if (*haystack == 0 && *needle == 0)
 		return ((char *)haystack);
-	if (haystack == 0 || *haystack == 0)
+	if (*haystack == 0)
 		return (NULL);
-	if (needle == 0 || *needle == 0)
+	if (*needle == 0)
 		return ((char *)haystack);
 	if (*haystack == *needle)
 	{

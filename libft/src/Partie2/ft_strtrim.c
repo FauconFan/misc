@@ -6,12 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:28:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 16:03:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/08 15:51:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <string.h>
+#include "libft.h"
 
 static int		is_blank(char c)
 {
@@ -53,8 +54,10 @@ char			*ft_strtrim(const char *s)
 	tmp = (char *)s;
 	res = 0;
 	index = 0;
+	if (s == 0)
+		return (0);
 	if (check_only_blank((char *)s) == 0)
-		return ("");
+		return (ft_strnew(1));
 	while (is_blank(*tmp))
 		tmp++;
 	real_size = true_size(tmp);
