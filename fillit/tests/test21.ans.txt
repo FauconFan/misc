@@ -1,6 +1,0 @@
-..AB.E
-AAABEE
-..CBE.
-CCCBDD
-FF.DD.
-.FF...

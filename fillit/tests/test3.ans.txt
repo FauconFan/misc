@@ -1,5 +1,0 @@
-A...B
-AAABB
-...B.
-CCCCD
-..DDD

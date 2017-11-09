@@ -1,6 +1,0 @@
-AABB..
-AA.BB.
-CCCCD.
-EE..DD
-.EEF.D
-..FFF.
