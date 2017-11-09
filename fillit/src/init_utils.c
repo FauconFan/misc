@@ -6,57 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 16:04:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 17:59:08 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/09 13:31:06 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "init_utils.h"
-
-t_piece_tetris_simp		**init_pieces(void)
-{
-	t_piece_tetris_simp	**res;
-	int					index;
-
-	if ((res = (t_piece_tetris_simp **)
-		malloc(sizeof(t_piece_tetris_simp *) * (SIZE_MAXX + 1))) == NULL)
-	{
-		die("Wrong malloc !");
-	}
-	index = 0;
-	while (index < SIZE_MAXX + 1)
-	{
-		res[index] = 0;
-		index++;
-	}
-	return (res);
-}
-
-void					print_pieces(t_piece_tetris_simp **pieces)
-{
-	int		index;
-
-	index = 0;
-	while (index < SIZE_MAXX)
-	{
-		if (pieces[index] != 0)
-			print_piece_simp(pieces[index]);
-		index++;
-	}
-}
-
-void					free_pieces(t_piece_tetris_simp **pieces)
-{
-	int		index;
-
-	index = 0;
-	while (index < SIZE_MAXX + 1)
-	{
-		if (pieces[index] != 0)
-			free_piece_simp(pieces[index]);
-		index++;
-	}
-	free(pieces);
-}
 
 /*
 **	Die function if there is an error, often this function is called with ERROR
