@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/10 19:06:31 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/08 18:12:20 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/09 14:05:14 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ memo :
 	cat memo_rendu.txt
 
 gource :
-	@gource -f --title "All Progress of Priou Development at 42 School" -a 1 -s 5 --key
+	@gource -f --title "All Progress of Priou Development at 42 School" -a 1 -s 0.5 --key
 
 clean :
 	rm -rf $(RENDU_DIR)
