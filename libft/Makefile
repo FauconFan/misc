@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/08 17:52:41 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/10 10:50:54 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,7 +120,7 @@ bin:
 	mkdir -p $(BIN_FOLDER)
 
 clean:
-	rm -f $(FILES_O)
+	rm -rf $(BIN_FOLDER)
 
 fclean: clean
 	rm -f $(NAME).a
