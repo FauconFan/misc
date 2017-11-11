@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/10 10:50:54 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/11 07:14:51 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ PARTIE1_FOLDER = Partie1/
 PARTIE2_FOLDER = Partie2/
 BONUS_FOLDER = Bonus/
 MYBONUS_FOLDER = MyBonus/
-BIN_FOLDER = bin/
 
 PARTIE1 = 	$(SRCS_FOLDER)$(PARTIE1_FOLDER)ft_memset.c \
 			$(SRCS_FOLDER)$(PARTIE1_FOLDER)ft_bzero.c \
@@ -89,10 +88,10 @@ MyBONUS = 	$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strpos.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_strparse_n_free.c \
 			$(SRCS_FOLDER)$(MYBONUS_FOLDER)ft_putnbrl.c
 
-PARTIE1_OBJ = 	$(patsubst $(SRCS_FOLDER)$(PARTIE1_FOLDER)%.c,$(BIN_FOLDER)%.o,$(PARTIE1))
-PARTIE2_OBJ = 	$(patsubst $(SRCS_FOLDER)$(PARTIE2_FOLDER)%.c,$(BIN_FOLDER)%.o,$(PARTIE2))
-BONUS_OBJ = 	$(patsubst $(SRCS_FOLDER)$(BONUS_FOLDER)%.c,$(BIN_FOLDER)%.o,$(BONUS))
-MyBONUS_OBJ = 	$(patsubst $(SRCS_FOLDER)$(MYBONUS_FOLDER)%.c,$(BIN_FOLDER)%.o,$(MyBONUS))
+PARTIE1_OBJ = 	$(PARTIE1:%.c=%.o)
+PARTIE2_OBJ = 	$(PARTIE2:%.c=%.o)
+BONUS_OBJ = 	$(BONUS:%.c=%.o)
+MyBONUS_OBJ = 	$(MyBONUS:%.c=%.o)
 
 FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ) $(BONUS_OBJ) $(MyBONUS_OBJ)
 
@@ -100,30 +99,23 @@ all: $(NAME).a
 
 $(NAME): all
 
-$(NAME).a: bin $(FILES_O)
-	ar rc $@ $(FILES_O)
-	ranlib $@
+$(NAME).a: $(FILES_O)
+	@echo "Compiling the library $@"
+	@ar rc $@ $(FILES_O)
+	@ranlib $@
+	@echo "Library built successfully"
 
-$(BIN_FOLDER)%.o: $(SRCS_FOLDER)$(PARTIE1_FOLDER)%.c
-	$(GCC) -c $? -o $@
-
-$(BIN_FOLDER)%.o: $(SRCS_FOLDER)$(PARTIE2_FOLDER)%.c
-	$(GCC) -c $? -o $@
-
-$(BIN_FOLDER)%.o: $(SRCS_FOLDER)$(BONUS_FOLDER)%.c
-	$(GCC) -c $? -o $@
-
-$(BIN_FOLDER)%.o: $(SRCS_FOLDER)$(MYBONUS_FOLDER)%.c
-	$(GCC) -c $? -o $@
-
-bin:
-	mkdir -p $(BIN_FOLDER)
+%.o: %.c
+	@echo "Compiling $?"
+	@$(GCC) -c $? -o $@
 
 clean:
-	rm -rf $(BIN_FOLDER)
+	@echo "removing all binary files"
+	@rm -f $(FILES_O)
 
 fclean: clean
-	rm -f $(NAME).a
+	@echo "removing the library"
+	@rm -f $(NAME).a
 
 re: fclean all
 
