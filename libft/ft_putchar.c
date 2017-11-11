@@ -6,11 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 19:11:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:46:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:51:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
 void	ft_putchar(char c)
 {

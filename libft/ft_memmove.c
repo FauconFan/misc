@@ -6,12 +6,10 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 11:42:06 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 13:44:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:51:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdlib.h>
 #include "libft.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t len)

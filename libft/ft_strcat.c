@@ -6,9 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 16:58:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 12:45:16 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:52:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_strcat(char *dest, const char *src)
 {

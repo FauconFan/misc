@@ -6,9 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 10:42:31 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/15 10:42:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:52:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 static int	ft_strcrpos_recu(char *s, int c, int res_actu, int nb_cara_actu)
 {

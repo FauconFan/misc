@@ -6,12 +6,10 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 23:19:44 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:48:46 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:51:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
 #include "libft.h"
 
 static t_list	*content_null(void)

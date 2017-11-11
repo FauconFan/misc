@@ -6,12 +6,10 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:28:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 15:51:27 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:54:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
 #include "libft.h"
 
 static int		is_blank(char c)

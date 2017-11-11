@@ -6,12 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 14:43:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:47:41 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:54:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
+#include "libft.h"
 
 char	*ft_strnew(size_t size)
 {

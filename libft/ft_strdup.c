@@ -6,11 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 16:58:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 14:09:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:52:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 char	*ft_strdup(const char *s)
 {

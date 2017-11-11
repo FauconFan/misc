@@ -6,11 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 16:58:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:46:03 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:52:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "libft.h"
 
 char	*ft_strcpy(char *dest, const char *src)
 {

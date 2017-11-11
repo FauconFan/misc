@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:40:35 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 13:42:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:51:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define LIBFT_H
 
 # include <string.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 /*
 ** PARTIE 1

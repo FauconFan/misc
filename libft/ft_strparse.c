@@ -6,11 +6,10 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:44:41 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 14:57:24 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:54:11 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 static int	ft_getnb_words(char *str, char c)

@@ -6,11 +6,10 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 22:13:47 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 14:46:00 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:52:08 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 
 static void		ft_putnbrrecu(int nb)

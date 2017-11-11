@@ -6,12 +6,10 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 23:21:49 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 16:55:19 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:50:55 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
 #include "libft.h"
 
 void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))

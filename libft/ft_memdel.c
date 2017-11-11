@@ -6,12 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 23:35:13 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/12 13:46:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:51:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
+#include "libft.h"
 
 void	ft_memdel(void **ap)
 {

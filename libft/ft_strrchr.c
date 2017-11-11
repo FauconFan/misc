@@ -6,11 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 21:59:53 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 15:59:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:54:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "libft.h"
 
 static char	*ft_strrchr_recu(const char *s, int c, const char *res_actu)
 {

@@ -6,12 +6,10 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 22:15:01 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 15:28:37 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:53:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
 #include "libft.h"
 
 char	*ft_strmap(const char *s, char (*f)(char))

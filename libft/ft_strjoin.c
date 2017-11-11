@@ -6,11 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 15:22:47 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 13:41:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:53:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 static unsigned int		ft_strlen(const char *s)
 {

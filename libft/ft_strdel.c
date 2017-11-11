@@ -6,11 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 23:44:16 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 13:36:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:52:50 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 void	ft_strdel(char **as)
 {

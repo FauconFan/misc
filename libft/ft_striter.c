@@ -6,9 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 09:41:47 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 15:39:59 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:53:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 void	ft_striter(char *s, void (*f)(char *))
 {

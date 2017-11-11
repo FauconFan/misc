@@ -6,11 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:24:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 17:02:24 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:54:26 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 static char		*ignorechr(char *s, char c)
 {
