@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 14:24:49 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 16:46:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int				ft_printf(char *str, ...)
 	t_string_buffer		*sb;
 	char				*tmp;
 	int					pos_first_percent;
+	int					res;
 
 	if ((sb = new_string_buffer()) == 0)
 		die(WMALLOC);
@@ -45,6 +46,7 @@ int				ft_printf(char *str, ...)
 	}
 	sb_append(sb, str);
 	va_end(va);
+	res = (int)length_tot(sb);
 	sb_print_and_free_all(sb);
-	return (0);
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:18 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 12:31:21 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 16:44:32 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include "libft.h"
+# include "string_buffer.h"
 # include "string_buffer_utils.h"
 
 # define WMALLOC		"WRONG MALLOC"
 # define SEPERATOR		'%'
 
-int		ft_printf(char *str, ...);
+int				ft_printf(char *str, ...);
+void			die(char *str);
 
 #endif
