@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/10 19:06:31 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/11 12:58:42 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/11 16:11:19 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ rendu_fillit : memo
 	mkdir -p $(FILLIT_RENDU_DIR)
 	mkdir -p $(FILLIT_RENDU_DIR)/$(LIBFT_DIR)
 	cp -R $(LIBFT_DIR)/auteur 					$(FILLIT_RENDU_DIR)/$(LIBFT_DIR)
-	cp -R $(LIBFT_DIR)/src 						$(FILLIT_RENDU_DIR)/$(LIBFT_DIR)
+	cp -R $(LIBFT_DIR)/*.c 						$(FILLIT_RENDU_DIR)/$(LIBFT_DIR)
 	cp -R $(LIBFT_DIR)/libft.h 					$(FILLIT_RENDU_DIR)/$(LIBFT_DIR)
 	cp -R $(LIBFT_DIR)/Makefile 				$(FILLIT_RENDU_DIR)/$(LIBFT_DIR)
 	cp -R $(FILLIT_DIR)auteur					$(FILLIT_RENDU_DIR)
@@ -65,8 +65,10 @@ rendu_fillit : memo
 rendu_get_next_line : memo
 	mkdir -p $(GET_NEXT_LINE_RENDU_DIR)
 	mkdir -p $(GET_NEXT_LINE_RENDU_DIR)/$(LIBFT_DIR)
+	mkdir -p $(GET_NEXT_LINE_RENDU_DIR)/$(LIBFT_DIR)/includes
 	cp -R $(LIBFT_DIR)/auteur 					$(GET_NEXT_LINE_RENDU_DIR)/$(LIBFT_DIR)
-	cp -R $(LIBFT_DIR)/src 						$(GET_NEXT_LINE_RENDU_DIR)/$(LIBFT_DIR)
+	cp -R $(LIBFT_DIR)/*.c 						$(GET_NEXT_LINE_RENDU_DIR)/$(LIBFT_DIR)
+	cp -R $(LIBFT_DIR)/libft.h 					$(GET_NEXT_LINE_RENDU_DIR)/$(LIBFT_DIR)/includes
 	cp -R $(LIBFT_DIR)/libft.h 					$(GET_NEXT_LINE_RENDU_DIR)/$(LIBFT_DIR)
 	cp -R $(LIBFT_DIR)/Makefile 				$(GET_NEXT_LINE_RENDU_DIR)/$(LIBFT_DIR)
 	cp $(GET_NEXT_LINE_DIR)get_next_line.c 		$(GET_NEXT_LINE_RENDU_DIR)
