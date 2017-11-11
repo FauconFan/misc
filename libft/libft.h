@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:40:35 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 16:41:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 17:21:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ int						ft_islower(int c);
 void					ft_putnbrl(int c);
 
 int						ft_atoi_base(char *str, char *base);
-char					*ft_convert_base(char *nbr, char *base_from, char *base_to);
+char					*ft_convert_base
+							(char *nbr, char *base_from, char *base_to);
 
 int						ft_lstsize(t_list *alst);
 
