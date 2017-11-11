@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/11 15:49:49 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/11 16:41:32 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,8 @@ FILES_MyBONUS = 	ft_strpos.c \
 					ft_islower.c \
 					ft_isupper.c \
 					ft_putnbrl.c \
+					ft_atoi_base.c \
+					ft_convert_base.c \
 					ft_lstsize.c
 
 PARTIE1_OBJ = 	$(FILES_PARTIE1:%.c=%.o)
