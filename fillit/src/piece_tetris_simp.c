@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/11 12:32:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/08 18:07:12 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 08:21:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_piece_tetris_simp		*new_piece_simp(void)
 	return (res);
 }
 
-static void						setValues(t_piece_tetris_simp *res, char *str)
+static void						set_values(t_piece_tetris_simp *res, char *str)
 {
 	short	i;
 	short	j;
@@ -57,7 +57,7 @@ t_piece_tetris_simp				*init_piece_simp(char *str)
 	t_piece_tetris_simp		*res;
 
 	res = new_piece_simp();
-	setValues(res, str);
+	set_values(res, str);
 	while (res->x[0] != 0 && res->x[1] != 0 && res->x[2] != 0 && res->x[3] != 0)
 	{
 		res->x[0] = res->x[0] - 1;

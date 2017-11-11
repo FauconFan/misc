@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/10 19:06:31 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/09 14:05:14 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/11/11 08:40:20 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ rendu_fillit : memo
 	cp -R $(LIBFT_DIR)/src 						$(FILLIT_RENDU_DIR)/$(LIBFT_DIR)
 	cp -R $(LIBFT_DIR)/libft.h 					$(FILLIT_RENDU_DIR)/$(LIBFT_DIR)
 	cp -R $(LIBFT_DIR)/Makefile 				$(FILLIT_RENDU_DIR)/$(LIBFT_DIR)
+	cp -R $(FILLIT_DIR)auteur					$(FILLIT_RENDU_DIR)
 	cp -R $(FILLIT_DIR)src						$(FILLIT_RENDU_DIR)
 	cp -R $(FILLIT_DIR)includes					$(FILLIT_RENDU_DIR)
 	cp -R $(FILLIT_DIR)Makefile					$(FILLIT_RENDU_DIR)

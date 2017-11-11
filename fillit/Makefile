@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 17:08:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/09 13:38:08 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/11/11 07:49:01 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,39 +18,39 @@ LIBS = -L$(L_FT) -lft
 CC = gcc
 
 SRC_FOLDER = src/
-BIN_FOLDER = bin/
 
-FILES_CODE = $(SRC_FOLDER)main.c \
-			 $(SRC_FOLDER)main_utils.c \
-			 $(SRC_FOLDER)map.c \
-			 $(SRC_FOLDER)map_utils.c \
-			 $(SRC_FOLDER)solver.c \
-			 $(SRC_FOLDER)init.c \
-			 $(SRC_FOLDER)init_utils.c \
-			 $(SRC_FOLDER)piece_tetris_simp.c \
-			 $(SRC_FOLDER)piece_tetris_simp2.c
-			
-FILES_OBJ =	$(patsubst $(SRC_FOLDER)%.c,$(BIN_FOLDER)%.o,$(FILES_CODE))
+CODE = main.c \
+		main_utils.c \
+		map.c \
+		map_utils.c \
+		solver.c \
+		init.c \
+		init_utils.c \
+		piece_tetris_simp.c \
+		piece_tetris_simp2.c
+
+FILES_CODE = $(addprefix $(SRC_FOLDER), $(CODE))
+
+FILES_OBJ = $(FILES_CODE:%.c=%.o)
 
 all : $(NAME)
-
-bin :
-	mkdir -p $(BIN_FOLDER)
 
 lib :
 	make -C $(L_FT)
 
-$(NAME) : bin lib $(FILES_OBJ)
+$(NAME) : lib $(FILES_OBJ)
 	$(CC) $(FLAGS) $(FILES_OBJ) -o $(NAME) $(LIBS)
 
-$(BIN_FOLDER)%.o : $(SRC_FOLDER)%.c 
+%.o : %.c
 	$(CC) -c $(FLAGS) $? -o $@
 
 clean :
-	rm -rf $(BIN_FOLDER)
+	rm -f $(FILES_OBJ)
+	make clean -C $(L_FT)
 
 fclean : clean
 	rm -rf $(NAME)
 	make fclean -C $(L_FT)
 
 re : fclean all
+	make re -C $(L_FT)

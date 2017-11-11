@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piece_tetris_simp2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan </var/spool/mail/fauconfan>      +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/09 12:38:03 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/11/09 13:31:23 by fauconfan        ###   ########.fr       */
+/*   Created: 2017/11/11 06:59:25 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/11 08:21:23 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,3 @@ void					free_pieces(t_piece_tetris_simp **pieces)
 	}
 	free(pieces);
 }
-
-
