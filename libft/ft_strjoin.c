@@ -6,21 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 15:22:47 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 14:53:10 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:57:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static unsigned int		ft_strlen(const char *s)
-{
-	unsigned int	res;
-
-	res = 0;
-	while (s[res])
-		res++;
-	return (res);
-}
 
 char					*ft_strjoin(const char *s1, const char *s2)
 {

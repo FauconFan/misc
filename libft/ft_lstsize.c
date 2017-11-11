@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/06 09:49:11 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 15:19:39 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/11 15:45:20 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/11 15:51:23 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_atoi(char const *nptr)
+int		ft_lstsize(t_list *alst)
 {
 	int		res;
-	int		sign;
 
-	res = 0;
-	sign = 1;
-	while (ft_isspace(*nptr))
-		nptr++;
-	if (*nptr == 0)
+	res = 1;
+	if (alst == 0)
 		return (0);
-	else if (*nptr == '+')
-		nptr++;
-	else if (*nptr == '-')
+	while (alst->next != 0)
 	{
-		nptr++;
-		sign = -1;
+		alst = alst->next;
+		res++;
 	}
-	while (ft_isdigit(*nptr))
-	{
-		res = res * 10 - (*nptr - '0');
-		nptr++;
-	}
-	return (-res * sign);
+	return (res);
 }

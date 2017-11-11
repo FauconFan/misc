@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:40:35 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 14:51:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 15:49:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,12 @@ int						ft_strcrpos(char *s, int c);
 int						ft_strparse(char ***res, char *str, char c);
 int						ft_strparse_n_free(char ***res, char *str, char c);
 
+int						ft_iswhitespace(int c);
+int						ft_isspace(int c);
+int						ft_islower(int c);
+
 void					ft_putnbrl(int c);
+
+int						ft_lstsize(t_list *alst);
 
 #endif
