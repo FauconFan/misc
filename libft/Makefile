@@ -6,18 +6,12 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/11 07:31:37 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/11 13:02:23 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft
 GCC = gcc -Wall -Wextra -Werror -I ./
-
-SRCS_FOLDER = src/
-PARTIE1_FOLDER = Partie1/
-PARTIE2_FOLDER = Partie2/
-BONUS_FOLDER = Bonus/
-MYBONUS_FOLDER = MyBonus/
 
 FILES_PARTIE1 = 	ft_memset.c \
 					ft_bzero.c \
@@ -88,15 +82,10 @@ FILES_MyBONUS = 	ft_strpos.c \
 					ft_strparse_n_free.c \
 					ft_putnbrl.c
 
-PARTIE1 = 		$(addprefix $(SRCS_FOLDER)$(PARTIE1_FOLDER), $(FILES_PARTIE1))
-PARTIE2 = 		$(addprefix $(SRCS_FOLDER)$(PARTIE2_FOLDER), $(FILES_PARTIE2))
-BONUS = 		$(addprefix $(SRCS_FOLDER)$(BONUS_FOLDER), $(FILES_BONUS))
-MyBONUS = 		$(addprefix $(SRCS_FOLDER)$(MYBONUS_FOLDER), $(FILES_MyBONUS))
-
-PARTIE1_OBJ = 	$(PARTIE1:%.c=%.o)
-PARTIE2_OBJ = 	$(PARTIE2:%.c=%.o)
-BONUS_OBJ = 	$(BONUS:%.c=%.o)
-MyBONUS_OBJ = 	$(MyBONUS:%.c=%.o)
+PARTIE1_OBJ = 	$(FILES_PARTIE1:%.c=%.o)
+PARTIE2_OBJ = 	$(FILES_PARTIE2:%.c=%.o)
+BONUS_OBJ = 	$(FILES_BONUS:%.c=%.o)
+MyBONUS_OBJ = 	$(FILES_MyBONUS:%.c=%.o)
 
 FILES_O = $(PARTIE1_OBJ) $(PARTIE2_OBJ) $(BONUS_OBJ) $(MyBONUS_OBJ)
 
