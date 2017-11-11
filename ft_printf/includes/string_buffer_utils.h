@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 21:13:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/12 21:35:57 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 12:01:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "string_buffer.h"
 
-unsigned int 		length_tot(t_string_buffer *res);
+unsigned int		length_tot(t_string_buffer *res);
 
 #endif

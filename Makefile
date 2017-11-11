@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/10 19:06:31 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/11 09:51:52 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/11 12:58:42 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ rendu_piscine_reloaded : memo
 rendu_libft : memo
 	mkdir -p $(LIBFT_RENDU_DIR)
 	cp -R $(LIBFT_DIR)/auteur $(LIBFT_RENDU_DIR)
-	cp -R $(LIBFT_DIR)/src $(LIBFT_RENDU_DIR)
+	cp -R $(LIBFT_DIR)/*.c $(LIBFT_RENDU_DIR)
 	cp -R $(LIBFT_DIR)/libft.h $(LIBFT_RENDU_DIR)
 	cp -R $(LIBFT_DIR)/Makefile $(LIBFT_RENDU_DIR)
 

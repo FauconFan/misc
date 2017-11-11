@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/07 18:27:58 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:19:18 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,6 @@
 
 int 	main(void)
 {
-	t_string_buffer *test;
-	char 			*str;
-
-	test = new_string_buffer();
-	sb_append(test, "Coucou");
-	sb_append(test, " Je m'appelle Jean-Michel !");
-	str = sb_to_string_and_free_all(test);
-	//ft_putstr(str);
-	free(str);
-	//ft_printf("coucou", "oui");
-	printf("allo:%s", "coucou");
+	ft_printf("%sCoucou %sje mapelle %s", "42", "oui", "sil te plait");
 	return (0);
 }

@@ -6,21 +6,22 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:23:46 by jpriou            #+#    #+#             */
-/*   Updated: 2017/10/12 21:58:54 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 14:26:38 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "string_buffer.h"
 #include "string_buffer_utils.h"
 
-t_string_buffer		*new_string_buffer()
+t_string_buffer		*new_string_buffer(void)
 {
 	t_string_buffer		*res;
-	int 				index;
+	int					index;
 
 	if ((res = (t_string_buffer *)malloc(sizeof(t_string_buffer))) == NULL)
 		return (0);
-	if ((res->tab = (char **)malloc(sizeof(char *) * SIZE_STRING_BUFFER)) == NULL)
+	if ((res->tab = (char **)
+		malloc(sizeof(char *) * SIZE_STRING_BUFFER)) == NULL)
 		return (0);
 	index = 0;
 	while (index < SIZE_STRING_BUFFER)
@@ -36,11 +37,12 @@ t_string_buffer		*new_string_buffer()
 t_string_buffer		*sb_append(t_string_buffer *buf, char *str)
 {
 	char			**tab;
-	int 			index;
+	int				index;
 
 	if (buf->size_actu >= buf->size)
 	{
-		if ((tab = (char **)malloc(sizeof(char *) * (buf->size + SIZE_STRING_BUFFER))) == NULL)
+		if ((tab = (char **)
+			malloc(sizeof(char *) * (buf->size + SIZE_STRING_BUFFER))) == NULL)
 			return (0);
 		index = 0;
 		while (index < buf->size)
@@ -57,12 +59,12 @@ t_string_buffer		*sb_append(t_string_buffer *buf, char *str)
 	return (buf);
 }
 
-char 				*sb_to_string_and_free_all(t_string_buffer *buf)
+char				*sb_to_string_and_free_all(t_string_buffer *buf)
 {
-	int 		i;
-	int 		size_word;
-	int 		size_actu;
-	char 		*str;
+	int			i;
+	int			size_word;
+	int			size_actu;
+	char		*str;
 
 	str = ft_strnew(length_tot(buf));
 	i = 0;
@@ -81,9 +83,9 @@ char 				*sb_to_string_and_free_all(t_string_buffer *buf)
 	return (str);
 }
 
-void 				sb_print_and_free_all(t_string_buffer *buf)
+void				sb_print_and_free_all(t_string_buffer *buf)
 {
-	char 		*str;
+	char		*str;
 
 	str = sb_to_string_and_free_all(buf);
 	ft_putstr(str);

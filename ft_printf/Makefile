@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/07 18:04:02 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/11 12:05:34 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,38 +19,35 @@ LIBS = -L$(L_FT) -lft
 CC = gcc
 
 SRC_FOLDER 				= src/
-BIN_FOLDER 				= bin/
 STRING_BUFFER_FOLDER 	= string_buffer/
 
-TEST_FILE 					= 	$(SRC_FOLDER)main.c \
-								$(SRC_FOLDER)ft_printf.c
-STRING_BUFFER_SRC 			= 	$(SRC_FOLDER)$(STRING_BUFFER_FOLDER)string_buffer.c \
-								$(SRC_FOLDER)$(STRING_BUFFER_FOLDER)string_buffer_utils.c
+TEST_FILE_CODE				= 	main.c \
+								ft_printf.c
+STRING_BUFFER_SRC_CODE		= 	string_buffer.c \
+								string_buffer_utils.c
 
-TEST_OBJ 					= 	$(patsubst $(SRC_FOLDER)%.c,$(BIN_FOLDER)%.o,$(TEST_FILE))
-STRING_BUFFER_OBJ 			= 	$(patsubst $(SRC_FOLDER)$(STRING_BUFFER_FOLDER)%.c,$(BIN_FOLDER)%.o,$(STRING_BUFFER_SRC))
+TEST_FILE 					= 	$(addprefix $(SRC_FOLDER),$(TEST_FILE_CODE))
+STRING_BUFFER_SRC 			= 	$(addprefix $(SRC_FOLDER)$(STRING_BUFFER_FOLDER),$(STRING_BUFFER_SRC_CODE))
+
+TEST_OBJ 					=	$(TEST_FILE:%.c=%.o)
+STRING_BUFFER_OBJ			=	$(STRING_BUFFER_SRC:%.c=%.o)
 
 FILES_OBJ 					= $(TEST_OBJ) $(STRING_BUFFER_OBJ)
 
-all : bin lib $(NAME)
+all : lib $(NAME)
 
 $(NAME) : $(FILES_OBJ)
 	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
 
-$(BIN_FOLDER)%.o : $(SRC_FOLDER)%.c
-	$(CC) -c $(FLAGS) $? -o $@
-
-$(BIN_FOLDER)%.o : $(SRC_FOLDER)$(STRING_BUFFER_FOLDER)%.c
+%.o: %.c
 	$(CC) -c $(FLAGS) $? -o $@
 
 lib :
 	make -C $(L_FT)
 
-bin :
-	mkdir -p $(BIN_FOLDER)
-
 clean :
-	rm -rf $(BIN_FOLDER)
+	rm -rf $(FILES_OBJ)
+	make clean -C $(L_FT)
 
 fclean : clean
 	rm -rf $(NAME)
