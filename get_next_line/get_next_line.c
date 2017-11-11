@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:42:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 10:05:08 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 10:16:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		fill_line(char **line, char **buff_prog)
 int				get_next_line(const int fd, char **line)
 {
 	static char		*buff_prog[MAX_FD];
-	static int		ret[MAX_FD];
+	int				ret;
 	char			*tmp;
 	char			buff[BUFF_SIZE + 1];
 
@@ -44,17 +44,17 @@ int				get_next_line(const int fd, char **line)
 		buff_prog[fd] = ft_strnew(1);
 	while (ft_strchr(buff_prog[fd], '\n') == 0)
 	{
-		if ((ret[fd] = read(fd, buff, BUFF_SIZE)) == -1)
+		if ((ret = read(fd, buff, BUFF_SIZE)) == -1)
 			return (-1);
-		if (ret[fd] == 0)
+		if (ret == 0)
 			break ;
-		buff[ret[fd]] = 0;
+		buff[ret] = 0;
 		tmp = ft_strjoin(buff_prog[fd], buff);
 		free(buff_prog[fd]);
 		buff_prog[fd] = tmp;
 	}
 	fill_line(line, &buff_prog[fd]);
-	if (ret[fd] == 0)
+	if (ret == 0 && ft_strcmp(*line, "") == 0)
 		return (0);
 	return (1);
 }

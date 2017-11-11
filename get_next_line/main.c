@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:25:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/09/19 08:27:52 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/11 10:10:40 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		main(int argc, char **argv)
 		while (get_next_line(fd, &tmp) != 0)
 			ft_putendl(tmp);
 		if (tmp != 0)
-			ft_putendl(tmp);
+			ft_putstr(tmp);
 		close(fd);
 	}
 	return (0);
