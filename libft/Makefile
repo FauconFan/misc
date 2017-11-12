@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/12 08:09:52 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/12 11:59:29 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,10 +80,22 @@ FILES_MyBONUS = 	ft_strpos.c \
 					ft_strcrpos.c \
 					ft_strparse.c \
 					ft_strparse_n_free.c \
+					ft_str_any.c \
+					ft_str_all.c \
 					ft_isspace.c \
 					ft_iswhitespace.c \
 					ft_islower.c \
 					ft_isupper.c \
+					ft_isblank.c \
+					ft_isxdigit.c \
+					ft_str_is_alnum.c \
+					ft_str_is_alpha.c \
+					ft_str_is_ascii.c \
+					ft_str_is_numeric.c \
+					ft_str_is_lowercase.c \
+					ft_str_is_uppercase.c \
+					ft_str_is_printable.c \
+					ft_str_is_blank.c \
 					ft_putnbrl.c \
 					ft_atoi_base.c \
 					ft_itoa_base.c \

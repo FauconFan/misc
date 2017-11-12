@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:40:35 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 08:16:25 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/12 11:59:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ int						ft_strrpos(char *big, char *little);
 int						ft_strcpos(char *s, int c);
 int						ft_strcrpos(char *s, int c);
 
+int						ft_str_any(char *s, int (*f)(int c));
+int						ft_str_all(char *s, int (*f)(int c));
+
 int						ft_strparse(char ***res, char *str, char c);
 int						ft_strparse_n_free(char ***res, char *str, char c);
 
@@ -130,6 +133,17 @@ int						ft_iswhitespace(int c);
 int						ft_isspace(int c);
 int						ft_islower(int c);
 int						ft_isupper(int c);
+int						ft_isblank(int c);
+int						ft_isxdigit(int c);
+
+int						ft_str_is_alnum(char *s);
+int						ft_str_is_alpha(char *s);
+int						ft_str_is_ascii(char *s);
+int						ft_str_is_numeric(char *s);
+int						ft_str_is_lowercase(char *s);
+int						ft_str_is_uppercase(char *s);
+int						ft_str_is_printable(char *s);
+int						ft_str_is_blank(char *s);
 
 void					ft_putnbrl(int c);
 
