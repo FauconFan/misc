@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_treat_data.h                                :+:      :+:    :+:   */
+/*   set_values_treat_data2.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/12 09:20:46 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 13:31:31 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 16:16:34 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 16:22:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_TREAT_DATA_H
-# define STRUCT_TREAT_DATA_H
+#ifndef SET_VALUES_TREAT_DATA2_H
+# define SET_VALUES_TREAT_DATA2_H
 
-typedef struct	s_treat_data
-{
-	short		hashtag_flag;
-	short		zero_flag;
-	short		minus_flag;
-	short		plus_flag;
-	short		space_flag;
-	int			gabarit;
-	int			precision;
-	int			length_modifier_id;
-	int			converter_id;
-}				t_treat_data;
+# include "ft_printf.h"
+
+int		set_converter_treat_data2(char cpy);
 
 #endif

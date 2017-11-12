@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_treat_data.h                                :+:      :+:    :+:   */
+/*   management.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/12 09:20:46 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 13:31:31 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 16:28:48 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 18:09:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_TREAT_DATA_H
-# define STRUCT_TREAT_DATA_H
+#include "management.h"
 
-typedef struct	s_treat_data
+char	*(* get_first_rep_function(int id))(va_list, t_treat_data *)
 {
-	short		hashtag_flag;
-	short		zero_flag;
-	short		minus_flag;
-	short		plus_flag;
-	short		space_flag;
-	int			gabarit;
-	int			precision;
-	int			length_modifier_id;
-	int			converter_id;
-}				t_treat_data;
+	if (id == CI_SEP)
+		return (get_first_rep_ci_sep);
+	return (0);
+}
 
-#endif
+char	*(* adapt_params_function(int id))(char *, va_list, t_treat_data *)
+{
+	if (id == CI_SEP)
+		return (adapt_params_function_ci_sep);
+	return (0);
+}

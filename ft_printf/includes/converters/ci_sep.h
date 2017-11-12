@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_treat_data.h                                :+:      :+:    :+:   */
+/*   ci_sep.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/12 09:20:46 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 13:31:31 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 14:57:53 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 18:12:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_TREAT_DATA_H
-# define STRUCT_TREAT_DATA_H
+#ifndef CI_SEP_H
+# define CI_SEP_H
 
-typedef struct	s_treat_data
-{
-	short		hashtag_flag;
-	short		zero_flag;
-	short		minus_flag;
-	short		plus_flag;
-	short		space_flag;
-	int			gabarit;
-	int			precision;
-	int			length_modifier_id;
-	int			converter_id;
-}				t_treat_data;
+# include <stdarg.h>
+# include "ft_printf.h"
+# include "struct_treat_data.h"
+
+char	*get_first_rep_ci_sep(va_list va, t_treat_data *res);
+char	*adapt_params_function_ci_sep(char *tmp, va_list va, t_treat_data *data);
 
 #endif

@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_treat_data.h                                :+:      :+:    :+:   */
+/*   build_str_treat_data.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/12 09:20:46 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 13:31:31 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 13:42:09 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 17:03:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_TREAT_DATA_H
-# define STRUCT_TREAT_DATA_H
+#ifndef BUILD_STR_TREAT_DATA_H
+# define BUILD_STR_TREAT_DATA_H
 
-typedef struct	s_treat_data
-{
-	short		hashtag_flag;
-	short		zero_flag;
-	short		minus_flag;
-	short		plus_flag;
-	short		space_flag;
-	int			gabarit;
-	int			precision;
-	int			length_modifier_id;
-	int			converter_id;
-}				t_treat_data;
+# include <stdarg.h>
+# include "ft_printf.h"
+# include "struct_treat_data.h"
+# include "management.h"
+
+char	*get_first_rep(va_list va, t_treat_data *data);
+char	*adapt_flags_gabarit_precision
+			(char *res, va_list va, t_treat_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 09:24:58 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/12 14:59:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 static char		*treat(char *str, va_list va, t_string_buffer *sb)
 {
 	t_treat_data	*data;
+	char			*tmp;
 
-	(void)va;
-	(void)sb;
 	data = init_treat_data();
 	str = set_values_treat_data(++str, data);
-	print_values(data);
+	tmp = treat_data(data, va);
+	sb_append(sb, tmp);
+	free(tmp);
 	free_treat_data(data);
 	return (str);
 }

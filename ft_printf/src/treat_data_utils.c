@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 10:26:59 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/12 14:03:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ char			*set_values_treat_data(char *str, t_treat_data *data)
 	return (str);
 }
 
+char			*treat_data(t_treat_data *data, va_list va)
+{
+	char	*res;
+
+	res = get_first_rep(va, data);
+	res = adapt_flags_gabarit_precision(res, va, data);
+	return (res);
+}
+
+void			free_treat_data(t_treat_data *data)
+{
+	free(data);
+}
+
 void			print_values(t_treat_data *data)
 {
 	ft_putstr("# : ");
@@ -60,9 +74,4 @@ void			print_values(t_treat_data *data)
 	ft_putnbrl(data->length_modifier_id);
 	ft_putstr("converter : ");
 	ft_putnbrl(data->converter_id);
-}
-
-void			free_treat_data(t_treat_data *data)
-{
-	free(data);
 }

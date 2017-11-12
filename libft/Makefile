@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/12 11:59:29 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/12 18:11:38 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,8 @@ FILES_BONUS = 		ft_lstnew.c \
 					ft_lstiter.c \
 					ft_lstmap.c
 
-FILES_MyBONUS = 	ft_strpos.c \
+FILES_MyBONUS = 	ft_strsetnew.c \
+					ft_strpos.c \
 					ft_strrpos.c \
 					ft_strcpos.c \
 					ft_strcrpos.c \

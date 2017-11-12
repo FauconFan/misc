@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 09:05:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 10:27:24 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/12 16:21:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*set_gabarit_treat_data(char *str, t_treat_data *data)
 	if (ft_isdigit(*str))
 	{
 		data->gabarit = 0;
-		while(ft_isdigit(*str))
+		while (ft_isdigit(*str))
 		{
 			data->gabarit = data->gabarit * 10 + *str - '0';
 			str++;
@@ -61,7 +61,7 @@ char	*set_precision_treat_data(char *str, t_treat_data *data)
 		data->precision = 0;
 		if (ft_isdigit(*str))
 		{
-			while(ft_isdigit(*str))
+			while (ft_isdigit(*str))
 			{
 				data->precision = data->precision * 10 + *str - '0';
 				str++;
@@ -101,39 +101,19 @@ char	*set_length_modifer(char *str, t_treat_data *data)
 
 char	*set_converter_treat_data(char *str, t_treat_data *data)
 {
-	char	cpy;
-
 	if (*str == 0)
 		die(UNEND);
-	cpy = ft_toupper(*str);
-	if (cpy == 'S')
-		data->converter_id = CI_S;
-	else if (cpy == 'D')
-		data->converter_id = CI_D;
-	else if (cpy == 'O')
-		data->converter_id = CI_O;
-	else if (cpy == 'U')
-		data->converter_id = CI_D;
-	else if (cpy == 'X')
-		data->converter_id = CI_X;
-	else if (cpy == 'C')
-		data->converter_id = CI_C;
-	else if (cpy == 'E')
-		data->converter_id = CI_E;
-	else if (cpy == 'F')
-		data->converter_id = CI_F;
-	else if (cpy == 'G')
-		data->converter_id = CI_G;
-	else if (cpy == 'A')
-		data->converter_id = CI_A;
+	data->converter_id = set_converter_treat_data2(ft_toupper(*str));	
 	if (data->converter_id != -1 && ft_islower(*str))
 		data->converter_id = data->converter_id - 1;
 	if (*str == 'p')
-		data->converter_id = CI_p;
+		data->converter_id = CI_P;
 	else if (*str == 'i')
-		data->converter_id = CI_i;
+		data->converter_id = CI_I;
 	else if (*str == 'n')
-		data->converter_id = CI_n;
+		data->converter_id = CI_N;
+	else if (*str == SEPERATOR)
+		data->converter_id = CI_SEP;
 	if (data->converter_id == -1)
 		die("Converter unknown");
 	return (++str);

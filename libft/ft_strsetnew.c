@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_treat_data.h                                :+:      :+:    :+:   */
+/*   ft_strsetnew.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/12 09:20:46 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 13:31:31 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 18:10:52 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 18:13:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_TREAT_DATA_H
-# define STRUCT_TREAT_DATA_H
+#include "libft.h"
 
-typedef struct	s_treat_data
+char		*ft_strsetnew(int len, char c)
 {
-	short		hashtag_flag;
-	short		zero_flag;
-	short		minus_flag;
-	short		plus_flag;
-	short		space_flag;
-	int			gabarit;
-	int			precision;
-	int			length_modifier_id;
-	int			converter_id;
-}				t_treat_data;
+	char	*res;
+	int		i;
 
-#endif
+	res = ft_strnew(len);
+	i = 0;
+	while (i < len)
+	{
+		res[i] = c;
+		i++;
+	}
+	return (res);
+}

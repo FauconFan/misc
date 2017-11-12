@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:40:35 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 11:59:13 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/12 18:11:26 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ t_list					*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 /*
 ** MyBONUS
 */
+
+char					*ft_strsetnew(int len, char c);
 
 int						ft_strpos(char *big, char *little);
 int						ft_strrpos(char *big, char *little);
