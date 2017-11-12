@@ -6,11 +6,11 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/12 09:21:54 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/12 13:23:57 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = test_printf
+NAME = libftprintf.a
 
 L_FT = libft/
 
@@ -21,9 +21,9 @@ CC = gcc
 SRC_FOLDER 				= src/
 
 TEST_FILE_CODE				= 	main.c
-SRC_CODE					= 	string_buffer.c \
+SRC_CODE					= 	ft_printf.c \
 								string_buffer_utils.c \
-								ft_printf.c \
+								string_buffer.c \
 								treat_data_utils.c \
 								set_values_treat_data.c
 
@@ -33,12 +33,13 @@ SRC 						= 	$(addprefix $(SRC_FOLDER),$(SRC_CODE))
 TEST_OBJ 					=	$(TEST_FILE:%.c=%.o)
 SRC_OBJ						=	$(SRC:%.c=%.o)
 
-FILES_OBJ 					= $(TEST_OBJ) $(SRC_OBJ)
+FILES_OBJ 					= $(SRC_OBJ)
 
-all : lib $(NAME)
+all : $(NAME)
 
-$(NAME) : $(FILES_OBJ)
-	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
+$(NAME) : lib $(FILES_OBJ)
+	ar rc $@ $(FILES_OBJ) $(L_FT)*.o
+	ranlib $@
 
 %.o: %.c
 	$(CC) -c $(FLAGS) $? -o $@
@@ -55,3 +56,9 @@ fclean : clean
 	make fclean -C $(L_FT)
 
 re : fclean all
+
+test :
+	make .
+	gcc $(TEST_FILE) -L. -lftprintf -I libft/ -I includes/
+	./a.out
+	rm -f a.out
