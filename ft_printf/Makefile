@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/12 17:08:11 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/12 20:02:42 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC_CODE					= 	ft_printf.c \
 								set_values_treat_data2.c \
 								build_str_treat_data.c
 CONVERTER_CODE				=	management.c \
-								ci_sep.c
+								ci_sep.c \
+								ci_octalx.c
 
 TEST_FILE 					= 	$(addprefix $(SRC_FOLDER),$(TEST_FILE_CODE))
 SRC 						= 	$(addprefix $(SRC_FOLDER),$(SRC_CODE))
