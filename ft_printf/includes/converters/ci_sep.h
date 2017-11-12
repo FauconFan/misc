@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 14:57:53 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 18:12:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/12 18:41:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "struct_treat_data.h"
 
 char	*get_first_rep_ci_sep(va_list va, t_treat_data *res);
-char	*adapt_params_function_ci_sep(char *tmp, va_list va, t_treat_data *data);
+char	*adapt_params_function_ci_sep
+				(char *tmp, va_list va, t_treat_data *data);
 
 #endif

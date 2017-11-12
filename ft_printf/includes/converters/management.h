@@ -6,16 +6,21 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:29:08 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 18:10:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/12 19:45:08 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MANAGEMENT_H
 # define MANAGEMENT_H
 
+# include <stdarg.h>
+# include "struct_treat_data.h"
 # include "ci_sep.h"
 
-char	*(* get_first_rep_function(int id))(va_list, t_treat_data *);
-char	*(* adapt_params_function(int id))(char *, va_list, t_treat_data *);
+typedef char *(*t_ptrfunc_firstrep)(va_list va, t_treat_data *data);
+typedef char *(*t_ptrfunc_lastrep)(char *tmp, va_list va, t_treat_data *data);
+
+t_ptrfunc_firstrep		get_first_rep_function(int id);
+t_ptrfunc_lastrep		adapt_params_function(int id);
 
 #endif

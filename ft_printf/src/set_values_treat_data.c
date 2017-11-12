@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 09:05:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 16:21:29 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/12 18:45:26 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*set_converter_treat_data(char *str, t_treat_data *data)
 {
 	if (*str == 0)
 		die(UNEND);
-	data->converter_id = set_converter_treat_data2(ft_toupper(*str));	
+	data->converter_id = set_converter_treat_data2(ft_toupper(*str));
 	if (data->converter_id != -1 && ft_islower(*str))
 		data->converter_id = data->converter_id - 1;
 	if (*str == 'p')
