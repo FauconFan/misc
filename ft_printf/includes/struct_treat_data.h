@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   struct_treat_data.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 10:27:07 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 09:20:46 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 09:21:18 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "libft.h"
-#include "string_buffer.h"
-#include "ft_printf.h"
+#ifndef STRUCT_TREAT_DATA_H
+# define STRUCT_TREAT_DATA_H
 
-int 	main(void)
+typedef struct	s_treat_data
 {
-	ft_printf("AA%# 012.13llsCC\n");
-	return (0);
-}
+	short		hashtag_flag;
+	short		zero_flag;
+	short		minus_flag;
+	short		plus_flag;
+	short		space_flag;
+	int			gabarit;
+	int			precision;
+	int			length_modifier_id;
+	int			converter_id;
+}				t_treat_data;
+
+# endif
