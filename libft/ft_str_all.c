@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_str_all.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 14:13:11 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 11:14:17 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 11:15:09 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "libft.h"
-#include "string_buffer.h"
-#include "ft_printf.h"
 
-int		main(void)
+int		ft_str_all(char *s, int (*f)(int c))
 {
-	ft_printf("%-5%");
-	//ft_printf("AA%# 012.13llsCC\n");
-	return (0);
+	int		index;
+
+	index = 0;
+	while (s[index])
+	{
+		if (f(s[index]) == 0)
+			return (0);
+		index++;
+	}
+	return (1);
 }

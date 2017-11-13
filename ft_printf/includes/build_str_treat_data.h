@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   build_str_treat_data.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 14:13:11 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 13:42:09 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 18:40:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "libft.h"
-#include "string_buffer.h"
-#include "ft_printf.h"
+#ifndef BUILD_STR_TREAT_DATA_H
+# define BUILD_STR_TREAT_DATA_H
 
-int		main(void)
-{
-	ft_printf("%-5%");
-	//ft_printf("AA%# 012.13llsCC\n");
-	return (0);
-}
+# include <stdarg.h>
+# include "ft_printf.h"
+# include "struct_treat_data.h"
+# include "management.h"
+
+char	*get_first_rep(va_list va, t_treat_data *data);
+char	*adapt_flags_gabarit_precision
+			(char *res, va_list va, t_treat_data *data);
+
+#endif

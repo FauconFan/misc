@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_logb.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 14:13:11 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 07:47:18 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 07:59:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "libft.h"
-#include "string_buffer.h"
-#include "ft_printf.h"
 
-int		main(void)
+static int		ft_log_pos(int n, int len)
 {
-	ft_printf("%-5%");
-	//ft_printf("AA%# 012.13llsCC\n");
-	return (0);
+	if (n == 0)
+		return (0);
+	return (1 + ft_log_pos(n / len, len));
+}
+
+int				ft_logb(int n, int lengthbase)
+{
+	if (lengthbase <= 1)
+		return (-1);
+	if (n == 0)
+		return (1);
+	else if (n < 0)
+		return (-1);
+	return (ft_log_pos(n, lengthbase));
 }

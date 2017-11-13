@@ -6,38 +6,50 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/11 12:05:34 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/12 20:02:42 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = test_printf
+NAME = libftprintf
 
 L_FT = libft/
 
-FLAGS = -g -Wall -Wextra -Werror -I libft/ -I includes/
+FLAGS = -Wall -Wextra -Werror -I libft/ -I includes/ -I includes/converters/
 LIBS = -L$(L_FT) -lft
 CC = gcc
 
 SRC_FOLDER 				= src/
-STRING_BUFFER_FOLDER 	= string_buffer/
+CONVERTERS_FOLDER		= converters/
 
-TEST_FILE_CODE				= 	main.c \
-								ft_printf.c
-STRING_BUFFER_SRC_CODE		= 	string_buffer.c \
-								string_buffer_utils.c
+TEST_FILE_CODE				= 	main.c
+SRC_CODE					= 	ft_printf.c \
+								string_buffer_utils.c \
+								string_buffer.c \
+								treat_data_utils.c \
+								set_values_treat_data.c \
+								set_values_treat_data2.c \
+								build_str_treat_data.c
+CONVERTER_CODE				=	management.c \
+								ci_sep.c \
+								ci_octalx.c
 
 TEST_FILE 					= 	$(addprefix $(SRC_FOLDER),$(TEST_FILE_CODE))
-STRING_BUFFER_SRC 			= 	$(addprefix $(SRC_FOLDER)$(STRING_BUFFER_FOLDER),$(STRING_BUFFER_SRC_CODE))
+SRC 						= 	$(addprefix $(SRC_FOLDER),$(SRC_CODE))
+CONVERTER_SRC				=	$(addprefix $(SRC_FOLDER)$(CONVERTERS_FOLDER), $(CONVERTER_CODE))
 
 TEST_OBJ 					=	$(TEST_FILE:%.c=%.o)
-STRING_BUFFER_OBJ			=	$(STRING_BUFFER_SRC:%.c=%.o)
+SRC_OBJ						=	$(SRC:%.c=%.o)
+CONVERTER_OBJ				=	$(CONVERTER_SRC:%.c=%.o)
 
-FILES_OBJ 					= $(TEST_OBJ) $(STRING_BUFFER_OBJ)
+FILES_OBJ 					= 	$(SRC_OBJ) $(CONVERTER_OBJ)
 
-all : lib $(NAME)
+all : lib $(NAME).a
 
-$(NAME) : $(FILES_OBJ)
-	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
+$(NAME): all
+
+$(NAME).a : $(FILES_OBJ)
+	ar rc $@ $(FILES_OBJ) $(L_FT)*.o
+	ranlib $@
 
 %.o: %.c
 	$(CC) -c $(FLAGS) $? -o $@
@@ -50,7 +62,13 @@ clean :
 	make clean -C $(L_FT)
 
 fclean : clean
-	rm -rf $(NAME)
+	rm -rf $(NAME).a
 	make fclean -C $(L_FT)
 
 re : fclean all
+
+test :
+	make
+	gcc $(TEST_FILE) -L. -lftprintf -I libft/ -I includes/ -I includes/converters/
+	./a.out
+	#rm -f a.out

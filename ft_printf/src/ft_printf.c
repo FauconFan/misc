@@ -6,16 +6,24 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 16:46:58 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/12 14:59:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		treat(char **str, va_list va, t_string_buffer *sb)
+static char		*treat(char *str, va_list va, t_string_buffer *sb)
 {
-	sb_append(sb, va_arg(va, char *));
-	*str = (*str + 2);
+	t_treat_data	*data;
+	char			*tmp;
+
+	data = init_treat_data();
+	str = set_values_treat_data(++str, data);
+	tmp = treat_data(data, va);
+	sb_append(sb, tmp);
+	free(tmp);
+	free_treat_data(data);
+	return (str);
 }
 
 void			die(char *str)
@@ -42,7 +50,7 @@ int				ft_printf(char *str, ...)
 		sb_append(sb, tmp);
 		str += pos_first_percent;
 		free(tmp);
-		treat(&str, va, sb);
+		str = treat(str, va, sb);
 	}
 	sb_append(sb, str);
 	va_end(va);

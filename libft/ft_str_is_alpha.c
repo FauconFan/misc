@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 14:13:11 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 11:01:58 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 11:18:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "libft.h"
-#include "string_buffer.h"
-#include "ft_printf.h"
 
-int		main(void)
+int		ft_str_is_alpha(char *s)
 {
-	ft_printf("%-5%");
-	//ft_printf("AA%# 012.13llsCC\n");
-	return (0);
+	return (ft_str_all(s, &ft_isalpha));
 }

@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_str_is_lowercase.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 14:13:11 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 11:24:53 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 11:53:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "libft.h"
-#include "string_buffer.h"
-#include "ft_printf.h"
 
-int		main(void)
+int		ft_str_is_lowercase(char *s)
 {
-	ft_printf("%-5%");
-	//ft_printf("AA%# 012.13llsCC\n");
-	return (0);
+	return (ft_str_all(s, &ft_islower));
 }

@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   build_str_treat_data.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 14:13:11 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 13:41:49 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 18:47:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "libft.h"
-#include "string_buffer.h"
-#include "ft_printf.h"
+#include "build_str_treat_data.h"
 
-int		main(void)
+char	*get_first_rep(va_list va, t_treat_data *data)
 {
-	ft_printf("%-5%");
-	//ft_printf("AA%# 012.13llsCC\n");
-	return (0);
+	return ((get_first_rep_function(data->converter_id))(va, data));
+}
+
+char	*adapt_flags_gabarit_precision(char *t, va_list va, t_treat_data *data)
+{
+	char	*res;
+
+	res = ((adapt_params_function(data->converter_id))(t, va, data));
+	free(t);
+	return (res);
 }

@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   management.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 14:13:11 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 16:28:48 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/12 19:59:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "libft.h"
-#include "string_buffer.h"
-#include "ft_printf.h"
+#include "management.h"
 
-int		main(void)
+t_ptrfunc_firstrep	get_first_rep_function(int id)
 {
-	ft_printf("%-5%");
-	//ft_printf("AA%# 012.13llsCC\n");
+	if (id == CI_SEP)
+		return (get_first_rep_ci_sep);
+	else if (id == CI_XMIN || id == CI_XMAJ)
+		return (get_first_rep_ci_octalx);
+	return (0);
+}
+
+t_ptrfunc_lastrep	adapt_params_function(int id)
+{
+	if (id == CI_SEP)
+		return (adapt_params_function_ci_sep);
+	else if (id == CI_XMIN || id == CI_XMAJ)
+		return (adapt_params_function_ci_octalx);
 	return (0);
 }
