@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/14 19:36:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/14 23:18:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,30 @@ static unsigned long long	get_rep_unsigned(va_list va, t_treat_data *data)
 	return (0);
 }
 
+static char					*check_hastag_flag_octal(
+									char *tmp, t_treat_data *data)
+{
+	char	*prefix;
+	char	*str;
+
+	if (data->converter_id == CI_XMIN)
+		prefix = "0x";
+	else if (data->converter_id == CI_XMAJ)
+		prefix = "0X";
+	else
+		die(SNA);
+	if (data->hashtag_flag == 0 || ft_strcmp(tmp, "0") == 0)
+		return (tmp);
+	str = ft_strjoin(prefix, tmp);
+	free(tmp);
+	return (str);
+}
+
 char						*get_first_rep_ci_numbers(
 								va_list va, t_treat_data *res)
 {
+	char	*tmp;
+
 	if (res->converter_id == CI_DMIN || res->converter_id == CI_I)
 		return (ft_lltoa_base(get_rep_no_unsigned(va, res), "0123456789"));
 	else if (res->converter_id == CI_OMIN)
@@ -77,9 +98,15 @@ char						*get_first_rep_ci_numbers(
 	else if (res->converter_id == CI_UMIN)
 		return (ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789"));
 	else if (res->converter_id == CI_XMIN)
-		return (ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789abcdef"));
+	{
+		tmp = ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789abcdef");
+		return (check_hastag_flag_octal(tmp, res));
+	}
 	else if (res->converter_id == CI_XMAJ)
-		return (ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789ABCDEF"));
+	{
+		tmp = ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789ABCDEF");
+		return (check_hastag_flag_octal(tmp, res));
+	}
 	die(SNA);
 	return (0);
 }
