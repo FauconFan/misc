@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/14 22:37:29 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/14 23:32:36 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,7 +122,8 @@ SRC_CODE					= 	ft_printf.c \
 CONVERTER_CODE				=	management.c \
 								ft_lltoa_n_ulltoa.c \
 								ci_sep.c \
-								ci_numbers.c
+								ci_numbers.c \
+								ci_string.c
 
 TEST_FILE 					= 	$(addprefix $(SRC_FOLDER), $(TEST_FILE_CODE))
 SRC 						= 	$(addprefix $(SRC_FOLDER), $(SRC_CODE))

@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ci_string.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/14 23:39:23 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/14 23:29:03 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/14 23:29:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "libft.h"
-#include "ft_printf.h"
-#include "ft_lltoa_n_ulltoa.h"
+#ifndef CI_STRING_H
+# define CI_STRING_H
 
-int		main(void)
-{
-	int		n;
+# include <stdarg.h>
+# include "libft.h"
+# include "ft_printf.h"
+# include "struct_treat_data.h"
 
-	n = 42;
-	ft_putstr("---\n");
-	ft_printf("%s\n", "oui");
-	ft_putstr("---\n");
-	return (0);
-}
+char	*get_first_rep_ci_string(va_list va, t_treat_data *res);
+char	*adapt_params_function_ci_string
+				(char *tmp, va_list va, t_treat_data *data);
+
+
+#endif
