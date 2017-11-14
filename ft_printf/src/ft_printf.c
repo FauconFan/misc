@@ -6,13 +6,19 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 14:59:29 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/14 16:13:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char		*treat(char *str, va_list va, t_string_buffer *sb)
+static void		print_and_length(char *str, int *res)
+{
+	ft_putstr(str);
+	*res = *res + ft_strlen(str);
+}
+
+static char		*treat(char *str, va_list va, int *res)
 {
 	t_treat_data	*data;
 	char			*tmp;
@@ -20,7 +26,7 @@ static char		*treat(char *str, va_list va, t_string_buffer *sb)
 	data = init_treat_data();
 	str = set_values_treat_data(++str, data);
 	tmp = treat_data(data, va);
-	sb_append(sb, tmp);
+	print_and_length(tmp, res);
 	free(tmp);
 	free_treat_data(data);
 	return (str);
@@ -35,26 +41,22 @@ void			die(char *str)
 int				ft_printf(char *str, ...)
 {
 	va_list				va;
-	t_string_buffer		*sb;
 	char				*tmp;
 	int					pos_first_percent;
 	int					res;
 
-	if ((sb = new_string_buffer()) == 0)
-		die(WMALLOC);
+	res = 0;
 	va_start(va, str);
 	while ((pos_first_percent = ft_strcpos(str, SEPERATOR)) != -1)
 	{
 		if ((tmp = ft_strsub(str, 0, pos_first_percent)) == 0)
 			die(WMALLOC);
-		sb_append(sb, tmp);
-		str += pos_first_percent;
+		print_and_length(tmp, &res);
 		free(tmp);
-		str = treat(str, va, sb);
+		str += pos_first_percent;
+		str = treat(str, va, &res);
 	}
-	sb_append(sb, str);
+	print_and_length(str, &res);
 	va_end(va);
-	res = (int)length_tot(sb);
-	sb_print_and_free_all(sb);
 	return (res);
 }

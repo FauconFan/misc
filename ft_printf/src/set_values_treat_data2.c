@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:16:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 18:45:41 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/14 19:35:09 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,16 @@ int		set_converter_treat_data2(char cpy)
 	else if (cpy == 'A')
 		return (CI_AMAJ);
 	return (-1);
+}
+
+void	update_uppercase_for_l_lm(char letter, t_treat_data *data)
+{
+	if (letter == 'D' || letter == 'O' || letter == 'U' || letter == 'C' ||
+		letter == 'S')
+	{
+		if (data->length_modifier_id != -1)
+			die(LM_UPPERCASE);
+		data->length_modifier_id = LM_L;
+		data->converter_id = data->converter_id - 1;
+	}
 }

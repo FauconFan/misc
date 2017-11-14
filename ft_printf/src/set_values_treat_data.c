@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 09:05:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 18:45:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/14 19:10:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ char	*set_converter_treat_data(char *str, t_treat_data *data)
 		data->converter_id = CI_SEP;
 	if (data->converter_id == -1)
 		die("Converter unknown");
+	update_uppercase_for_l_lm(*str, data);
 	return (++str);
 }

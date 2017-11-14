@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/12 20:02:42 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/14 19:27:28 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,15 +23,14 @@ CONVERTERS_FOLDER		= converters/
 
 TEST_FILE_CODE				= 	main.c
 SRC_CODE					= 	ft_printf.c \
-								string_buffer_utils.c \
-								string_buffer.c \
 								treat_data_utils.c \
 								set_values_treat_data.c \
 								set_values_treat_data2.c \
 								build_str_treat_data.c
 CONVERTER_CODE				=	management.c \
+								ft_lltoa_n_ulltoa.c \
 								ci_sep.c \
-								ci_octalx.c
+								ci_numbers.c
 
 TEST_FILE 					= 	$(addprefix $(SRC_FOLDER),$(TEST_FILE_CODE))
 SRC 						= 	$(addprefix $(SRC_FOLDER),$(SRC_CODE))
@@ -43,18 +42,18 @@ CONVERTER_OBJ				=	$(CONVERTER_SRC:%.c=%.o)
 
 FILES_OBJ 					= 	$(SRC_OBJ) $(CONVERTER_OBJ)
 
-all : lib $(NAME).a
+all : $(NAME).a
 
 $(NAME): all
 
-$(NAME).a : $(FILES_OBJ)
-	ar rc $@ $(FILES_OBJ) $(L_FT)*.o
+$(NAME).a : $(L_FT)libft.a $(FILES_OBJ)
+	ar rc $@ $(L_FT)libft.a $(FILES_OBJ)
 	ranlib $@
 
 %.o: %.c
 	$(CC) -c $(FLAGS) $? -o $@
 
-lib :
+$(L_FT)libft.a :
 	make -C $(L_FT)
 
 clean :
@@ -71,4 +70,4 @@ test :
 	make
 	gcc $(TEST_FILE) -L. -lftprintf -I libft/ -I includes/ -I includes/converters/
 	./a.out
-	#rm -f a.out
+	rm -f a.out

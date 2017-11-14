@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_buffer_utils.h                              :+:      :+:    :+:   */
+/*   ft_lltoa_n_ulltoa.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 21:13:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 12:01:16 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/14 17:07:34 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/14 19:36:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRING_BUFFER_UTILS_H
-# define STRING_BUFFER_UTILS_H
+#ifndef FT_LLTOA_N_ULLTOA_H
+# define FT_LLTOA_N_ULLTOA_H
 
-# include "string_buffer.h"
+# include "libft.h"
 
-unsigned int		length_tot(t_string_buffer *res);
+char		*ft_lltoa_base(long long n, char *base);
+char		*ft_ulltoa_base(unsigned long long n, char *base);
 
 #endif

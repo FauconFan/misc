@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:18 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 16:23:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/14 19:23:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include "libft.h"
-# include "string_buffer.h"
-# include "string_buffer_utils.h"
 # include "treat_data_utils.h"
 # include "build_str_treat_data.h"
 
 # define WMALLOC		"WRONG MALLOC"
 # define UNEND			"UNEXPECTED END OF STRING"
+# define SNA			"Should never happen exception"
+# define LM_UPPERCASE	"Wrong Length Modifiere exception"
 # define SEPERATOR		'%'
 
 # define HASHTAG_FLAG	'#'
@@ -32,6 +32,10 @@
 # define SPACE_FLAG		' '
 
 # define SEP_PRECISION	'.'
+
+/*
+**	Don't change the following
+*/
 
 # define LM_HH			1
 # define LM_H			2

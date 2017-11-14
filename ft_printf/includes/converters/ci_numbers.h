@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ci_octalx.h                                        :+:      :+:    :+:   */
+/*   ci_numbers.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/12 19:51:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 20:01:49 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/14 18:17:19 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/14 19:36:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CI_OCTALX_H
-# define CI_OCTALX_H
+#ifndef CI_NUMBERS_H
+# define CI_NUMBERS_H
 
 # include <stdarg.h>
 # include "libft.h"
 # include "ft_printf.h"
 # include "struct_treat_data.h"
+# include "ft_lltoa_n_ulltoa.h"
 
-# define HEXALOWER		"0123456789abcdef"
-# define HEXAUPPER		"0123456789ABCDEF"
-
-char	*get_first_rep_ci_octalx(va_list va, t_treat_data *res);
-char	*adapt_params_function_ci_octalx
-			(char *tmp, va_list va, t_treat_data *data);
+char						*get_first_rep_ci_numbers(
+								va_list va, t_treat_data *res);
+char						*adapt_params_function_ci_numbers(
+	char *tmp, va_list va, t_treat_data *data);
 
 #endif
