@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:16:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/14 19:35:09 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/15 15:10:08 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,11 @@ void	update_uppercase_for_l_lm(char letter, t_treat_data *data)
 			die(LM_UPPERCASE);
 		data->length_modifier_id = LM_L;
 		data->converter_id = data->converter_id - 1;
+	}
+	else if (letter == 'p')
+	{
+		data->converter_id = CI_XMIN;
+		data->length_modifier_id = LM_LL;
+		data->hashtag_flag = 1;
 	}
 }

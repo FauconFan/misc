@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:18:07 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/15 12:31:59 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/15 14:28:06 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # include "ft_printf.h"
 # include "struct_treat_data.h"
 
-int		check_octal(char **res, t_treat_data *data);
+int		check_octal(char *tmp, char **res, t_treat_data *data);
 
 #endif
