@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/14 23:39:23 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/15 14:15:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		main(void)
 
 	n = 42;
 	ft_putstr("---\n");
-	ft_printf("%s\n", "oui");
+	ft_printf("%-5.2s is a string\n", "this");
 	ft_putstr("---\n");
 	return (0);
 }

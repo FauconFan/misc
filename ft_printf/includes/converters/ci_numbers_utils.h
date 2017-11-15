@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ci_numbers.h                                       :+:      :+:    :+:   */
+/*   ci_numbers_utils.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/14 18:17:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/15 12:28:53 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/15 12:18:07 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/15 12:31:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CI_NUMBERS_H
-# define CI_NUMBERS_H
+#ifndef CI_NUMBERS_UTILS_H
+# define CI_NUMBERS_UTILS_H
 
 # include <stdarg.h>
-# include <stdint.h>
 # include "libft.h"
 # include "ft_printf.h"
 # include "struct_treat_data.h"
-# include "ft_lltoa_n_ulltoa.h"
-# include "ci_numbers_utils.h"
 
-char						*get_first_rep_ci_numbers(
-								va_list va, t_treat_data *res);
-char						*adapt_params_function_ci_numbers(
-	char *tmp, va_list va, t_treat_data *data);
+int		check_octal(char **res, t_treat_data *data);
 
 #endif

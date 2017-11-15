@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:18 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/14 23:31:38 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/15 12:37:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 
 /*
 **	Don't change the following
+**	The following conerters id are not used finally :
+**	S, D, O, U, C
 */
 
 # define LM_HH			1

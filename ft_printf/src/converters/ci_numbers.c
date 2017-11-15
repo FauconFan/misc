@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/14 23:18:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/15 13:25:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char						*adapt_params_function_ci_numbers(
 
 	(void)va;
 	len = ft_max(data->gabarit, ft_strlen(tmp));
-	res = ft_strsetnew(len, ' ');
+	res = ft_strsetnew(len, (data->zero_flag == 1) ? '0' : ' ');
 	if (data->minus_flag)
 		ft_strncpy(res, tmp, ft_strlen(tmp));
 	else

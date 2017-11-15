@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:29:08 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/14 23:32:24 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/15 13:34:06 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "ci_sep.h"
 # include "ci_numbers.h"
 # include "ci_string.h"
+# include "ci_character.h"
 
 typedef char *(*t_ptrfunc_firstrep)(va_list va, t_treat_data *data);
 typedef char *(*t_ptrfunc_lastrep)(char *tmp, va_list va, t_treat_data *data);
