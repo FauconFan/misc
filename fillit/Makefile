@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 17:08:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/11 07:49:01 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/14 14:48:37 by agrossma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,11 +35,11 @@ FILES_OBJ = $(FILES_CODE:%.c=%.o)
 
 all : $(NAME)
 
-lib :
-	make -C $(L_FT)
+$(NAME) : $(L_FT)libft.a $(FILES_OBJ)
+	$(CC) $(FLAGS) $(FILES_OBJ) -o $@ $(LIBS)
 
-$(NAME) : lib $(FILES_OBJ)
-	$(CC) $(FLAGS) $(FILES_OBJ) -o $(NAME) $(LIBS)
+$(L_FT)libft.a:
+	make -C $(L_FT)
 
 %.o : %.c
 	$(CC) -c $(FLAGS) $? -o $@
@@ -53,4 +53,3 @@ fclean : clean
 	make fclean -C $(L_FT)
 
 re : fclean all
-	make re -C $(L_FT)
