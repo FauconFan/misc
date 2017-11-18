@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:17:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/15 15:16:14 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/18 09:29:36 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		check_octal(char *tmp, char **res, t_treat_data *data)
 			*res = ft_strdup("");
 			*res = fill_gabarit(*res, data);
 		}
-		else if (data->hashtag_flag)
+		else if (data->hashtag_flag && ft_strcmp(tmp, "0") != 0)
 		{
 			*res = build_str_octal_hashtag_flag(tmp, data);
 		}

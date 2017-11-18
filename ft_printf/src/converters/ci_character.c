@@ -6,26 +6,28 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 13:27:13 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/15 14:21:11 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/18 09:59:49 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ci_character.h"
 
-char	*get_first_rep_ci_char(va_list va, t_treat_data *data)
+void	print_special_char(va_list va, t_treat_data *data, int *return_func)
 {
-	char	*res;
+	char	c;
+	int		index;
 
-	(void)data;
-	res = ft_strdup("_");
-	res[0] = (char)va_arg(va, int);
-	return (res);
-}
-
-char	*adapt_params_function_ci_char(
-	char *tmp, va_list va, t_treat_data *data)
-{
-	(void)va;
-	(void)data;
-	return (ft_strdup(tmp));
+	c = (char)va_arg(va, int);
+	if (data->minus_flag)
+		ft_putchar(c);
+	index = 0;
+	while (index < data->gabarit - 1)
+	{
+		ft_putchar(' ');
+		*return_func = *return_func + 1;
+		index++;
+	}
+	if (data->minus_flag == 0)
+		ft_putchar(c);
+	*return_func = *return_func + 1;
 }

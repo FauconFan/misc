@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:29:08 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/15 13:34:06 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/18 16:59:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,8 @@ typedef char *(*t_ptrfunc_lastrep)(char *tmp, va_list va, t_treat_data *data);
 
 t_ptrfunc_firstrep		get_first_rep_function(int id);
 t_ptrfunc_lastrep		adapt_params_function(int id);
+void					special_char(
+		va_list va, t_treat_data *data, int *return_func);
+char					*numeri(va_list va, t_treat_data *data);
 
 #endif

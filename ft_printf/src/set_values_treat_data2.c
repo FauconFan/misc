@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:16:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/15 15:10:08 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/18 10:47:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		set_converter_treat_data2(char cpy)
 	else if (cpy == 'O')
 		return (CI_OMAJ);
 	else if (cpy == 'U')
-		return (CI_DMAJ);
+		return (CI_UMAJ);
 	else if (cpy == 'X')
 		return (CI_XMAJ);
 	else if (cpy == 'C')

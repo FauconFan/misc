@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/15 16:32:57 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/18 10:46:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ static char		*treat(char *str, va_list va, int *res)
 
 	data = init_treat_data();
 	str = set_values_treat_data(++str, data);
-	tmp = treat_data(data, va);
-	print_and_length(tmp, res);
-	free(tmp);
+	tmp = treat_data(data, va, res);
+	if (tmp != 0)
+	{
+		print_and_length(tmp, res);
+		free(tmp);
+	}
 	free_treat_data(data);
 	return (str);
 }

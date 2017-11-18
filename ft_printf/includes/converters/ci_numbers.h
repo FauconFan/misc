@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/15 12:28:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/18 16:57:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@
 # include "ft_lltoa_n_ulltoa.h"
 # include "ci_numbers_utils.h"
 
-char						*get_first_rep_ci_numbers(
-								va_list va, t_treat_data *res);
-char						*adapt_params_function_ci_numbers(
-	char *tmp, va_list va, t_treat_data *data);
+char						*adapt2(va_list va, t_treat_data *data);
 
 #endif

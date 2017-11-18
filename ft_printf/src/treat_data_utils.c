@@ -6,11 +6,16 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 14:03:12 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/18 17:00:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "treat_data_utils.h"
+
+static int			is_numeri(int id)
+{
+	return (id >= 13 && id <= 21);
+}
 
 t_treat_data	*init_treat_data(void)
 {
@@ -40,10 +45,19 @@ char			*set_values_treat_data(char *str, t_treat_data *data)
 	return (str);
 }
 
-char			*treat_data(t_treat_data *data, va_list va)
+char			*treat_data(t_treat_data *data, va_list va, int *return_func)
 {
 	char	*res;
 
+	if (data->converter_id == CI_CMIN)
+	{
+		special_char(va, data, return_func);
+		return (0);
+	}
+	else if (is_numeri(data->converter_id))
+	{
+		return (numeri(va, data));
+	}
 	res = get_first_rep(va, data);
 	res = adapt_flags_gabarit_precision(res, va, data);
 	return (res);
