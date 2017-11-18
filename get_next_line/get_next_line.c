@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:42:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 10:16:12 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/18 17:56:11 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int				get_next_line(const int fd, char **line)
 	char			*tmp;
 	char			buff[BUFF_SIZE + 1];
 
-	if (fd < 0 || line == 0)
+	if (fd < 0 || line == 0 || read(fd, buff, 0) < 0)
 		return (-1);
 	if (buff_prog[fd] == 0)
 		buff_prog[fd] = ft_strnew(1);
