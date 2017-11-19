@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:18 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/15 12:37:54 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 16:19:19 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,5 @@
 # define CI_N			32
 
 int				ft_printf(char *str, ...);
-void			die(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 09:05:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/14 19:10:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 16:27:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*set_flags_treat_data(char *str, t_treat_data *data)
 {
-	if (*str == 0)
-		die(UNEND);
+	if (str == 0 || *str == 0)
+		return (0);
 	if (*str == HASHTAG_FLAG)
 		data->hashtag_flag = 1;
 	else if (*str == ZERO_FLAG)
@@ -33,8 +33,8 @@ char	*set_flags_treat_data(char *str, t_treat_data *data)
 
 char	*set_gabarit_treat_data(char *str, t_treat_data *data)
 {
-	if (*str == 0)
-		die(UNEND);
+	if (str == 0 || *str == 0)
+		return (0);
 	if (ft_isdigit(*str))
 	{
 		data->gabarit = 0;
@@ -43,7 +43,7 @@ char	*set_gabarit_treat_data(char *str, t_treat_data *data)
 			data->gabarit = data->gabarit * 10 + *str - '0';
 			str++;
 			if (*str == 0)
-				die(UNEND);
+				return (0);
 		}
 	}
 	return (str);
@@ -51,13 +51,13 @@ char	*set_gabarit_treat_data(char *str, t_treat_data *data)
 
 char	*set_precision_treat_data(char *str, t_treat_data *data)
 {
-	if (*str == 0)
-		die(UNEND);
+	if (str == 0 || *str == 0)
+		return (0);
 	if (*str == SEP_PRECISION)
 	{
 		str++;
 		if (*str == 0)
-			die(UNEND);
+			return (0);
 		data->precision = 0;
 		if (ft_isdigit(*str))
 		{
@@ -66,7 +66,7 @@ char	*set_precision_treat_data(char *str, t_treat_data *data)
 				data->precision = data->precision * 10 + *str - '0';
 				str++;
 				if (*str == 0)
-					die(UNEND);
+					return (0);
 			}
 		}
 	}
@@ -75,8 +75,8 @@ char	*set_precision_treat_data(char *str, t_treat_data *data)
 
 char	*set_length_modifer(char *str, t_treat_data *data)
 {
-	if (*str == 0)
-		die(UNEND);
+	if (str == 0 || *str == 0)
+		return (0);
 	if (*str == 'j')
 		data->length_modifier_id = LM_J;
 	else if (*str == 'z')
@@ -101,8 +101,8 @@ char	*set_length_modifer(char *str, t_treat_data *data)
 
 char	*set_converter_treat_data(char *str, t_treat_data *data)
 {
-	if (*str == 0)
-		die(UNEND);
+	if (str == 0 || *str == 0)
+		return (0);
 	data->converter_id = set_converter_treat_data2(ft_toupper(*str));
 	if (data->converter_id != -1 && ft_islower(*str))
 		data->converter_id = data->converter_id - 1;
@@ -115,7 +115,7 @@ char	*set_converter_treat_data(char *str, t_treat_data *data)
 	else if (*str == SEPERATOR)
 		data->converter_id = CI_SEP;
 	if (data->converter_id == -1)
-		die("Converter unknown");
+		return (0);
 	update_uppercase_for_l_lm(*str, data);
 	return (++str);
 }

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/18 17:00:14 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 16:24:35 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_treat_data	*init_treat_data(void)
 	t_treat_data	*data;
 
 	if ((data = (t_treat_data *)malloc(sizeof(t_treat_data))) == 0)
-		die(WMALLOC);
+		return (0);
 	data->hashtag_flag = 0;
 	data->zero_flag = 0;
 	data->minus_flag = 0;

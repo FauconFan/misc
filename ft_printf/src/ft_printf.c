@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/18 10:46:52 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 16:26:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ static char		*treat(char *str, va_list va, int *res)
 	t_treat_data	*data;
 	char			*tmp;
 
-	data = init_treat_data();
-	str = set_values_treat_data(++str, data);
+	if ((data = init_treat_data()) == 0)
+		return (0);
+	if ((str = set_values_treat_data(++str, data)) == 0)
+		return (0);
 	tmp = treat_data(data, va, res);
 	if (tmp != 0)
 	{
@@ -33,12 +35,6 @@ static char		*treat(char *str, va_list va, int *res)
 	}
 	free_treat_data(data);
 	return (str);
-}
-
-void			die(char *str)
-{
-	ft_putendl(str);
-	exit(1);
 }
 
 int				ft_printf(char *str, ...)
@@ -53,11 +49,12 @@ int				ft_printf(char *str, ...)
 	while ((pos_first_percent = ft_strcpos(str, SEPERATOR)) != -1)
 	{
 		if ((tmp = ft_strsub(str, 0, pos_first_percent)) == 0)
-			die(WMALLOC);
+			return (-1);
 		print_and_length(tmp, &res);
 		free(tmp);
 		str += pos_first_percent;
-		str = treat(str, va, &res);
+		if ((str = treat(str, va, &res)) == 0)
+			return (-1);
 	}
 	print_and_length(str, &res);
 	va_end(va);

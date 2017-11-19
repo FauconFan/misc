@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:17:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 15:53:42 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 16:28:23 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static long long			get_rep_no_unsigned(va_list va, t_treat_data *data)
 		else
 			return ((long long)va_arg(va, long int));
 	}
-	die(SNA);
 	return (0);
 }
 
@@ -63,7 +62,6 @@ static unsigned long long	get_rep_unsigned(va_list va, t_treat_data *data)
 	{
 		return ((unsigned long long)va_arg(va, unsigned int));
 	}
-	die(SNA);
 	return (0);
 }
 
@@ -80,7 +78,6 @@ static char					*get_first_rep_ci_numbers(
 		return (ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789abcdef"));
 	else if (res->converter_id == CI_XMAJ)
 		return (ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789ABCDEF"));
-	die(SNA);
 	return (0);
 }
 
