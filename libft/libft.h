@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:40:35 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 18:11:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 16:55:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ int						ft_str_is_printable(char *s);
 int						ft_str_is_blank(char *s);
 
 void					ft_putnbrl(int c);
+char					*ft_strndup(const char *s, size_t n);
 
 int						ft_min(int a, int b);
 int						ft_max(int a, int b);

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/15 10:07:29 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/14 22:32:26 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/19 16:56:09 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ FILES_MyBONUS = 	ft_strsetnew.c \
 					ft_str_all.c \
 					ft_isspace.c \
 					ft_iswhitespace.c \
+					ft_strndup.c \
 					ft_islower.c \
 					ft_isupper.c \
 					ft_isblank.c \
