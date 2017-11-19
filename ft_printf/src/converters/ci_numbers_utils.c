@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:17:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 16:28:23 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 16:59:44 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,20 +111,21 @@ char						*get_prefix(char **str, t_treat_data *data)
 		tmp = ft_strsub(*str, 1, ft_strlen(*str) - 1);
 		free(*str);
 		*str = tmp;
-		return ("-");
+		return (ft_strndup("-", 1));
 	}
 	else if (**str != '-' && (data->converter_id == CI_DMIN || data->converter_id == CI_I))
 	{
-		return ((data->plus_flag) ? "+" : ((data->space_flag) ? " " : ""));
+		return ((data->plus_flag) ? ft_strndup("+", 1) :
+			((data->space_flag) ? ft_strndup(" ", 1) : ft_strnew(1)));
 	}
 	else if (data->hashtag_flag)
 	{
 		if (data->converter_id == CI_XMIN)
-			return ("0x");
+			return (ft_strndup("0x", 2));
 		else if (data->converter_id == CI_XMAJ)
-			return ("0X");
+			return (ft_strndup("0X", 2));
 		else if (data->converter_id == CI_OMIN)
-			return ("0");
+			return (ft_strndup("0", 1));
 	}
-	return ("");
+	return (ft_strnew(1));
 }

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 15:17:25 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 16:45:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ static char			*adaptgabarit(char *prefix, char *str, t_treat_data *data)
 	else
 		res = adaptcasebycase(prefix, str, ft_strlen(str) + ft_strlen(prefix), 1);
 	free(str);
+	free(prefix);
 	return (res);
 }
 
-char						*adapt2(va_list va, t_treat_data *data)
+char				*adapt2(va_list va, t_treat_data *data)
 {
 	char	*str;
 	char	*prefix;

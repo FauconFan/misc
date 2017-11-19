@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 16:50:10 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 16:55:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 17:01:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char		*ft_strndup(const char *s, size_t n)
 {
 	char	*res;
-	int		index;
+	size_t	index;
 
 	res = ft_strnew(n);
 	index = 0;

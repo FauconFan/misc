@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/15 16:32:45 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/19 17:20:41 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ LIBFT_CODE		= 	ft_memset.c \
 					ft_lstiter.c \
 					ft_lstmap.c \
 					ft_strsetnew.c \
+					ft_strndup.c \
 					ft_strpos.c \
 					ft_strrpos.c \
 					ft_strcpos.c \
