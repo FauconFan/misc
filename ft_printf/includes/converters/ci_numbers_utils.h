@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:18:07 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 15:16:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 19:20:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "struct_treat_data.h"
+
+# define PREFIX_XMIN	"0x"
+# define PREFIX_XMAJ	"0X"
+# define ZERO_SOLO		"0"
+# define MINUS_SOLO		"-"
+# define PLUS_SOLO		"+"
+# define SPACE_SOLO		" "
+
+# define BASE_DECA		"0123456789"
+# define BASE_OCTO		"01234567"
+# define BASE_HEXAMIN	"0123456789abcdef"
+# define BASE_HEXAMAJ	"0123456789ABCDEF"
 
 char						*get_rep_with_prec(va_list va, t_treat_data *res);
 char						*get_prefix(char **str, t_treat_data *data);

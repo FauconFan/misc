@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 16:45:21 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 21:06:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char				*adapt2(va_list va, t_treat_data *data)
 	char	*prefix;
 
 	str = get_rep_with_prec(va, data);
+	//ft_putstr(str);
 	prefix = get_prefix(&str, data);
 	return (adaptgabarit(prefix, str, data));
 }

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:17:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 16:59:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/19 21:52:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,9 @@ static long long			get_rep_no_unsigned(va_list va, t_treat_data *data)
 		else if (data->length_modifier_id == LM_Z)
 			return ((long long)va_arg(va, size_t));
 	}
-	else
-	{
-		if (data->converter_id == CI_DMIN)
-			return ((long long)va_arg(va, int));
-		else
-			return ((long long)va_arg(va, long int));
-	}
-	return (0);
+	if (data->converter_id == CI_DMIN)
+		return ((long long)va_arg(va, int));
+	return ((long long)va_arg(va, long int));
 }
 
 static unsigned long long	get_rep_unsigned(va_list va, t_treat_data *data)
@@ -58,27 +53,23 @@ static unsigned long long	get_rep_unsigned(va_list va, t_treat_data *data)
 		else if (data->length_modifier_id == LM_Z)
 			return ((unsigned long long)va_arg(va, size_t));
 	}
-	else
-	{
-		return ((unsigned long long)va_arg(va, unsigned int));
-	}
-	return (0);
+	return ((unsigned long long)va_arg(va, unsigned int));
 }
 
 static char					*get_first_rep_ci_numbers(
 								va_list va, t_treat_data *res)
 {
 	if (res->converter_id == CI_DMIN || res->converter_id == CI_I)
-		return (ft_lltoa_base(get_rep_no_unsigned(va, res), "0123456789"));
+		return (ft_lltoa_base(get_rep_no_unsigned(va, res), BASE_DECA));
 	else if (res->converter_id == CI_OMIN)
-		return (ft_ulltoa_base(get_rep_unsigned(va, res), "01234567"));
+		return (ft_ulltoa_base(get_rep_unsigned(va, res), BASE_OCTO));
 	else if (res->converter_id == CI_UMIN)
-		return (ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789"));
+		return (ft_ulltoa_base(get_rep_unsigned(va, res), BASE_DECA));
 	else if (res->converter_id == CI_XMIN)
-		return (ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789abcdef"));
+		return (ft_ulltoa_base(get_rep_unsigned(va, res), BASE_HEXAMIN));
 	else if (res->converter_id == CI_XMAJ)
-		return (ft_ulltoa_base(get_rep_unsigned(va, res), "0123456789ABCDEF"));
-	return (0);
+		return (ft_ulltoa_base(get_rep_unsigned(va, res), BASE_HEXAMAJ));
+	return (ft_strnew(0));
 }
 
 char						*get_rep_with_prec(va_list va, t_treat_data *data)
@@ -94,7 +85,7 @@ char						*get_rep_with_prec(va_list va, t_treat_data *data)
 		free(str);
 		str = tmp;
 	}
-	else if (data->precision == 0 && ft_strcmp("0", str) == 0)
+	else if (data->precision == 0 && ft_strcmp(ZERO_SOLO, str) == 0)
 	{
 		free(str);
 		str = ft_strnew(1);
@@ -111,21 +102,21 @@ char						*get_prefix(char **str, t_treat_data *data)
 		tmp = ft_strsub(*str, 1, ft_strlen(*str) - 1);
 		free(*str);
 		*str = tmp;
-		return (ft_strndup("-", 1));
+		return (ft_strndup(MINUS_SOLO, 1));
 	}
 	else if (**str != '-' && (data->converter_id == CI_DMIN || data->converter_id == CI_I))
 	{
-		return ((data->plus_flag) ? ft_strndup("+", 1) :
-			((data->space_flag) ? ft_strndup(" ", 1) : ft_strnew(1)));
+		return ((data->plus_flag) ? ft_strndup(PLUS_SOLO, 1) :
+			((data->space_flag) ? ft_strndup(SPACE_SOLO, 1) : ft_strnew(1)));
 	}
 	else if (data->hashtag_flag)
 	{
 		if (data->converter_id == CI_XMIN)
-			return (ft_strndup("0x", 2));
+			return (ft_strndup(PREFIX_XMIN, 2));
 		else if (data->converter_id == CI_XMAJ)
-			return (ft_strndup("0X", 2));
+			return (ft_strndup(PREFIX_XMAJ, 2));
 		else if (data->converter_id == CI_OMIN)
-			return (ft_strndup("0", 1));
+			return (ft_strndup(ZERO_SOLO, 1));
 	}
 	return (ft_strnew(1));
 }

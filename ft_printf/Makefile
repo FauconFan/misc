@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/19 17:20:41 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/19 22:38:35 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ L_FT = libft/
 
 FLAGS = -Wall -Wextra -Werror -I libft/ -I includes/ -I includes/converters/
 LIBS = -L$(L_FT) -lft
-CC = gcc
+CC = clang
 
 SRC_FOLDER 				= src/
 CONVERTERS_FOLDER		= converters/
