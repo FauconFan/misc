@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 16:24:35 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 09:14:23 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int			is_numeri(int id)
 {
-	return (id >= 13 && id <= 21);
+	return (id >= 12 && id <= 21);
 }
 
 t_treat_data	*init_treat_data(void)

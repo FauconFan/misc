@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:28:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/18 16:59:41 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 09:14:31 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void				special_char(
 
 char				*numeri(va_list va, t_treat_data *data)
 {
-	return (adapt2(va, data));
+	return (buildumeri(va, data));
 }

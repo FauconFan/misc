@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 21:06:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 09:19:35 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 ** 3 => both zero
 */
 
-static char			*adaptcasebycase(char *prefix, char *str, int gabarit, int id)
+static char			*adaptcasebycase(char *prefix, char *str, int gabarit,
+		int id)
 {
 	char	*tmp;
 
@@ -54,19 +55,19 @@ static char			*adaptgabarit(char *prefix, char *str, t_treat_data *data)
 		}
 	}
 	else
-		res = adaptcasebycase(prefix, str, ft_strlen(str) + ft_strlen(prefix), 1);
+		res = adaptcasebycase(prefix, str, ft_strlen(str) + ft_strlen(prefix),
+			1);
 	free(str);
 	free(prefix);
 	return (res);
 }
 
-char				*adapt2(va_list va, t_treat_data *data)
+char				*buildumeri(va_list va, t_treat_data *data)
 {
 	char	*str;
 	char	*prefix;
 
 	str = get_rep_with_prec(va, data);
-	//ft_putstr(str);
 	prefix = get_prefix(&str, data);
 	return (adaptgabarit(prefix, str, data));
 }

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:17:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 21:52:41 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 09:22:01 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static char					*get_first_rep_ci_numbers(
 		return (ft_ulltoa_base(get_rep_unsigned(va, res), BASE_OCTO));
 	else if (res->converter_id == CI_UMIN)
 		return (ft_ulltoa_base(get_rep_unsigned(va, res), BASE_DECA));
-	else if (res->converter_id == CI_XMIN)
+	else if (res->converter_id == CI_XMIN || res->converter_id == CI_P)
 		return (ft_ulltoa_base(get_rep_unsigned(va, res), BASE_HEXAMIN));
 	else if (res->converter_id == CI_XMAJ)
 		return (ft_ulltoa_base(get_rep_unsigned(va, res), BASE_HEXAMAJ));
@@ -78,10 +78,19 @@ char						*get_rep_with_prec(va_list va, t_treat_data *data)
 	char	*tmp;
 
 	str = get_first_rep_ci_numbers(va, data);
-	if (data->precision > (int)ft_strlen(str))
+	if (data->precision + (*str == '-') > (int)ft_strlen(str))
 	{
-		tmp = ft_strsetnew(data->precision, '0');
-		ft_strncpy(tmp + data->precision - ft_strlen(str), str, ft_strlen(str));
+		if (*str != '-')
+		{
+			tmp = ft_strsetnew(data->precision, '0');
+			ft_strncpy(tmp + data->precision - ft_strlen(str), str, ft_strlen(str));
+		}
+		else
+		{
+			tmp = ft_strsetnew(data->precision + 1, '0');
+			ft_strncpy(tmp + data->precision + 2 - ft_strlen(str), str + 1, ft_strlen(str) - 1);
+			*tmp = '-';
+		}
 		free(str);
 		str = tmp;
 	}
@@ -111,12 +120,14 @@ char						*get_prefix(char **str, t_treat_data *data)
 	}
 	else if (data->hashtag_flag)
 	{
-		if (data->converter_id == CI_XMIN)
+		if (data->converter_id == CI_XMIN && data->precision != 0 && ft_strcmp(*str, ZERO_SOLO) != 0)
 			return (ft_strndup(PREFIX_XMIN, 2));
-		else if (data->converter_id == CI_XMAJ)
+		else if (data->converter_id == CI_XMAJ && data->precision != 0 && ft_strcmp(*str, ZERO_SOLO) != 0)
 			return (ft_strndup(PREFIX_XMAJ, 2));
 		else if (data->converter_id == CI_OMIN)
 			return (ft_strndup(ZERO_SOLO, 1));
+		else if (data->converter_id == CI_P)
+			return (ft_strndup(PREFIX_XMIN, 2));
 	}
 	return (ft_strnew(1));
 }

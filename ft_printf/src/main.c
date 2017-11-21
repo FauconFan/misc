@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/19 22:20:46 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 09:27:39 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int		main(void)
 
 	n = 42;
 	ft_putstr("---\n");
-	//ft_printf("@moulitest: %#.x %#.0x", 0, 0);
-	printf("oui%a", 33.366);
+	ft_printf("% Zoooo");
+	printf("% Zoooo");
 	ft_putstr("\n---\n");
 	return (0);
 }

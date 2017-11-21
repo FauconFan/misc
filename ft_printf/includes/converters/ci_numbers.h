@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/18 16:57:37 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 09:08:35 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@
 # include "ft_lltoa_n_ulltoa.h"
 # include "ci_numbers_utils.h"
 
-char						*adapt2(va_list va, t_treat_data *data);
+char						*buildumeri(va_list va, t_treat_data *data);
 
 #endif
