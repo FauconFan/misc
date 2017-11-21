@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/21 09:14:23 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 11:38:23 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char			*treat_data(t_treat_data *data, va_list va, int *return_func)
 {
 	char	*res;
 
+	if (data->converter_id == -1)
+		return (0);
 	if (data->converter_id == CI_CMIN)
 	{
 		special_char(va, data, return_func);

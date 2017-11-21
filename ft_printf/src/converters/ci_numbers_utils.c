@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:17:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/21 09:22:01 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 11:56:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static long long			get_rep_no_unsigned(va_list va, t_treat_data *data)
 		else if (data->length_modifier_id == LM_Z)
 			return ((long long)va_arg(va, size_t));
 	}
-	if (data->converter_id == CI_DMIN)
+	if (data->converter_id == CI_DMIN || data->converter_id == CI_I)
 		return ((long long)va_arg(va, int));
 	return ((long long)va_arg(va, long int));
 }
@@ -124,7 +124,7 @@ char						*get_prefix(char **str, t_treat_data *data)
 			return (ft_strndup(PREFIX_XMIN, 2));
 		else if (data->converter_id == CI_XMAJ && data->precision != 0 && ft_strcmp(*str, ZERO_SOLO) != 0)
 			return (ft_strndup(PREFIX_XMAJ, 2));
-		else if (data->converter_id == CI_OMIN)
+		else if (data->converter_id == CI_OMIN && ft_strcmp(*str, ZERO_SOLO) != 0)
 			return (ft_strndup(ZERO_SOLO, 1));
 		else if (data->converter_id == CI_P)
 			return (ft_strndup(PREFIX_XMIN, 2));

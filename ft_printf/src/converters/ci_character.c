@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 13:27:13 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/18 09:59:49 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 11:54:26 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_special_char(va_list va, t_treat_data *data, int *return_func)
 	index = 0;
 	while (index < data->gabarit - 1)
 	{
-		ft_putchar(' ');
+		ft_putchar((data->zero_flag) ? '0' : ' ');
 		*return_func = *return_func + 1;
 		index++;
 	}

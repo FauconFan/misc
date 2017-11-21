@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/21 09:27:39 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 11:58:53 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int		main(void)
 
 	n = 42;
 	ft_putstr("---\n");
-	ft_printf("% Zoooo");
-	printf("% Zoooo");
+	printf("{% S}", L"(null)");
+	ft_printf("{% S}", L"(null)");
 	ft_putstr("\n---\n");
 	return (0);
 }
