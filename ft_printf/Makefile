@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/21 08:59:07 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/21 12:12:15 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,8 +118,7 @@ TEST_FILE_CODE				= 	main.c
 SRC_CODE					= 	ft_printf.c \
 								treat_data_utils.c \
 								set_values_treat_data.c \
-								set_values_treat_data2.c \
-								build_str_treat_data.c
+								set_values_treat_data2.c
 CONVERTER_CODE				=	management.c \
 								ft_lltoa_n_ulltoa.c \
 								ci_sep.c \

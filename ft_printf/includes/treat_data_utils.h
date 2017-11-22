@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:59:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/18 09:32:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/21 12:12:49 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "ft_printf.h"
 # include "struct_treat_data.h"
 # include "set_values_treat_data.h"
-# include "build_str_treat_data.h"
+# include "management.h"
 
 t_treat_data	*init_treat_data(void);
 void			free_treat_data(t_treat_data *data);
