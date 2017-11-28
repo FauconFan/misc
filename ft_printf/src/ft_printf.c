@@ -6,11 +6,15 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 12:39:39 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 12:41:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+**	treat the data when a '%' is found
+*/
 
 static char		*treat_sep(
 		char *str,
@@ -32,6 +36,10 @@ static char		*treat_sep(
 	free_treat_data(data);
 	return (str);
 }
+
+/*
+**	parse the data properly. It use string buffer
+*/
 
 static int		process(
 		char *str,
@@ -59,6 +67,10 @@ static int		process(
 	return (build_str(sb, to_print, len_to_print));
 }
 
+/*
+**	ft_printf...
+*/
+
 int				ft_printf(
 		const char *restrict format,
 		...)
@@ -80,6 +92,10 @@ int				ft_printf(
 	free(to_print);
 	return (res);
 }
+
+/*
+**	ft_dprintf...
+*/
 
 int				ft_dprintf(
 		int fd,
