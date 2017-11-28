@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/28 15:07:04 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/28 20:16:14 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = libftprintf
 L_FT = libft/
 L_FTA = libft.a
 
-FLAGS = -Wall -Wextra -Werror -I libft/ -I includes/ -I includes/converters/
+FLAGS = -g -Wall -Wextra -Werror -I libft/ -I includes/ -I includes/converters/
 LIBS = -L$(L_FT) -lft
 CC = gcc
 
@@ -36,6 +36,7 @@ CONVERTER_CODE				=	management.c \
 								ci_sep.c \
 								ci_numbers.c \
 								ci_string_ascii.c \
+								ci_string_unicode.c \
 								ci_numbers_utils.c \
 
 TEST_FILE 					= 	$(addprefix $(SRC_FOLDER), $(TEST_FILE_CODE))

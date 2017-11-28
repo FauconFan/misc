@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ci_strings_unicode.c                               :+:      :+:    :+:   */
+/*   ci_string_unicode.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/28 15:11:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 15:50:26 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/28 19:36:56 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/28 19:53:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ci_strings_unicode.h"
-#define MIN_ONE_BYTE			0b00000000
-#define MAX_ONE_BYTE			0b01111111
-#define MIN_TWO_BYTE			0b1100000010100000
-#define MAX_TWO_BYTE			0b1101111110111111
-#define MIN_THREE_BYTE_ONE		0b111000001010000010000000
-#define MAX_THREE_BYTE_ONE		0b111011011001111110111111
-#define MIN_THREE_BYTE_TWO		0b111011101000000010000000
-#define MAX_THREE_BYTE_TWO		0b111011111011111110111111
-#define MIN_FOUR_BYTE_ONE		0b11110000100100001000000010000000
-#define MAX_FOUR_BYTE_ONE		0b11110011101111111011111110111111
-#define MIN_FOUR_BYTE_TWO		0b11110100100000001000000010000000
-#define MAX_FOUR_BYTE_TWO		0b11110100100011111011111110111111
+#include "ci_string_unicode.h"
 
 int		ft_wcharlen(unsigned int c)
 {
@@ -35,4 +23,18 @@ int		ft_wcharlen(unsigned int c)
 		return (3);
 	else if ((c >= MIN_FOUR_BYTE_ONE && c <= MAX_FOUR_BYTE_ONE) ||
 			(c >= MIN_FOUR_BYTE_TWO && c <= MAX_FOUR_BYTE_TWO))
+		return (4);
+	return (-1);
+}
+
+void	process_special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
+{
+	wchar_t	cara;
+
+	(void)data;
+	(void)sb;
+	cara = va_arg(va, wchar_t);
+	ft_putchar((char)(cara >> 16));
+	ft_putchar((char)(cara >> 8));
+	ft_putchar((char)(cara));
 }

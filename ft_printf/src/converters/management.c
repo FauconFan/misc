@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:28:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 14:54:00 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 19:35:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ t_ptrfunc_lastrep	adapt_params_function(int id)
 	return (0);
 }
 
-void	special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
+void				normal_char(va_list va, t_treat_data *data, t_string_buffer *sb)
 {
-	print_special_char(va, data, sb);
+	process_normal_char(va, data, sb);
+}
+
+void				special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
+{
+	process_special_char(va, data, sb);
 }
 
 char				*numeri(va_list va, t_treat_data *data)

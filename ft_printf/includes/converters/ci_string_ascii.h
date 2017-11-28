@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ci_string.h                                        :+:      :+:    :+:   */
+/*   ci_string_ascii.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 23:29:03 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 15:07:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 19:36:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "struct_treat_data.h"
 # include "string_buffer.h"
 
-void	print_special_char(va_list va, t_treat_data *res, t_string_buffer *sb);
+void	process_normal_char(va_list va, t_treat_data *res, t_string_buffer *sb);
 
 char	*get_first_rep_ci_string(va_list va, t_treat_data *res);
 char	*adapt_params_function_ci_string

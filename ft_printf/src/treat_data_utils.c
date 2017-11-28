@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 14:55:06 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 19:40:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 	if (data->converter_id == -1)
 		return ;
 	if (data->converter_id == CI_CMIN)
-	{
+		normal_char(va, data, sb);
+	else if (data->converter_id == CI_CMAJ)
 		special_char(va, data, sb);
-	}
 	else if (is_numeri(data->converter_id))
 	{
 		res = numeri(va, data);

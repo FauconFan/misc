@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 14:35:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 20:13:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ static char		*treat_sep(
 static int		process(
 		char *str,
 		va_list va,
+		t_string_buffer *sb,
 		char **to_print,
 		int *len_to_print)
 {
-	t_string_buffer		*sb;
 	char				*tmp;
 	int					pos_first_percent;
 
-	if ((sb = new_string_buffer_normal(ft_strnew(0))) == 0)
-		return (-1);
 	while ((pos_first_percent = ft_strcpos(str, SEPERATOR)) != -1)
 	{
 		if ((tmp = ft_strsub(str, 0, pos_first_percent)) == 0)
@@ -80,9 +78,9 @@ int				ft_printf(
 	char				*to_print;
 
 	va_start(va, format);
-	if ((sb = new_string_buffer_normal(ft_strnew(0))) == 0)
+	if ((sb = new_string_buffer_normal("")) == 0)
 		return (-1);
-	if ((res = process((char *)format, va, &to_print, &len_to_print)) == -1)
+	if ((res = process((char *)format, va, sb, &to_print, &len_to_print)) == -1)
 		return (-1);
 	va_end(va);
 	free_string_buffer(sb);
@@ -107,9 +105,9 @@ int				ft_dprintf(
 	char				*to_print;
 
 	va_start(va, format);
-	if ((sb = new_string_buffer_normal(ft_strnew(0))) == 0)
+	if ((sb = new_string_buffer_normal("")) == 0)
 		return (-1);
-	if ((res = process((char *)format, va, &to_print, &len_to_print)) == -1)
+	if ((res = process((char *)format, va, sb, &to_print, &len_to_print)) == -1)
 		return (-1);
 	va_end(va);
 	free_string_buffer(sb);

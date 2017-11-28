@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:23:46 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 12:34:23 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 20:09:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_string_buffer		*new_string_buffer_special(
 	res->next = 0;
 	res->byte_stored = byte_stored;
 	res->byte_printed = byte_printed;
-	res->str = str;
+	res->str = ft_strdup(str);
 	return (res);
 }
 
@@ -59,7 +59,7 @@ void				sb_append_normal(
 		return ;
 	while (head->next)
 		head = head->next;
-	head->next = new_string_buffer_normal(ft_strdup(str));
+	head->next = new_string_buffer_normal(str);
 }
 
 /*
@@ -78,7 +78,7 @@ void				sb_append_special(
 		return ;
 	while (head->next)
 		head = head->next;
-	head->next = new_string_buffer_special(ft_strdup(str), byte_printed, byte_stored);
+	head->next = new_string_buffer_special(str, byte_printed, byte_stored);
 }
 
 /*

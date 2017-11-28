@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 23:28:12 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 15:07:41 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 19:35:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*adapt_params_function_ci_string(
 	return (res);
 }
 
-void	print_special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
+void	process_normal_char(va_list va, t_treat_data *data, t_string_buffer *sb)
 {
 	char	*str;
 	char	c;

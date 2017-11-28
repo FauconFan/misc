@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:16:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/21 09:14:00 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 19:40:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int		set_converter_treat_data2(char cpy)
 
 void	update_uppercase_for_l_lm(char letter, t_treat_data *data)
 {
-	if (letter == 'D' || letter == 'O' || letter == 'U' || letter == 'C' ||
-		letter == 'S')
+	if (letter == 'D' || letter == 'O' || letter == 'U')
 	{
 		data->length_modifier_id = LM_L;
 		data->converter_id = data->converter_id - 1;
