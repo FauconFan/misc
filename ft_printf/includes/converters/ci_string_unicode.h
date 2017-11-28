@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:32:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 19:38:13 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 21:21:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@
 # define MAX_FOUR_BYTE_TWO		0b11110100100011111011111110111111
 
 void	process_special_char(va_list va, t_treat_data *data, t_string_buffer *sb);
+void	process_special_string(va_list, t_treat_data *data, t_string_buffer *sb);
 
 #endif

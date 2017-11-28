@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:28:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 19:35:43 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 21:20:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void				normal_char(va_list va, t_treat_data *data, t_string_buffer *sb)
 void				special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
 {
 	process_special_char(va, data, sb);
+}
+
+void				special_string(va_list va, t_treat_data *data, t_string_buffer *sb)
+{
+	process_special_string(va, data, sb);
 }
 
 char				*numeri(va_list va, t_treat_data *data)
