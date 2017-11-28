@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   string_buffer_utils.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 12:03:55 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/28 11:41:42 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/28 11:51:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <limits.h>
-#include <signal.h>
-#include "libft.h"
-#include "ft_printf.h"
-#include "ft_lltoa_n_ulltoa.h"
+#ifndef STRING_BUFFER_UTILS_H
+# define STRING_BUFFER_UTILS_H
 
-int		main(void)
-{
-	int		n;
+# include <stdlib.h>
+# include "string_buffer.h"
 
-	n = 42;
-	ft_putstr("---\n");
-	ft_printf("{%s}", "(null)");
-	ft_putstr("\n---\n");
-	return (0);
-}
+void		free_string_buffer(
+		t_string_buffer *res);
+
+#endif

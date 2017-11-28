@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:18 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/21 12:13:23 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 12:29:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "treat_data_utils.h"
+# include "string_buffer.h"
+# include "string_buffer_utils.h"
 
 # define WMALLOC		"WRONG MALLOC"
 # define UNEND			"UNEXPECTED END OF STRING"
@@ -70,6 +72,6 @@
 # define CI_AMAJ		31
 # define CI_N			32
 
-int				ft_printf(char *str, ...);
+int				ft_printf(const char * restrict format, ...);
 
 #endif

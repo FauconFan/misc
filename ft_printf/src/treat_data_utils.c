@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/21 12:11:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 09:16:44 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char			*set_values_treat_data(char *str, t_treat_data *data)
 	return (str);
 }
 
-char			*treat_data(t_treat_data *data, va_list va, int *return_func)
+char			*treat_data(t_treat_data *data, va_list va)
 {
 	char	*res;
 	char	*tmp;
@@ -54,7 +54,7 @@ char			*treat_data(t_treat_data *data, va_list va, int *return_func)
 		return (0);
 	if (data->converter_id == CI_CMIN)
 	{
-		special_char(va, data, return_func);
+		special_char(va, data);
 		return (0);
 	}
 	else if (is_numeri(data->converter_id))
