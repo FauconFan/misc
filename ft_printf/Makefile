@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/28 11:55:06 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/28 15:07:04 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,7 @@ CONVERTER_CODE				=	management.c \
 								ft_lltoa_n_ulltoa.c \
 								ci_sep.c \
 								ci_numbers.c \
-								ci_string.c \
-								ci_character.c \
+								ci_string_ascii.c \
 								ci_numbers_utils.c \
 
 TEST_FILE 					= 	$(addprefix $(SRC_FOLDER), $(TEST_FILE_CODE))
@@ -75,4 +74,4 @@ test :
 	make
 	gcc $(TEST_FILE) -L. -lftprintf -I libft/ -I includes/ -I includes/converters/
 	./a.out | cat -e
-	rm -f a.out
+	@rm -f a.out

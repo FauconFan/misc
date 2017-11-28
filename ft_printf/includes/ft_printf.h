@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:18 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 12:29:48 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 14:29:18 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@
 # define CI_AMAJ		31
 # define CI_N			32
 
-int				ft_printf(const char * restrict format, ...);
+int				ft_printf(const char *restrict format, ...);
+int				ft_dprintf(int fd, const char *restrict format, ...);
 
 #endif

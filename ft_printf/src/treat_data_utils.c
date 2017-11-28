@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 09:16:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 14:55:06 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,31 @@ char			*set_values_treat_data(char *str, t_treat_data *data)
 	return (str);
 }
 
-char			*treat_data(t_treat_data *data, va_list va)
+void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 {
 	char	*res;
 	char	*tmp;
 
 	if (data->converter_id == -1)
-		return (0);
+		return ;
 	if (data->converter_id == CI_CMIN)
 	{
-		special_char(va, data);
-		return (0);
+		special_char(va, data, sb);
 	}
 	else if (is_numeri(data->converter_id))
 	{
-		return (numeri(va, data));
+		res = numeri(va, data);
+		sb_append_normal(sb, res);
+		free(res);
 	}
-	tmp = (get_first_rep_function(data->converter_id))(va, data);
-	res = (adapt_params_function(data->converter_id))(tmp, va, data);
-	free(tmp);
-	return (res);
+	else
+	{
+		tmp = (get_first_rep_function(data->converter_id))(va, data);
+		res = (adapt_params_function(data->converter_id))(tmp, va, data);
+		free(tmp);
+		sb_append_normal(sb, res);
+		free(res);
+	}
 }
 
 void			free_treat_data(t_treat_data *data)

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 12:41:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/28 14:35:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static char		*treat_sep(
 		t_string_buffer *sb)
 {
 	t_treat_data	*data;
-	char			*tmp;
 
 	if ((data = init_treat_data()) == 0)
 		return (0);
@@ -31,8 +30,7 @@ static char		*treat_sep(
 		free_treat_data(data);
 		return (str);
 	}
-	tmp = treat_data(data, va);
-	sb_append_normal(sb, tmp);
+	treat_data(data, va, sb);
 	free_treat_data(data);
 	return (str);
 }
