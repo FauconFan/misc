@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/29 10:52:24 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/29 11:05:35 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int		main(void)
 {
 	setlocale(LC_ALL, "");
 	ft_printf("-----\n");
-	printf("%S\n", 0);
-	ft_printf("%S\n", 0);
+	ft_printf("%C\n", L'猫');
 	ft_printf("-----\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:36:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/29 11:03:19 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/29 11:06:29 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,6 @@ void	process_special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
 	size = ft_wcharlen(wchar);
 	str = ft_strnew(size);
 	fill_string(wchar, str, size);
-	for (int i = 0; i < size; ++i)
-	{
-		ft_putnbrl((unsigned char)str[i]);
-	}
-	ft_putchar('\n');
 	sb_append_special(sb, str, 1, size);
 	free(str);
 }
