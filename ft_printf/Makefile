@@ -6,7 +6,7 @@
 #    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/29 08:42:27 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/11/29 14:33:51 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ CONVERTERS_FOLDER		= converters/
 
 TEST_FILE_CODE				= 	main.c \
 
-SRC_CODE					= 	ft_printf.c \
+SRC_CODE					= 	ft_printf_family.c \
+								ft_vprintf_family.c  \
 								treat_data_utils.c \
 								set_values_treat_data.c \
 								set_values_treat_data2.c \
