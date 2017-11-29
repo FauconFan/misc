@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 08:09:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 20:13:27 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/29 10:09:46 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int				ft_printf(
 	int					len_to_print;
 	char				*to_print;
 
+	if (format == 0 || *format == 0)
+		return (0);
 	va_start(va, format);
 	if ((sb = new_string_buffer_normal("")) == 0)
 		return (-1);
@@ -104,6 +106,8 @@ int				ft_dprintf(
 	int					len_to_print;
 	char				*to_print;
 
+	if (format == 0 || *format == 0)
+		return (0);
 	va_start(va, format);
 	if ((sb = new_string_buffer_normal("")) == 0)
 		return (-1);

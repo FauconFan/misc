@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
+#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/28 20:16:14 by jpriou           ###   ########.fr        #
+#    Updated: 2017/11/29 08:42:27 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,9 @@ all : $(NAME).a
 $(NAME): all
 
 $(NAME).a : $(FILES_OBJ) $(L_FT)$(L_FTA)
-	libtool -static -o $@ $^
+	#libtool -static -o $@ $^
+	ar rc $@ $(FILES_OBJ) libft/*.o
+	ranlib $@
 
 $(L_FT)$(L_FTA):
 	make -C $(L_FT)

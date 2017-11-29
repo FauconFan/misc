@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ci_string_unicode.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:36:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 22:05:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/29 11:03:19 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,15 @@
 
 static int		ft_wcharlen(wchar_t wchar)
 {
-	/*
-	if (c >= MIN_ONE_BYTE && c <= MAX_ONE_BYTE)
+	if (wchar <= 0x7F)
 		return (1);
-	else if (c >= MIN_TWO_BYTE && c <= MAX_TWO_BYTE)
+	else if (wchar <= 0x7FF)
 		return (2);
-	else if ((c >= MIN_THREE_BYTE_ONE && c <= MAX_THREE_BYTE_ONE) ||
-			(c >= MIN_THREE_BYTE_TWO && c <= MAX_THREE_BYTE_TWO))
+	else if (wchar <= 0xFFFF)
 		return (3);
-	else if ((c >= MIN_FOUR_BYTE_ONE && c <= MAX_FOUR_BYTE_ONE) ||
-			(c >= MIN_FOUR_BYTE_TWO && c <= MAX_FOUR_BYTE_TWO))
+	else if (wchar <= 0x10FFFF)
 		return (4);
-	return (-1);
-	*/
-	if (wchar <= 0)
-		return (0);
-	if (wchar < 0x80)
-		return (1);
-	else if (wchar < 0x800)
-		return (2);
-	else if (wchar < 0x200000)
-		return (3);
-	return (4);
+	return (0);
 }
 
 static void		fill_string(wchar_t wchar, char *str, int size)
@@ -73,6 +60,11 @@ void	process_special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
 	size = ft_wcharlen(wchar);
 	str = ft_strnew(size);
 	fill_string(wchar, str, size);
+	for (int i = 0; i < size; ++i)
+	{
+		ft_putnbrl((unsigned char)str[i]);
+	}
+	ft_putchar('\n');
 	sb_append_special(sb, str, 1, size);
 	free(str);
 }
@@ -88,6 +80,11 @@ void	process_special_string(va_list va, t_treat_data *data, t_string_buffer *sb)
 
 	(void)data;
 	wstr = va_arg(va, wchar_t *);
+	if (wstr == 0)
+	{
+		sb_append_special(sb, "(null)", 6, 6);
+		return ;
+	}
 	index = 0;
 	size = 0;
 	size_tot = 0;

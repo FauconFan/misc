@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 21:47:16 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/29 10:52:24 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 #include <stdio.h>
 #include <limits.h>
 #include <signal.h>
+#include <locale.h>
 #include "libft.h"
 #include "ft_printf.h"
 #include "ft_lltoa_n_ulltoa.h"
 
 int		main(void)
 {
+	setlocale(LC_ALL, "");
 	ft_printf("-----\n");
-	ft_printf("%C\n", L'ሴ');
+	printf("%S\n", 0);
+	ft_printf("%S\n", 0);
 	ft_printf("-----\n");
-	printf("%C\n", 65008);
 	return (0);
 }
