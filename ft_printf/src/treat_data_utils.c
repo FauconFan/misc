@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 11:45:20 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 16:25:25 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	init the struct and fill it
 */
 
-char			*init_and_set_values_treat_data(char *str, t_treat_data **data)
+static char		*init_and_set_values_treat_data(char *str, t_treat_data **data, va_list va)
 {
 	if ((*data = (t_treat_data *)malloc(sizeof(t_treat_data))) == 0)
 		return (0);
@@ -30,10 +30,11 @@ char			*init_and_set_values_treat_data(char *str, t_treat_data **data)
 	(*data)->length_modifier_id = -1;
 	(*data)->converter_id = -1;
 	str = set_flags_treat_data(str, *data);
-	str = set_gabarit_treat_data(str, *data);
-	str = set_precision_treat_data(str, *data);
+	str = set_gabarit_treat_data(str, *data, va);
+	str = set_precision_treat_data(str, *data, va);
 	str = set_length_modifer(str, *data);
 	str = set_converter_treat_data(str, *data);
+	ft_putnbrl((*data)->precision);
 	if (str == 0)
 		free(*data);
 	return (str);
@@ -43,7 +44,7 @@ char			*init_and_set_values_treat_data(char *str, t_treat_data **data)
 ** treat_data
 */
 
-void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
+static void		treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 {
 	if (data->converter_id == -1 || data->converter_id >= 24)
 		return ;
@@ -73,7 +74,7 @@ char			*treat_sep(char *str, va_list va, t_string_buffer *sb)
 {
 	t_treat_data	*data;
 
-	if ((str = init_and_set_values_treat_data(++str, &data)) == 0)
+	if ((str = init_and_set_values_treat_data(++str, &data, va)) == 0)
 		return (str);
 	treat_data(data, va, sb);
 	free(data);
@@ -81,7 +82,7 @@ char			*treat_sep(char *str, va_list va, t_string_buffer *sb)
 }
 
 /*
-**	parse the data properly. It use string buffer
+**	parse the data properly.
 */
 
 int				process(char *str, va_list va, t_string_buffer *sb,

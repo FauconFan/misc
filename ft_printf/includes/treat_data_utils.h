@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:59:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 11:46:03 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 16:15:48 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define SPACE_FLAG		' '
 
 # define SEP_PRECISION	'.'
+# define STAR_CHARACTER	'*'
 
 /*
 **	Don't change the following
@@ -72,8 +73,6 @@
 # define CI_AMAJ		31
 # define CI_N			32
 
-char			*init_and_set_values_treat_data(char *str, t_treat_data **data);
-void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb);
 char			*treat_sep(char *str, va_list va, t_string_buffer *sb);
 int				process(char *str, va_list va, t_string_buffer *sb,
 							char **to_print, int *len_to_print);

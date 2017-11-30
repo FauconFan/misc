@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_values_treat_data.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 09:05:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/21 11:36:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/30 16:26:19 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,18 @@ char	*set_flags_treat_data(char *str, t_treat_data *data)
 	return (set_flags_treat_data(str + 1, data));
 }
 
-char	*set_gabarit_treat_data(char *str, t_treat_data *data)
+char	*set_gabarit_treat_data(char *str, t_treat_data *data, va_list va)
 {
 	if (str == 0 || *str == 0)
 		return (str);
-	if (ft_isdigit(*str))
+	if (*str == STAR_CHARACTER)
+	{
+		data->gabarit = va_arg(va, int);
+		if (data->gabarit <= 0)
+			data->gabarit = -1;
+		str++;
+	}
+	else if (ft_isdigit(*str))
 	{
 		data->gabarit = 0;
 		while (ft_isdigit(*str))
@@ -49,7 +56,7 @@ char	*set_gabarit_treat_data(char *str, t_treat_data *data)
 	return (str);
 }
 
-char	*set_precision_treat_data(char *str, t_treat_data *data)
+char	*set_precision_treat_data(char *str, t_treat_data *data, va_list va)
 {
 	if (str == 0 || *str == 0)
 		return (str);
@@ -57,10 +64,17 @@ char	*set_precision_treat_data(char *str, t_treat_data *data)
 	{
 		str++;
 		if (*str == 0)
-			return (0);
-		data->precision = 0;
-		if (ft_isdigit(*str))
+			return (str);
+		if (*str == STAR_CHARACTER)
 		{
+			data->precision = va_arg(va, int);
+			if (data->precision <= 0)
+				data->precision = -1;
+			str++;
+		}
+		else
+		{
+			data->precision = 0;
 			while (ft_isdigit(*str))
 			{
 				data->precision = data->precision * 10 + *str - '0';
