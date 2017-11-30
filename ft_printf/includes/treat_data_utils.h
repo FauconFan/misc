@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:59:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/29 14:50:12 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 11:05:44 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include "struct_treat_data.h"
 # include "set_values_treat_data.h"
 # include "management.h"
+# include "ci_string_unicode.h"
+# include "ci_numbers.h"
 # include "string_buffer.h"
 # include "string_buffer_utils.h"
 
@@ -74,6 +76,4 @@ void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb);
 char			*treat_sep(char *str, va_list va, t_string_buffer *sb);
 int				process(char *str, va_list va, t_string_buffer *sb,
 							char **to_print, int *len_to_print);
-void			print_values(t_treat_data *data);
-
 #endif

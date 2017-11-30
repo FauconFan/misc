@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/29 14:50:49 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 11:04:13 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # include "struct_treat_data.h"
 # include "ft_lltoa_n_ulltoa.h"
 # include "ci_numbers_utils.h"
+# include "string_buffer.h"
 
-char						*buildumeri(va_list va, t_treat_data *data);
+void				process_numbers(va_list va, t_treat_data *data, t_string_buffer *sb);
 
 #endif

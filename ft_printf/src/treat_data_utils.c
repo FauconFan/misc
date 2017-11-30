@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/29 12:52:18 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 11:04:46 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,13 @@ void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 	if (data->converter_id == -1 || data->converter_id >= 24)
 		return ;
 	if (data->converter_id == CI_CMIN)
-		normal_char(va, data, sb);
+		process_normal_char(va, data, sb);
 	else if (data->converter_id == CI_CMAJ)
-		special_char(va, data, sb);
+		process_special_char(va, data, sb);
 	else if (data->converter_id == CI_SMAJ)
-		special_string(va, data, sb);
+		process_special_string(va, data, sb);
 	else if (data->converter_id >= 12 && data->converter_id <= 21)
-	{
-		res = numeri(va, data);
-		sb_append_normal(sb, res);
-		free(res);
-	}
+		process_numbers(va, data, sb);
 	else
 	{
 		tmp = (get_first_rep_function(data->converter_id))(va, data);
@@ -109,26 +105,4 @@ int				process(char *str, va_list va, t_string_buffer *sb,
 	}
 	sb_append_normal(sb, str);
 	return (build_str(sb, to_print, len_to_print));
-}
-
-void			print_values(t_treat_data *data)
-{
-	ft_putstr("# : ");
-	ft_putnbrl(data->hashtag_flag);
-	ft_putstr("0 : ");
-	ft_putnbrl(data->zero_flag);
-	ft_putstr("- : ");
-	ft_putnbrl(data->minus_flag);
-	ft_putstr("+ : ");
-	ft_putnbrl(data->plus_flag);
-	ft_putstr("  : ");
-	ft_putnbrl(data->space_flag);
-	ft_putstr("gabarit : ");
-	ft_putnbrl(data->gabarit);
-	ft_putstr("precision : ");
-	ft_putnbrl(data->precision);
-	ft_putstr("length_modifier : ");
-	ft_putnbrl(data->length_modifier_id);
-	ft_putstr("converter : ");
-	ft_putnbrl(data->converter_id);
 }

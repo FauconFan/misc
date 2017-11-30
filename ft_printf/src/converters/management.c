@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   management.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:28:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 21:20:14 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/30 11:02:10 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,4 @@ t_ptrfunc_lastrep	adapt_params_function(int id)
 	else if (id == CI_SMIN || id == CI_SMAJ)
 		return (adapt_params_function_ci_string);
 	return (0);
-}
-
-void				normal_char(va_list va, t_treat_data *data, t_string_buffer *sb)
-{
-	process_normal_char(va, data, sb);
-}
-
-void				special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
-{
-	process_special_char(va, data, sb);
-}
-
-void				special_string(va_list va, t_treat_data *data, t_string_buffer *sb)
-{
-	process_special_string(va, data, sb);
-}
-
-char				*numeri(va_list va, t_treat_data *data)
-{
-	return (buildumeri(va, data));
 }
