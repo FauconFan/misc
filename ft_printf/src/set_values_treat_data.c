@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 09:05:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 16:26:19 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 20:00:21 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,27 +89,32 @@ char	*set_precision_treat_data(char *str, t_treat_data *data, va_list va)
 
 char	*set_length_modifer(char *str, t_treat_data *data)
 {
+	int		tmp;
+
+	tmp = 0;
 	if (str == 0 || *str == 0)
 		return (str);
 	if (*str == 'j')
-		data->length_modifier_id = LM_J;
+		tmp = LM_J;
 	else if (*str == 'z')
-		data->length_modifier_id = LM_Z;
+		tmp = LM_Z;
 	else if (*str == 'h')
 	{
-		data->length_modifier_id = LM_H;
+		tmp = LM_H;
 		if (*(str + 1) == 'h' && str++)
-			data->length_modifier_id = LM_HH;
+			tmp = LM_HH;
 	}
 	else if (*str == 'l')
 	{
-		data->length_modifier_id = LM_L;
+		tmp = LM_L;
 		if (*(str + 1) == 'l' && str++)
-			data->length_modifier_id = LM_LL;
+			tmp = LM_LL;
 	}
 	else
 		str--;
 	str++;
+	if (tmp != 0 && data->length_modifier_id < tmp)
+		data->length_modifier_id = tmp;
 	return (str);
 }
 

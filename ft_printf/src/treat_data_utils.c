@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 17:18:50 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 19:52:01 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 static char		*init_and_set_values_treat_data(char *str, t_treat_data **data, va_list va)
 {
+	char	*cpy;
+	int		first_time;
+
 	if ((*data = (t_treat_data *)malloc(sizeof(t_treat_data))) == 0)
 		return (0);
 	(*data)->hashtag_flag = 0;
@@ -29,10 +32,16 @@ static char		*init_and_set_values_treat_data(char *str, t_treat_data **data, va_
 	(*data)->precision = -1;
 	(*data)->length_modifier_id = -1;
 	(*data)->converter_id = -1;
-	str = set_flags_treat_data(str, *data);
-	str = set_gabarit_treat_data(str, *data, va);
-	str = set_precision_treat_data(str, *data, va);
-	str = set_length_modifer(str, *data);
+	first_time = 1;
+	while (first_time == 1 || cpy != str)
+	{
+		first_time = 0;
+		cpy = str;
+		str = set_flags_treat_data(str, *data);
+		str = set_gabarit_treat_data(str, *data, va);
+		str = set_precision_treat_data(str, *data, va);
+		str = set_length_modifer(str, *data);
+	}
 	str = set_converter_treat_data(str, *data);
 	if (str == 0)
 		free(*data);

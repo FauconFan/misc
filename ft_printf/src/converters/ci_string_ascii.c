@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 23:28:12 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 17:39:38 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 20:02:57 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	process_normal_string(va_list va, t_treat_data *data,
 	}
 	if (data->gabarit > (int)ft_strlen(res))
 	{
-		tmp = ft_strsetnew(data->gabarit, ' ');
+		tmp = ft_strsetnew(data->gabarit, (data->zero_flag) ? '0' : ' ');
 		if (data->minus_flag)
 			ft_strncpy(tmp, res, ft_strlen(res));
 		else
