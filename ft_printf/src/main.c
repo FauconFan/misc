@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/29 16:27:23 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 11:28:16 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int		main(void)
 	char	*s;
 
 	ft_printf("-----\n");
-	ft_snprintf(&s, 9, "oui%s%d\n", "non", 42);
-	printf("%G\n", 24.444);
-	ft_putstr(s);
+	//ft_snprintf(&s, 9, "oui%s%d\n", "non", 42);
+	ft_printf("%s\n", "coucou");
+	//ft_putstr(s);
 	free(s);
 	ft_printf("-----\n");
 	return (0);

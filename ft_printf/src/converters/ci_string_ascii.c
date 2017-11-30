@@ -3,52 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ci_string_ascii.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 23:28:12 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 19:35:58 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/30 11:27:36 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ci_string_ascii.h"
 
-char	*get_first_rep_ci_string(va_list va, t_treat_data *data)
+void	process_normal_string(va_list va, t_treat_data *data, t_string_buffer *sb)
 {
 	char	*res;
+	char	*tmp;
 
-	(void)data;
-	res = va_arg(va, char *);
-	if (res == 0)
-		return (ft_strdup("(null)"));
-	return (ft_strdup(res));
-}
-
-char	*adapt_params_function_ci_string(
-	char *tmp, va_list va, t_treat_data *data)
-{
-	char	*res;
-	char	*res2;
-
-	(void)va;
+	tmp = va_arg(va, char *);
+	if (tmp == 0)
+		tmp = "(null)";
 	res = ft_strdup(tmp);
 	if (data->precision != -1 && data->precision < (int)ft_strlen(res))
 	{
-		res2 = ft_strsub(res, 0, data->precision);
+		tmp = ft_strsub(res, 0, data->precision);
 		free(res);
-		res = res2;
+		res = tmp;
 	}
-	if (data->gabarit != -1 && data->gabarit > (int)ft_strlen(res))
+	if (data->gabarit > (int)ft_strlen(res))
 	{
-		res2 = ft_strsetnew(data->gabarit, ' ');
+		tmp = ft_strsetnew(data->gabarit, ' ');
 		if (data->minus_flag)
-			ft_strncpy(res2, res, ft_strlen(res));
+			ft_strncpy(tmp, res, ft_strlen(res));
 		else
-			ft_strncpy(res2 + data->gabarit - ft_strlen(res),
+			ft_strncpy(tmp + data->gabarit - ft_strlen(res),
 				res, ft_strlen(res));
 		free(res);
-		res = res2;
+		res = tmp;
 	}
-	return (res);
+	sb_append_normal(sb, res);
+	free(res);
 }
 
 void	process_normal_char(va_list va, t_treat_data *data, t_string_buffer *sb)

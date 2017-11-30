@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 11:04:46 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 11:19:28 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 		return ;
 	if (data->converter_id == CI_CMIN)
 		process_normal_char(va, data, sb);
+	else if (data->converter_id == CI_SMIN)
+		process_normal_string(va, data, sb);
 	else if (data->converter_id == CI_CMAJ)
 		process_special_char(va, data, sb);
 	else if (data->converter_id == CI_SMAJ)
@@ -60,6 +62,8 @@ void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 		process_numbers(va, data, sb);
 	else
 	{
+		ft_putstr("debug");
+		ft_putnbrl(data->converter_id);
 		tmp = (get_first_rep_function(data->converter_id))(va, data);
 		res = (adapt_params_function(data->converter_id))(tmp, va, data);
 		free(tmp);
