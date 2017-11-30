@@ -6,13 +6,14 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 14:34:29 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/11/29 14:49:50 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 17:39:56 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int				ft_center_printf(const char *restrict format, va_list va, char **answer, int *len_to_print)
+int				ft_center_printf(const char *restrict format, va_list va,
+					char **answer, int *len_to_print)
 {
 	t_string_buffer		*sb;
 	int					res;
@@ -98,7 +99,8 @@ int				ft_sprintf(char **str, const char *restrict format, ...)
 **	can have some bugs with unicode...
 */
 
-int				ft_snprintf(char **str, size_t size, const char *restrict format, ...)
+int				ft_snprintf(char **str, size_t size,
+					const char *restrict format, ...)
 {
 	va_list				va;
 	int					res;

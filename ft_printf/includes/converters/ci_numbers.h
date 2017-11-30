@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 11:04:13 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 17:35:19 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "ci_numbers_utils.h"
 # include "string_buffer.h"
 
-void				process_numbers(va_list va, t_treat_data *data, t_string_buffer *sb);
+void				process_numbers(va_list va, t_treat_data *data,
+						t_string_buffer *sb);
 
 #endif

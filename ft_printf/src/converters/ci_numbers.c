@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 18:17:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 11:06:13 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 17:38:09 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static char			*adaptgabarit(char *prefix, char *str, t_treat_data *data)
 	return (res);
 }
 
-void				process_numbers(va_list va, t_treat_data *data, t_string_buffer *sb)
+void				process_numbers(va_list va, t_treat_data *data,
+						t_string_buffer *sb)
 {
 	char	*str;
 	char	*ans;

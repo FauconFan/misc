@@ -6,20 +6,20 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 23:28:12 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 11:54:24 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 17:39:38 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ci_string_ascii.h"
 
-void	process_normal_string(va_list va, t_treat_data *data, t_string_buffer *sb)
+void	process_normal_string(va_list va, t_treat_data *data,
+			t_string_buffer *sb)
 {
 	char	*res;
 	char	*tmp;
 
 	tmp = va_arg(va, char *);
-	if (tmp == 0)
-		tmp = "(null)";
+	tmp = (tmp == 0) ? "(null)" : tmp;
 	res = ft_strdup(tmp);
 	if (data->precision != -1 && data->precision < (int)ft_strlen(res))
 	{
