@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:36:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/29 12:41:01 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 12:13:41 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,21 @@ void	process_special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
 	wchar_t		wchar;
 	char		*str;
 	int			size;
+	int			len;
 
-	(void)data;
 	wchar = va_arg(va, wchar_t);
 	size = ft_wcharlen(wchar);
-	str = ft_strnew(size);
-	fill_string(wchar, str, size);
-	sb_append_special(sb, str, 1, size);
+	len = ft_max(data->gabarit, 1);
+	str = 0;
+	if (len > 1)
+		str = ft_strsetnew(size + len - 1, (data->zero_flag) ? '0' : ' ');
+	else
+		str = ft_strsetnew(size, (data->zero_flag) ? '0' : ' ');
+	if (data->minus_flag)
+		fill_string(wchar, str, size);
+	else
+		fill_string(wchar, str + len - 1, size);
+	sb_append_special(sb, str, len, size + len - 1);
 	free(str);
 }
 
