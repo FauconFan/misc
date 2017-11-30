@@ -6,7 +6,7 @@
 #    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/12 17:06:05 by jpriou            #+#    #+#              #
-#    Updated: 2017/11/29 14:33:51 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/11/30 11:46:46 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,7 @@ SRC_CODE					= 	ft_printf_family.c \
 								string_buffer.c \
 								string_buffer_utils.c \
 
-CONVERTER_CODE				=	management.c \
-								ft_lltoa_n_ulltoa.c \
+CONVERTER_CODE				=	ft_lltoa_n_ulltoa.c \
 								ci_sep.c \
 								ci_numbers.c \
 								ci_string_ascii.c \

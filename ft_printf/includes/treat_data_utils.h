@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:59:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 11:05:44 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 11:46:03 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include "ft_printf.h"
 # include "struct_treat_data.h"
 # include "set_values_treat_data.h"
-# include "management.h"
+# include "ci_string_ascii.h"
 # include "ci_string_unicode.h"
+# include "ci_sep.h"
 # include "ci_numbers.h"
 # include "string_buffer.h"
 # include "string_buffer_utils.h"

@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 11:19:28 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 11:45:20 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ char			*init_and_set_values_treat_data(char *str, t_treat_data **data)
 
 void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 {
-	char	*res;
-	char	*tmp;
-
 	if (data->converter_id == -1 || data->converter_id >= 24)
 		return ;
 	if (data->converter_id == CI_CMIN)
@@ -58,17 +55,13 @@ void			treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 		process_special_char(va, data, sb);
 	else if (data->converter_id == CI_SMAJ)
 		process_special_string(va, data, sb);
+	else if (data->converter_id == CI_SEP)
+		process_sep(data, sb);
 	else if (data->converter_id >= 12 && data->converter_id <= 21)
 		process_numbers(va, data, sb);
 	else
 	{
-		ft_putstr("debug");
-		ft_putnbrl(data->converter_id);
-		tmp = (get_first_rep_function(data->converter_id))(va, data);
-		res = (adapt_params_function(data->converter_id))(tmp, va, data);
-		free(tmp);
-		sb_append_normal(sb, res);
-		free(res);
+		ft_putstr_fd("should never happen", 2);
 	}
 }
 

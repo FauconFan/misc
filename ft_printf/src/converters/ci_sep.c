@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ci_sep.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 14:56:49 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 18:45:35 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/11/30 11:44:18 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ci_sep.h"
 
-char	*get_first_rep_ci_sep(va_list va, t_treat_data *res)
-{
-	(void)va;
-	(void)res;
-	return (ft_strdup("%"));
-}
-
-char	*adapt_params_function_ci_sep(char *tmp, va_list va, t_treat_data *data)
+void	process_sep(t_treat_data *data, t_string_buffer *sb)
 {
 	char	*res;
-	int		len;
+	char	*tmp;
 
-	(void)va;
-	len = ft_max(data->gabarit, ft_strlen(tmp));
-	res = ft_strsetnew(len, ' ');
-	if (data->minus_flag)
-		ft_strncpy(res, tmp, ft_strlen(tmp));
+	res = "%";
+	if (data->gabarit > 1)
+	{
+		tmp = ft_strsetnew(data->gabarit, ' ');
+		if (data->minus_flag)
+			ft_strncpy(tmp, res, 1);
+		else
+			ft_strncpy(tmp + data->gabarit - 1, res, 1);
+		sb_append_special(sb, tmp, data->gabarit, data->gabarit);
+		free(tmp);
+	}
 	else
-		ft_strncpy(res + len - ft_strlen(tmp), tmp, ft_strlen(tmp));
-	return (res);
+	{
+		sb_append_special(sb, res, 1, 1);
+	}
 }
