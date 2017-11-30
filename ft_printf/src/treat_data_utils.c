@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 16:25:25 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/11/30 17:18:50 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static char		*init_and_set_values_treat_data(char *str, t_treat_data **data, va_
 	str = set_precision_treat_data(str, *data, va);
 	str = set_length_modifer(str, *data);
 	str = set_converter_treat_data(str, *data);
-	ft_putnbrl((*data)->precision);
 	if (str == 0)
 		free(*data);
 	return (str);
