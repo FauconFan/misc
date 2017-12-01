@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_family.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 14:34:29 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/11/30 17:39:56 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/01 10:17:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int				ft_center_printf(const char *restrict format, va_list va,
 	int					res;
 	int					tampon;
 
-	setlocale(LC_ALL, "");
 	if ((sb = new_string_buffer_normal("")) == 0)
 		return (-1);
 	if ((res = process((char *)format, va, sb, answer, &tampon)) == -1)

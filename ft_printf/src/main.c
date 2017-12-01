@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 20:04:02 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/01 10:25:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,13 @@
 
 int		main(void)
 {
-	char	*s;
-
 	ft_printf("-----\n");
 	//ft_snprintf(&s, 9, "oui%s%d\n", "non", 42);
 	//printf("%*.*s\n", 4, 2, "oui");
 	//ft_printf("%*.*s\n", 4, 2, "oui");
-	ft_printf("@main_ftprintf: %###-#0000 33...12..#0+0d", 256);
+	ft_printf("%S\n", L"米");
+	ft_printf("%d\n", printf("%S", L"米"));
 	//ft_putstr(s);
-	free(s);
 	ft_printf("\n-----\n");
 	return (0);
 }

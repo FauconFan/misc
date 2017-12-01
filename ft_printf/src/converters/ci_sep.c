@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ci_sep.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 14:56:49 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 19:56:25 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/01 10:13:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	process_sep(t_treat_data *data, t_string_buffer *sb)
 	res = "%";
 	if (data->gabarit > 1)
 	{
-		tmp = ft_strsetnew(data->gabarit, (data->zero_flag) ? '0' : ' ');
+		tmp = ft_strsetnew(data->gabarit, (data->zero_flag && data->minus_flag == 0) ? '0' : ' ');
 		if (data->minus_flag)
 			ft_strncpy(tmp, res, 1);
 		else

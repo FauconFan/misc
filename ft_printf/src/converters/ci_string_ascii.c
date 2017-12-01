@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ci_string_ascii.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 23:28:12 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 20:02:57 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/01 10:18:44 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	process_normal_string(va_list va, t_treat_data *data,
 	}
 	if (data->gabarit > (int)ft_strlen(res))
 	{
-		tmp = ft_strsetnew(data->gabarit, (data->zero_flag) ? '0' : ' ');
+		tmp = ft_strsetnew(data->gabarit, (data->zero_flag && data->minus_flag == 0) ? '0' : ' ');
 		if (data->minus_flag)
 			ft_strncpy(tmp, res, ft_strlen(res));
 		else
