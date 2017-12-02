@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 09:05:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 08:06:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 11:41:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,10 @@ char	*set_converter_treat_data(char *str, t_treat_data *data)
 		data->converter_id = CI_I;
 	else if (*str == 'n')
 		data->converter_id = CI_N;
+	else if (*str == 'Z')
+		data->converter_id = CI_Z;
+	else if (*str == 'R')
+		data->converter_id = CI_R;
 	else if (*str == SEPERATOR)
 		data->converter_id = CI_SEP;
 	if (data->converter_id == -1)

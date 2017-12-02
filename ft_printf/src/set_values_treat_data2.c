@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_values_treat_data2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 16:16:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 20:02:20 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 10:11:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,15 @@ void	update_uppercase_for_l_lm(char letter, t_treat_data *data)
 	{
 		data->length_modifier_id = LM_LL;
 		data->hashtag_flag = 1;
+	}
+	else if (letter == 'c' && data->length_modifier_id == LM_L)
+	{
+		data->converter_id = CI_CMAJ;
+		data->length_modifier_id = -1;
+	}
+	else if (letter == 's' && data->length_modifier_id == LM_L)
+	{
+		data->converter_id = CI_SMAJ;
+		data->length_modifier_id = -1;
 	}
 }

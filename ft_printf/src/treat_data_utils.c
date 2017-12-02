@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 09:02:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 12:38:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static char		*init_and_set_values_treat_data(char *str,
 
 static int		treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 {
-	if (data->converter_id == -1 || data->converter_id >= 24)
+	if (data->converter_id == -1 ||
+		(data->converter_id >= 24 && data->converter_id <= 32))
 		return (0);
 	if (data->converter_id == CI_CMIN)
 		process_normal_char(va, data, sb);
@@ -78,6 +79,8 @@ static int		treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 		return (process_special_string(va, data, sb));
 	else if (data->converter_id == CI_SEP)
 		process_sep(data, sb);
+	else if (data->converter_id == CI_Z || data->converter_id == CI_R)
+		process_unused_flag(data, sb);
 	else if (data->converter_id >= 12 && data->converter_id <= 21)
 		process_numbers(va, data, sb);
 	else
@@ -85,7 +88,7 @@ static int		treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 		ft_putstr_fd("should never happen", 2);
 		return (2);
 	}
-	return(0);
+	return (0);
 }
 
 /*
@@ -99,7 +102,10 @@ static int		treat_sep(char **str, va_list va, t_string_buffer *sb)
 	if ((*str = init_and_set_values_treat_data(++(*str), &data, va)) == 0)
 		return (-1);
 	if (treat_data(data, va, sb) == -2)
+	{
+		free(data);
 		return (-2);
+	}
 	free(data);
 	return (0);
 }

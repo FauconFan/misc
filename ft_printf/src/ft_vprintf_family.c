@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 13:24:49 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/02 08:00:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 12:35:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int				ft_vprintf(const char *restrict format, va_list ap)
 		return (-1);
 	write(1, to_print, len_to_print);
 	free(to_print);
-	return (res);
+	return (res == -2 ? -1 : res);
 }
 
 int				ft_vdprintf(int fd, const char *restrict format, va_list ap)
@@ -39,7 +39,7 @@ int				ft_vdprintf(int fd, const char *restrict format, va_list ap)
 		return (-1);
 	write(fd, to_print, len_to_print);
 	free(to_print);
-	return (res);
+	return (res == -2 ? -1 : res);
 }
 
 int				ft_vsprintf(char **str, const char *restrict format, va_list ap)
@@ -52,7 +52,7 @@ int				ft_vsprintf(char **str, const char *restrict format, va_list ap)
 	if ((res = ft_center_printf(format, ap, &to_print, 0)) == -1)
 		return (-1);
 	*str = to_print;
-	return (res);
+	return (res == -2 ? -1 : res);
 }
 
 int				ft_vsnprintf(char **str, size_t size,
@@ -70,5 +70,5 @@ int				ft_vsnprintf(char **str, size_t size,
 	len = ft_min(size, len_to_print);
 	*str = ft_strnew(len);
 	ft_strncpy(*str, to_print, len);
-	return (res);
+	return (res == -2 ? -1 : res);
 }

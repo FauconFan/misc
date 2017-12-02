@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:59:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 08:47:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 11:41:03 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "ci_string_unicode.h"
 # include "ci_sep.h"
 # include "ci_numbers.h"
+# include "ci_unused_flags.h"
 # include "string_buffer.h"
 # include "string_buffer_utils.h"
 
@@ -72,6 +73,8 @@
 # define CI_AMIN		30
 # define CI_AMAJ		31
 # define CI_N			32
+# define CI_Z			33
+# define CI_R			34
 
 int				process(char *str, va_list va, t_string_buffer *sb);
 #endif
