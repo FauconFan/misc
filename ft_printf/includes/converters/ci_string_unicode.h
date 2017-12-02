@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ci_string_unicode.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:32:02 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 17:36:07 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 09:02:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include "struct_treat_data.h"
 # include "string_buffer.h"
 
-void	process_special_char(va_list va, t_treat_data *data,
+int		process_special_char(va_list va, t_treat_data *data,
 					t_string_buffer *sb);
-void	process_special_string(va_list va, t_treat_data *data,
+int		process_special_string(va_list va, t_treat_data *data,
 					t_string_buffer *sb);
 
 #endif

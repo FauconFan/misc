@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:59:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 08:11:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 08:47:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,5 @@
 # define CI_AMAJ		31
 # define CI_N			32
 
-char			*treat_sep(char *str, va_list va, t_string_buffer *sb);
 int				process(char *str, va_list va, t_string_buffer *sb);
 #endif

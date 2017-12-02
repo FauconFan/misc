@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_buffer_utils.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 11:41:42 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 17:36:44 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 08:54:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 
 void		free_string_buffer(
 		t_string_buffer *res);
+void		free_last(t_string_buffer *res);
 
 #endif

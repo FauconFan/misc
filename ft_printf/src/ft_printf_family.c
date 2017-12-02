@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 14:34:29 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/02 08:11:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 08:57:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,21 @@ int				ft_center_printf(const char *restrict format, va_list va,
 	t_string_buffer		*sb;
 	int					res;
 	int					tampon;
+	int					ret;
 
 	if ((sb = new_string_buffer_normal("")) == 0)
 		return (-1);
-	if (process((char *)format, va, sb) == -1)
+	if ((ret = process((char *)format, va, sb)) == -1)
 		return (-1);
+	if (ret == -2)
+	{
+		free_last(sb);
+		build_str(sb, answer, &tampon);
+		free_string_buffer(sb);
+		if (len_to_print != 0)
+			*len_to_print = tampon;
+		return (-2);
+	}
 	res = build_str(sb, answer, &tampon);
 	free_string_buffer(sb);
 	if (len_to_print != 0)
@@ -49,7 +59,7 @@ int				ft_printf(const char *restrict format, ...)
 	va_end(va);
 	write(1, to_print, len_to_print);
 	free(to_print);
-	return (res);
+	return (res == -2 ? -1 : res);
 }
 
 /*

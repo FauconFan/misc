@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 08:15:36 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 09:02:53 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,18 @@ static char		*init_and_set_values_treat_data(char *str,
 ** treat_data
 */
 
-static void		treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
+static int		treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 {
 	if (data->converter_id == -1 || data->converter_id >= 24)
-		return ;
+		return (0);
 	if (data->converter_id == CI_CMIN)
 		process_normal_char(va, data, sb);
 	else if (data->converter_id == CI_SMIN)
 		process_normal_string(va, data, sb);
 	else if (data->converter_id == CI_CMAJ)
-		process_special_char(va, data, sb);
+		return (process_special_char(va, data, sb));
 	else if (data->converter_id == CI_SMAJ)
-		process_special_string(va, data, sb);
+		return (process_special_string(va, data, sb));
 	else if (data->converter_id == CI_SEP)
 		process_sep(data, sb);
 	else if (data->converter_id >= 12 && data->converter_id <= 21)
@@ -83,22 +83,25 @@ static void		treat_data(t_treat_data *data, va_list va, t_string_buffer *sb)
 	else
 	{
 		ft_putstr_fd("should never happen", 2);
+		return (2);
 	}
+	return(0);
 }
 
 /*
 **	treat the data when a '%' is found
 */
 
-char			*treat_sep(char *str, va_list va, t_string_buffer *sb)
+static int		treat_sep(char **str, va_list va, t_string_buffer *sb)
 {
 	t_treat_data	*data;
 
-	if ((str = init_and_set_values_treat_data(++str, &data, va)) == 0)
-		return (str);
-	treat_data(data, va, sb);
+	if ((*str = init_and_set_values_treat_data(++(*str), &data, va)) == 0)
+		return (-1);
+	if (treat_data(data, va, sb) == -2)
+		return (-2);
 	free(data);
-	return (str);
+	return (0);
 }
 
 /*
@@ -109,6 +112,7 @@ int				process(char *str, va_list va, t_string_buffer *sb)
 {
 	char				*tmp;
 	int					pos_first_percent;
+	int					ret;
 
 	while ((pos_first_percent = ft_strcpos(str, SEPERATOR)) != -1)
 	{
@@ -117,8 +121,10 @@ int				process(char *str, va_list va, t_string_buffer *sb)
 		sb_append_normal(sb, tmp);
 		str += pos_first_percent;
 		free(tmp);
-		if ((str = treat_sep(str, va, sb)) == 0)
+		if ((ret = treat_sep(&str, va, sb)) == -1)
 			return (-1);
+		if (ret == -2)
+			return (-2);
 	}
 	sb_append_normal(sb, str);
 	return (0);

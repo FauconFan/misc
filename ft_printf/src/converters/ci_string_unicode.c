@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:36:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 07:58:21 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 09:10:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void		fill_string(wchar_t wchar, char *str, int size)
 	}
 }
 
-void			process_special_char(va_list va, t_treat_data *data,
+int				process_special_char(va_list va, t_treat_data *data,
 						t_string_buffer *sb)
 {
 	wchar_t		wchar;
@@ -59,6 +59,8 @@ void			process_special_char(va_list va, t_treat_data *data,
 
 	wchar = va_arg(va, wchar_t);
 	size = ft_wcharlen(wchar);
+	if (size > MB_CUR_MAX)
+		return (-2);
 	len = ft_max(data->gabarit, 1);
 	str = 0;
 	if (len > 1)
@@ -71,9 +73,10 @@ void			process_special_char(va_list va, t_treat_data *data,
 		fill_string(wchar, str + len - 1, size);
 	sb_append_special(sb, str, len, size + len - 1);
 	free(str);
+	return (0);
 }
 
-void			process_special_string(va_list va, t_treat_data *data,
+int				process_special_string(va_list va, t_treat_data *data,
 					t_string_buffer *sb)
 {
 	wchar_t		*wstr;
@@ -88,14 +91,17 @@ void			process_special_string(va_list va, t_treat_data *data,
 	if (wstr == 0)
 	{
 		sb_append_special(sb, "(null)", 6, 6);
-		return ;
+		return (0);
 	}
 	index = 0;
 	size = 0;
 	size_tot = 0;
 	while (wstr[index])
 	{
-		size_tot += ft_wcharlen(wstr[index]);
+		int		size_current = ft_wcharlen(wstr[index]);
+		if (size_current > MB_CUR_MAX)
+			return (-2);
+		size_tot += size_current;
 		index++;
 	}
 	index = 0;
@@ -110,4 +116,5 @@ void			process_special_string(va_list va, t_treat_data *data,
 	}
 	sb_append_special(sb, str, index, size_tot);
 	free(str);
+	return (0);
 }
