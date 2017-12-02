@@ -3,24 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   treat_data_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:49:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 19:52:01 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 08:15:36 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "treat_data_utils.h"
 
 /*
-**	init the struct and fill it
+**	Init the struct
 */
 
-static char		*init_and_set_values_treat_data(char *str, t_treat_data **data, va_list va)
+static int		init_treat_data(t_treat_data **data)
 {
-	char	*cpy;
-	int		first_time;
-
 	if ((*data = (t_treat_data *)malloc(sizeof(t_treat_data))) == 0)
 		return (0);
 	(*data)->hashtag_flag = 0;
@@ -32,6 +29,21 @@ static char		*init_and_set_values_treat_data(char *str, t_treat_data **data, va_
 	(*data)->precision = -1;
 	(*data)->length_modifier_id = -1;
 	(*data)->converter_id = -1;
+	return (1);
+}
+
+/*
+**	init the struct and fill it
+*/
+
+static char		*init_and_set_values_treat_data(char *str,
+			t_treat_data **data, va_list va)
+{
+	char	*cpy;
+	int		first_time;
+
+	if (init_treat_data(data) == 0)
+		return (0);
 	first_time = 1;
 	while (first_time == 1 || cpy != str)
 	{
@@ -93,8 +105,7 @@ char			*treat_sep(char *str, va_list va, t_string_buffer *sb)
 **	parse the data properly.
 */
 
-int				process(char *str, va_list va, t_string_buffer *sb,
-							char **to_print, int *len_to_print)
+int				process(char *str, va_list va, t_string_buffer *sb)
 {
 	char				*tmp;
 	int					pos_first_percent;
@@ -110,5 +121,5 @@ int				process(char *str, va_list va, t_string_buffer *sb,
 			return (-1);
 	}
 	sb_append_normal(sb, str);
-	return (build_str(sb, to_print, len_to_print));
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vprintf_family.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 13:24:49 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/11/29 14:49:56 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 08:00:40 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int				ft_vsprintf(char **str, const char *restrict format, va_list ap)
 	return (res);
 }
 
-int				ft_vsnprintf(char **str, size_t size, const char *restrict format, va_list ap)
+int				ft_vsnprintf(char **str, size_t size,
+					const char *restrict format, va_list ap)
 {
 	int					res;
 	int					len_to_print;

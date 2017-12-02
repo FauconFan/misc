@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ci_string_unicode.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:36:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 12:13:41 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 07:58:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static void		fill_string(wchar_t wchar, char *str, int size)
 	}
 }
 
-void	process_special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
+void			process_special_char(va_list va, t_treat_data *data,
+						t_string_buffer *sb)
 {
 	wchar_t		wchar;
 	char		*str;
@@ -72,7 +73,8 @@ void	process_special_char(va_list va, t_treat_data *data, t_string_buffer *sb)
 	free(str);
 }
 
-void	process_special_string(va_list va, t_treat_data *data, t_string_buffer *sb)
+void			process_special_string(va_list va, t_treat_data *data,
+					t_string_buffer *sb)
 {
 	wchar_t		*wstr;
 	char		*str;

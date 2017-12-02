@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ci_numbers_utils2.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 17:13:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 08:00:30 by jpriou           ###   ########.fr       */
+/*   Created: 2017/12/02 07:50:26 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/02 08:16:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <limits.h>
-#include <signal.h>
-#include <locale.h>
-#include "libft.h"
-#include "ft_printf.h"
-#include "ft_lltoa_n_ulltoa.h"
+#ifndef CI_NUMBERS_UTILS2_H
+# define CI_NUMBERS_UTILS2_H
 
-int		main(void)
-{
-	ft_printf("-----\n");
-	ft_printf("%S\n", L"米");
-	ft_printf("%d\n", printf("%S", L"米"));
-	ft_printf("\n-----\n");
-	return (0);
-}
+# include "libft.h"
+# include "struct_treat_data.h"
+# include "ci_numbers_utils.h"
+# include "treat_data_utils.h"
+
+char	*handle_negative_decimal_numbers(t_treat_data *data);
+char	*handle_hashtag_flag(char **str, t_treat_data *data);
+
+#endif

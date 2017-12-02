@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_values_treat_data.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 09:05:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 20:00:21 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 08:06:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ char	*set_precision_treat_data(char *str, t_treat_data *data, va_list va)
 		return (str);
 	if (*str == SEP_PRECISION)
 	{
-		str++;
-		if (*str == 0)
+		if (*(++str) == 0)
 			return (str);
 		if (*str == STAR_CHARACTER)
 		{
@@ -78,8 +77,7 @@ char	*set_precision_treat_data(char *str, t_treat_data *data, va_list va)
 			while (ft_isdigit(*str))
 			{
 				data->precision = data->precision * 10 + *str - '0';
-				str++;
-				if (*str == 0)
+				if (*(++str) == 0)
 					return (str);
 			}
 		}
@@ -99,17 +97,9 @@ char	*set_length_modifer(char *str, t_treat_data *data)
 	else if (*str == 'z')
 		tmp = LM_Z;
 	else if (*str == 'h')
-	{
-		tmp = LM_H;
-		if (*(str + 1) == 'h' && str++)
-			tmp = LM_HH;
-	}
+		tmp = (*(str + 1) == 'h' && str++) ? LM_HH : LM_H;
 	else if (*str == 'l')
-	{
-		tmp = LM_L;
-		if (*(str + 1) == 'l' && str++)
-			tmp = LM_LL;
-	}
+		tmp = (*(str + 1) == 'l' && str++) ? LM_LL : LM_L;
 	else
 		str--;
 	str++;

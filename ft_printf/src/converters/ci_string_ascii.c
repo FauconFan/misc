@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 23:28:12 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/01 10:18:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 07:42:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,24 @@ void	process_normal_string(va_list va, t_treat_data *data,
 	char	*res;
 	char	*tmp;
 
-	tmp = va_arg(va, char *);
-	tmp = (tmp == 0) ? "(null)" : tmp;
-	res = ft_strdup(tmp);
+	res = va_arg(va, char *);
+	res = (res == 0) ? "(null)" : res;
 	if (data->precision != -1 && data->precision < (int)ft_strlen(res))
-	{
-		tmp = ft_strsub(res, 0, data->precision);
-		free(res);
-		res = tmp;
-	}
+		res[data->precision] = 0;
 	if (data->gabarit > (int)ft_strlen(res))
 	{
-		tmp = ft_strsetnew(data->gabarit, (data->zero_flag && data->minus_flag == 0) ? '0' : ' ');
+		tmp = ft_strsetnew(data->gabarit,
+			(data->zero_flag && data->minus_flag == 0) ? '0' : ' ');
 		if (data->minus_flag)
 			ft_strncpy(tmp, res, ft_strlen(res));
 		else
 			ft_strncpy(tmp + data->gabarit - ft_strlen(res),
 				res, ft_strlen(res));
-		free(res);
-		res = tmp;
+		sb_append_special(sb, tmp, data->gabarit, data->gabarit);
+		free(tmp);
 	}
-	sb_append_normal(sb, res);
-	free(res);
+	else
+		sb_append_normal(sb, res);
 }
 
 void	process_normal_char(va_list va, t_treat_data *data, t_string_buffer *sb)

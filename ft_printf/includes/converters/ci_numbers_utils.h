@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ci_numbers_utils.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:18:07 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/29 14:50:46 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 07:59:01 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "struct_treat_data.h"
+# include "ci_numbers_utils2.h"
 
 # define PREFIX_XMIN	"0x"
 # define PREFIX_XMAJ	"0X"

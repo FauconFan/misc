@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 12:17:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/21 11:56:42 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 07:59:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,28 +76,25 @@ char						*get_rep_with_prec(va_list va, t_treat_data *data)
 {
 	char	*str;
 	char	*tmp;
+	int		is_negative;
 
 	str = get_first_rep_ci_numbers(va, data);
+	is_negative = (*str == '-');
 	if (data->precision + (*str == '-') > (int)ft_strlen(str))
 	{
-		if (*str != '-')
-		{
-			tmp = ft_strsetnew(data->precision, '0');
-			ft_strncpy(tmp + data->precision - ft_strlen(str), str, ft_strlen(str));
-		}
-		else
-		{
-			tmp = ft_strsetnew(data->precision + 1, '0');
-			ft_strncpy(tmp + data->precision + 2 - ft_strlen(str), str + 1, ft_strlen(str) - 1);
+		tmp = ft_strsetnew(data->precision + is_negative, '0');
+		ft_strncpy(tmp + data->precision + 2 * is_negative - ft_strlen(str),
+			str + is_negative,
+			ft_strlen(str) - is_negative);
+		if (is_negative)
 			*tmp = '-';
-		}
 		free(str);
 		str = tmp;
 	}
 	else if (data->precision == 0 && ft_strcmp(ZERO_SOLO, str) == 0)
 	{
 		free(str);
-		str = ft_strnew(1);
+		str = ft_strnew(0);
 	}
 	return (str);
 }
@@ -113,21 +110,10 @@ char						*get_prefix(char **str, t_treat_data *data)
 		*str = tmp;
 		return (ft_strndup(MINUS_SOLO, 1));
 	}
-	else if (**str != '-' && (data->converter_id == CI_DMIN || data->converter_id == CI_I))
-	{
-		return ((data->plus_flag) ? ft_strndup(PLUS_SOLO, 1) :
-			((data->space_flag) ? ft_strndup(SPACE_SOLO, 1) : ft_strnew(1)));
-	}
+	else if (**str != '-' && (data->converter_id == CI_DMIN ||
+			data->converter_id == CI_I))
+		return (handle_negative_decimal_numbers(data));
 	else if (data->hashtag_flag)
-	{
-		if (data->converter_id == CI_XMIN && data->precision != 0 && ft_strcmp(*str, ZERO_SOLO) != 0)
-			return (ft_strndup(PREFIX_XMIN, 2));
-		else if (data->converter_id == CI_XMAJ && data->precision != 0 && ft_strcmp(*str, ZERO_SOLO) != 0)
-			return (ft_strndup(PREFIX_XMAJ, 2));
-		else if (data->converter_id == CI_OMIN && ft_strcmp(*str, ZERO_SOLO) != 0)
-			return (ft_strndup(ZERO_SOLO, 1));
-		else if (data->converter_id == CI_P)
-			return (ft_strndup(PREFIX_XMIN, 2));
-	}
-	return (ft_strnew(1));
+		return (handle_hashtag_flag(str, data));
+	return (ft_strnew(0));
 }

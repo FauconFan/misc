@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_data_utils.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 08:59:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 16:15:48 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 08:11:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@
 # define CI_N			32
 
 char			*treat_sep(char *str, va_list va, t_string_buffer *sb);
-int				process(char *str, va_list va, t_string_buffer *sb,
-							char **to_print, int *len_to_print);
+int				process(char *str, va_list va, t_string_buffer *sb);
 #endif
