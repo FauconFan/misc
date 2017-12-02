@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:36:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 09:10:05 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 10:07:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ static void		fill_string(wchar_t wchar, char *str, int size)
 	}
 	else if (size == 3)
 	{
-		str[0] = ((wchar >> 12) + 0xE0);
-		str[1] = ((wchar >> 6) + 0x80);
+		str[0] = (((wchar >> 12) & 0xF) + 0xE0);
+		str[1] = (((wchar >> 6) & 0x3F) + 0x80);
 		str[2] = ((wchar & 0x3F) + 0x80);
 	}
 	else
 	{
-		str[0] = ((wchar >> 18) + 0xF0);
-		str[1] = ((wchar >> 12) + 0x80);
-		str[2] = ((wchar >> 6) + 0x80);
+		str[0] = (((wchar >> 18) & 0x7) + 0xF0);
+		str[1] = (((wchar >> 12) & 0x3F) + 0x80);
+		str[2] = (((wchar >> 6) & 0x3F) + 0x80);
 		str[3] = ((wchar & 0x3F) + 0x80);
 	}
 }
@@ -71,7 +71,7 @@ int				process_special_char(va_list va, t_treat_data *data,
 		fill_string(wchar, str, size);
 	else
 		fill_string(wchar, str + len - 1, size);
-	sb_append_special(sb, str, len, size + len - 1);
+	sb_append_special(sb, str, size + len - 1);
 	free(str);
 	return (0);
 }
@@ -90,7 +90,7 @@ int				process_special_string(va_list va, t_treat_data *data,
 	wstr = va_arg(va, wchar_t *);
 	if (wstr == 0)
 	{
-		sb_append_special(sb, "(null)", 6, 6);
+		sb_append_special(sb, "(null)", 6);
 		return (0);
 	}
 	index = 0;
@@ -114,7 +114,7 @@ int				process_special_string(va_list va, t_treat_data *data,
 		index2 += size;
 		index++;
 	}
-	sb_append_special(sb, str, index, size_tot);
+	sb_append_special(sb, str, size_tot);
 	free(str);
 	return (0);
 }

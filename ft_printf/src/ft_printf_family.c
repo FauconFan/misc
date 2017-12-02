@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 14:34:29 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/02 08:57:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 09:18:23 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ int				ft_center_printf(const char *restrict format, va_list va,
 	if (ret == -2)
 	{
 		free_last(sb);
-		build_str(sb, answer, &tampon);
+		tampon = build_str(sb, answer);
 		free_string_buffer(sb);
 		if (len_to_print != 0)
 			*len_to_print = tampon;
 		return (-2);
 	}
-	res = build_str(sb, answer, &tampon);
+	res = build_str(sb, answer);
 	free_string_buffer(sb);
 	if (len_to_print != 0)
-		*len_to_print = tampon;
+		*len_to_print = res;
 	return (res);
 }
 

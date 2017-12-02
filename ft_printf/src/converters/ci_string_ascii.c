@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 23:28:12 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 07:42:00 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 09:19:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	process_normal_string(va_list va, t_treat_data *data,
 		else
 			ft_strncpy(tmp + data->gabarit - ft_strlen(res),
 				res, ft_strlen(res));
-		sb_append_special(sb, tmp, data->gabarit, data->gabarit);
+		sb_append_special(sb, tmp, data->gabarit);
 		free(tmp);
 	}
 	else
@@ -51,6 +51,6 @@ void	process_normal_char(va_list va, t_treat_data *data, t_string_buffer *sb)
 		*str = c;
 	else
 		str[len - 1] = c;
-	sb_append_special(sb, str, len, len);
+	sb_append_special(sb, str, len);
 	free(str);
 }

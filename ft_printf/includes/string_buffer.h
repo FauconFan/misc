@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_buffer.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:24:08 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/30 17:37:37 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/02 09:15:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@
 typedef struct				s_string_buffer
 {
 	char					*str;
-	int						byte_printed;
 	int						byte_stored;
 	struct s_string_buffer	*next;
 }							t_string_buffer;
 
 t_string_buffer				*new_string_buffer_special(
 		char *str,
-		int byte_printed,
 		int byte_stored);
 
 t_string_buffer				*new_string_buffer_normal(
@@ -40,12 +38,10 @@ void						sb_append_normal(
 void						sb_append_special(
 		t_string_buffer *head,
 		char *str,
-		int byte_printed,
 		int byte_stored);
 
 int							build_str(
 		t_string_buffer *head,
-		char **res,
-		int *len_to_print);
+		char **res);
 
 #endif

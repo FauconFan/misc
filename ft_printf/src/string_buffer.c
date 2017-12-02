@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:23:46 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:25 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/02 09:15:36 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 t_string_buffer		*new_string_buffer_special(
 		char *str,
-		int byte_printed,
 		int byte_stored)
 {
 	t_string_buffer	*res;
@@ -28,7 +27,6 @@ t_string_buffer		*new_string_buffer_special(
 		return (0);
 	res->next = 0;
 	res->byte_stored = byte_stored;
-	res->byte_printed = byte_printed;
 	res->str = ft_strdup(str);
 	return (res);
 }
@@ -40,10 +38,7 @@ t_string_buffer		*new_string_buffer_special(
 t_string_buffer		*new_string_buffer_normal(
 		char *str)
 {
-	int		len;
-
-	len = ft_strlen(str);
-	return (new_string_buffer_special(str, len, len));
+	return (new_string_buffer_special(str, ft_strlen(str)));
 }
 
 /*
@@ -71,14 +66,13 @@ void				sb_append_normal(
 void				sb_append_special(
 		t_string_buffer *head,
 		char *str,
-		int byte_printed,
 		int byte_stored)
 {
 	if (head == 0)
 		return ;
 	while (head->next)
 		head = head->next;
-	head->next = new_string_buffer_special(str, byte_printed, byte_stored);
+	head->next = new_string_buffer_special(str, byte_stored);
 }
 
 /*
@@ -89,22 +83,18 @@ void				sb_append_special(
 
 int					build_str(
 		t_string_buffer *head,
-		char **res,
-		int *len_to_print)
+		char **res)
 {
 	t_string_buffer		*tmp;
-	int					len_tot_printed;
 	int					len_tot_stored;
 	int					len_actu;
 
-	len_tot_printed = 0;
 	len_tot_stored = 0;
 	len_actu = 0;
 	tmp = head;
 	while (tmp)
 	{
 		len_tot_stored += tmp->byte_stored;
-		len_tot_printed += tmp->byte_printed;
 		tmp = tmp->next;
 	}
 	*res = ft_strnew(len_tot_stored);
@@ -115,6 +105,5 @@ int					build_str(
 		len_actu += tmp->byte_stored;
 		tmp = tmp->next;
 	}
-	*len_to_print = len_tot_stored;
-	return (len_tot_printed);
+	return (len_tot_stored);
 }
