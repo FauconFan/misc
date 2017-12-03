@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ci_string_unicode_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 11:58:42 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 12:32:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/03 12:25:47 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		get_byte_size(wchar_t *wstr, t_treat_data *data)
 	while (wstr[index])
 	{
 		prec_actu = ft_wcharlen(wstr[index]);
-		if (prec_actu > MB_CUR_MAX)
+		if (prec_actu > (int)MB_CUR_MAX)
 			return (-2);
 		if (data->precision != -1 && res + prec_actu > data->precision)
 			break ;
@@ -34,7 +34,7 @@ int		get_byte_size(wchar_t *wstr, t_treat_data *data)
 	index++;
 	while (wstr[index])
 	{
-		if (ft_wcharlen(wstr[index]) > MB_CUR_MAX)
+		if (ft_wcharlen(wstr[index]) > (int)MB_CUR_MAX)
 			return (-2);
 		index++;
 	}

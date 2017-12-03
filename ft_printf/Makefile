@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
+#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/01 10:01:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/02 12:36:07 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/03 12:26:40 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,9 +57,9 @@ all : $(NAME).a
 $(NAME): all
 
 $(NAME).a : $(FILES_OBJ) $(L_FT)$(L_FTA)
-	libtool -static -o $@ $^
-	#ar rc $@ $(FILES_OBJ) libft/*.o
-	#ranlib $@
+	#libtool -static -o $@ $^
+	ar rc $@ $(FILES_OBJ) libft/*.o
+	ranlib $@
 
 $(L_FT)$(L_FTA):
 	make -C $(L_FT)
@@ -80,4 +80,4 @@ test :
 	make
 	gcc $(TEST_FILE) -L. -lftprintf -I libft/ -I includes/ -I includes/converters/
 	./a.out | cat -e
-	#@rm -f a.out
+	@rm -f a.out

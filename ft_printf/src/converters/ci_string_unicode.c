@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ci_string_unicode.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:36:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/02 12:24:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/03 12:26:09 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int				process_special_char(va_list va, t_treat_data *data,
 
 	wchar = va_arg(va, wchar_t);
 	size = ft_wcharlen(wchar);
-	if (size > MB_CUR_MAX)
+	if (size > (int)MB_CUR_MAX)
 		return (-2);
 	len = ft_max(data->gabarit, 1);
 	str = 0;
