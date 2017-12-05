@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/05 09:23:13 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 09:46:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 
 char			*ft_strstr(const char *haystack, const char *needle);
-char			*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char			*ft_strnstr(const char *haystack, const char *needle,
+										size_t len);
 
 void			ft_strdel(char **as);
 void			ft_strclr(char *s);
@@ -149,14 +150,14 @@ typedef struct	s_list
 	struct s_list		*next;
 }				t_list;
 
-
 t_list			*ft_lstnew(void *content, void *(*cpy)(void *));
 void			ft_lstadd(t_list **alst, t_list *new);
 int				ft_lstsize(t_list *alst);
 void			ft_lstdelone(t_list **alst, void (*del)(void*));
 void			ft_lstdel(t_list **alst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *), void *(*cpy)(void *));
+t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *),
+						void *(*cpy)(void *));
 
 /*
 **	------------------------------- LIBFT MATH --------------------------------
