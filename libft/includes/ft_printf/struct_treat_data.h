@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   struct_treat_data.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 14:43:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 11:58:19 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 09:20:46 by jpriou            #+#    #+#             */
+/*   Updated: 2017/11/15 12:30:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef STRUCT_TREAT_DATA_H
+# define STRUCT_TREAT_DATA_H
 
-char	*ft_strnew(size_t size)
+typedef struct	s_treat_data
 {
-	char	*s;
-	size_t	index;
+	short		hashtag_flag;
+	short		zero_flag;
+	short		minus_flag;
+	short		plus_flag;
+	short		space_flag;
+	int			gabarit;
+	int			precision;
+	int			length_modifier_id;
+	int			converter_id;
+}				t_treat_data;
 
-	index = 0;
-	ft_memcheck((s = (char *)malloc(sizeof(char) * (size + 1))));
-	while (index < size)
-	{
-		s[index] = 0;
-		index++;
-	}
-	s[index] = 0;
-	return (s);
-}
+#endif

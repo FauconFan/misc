@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   set_values_treat_data2.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 14:43:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 11:58:19 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/12 16:16:34 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/05 11:32:46 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SET_VALUES_TREAT_DATA2_H
+# define SET_VALUES_TREAT_DATA2_H
 
-char	*ft_strnew(size_t size)
-{
-	char	*s;
-	size_t	index;
+# include "libft.h"
+# include "struct_treat_data.h"
+# include "treat_data_utils.h"
 
-	index = 0;
-	ft_memcheck((s = (char *)malloc(sizeof(char) * (size + 1))));
-	while (index < size)
-	{
-		s[index] = 0;
-		index++;
-	}
-	s[index] = 0;
-	return (s);
-}
+int		set_converter_treat_data2(char cpy);
+void	update_uppercase_for_l_lm(char letter, t_treat_data *data);
+
+#endif

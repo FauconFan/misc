@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/03 15:58:37 by fauconfan         #+#    #+#              #
-#    Updated: 2017/12/05 09:44:52 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/05 11:40:55 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = libft.a
 SRC_FOLDER = src/
 INCLUDES_MK_FOLDER = includes_mk/
 INCLUDES_FOLDER = includes/
+CONVERTERS_FT_PRINTF_FOLDER = converters/
 
 LIBFT_CHAR_FOLDER = libft_char/
 LIBFT_STR_FOLDER = libft_str/
@@ -23,10 +24,11 @@ LIBFT_MEMMORY_FOLDER = libft_memmory/
 LIBFT_MATH_FOLDER = libft_math/
 LIBFT_LINKED_LIST_FOLDER = libft_linked_list/
 GET_NEXT_LINE_FOLDER = get_next_line/
+FT_PRINTF_FOLDER = ft_printf/
 
 CC = gcc
 COMPILATION_FLAGS = -Wall -Wextra -Werror
-INCLUDES_FLAGS = -I $(INCLUDES_FOLDER)
+INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(INCLUDES_FOLDER)$(FT_PRINTF_FOLDER) -I $(INCLUDES_FOLDER)$(FT_PRINTF_FOLDER)$(CONVERTERS_FT_PRINTF_FOLDER)
 FLAGS = $(COMPILATION_FLAGS) $(INCLUDES_FLAGS)
 
 include $(INCLUDES_MK_FOLDER)libft_char.mk
@@ -36,6 +38,7 @@ include $(INCLUDES_MK_FOLDER)libft_memmory.mk
 include $(INCLUDES_MK_FOLDER)libft_math.mk
 include $(INCLUDES_MK_FOLDER)libft_linked_list.mk
 include $(INCLUDES_MK_FOLDER)get_next_line.mk
+include $(INCLUDES_MK_FOLDER)ft_printf.mk
 
 SRC = $(SRC_LIBFT_CHAR_FP) \
 		$(SRC_LIBFT_STR_FP) \
@@ -44,6 +47,7 @@ SRC = $(SRC_LIBFT_CHAR_FP) \
 		$(SRC_LIBFT_MATH_FP) \
 		$(SRC_LIBFT_LINKED_LIST_FP) \
 		$(SRC_GET_NEXT_LINE_FP) \
+		$(SRC_FT_PRINTF_FP) \
 
 OBJ = $(SRC:%.c=%.o)
 
@@ -54,7 +58,8 @@ $(NAME) : $(OBJ)
 	ranlib $@
 
 %.o : %.c
-	$(CC) $(FLAGS) -c $? -o $@
+	@echo $?
+	@$(CC) $(FLAGS) -c $? -o $@
 
 clean :
 	rm -rf $(OBJ)

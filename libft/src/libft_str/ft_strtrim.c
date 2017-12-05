@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:28:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 10:06:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 11:52:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char			*ft_strtrim(const char *s)
 	while (is_blank(*tmp))
 		tmp++;
 	real_size = true_size(tmp);
-	MEMCHECK((res = (char *)malloc(sizeof(char) * (real_size + 1))))
+	ft_memcheck((res = (char *)malloc(sizeof(char) * (real_size + 1))));
 	while (index < real_size)
 	{
 		res[index] = tmp[index];

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 22:44:49 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 10:04:16 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 11:54:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 	index = 0;
 	while (s[index])
 		index++;
-	MEMCHECK((res = (char *)malloc(sizeof(char) * (index + 1))))
+	ft_memcheck((res = (char *)malloc(sizeof(char) * (index + 1))));
 	index = 0;
 	while (s[index])
 	{

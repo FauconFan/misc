@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_lltoa_n_ulltoa.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 14:43:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 11:58:19 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/14 17:07:34 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/05 11:32:36 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_LLTOA_N_ULLTOA_H
+# define FT_LLTOA_N_ULLTOA_H
 
-char	*ft_strnew(size_t size)
-{
-	char	*s;
-	size_t	index;
+# include "libft.h"
 
-	index = 0;
-	ft_memcheck((s = (char *)malloc(sizeof(char) * (size + 1))));
-	while (index < size)
-	{
-		s[index] = 0;
-		index++;
-	}
-	s[index] = 0;
-	return (s);
-}
+char		*ft_lltoa_base(long long n, char *base);
+char		*ft_ulltoa_base(unsigned long long n, char *base);
+
+#endif

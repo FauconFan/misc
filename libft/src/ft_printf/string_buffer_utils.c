@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   string_buffer_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 14:43:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 11:58:19 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/28 11:41:22 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/02 08:54:46 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "string_buffer_utils.h"
 
-char	*ft_strnew(size_t size)
+/*
+**	free_string_buffer, assez explicit.
+*/
+
+void		free_string_buffer(
+		t_string_buffer *res)
 {
-	char	*s;
-	size_t	index;
-
-	index = 0;
-	ft_memcheck((s = (char *)malloc(sizeof(char) * (size + 1))));
-	while (index < size)
+	if (res)
 	{
-		s[index] = 0;
-		index++;
+		if (res->next)
+			free_string_buffer(res->next);
+		free(res->str);
+		free(res);
 	}
-	s[index] = 0;
-	return (s);
+}
+
+void		free_last(t_string_buffer *res)
+{
+	if (res == 0)
+		return ;
+	while (res->next->next)
+		res = res->next;
+	free_string_buffer(res->next);
+	res->next = 0;
 }

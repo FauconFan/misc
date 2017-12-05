@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_memcheck.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 14:43:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 11:58:19 by jpriou           ###   ########.fr       */
+/*   Created: 2017/12/05 11:48:35 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/05 11:52:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnew(size_t size)
+void	ft_memcheck(void *ptr)
 {
-	char	*s;
-	size_t	index;
-
-	index = 0;
-	ft_memcheck((s = (char *)malloc(sizeof(char) * (size + 1))));
-	while (index < size)
+	if (ptr == 0)
 	{
-		s[index] = 0;
-		index++;
+		ft_putstr_fd("A wrong malloc occured\n", 2);
+		exit(2);
 	}
-	s[index] = 0;
-	return (s);
 }

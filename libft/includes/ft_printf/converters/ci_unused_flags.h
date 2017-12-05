@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ci_unused_flags.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 14:43:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 11:58:19 by jpriou           ###   ########.fr       */
+/*   Created: 2017/12/02 11:37:25 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/05 11:36:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef CI_UNUSED_FLAGS_H
+# define CI_UNUSED_FLAGS_H
 
-char	*ft_strnew(size_t size)
-{
-	char	*s;
-	size_t	index;
+# include "libft.h"
+# include "treat_data_utils.h"
+# include "struct_treat_data.h"
+# include "string_buffer.h"
 
-	index = 0;
-	ft_memcheck((s = (char *)malloc(sizeof(char) * (size + 1))));
-	while (index < size)
-	{
-		s[index] = 0;
-		index++;
-	}
-	s[index] = 0;
-	return (s);
-}
+void	process_unused_flag(t_treat_data *data, t_string_buffer *sb);
+
+#endif

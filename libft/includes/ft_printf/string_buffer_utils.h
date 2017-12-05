@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   string_buffer_utils.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 14:43:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 11:58:19 by jpriou           ###   ########.fr       */
+/*   Created: 2017/11/28 11:41:42 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/05 11:34:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef STRING_BUFFER_UTILS_H
+# define STRING_BUFFER_UTILS_H
 
-char	*ft_strnew(size_t size)
-{
-	char	*s;
-	size_t	index;
+# include "libft.h"
 
-	index = 0;
-	ft_memcheck((s = (char *)malloc(sizeof(char) * (size + 1))));
-	while (index < size)
-	{
-		s[index] = 0;
-		index++;
-	}
-	s[index] = 0;
-	return (s);
-}
+void		free_string_buffer(
+		t_string_buffer *res);
+void		free_last(t_string_buffer *res);
+
+#endif

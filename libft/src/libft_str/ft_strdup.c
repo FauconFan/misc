@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 16:58:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 10:01:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 11:56:18 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strdup(const char *s)
 	res = 0;
 	while (s[len])
 		len++;
-	MEMCHECK((res = (char *)malloc(sizeof(char) * (len + 1))))
+	ft_memcheck((res = (char *)malloc(sizeof(char) * (len + 1))));
 	len = 0;
 	while (s[len])
 	{

@@ -6,23 +6,32 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/05 10:07:46 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 11:57:31 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <string.h>
+# include <stdarg.h>
+# include <stdint.h>
+
+/*
+**	Includes for ft_printf
+*/
+
+# include "string_buffer.h"
+# include "string_buffer_utils.h"
+# include "treat_data_utils.h"
 
 /*
 **	Define Get next line
 */
 
-# define BUFF_SIZE_GNL 			25
-# define MEMCHECK(x)			if (x == 0) exit(2);
+# define BUFF_SIZE_GNL			25
 
 /*
 **	-------------------------- LIBFT_CHAR_FUNCTIONS ---------------------------
@@ -118,6 +127,7 @@ int				ft_str_is_blank(char *s);
 void			*ft_memalloc(size_t size);
 void			ft_memdel(void **ap);
 void			ft_bzero(void *s, size_t n);
+void			ft_memcheck(void *ptr);
 void			*ft_memset(void *s, int c, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
 void			*ft_memccpy(void *dest, const void *src, int c, size_t n);
@@ -187,5 +197,47 @@ int				get_next_line(const int fd, char **line, t_env_gnl *env_gnl);
 t_env_gnl		*init_env_gnl(void);
 void			free_env_gnl(t_env_gnl *head);
 char			**find_buff_prog(t_env_gnl *head, int searched_fd);
+
+/*
+**	-------------------------------- FT_PRINTF --------------------------------
+*/
+
+int				ft_center_printf(
+						const char *restrict format,
+						va_list va,
+						char **answer,
+						int *len_to_print);
+
+int				ft_printf(
+						const char *restrict format,
+						...);
+int				ft_dprintf(
+						int fd,
+						const char *restrict format,
+						...);
+int				ft_sprintf(char **str,
+						const char *restrict format,
+						...);
+int				ft_snprintf(
+						char **str,
+						size_t size,
+						const char *restrict format,
+						...);
+
+int				ft_vprintf(
+						const char *restrict format,
+						va_list ap);
+int				ft_vdprintf(
+						int fd,
+						const char *restrict format,
+						va_list ap);
+int				ft_vsprintf(
+						char **str,
+						const char *restrict format,
+						va_list ap);
+int				ft_vsnprintf(char **str,
+						size_t size,
+						const char *restrict format,
+						va_list ap);
 
 #endif

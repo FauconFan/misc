@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/01 10:01:35 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/03 12:26:40 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/12/05 10:28:39 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = libftprintf
 L_FT = libft/
 L_FTA = libft.a
 
-FLAGS = -g -Wall -Wextra -Werror -I libft/ -I includes/ -I includes/converters/
+FLAGS = -g -Wall -Wextra -Werror -I libft/includes/ -I includes/ -I includes/converters/
 LIBS = -L$(L_FT) -lft
 CC = gcc
 
@@ -57,9 +57,9 @@ all : $(NAME).a
 $(NAME): all
 
 $(NAME).a : $(FILES_OBJ) $(L_FT)$(L_FTA)
-	#libtool -static -o $@ $^
-	ar rc $@ $(FILES_OBJ) libft/*.o
-	ranlib $@
+	libtool -static -o $@ $^
+	#ar rc $@ $(FILES_OBJ) libft/*.o
+	#ranlib $@
 
 $(L_FT)$(L_FTA):
 	make -C $(L_FT)
@@ -78,6 +78,6 @@ re : fclean all
 
 test :
 	make
-	gcc $(TEST_FILE) -L. -lftprintf -I libft/ -I includes/ -I includes/converters/
+	gcc $(TEST_FILE) -L. -lftprintf -I libft/includes/ -I includes/ -I includes/converters/
 	./a.out | cat -e
 	@rm -f a.out
