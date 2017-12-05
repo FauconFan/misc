@@ -20,5 +20,6 @@ SRC_LIBFT_MEMMORY = ft_bzero.c \
 						ft_memdel.c \
 						ft_memmove.c \
 						ft_memset.c \
+						ft_die.c \
 
 SRC_LIBFT_MEMMORY_FP = $(addprefix $(SRC_FOLDER)$(LIBFT_MEMMORY_FOLDER), $(SRC_LIBFT_MEMMORY))

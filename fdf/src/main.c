@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:42:18 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 14:27:21 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 18:55:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,30 @@
 void	display_window(t_env_fdf *env_fdf)
 {
 	env_fdf->mlx_ptr = mlx_init();
-	env_fdf->mlx_win = mlx_new_window(env_fdf->mlx_ptr, 400, 400, "test 42");
+	env_fdf->mlx_win = mlx_new_window(env_fdf->mlx_ptr, WIDTH_WINDOW, HEIGHT_WINDOW, "FdF");
 	mlx_key_hook (env_fdf->mlx_win, key_handle, env_fdf);
+	draw_pixels(env_fdf);
 	mlx_loop(env_fdf->mlx_ptr);
 }
 
-int		main(void)
+void	do_main(char *name_file)
 {
 	t_env_fdf		*env_fdf;
 
 	env_fdf = init_env_fdf();
+	ft_read_file(env_fdf, name_file);
+	ft_init_matrix(env_fdf);
 	display_window(env_fdf);
 	free_env_fdf(&env_fdf);
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 2)
+	{
+		do_main(argv[1]);
+	}
+	else
+		ft_die(ONE_UNIQUE_FILE);
 	return (0);
 }

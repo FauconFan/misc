@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/05 12:30:57 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 15:44:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int				ft_str_is_blank(char *s);
 /*
 ** ------------------------------ LIBFT MEMMORY -------------------------------
 */
+
+void			ft_die(char *error_message);
 
 void			*ft_memalloc(size_t size);
 void			ft_memdel(void **ap);
