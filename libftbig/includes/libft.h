@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/03 18:17:44 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/05 09:23:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+/*
+**	Define Get next line
+*/
 
 # define BUFF_SIZE_GNL 			25
 
@@ -164,5 +168,22 @@ int				ft_max(int a, int b);
 int				ft_abs(int c);
 int				ft_log10(int n);
 int				ft_logb(int n, int lengthbase);
+
+/*
+**	------------------------------ GET NEXT LINE ------------------------------
+*/
+
+typedef struct	s_env_gnl
+{
+	struct s_env_gnl	*next;
+	char				**buff_prog;
+	int					fd;
+}				t_env_gnl;
+
+int				get_next_line(const int fd, char **line, t_env_gnl *env_gnl);
+
+t_env_gnl		*init_env_gnl(void);
+void			free_env_gnl(t_env_gnl *head);
+char			**find_buff_prog(t_env_gnl *head, int searched_fd);
 
 #endif

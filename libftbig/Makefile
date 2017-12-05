@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/03 15:58:37 by fauconfan         #+#    #+#              #
-#    Updated: 2017/12/03 18:18:46 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/12/05 09:44:52 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LIBFT_PUT_FOLDER = libft_put/
 LIBFT_MEMMORY_FOLDER = libft_memmory/
 LIBFT_MATH_FOLDER = libft_math/
 LIBFT_LINKED_LIST_FOLDER = libft_linked_list/
+GET_NEXT_LINE_FOLDER = get_next_line/
 
 CC = gcc
 COMPILATION_FLAGS = -Wall -Wextra -Werror
@@ -34,6 +35,7 @@ include $(INCLUDES_MK_FOLDER)libft_put.mk
 include $(INCLUDES_MK_FOLDER)libft_memmory.mk
 include $(INCLUDES_MK_FOLDER)libft_math.mk
 include $(INCLUDES_MK_FOLDER)libft_linked_list.mk
+include $(INCLUDES_MK_FOLDER)get_next_line.mk
 
 SRC = $(SRC_LIBFT_CHAR_FP) \
 		$(SRC_LIBFT_STR_FP) \
@@ -41,6 +43,7 @@ SRC = $(SRC_LIBFT_CHAR_FP) \
 		$(SRC_LIBFT_MEMMORY_FP) \
 		$(SRC_LIBFT_MATH_FP) \
 		$(SRC_LIBFT_LINKED_LIST_FP) \
+		$(SRC_GET_NEXT_LINE_FP) \
 
 OBJ = $(SRC:%.c=%.o)
 
