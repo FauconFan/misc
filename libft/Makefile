@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/03 15:58:37 by fauconfan         #+#    #+#              #
-#    Updated: 2017/12/05 11:40:55 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/05 12:39:36 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ FT_PRINTF_FOLDER = ft_printf/
 
 CC = gcc
 COMPILATION_FLAGS = -Wall -Wextra -Werror
-INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(INCLUDES_FOLDER)$(FT_PRINTF_FOLDER) -I $(INCLUDES_FOLDER)$(FT_PRINTF_FOLDER)$(CONVERTERS_FT_PRINTF_FOLDER)
+INCLUDES_FLAGS = -I $(INCLUDES_FOLDER)
 FLAGS = $(COMPILATION_FLAGS) $(INCLUDES_FLAGS)
 
 include $(INCLUDES_MK_FOLDER)libft_char.mk
@@ -54,18 +54,22 @@ OBJ = $(SRC:%.c=%.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	ar -rc $@ $(OBJ)
-	ranlib $@
+	@ar -rc $@ $(OBJ)
+	@ranlib $@
+	@echo "libft built successfully"
 
 %.o : %.c
 	@echo $?
 	@$(CC) $(FLAGS) -c $? -o $@
 
 clean :
-	rm -rf $(OBJ)
+	@rm -rf $(OBJ)
+	@echo "libft cleaned"
 
-fclean : clean
-	rm -rf $(NAME)
+fclean :
+	@rm -rf $(OBJ)
+	@rm -rf $(NAME)
+	@echo "libft fcleaned"
 
 re : fclean all
 
