@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 21:44:41 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 14:54:11 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 10:05:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ int			ft_strparse(char ***res, char *str, char c)
 	int		place;
 
 	nb_words = ft_getnb_words(str, c);
-	if ((*res = (char **)malloc(sizeof(char *) * (nb_words + 1))) == NULL)
-		return (-1);
+	MEMCHECK((*res = (char **)malloc(sizeof(char *) * (nb_words + 1))))
 	(*res)[nb_words] = 0;
 	index = 0;
 	while (index < nb_words)

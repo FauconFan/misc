@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 08:50:25 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 09:19:05 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 10:09:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 static t_env_gnl	*init_next(t_env_gnl *last, int new_fd)
 {
-	if ((last->next = (t_env_gnl *)malloc(sizeof(t_env_gnl))) == 0)
-		return (0);
+	MEMCHECK((last->next = (t_env_gnl *)malloc(sizeof(t_env_gnl))))
 	last->next->next = 0;
-	if ((last->next->buff_prog = (char **)malloc(sizeof(char *))) == 0)
-		return (0);
+	MEMCHECK((last->next->buff_prog = (char **)malloc(sizeof(char *))))
 	*(last->next->buff_prog) = ft_strnew(0);
 	last->next->fd = new_fd;
 	return (last->next);
@@ -28,8 +26,7 @@ t_env_gnl			*init_env_gnl(void)
 {
 	t_env_gnl	*res;
 
-	if ((res = (t_env_gnl *)malloc(sizeof(t_env_gnl))) == 0)
-		return (0);
+	MEMCHECK((res = (t_env_gnl *)malloc(sizeof(t_env_gnl))))
 	res->next = 0;
 	res->buff_prog = 0;
 	res->fd = -1;

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 07:55:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 07:58:50 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 10:00:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ char			*ft_itoa_base(int n, char *base)
 	lenbase = ft_strlen(base);
 	len = my_log(n, lenbase);
 	index = 0;
-	if ((res = (char *)malloc(sizeof(char) * (len + 1))) == NULL)
-		return (NULL);
+	MEMCHECK((res = (char *)malloc(sizeof(char) * (len + 1))))
 	if (n == 0)
 		return (returnzero(res));
 	else if (n < 0)

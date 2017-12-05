@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 22:15:01 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 14:53:37 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 10:03:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ char	*ft_strmap(const char *s, char (*f)(char))
 
 	if (s == 0)
 		return (0);
-	if ((res = ft_strdup((char *)s)) == 0)
-		return (0);
+	res = ft_strdup((char *)s);
 	index = 0;
 	while (s[index])
 	{

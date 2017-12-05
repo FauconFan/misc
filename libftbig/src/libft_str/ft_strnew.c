@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 14:43:34 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 14:54:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 10:04:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ char	*ft_strnew(size_t size)
 	size_t	index;
 
 	index = 0;
-	s = (char *)malloc(sizeof(char) * (size + 1));
-	if (s == NULL)
-		return (NULL);
+	MEMCHECK((s = (char *)malloc(sizeof(char) * (size + 1))));
 	while (index < size)
 	{
 		s[index] = 0;

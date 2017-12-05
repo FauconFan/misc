@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:24:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 14:54:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 10:05:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,12 @@ char			**ft_strsplit(char const *s, char c)
 		return (0);
 	length_tot = len_words((char *)s, c, index);
 	tmp = ignorechr((char *)s, c);
-	if ((res = (char **)malloc(sizeof(char *) * (length_tot + 1))) == NULL)
-		return (NULL);
+	MEMCHECK((res = (char **)malloc(sizeof(char *) * (length_tot + 1))))
 	while (index[0] < length_tot)
 	{
 		length_word = len_word(tmp, c, index + 1);
-		if ((res[index[0]] =
-			(char *)malloc(sizeof(char) * (length_word + 1))) == NULL)
-			return (NULL);
+		MEMCHECK((res[index[0]] =
+			(char *)malloc(sizeof(char) * (length_word + 1))))
 		while (index[1] < length_word)
 			res[index[0]][index[1]++] = *(tmp++);
 		res[index[0]++][index[1]] = 0;

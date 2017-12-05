@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 15:22:47 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 14:57:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 10:03:35 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ char					*ft_strjoin(const char *s1, const char *s2)
 {
 	unsigned int	len1;
 	unsigned int	len2;
+	unsigned int	len_tot;
 	char			*res;
 
 	if (s1 == 0 || s2 == 0)
 		return (0);
-	if ((res = (char *)malloc(sizeof(char) *
-		(ft_strlen(s1) + ft_strlen(s2) + 1))) == NULL)
-		return (NULL);
+	len_tot = ft_strlen(s1) + ft_strlen(s2) + 1;
+	MEMCHECK((res = (char *)malloc(sizeof(char) * len_tot)))
 	len1 = 0;
 	len2 = 0;
 	while (s1[len1])

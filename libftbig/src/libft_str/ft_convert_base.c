@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/09 08:13:09 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 16:41:06 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 09:54:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char			*ft_convert_base(char *nbr, char *base_from, char *base_to)
 	length[2] = get_length_number_in_base(length[3], length[1]);
 	if (*nbr == '-' && *nbr == '+')
 		nbr++;
-	res = (char *)malloc(sizeof(*res) * (length[2] + 1));
+	MEMCHECK((res = (char *)malloc(sizeof(*res) * (length[2] + 1))));
 	if (*nbr == '-')
 	{
 		length[2]++;

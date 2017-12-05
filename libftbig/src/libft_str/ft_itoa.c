@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 22:35:37 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 08:04:24 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/05 09:59:44 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ char			*ft_itoa(int n)
 
 	len = my_log(n);
 	index = 0;
-	if ((res = (char *)malloc(sizeof(char) * (len + 1))) == NULL)
-		return (NULL);
+	MEMCHECK((res = (char *)malloc(sizeof(char) * (len + 1))))
 	if (n == 0)
 	{
 		res[0] = '0';
