@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 14:11:24 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 18:51:39 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/06 15:14:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ t_env_fdf		*init_env_fdf(void)
 	res->mlx_win = 0;
 	res->fdf_first_line = 0;
 	res->matrix = 0;
+	res->rotation_x = 0;
+	res->rotation_y = 0;
+	res->rotation_z = 0;
+	res->actual_rotation[0] = 0;
+	res->actual_rotation[1] = 0;
+	res->actual_rotation[2] = 0;
+	res->actual_rotation[3] = 0;
+	res->actual_rotation[4] = 0;
+	res->actual_rotation[5] = 0;
 	return (res);
 }
 

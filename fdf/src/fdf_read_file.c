@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 14:46:05 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/05 17:41:00 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/06 14:06:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ static t_point_col	*build_point(int x, int y, int z, int color)
 	res->x = x;
 	res->y = y;
 	res->z = z;
+	res->x_treated = (double)x;
+	res->y_treated = (double)y;
+	res->z_treated = (double)z;
 	res->color = color;
 	return (res);
 }
@@ -56,11 +59,6 @@ int				get_information_first(char *buff)
 	return (size);
 }
 
-void			ft_describe(t_point_col *po)
-{
-	ft_printf("point %p : x => %d, y => %d, z => %d\n", po, po->x, po->y, po->z);
-}
-
 void			ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
 {
 	int		size_actu;
@@ -75,7 +73,7 @@ void			ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
 			buff++;
 		else if (ft_isdigit(*buff) || (*buff == '-' && ft_isdigit(*(buff + 1))))
 		{
-			line->list[size_actu] = build_point(size_actu, size_y, ft_atoi(buff), 0);
+			line->list[size_actu] = build_point(size_actu, size_y, ft_atoi(buff), 0x00ffffff);
 			buff++;
 			while (ft_isdigit(*buff))
 				buff++;
@@ -119,6 +117,9 @@ void			ft_read_file(t_env_fdf *env_fdf, char *name_file)
 		ptr_line = ptr_line->next;
 		size_y++;
 	}
+	free_env_gnl(env_gnl);
+	env_fdf->size_x = size_x;
+	env_fdf->size_y = size_y;
 	if (close(fd) == -1)
 		ft_die(STRANGE_OCCURED);
 }
