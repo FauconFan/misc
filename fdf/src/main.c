@@ -16,7 +16,8 @@ void	display_window(t_env_fdf *env_fdf)
 {
 	if ((env_fdf->mlx_ptr = mlx_init()) == 0)
 		ft_die(STRANGE_OCCURED);
-	if ((env_fdf->mlx_win = mlx_new_window(env_fdf->mlx_ptr, WIDTH_WINDOW, HEIGHT_WINDOW, "FdF")) == 0)
+	if ((env_fdf->mlx_win = mlx_new_window(
+			env_fdf->mlx_ptr, WIDTH_WINDOW, HEIGHT_WINDOW, "FdF")) == 0)
 		ft_die(STRANGE_OCCURED);
 	mlx_key_hook(env_fdf->mlx_win, key_handle, env_fdf);
 	mlx_mouse_hook(env_fdf->mlx_win, mouse_handle, env_fdf);

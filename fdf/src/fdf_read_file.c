@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-static t_point_col	*build_point(int x, int y, int z, int color)
+static t_point_col	*build_point(int x, int y, int z)
 {
 	t_point_col	*res;
 
@@ -23,7 +23,8 @@ static t_point_col	*build_point(int x, int y, int z, int color)
 	res->x_treated = (double)x;
 	res->y_treated = (double)y;
 	res->z_treated = (double)z;
-	res->color = color;
+	res->color = 0x00FFFFFF;
+	res->is_changeable = 1;
 	return (res);
 }
 
@@ -37,7 +38,7 @@ static t_fdf_line	*build_line(void)
 	return (res);
 }
 
-int				get_information_first(char *buff)
+int					get_information_first(char *buff)
 {
 	int			size;
 
@@ -59,7 +60,7 @@ int				get_information_first(char *buff)
 	return (size);
 }
 
-void			ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
+void				ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
 {
 	int		size_actu;
 
@@ -73,10 +74,18 @@ void			ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
 			buff++;
 		else if (ft_isdigit(*buff) || (*buff == '-' && ft_isdigit(*(buff + 1))))
 		{
-			line->list[size_actu] = build_point(size_actu, size_y, ft_atoi(buff), 0x00ffffff);
+			line->list[size_actu] = build_point(size_actu, size_y, ft_atoi(buff));
 			buff++;
 			while (ft_isdigit(*buff))
 				buff++;
+			if (ft_strncmp(buff, ",0x", 3) == 0)
+			{
+				buff += 3;
+				line->list[size_actu]->color = ft_atoi_base(buff, "0123456789ABCDEF");
+				line->list[size_actu]->is_changeable = 0;
+				while (ft_isxdigit(*buff))
+					buff++;
+			}
 			size_actu++;
 			if (size_actu > size_x)
 				ft_die(FILE_NOT_VALID);
@@ -88,33 +97,33 @@ void			ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
 		ft_die(FILE_NOT_VALID);
 }
 
-/*
-void			ft_fill_env(t_env_fdf *env_fdf, char *buff, )
+void				ft_fill_env(t_env_fdf *env_fdf, char *buff, int size_x, int fd)
 {
+	int			size_y;
+	t_fdf_line	*line;
+
+	size_y = 0;
 	env_fdf->fdf_first_line = build_line();
-	ptr_line = env_fdf->fdf_first_line;
+	line = env_fdf->fdf_first_line;
 	while (1)
 	{
-		ft_fill(ptr_line, buff, size_x, size_y);
+		ft_fill(line, buff, size_x, size_y);
 		free(buff);
-		if (get_next_line(fd, &buff, env_gnl) == 0)
+		if (get_next_line(fd, &buff, env_fdf->env_gnl) == 0)
 			break ;
-		ptr_line->next = build_line();
-		ptr_line = ptr_line->next;
+		line->next = build_line();
+		line = line->next;
 		size_y++;
 	}
-	free_env_gnl(env_gnl);
 	env_fdf->size_x = size_x;
 	env_fdf->size_y = size_y;
 }
-*/
-void			ft_read_file(t_env_fdf *env_fdf, char *name_file)
+
+void				ft_read_file(t_env_fdf *env_fdf, char *name_file)
 {
-	t_fdf_line	*ptr_line;
 	int			fd;
 	char		*buff;
 	int			size_x;
-	int			size_y;
 
 	buff = 0;
 	env_fdf->env_gnl = init_env_gnl();
@@ -123,21 +132,7 @@ void			ft_read_file(t_env_fdf *env_fdf, char *name_file)
 	if (get_next_line(fd, &buff, env_fdf->env_gnl) < 0)
 		ft_die(STRANGE_OCCURED);
 	size_x = get_information_first(buff);
-	size_y = 0;
-	env_fdf->fdf_first_line = build_line();
-	ptr_line = env_fdf->fdf_first_line;
-	while (1)
-	{
-		ft_fill(ptr_line, buff, size_x, size_y);
-		free(buff);
-		if (get_next_line(fd, &buff, env_fdf->env_gnl) == 0)
-			break ;
-		ptr_line->next = build_line();
-		ptr_line = ptr_line->next;
-		size_y++;
-	}
-	env_fdf->size_x = size_x;
-	env_fdf->size_y = size_y;
+	ft_fill_env(env_fdf, buff, size_x, fd);
 	if (close(fd) == -1)
 		ft_die(STRANGE_OCCURED);
 }

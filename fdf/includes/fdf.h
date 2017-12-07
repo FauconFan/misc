@@ -80,6 +80,7 @@ typedef struct		s_point_col
 	double				y_treated;
 	double				z_treated;
 	unsigned int		color;
+	short				is_changeable;
 }					t_point_col;
 
 typedef struct		s_fdf_line

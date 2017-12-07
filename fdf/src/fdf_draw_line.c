@@ -12,7 +12,20 @@
 
 #include "fdf.h"
 
-void	ft_mlx_draw_line(int x[2], int y[2], t_env_fdf *env_fdf)
+int		build_color(int color[6], int ecart, double dx)
+{
+	int		res;
+
+	res = 0;
+	res += color[0] + (color[3] - color[0]) * ecart / dx;
+	res = res << 8;
+	res += color[1] + (color[4] - color[1]) * ecart / dx;
+	res = res << 8;
+	res += color[2] + (color[5] - color[2]) * ecart / dx;
+	return (res);
+}
+
+void	ft_mlx_draw_line(int x[2], int y[2], int color[6], t_env_fdf *env_fdf)
 {
 	double		dx;
 	double		dy;
@@ -26,7 +39,8 @@ void	ft_mlx_draw_line(int x[2], int y[2], t_env_fdf *env_fdf)
 	while (tmp != x[1])
 	{
 		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win,
-			tmp, y[0] + dy * (tmp - x[0]) / dx, 0x00ffffff);
+			tmp, y[0] + dy * (tmp - x[0]) / dx,
+			build_color(color, tmp - x[0], dx));
 		tmp += isgrowing;
 	}
 	isgrowing = (y[1] > y[0]) ? 1 : -1;
@@ -34,7 +48,8 @@ void	ft_mlx_draw_line(int x[2], int y[2], t_env_fdf *env_fdf)
 	while (tmp != y[1])
 	{
 		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win,
-			x[0] + dx * (tmp - y[0]) / dy, tmp, 0x00ffffff);
+			x[0] + dx * (tmp - y[0]) / dy, tmp,
+			build_color(color, tmp - y[0], dy));
 		tmp += isgrowing;
 	}
 }
@@ -43,6 +58,7 @@ void	draw_2points(t_env_fdf *env_fdf, t_point_col *po1, t_point_col *po2)
 {
 	int		x[2];
 	int		y[2];
+	int	color[6];
 
 	x[0] = (int)(po1->x_treated * env_fdf->matrix->x1 +
 		po1->y_treated * env_fdf->matrix->x2 +
@@ -60,7 +76,13 @@ void	draw_2points(t_env_fdf *env_fdf, t_point_col *po1, t_point_col *po2)
 		po2->y_treated * env_fdf->matrix->y2 +
 		po2->z_treated * env_fdf->matrix->y3 +
 		env_fdf->matrix->additional_y);
-	ft_mlx_draw_line(x, y, env_fdf);
+	color[0] = (po1->color >> 16) & 0xFF;
+	color[1] = (po1->color >> 8) & 0xFF;
+	color[2] = (po1->color) & 0xFF;
+	color[3] = (po2->color >> 16) & 0xFF;
+	color[4] = (po2->color >> 8) & 0xFF;
+	color[5] = (po2->color) & 0xFF;
+	ft_mlx_draw_line(x, y, color, env_fdf);
 }
 
 void	treat_point(t_env_fdf *env, t_point_col *po)
