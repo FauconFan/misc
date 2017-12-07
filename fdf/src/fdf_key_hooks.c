@@ -57,31 +57,18 @@ static int		handle_elevation(int keycode, t_env_fdf *env)
 {
 	t_fdf_line	*line;
 	int			index;
+	double		factor;
 
-	if (keycode == A_KEYCODE)
+	if (keycode == A_KEYCODE || keycode == Z_KEYCODE)
 	{
+		factor = (keycode == A_KEYCODE) ? FACTOR_ELEVATION : 1.0 / FACTOR_ELEVATION;
 		line = env->fdf_first_line;
 		while (line)
 		{
 			index = 0;
 			while (line->list[index])
 			{
-				line->list[index]->z *= FACTOR_ELEVATION;
-				index++;
-			}
-			line = line->next;
-		}
-	}
-	else if (keycode == Z_KEYCODE)
-	{
-		
-		line = env->fdf_first_line;
-		while (line)
-		{
-			index = 0;
-			while (line->list[index])
-			{
-				line->list[index]->z /= FACTOR_ELEVATION;
+				line->list[index]->z *= factor;
 				index++;
 			}
 			line = line->next;

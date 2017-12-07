@@ -29,3 +29,9 @@ void	fdf_list_iter(t_env_fdf *env, void (*f)(t_env_fdf *env, t_point_col *po))
 		line = line->next;
 	}
 }
+
+void	adapt_each_point(t_env_fdf *env, t_point_col *col)
+{
+	col->x -= env->size_x / 2;
+	col->y -= env->size_y / 2;
+}

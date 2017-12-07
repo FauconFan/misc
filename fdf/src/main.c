@@ -14,8 +14,10 @@
 
 void	display_window(t_env_fdf *env_fdf)
 {
-	env_fdf->mlx_ptr = mlx_init();
-	env_fdf->mlx_win = mlx_new_window(env_fdf->mlx_ptr, WIDTH_WINDOW, HEIGHT_WINDOW, "FdF");
+	if ((env_fdf->mlx_ptr = mlx_init()) == 0)
+		ft_die(STRANGE_OCCURED);
+	if ((env_fdf->mlx_win = mlx_new_window(env_fdf->mlx_ptr, WIDTH_WINDOW, HEIGHT_WINDOW, "FdF")) == 0)
+		ft_die(STRANGE_OCCURED);
 	mlx_key_hook(env_fdf->mlx_win, key_handle, env_fdf);
 	mlx_mouse_hook(env_fdf->mlx_win, mouse_handle, env_fdf);
 	draw_pixels(env_fdf);
@@ -29,6 +31,7 @@ void	do_main(char *name_file)
 	env_fdf = init_env_fdf();
 	ft_read_file(env_fdf, name_file);
 	ft_init_matrix(env_fdf);
+	fdf_list_iter(env_fdf, adapt_each_point);
 	display_window(env_fdf);
 	free_env_fdf(&env_fdf);
 }

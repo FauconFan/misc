@@ -30,6 +30,16 @@ void			free_lines(t_fdf_line *line)
 	}
 }
 
+void	setup_env_actu_rotation(t_env_fdf *res)
+{
+	res->actual_rotation[0] = cos(res->rotation_x);
+	res->actual_rotation[1] = sin(res->rotation_x);
+	res->actual_rotation[2] = cos(res->rotation_y);
+	res->actual_rotation[3] = sin(res->rotation_y);
+	res->actual_rotation[4] = cos(res->rotation_z);
+	res->actual_rotation[5] = sin(res->rotation_z);
+}
+
 t_env_fdf		*init_env_fdf(void)
 {
 	t_env_fdf	*res;
@@ -37,8 +47,12 @@ t_env_fdf		*init_env_fdf(void)
 	ft_memcheck((res = (t_env_fdf *)malloc(sizeof(t_env_fdf))));
 	res->mlx_ptr = 0;
 	res->mlx_win = 0;
+	res->env_gnl = 0;
 	res->fdf_first_line = 0;
 	res->matrix = 0;
+	//res->rotation_x = - M_PI / 8;
+	//res->rotation_y = M_PI / 8;
+	//res->rotation_z = - M_PI / 8;
 	res->rotation_x = 0;
 	res->rotation_y = 0;
 	res->rotation_z = 0;
@@ -68,5 +82,7 @@ void			free_env_fdf(t_env_fdf **env_fdf)
 	}
 	if (fdf->matrix)
 		free(fdf->matrix);
+	if (fdf->env_gnl)
+		free_env_gnl(fdf->env_gnl);
 	*env_fdf = 0;
 }

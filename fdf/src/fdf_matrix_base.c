@@ -14,13 +14,16 @@
 
 void		ft_init_matrix(t_env_fdf *fdf)
 {
+	int		factor;
+
+	factor = (ft_min(WIDTH_WINDOW, HEIGHT_WINDOW) / ft_min(fdf->size_x, fdf->size_y)) / 2;
 	ft_memcheck((fdf->matrix = (t_matrix_base *)malloc(sizeof(t_matrix_base))));
-	fdf->matrix->x1 = 50.0;
+	fdf->matrix->x1 = factor;
 	fdf->matrix->x2 = 0.0;
 	fdf->matrix->x3 = 0.0;
 	fdf->matrix->y1 = 0.0;
-	fdf->matrix->y2 = 50.0;
+	fdf->matrix->y2 = factor;
 	fdf->matrix->y3 = 0.0;
-	fdf->matrix->additional_x = WIDTH_WINDOW / 2 - fdf->matrix->x1 * fdf->size_x / 2;
-	fdf->matrix->additional_y = HEIGHT_WINDOW / 2 - fdf->matrix->y2 * fdf->size_y / 2;
+	fdf->matrix->additional_x = WIDTH_WINDOW / 2;
+	fdf->matrix->additional_y = HEIGHT_WINDOW / 2;
 }

@@ -88,23 +88,9 @@ void			ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
 		ft_die(FILE_NOT_VALID);
 }
 
-void			ft_read_file(t_env_fdf *env_fdf, char *name_file)
+/*
+void			ft_fill_env(t_env_fdf *env_fdf, char *buff, )
 {
-	t_env_gnl	*env_gnl;
-	t_fdf_line	*ptr_line;
-	int			fd;
-	char		*buff;
-	int			size_x;
-	int			size_y;
-
-	buff = 0;
-	env_gnl = init_env_gnl();
-	if ((fd = open(name_file, O_RDONLY)) == -1)
-		ft_die(NAME_FILE_NOT_VALID);
-	if (get_next_line(fd, &buff, env_gnl) < 0)
-		ft_die(STRANGE_OCCURED);
-	size_x = get_information_first(buff);
-	size_y = 0;
 	env_fdf->fdf_first_line = build_line();
 	ptr_line = env_fdf->fdf_first_line;
 	while (1)
@@ -118,6 +104,38 @@ void			ft_read_file(t_env_fdf *env_fdf, char *name_file)
 		size_y++;
 	}
 	free_env_gnl(env_gnl);
+	env_fdf->size_x = size_x;
+	env_fdf->size_y = size_y;
+}
+*/
+void			ft_read_file(t_env_fdf *env_fdf, char *name_file)
+{
+	t_fdf_line	*ptr_line;
+	int			fd;
+	char		*buff;
+	int			size_x;
+	int			size_y;
+
+	buff = 0;
+	env_fdf->env_gnl = init_env_gnl();
+	if ((fd = open(name_file, O_RDONLY)) == -1)
+		ft_die(NAME_FILE_NOT_VALID);
+	if (get_next_line(fd, &buff, env_fdf->env_gnl) < 0)
+		ft_die(STRANGE_OCCURED);
+	size_x = get_information_first(buff);
+	size_y = 0;
+	env_fdf->fdf_first_line = build_line();
+	ptr_line = env_fdf->fdf_first_line;
+	while (1)
+	{
+		ft_fill(ptr_line, buff, size_x, size_y);
+		free(buff);
+		if (get_next_line(fd, &buff, env_fdf->env_gnl) == 0)
+			break ;
+		ptr_line->next = build_line();
+		ptr_line = ptr_line->next;
+		size_y++;
+	}
 	env_fdf->size_x = size_x;
 	env_fdf->size_y = size_y;
 	if (close(fd) == -1)

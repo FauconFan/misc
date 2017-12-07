@@ -26,6 +26,9 @@
 # define ROTATE_WHEN_PRESSING	M_PI / 180.0
 # define FACTOR_ELEVATION		1.1
 
+# define MIN_COLOR				0x00FFFFFF
+# define MAX_COLOR				0x00FFFF00
+
 /*
 # define ESC_KEYCODE			53
 # define UP_KEYCODE				126
@@ -70,9 +73,9 @@ typedef struct		s_matrix_base
 
 typedef struct		s_point_col
 {
-	double					x;
-	double					y;
-	double					z;
+	double				x;
+	double				y;
+	double				z;
 	double				x_treated;
 	double				y_treated;
 	double				z_treated;
@@ -89,6 +92,7 @@ typedef struct		s_env_fdf
 {
 	void			*mlx_ptr;
 	void			*mlx_win;
+	t_env_gnl		*env_gnl;
 	t_fdf_line		*fdf_first_line;
 	t_matrix_base	*matrix;
 	int				size_x;
@@ -101,12 +105,14 @@ typedef struct		s_env_fdf
 
 t_env_fdf			*init_env_fdf(void);
 void				free_env_fdf(t_env_fdf **env_fdf);
+void				setup_env_actu_rotation(t_env_fdf *res);
 void				fdf_list_iter(t_env_fdf *env, void (*f)(t_env_fdf *env, t_point_col *po));
 
 void				draw_pixels(t_env_fdf *env_fdf);
 
 void				ft_init_matrix(t_env_fdf *fdf);
 
+void				adapt_each_point(t_env_fdf *env, t_point_col *col);
 int					key_handle(int keycode, void *param);
 int					mouse_handle(int button, int x, int y, void *fdf_env);
 

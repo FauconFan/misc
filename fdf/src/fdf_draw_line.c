@@ -25,19 +25,21 @@ void	ft_mlx_draw_line(int x[2], int y[2], t_env_fdf *env_fdf)
 	tmp = x[0];
 	while (tmp != x[1])
 	{
-		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win, tmp, y[0] + dy * (tmp - x[0]) / dx, 0x00ffffff);
+		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win,
+			tmp, y[0] + dy * (tmp - x[0]) / dx, 0x00ffffff);
 		tmp += isgrowing;
 	}
 	isgrowing = (y[1] > y[0]) ? 1 : -1;
 	tmp = y[0];
 	while (tmp != y[1])
 	{
-		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win, x[0] + dx * (tmp - y[0]) / dy, tmp, 0x00ffffff);
+		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win,
+			x[0] + dx * (tmp - y[0]) / dy, tmp, 0x00ffffff);
 		tmp += isgrowing;
 	}
 }
 
-void	draw_between_two_points(t_env_fdf *env_fdf, t_point_col *po1, t_point_col *po2)
+void	draw_2points(t_env_fdf *env_fdf, t_point_col *po1, t_point_col *po2)
 {
 	int		x[2];
 	int		y[2];
@@ -61,30 +63,20 @@ void	draw_between_two_points(t_env_fdf *env_fdf, t_point_col *po1, t_point_col *
 	ft_mlx_draw_line(x, y, env_fdf);
 }
 
-void	setup_env_actu_rotation(t_env_fdf *res)
-{
-	res->actual_rotation[0] = cos(res->rotation_x);
-	res->actual_rotation[1] = sin(res->rotation_x);
-	res->actual_rotation[2] = cos(res->rotation_y);
-	res->actual_rotation[3] = sin(res->rotation_y);
-	res->actual_rotation[4] = cos(res->rotation_z);
-	res->actual_rotation[5] = sin(res->rotation_z);
-}
-
 void	treat_point(t_env_fdf *env, t_point_col *po)
 {
 	double		*coeff;
 
 	coeff = env->actual_rotation;
 	po->x_treated = po->x * (coeff[2] * coeff[4]) +
-						po->y * (coeff[1] * coeff[3] * coeff[4] + coeff[0] * coeff[5]) +
-						po->z * ( -coeff[3] * coeff[0] * coeff[4] + coeff[5] * coeff[1]);
+			po->y * (coeff[1] * coeff[3] * coeff[4] + coeff[0] * coeff[5]) +
+			po->z * ( -coeff[3] * coeff[0] * coeff[4] + coeff[5] * coeff[1]);
 	po->y_treated = po->x * (-coeff[2] * coeff[5]) +
-						po->y * (-coeff[1] * coeff[3] * coeff[5] + coeff[0] * coeff[4]) +
-						po->z * (coeff[2] * coeff[0] * coeff[5] + coeff[1] * coeff[4]);
+			po->y * (-coeff[1] * coeff[3] * coeff[5] + coeff[0] * coeff[4]) +
+			po->z * (coeff[2] * coeff[0] * coeff[5] + coeff[1] * coeff[4]);
 	po->z_treated = po->x * (coeff[2]) +
-						po->y * (-coeff[1] * coeff[2]) +
-						po->z * (coeff[0] * coeff[2]);
+			po->y * (-coeff[1] * coeff[2]) +
+			po->z * (coeff[0] * coeff[2]);
 }
 
 void	draw_pixels(t_env_fdf *env_fdf)
@@ -100,20 +92,14 @@ void	draw_pixels(t_env_fdf *env_fdf)
 	line2 = line1->next;
 	while (line1)
 	{
-		index = 0;
-		while (line1->list[index + 1])
-		{
-			draw_between_two_points(env_fdf, line1->list[index], line1->list[index + 1]);
-			index++;
-		}
+		index = -1;
+		while (line1->list[++index + 1])
+			draw_2points(env_fdf, line1->list[index], line1->list[index + 1]);
 		if (line2)
 		{
-			index = 0;
-			while (line1->list[index])
-			{
-				draw_between_two_points(env_fdf, line1->list[index], line2->list[index]);
-				index++;
-			}
+			index = -1;
+			while (line1->list[++index])
+				draw_2points(env_fdf, line1->list[index], line2->list[index]);
 			line2 = line2->next;
 		}
 		line1 = line1->next;
