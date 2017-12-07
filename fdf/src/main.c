@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	display_window(t_env_fdf *env_fdf)
+static void		display_window(t_env_fdf *env_fdf)
 {
 	if ((env_fdf->mlx_ptr = mlx_init()) == 0)
 		ft_die(STRANGE_OCCURED);
@@ -25,25 +25,32 @@ void	display_window(t_env_fdf *env_fdf)
 	mlx_loop(env_fdf->mlx_ptr);
 }
 
-void	do_main(char *name_file)
+static void		do_main(char *name_file)
 {
 	t_env_fdf		*env_fdf;
 
 	env_fdf = init_env_fdf();
 	ft_read_file(env_fdf, name_file);
 	ft_init_matrix(env_fdf);
-	fdf_list_iter(env_fdf, adapt_each_point);
+	treat_points_for_display_well(env_fdf);
 	display_window(env_fdf);
 	free_env_fdf(&env_fdf);
 }
 
-int		main(int argc, char **argv)
+static void		display_usgae(void)
+{
+	ft_printf("****** FdF ******\n\n");
+	ft_printf("usage ./fdf file_name\n");
+	exit(1);
+}
+
+int				main(int argc, char **argv)
 {
 	if (argc == 2)
 	{
 		do_main(argv[1]);
 	}
 	else
-		ft_die(ONE_UNIQUE_FILE);
+		display_usgae();
 	return (0);
 }

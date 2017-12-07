@@ -12,23 +12,23 @@
 
 #include "fdf.h"
 
-int		build_color(int color[6], int ecart, double dx)
+int		build_color(int color[6], double ecart, int dx)
 {
 	int		res;
 
 	res = 0;
-	res += color[0] + (color[3] - color[0]) * ecart / dx;
+	res += color[0] + ((color[3] - color[0]) * ecart / dx);
 	res = res << 8;
-	res += color[1] + (color[4] - color[1]) * ecart / dx;
+	res += color[1] + ((color[4] - color[1]) * ecart / dx);
 	res = res << 8;
-	res += color[2] + (color[5] - color[2]) * ecart / dx;
+	res += color[2] + ((color[5] - color[2]) * ecart / dx);
 	return (res);
 }
 
 void	ft_mlx_draw_line(int x[2], int y[2], int color[6], t_env_fdf *env_fdf)
 {
-	double		dx;
-	double		dy;
+	int			dx;
+	int			dy;
 	int			isgrowing;
 	int			tmp;
 
@@ -52,13 +52,14 @@ void	ft_mlx_draw_line(int x[2], int y[2], int color[6], t_env_fdf *env_fdf)
 			build_color(color, tmp - y[0], dy));
 		tmp += isgrowing;
 	}
+
 }
 
 void	draw_2points(t_env_fdf *env_fdf, t_point_col *po1, t_point_col *po2)
 {
 	int		x[2];
 	int		y[2];
-	int	color[6];
+	int		color[6];
 
 	x[0] = (int)(po1->x_treated * env_fdf->matrix->x1 +
 		po1->y_treated * env_fdf->matrix->x2 +
@@ -76,12 +77,7 @@ void	draw_2points(t_env_fdf *env_fdf, t_point_col *po1, t_point_col *po2)
 		po2->y_treated * env_fdf->matrix->y2 +
 		po2->z_treated * env_fdf->matrix->y3 +
 		env_fdf->matrix->additional_y);
-	color[0] = (po1->color >> 16) & 0xFF;
-	color[1] = (po1->color >> 8) & 0xFF;
-	color[2] = (po1->color) & 0xFF;
-	color[3] = (po2->color >> 16) & 0xFF;
-	color[4] = (po2->color >> 8) & 0xFF;
-	color[5] = (po2->color) & 0xFF;
+	build_rep(po1->color, po2->color, color);
 	ft_mlx_draw_line(x, y, color, env_fdf);
 }
 

@@ -62,6 +62,8 @@ t_env_fdf		*init_env_fdf(void)
 	res->actual_rotation[3] = 0;
 	res->actual_rotation[4] = 0;
 	res->actual_rotation[5] = 0;
+	res->min_color = MIN_COLOR_DEFAULT;
+	res->max_color = MAX_COLOR_DEFAULT;
 	return (res);
 }
 

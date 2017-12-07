@@ -23,7 +23,7 @@ static t_point_col	*build_point(int x, int y, int z)
 	res->x_treated = (double)x;
 	res->y_treated = (double)y;
 	res->z_treated = (double)z;
-	res->color = 0x00FFFFFF;
+	res->color = 0;
 	res->is_changeable = 1;
 	return (res);
 }

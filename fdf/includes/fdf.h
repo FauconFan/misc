@@ -26,8 +26,8 @@
 # define ROTATE_WHEN_PRESSING	M_PI / 180.0
 # define FACTOR_ELEVATION		1.1
 
-# define MIN_COLOR				0x00FFFFFF
-# define MAX_COLOR				0x00FFFF00
+# define MIN_COLOR_DEFAULT		0x00FFFFFF
+# define MAX_COLOR_DEFAULT		0x0000FFFF
 
 /*
 # define ESC_KEYCODE			53
@@ -102,14 +102,19 @@ typedef struct		s_env_fdf
 	double			rotation_y;
 	double			rotation_z;
 	double			actual_rotation[6];
+	int				min_color;
+	int				max_color;
 }					t_env_fdf;
 
 t_env_fdf			*init_env_fdf(void);
 void				free_env_fdf(t_env_fdf **env_fdf);
 void				setup_env_actu_rotation(t_env_fdf *res);
+void				treat_points_for_display_well(t_env_fdf *env);
 void				fdf_list_iter(t_env_fdf *env, void (*f)(t_env_fdf *env, t_point_col *po));
 
+int					build_color(int color[6], double ecart, int dx);
 void				draw_pixels(t_env_fdf *env_fdf);
+void				build_rep(int color1, int color2, int *rep);
 
 void				ft_init_matrix(t_env_fdf *fdf);
 

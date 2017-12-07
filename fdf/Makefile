@@ -48,7 +48,6 @@ lib :
 
 clean :
 	rm -f $(OBJ)
-	make clean -C $(LIBFT_FOLDER)
 
 fclean :
 	rm -f $(OBJ)
