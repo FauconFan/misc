@@ -77,16 +77,12 @@ static int		atoi_real(char *str, char *base, int length_base)
 	}
 	else if (*str == '+')
 		str++;
-	tmp = get_place_in_base(*str, base);
 	res = 0;
-	while (*str)
+	while (*str && (tmp = get_place_in_base(*str, base)) != -1)
 	{
-		if (tmp == -1)
-			return (0);
 		res *= length_base;
 		res -= tmp;
 		str++;
-		tmp = get_place_in_base(*str, base);
 	}
 	return (res * -sign);
 }
