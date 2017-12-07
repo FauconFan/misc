@@ -63,11 +63,6 @@ void	treat_points_for_display_well(t_env_fdf *env)
 	ft_printf("Max value : %d\n", values[1]);
 	line = env->fdf_first_line;
 	build_rep(env->min_color, env->max_color, color);
-	for (int i = 0; i < 6; ++i)
-	{
-		ft_printf(" %d <= %X\n", i, color[i]);
-	}
-	ft_printf("%X\n", build_color(color, 2, 9));
 	while (line)
 	{
 		index = 0;

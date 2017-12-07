@@ -40,7 +40,7 @@ void	setup_env_actu_rotation(t_env_fdf *res)
 	res->actual_rotation[5] = sin(res->rotation_z);
 }
 
-t_env_fdf		*init_env_fdf(void)
+t_env_fdf		*init_env_fdf(int color_values[2], int is_iso)
 {
 	t_env_fdf	*res;
 
@@ -50,20 +50,17 @@ t_env_fdf		*init_env_fdf(void)
 	res->env_gnl = 0;
 	res->fdf_first_line = 0;
 	res->matrix = 0;
-	//res->rotation_x = - M_PI / 8;
-	//res->rotation_y = M_PI / 8;
-	//res->rotation_z = - M_PI / 8;
-	res->rotation_x = 0;
-	res->rotation_y = 0;
-	res->rotation_z = 0;
+	res->rotation_x = (is_iso) ? - M_PI / 8 : 0;
+	res->rotation_y = (is_iso) ? - M_PI / 8 : 0;
+	res->rotation_z = (is_iso) ? 0 : 0;
 	res->actual_rotation[0] = 0;
 	res->actual_rotation[1] = 0;
 	res->actual_rotation[2] = 0;
 	res->actual_rotation[3] = 0;
 	res->actual_rotation[4] = 0;
 	res->actual_rotation[5] = 0;
-	res->min_color = MIN_COLOR_DEFAULT;
-	res->max_color = MAX_COLOR_DEFAULT;
+	res->min_color = color_values[0];
+	res->max_color = color_values[1];
 	return (res);
 }
 

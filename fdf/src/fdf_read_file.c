@@ -60,6 +60,23 @@ int					get_information_first(char *buff)
 	return (size);
 }
 
+static char			*ft_fill_one(t_point_col **po, int size_actu, int size_y, char *buff)
+{
+	*po = build_point(size_actu, size_y, ft_atoi(buff));
+	buff++;
+	while (ft_isdigit(*buff))
+		buff++;
+	if (ft_strncmp(buff, ",0x", 3) == 0)
+	{
+		buff += 3;
+		(*po)->color = ft_atoi_base(buff, BASE_HEXA);
+		(*po)->is_changeable = 0;
+		while (ft_isxdigit(*buff))
+			buff++;
+	}
+	return (buff);
+}
+
 void				ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
 {
 	int		size_actu;
@@ -74,18 +91,7 @@ void				ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
 			buff++;
 		else if (ft_isdigit(*buff) || (*buff == '-' && ft_isdigit(*(buff + 1))))
 		{
-			line->list[size_actu] = build_point(size_actu, size_y, ft_atoi(buff));
-			buff++;
-			while (ft_isdigit(*buff))
-				buff++;
-			if (ft_strncmp(buff, ",0x", 3) == 0)
-			{
-				buff += 3;
-				line->list[size_actu]->color = ft_atoi_base(buff, "0123456789ABCDEF");
-				line->list[size_actu]->is_changeable = 0;
-				while (ft_isxdigit(*buff))
-					buff++;
-			}
+			buff = ft_fill_one(line->list + size_actu, size_actu, size_y, buff);
 			size_actu++;
 			if (size_actu > size_x)
 				ft_die(FILE_NOT_VALID);

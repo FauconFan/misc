@@ -25,11 +25,30 @@ static void		display_window(t_env_fdf *env_fdf)
 	mlx_loop(env_fdf->mlx_ptr);
 }
 
-static void		do_main(char *name_file)
+static void		display_usage(void)
+{
+	ft_printf("****** FdF ******\n\n");
+	ft_printf("usage ./fdf file_name\n\n");
+	ft_printf("how to launch it :\n\n");
+	ft_printf("you can specify two colors starting with the prefix \"0x\"");
+	ft_printf("how to use it :\n\n");
+	ft_printf("\t A => Increase elevation\n");
+	ft_printf("\t Z => Decrease elevation\n\n");
+	ft_printf("\t T => ROTATE X +\n\t Y => ROTATE X -\n");
+	ft_printf("\t G => ROTATE Y +\n\t H => ROTATE Y -\n");
+	ft_printf("\t B => ROTATE Z +\n\t N => ROTATE Z -\n\n");
+	ft_printf("\t P => ZOOM +\n\t M => ZOOM -\n\n");
+	ft_printf("\t UP => TRANSLATE UP\n\t DOWN => TRANSLATE DOWN\n");
+	ft_printf("\t LEFT => TRANSLATE LEFT\n\t RIGHT => TRANSLATE RIGHT\n\n");
+	ft_printf("\t MOUSE CLICK => orient the shape in the dir. of the mouse\n");
+	exit(1);
+}
+
+static void		do_main(char *name_file, int color_values[2], int is_iso)
 {
 	t_env_fdf		*env_fdf;
 
-	env_fdf = init_env_fdf();
+	env_fdf = init_env_fdf(color_values, is_iso);
 	ft_read_file(env_fdf, name_file);
 	ft_init_matrix(env_fdf);
 	treat_points_for_display_well(env_fdf);
@@ -37,20 +56,50 @@ static void		do_main(char *name_file)
 	free_env_fdf(&env_fdf);
 }
 
-static void		display_usgae(void)
+static void		treat_args(int argc, char **argv)
 {
-	ft_printf("****** FdF ******\n\n");
-	ft_printf("usage ./fdf file_name\n");
-	exit(1);
+	char	*name_file;
+	int		color_values[2];
+	int		is_iso;
+	int		index;
+
+	index = 0;
+	is_iso = 0;
+	name_file = 0;
+	color_values[0] = MIN_COLOR_DEFAULT;
+	color_values[1] = MAX_COLOR_DEFAULT;
+	while (index < argc)
+	{
+		if (ft_strncmp(argv[index], "0x", 2) == 0 &&
+			index != argc - 1 && ft_strncmp(argv[index + 1], "0x", 2) == 0)
+		{
+			color_values[0] = ft_atoi_base(argv[index] + 2, BASE_HEXA);
+			index++;
+			color_values[1] = ft_atoi_base(argv[index] + 2, BASE_HEXA);
+		}
+		else if (ft_strcmp(argv[index], "-iso") == 0)
+			is_iso = 1;
+		else
+		{
+			if (name_file == 0)
+				name_file = argv[index];
+			else
+				display_usage();
+		}
+		index++;
+	}
+	if (name_file == 0)
+		display_usage();
+	do_main(name_file, color_values, is_iso);
 }
 
 int				main(int argc, char **argv)
 {
-	if (argc == 2)
+	if (argc >= 2)
 	{
-		do_main(argv[1]);
+		treat_args(argc - 1, ++argv);
 	}
 	else
-		display_usgae();
+		display_usage();
 	return (0);
 }

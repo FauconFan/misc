@@ -23,7 +23,7 @@
 
 # define MOVE_WHEN_PRESSING		10
 # define ZOOM_WHEN_PRESSING		1.05
-# define ROTATE_WHEN_PRESSING	M_PI / 180.0
+# define ROTATE_WHEN_PRESSING	M_PI / 8.0
 # define FACTOR_ELEVATION		1.1
 
 # define MIN_COLOR_DEFAULT		0x00FFFFFF
@@ -53,6 +53,19 @@
 
 # define A_KEYCODE				97
 # define Z_KEYCODE				122
+
+# define ROTATE_PLUS_X_KEYCODE	116
+# define ROTATE_MOINS_X_KEYCODE	121
+
+# define ROTATE_PLUS_Y_KEYCODE	103
+# define ROTATE_MOINS_Y_KEYCODE	104
+
+# define ROTATE_PLUS_Z_KEYCODE	98
+# define ROTATE_MOINS_Z_KEYCODE	110
+
+# define RESET_KEYCODE			114
+
+# define BASE_HEXA				"0123456789ABCDEF"
 
 # define FILE_NOT_VALID			"This file is not well formatted"
 # define STRANGE_OCCURED		"Something occured"
@@ -106,9 +119,10 @@ typedef struct		s_env_fdf
 	int				max_color;
 }					t_env_fdf;
 
-t_env_fdf			*init_env_fdf(void);
+t_env_fdf			*init_env_fdf(int color_values[2], int is_iso);
 void				free_env_fdf(t_env_fdf **env_fdf);
 void				setup_env_actu_rotation(t_env_fdf *res);
+
 void				treat_points_for_display_well(t_env_fdf *env);
 void				fdf_list_iter(t_env_fdf *env, void (*f)(t_env_fdf *env, t_point_col *po));
 
