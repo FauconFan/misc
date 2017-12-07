@@ -12,15 +12,20 @@
 
 #include "fdf.h"
 
-void		ft_init_matrix(t_env_fdf *fdf)
+void	fdf_list_iter(t_env_fdf *env, void (*f)(t_env_fdf *env, t_point_col *po))
 {
-	ft_memcheck((fdf->matrix = (t_matrix_base *)malloc(sizeof(t_matrix_base))));
-	fdf->matrix->x1 = 50.0;
-	fdf->matrix->x2 = 0.0;
-	fdf->matrix->x3 = 0.0;
-	fdf->matrix->y1 = 0.0;
-	fdf->matrix->y2 = 50.0;
-	fdf->matrix->y3 = 0.0;
-	fdf->matrix->additional_x = WIDTH_WINDOW / 2 - fdf->matrix->x1 * fdf->size_x / 2;
-	fdf->matrix->additional_y = HEIGHT_WINDOW / 2 - fdf->matrix->y2 * fdf->size_y / 2;
+	t_fdf_line	*line;
+	int			index;
+
+	line = env->fdf_first_line;
+	while (line)
+	{
+		index = 0;
+		while (line->list[index])
+		{
+			f(env, line->list[index]);
+			index++;
+		}
+		line = line->next;
+	}
 }

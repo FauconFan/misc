@@ -24,7 +24,9 @@
 # define MOVE_WHEN_PRESSING		10
 # define ZOOM_WHEN_PRESSING		1.05
 # define ROTATE_WHEN_PRESSING	M_PI / 180.0
+# define FACTOR_ELEVATION		1.1
 
+/*
 # define ESC_KEYCODE			53
 # define UP_KEYCODE				126
 # define DOWN_KEYCODE			125
@@ -35,6 +37,19 @@
 # define ZOOM_MINUS				78
 
 # define ROTATE_X_KEYCODE		31
+*/
+
+# define ESC_KEYCODE			65307
+# define UP_KEYCODE				65362
+# define DOWN_KEYCODE			65364
+# define LEFT_KEYCODE			65361
+# define RIGHT_KEYCODE			65363
+
+# define ZOOM_PLUS				112
+# define ZOOM_MINUS				109
+
+# define A_KEYCODE				97
+# define Z_KEYCODE				122
 
 # define FILE_NOT_VALID			"This file is not well formatted"
 # define STRANGE_OCCURED		"Something occured"
@@ -55,9 +70,9 @@ typedef struct		s_matrix_base
 
 typedef struct		s_point_col
 {
-	int					x;
-	int					y;
-	int					z;
+	double					x;
+	double					y;
+	double					z;
 	double				x_treated;
 	double				y_treated;
 	double				z_treated;
@@ -86,12 +101,14 @@ typedef struct		s_env_fdf
 
 t_env_fdf			*init_env_fdf(void);
 void				free_env_fdf(t_env_fdf **env_fdf);
+void				fdf_list_iter(t_env_fdf *env, void (*f)(t_env_fdf *env, t_point_col *po));
 
 void				draw_pixels(t_env_fdf *env_fdf);
 
 void				ft_init_matrix(t_env_fdf *fdf);
 
 int					key_handle(int keycode, void *param);
+int					mouse_handle(int button, int x, int y, void *fdf_env);
 
 void				ft_read_file(t_env_fdf *env_fdf, char *name_file);
 

@@ -87,24 +87,6 @@ void	treat_point(t_env_fdf *env, t_point_col *po)
 						po->z * (coeff[0] * coeff[2]);
 }
 
-void	adapt_points(t_env_fdf *env)
-{
-	t_fdf_line	*line;
-	int			index;
-
-	line = env->fdf_first_line;
-	while (line)
-	{
-		index = 0;
-		while (line->list[index])
-		{
-			treat_point(env, line->list[index]);
-			index++;
-		}
-		line = line->next;
-	}
-}
-
 void	draw_pixels(t_env_fdf *env_fdf)
 {
 	t_fdf_line	*line1;
@@ -112,7 +94,7 @@ void	draw_pixels(t_env_fdf *env_fdf)
 	int			index;
 
 	setup_env_actu_rotation(env_fdf);
-	adapt_points(env_fdf);
+	fdf_list_iter(env_fdf, &treat_point);
 	mlx_clear_window(env_fdf->mlx_ptr, env_fdf->mlx_win);
 	line1 = env_fdf->fdf_first_line;
 	line2 = line1->next;

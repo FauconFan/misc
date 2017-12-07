@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "fdf.h"
 
 static int		directional_buttons(int keycode, t_env_fdf *env)
@@ -52,11 +53,39 @@ static int		handle_zoom(int keycode, t_env_fdf *env)
 	return (1);
 }
 
-static int		handle_rotate(int keycode, t_env_fdf *env)
+static int		handle_elevation(int keycode, t_env_fdf *env)
 {
-	if (keycode == ROTATE_X_KEYCODE)
+	t_fdf_line	*line;
+	int			index;
+
+	if (keycode == A_KEYCODE)
 	{
-		env->rotation_y += ROTATE_WHEN_PRESSING;
+		line = env->fdf_first_line;
+		while (line)
+		{
+			index = 0;
+			while (line->list[index])
+			{
+				line->list[index]->z *= FACTOR_ELEVATION;
+				index++;
+			}
+			line = line->next;
+		}
+	}
+	else if (keycode == Z_KEYCODE)
+	{
+		
+		line = env->fdf_first_line;
+		while (line)
+		{
+			index = 0;
+			while (line->list[index])
+			{
+				line->list[index]->z /= FACTOR_ELEVATION;
+				index++;
+			}
+			line = line->next;
+		}
 	}
 	else
 		return (0);
@@ -70,7 +99,7 @@ int				key_handle(int keycode, void *param)
 	env = (t_env_fdf *)param;
 	if (handle_zoom(keycode, env) != 0 ||
 		directional_buttons(keycode, env) != 0 ||
-		handle_rotate(keycode, env) != 0)
+		handle_elevation(keycode, env) != 0)
 	{
 		draw_pixels(env);
 		return (0);

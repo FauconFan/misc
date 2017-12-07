@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   fdf_mouse_hooks.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,34 +12,16 @@
 
 #include "fdf.h"
 
-void	display_window(t_env_fdf *env_fdf)
+int		mouse_handle(int button, int x, int y, void *fdf_env)
 {
-	env_fdf->mlx_ptr = mlx_init();
-	env_fdf->mlx_win = mlx_new_window(env_fdf->mlx_ptr, WIDTH_WINDOW, HEIGHT_WINDOW, "FdF");
-	mlx_key_hook(env_fdf->mlx_win, key_handle, env_fdf);
-	mlx_mouse_hook(env_fdf->mlx_win, mouse_handle, env_fdf);
-	draw_pixels(env_fdf);
-	mlx_loop(env_fdf->mlx_ptr);
-}
+	t_env_fdf	*env;
 
-void	do_main(char *name_file)
-{
-	t_env_fdf		*env_fdf;
-
-	env_fdf = init_env_fdf();
-	ft_read_file(env_fdf, name_file);
-	ft_init_matrix(env_fdf);
-	display_window(env_fdf);
-	free_env_fdf(&env_fdf);
-}
-
-int		main(int argc, char **argv)
-{
-	if (argc == 2)
+	env = (t_env_fdf *)fdf_env;
+	if (button == 1)
 	{
-		do_main(argv[1]);
+		env->rotation_x = ((double)y - HEIGHT_WINDOW / 2) / (HEIGHT_WINDOW / 2);
+		env->rotation_y = (-(double)x + WIDTH_WINDOW / 2) / (WIDTH_WINDOW / 2);
+		draw_pixels(env);
 	}
-	else
-		ft_die(ONE_UNIQUE_FILE);
 	return (0);
 }

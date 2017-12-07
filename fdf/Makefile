@@ -17,15 +17,19 @@ INCLUDES_FOLDER = includes/
 LIBFT_FOLDER = libft/
 
 GWW = gcc -g -Wall -Wextra -Werror
-INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER)
-LIBS = -L libft -l ft -l mlx -framework OpenGL -framework Appkit
+#INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER)
+INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I /usr/X11/include
+#LIBS = -L libft -l ft -l mlx -framework OpenGL -framework Appkit
+LIBS = -L libft -l ft -L /usr/X11/lib -l mlx -l X11 -l Xext -framework OpenGL -framework Appkit
 
 SRC_CODE = main.c \
 			fdf_env_utils.c \
 			fdf_key_hooks.c \
+			fdf_mouse_hooks.c \
 			fdf_read_file.c \
 			fdf_draw_line.c \
 			fdf_matrix_base.c \
+			fdf_utils_list.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC_CODE))
 
