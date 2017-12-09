@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/05 12:41:40 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/09 09:00:43 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/09 09:39:36 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ lib :
 
 clean :
 	rm -f $(OBJ)
+	make clean -C $(LIBFT_FOLDER)
 
 fclean :
 	rm -f $(OBJ)
