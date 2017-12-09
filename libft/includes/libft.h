@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/05 15:44:25 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/09 15:31:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,11 @@ void			ft_lstdel(t_list **alst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *),
 						void *(*cpy)(void *));
+void			ft_lstmerge(
+						t_list **head,
+						void *data,
+						int (*cmp)(void *d1, void *d2),
+						void *(*cpy)(void *data));
 
 /*
 **	------------------------------- LIBFT MATH --------------------------------
