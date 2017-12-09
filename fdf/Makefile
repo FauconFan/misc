@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/05 12:41:40 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/09 08:37:13 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/09 09:00:43 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC_FOLDER = src/
 INCLUDES_FOLDER = includes/
 LIBFT_FOLDER = libft/
 
-GWW = gcc -g -Wall -Wextra -Werror
+GWW = gcc -Wall -Wextra -Werror
 INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER)
 #INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I /usr/X11/include
 LIBS = -L libft -l ft -l mlx -framework OpenGL -framework Appkit

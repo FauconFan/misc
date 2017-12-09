@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:42:32 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/09 08:37:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/09 09:03:46 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,5 @@ void				ft_read_file(t_env_fdf *env_fdf, char *name_file);
 t_point_col			*build_point(int x, int y, int z);
 t_fdf_line			*build_line(void);
 int					get_information_first(char *buff);
-
 
 #endif
