@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_matrix_base.c                                  :+:      :+:    :+:   */
+/*   fdf_utils_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 18:18:09 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/06 15:37:08 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:39:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	fdf_list_iter(t_env_fdf *env, void (*f)(t_env_fdf *env, t_point_col *po))
+void	fdf_list_iter(
+			t_env_fdf *env,
+			void (*f)(t_env_fdf *env, t_point_col *po))
 {
 	t_fdf_line	*line;
 	int			index;

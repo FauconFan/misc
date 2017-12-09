@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:42:32 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/06 15:34:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:37:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # define MIN_COLOR_DEFAULT		0x00FFFFFF
 # define MAX_COLOR_DEFAULT		0x0000FFFF
 
-/*
 # define ESC_KEYCODE			53
 # define UP_KEYCODE				126
 # define DOWN_KEYCODE			125
@@ -39,31 +38,42 @@
 # define ZOOM_PLUS				69
 # define ZOOM_MINUS				78
 
-# define ROTATE_X_KEYCODE		31
+# define A_KEYCODE				12
+# define Z_KEYCODE				13
+
+# define ROTATE_PLUS_X_KEYCODE	17
+# define ROTATE_MOINS_X_KEYCODE	16
+
+# define ROTATE_PLUS_Y_KEYCODE	5
+# define ROTATE_MOINS_Y_KEYCODE	4
+
+# define ROTATE_PLUS_Z_KEYCODE	11
+# define ROTATE_MOINS_Z_KEYCODE	45
+
+# define RESET_KEYCODE			15
+
+/*
+**	define ESC_KEYCODE			65307
+**	define UP_KEYCODE				65362
+**	define DOWN_KEYCODE			65364
+**	define LEFT_KEYCODE			65361
+**	define RIGHT_KEYCODE			65363
+**
+**	define ZOOM_PLUS				112
+**	define ZOOM_MINUS				109
+**
+**	define A_KEYCODE				97
+**	define Z_KEYCODE				122
+**
+**	define ROTATE_PLUS_X_KEYCODE	116
+**	define ROTATE_MOINS_X_KEYCODE	121
+**	define ROTATE_PLUS_Y_KEYCODE	103
+**	define ROTATE_MOINS_Y_KEYCODE	104
+**	define ROTATE_PLUS_Z_KEYCODE	98
+**	define ROTATE_MOINS_Z_KEYCODE	110
+**
+**	define RESET_KEYCODE			114
 */
-
-# define ESC_KEYCODE			65307
-# define UP_KEYCODE				65362
-# define DOWN_KEYCODE			65364
-# define LEFT_KEYCODE			65361
-# define RIGHT_KEYCODE			65363
-
-# define ZOOM_PLUS				112
-# define ZOOM_MINUS				109
-
-# define A_KEYCODE				97
-# define Z_KEYCODE				122
-
-# define ROTATE_PLUS_X_KEYCODE	116
-# define ROTATE_MOINS_X_KEYCODE	121
-
-# define ROTATE_PLUS_Y_KEYCODE	103
-# define ROTATE_MOINS_Y_KEYCODE	104
-
-# define ROTATE_PLUS_Z_KEYCODE	98
-# define ROTATE_MOINS_Z_KEYCODE	110
-
-# define RESET_KEYCODE			114
 
 # define BASE_HEXA				"0123456789ABCDEF"
 
@@ -124,7 +134,8 @@ void				free_env_fdf(t_env_fdf **env_fdf);
 void				setup_env_actu_rotation(t_env_fdf *res);
 
 void				treat_points_for_display_well(t_env_fdf *env);
-void				fdf_list_iter(t_env_fdf *env, void (*f)(t_env_fdf *env, t_point_col *po));
+void				fdf_list_iter(t_env_fdf *env,
+						void (*f)(t_env_fdf *env, t_point_col *po));
 
 int					build_color(int color[6], double ecart, int dx);
 void				draw_pixels(t_env_fdf *env_fdf);
@@ -137,5 +148,10 @@ int					key_handle(int keycode, void *param);
 int					mouse_handle(int button, int x, int y, void *fdf_env);
 
 void				ft_read_file(t_env_fdf *env_fdf, char *name_file);
+
+t_point_col			*build_point(int x, int y, int z);
+t_fdf_line			*build_line(void);
+int					get_information_first(char *buff);
+
 
 #endif

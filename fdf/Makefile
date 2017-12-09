@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/05 12:41:40 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/05 19:07:24 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/09 08:37:13 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,16 +17,17 @@ INCLUDES_FOLDER = includes/
 LIBFT_FOLDER = libft/
 
 GWW = gcc -g -Wall -Wextra -Werror
-#INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER)
-INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I /usr/X11/include
-#LIBS = -L libft -l ft -l mlx -framework OpenGL -framework Appkit
-LIBS = -L libft -l ft -L /usr/X11/lib -l mlx -l X11 -l Xext -framework OpenGL -framework Appkit
+INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER)
+#INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I /usr/X11/include
+LIBS = -L libft -l ft -l mlx -framework OpenGL -framework Appkit
+#LIBS = -L libft -l ft -L /usr/X11/lib -l mlx -l X11 -l Xext -framework OpenGL -framework Appkit
 
 SRC_CODE = main.c \
 			fdf_env_utils.c \
 			fdf_key_hooks.c \
 			fdf_mouse_hooks.c \
 			fdf_read_file.c \
+			fdf_read_files_utils.c \
 			fdf_draw_line.c \
 			fdf_matrix_base.c \
 			fdf_utils_list.c \

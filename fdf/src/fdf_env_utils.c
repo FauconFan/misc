@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 14:11:24 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/06 15:14:05 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:32:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			free_lines(t_fdf_line *line)
 	}
 }
 
-void	setup_env_actu_rotation(t_env_fdf *res)
+void			setup_env_actu_rotation(t_env_fdf *res)
 {
 	res->actual_rotation[0] = cos(res->rotation_x);
 	res->actual_rotation[1] = sin(res->rotation_x);
@@ -50,8 +50,8 @@ t_env_fdf		*init_env_fdf(int color_values[2], int is_iso)
 	res->env_gnl = 0;
 	res->fdf_first_line = 0;
 	res->matrix = 0;
-	res->rotation_x = (is_iso) ? - M_PI / 8 : 0;
-	res->rotation_y = (is_iso) ? - M_PI / 8 : 0;
+	res->rotation_x = (is_iso) ? -M_PI / 8 : 0;
+	res->rotation_y = (is_iso) ? -M_PI / 8 : 0;
 	res->rotation_z = (is_iso) ? 0 : 0;
 	res->actual_rotation[0] = 0;
 	res->actual_rotation[1] = 0;

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 18:03:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/06 15:25:10 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:34:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,18 @@ void	ft_mlx_draw_line(int x[2], int y[2], int color[6], t_env_fdf *env_fdf)
 	tmp = x[0];
 	while (tmp != x[1])
 	{
-		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win,
-			tmp, y[0] + dy * (tmp - x[0]) / dx,
-			build_color(color, tmp - x[0], dx));
+		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win, tmp,
+			y[0] + dy * (tmp - x[0]) / dx, build_color(color, tmp - x[0], dx));
 		tmp += isgrowing;
 	}
 	isgrowing = (y[1] > y[0]) ? 1 : -1;
 	tmp = y[0];
 	while (tmp != y[1])
 	{
-		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win,
-			x[0] + dx * (tmp - y[0]) / dy, tmp,
-			build_color(color, tmp - y[0], dy));
+		mlx_pixel_put(env_fdf->mlx_ptr, env_fdf->mlx_win, x[0] + dx *
+			(tmp - y[0]) / dy, tmp, build_color(color, tmp - y[0], dy));
 		tmp += isgrowing;
 	}
-
 }
 
 void	draw_2points(t_env_fdf *env_fdf, t_point_col *po1, t_point_col *po2)
@@ -88,7 +85,7 @@ void	treat_point(t_env_fdf *env, t_point_col *po)
 	coeff = env->actual_rotation;
 	po->x_treated = po->x * (coeff[2] * coeff[4]) +
 			po->y * (coeff[1] * coeff[3] * coeff[4] + coeff[0] * coeff[5]) +
-			po->z * ( -coeff[3] * coeff[0] * coeff[4] + coeff[5] * coeff[1]);
+			po->z * (-coeff[3] * coeff[0] * coeff[4] + coeff[5] * coeff[1]);
 	po->y_treated = po->x * (-coeff[2] * coeff[5]) +
 			po->y * (-coeff[1] * coeff[3] * coeff[5] + coeff[0] * coeff[4]) +
 			po->z * (coeff[2] * coeff[0] * coeff[5] + coeff[1] * coeff[4]);

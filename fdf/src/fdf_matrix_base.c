@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 18:18:09 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/06 15:37:08 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:32:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void		ft_init_matrix(t_env_fdf *fdf)
 {
 	int		factor;
 
-	factor = (ft_min(WIDTH_WINDOW, HEIGHT_WINDOW) / ft_min(fdf->size_x, fdf->size_y)) / 2;
+	factor = (ft_min(WIDTH_WINDOW, HEIGHT_WINDOW) /
+					ft_min(fdf->size_x, fdf->size_y)) / 2;
 	ft_memcheck((fdf->matrix = (t_matrix_base *)malloc(sizeof(t_matrix_base))));
 	fdf->matrix->x1 = factor;
 	fdf->matrix->x2 = 0.0;

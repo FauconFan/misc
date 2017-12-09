@@ -6,61 +6,17 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 14:46:05 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/06 14:06:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:38:19 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static t_point_col	*build_point(int x, int y, int z)
-{
-	t_point_col	*res;
-
-	ft_memcheck((res = (t_point_col *)malloc(sizeof(t_point_col))));
-	res->x = x;
-	res->y = y;
-	res->z = z;
-	res->x_treated = (double)x;
-	res->y_treated = (double)y;
-	res->z_treated = (double)z;
-	res->color = 0;
-	res->is_changeable = 1;
-	return (res);
-}
-
-static t_fdf_line	*build_line(void)
-{
-	t_fdf_line	*res;
-
-	ft_memcheck((res = (t_fdf_line *)malloc(sizeof(t_fdf_line))));
-	res->list = 0;
-	res->next = 0;
-	return (res);
-}
-
-int					get_information_first(char *buff)
-{
-	int			size;
-
-	size = 0;
-	while (*buff)
-	{
-		if (ft_isblank(*buff))
-			buff++;
-		else if (ft_isdigit(*buff) || (*buff == '-' && ft_isdigit(*(buff + 1))))
-		{
-			buff++;
-			while (ft_isdigit(*buff))
-				buff++;
-			size++;
-		}
-		else
-			ft_die(FILE_NOT_VALID);
-	}
-	return (size);
-}
-
-static char			*ft_fill_one(t_point_col **po, int size_actu, int size_y, char *buff)
+static char			*ft_fill_one(
+		t_point_col **po,
+		int size_actu,
+		int size_y,
+		char *buff)
 {
 	*po = build_point(size_actu, size_y, ft_atoi(buff));
 	buff++;
@@ -77,7 +33,11 @@ static char			*ft_fill_one(t_point_col **po, int size_actu, int size_y, char *bu
 	return (buff);
 }
 
-void				ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
+void				ft_fill(
+		t_fdf_line *line,
+		char *buff,
+		int size_x,
+		int size_y)
 {
 	int		size_actu;
 
@@ -103,7 +63,11 @@ void				ft_fill(t_fdf_line *line, char *buff, int size_x, int size_y)
 		ft_die(FILE_NOT_VALID);
 }
 
-void				ft_fill_env(t_env_fdf *env_fdf, char *buff, int size_x, int fd)
+void				ft_fill_env(
+		t_env_fdf *env_fdf,
+		char *buff,
+		int size_x,
+		int fd)
 {
 	int			size_y;
 	t_fdf_line	*line;

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 14:18:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/06 15:36:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:41:36 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ static int		handle_elevation(int keycode, t_env_fdf *env)
 
 	if (keycode == A_KEYCODE || keycode == Z_KEYCODE)
 	{
-		factor = (keycode == A_KEYCODE) ? FACTOR_ELEVATION : 1.0 / FACTOR_ELEVATION;
+		factor = (keycode == A_KEYCODE) ?
+				FACTOR_ELEVATION : 1.0 / FACTOR_ELEVATION;
 		line = env->fdf_first_line;
 		while (line)
 		{
@@ -91,6 +92,19 @@ static int		handle_elevation(int keycode, t_env_fdf *env)
 	return (1);
 }
 
+static int		handle_reset(int keycode, t_env_fdf *env)
+{
+	if (keycode == RESET_KEYCODE)
+	{
+		env->rotation_x = 0;
+		env->rotation_y = 0;
+		env->rotation_z = 0;
+	}
+	else
+		return (0);
+	return (1);
+}
+
 int				key_handle(int keycode, void *param)
 {
 	t_env_fdf	*env;
@@ -98,17 +112,11 @@ int				key_handle(int keycode, void *param)
 	env = (t_env_fdf *)param;
 	if (handle_zoom(keycode, env) != 0 ||
 		directional_buttons_rotate(keycode, env) != 0 ||
-		handle_elevation(keycode, env) != 0)
+		handle_elevation(keycode, env) != 0 ||
+		handle_reset(keycode, env) != 0)
 	{
 		draw_pixels(env);
 		return (0);
-	}
-	else if (keycode == RESET_KEYCODE)
-	{
-		env->rotation_x = 0;
-		env->rotation_y = 0;
-		env->rotation_z = 0;
-		draw_pixels(env);
 	}
 	else if (keycode == ESC_KEYCODE)
 	{
