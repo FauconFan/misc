@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
+#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/05 12:09:48 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/09 10:21:46 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/10 15:13:02 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT_FOLDER = libft/
 
 LIBS = -L$(LIBFT_FOLDER) -lft
 GWW = gcc -g -Wall -Wextra -Werror
-INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER)
+INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
 
 SRC_CODE = main.c \
 			ls_env_utils.c \

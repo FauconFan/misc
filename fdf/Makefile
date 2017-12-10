@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
+#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/05 12:41:40 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/09 09:39:36 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/10 15:12:26 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ INCLUDES_FOLDER = includes/
 LIBFT_FOLDER = libft/
 
 GWW = gcc -Wall -Wextra -Werror
-INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER)
-#INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I /usr/X11/include
+INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
+#INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I $(LIBFT_FOLDER) -I /usr/X11/include
 LIBS = -L libft -l ft -l mlx -framework OpenGL -framework Appkit
 #LIBS = -L libft -l ft -L /usr/X11/lib -l mlx -l X11 -l Xext -framework OpenGL -framework Appkit
 

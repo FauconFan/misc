@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
+#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/03 15:58:37 by fauconfan         #+#    #+#              #
-#    Updated: 2017/12/05 12:39:36 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/10 15:13:39 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ FT_PRINTF_FOLDER = ft_printf/
 
 CC = gcc
 COMPILATION_FLAGS = -Wall -Wextra -Werror
-INCLUDES_FLAGS = -I $(INCLUDES_FOLDER)
+INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I ./
 FLAGS = $(COMPILATION_FLAGS) $(INCLUDES_FLAGS)
 
 include $(INCLUDES_MK_FOLDER)libft_char.mk
