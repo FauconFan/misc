@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   ft_lstfree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/11 23:23:37 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/03 15:20:33 by fauconfan        ###   ########.fr       */
+/*   Created: 2017/12/10 15:02:44 by fauconfan         #+#    #+#             */
+/*   Updated: 2017/12/10 15:07:47 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdel(t_list **alst, void (*del)(void *))
+void	ft_lstfreeall(t_list **head, void (*free_elem)(void *content))
 {
-	if (alst == 0 || *alst == 0)
+	t_list	*tmp;
+	t_list	*actu;
+
+	if (head == 0)
 		return ;
-	if ((*alst)->next != NULL)
-		ft_lstdel(&((*alst)->next), del);
-	ft_lstdelone(alst, del);
+	tmp = *head;
+	while (tmp)
+	{
+		actu = tmp;
+		free_elem(tmp->content);
+		tmp = tmp->next;
+		free(actu);
+	}
+	*head = 0;
 }

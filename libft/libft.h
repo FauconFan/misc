@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/09 15:31:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/10 15:08:22 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,13 +164,19 @@ typedef struct	s_list
 }				t_list;
 
 t_list			*ft_lstnew(void *content, void *(*cpy)(void *));
-void			ft_lstadd(t_list **alst, t_list *new);
+t_list			*ft_lstnew_nocpy(void *content);
+
+void			ft_lstfreeall(t_list **head,
+							void (*free_elem)(void *content));
+void			ft_lstaddfront(t_list **head, void *content,
+							void *(*cpy)(void *data));
+void			ft_lstaddfront_nocpy(t_list **head, void *content);
+void			ft_lstaddback(t_list **head, void *content,
+							void *(*cpy)(void *data));
+void			ft_lstaddback_nocpy(t_list **head, void *content);
 int				ft_lstsize(t_list *alst);
-void			ft_lstdelone(t_list **alst, void (*del)(void*));
-void			ft_lstdel(t_list **alst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *),
-						void *(*cpy)(void *));
+t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *));
 void			ft_lstmerge(
 						t_list **head,
 						void *data,
