@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/10 15:40:48 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/10 18:26:33 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 
 typedef struct 			s_content_args
 {
-	struct stats	*stat_file;
+	struct stat		*stat_file;
+	char			*file_name;
 }						t_content_args;
 
 typedef struct 			s_content_error_files
@@ -53,7 +54,12 @@ void					free_ls_env(t_env_ls **env);
 
 t_content_error_files	*ls_new_error_file(char *name);
 void					free_error_file(void *content);
-void					display_error(t_list *elem);
+void					display_error(void *elem);
 int						cmp_error_files(void *d1, void *d2);
+
+t_content_args			*ls_new_content_args(struct stat *stat_file, char *file_name);
+void					free_new_content_file(void *content);
+void					display_content(void *content, void *param);
+int						cmp_content_args(void *d1, void *d2);
 
 #endif

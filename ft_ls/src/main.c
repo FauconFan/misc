@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/10 15:45:09 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/10 18:31:12 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		main(int argc, char **argv)
 	argv++;
 	env_ls = init_ls_env(&argc, &argv);
 	ft_lstiter(env_ls->list_error_files, display_error);
+	ft_lstiterparam(env_ls->list_contents_args, env_ls, display_content);
 	free_ls_env(&env_ls);
 	return (0);
 }

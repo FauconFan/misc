@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:48:37 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/10 15:48:49 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/10 18:27:56 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void					free_error_file(void *content)
 	(void)content;
 }
 
-void					display_error(t_list *elem)
+void					display_error(void *elem)
 {
 	t_content_error_files	*tmp;
 
-	tmp = (t_content_error_files *)elem->content;
+	tmp = (t_content_error_files *)(elem);
 	ft_printf("ft_ls: cannot access '%s': %s\n",
 		tmp->file_name,
 		tmp->perror_message);

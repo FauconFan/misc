@@ -6,7 +6,7 @@
 #    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/05 12:09:48 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/10 15:49:33 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/12/10 17:37:05 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I $
 SRC_CODE = main.c \
 			ls_env_utils.c \
 			ls_error_files_utils.c \
+			ls_content_args_utils.c \
 
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_CODE))
 

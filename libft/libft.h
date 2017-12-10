@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/10 15:41:16 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/10 17:44:54 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,12 @@ void			ft_lstaddback(t_list **head, void *content,
 							void *(*cpy)(void *data));
 void			ft_lstaddback_nocpy(t_list **head, void *content);
 int				ft_lstsize(t_list *alst);
-void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *));
+void			ft_lstiter(t_list *lst, void (*f)(void *content));
+void			ft_lstiterparam(t_list *lst, void *param,
+					void (*f)(void *content, void *param));
+t_list			*ft_lstmap(t_list *lst, void *(*f)(void *content));
+t_list			*ft_lstmapparam(t_list *lst, void *param,
+					void *(*f)(void *content, void *param));
 void			ft_lstmerge(
 						t_list **head,
 						void *data,
