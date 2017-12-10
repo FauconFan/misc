@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls_env_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 09:45:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/09 18:53:21 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/10 15:41:54 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,22 @@ static void		fill_file_names(t_env_ls *env_ls, int *argc, char ***argv)
 		ft_memcheck((stats = (struct stat *)malloc(sizeof(struct stat))));
 		if (lstat(argv[0][index], stats) == -1)
 		{
-
+			ft_lstmerge_nocpy(&(env_ls->list_error_files),
+				(void *)ls_new_error_file(argv[0][index]),
+				cmp_error_files);
+			/*
+			ft_lstaddback_nocpy(&(env_ls->list_error_files),
+				(void *)ls_new_error_file(argv[0][index]));
+			*/
 		}
 		else
 		{
-
+			ft_lstaddback_nocpy(&(env_ls->list_contents_args), (void *)stats);
 		}
 		index++;
 	}
+	*argc = 0;
+	*argv = 0;
 }
 
 t_env_ls		*init_ls_env(int *argc, char ***argv)
@@ -85,6 +93,7 @@ t_env_ls		*init_ls_env(int *argc, char ***argv)
 
 void			free_ls_env(t_env_ls **env)
 {
+	ft_lstfreeall(&((*env)->list_error_files), free_error_file);
 	free(*env);
 	*env = 0;
 }

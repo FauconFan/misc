@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/09 17:52:48 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/10 15:45:09 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		main(int argc, char **argv)
 	argc--;
 	argv++;
 	env_ls = init_ls_env(&argc, &argv);
+	ft_lstiter(env_ls->list_error_files, display_error);
 	free_ls_env(&env_ls);
 	return (0);
 }

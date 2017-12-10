@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/10 15:08:22 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/10 15:41:16 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,10 @@ void			ft_lstmerge(
 						void *data,
 						int (*cmp)(void *d1, void *d2),
 						void *(*cpy)(void *data));
+void			ft_lstmerge_nocpy(
+						t_list **head,
+						void *data,
+						int (*cmp)(void *d1, void *d2));
 
 /*
 **	------------------------------- LIBFT MATH --------------------------------
