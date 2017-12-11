@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 19:24:58 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 19:49:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ void			ls_display_usage(char illegal_option, t_env_ls *env_ls)
 	exit(1);
 }
 
-void			ls_list_files_only(t_env_ls *env_ls)
+static int		ls_list_files_only(t_env_ls *env_ls)
 {
 	t_list			*list_contents_args;
 	t_file_content	*content_args;
 	t_file_content	*file_content;
+	int				ret;
 
+	ret = 0;
 	list_contents_args = env_ls->list_contents_args;
 	while (list_contents_args != 0)
 	{
@@ -53,23 +55,33 @@ void			ls_list_files_only(t_env_ls *env_ls)
 			file_content->dirent_file = 0;
 			flag_manager(env_ls->flags)(file_content);
 			free(file_content);
+			ret = 1;
 		}
 		list_contents_args = list_contents_args->next;
 	}
+	return (ret);
 }
 
-void			ls_list_directories_only(t_env_ls *env_ls)
+static void		ls_list_directories_only(t_env_ls *env_ls, int ret_files_only)
 {
 	t_list			*list_contents_args;
 	t_file_content	*content_args;
+	t_bool			display_name_directory;
+	t_bool			display_new_line;
 
 	list_contents_args = env_ls->list_contents_args;
+	display_name_directory = (ret_files_only == 1 || env_ls->flags & FLAG_R_MAJ
+		|| ft_lstsize(env_ls->list_contents_args) >= 2) ? TRUE : FALSE;
+	display_new_line = (ret_files_only == 1) ? TRUE : FALSE;
 	while (list_contents_args != 0)
 	{
 		content_args = list_contents_args->content;
 		if ((S_ISDIR(content_args->stat_file->st_mode)))
+		{
 			ls_list_directories(env_ls->flags,
-				content_args->name_file, TRUE, TRUE);
+				content_args->name_file, display_name_directory, display_new_line);
+			display_new_line = TRUE;
+		}
 		list_contents_args = list_contents_args->next;
 	}
 }
@@ -77,14 +89,15 @@ void			ls_list_directories_only(t_env_ls *env_ls)
 int				main(int argc, char **argv)
 {
 	t_env_ls	*env_ls;
+	int			ret_files_only;
 
 	argc--;
 	argv++;
 	env_ls = init_ls_env(&argc, &argv);
 	ft_lstiter(env_ls->list_error_files, display_error);
 	fill_is_all_empty(env_ls);
-	ls_list_files_only(env_ls);
-	ls_list_directories_only(env_ls);
+	ret_files_only = ls_list_files_only(env_ls);
+	ls_list_directories_only(env_ls, ret_files_only);
 	free_ls_env(&env_ls);
 	return (0);
 }
