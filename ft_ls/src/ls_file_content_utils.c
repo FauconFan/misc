@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:20:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 15:52:59 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 19:21:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 t_file_content	*ls_new_file_content(
 					struct dirent *dirent_file,
-					char *name_directory)
+					char *name_directory,
+					char *name_file)
 {
 	t_file_content	*res;
 	struct stat		*stat_file;
 	char			*name_tmp;
 
 	ft_memcheck((res = (t_file_content *)malloc(sizeof(t_file_content))));
-	res->name_file = dirent_file->d_name;
+	res->name_file = name_file;
 	ft_memcheck((stat_file = (struct stat *)malloc(sizeof(struct stat))));
-	name_tmp = ls_utils_build_name(name_directory, dirent_file->d_name);
+	name_tmp = ls_utils_build_name(name_directory, name_file);
 	if (lstat(name_tmp, stat_file) == -1)
 		ft_printf("%s => lstat, ls_new_file_content return -1\n", WARNING_SNA);
 	res->stat_file = stat_file;
@@ -41,14 +42,6 @@ void			free_new_file_content(void *content)
 	free(content);
 }
 
-void			display_name_simply(void *content)
-{
-	t_file_content	*tmp;
-
-	tmp = (t_file_content *)content;
-	ft_printf("%s\n", tmp->name_file);
-}
-
 void			display_recursively(void *content, void *param)
 {
 	t_file_content	*tmp;
@@ -62,7 +55,7 @@ void			display_recursively(void *content, void *param)
 		data_sample = (t_tmp_recu *)param;
 		final_name = ls_utils_build_name(data_sample->name_parent_folder,
 											tmp->dirent_file->d_name);
-		ls_list_directories(data_sample->flags, final_name, TRUE);
+		ls_list_directories(data_sample->flags, final_name, TRUE, TRUE);
 		free(final_name);
 	}
 }
@@ -75,6 +68,8 @@ char			*ls_utils_build_name(char *name_directory, char *name_file)
 
 	length_name_directory = ft_strlen(name_directory);
 	length_name_file = ft_strlen(name_file);
+	if (length_name_directory == 0)
+		return (ft_strndup(name_file, length_name_file));
 	if (name_directory[length_name_directory - 1] != '/')
 	{
 		res = ft_strnew(length_name_directory + length_name_file + 1);

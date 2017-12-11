@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 09:45:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 15:49:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 19:22:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void		fill_file_names(t_env_ls *env_ls, int *argc, char ***argv)
 	struct stat	*stats;
 	int			index;
 
-	(void)env_ls;
 	index = 0;
 	while (index < *argc)
 	{
@@ -68,8 +67,8 @@ static void		fill_file_names(t_env_ls *env_ls, int *argc, char ***argv)
 		else
 		{
 			ft_lstmerge_nocpy(&(env_ls->list_contents_args),
-				(void *)ls_new_content_args(stats, argv[0][index]),
-				cmp_content_args);
+				(void *)ls_new_file_content(0, "", argv[0][index]),
+				get_sort_function(env_ls->flags));
 		}
 		index++;
 	}
@@ -83,9 +82,9 @@ t_env_ls		*init_ls_env(int *argc, char ***argv)
 
 	ft_memcheck((res = (t_env_ls *)malloc(sizeof(t_env_ls))));
 	res->flags = 0;
-	fill_flags(res, argc, argv);
 	res->list_contents_args = 0;
 	res->list_error_files = 0;
+	fill_flags(res, argc, argv);
 	fill_file_names(res, argc, argv);
 	return (res);
 }
@@ -93,7 +92,7 @@ t_env_ls		*init_ls_env(int *argc, char ***argv)
 void			free_ls_env(t_env_ls **env)
 {
 	ft_lstfreeall(&((*env)->list_error_files), free_error_file);
-	ft_lstfreeall(&((*env)->list_contents_args), free_new_content_file);
+	ft_lstfreeall(&((*env)->list_contents_args), free_new_file_content);
 	free(*env);
 	*env = 0;
 }
