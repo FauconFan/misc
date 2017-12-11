@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 11:01:58 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 11:18:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 08:36:07 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_str_is_alpha(char *s)
+t_bool		ft_str_is_alpha(char *s)
 {
 	return (ft_str_all(s, &ft_isalpha));
 }

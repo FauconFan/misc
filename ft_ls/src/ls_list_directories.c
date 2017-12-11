@@ -1,20 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isxdigit.c                                      :+:      :+:    :+:   */
+/*   ls_list_directories.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/12 11:57:27 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 08:38:04 by fauconfan        ###   ########.fr       */
+/*   Created: 2017/12/11 08:27:25 by fauconfan         #+#    #+#             */
+/*   Updated: 2017/12/11 08:28:07 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_ls.h"
 
-t_bool		ft_isxdigit(int c)
-{
-	return (ft_isdigit(c) ||
-		(c >= 'a' && c <= 'f') ||
-		(c >= 'A' && c <= 'F') ? True : False);
-}
+void	ls_list_directories()

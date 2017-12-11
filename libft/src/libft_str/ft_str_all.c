@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_all.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 11:14:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 11:15:09 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 08:35:40 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_str_all(char *s, int (*f)(int c))
+t_bool		ft_str_all(char *s, t_bool (*f)(int c))
 {
 	int		index;
 
@@ -20,8 +20,8 @@ int		ft_str_all(char *s, int (*f)(int c))
 	while (s[index])
 	{
 		if (f(s[index]) == 0)
-			return (0);
+			return (False);
 		index++;
 	}
-	return (1);
+	return (True);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 15:28:14 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 15:28:52 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 08:34:30 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_iswhitespace(int c)
+t_bool		ft_iswhitespace(int c)
 {
-	return (c == ' ' || c == '\n' || c == '\t');
+	return ((c == ' ' || c == '\n' || c == '\t') ? True : False);
 }

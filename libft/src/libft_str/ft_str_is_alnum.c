@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_is_alnum.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 10:52:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/12 11:19:52 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 08:36:03 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_str_is_alnum(char *s)
+t_bool		ft_str_is_alnum(char *s)
 {
 	return (ft_str_all(s, &ft_isalnum));
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 15:48:01 by jpriou            #+#    #+#             */
-/*   Updated: 2017/11/11 15:49:03 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 08:33:04 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_islower(int c)
+t_bool		ft_islower(int c)
 {
-	return ((c >= 'a' && c <= 'z') ? 1 : 0);
+	return ((c >= 'a' && c <= 'z') ? True : False);
 }

@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/10 17:44:54 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 08:39:19 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <string.h>
 # include <stdarg.h>
 # include <stdint.h>
+
+/*
+**	Own defines
+*/
+
+# define True		1
+# define False		0
 
 /*
 **	Includes for ft_printf
@@ -34,20 +41,26 @@
 # define BUFF_SIZE_GNL			25
 
 /*
+**	Own typedefs
+*/
+
+typedef short	t_bool;
+
+/*
 **	-------------------------- LIBFT_CHAR_FUNCTIONS ---------------------------
 */
 
-int				ft_isalnum(int c);
-int				ft_isalpha(int c);
-int				ft_isdigit(int c);
-int				ft_isascii(int c);
-int				ft_isblank(int c);
-int				ft_isprint(int c);
-int				ft_iswhitespace(int c);
-int				ft_isspace(int c);
-int				ft_islower(int c);
-int				ft_isupper(int c);
-int				ft_isxdigit(int c);
+t_bool			ft_isalnum(int c);
+t_bool			ft_isalpha(int c);
+t_bool			ft_isdigit(int c);
+t_bool			ft_isascii(int c);
+t_bool			ft_isblank(int c);
+t_bool			ft_isprint(int c);
+t_bool			ft_iswhitespace(int c);
+t_bool			ft_isspace(int c);
+t_bool			ft_islower(int c);
+t_bool			ft_isupper(int c);
+t_bool			ft_isxdigit(int c);
 
 int				ft_toupper(int c);
 int				ft_tolower(int c);
@@ -108,17 +121,17 @@ int				ft_strrpos(char *big, char *little);
 int				ft_strparse(char ***res, char *str, char c);
 int				ft_strparse_n_free(char ***res, char *str, char c);
 
-int				ft_str_all(char *s, int (*f)(int c));
-int				ft_str_any(char *s, int (*f)(int c));
+t_bool			ft_str_all(char *s, t_bool (*f)(int c));
+t_bool			ft_str_any(char *s, t_bool (*f)(int c));
 
-int				ft_str_is_alnum(char *s);
-int				ft_str_is_alpha(char *s);
-int				ft_str_is_ascii(char *s);
-int				ft_str_is_numeric(char *s);
-int				ft_str_is_lowercase(char *s);
-int				ft_str_is_uppercase(char *s);
-int				ft_str_is_printable(char *s);
-int				ft_str_is_blank(char *s);
+t_bool			ft_str_is_alnum(char *s);
+t_bool			ft_str_is_alpha(char *s);
+t_bool			ft_str_is_ascii(char *s);
+t_bool			ft_str_is_numeric(char *s);
+t_bool			ft_str_is_lowercase(char *s);
+t_bool			ft_str_is_uppercase(char *s);
+t_bool			ft_str_is_printable(char *s);
+t_bool			ft_str_is_blank(char *s);
 
 /*
 ** ------------------------------ LIBFT MEMMORY -------------------------------
