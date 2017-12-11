@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:48:37 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/10 18:27:56 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 08:14:47 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_content_error_files	*ls_new_error_file(char *name)
 
 void					free_error_file(void *content)
 {
-	(void)content;
+	free(content);
 }
 
 void					display_error(void *elem)

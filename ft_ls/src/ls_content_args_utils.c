@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 17:17:28 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/10 18:33:16 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 08:20:38 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void			free_new_content_file(void *content)
 
 	tmp = (t_content_args *)content;
 	free(tmp->stat_file);
+	free(content);
 }
 
 void			display_content(void *content, void *param)
@@ -38,8 +39,7 @@ void			display_content(void *content, void *param)
 	(void)param;
 	arg = (t_content_args *)content;
 	stat_actu = (struct stat)(*(arg->stat_file));
-	(void)stat_actu;
-	ft_printf("%s\n", arg->file_name);
+	ft_printf("%s %d\n", arg->file_name, stat_actu.st_ino);
 }
 
 int				cmp_content_args(void *d1, void *d2)

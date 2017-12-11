@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 09:45:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/10 18:13:59 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 08:20:20 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void		fill_file_names(t_env_ls *env_ls, int *argc, char ***argv)
 			ft_lstmerge_nocpy(&(env_ls->list_error_files),
 				(void *)ls_new_error_file(argv[0][index]),
 				cmp_error_files);
+			free(stats);
 		}
 		else
 		{
@@ -70,7 +71,6 @@ static void		fill_file_names(t_env_ls *env_ls, int *argc, char ***argv)
 				(void *)ls_new_content_args(stats, argv[0][index]),
 				cmp_content_args);
 		}
-		free(stats);
 		index++;
 	}
 	*argc = 0;
@@ -93,6 +93,7 @@ t_env_ls		*init_ls_env(int *argc, char ***argv)
 void			free_ls_env(t_env_ls **env)
 {
 	ft_lstfreeall(&((*env)->list_error_files), free_error_file);
+	ft_lstfreeall(&((*env)->list_contents_args), free_new_content_file);
 	free(*env);
 	*env = 0;
 }
