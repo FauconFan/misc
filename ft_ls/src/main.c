@@ -6,13 +6,18 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 13:08:18 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 13:58:11 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+/*
+static void		fill_is_all_empty(t_env_ls *env_ls)
+{
+	(void)env_ls;
+}*/
 
-void	ls_display_usage(char illegal_option, t_env_ls *env_ls)
+void			ls_display_usage(char illegal_option, t_env_ls *env_ls)
 {
 	free_ls_env(&env_ls);
 	ft_printf("ft_ls: illegal option -- %c\n", illegal_option);
@@ -20,7 +25,7 @@ void	ls_display_usage(char illegal_option, t_env_ls *env_ls)
 	exit(1);
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_env_ls	*env_ls;
 
