@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 19:25:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 19:26:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 19:34:26 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,42 @@ static char		*build_date(struct stat my_stat)
 	return (res);
 }
 
+static char		*build_name(struct stat my_stat, char *name_file)
+{
+	ssize_t		ret;
+	char		*buff;
+	char		*tmp;
+
+	if (S_ISLNK(my_stat.st_mode))
+	{
+		buff = ft_strnew(255);
+		ret = readlink(name_file, buff, 255);
+		if (ret > 255)
+		{
+			ft_putendl(WARNING_SNA);
+			exit(2);
+		}
+		buff[ret] = 0;
+		tmp = ft_strjoin(" -> ", buff);
+		free(buff);
+		buff = ft_strjoin(name_file, tmp);
+		free(tmp);
+		return (buff);
+	}
+	return (ft_strdup(name_file));
+}
+
 void			display_l_option(void *content)
 {
 	t_file_content	*tmp;
 	char			*permissions;
 	char			*date;
+	char			*name;
 
 	tmp = (t_file_content *)content;
 	permissions = build_access_right(tmp->stat_file->st_mode);
 	date = build_date(*(tmp->stat_file));
+	name = build_name(*(tmp->stat_file), tmp->name_file);
 	ft_printf("%c%s %3d %s  %s %6d %s %s\n",
 				get_idchar_from_type_file(tmp->stat_file->st_mode),
 				permissions,
@@ -85,27 +112,8 @@ void			display_l_option(void *content)
 				getgrgid(tmp->stat_file->st_gid)->gr_name,
 				tmp->stat_file->st_size,
 				date,
-				tmp->name_file);
+				name);
 	free(permissions);
 	free(date);
-}
-
-void			display_total_blocks_if_need(int flags, t_list *dir_content)
-{
-	t_file_content	*tmp;
-	int				size_tot;
-
-	if (flags & FLAG_L_MIN)
-	{
-		size_tot = 0;
-		tmp = (t_file_content *)dir_content->content;
-		while (1)
-		{
-			size_tot += tmp->stat_file->st_blocks;
-			if ((dir_content = dir_content->next) == 0)
-				break ;
-			tmp = (t_file_content *)dir_content->content;
-		}
-		ft_printf("total %d\n", size_tot);
-	}
+	free(name);
 }
