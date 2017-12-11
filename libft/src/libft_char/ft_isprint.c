@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:07:37 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 08:33:21 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 15:44:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 t_bool		ft_isprint(int c)
 {
-	return ((c >= 32 && c < 127) ? True : False);
+	return ((c >= 32 && c < 127) ? TRUE : FALSE);
 }

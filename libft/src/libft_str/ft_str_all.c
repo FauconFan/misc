@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_all.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 11:14:17 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 08:35:40 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 15:45:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_bool		ft_str_all(char *s, t_bool (*f)(int c))
 	while (s[index])
 	{
 		if (f(s[index]) == 0)
-			return (False);
+			return (FALSE);
 		index++;
 	}
-	return (True);
+	return (TRUE);
 }

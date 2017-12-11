@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 13:21:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 15:51:55 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@
 
 # define WARNING_SNA	"Warning : Should never happen"
 
-typedef struct 			s_content_args
+typedef struct			s_content_args
 {
 	struct stat		*stat_file;
 	char			*file_name;
 }						t_content_args;
 
-typedef struct 			s_content_error_files
+typedef struct			s_content_error_files
 {
 	char	*file_name;
 	char	*perror_message;
@@ -78,12 +78,14 @@ void					free_error_file(void *content);
 void					display_error(void *elem);
 int						cmp_error_files(void *d1, void *d2);
 
-t_content_args			*ls_new_content_args(struct stat *stat_file, char *file_name);
+t_content_args			*ls_new_content_args(struct stat *stat_file,
+									char *file_name);
 void					free_new_content_file(void *content);
 void					display_content(void *content, void *param);
 int						cmp_content_args(void *d1, void *d2);
 
-t_file_content			*ls_new_file_content(struct dirent *dirent_file, char *name_directory);
+t_file_content			*ls_new_file_content(struct dirent *dirent_file,
+										char *name_directory);
 void					free_new_file_content(void *content);
 void					display_name_simply(void *content);
 
@@ -93,7 +95,8 @@ void					ls_list_directories(
 							t_bool display_name_directory);
 
 void					display_recursively(void *content, void *param);
-char					*ls_utils_build_name(char *name_directory, char *name_file);
+char					*ls_utils_build_name(char *name_directory,
+											char *name_file);
 
 /*
 **	Sort utils
@@ -102,6 +105,7 @@ char					*ls_utils_build_name(char *name_directory, char *name_file);
 int						ls_sort_by_file_name(void *d1, void *d2);
 int						ls_sort_by_file_name_reverse(void *d1, void *d2);
 int						ls_sort_by_last_time_modified(void *d1, void *d2);
-int						ls_sort_by_last_time_modified_reverse(void *d1, void *d2);
+int						ls_sort_by_last_time_modified_reverse
+							(void *d1, void *d2);
 
 #endif

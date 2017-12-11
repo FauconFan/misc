@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isxdigit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/12 11:57:27 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 08:38:04 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 15:45:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ t_bool		ft_isxdigit(int c)
 {
 	return (ft_isdigit(c) ||
 		(c >= 'a' && c <= 'f') ||
-		(c >= 'A' && c <= 'F') ? True : False);
+		(c >= 'A' && c <= 'F') ? TRUE : FALSE);
 }

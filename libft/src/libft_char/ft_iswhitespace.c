@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 15:28:14 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 08:34:30 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 15:45:06 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 t_bool		ft_iswhitespace(int c)
 {
-	return ((c == ' ' || c == '\n' || c == '\t') ? True : False);
+	return ((c == ' ' || c == '\n' || c == '\t') ? TRUE : FALSE);
 }

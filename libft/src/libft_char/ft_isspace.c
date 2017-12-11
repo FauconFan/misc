@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 15:18:37 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 08:37:35 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 15:44:50 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 t_bool		ft_isspace(int c)
 {
 	return ((c == ' ' || c == '\n' || c == '\t' ||
-			c == '\f' || c == '\v' || c == '\r') ? True : False);
+			c == '\f' || c == '\v' || c == '\r') ? TRUE : FALSE);
 }

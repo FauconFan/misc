@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:07:21 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 08:32:14 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 15:44:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 t_bool		ft_isascii(int c)
 {
-	return ((c >= 0 && c <= 127) ? True : False);
+	return ((c >= 0 && c <= 127) ? TRUE : FALSE);
 }

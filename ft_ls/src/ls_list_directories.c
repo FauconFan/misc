@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 08:27:25 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/11 13:13:12 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 15:53:20 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void		ls_fill_list_actu_properly(
 					t_list_directory *list_actu,
 					char *name_directory)
 {
-	if (*(dirent_actu->d_name) == '.' && (flags & FLAG_A_MIN) == False)
+	if (*(dirent_actu->d_name) == '.' && (flags & FLAG_A_MIN) == FALSE)
 		return ;
 	ft_lstmerge_nocpy(&(list_actu->dir_content),
 		(void *)ls_new_file_content(dirent_actu, name_directory),
@@ -65,7 +65,8 @@ void			ls_list_directories(
 	list_actu->dir_actu = opendir(name_directory);
 	list_actu->dir_content = 0;
 	while ((dirent_actu = readdir(list_actu->dir_actu)) != 0)
-		ls_fill_list_actu_properly(flags, dirent_actu, list_actu, name_directory);
+		ls_fill_list_actu_properly(flags, dirent_actu, list_actu,
+				name_directory);
 	ft_lstiter(list_actu->dir_content, display_name_simply);
 	if (flags & FLAG_R_MAJ)
 		ls_list_recu(flags, name_directory, list_actu);

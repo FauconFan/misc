@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 12:06:58 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 08:30:57 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 15:43:53 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ t_bool		ft_isalnum(int c)
 {
 	return (((c >= '0' && c <= '9') ||
 		(c >= 'a' && c <= 'z') ||
-		(c >= 'A' && c <= 'Z')) ? True : False);
+		(c >= 'A' && c <= 'Z')) ? TRUE : FALSE);
 }

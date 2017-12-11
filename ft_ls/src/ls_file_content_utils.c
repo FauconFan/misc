@@ -6,13 +6,15 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:20:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 13:59:09 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 15:52:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file_content	*ls_new_file_content(struct dirent *dirent_file, char *name_directory)
+t_file_content	*ls_new_file_content(
+					struct dirent *dirent_file,
+					char *name_directory)
 {
 	t_file_content	*res;
 	struct stat		*stat_file;
@@ -54,11 +56,13 @@ void			display_recursively(void *content, void *param)
 	char			*final_name;
 
 	tmp = (t_file_content *)content;
-	if (tmp->dirent_file->d_type == DT_DIR || tmp->dirent_file->d_type == DT_LNK)
+	if (tmp->dirent_file->d_type == DT_DIR ||
+		tmp->dirent_file->d_type == DT_LNK)
 	{
 		data_sample = (t_tmp_recu *)param;
-		final_name = ls_utils_build_name(data_sample->name_parent_folder, tmp->dirent_file->d_name);
-		ls_list_directories(data_sample->flags, final_name, True);
+		final_name = ls_utils_build_name(data_sample->name_parent_folder,
+											tmp->dirent_file->d_name);
+		ls_list_directories(data_sample->flags, final_name, TRUE);
 		free(final_name);
 	}
 }
@@ -76,7 +80,8 @@ char			*ls_utils_build_name(char *name_directory, char *name_file)
 		res = ft_strnew(length_name_directory + length_name_file + 1);
 		ft_strncpy(res, name_directory, length_name_directory);
 		ft_strncpy(res + length_name_directory, "/", 1);
-		ft_strncpy(res + length_name_directory + 1, name_file, length_name_file);
+		ft_strncpy(res + length_name_directory + 1, name_file,
+					length_name_file);
 	}
 	else
 	{

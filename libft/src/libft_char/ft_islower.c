@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 15:48:01 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 08:33:04 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 15:44:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 t_bool		ft_islower(int c)
 {
-	return ((c >= 'a' && c <= 'z') ? True : False);
+	return ((c >= 'a' && c <= 'z') ? TRUE : FALSE);
 }

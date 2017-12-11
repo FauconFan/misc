@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 23:24:51 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/10 14:36:17 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 15:46:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_lstaddback(t_list **head, void *content, void *(*cpy)(void *data))
 	else
 	{
 		actu = *head;
-		while(actu->next)
+		while (actu->next)
 			actu = actu->next;
 		actu->next = tmp;
 	}
@@ -66,7 +66,7 @@ void	ft_lstaddback_nocpy(t_list **head, void *content)
 	else
 	{
 		actu = *head;
-		while(actu->next)
+		while (actu->next)
 			actu = actu->next;
 		actu->next = tmp;
 	}

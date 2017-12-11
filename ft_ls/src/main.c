@@ -6,11 +6,12 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 13:58:11 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 15:54:17 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
 /*
 static void		fill_is_all_empty(t_env_ls *env_ls)
 {
@@ -34,7 +35,7 @@ int				main(int argc, char **argv)
 	env_ls = init_ls_env(&argc, &argv);
 	ft_lstiter(env_ls->list_error_files, display_error);
 	ft_lstiterparam(env_ls->list_contents_args, env_ls, display_content);
-	ls_list_directories(env_ls->flags, "./", True);
+	ls_list_directories(env_ls->flags, "./", TRUE);
 	free_ls_env(&env_ls);
 	return (0);
 }
