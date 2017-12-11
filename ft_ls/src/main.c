@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 19:49:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 20:42:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void		fill_is_all_empty(t_env_ls *env_ls)
 		ft_memcheck((stats = (struct stat *)malloc(sizeof(struct stat))));
 		lstat("./", stats);
 		ft_lstaddfront_nocpy(&(env_ls->list_contents_args),
-				(void *)ls_new_file_content(0, "./", ""));
+				(void *)ls_new_file_content(0, "", "./"));
 	}
 }
 
@@ -53,7 +53,7 @@ static int		ls_list_files_only(t_env_ls *env_ls)
 			file_content->name_file = content_args->name_file;
 			file_content->stat_file = content_args->stat_file;
 			file_content->dirent_file = 0;
-			flag_manager(env_ls->flags)(file_content);
+			flag_manager(env_ls->flags)(file_content, 0);
 			free(file_content);
 			ret = 1;
 		}

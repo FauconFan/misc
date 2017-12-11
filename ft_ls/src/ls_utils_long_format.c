@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 19:25:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 19:34:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 21:01:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,20 @@ static char		*build_access_right(mode_t st_mode)
 static char		*build_date(struct stat my_stat)
 {
 	char	*res;
-	char	*time_from_ctime;
 	time_t	actual_time;
+	char	**time_from_ctime;
 
 	res = ft_strsetnew(12, ' ');
-	time_from_ctime = ctime(&(my_stat.st_mtimespec.tv_sec));
-	ft_strncpy(res, time_from_ctime + 4, 3);
-	ft_strncpy(res + 4, time_from_ctime + 8, 2);
+	time_from_ctime = ft_strsplit(ctime(&(my_stat.st_mtimespec.tv_sec)), ' ');
+	ft_strncpy(res, time_from_ctime[1], 3);
+	ft_strncpy(res + 4 + (ft_strlen(time_from_ctime[2]) == 1),
+					*(time_from_ctime + 2),
+					1 + (ft_strlen(time_from_ctime[2]) != 1));
 	actual_time = time(0);
 	if (ft_abs(actual_time - my_stat.st_mtimespec.tv_sec) < 3600 * 24 * 180)
-		ft_strncpy(res + 7, time_from_ctime + 11, 5);
+		ft_strncpy(res + 7, time_from_ctime[3], 5);
 	else
-		ft_strncpy(res + 8, time_from_ctime + 20, 4);
+		ft_strncpy(res + 8, time_from_ctime[4], ft_strlen(time_from_ctime[4]) - 1);
 	return (res);
 }
 
@@ -93,24 +95,26 @@ static char		*build_name(struct stat my_stat, char *name_file)
 	return (ft_strdup(name_file));
 }
 
-void			display_l_option(void *content)
+void			display_l_option(void *content, void *param)
 {
-	t_file_content	*tmp;
-	char			*permissions;
-	char			*date;
-	char			*name;
+	t_file_content				*tmp;
+	char						*permissions;
+	char						*date;
+	char						*name;
+	t_max_values_long_format	*max_values;
 
+	max_values = (t_max_values_long_format *)param;
 	tmp = (t_file_content *)content;
 	permissions = build_access_right(tmp->stat_file->st_mode);
 	date = build_date(*(tmp->stat_file));
 	name = build_name(*(tmp->stat_file), tmp->name_file);
-	ft_printf("%c%s %3d %s  %s %6d %s %s\n",
+	ft_printf("%c%s %*d %s  %s %*d %s %s\n",
 				get_idchar_from_type_file(tmp->stat_file->st_mode),
 				permissions,
-				tmp->stat_file->st_nlink,
+				max_values->max_st_nlink + 1, tmp->stat_file->st_nlink,
 				getpwuid(tmp->stat_file->st_uid)->pw_name,
 				getgrgid(tmp->stat_file->st_gid)->gr_name,
-				tmp->stat_file->st_size,
+				max_values->max_st_size + 1, tmp->stat_file->st_size,
 				date,
 				name);
 	free(permissions);

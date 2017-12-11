@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 19:22:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 20:41:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 # define WARNING_SNA	"Warning : Should never happen"
 
-typedef void			(*t_simple_ptr)(void *content);
+typedef void			(*t_simple_ptr)(void *content, void *param);
 typedef int				(*t_ptr_cmp)(void *d1, void *d2);
 
 typedef struct			s_content_error_files
@@ -55,6 +55,12 @@ typedef struct			s_list_directory
 	DIR					*dir_actu;
 	t_list				*dir_content;
 }						t_list_directory;
+
+typedef struct			s_max_values_long_format
+{
+	int					max_st_nlink;
+	int					max_st_size;
+}						t_max_values_long_format;
 
 typedef struct			s_tmp_recu
 {
@@ -87,8 +93,8 @@ void					free_new_file_content(void *content);
 
 t_simple_ptr			flag_manager(int flags);
 
-void					display_name_simply(void *content);
-void					display_l_option(void *content);
+void					display_name_simply(void *content, void *param);
+void					display_l_option(void *content, void *param);
 
 void					display_total_blocks_if_need(int flags,
 							t_list *dir_content);

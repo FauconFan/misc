@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 16:08:31 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 19:27:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 20:38:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ t_simple_ptr	flag_manager(int flags)
 	return (display_name_simply);
 }
 
-void			display_name_simply(void *content)
+void			display_name_simply(void *content, void *param)
 {
 	t_file_content	*tmp;
 
+	(void)param;
 	tmp = (t_file_content *)content;
 	ft_printf("%s\n", tmp->name_file);
 }

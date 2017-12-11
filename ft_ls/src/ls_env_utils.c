@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 09:45:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 19:22:43 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/11 19:58:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void		handle_flags(t_env_ls *env_ls, char c)
 		env_ls->flags += FLAG_R_MIN * ((env_ls->flags & FLAG_R_MIN) == FALSE);
 	else if (c == 't')
 		env_ls->flags += FLAG_T_MIN * ((env_ls->flags & FLAG_T_MIN) == FALSE);
+	else if (c == '1')
+		env_ls->flags = env_ls->flags;
 	else
 		ls_display_usage(c, env_ls);
 }
