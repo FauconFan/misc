@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/05 12:09:48 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/10 17:37:05 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/12/11 11:28:35 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ SRC_CODE = main.c \
 			ls_env_utils.c \
 			ls_error_files_utils.c \
 			ls_content_args_utils.c \
+			ls_list_directories.c \
+			ls_file_content_utils.c \
+			ls_sort_utils.c \
 
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_CODE))
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/10 18:26:33 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/11 13:21:20 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define FLAG_R_MIN		0b1000
 # define FLAG_T_MIN		0b10000
 
+# define WARNING_SNA	"Warning : Should never happen"
+
 typedef struct 			s_content_args
 {
 	struct stat		*stat_file;
@@ -39,6 +41,25 @@ typedef struct 			s_content_error_files
 	char	*file_name;
 	char	*perror_message;
 }						t_content_error_files;
+
+typedef struct			s_file_content
+{
+	char			*name_file;
+	struct stat		*stat_file;
+	struct dirent	*dirent_file;
+}						t_file_content;
+
+typedef struct			s_list_directory
+{
+	DIR					*dir_actu;
+	t_list				*dir_content;
+}						t_list_directory;
+
+typedef struct			s_tmp_recu
+{
+	int					flags;
+	char				*name_parent_folder;
+}						t_tmp_recu;
 
 typedef struct			s_env_ls
 {
@@ -61,5 +82,26 @@ t_content_args			*ls_new_content_args(struct stat *stat_file, char *file_name);
 void					free_new_content_file(void *content);
 void					display_content(void *content, void *param);
 int						cmp_content_args(void *d1, void *d2);
+
+t_file_content			*ls_new_file_content(struct dirent *dirent_file, char *name_directory);
+void					free_new_file_content(void *content);
+void					display_name_simply(void *content);
+
+void					ls_list_directories(
+							int flags,
+							char *name_directory,
+							t_bool display_name_directory);
+
+void					display_recursively(void *content, void *param);
+char					*ls_utils_build_name(char *name_directory, char *name_file);
+
+/*
+**	Sort utils
+*/
+
+int						ls_sort_by_file_name(void *d1, void *d2);
+int						ls_sort_by_file_name_reverse(void *d1, void *d2);
+int						ls_sort_by_last_time_modified(void *d1, void *d2);
+int						ls_sort_by_last_time_modified_reverse(void *d1, void *d2);
 
 #endif
