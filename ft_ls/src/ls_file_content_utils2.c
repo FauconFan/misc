@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 16:08:31 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 20:38:57 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 09:24:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,27 @@ void			display_total_blocks_if_need(int flags, t_list *dir_content)
 		}
 		ft_printf("total %d\n", size_tot);
 	}
+}
+
+t_bool			check_if_a_file_is_readable_as_a_folder(char *name_file)
+{
+	struct stat		stats;
+	char			buff[255];
+	ssize_t			ret;
+
+	if ((stat(name_file, &stats)) == -1)
+		return (FALSE);
+	if (S_ISDIR(stats.st_mode))
+		return (TRUE);
+	else if (S_ISLNK(stats.st_mode))
+	{
+		ft_bzero(buff, 255);
+		ret = readlink(name_file, buff, 255);
+		if (ret > 255)
+			return (FALSE);
+		buff[ret] = 0;
+		stat(buff, &stats);
+		return (S_ISDIR(stats.st_mode));
+	}
+	return (FALSE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls_error_files_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:48:37 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/11 08:14:47 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/12 09:43:35 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,22 @@ void					free_error_file(void *content)
 	free(content);
 }
 
+/*
+**	Remove this shit
+*/
+
 void					display_error(void *elem)
 {
 	t_content_error_files	*tmp;
+	t_bool					is_fts_open;
 
 	tmp = (t_content_error_files *)(elem);
-	ft_printf("ft_ls: cannot access '%s': %s\n",
-		tmp->file_name,
+	is_fts_open = ft_strcmp(tmp->file_name, "") == 0;
+	ft_dprintf(2, "ft_ls: %s: %s\n",
+		is_fts_open ? "fts_open" : tmp->file_name,
 		tmp->perror_message);
+	if (is_fts_open)
+		exit(1);
 }
 
 int						cmp_error_files(void *d1, void *d2)

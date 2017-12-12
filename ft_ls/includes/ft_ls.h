@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 08:44:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 09:24:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ void						update_max_values(
 								int st_nlink,
 								int st_size);
 
+t_bool						check_if_a_file_is_readable_as_a_folder(
+								char *name_file);
 /*
 **	Sort utils
 */

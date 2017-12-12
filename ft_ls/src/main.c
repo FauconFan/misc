@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 08:47:14 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 09:25:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void		fill_is_all_empty(t_env_ls *env_ls)
 void			ls_display_usage(char illegal_option, t_env_ls *env_ls)
 {
 	free_ls_env(&env_ls);
-	ft_printf("ft_ls: illegal option -- %c\n", illegal_option);
-	ft_printf("usage: ft_ls [-1Ralrt] [file ...]\n");
+	ft_dprintf(2, "ft_ls: illegal option -- %c\n", illegal_option);
+	ft_dprintf(2, "usage: ft_ls [-1Ralrt] [file ...]\n");
 	exit(1);
 }
 
@@ -48,7 +48,7 @@ static int		ls_list_files_only(
 	while (list_contents_args != 0)
 	{
 		content_args = list_contents_args->content;
-		if ((S_ISDIR(content_args->stat_file->st_mode)) == FALSE)
+		if (check_if_a_file_is_readable_as_a_folder(content_args->name_file) == FALSE)
 		{
 			ft_memcheck((file_content =
 					(t_file_content *)malloc(sizeof(t_file_content))));
@@ -72,16 +72,16 @@ static void		ls_list_directories_only(t_env_ls *env_ls, int ret_files_only)
 	t_bool			display_new_line;
 
 	list_contents_args = env_ls->list_contents_args;
-	display_name_directory = (ret_files_only == 1 || env_ls->flags & FLAG_R_MAJ
-		|| ft_lstsize(env_ls->list_contents_args) >= 2) ? TRUE : FALSE;
+	display_name_directory = (ret_files_only == 1) ? TRUE : FALSE;
 	display_new_line = (ret_files_only == 1) ? TRUE : FALSE;
 	while (list_contents_args != 0)
 	{
 		content_args = list_contents_args->content;
-		if ((S_ISDIR(content_args->stat_file->st_mode)))
+		if (check_if_a_file_is_readable_as_a_folder(content_args->name_file))
 		{
 			ls_list_directories(env_ls->flags, content_args->name_file,
 				display_name_directory, display_new_line);
+			display_name_directory = TRUE;
 			display_new_line = TRUE;
 		}
 		list_contents_args = list_contents_args->next;

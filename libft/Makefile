@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/03 15:58:37 by fauconfan         #+#    #+#              #
-#    Updated: 2017/12/10 15:13:39 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/12/12 11:28:23 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,8 @@ $(NAME) : $(OBJ)
 	@echo "libft built successfully"
 
 %.o : %.c
-	@echo $?
+	@printf "                                                   \r"
+	@printf " $?\r"
 	@$(CC) $(FLAGS) -c $? -o $@
 
 clean :

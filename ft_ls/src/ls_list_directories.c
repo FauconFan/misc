@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 08:27:25 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/12 08:45:36 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 09:45:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void							display_header_if_needed(
 {
 	if (display_return_line)
 		ft_printf("\n");
-	if (display_name_directory && ft_strcmp(name_directory, "./"))
+	if (display_name_directory)
 		ft_printf("%s:\n", name_directory);
 }
 
@@ -69,7 +69,7 @@ void								ls_list_directories(
 	ft_memcheck((list_actu =
 		(t_list_directory *)malloc(sizeof(t_list_directory))));
 	if ((list_actu->dir_actu = opendir(name_directory)) == 0)
-		ft_printf("ft_ls: %s: %s\n", name_directory, strerror(errno));
+		ft_dprintf(2, "ft_ls: %s: %s\n", name_directory, strerror(errno));
 	else
 	{
 		list_actu->max_values = init_max_values();
