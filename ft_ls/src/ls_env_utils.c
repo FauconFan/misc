@@ -77,7 +77,7 @@ static void		fill_file_names(
 			ft_lstmerge_nocpy(&(env_ls->list_contents_args),
 				(void *)new_file_content,
 				get_sort_function(env_ls->flags));
-			update_max_values(max_values, stats->st_nlink, stats->st_size);
+			update_max_values(max_values, *stats);
 		}
 		index++;
 	}

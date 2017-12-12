@@ -17,7 +17,7 @@ INCLUDES_FOLDER = includes/
 LIBFT_FOLDER = libft/
 
 LIBS = -L$(LIBFT_FOLDER) -lft
-GWW = gcc -Wall -Wextra -Werror
+GWW = gcc -g -Wall -Wextra -Werror
 INCLUDES_FLAGS = -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)$(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
 
 SRC_CODE = main.c \

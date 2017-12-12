@@ -54,11 +54,14 @@ typedef struct				s_max_values_long_format
 {
 	int					max_st_nlink;
 	int					max_st_size;
+	int					max_len_user_id;
+	int					max_len_group_id;
 }							t_max_values_long_format;
 
 typedef struct				s_list_directory
 {
 	DIR							*dir_actu;
+	char						*name_directory;
 	t_list						*dir_content;
 	t_max_values_long_format	*max_values;
 }							t_list_directory;
@@ -116,8 +119,7 @@ t_max_values_long_format	*init_max_values(void);
 void						free_max_values(t_max_values_long_format **max);
 void						update_max_values(
 								t_max_values_long_format *max,
-								int st_nlink,
-								int st_size);
+								struct stat stats);
 
 t_bool						check_if_a_file_is_readable_as_a_folder(
 								char *name_file);

@@ -33,7 +33,7 @@ void			display_total_blocks_if_need(int flags, t_list *dir_content)
 	t_file_content	*tmp;
 	int				size_tot;
 
-	if (flags & FLAG_L_MIN)
+	if (flags & FLAG_L_MIN && dir_content != 0)
 	{
 		size_tot = 0;
 		tmp = (t_file_content *)dir_content->content;

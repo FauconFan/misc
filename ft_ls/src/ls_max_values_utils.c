@@ -20,6 +20,8 @@ t_max_values_long_format		*init_max_values(void)
 			malloc(sizeof(t_max_values_long_format))));
 	res->max_st_nlink = 0;
 	res->max_st_size = 0;
+	res->max_len_user_id = 0;
+	res->max_len_group_id = 0;
 	return (res);
 }
 
@@ -33,11 +35,14 @@ void							free_max_values(t_max_values_long_format **max)
 
 void							update_max_values(
 					t_max_values_long_format *max,
-					int st_nlink,
-					int st_size)
+					struct stat stats)
 {
 	max->max_st_nlink = ft_max(max->max_st_nlink,
-					ft_log10(st_nlink));
+					ft_log10(stats.st_nlink));
 	max->max_st_size = ft_max(max->max_st_size,
-					ft_log10(st_size));
+					ft_log10(stats.st_size));
+	max->max_len_user_id = ft_max(max->max_len_user_id,
+					ft_strlen(getpwuid(stats.st_uid)->pw_name));
+	max->max_len_group_id = ft_max(max->max_len_group_id,
+					ft_strlen(getgrgid(stats.st_gid)->gr_name));
 }

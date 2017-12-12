@@ -14,13 +14,9 @@
 
 static void		fill_is_all_empty(t_env_ls *env_ls)
 {
-	struct stat	*stats;
-
 	if (ft_lstsize(env_ls->list_error_files) == 0 &&
 		ft_lstsize(env_ls->list_contents_args) == 0)
 	{
-		ft_memcheck((stats = (struct stat *)malloc(sizeof(struct stat))));
-		lstat("./", stats);
 		ft_lstaddfront_nocpy(&(env_ls->list_contents_args),
 				(void *)ls_new_file_content(0, "", "./"));
 	}
@@ -34,13 +30,33 @@ void			ls_display_usage(char illegal_option, t_env_ls *env_ls)
 	exit(1);
 }
 
+void			display_for_only_file(
+			t_file_content *content_args,
+			t_max_values_long_format *max_values,
+			int flags)
+{
+	t_file_content		*file_content;
+	t_list_directory	*ld;
+
+	ft_memcheck((file_content =
+			(t_file_content *)malloc(sizeof(t_file_content))));
+	file_content->name_file = content_args->name_file;
+	file_content->stat_file = content_args->stat_file;
+	file_content->dirent_file = 0;
+	ft_memcheck((ld = (t_list_directory *)malloc(sizeof(t_list_directory))));
+	ld->name_directory = "";
+	ld->max_values = max_values;
+	flag_manager(flags)(file_content, ld);
+	free(ld);
+	free(file_content);
+}
+
 static int		ls_list_files_only(
 					t_env_ls *env_ls,
 					t_max_values_long_format *max_values)
 {
 	t_list			*list_contents_args;
 	t_file_content	*content_args;
-	t_file_content	*file_content;
 	int				ret;
 
 	ret = 0;
@@ -48,15 +64,10 @@ static int		ls_list_files_only(
 	while (list_contents_args != 0)
 	{
 		content_args = list_contents_args->content;
-		if (check_if_a_file_is_readable_as_a_folder(content_args->name_file) == FALSE)
+		if (check_if_a_file_is_readable_as_a_folder(content_args->name_file)
+			== FALSE)
 		{
-			ft_memcheck((file_content =
-					(t_file_content *)malloc(sizeof(t_file_content))));
-			file_content->name_file = content_args->name_file;
-			file_content->stat_file = content_args->stat_file;
-			file_content->dirent_file = 0;
-			flag_manager(env_ls->flags)(file_content, max_values);
-			free(file_content);
+			display_for_only_file(content_args, max_values, env_ls->flags);
 			ret = 1;
 		}
 		list_contents_args = list_contents_args->next;
@@ -72,7 +83,9 @@ static void		ls_list_directories_only(t_env_ls *env_ls, int ret_files_only)
 	t_bool			display_new_line;
 
 	list_contents_args = env_ls->list_contents_args;
-	display_name_directory = (ret_files_only == 1) ? TRUE : FALSE;
+	display_name_directory = (ret_files_only == 1 ||
+		ft_lstsize(env_ls->list_contents_args) >= 2 ||
+		ft_lstsize(env_ls->list_error_files) != 0) ? TRUE : FALSE;
 	display_new_line = (ret_files_only == 1) ? TRUE : FALSE;
 	while (list_contents_args != 0)
 	{
@@ -91,8 +104,9 @@ static void		ls_list_directories_only(t_env_ls *env_ls, int ret_files_only)
 int				main(int argc, char **argv)
 {
 	t_env_ls					*env_ls;
-	int							ret_files_only;
 	t_max_values_long_format	*max_values;
+	int							ret_files_only;
+	int							ret;
 
 	argc--;
 	argv++;
@@ -103,6 +117,7 @@ int				main(int argc, char **argv)
 	ret_files_only = ls_list_files_only(env_ls, max_values);
 	ls_list_directories_only(env_ls, ret_files_only);
 	free_max_values(&max_values);
+	ret = ft_lstsize(env_ls->list_error_files) != 0;
 	free_ls_env(&env_ls);
-	return (0);
+	return (ret);
 }

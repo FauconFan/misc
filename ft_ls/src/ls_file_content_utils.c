@@ -54,7 +54,8 @@ void			display_recursively(void *content, void *param)
 										tmp->dirent_file->d_name);
 	if ((check_if_a_file_is_readable_as_a_folder(final_name)) &&
 		ft_strcmp(tmp->dirent_file->d_name, ".") != 0 &&
-		ft_strcmp(tmp->dirent_file->d_name, "..") != 0)
+		ft_strcmp(tmp->dirent_file->d_name, "..") != 0 &&
+		ft_strcmp(tmp->dirent_file->d_name, "") != 0)
 	{
 		ls_list_directories(data_sample->flags, final_name, TRUE, TRUE);
 	}
