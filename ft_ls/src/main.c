@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 20:42:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 08:47:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ void			ls_display_usage(char illegal_option, t_env_ls *env_ls)
 {
 	free_ls_env(&env_ls);
 	ft_printf("ft_ls: illegal option -- %c\n", illegal_option);
-	ft_printf("usage: ft_ls [-Ralrt] [file ...]\n");
+	ft_printf("usage: ft_ls [-1Ralrt] [file ...]\n");
 	exit(1);
 }
 
-static int		ls_list_files_only(t_env_ls *env_ls)
+static int		ls_list_files_only(
+					t_env_ls *env_ls,
+					t_max_values_long_format *max_values)
 {
 	t_list			*list_contents_args;
 	t_file_content	*content_args;
@@ -53,7 +55,7 @@ static int		ls_list_files_only(t_env_ls *env_ls)
 			file_content->name_file = content_args->name_file;
 			file_content->stat_file = content_args->stat_file;
 			file_content->dirent_file = 0;
-			flag_manager(env_ls->flags)(file_content, 0);
+			flag_manager(env_ls->flags)(file_content, max_values);
 			free(file_content);
 			ret = 1;
 		}
@@ -78,8 +80,8 @@ static void		ls_list_directories_only(t_env_ls *env_ls, int ret_files_only)
 		content_args = list_contents_args->content;
 		if ((S_ISDIR(content_args->stat_file->st_mode)))
 		{
-			ls_list_directories(env_ls->flags,
-				content_args->name_file, display_name_directory, display_new_line);
+			ls_list_directories(env_ls->flags, content_args->name_file,
+				display_name_directory, display_new_line);
 			display_new_line = TRUE;
 		}
 		list_contents_args = list_contents_args->next;
@@ -88,16 +90,19 @@ static void		ls_list_directories_only(t_env_ls *env_ls, int ret_files_only)
 
 int				main(int argc, char **argv)
 {
-	t_env_ls	*env_ls;
-	int			ret_files_only;
+	t_env_ls					*env_ls;
+	int							ret_files_only;
+	t_max_values_long_format	*max_values;
 
 	argc--;
 	argv++;
-	env_ls = init_ls_env(&argc, &argv);
+	max_values = init_max_values();
+	env_ls = init_ls_env(&argc, &argv, max_values);
 	ft_lstiter(env_ls->list_error_files, display_error);
 	fill_is_all_empty(env_ls);
-	ret_files_only = ls_list_files_only(env_ls);
+	ret_files_only = ls_list_files_only(env_ls, max_values);
 	ls_list_directories_only(env_ls, ret_files_only);
+	free_max_values(&max_values);
 	free_ls_env(&env_ls);
 	return (0);
 }

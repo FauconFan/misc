@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 19:25:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 21:01:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 08:46:50 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static char		*build_date(struct stat my_stat)
 	if (ft_abs(actual_time - my_stat.st_mtimespec.tv_sec) < 3600 * 24 * 180)
 		ft_strncpy(res + 7, time_from_ctime[3], 5);
 	else
-		ft_strncpy(res + 8, time_from_ctime[4], ft_strlen(time_from_ctime[4]) - 1);
+		ft_strncpy(res + 8, time_from_ctime[4],
+				ft_strlen(time_from_ctime[4]) - 1);
 	return (res);
 }
 

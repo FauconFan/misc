@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/05 12:09:48 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/11 20:09:09 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/12 08:28:05 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC_CODE = main.c \
 			ls_file_content_utils2.c \
 			ls_utils_long_format.c \
 			ls_sort_utils.c \
+			ls_max_values_utils.c \
 
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_CODE))
 

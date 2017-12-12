@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 09:45:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 19:58:52 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 08:46:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,15 @@ static void		fill_flags(t_env_ls *env_ls, int *argc, char ***argv)
 	*argv = *argv + index;
 }
 
-static void		fill_file_names(t_env_ls *env_ls, int *argc, char ***argv)
+static void		fill_file_names(
+					t_env_ls *env_ls,
+					int *argc,
+					char ***argv,
+					t_max_values_long_format *max_values)
 {
-	struct stat	*stats;
-	int			index;
+	struct stat			*stats;
+	int					index;
+	t_file_content		*new_file_content;
 
 	index = 0;
 	while (index < *argc)
@@ -68,17 +73,20 @@ static void		fill_file_names(t_env_ls *env_ls, int *argc, char ***argv)
 		}
 		else
 		{
+			new_file_content = ls_new_file_content(0, "", argv[0][index]);
 			ft_lstmerge_nocpy(&(env_ls->list_contents_args),
-				(void *)ls_new_file_content(0, "", argv[0][index]),
+				(void *)new_file_content,
 				get_sort_function(env_ls->flags));
+			update_max_values(max_values, stats->st_nlink, stats->st_size);
 		}
 		index++;
 	}
-	*argc = 0;
-	*argv = 0;
 }
 
-t_env_ls		*init_ls_env(int *argc, char ***argv)
+t_env_ls		*init_ls_env(
+					int *argc,
+					char ***argv,
+					t_max_values_long_format *max_values)
 {
 	t_env_ls	*res;
 
@@ -87,7 +95,9 @@ t_env_ls		*init_ls_env(int *argc, char ***argv)
 	res->list_contents_args = 0;
 	res->list_error_files = 0;
 	fill_flags(res, argc, argv);
-	fill_file_names(res, argc, argv);
+	fill_file_names(res, argc, argv, max_values);
+	*argc = 0;
+	*argv = 0;
 	return (res);
 }
 

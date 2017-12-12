@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:20:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/11 21:06:19 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 08:46:38 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void			display_recursively(void *content, void *param)
 	if ((tmp->dirent_file->d_type == DT_DIR ||
 		tmp->dirent_file->d_type == DT_LNK) &&
 		ft_strcmp(tmp->dirent_file->d_name, ".") != 0 &&
-		ft_strcmp(tmp->dirent_file->d_name, "..") != 0 )
+		ft_strcmp(tmp->dirent_file->d_name, "..") != 0)
 	{
 		data_sample = (t_tmp_recu *)param;
 		final_name = ls_utils_build_name(data_sample->name_parent_folder,
