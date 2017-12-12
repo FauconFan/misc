@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 18:11:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 19:30:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ char						**build_all_strings_long_format(
 
 char						*get_real_pw_name(struct stat mystat, int flags);
 char						*get_real_gr_name(struct stat mystat, int flags);
+
+char						*build_str_size(struct stat my_stat);
 
 /*
 **	Sort utils

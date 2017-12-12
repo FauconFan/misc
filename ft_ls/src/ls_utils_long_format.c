@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 19:25:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 19:05:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 19:43:47 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char		get_idchar_from_type_file(mode_t st_mode)
 	else if (S_ISDIR(st_mode))
 		return ('d');
 	else if (S_ISBLK(st_mode))
-		return ('?');
+		return ('b');
 	else if (S_ISREG(st_mode))
 		return ('-');
 	else if (S_ISLNK(st_mode))
@@ -64,12 +64,12 @@ void			display_l_option(void *content, void *param)
 	ld = (t_list_directory *)param;
 	builted_str = build_all_strings_long_format(*(tmp->stat_file),
 							ld->name_directory, tmp->name_file, ld->flags);
-	ft_printf("%c%s  %*d %*s  %*s  %*d %s %s\n",
+	ft_printf("%c%s  %*d %-*s  %-*s  %*s %s %s\n",
 		get_idchar_from_type_file(tmp->stat_file->st_mode), builted_str[0],
 		ld->max_values->max_st_nlink, tmp->stat_file->st_nlink,
 		ld->max_values->max_len_user_id, builted_str[3],
 		ld->max_values->max_len_group_id, builted_str[4],
-		ld->max_values->max_st_size, tmp->stat_file->st_size,
+		ld->max_values->max_st_size, builted_str[5],
 		builted_str[1],
 		builted_str[2]);
 	index = -1;

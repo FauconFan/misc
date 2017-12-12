@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 16:54:11 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 19:01:22 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 19:41:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,34 @@ static char		*build_name(
 	return (ft_strdup(name_file));
 }
 
+char			*build_str_size(struct stat my_stat)
+{
+	char	*res;
+	char	*tmp;
+	int		major;
+	int		minor;
+	int		len;
+
+	if (S_ISCHR(my_stat.st_mode) || S_ISBLK(my_stat.st_mode))
+	{
+		res = ft_strsetnew(8, ' ');
+		major = major(my_stat.st_rdev);
+		minor = minor(my_stat.st_rdev);
+		tmp = ft_itoa(minor);
+		len = ft_strlen(tmp);
+		ft_strncpy(res + 8 - len, tmp, len);
+		free(tmp);
+		res[3] = ',';
+		tmp = ft_itoa(major);
+		len = ft_strlen(tmp);
+		ft_strncpy(res + 3 - len, tmp, len);
+		free(tmp);
+		return (res);
+	}
+	else
+		return (ft_itoa(my_stat.st_size));
+}
+
 char			**build_all_strings_long_format(
 					struct stat my_stat,
 					char *name_directory,
@@ -105,12 +133,13 @@ char			**build_all_strings_long_format(
 {
 	char		**res;
 
-	ft_memcheck((res = (char **)malloc(sizeof(char *) * 6)));
+	ft_memcheck((res = (char **)malloc(sizeof(char *) * 7)));
 	res[0] = build_access_right(my_stat.st_mode);
 	res[1] = build_date(my_stat);
 	res[2] = build_name(my_stat, name_directory, name_file, flags);
 	res[3] = get_real_pw_name(my_stat, flags);
 	res[4] = get_real_gr_name(my_stat, flags);
-	res[5] = 0;
+	res[5] = build_str_size(my_stat);
+	res[6] = 0;
 	return (res);
 }
