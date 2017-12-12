@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:20:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 09:30:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 18:56:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_file_content	*ls_new_file_content(
 	char			*name_tmp;
 
 	ft_memcheck((res = (t_file_content *)malloc(sizeof(t_file_content))));
-	res->name_file = name_file;
+	res->name_file = ft_strdup(name_file);
 	ft_memcheck((stat_file = (struct stat *)malloc(sizeof(struct stat))));
 	name_tmp = ls_utils_build_name(name_directory, name_file);
 	if (lstat(name_tmp, stat_file) == -1)
@@ -39,6 +39,7 @@ void			free_new_file_content(void *content)
 
 	tmp = (t_file_content *)content;
 	free(tmp->stat_file);
+	free(tmp->name_file);
 	free(content);
 }
 

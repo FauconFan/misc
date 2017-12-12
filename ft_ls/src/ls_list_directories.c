@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 08:27:25 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/12 09:45:54 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 18:59:01 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void							ls_fill_list_actu_properly(
 	ft_lstmerge_nocpy(&(list_actu->dir_content),
 		(void *)elem,
 		get_sort_function(flags));
-	update_max_values(list_actu->max_values, *(elem->stat_file));
+	update_max_values(list_actu->max_values, *(elem->stat_file), flags);
 }
 
 static void							ls_list_recu(
@@ -70,6 +70,7 @@ static t_list_directory				*init_new_list_directory(
 		res->name_directory = name_directory;
 		res->max_values = init_max_values();
 		res->dir_content = 0;
+		res->flags = flags;
 		while ((dirent_actu = readdir(res->dir_actu)) != 0)
 			ls_fill_list_actu_properly(flags, dirent_actu, res,
 					name_directory);

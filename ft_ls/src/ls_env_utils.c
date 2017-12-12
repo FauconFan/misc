@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 09:45:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 08:46:22 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 18:06:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,17 @@ static void		handle_flags(t_env_ls *env_ls, char c)
 	else if (c == 't')
 		env_ls->flags += FLAG_T_MIN * ((env_ls->flags & FLAG_T_MIN) == FALSE);
 	else if (c == '1')
+	{
+		env_ls->flags -= FLAG_L_MIN * ((env_ls->flags & FLAG_L_MIN));
 		env_ls->flags = env_ls->flags;
+	}
+	else if (c == 'n')
+	{
+		env_ls->flags += FLAG_N_MIN * ((env_ls->flags & FLAG_N_MIN) == FALSE);
+		env_ls->flags += FLAG_L_MIN * ((env_ls->flags & FLAG_L_MIN) == FALSE);
+	}
+	else if (c == 'p')
+		env_ls->flags += FLAG_P_MIN * ((env_ls->flags & FLAG_P_MIN) == FALSE);
 	else
 		ls_display_usage(c, env_ls);
 }
@@ -69,7 +79,6 @@ static void		fill_file_names(
 			ft_lstmerge_nocpy(&(env_ls->list_error_files),
 				(void *)ls_new_error_file(argv[0][index]),
 				cmp_error_files);
-			free(stats);
 		}
 		else
 		{
@@ -77,8 +86,9 @@ static void		fill_file_names(
 			ft_lstmerge_nocpy(&(env_ls->list_contents_args),
 				(void *)new_file_content,
 				get_sort_function(env_ls->flags));
-			update_max_values(max_values, *stats);
+			update_max_values(max_values, *stats, env_ls->flags);
 		}
+		free(stats);
 		index++;
 	}
 }

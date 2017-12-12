@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 09:24:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 18:11:40 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define FLAG_A_MIN			0b100
 # define FLAG_R_MIN			0b1000
 # define FLAG_T_MIN			0b10000
+# define FLAG_N_MIN			0b100000
+# define FLAG_P_MIN			0b1000000
 
 # define WARNING_SNA		"Warning : Should never happen"
 
@@ -60,6 +62,7 @@ typedef struct				s_max_values_long_format
 
 typedef struct				s_list_directory
 {
+	int							flags;
 	DIR							*dir_actu;
 	char						*name_directory;
 	t_list						*dir_content;
@@ -81,6 +84,13 @@ typedef struct				s_env_ls
 
 void						ls_display_usage(char illegal_option,
 									t_env_ls *env_ls);
+
+int							ls_list_files_only(
+								t_env_ls *env_ls,
+								t_max_values_long_format *max_values);
+void						ls_list_directories_only(
+								t_env_ls *env_ls,
+								int ret_files_only);
 
 t_env_ls					*init_ls_env(int *argc, char ***argv,
 								t_max_values_long_format *max_values);
@@ -106,23 +116,36 @@ void						display_total_blocks_if_need(int flags,
 							t_list *dir_content);
 
 void						ls_list_directories(
-							int flags,
-							char *name_directory,
-							t_bool display_name_directory,
-							t_bool display_return_line);
+								int flags,
+								char *name_directory,
+								t_bool display_name_directory,
+								t_bool display_return_line);
 
 void						display_recursively(void *content, void *param);
 char						*ls_utils_build_name(char *name_directory,
 											char *name_file);
 
+char						*add_slash_next_to_folder_name(char *name_folder);
+
 t_max_values_long_format	*init_max_values(void);
 void						free_max_values(t_max_values_long_format **max);
 void						update_max_values(
 								t_max_values_long_format *max,
-								struct stat stats);
+								struct stat stats,
+								int flags);
 
 t_bool						check_if_a_file_is_readable_as_a_folder(
 								char *name_file);
+
+char						**build_all_strings_long_format(
+								struct stat my_stat,
+								char *name_directory,
+								char *name_file,
+								int flags);
+
+char						*get_real_pw_name(struct stat mystat, int flags);
+char						*get_real_gr_name(struct stat mystat, int flags);
+
 /*
 **	Sort utils
 */

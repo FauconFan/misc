@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 16:08:31 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 09:24:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/12 18:37:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,34 @@ t_simple_ptr	flag_manager(int flags)
 	return (display_name_simply);
 }
 
-void			display_name_simply(void *content, void *param)
+char			*add_slash_next_to_folder_name(char *name_folder)
 {
-	t_file_content	*tmp;
+	char	*new_name;
+	int		len_folder_name;
 
-	(void)param;
-	tmp = (t_file_content *)content;
-	ft_printf("%s\n", tmp->name_file);
+	len_folder_name = ft_strlen(name_folder);
+	new_name = ft_strnew(len_folder_name + 1);
+	ft_strncpy(new_name, name_folder, len_folder_name);
+	new_name[len_folder_name] = '/';
+	return (new_name);
 }
 
-void			display_total_blocks_if_need(int flags, t_list *dir_content)
+void			display_name_simply(void *content, void *param)
 {
-	t_file_content	*tmp;
-	int				size_tot;
+	t_file_content		*tmp;
+	t_list_directory	*ld;
+	char				*new_name;
 
-	if (flags & FLAG_L_MIN && dir_content != 0)
+	ld = (t_list_directory *)param;
+	tmp = (t_file_content *)content;
+	if ((ld->flags & FLAG_P_MIN) && S_ISDIR(tmp->stat_file->st_mode))
 	{
-		size_tot = 0;
-		tmp = (t_file_content *)dir_content->content;
-		while (1)
-		{
-			size_tot += tmp->stat_file->st_blocks;
-			if ((dir_content = dir_content->next) == 0)
-				break ;
-			tmp = (t_file_content *)dir_content->content;
-		}
-		ft_printf("total %d\n", size_tot);
+		new_name = add_slash_next_to_folder_name(tmp->name_file);
+		ft_printf("%s\n", new_name);
+		free(new_name);
 	}
+	else
+		ft_printf("%s\n", tmp->name_file);
 }
 
 t_bool			check_if_a_file_is_readable_as_a_folder(char *name_file)
