@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 08:27:25 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/13 08:32:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 10:05:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,17 @@ static void							ls_fill_list_actu_properly(
 {
 	t_file_content	*elem;
 
-	if (*(dirent_actu->d_name) == '.' && (flags & FLAG_A_MIN) == FALSE)
-		return ;
+	if ((flags & FLAG_A_MIN) == FALSE)
+	{
+		if ((flags & FLAG_A_MAJ) == FALSE && *(dirent_actu->d_name) == '.')
+			return ;
+		else
+		{
+			if (ft_strcmp(dirent_actu->d_name, ".") == 0 ||
+				ft_strcmp(dirent_actu->d_name, "..") == 0)
+				return ;
+		}
+	}
 	elem = ls_new_file_content(dirent_actu,
 			name_directory, dirent_actu->d_name);
 	ft_lstmerge_nocpy(&(list_actu->dir_content),

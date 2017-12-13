@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/13 09:46:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 10:16:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define FLAG_U_MAJ			0b1000000000
 # define FLAG_C_MIN			0b10000000000
 # define FLAG_S_MAJ			0b100000000000
+# define FLAG_A_MAJ			0b1000000000000
+# define FLAG_F_MIN			0b10000000000000
 
 # define WARNING_SNA		"Warning : Should never happen"
 

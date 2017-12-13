@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 08:45:06 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/13 09:47:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 10:23:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static int		handle_flag_sort(t_env_ls *env_ls, char c)
 		env_ls->flags -= FLAG_U_MIN * ((env_ls->flags & FLAG_U_MIN));
 		env_ls->flags -= FLAG_C_MIN * ((env_ls->flags & FLAG_C_MIN));
 		if (c == 'u')
-			env_ls->flags += FLAG_U_MIN * 
+			env_ls->flags += FLAG_U_MIN *
 				((env_ls->flags & FLAG_U_MIN) == FALSE);
 		else if (c == 'c')
-			env_ls->flags += FLAG_C_MIN * 
+			env_ls->flags += FLAG_C_MIN *
 				((env_ls->flags & FLAG_C_MIN) == FALSE);
 	}
 	else
@@ -66,6 +66,13 @@ void			handle_flags(t_env_ls *env_ls, char c)
 		env_ls->flags += FLAG_R_MAJ * ((env_ls->flags & FLAG_R_MAJ) == FALSE);
 	else if (c == 'a')
 		env_ls->flags += FLAG_A_MIN * ((env_ls->flags & FLAG_A_MIN) == FALSE);
+	else if (c == 'A')
+		env_ls->flags += FLAG_A_MAJ * ((env_ls->flags & FLAG_A_MAJ) == FALSE);
+	else if (c == 'f')
+	{
+		env_ls->flags += FLAG_A_MIN * ((env_ls->flags & FLAG_A_MIN) == FALSE);
+		env_ls->flags += FLAG_F_MIN * ((env_ls->flags & FLAG_F_MIN) == FALSE);
+	}
 	else if (c == 'd')
 		env_ls->flags += FLAG_D_MIN * ((env_ls->flags & FLAG_D_MIN) == FALSE);
 	else if (c == 'p')

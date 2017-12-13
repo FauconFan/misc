@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/13 09:47:10 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 10:17:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void			ls_display_usage(char illegal_option, t_env_ls *env_ls)
 {
 	free_ls_env(&env_ls);
 	ft_dprintf(2, "ft_ls: illegal option -- %c\n", illegal_option);
-	ft_dprintf(2, "usage: ft_ls [-1RSUacdlnprtu] [file ...]\n");
+	ft_dprintf(2, "usage: ft_ls [-1RSUacdflnprtu] [file ...]\n");
 	exit(1);
 }
 
