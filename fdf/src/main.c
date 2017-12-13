@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:42:18 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/09 13:32:32 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 15:55:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ static void		display_window(t_env_fdf *env_fdf)
 static char		*display_usage(void)
 {
 	ft_printf("****** FdF ******\n\n");
-	ft_printf("usage ./fdf file_name\n\n");
-	ft_printf("how to launch it :\n\n");
-	ft_printf("you can specify two colors starting with the prefix \"0x\"\n");
+	ft_printf("usage ./fdf file_name [0xRRGGBB 0xRRGGBB] [-iso]\n\n");
+	ft_printf("by default, fdf launch the map without any rotation\n");
+	ft_printf("you may have to change it manually or give the option -iso\n");
+	ft_printf("you can specify two colors starting with the prefix \"0x\"\n\n");
+	ft_printf("if you run this program under a linux machine, you may have ");
+	ft_printf("to change the default keyboard shortcuts\n");
 	ft_printf("how to use it :\n\n");
 	ft_printf("\t Q => Increase elevation\n");
 	ft_printf("\t W => Decrease elevation\n\n");
