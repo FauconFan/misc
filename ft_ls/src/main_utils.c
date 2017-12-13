@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 16:46:15 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 17:01:03 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 08:44:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int					ls_list_files_only(
 	while (list_contents_args != 0)
 	{
 		content_args = list_contents_args->content;
-		if (check_if_a_file_is_readable_as_a_folder(content_args->name_file)
+		if ((env_ls->flags & FLAG_D_MIN) ||
+			check_if_a_file_is_readable_as_a_folder(content_args->name_file)
 			== FALSE)
 		{
 			display_for_only_file(content_args, max_values, env_ls->flags);
@@ -74,7 +75,8 @@ void				ls_list_directories_only(
 	while (list_contents_args != 0)
 	{
 		content_args = list_contents_args->content;
-		if (check_if_a_file_is_readable_as_a_folder(content_args->name_file))
+		if (((env_ls->flags & FLAG_D_MIN) == FALSE) &&
+			check_if_a_file_is_readable_as_a_folder(content_args->name_file))
 		{
 			ls_list_directories(env_ls->flags, content_args->name_file,
 				display_name_directory, display_new_line);

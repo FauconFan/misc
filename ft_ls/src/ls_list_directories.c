@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 08:27:25 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/12 18:59:01 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 08:32:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void								ls_list_directories(
 			ls_list_recu(flags, name_directory, list_actu);
 		ft_lstfreeall(&(list_actu->dir_content), free_new_file_content);
 		free(list_actu->max_values);
-		closedir(list_actu->dir_actu);
+		if (closedir(list_actu->dir_actu) == -1)
+			ft_dprintf(2, "%s\n", strerror(errno));
 	}
 	free(list_actu);
 }

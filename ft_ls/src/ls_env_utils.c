@@ -6,39 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 09:45:52 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 18:06:34 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 08:45:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-static void		handle_flags(t_env_ls *env_ls, char c)
-{
-	if (c == 'R')
-		env_ls->flags += FLAG_R_MAJ * ((env_ls->flags & FLAG_R_MAJ) == FALSE);
-	else if (c == 'a')
-		env_ls->flags += FLAG_A_MIN * ((env_ls->flags & FLAG_A_MIN) == FALSE);
-	else if (c == 'l')
-		env_ls->flags += FLAG_L_MIN * ((env_ls->flags & FLAG_L_MIN) == FALSE);
-	else if (c == 'r')
-		env_ls->flags += FLAG_R_MIN * ((env_ls->flags & FLAG_R_MIN) == FALSE);
-	else if (c == 't')
-		env_ls->flags += FLAG_T_MIN * ((env_ls->flags & FLAG_T_MIN) == FALSE);
-	else if (c == '1')
-	{
-		env_ls->flags -= FLAG_L_MIN * ((env_ls->flags & FLAG_L_MIN));
-		env_ls->flags = env_ls->flags;
-	}
-	else if (c == 'n')
-	{
-		env_ls->flags += FLAG_N_MIN * ((env_ls->flags & FLAG_N_MIN) == FALSE);
-		env_ls->flags += FLAG_L_MIN * ((env_ls->flags & FLAG_L_MIN) == FALSE);
-	}
-	else if (c == 'p')
-		env_ls->flags += FLAG_P_MIN * ((env_ls->flags & FLAG_P_MIN) == FALSE);
-	else
-		ls_display_usage(c, env_ls);
-}
 
 static void		fill_flags(t_env_ls *env_ls, int *argc, char ***argv)
 {

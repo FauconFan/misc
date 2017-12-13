@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 16:54:11 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 19:41:58 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 08:34:39 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char		*build_access_right(mode_t st_mode)
 {
 	char	*res;
 
-	res = ft_strnew(9);
+	res = ft_strsetnew(10, ' ');
 	res[0] = (st_mode & S_IRUSR) ? 'r' : '-';
 	res[1] = (st_mode & S_IWUSR) ? 'w' : '-';
 	res[2] = (st_mode & S_IXUSR) ? 'x' : '-';

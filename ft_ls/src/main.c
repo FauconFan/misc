@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:59 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/12 19:14:10 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 08:49:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		fill_is_all_empty(t_env_ls *env_ls)
 		ft_lstsize(env_ls->list_contents_args) == 0)
 	{
 		ft_lstaddfront_nocpy(&(env_ls->list_contents_args),
-				(void *)ls_new_file_content(0, "", "./"));
+				(void *)ls_new_file_content(0, "", "."));
 	}
 }
 
@@ -26,7 +26,7 @@ void			ls_display_usage(char illegal_option, t_env_ls *env_ls)
 {
 	free_ls_env(&env_ls);
 	ft_dprintf(2, "ft_ls: illegal option -- %c\n", illegal_option);
-	ft_dprintf(2, "usage: ft_ls [-1Ralnprt] [file ...]\n");
+	ft_dprintf(2, "usage: ft_ls [-1Radlnprt] [file ...]\n");
 	exit(1);
 }
 
