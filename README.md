@@ -31,3 +31,6 @@ how to use it :
 
 	 MOUSE CLICK => orient the shape in the dir. of the mouse
 
+# Some images because we like that
+
+![img01][https://github.com/FauconFan/fdf/assets/img01.png]
