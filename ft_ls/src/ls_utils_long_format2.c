@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 16:54:11 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/13 08:34:39 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 09:57:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char		*build_access_right(mode_t st_mode)
 	return (res);
 }
 
-static char		*build_date(struct stat my_stat)
+static char		*build_date(time_t time_treated)
 {
 	char	*res;
 	time_t	actual_time;
@@ -43,23 +43,20 @@ static char		*build_date(struct stat my_stat)
 	int		index;
 
 	res = ft_strsetnew(12, ' ');
-	time_from_ctime = ft_strsplit(ctime(&(my_stat.st_mtimespec.tv_sec)), ' ');
+	time_from_ctime = ft_strsplit(ctime(&time_treated), ' ');
 	ft_strncpy(res, time_from_ctime[1], 3);
 	ft_strncpy(res + 4 + (ft_strlen(time_from_ctime[2]) == 1),
 					*(time_from_ctime + 2),
 					1 + (ft_strlen(time_from_ctime[2]) != 1));
 	actual_time = time(0);
-	if (ft_abs(actual_time - my_stat.st_mtimespec.tv_sec) < 3600 * 24 * 180)
+	if (ft_abs(actual_time - time_treated) < 3600 * 24 * 180)
 		ft_strncpy(res + 7, time_from_ctime[3], 5);
 	else
 		ft_strncpy(res + 8, time_from_ctime[4],
 				ft_strlen(time_from_ctime[4]) - 1);
-	index = 0;
-	while (index < 5)
-	{
+	index = -1;
+	while (++index < 5)
 		free(time_from_ctime[index]);
-		index++;
-	}
 	free(time_from_ctime);
 	return (res);
 }
@@ -132,10 +129,18 @@ char			**build_all_strings_long_format(
 					int flags)
 {
 	char		**res;
+	time_t		handle_flag_for_date_output;
 
+	handle_flag_for_date_output = my_stat.st_mtimespec.tv_sec;
+	if (flags & FLAG_U_MAJ)
+		handle_flag_for_date_output = my_stat.st_birthtimespec.tv_sec;
+	else if (flags & FLAG_U_MIN)
+		handle_flag_for_date_output = my_stat.st_atimespec.tv_sec;
+	else if (flags & FLAG_C_MIN)
+		handle_flag_for_date_output = my_stat.st_ctimespec.tv_sec;
 	ft_memcheck((res = (char **)malloc(sizeof(char *) * 7)));
 	res[0] = build_access_right(my_stat.st_mode);
-	res[1] = build_date(my_stat);
+	res[1] = build_date(handle_flag_for_date_output);
 	res[2] = build_name(my_stat, name_directory, name_file, flags);
 	res[3] = get_real_pw_name(my_stat, flags);
 	res[4] = get_real_gr_name(my_stat, flags);

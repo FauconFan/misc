@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/13 08:45:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/13 09:46:40 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 # define FLAG_N_MIN			0b100000
 # define FLAG_P_MIN			0b1000000
 # define FLAG_D_MIN			0b10000000
+# define FLAG_U_MIN			0b100000000
+# define FLAG_U_MAJ			0b1000000000
+# define FLAG_C_MIN			0b10000000000
+# define FLAG_S_MAJ			0b100000000000
 
 # define WARNING_SNA		"Warning : Should never happen"
 
@@ -161,5 +165,17 @@ int							ls_sort_by_file_name_reverse(void *d1, void *d2);
 int							ls_sort_by_last_time_modified(void *d1, void *d2);
 int							ls_sort_by_last_time_modified_reverse
 								(void *d1, void *d2);
+int							ls_sort_by_last_time_accessed(void *d1, void *d2);
+int							ls_sort_by_last_time_accessed_reverse
+								(void *d1, void *d2);
+int							ls_sort_by_last_time_birth(void *d1, void *d2);
+int							ls_sort_by_last_time_birth_reverse
+								(void *d1, void *d2);
+int							ls_sort_by_last_time_change_status
+								(void *d1, void *d2);
+int							ls_sort_by_last_time_change_status_reverse
+								(void *d1, void *d2);
+int							ls_sort_by_size(void *d1, void *d2);
+int							ls_sort_by_size_reverse(void *d1, void *d2);
 
 #endif
