@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:29 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/21 09:25:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/21 18:37:06 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		main(int argc, char **argv, char **env)
 	{
 		ft_putstr("$> ");
 		cmd = read_from_input();
-		if (treat_cmd(cmd) == 1)
+		if (treat_cmd(cmd, ms_env) == 1)
 			break ;
 	}
 	free_ms_env(&ms_env);

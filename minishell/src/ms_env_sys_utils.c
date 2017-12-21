@@ -6,76 +6,113 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:41:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/21 09:21:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/21 19:10:19 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_ms_couple		*new_ms_couple(char *index, char *value)
+char					**build_cpy_env(char **env)
 {
-	t_ms_couple		*res;
-
-	ft_memcheck((res = (t_ms_couple *)malloc(sizeof(t_ms_couple))));
-	res->index = index;
-	res->value = value;
-	res->next = 0;
-	return (res);
-}
-
-static void				add_next(t_ms_couple **head, t_ms_couple *list)
-{
-	t_ms_couple		*tmp;
-
-	if (*head == 0)
-	{
-		*head = list;
-		return ;
-	}
-	tmp = *head;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = list;
-}
-
-t_ms_couple				*build_cpy_env(char **env)
-{
-	t_ms_couple		*res;
-	int				index;
-	int				index_equals;
+	char	**cpy_env;
+	int		index;
 
 	index = 0;
-	res = 0;
+	while(env[index])
+		index++;
+	ft_memcheck((cpy_env = (char **)malloc(sizeof(char *) * (index + 1))));
+	index = 0;
 	while (env[index])
 	{
-		index_equals = ft_strcpos(env[index], '=');
-		add_next(&res, new_ms_couple(
-						ft_strndup(env[index], index_equals),
-						ft_strdup(env[index] + index_equals + 1)));
+		cpy_env[index] = ft_strdup(env[index]);
 		index++;
 	}
-	return (res);
+	cpy_env[index] = 0;
+	return (cpy_env);
 }
 
-void					free_cpy_env(t_ms_couple **head)
+void					free_cpy_env(char ***list)
 {
-	t_ms_couple	*list;
-	t_ms_couple	*next;
+	int			index;
 
-	if (*head)
+	index = 0;
+	while ((*list)[index])
 	{
-		list = *head;
-		next = list->next;
-		while (1)
-		{
-			free(list->index);
-			free(list->value);
-			free(list);
-			list = next;
-			if (list == 0)
-				break ;
-			next = list->next;
-		}
+		free((*list)[index]);
+		index++;
 	}
-	*head = 0;
+	free((*list));
+	*list = 0;
+}
+
+char					*get_env_local(char **list, char *key)
+{
+	int			index;
+	int			pos_equals;
+
+	index = 0;
+	while (list[index])
+	{
+		pos_equals = ft_strcpos(list[index], '=');
+		if (ft_strncmp(list[index], key, pos_equals) == 0)
+		{
+			return (ft_strdup(list[index] + pos_equals + 1));
+		}
+		index++;
+	}
+	return (0);
+}
+
+void					set_env_local(char ***list, char *key, char *value)
+{
+	int			index;
+	int			pos_equals;
+	char		**new_list;
+
+	index = 0;
+	while ((*list)[index])
+	{
+		pos_equals = ft_strcpos((*list)[index], '=');
+		if (ft_strncmp((*list)[index], key, pos_equals) == 0)
+		{
+			free((*list)[index]);
+			ft_sprintf((*list) + index, "%s=%s", key, value);
+			return ;
+		}
+		index++;
+	}
+	ft_memcheck((new_list = (char **)malloc(sizeof(char *) * (index + 2))));
+	index = -1;
+	while ((*list)[++index])
+		new_list[index] = (*list)[index];
+	ft_sprintf(new_list + index, "%s=%s", key, value);
+	new_list[index + 1] = 0;
+	free(*list);
+	*list = new_list;
+}
+
+void					remove_env_local(char ***list, char *key)
+{
+	int			pos_equals;
+	int			size;
+	int			index;
+
+	size = 0;
+	while ((*list)[size])
+	{
+		pos_equals = ft_strcpos((*list)[size], '=');
+		if (ft_strncmp((*list)[size], key, pos_equals) == 0)
+		{
+			free((*list)[size]);
+			index = size;
+			while ((*list)[index + 1])
+			{
+				(*list)[index] = (*list)[index + 1];
+				index++;
+			}
+			(*list)[index] = 0;
+		}
+		else
+			size++;
+	}
 }

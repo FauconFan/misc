@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_utils.c                                     :+:      :+:    :+:   */
+/*   ms_str_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/21 09:02:45 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/21 19:01:21 by jpriou           ###   ########.fr       */
+/*   Created: 2017/12/21 16:56:44 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/21 19:17:03 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ms_env	*init_ms_env(char **env)
+char	*concat_dir_str(char *s1, char *s2)
 {
-	t_ms_env	*res;
+	char	*res;
+	int		l1;
+	int		l2;
 
-	ft_memcheck((res = (t_ms_env *)malloc(sizeof(t_ms_env))));
-	res->cpy_env = build_cpy_env(env);
+	l1 = ft_strlen(s1);
+	l2 = ft_strlen(s2);
+	if (s1[l1 - 1] == '/')
+	{
+		res = ft_strnew(l1 + l2);
+		ft_strncpy(res, s1, l1);
+		ft_strncpy(res + l1, s2, l2);
+	}
+	else
+	{
+		res = ft_strnew(l1 + l2 + 1);
+		ft_strncpy(res, s1, l1);
+		res[l1] = '/';
+		ft_strncpy(res + l1 + 1, s2, l2);
+	}
 	return (res);
-}
-
-void		free_ms_env(t_ms_env **ms_env)
-{
-	free_cpy_env(&((*ms_env)->cpy_env));
-	free(*ms_env);
-	*ms_env = 0;
 }

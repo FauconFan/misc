@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_utils.c                                     :+:      :+:    :+:   */
+/*   ms_exec_fork_wait.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/21 09:02:45 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/21 19:01:21 by jpriou           ###   ########.fr       */
+/*   Created: 2017/12/21 16:12:20 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/21 19:20:01 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ms_env	*init_ms_env(char **env)
+void		fork_n_wait(t_ms_env *ms_env, char *directory, char *cmd_real, char **args)
 {
-	t_ms_env	*res;
+	int		status;
+	char	*full_path_exe;
 
-	ft_memcheck((res = (t_ms_env *)malloc(sizeof(t_ms_env))));
-	res->cpy_env = build_cpy_env(env);
-	return (res);
-}
-
-void		free_ms_env(t_ms_env **ms_env)
-{
-	free_cpy_env(&((*ms_env)->cpy_env));
-	free(*ms_env);
-	*ms_env = 0;
+	full_path_exe = concat_dir_str(directory, cmd_real);
+	if (fork() == 0)
+	{
+		ft_printf("debug :%s\n", *args);
+		execve(full_path_exe, args, ms_env->cpy_env);
+	}
+	else
+	{
+		wait(&status);
+	}
+	free(full_path_exe);
 }

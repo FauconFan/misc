@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/21 09:10:47 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/21 18:56:28 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC_FOLDER = src/
 INCLUDES_FOLDER = includes/
 LIBFT_FOLDER = libft/
 
-GWW = gcc -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
+GWW = gcc -g -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
 LIBS = -L libft -l ft
 
 SRC_PROJECT = main.c \
@@ -24,6 +24,10 @@ SRC_PROJECT = main.c \
 				ms_treat_cmd.c \
 				ms_env_utils.c \
 				ms_env_sys_utils.c \
+				ms_builtin1.c \
+				ms_treat_path.c \
+				ms_exec_fork_wait.c \
+				ms_str_utils.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC_PROJECT))
 
