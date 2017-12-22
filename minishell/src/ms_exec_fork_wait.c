@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 16:12:20 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:06:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/22 14:57:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	**build_args_for_fork(char *full_path_exe, char **args)
 }
 
 void		fork_n_wait(
-				t_ms_env *ms_env,
+				t_array_key **env_actu,
 				char *directory,
 				char *cmd_real,
 				char **args)
@@ -45,7 +45,7 @@ void		fork_n_wait(
 
 	full_path_exe = concat_dir_str(directory, cmd_real);
 	argstmp = build_args_for_fork(full_path_exe, args);
-	env_tmp = from_array_keys_to_array_string(ms_env->env_local);
+	env_tmp = from_array_keys_to_array_string(env_actu);
 	if (fork() == 0)
 	{
 		execve(full_path_exe, argstmp, env_tmp);

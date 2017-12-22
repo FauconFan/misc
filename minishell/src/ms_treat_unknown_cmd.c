@@ -6,35 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 18:15:31 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:08:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/22 16:53:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static t_bool		look_in_this_directory(
-						char *directory,
-						char *search_binary)
-{
-	DIR				*dir_actu;
-	struct dirent	*dirent_actu;
-	t_bool			res;
-
-	res = FALSE;
-	if ((dir_actu = opendir(directory)) == 0)
-		return (FALSE);
-	while ((dirent_actu = readdir(dir_actu)))
-	{
-		if (ft_strcmp(dirent_actu->d_name, search_binary) == 0)
-		{
-			res = TRUE;
-			break ;
-		}
-	}
-	if (closedir(dir_actu) == -1)
-		return (FALSE);
-	return (res);
-}
 
 static int			treat_if_path_is_defined(
 						t_ms_env *ms_env,
@@ -51,14 +27,14 @@ static int			treat_if_path_is_defined(
 	is_found = FALSE;
 	while (parsed[index])
 	{
-		is_found = look_in_this_directory(parsed[index], cmd_real);
+		is_found = is_file_exist(parsed[index], cmd_real);
 		if (is_found)
 			break ;
 		index++;
 	}
 	if (is_found)
 	{
-		fork_n_wait(ms_env, parsed[index], cmd_real, args);
+		fork_n_wait(ms_env->env_local, parsed[index], cmd_real, args);
 	}
 	index = -1;
 	while (parsed[++index])

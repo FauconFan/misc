@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:33:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:10:43 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/22 16:32:55 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,18 @@ int				treat_cmd(char *s, t_ms_env *ms_env)
 {
 	char	**args;
 	char	*real_cmd;
+	int		ret;
 
 	parse_cmd(s, &real_cmd, &args);
+	ret = handle_cmd(real_cmd, args, ms_env);
+	free_parsed_cmd(&s, &real_cmd, &args);
+	return (ret);
+}
+
+int				handle_cmd(char *real_cmd, char **args, t_ms_env *ms_env)
+{
 	if (ft_strcmp(real_cmd, CST_EXIT) == 0)
-	{
-		free_parsed_cmd(&s, &real_cmd, &args);
 		return (1);
-	}
 	else if (ft_strcmp(real_cmd, CST_ENV) == 0)
 		builtin_env(ms_env->env_local);
 	else if (ft_strcmp(real_cmd, CST_SETENV) == 0)
@@ -80,6 +85,5 @@ int				treat_cmd(char *s, t_ms_env *ms_env)
 		builtin_cd(&(ms_env->env_local), args);
 	else if (ft_strcmp(real_cmd, ""))
 		treat_from_scratch(ms_env, real_cmd, args);
-	free_parsed_cmd(&s, &real_cmd, &args);
 	return (0);
 }

@@ -6,15 +6,18 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:15:30 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:56:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/22 19:13:03 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		real_cd(char **curpath, t_array_key **list_env, char **args)
+static int		handle_exception(
+				char **curpath,
+				t_array_key **list_env,
+				char *real_args)
 {
-	if (*args == 0)
+	if (real_args == 0)
 	{
 		*curpath = get_env_local(list_env, ENV_CST_HOME);
 		if (*curpath == 0)
@@ -23,7 +26,7 @@ static int		real_cd(char **curpath, t_array_key **list_env, char **args)
 			return (1);
 		}
 	}
-	else if ((*args)[0] == '-' && (*args)[1] == 0)
+	else if ((real_args)[0] == '-' && (real_args)[1] == 0)
 	{
 		*curpath = get_env_local(list_env, ENV_CST_OLDPWD);
 		if (*curpath == 0)
@@ -33,38 +36,92 @@ static int		real_cd(char **curpath, t_array_key **list_env, char **args)
 		}
 	}
 	else
-		*curpath = ft_strdup(*args);
+		*curpath = normalize_path(list_env, real_args);
+	return (0);
+}
+
+static void		real_cd(
+					char *curpath,
+					t_array_key ***list_env,
+					char *real_arg,
+					t_bool logical_cd)
+{
+	char	*cwd;
+	char	*tmp;
+
+	cwd = get_env_local(*list_env, ENV_CST_PWD);
+	if (chdir(curpath) == -1)
+	{
+		if ((tmp = why_a_folder_is_unreachable(curpath)))
+			ft_dprintf(2, "cd: %s: %s\n", tmp, real_arg);
+		else
+			ft_dprintf(2, "cd: %s\n", real_arg);
+	}
+	else
+	{
+		set_env_local(list_env, ENV_CST_OLDPWD, cwd);
+		if (logical_cd)
+			set_env_local(list_env, ENV_CST_PWD, curpath);
+		else
+		{
+			tmp = ft_strnew(2048);
+			getcwd(tmp, 2048);
+			set_env_local(list_env, ENV_CST_PWD, tmp);
+			free(tmp);
+		}
+	}
+	free(cwd);
+}
+
+static int		parse_arg(
+					char **args,
+					char **real_arg,
+					t_bool *logical_cd,
+					int size)
+{
+	int		index[2];
+
+	index[0] = -1;
+	while (++index[0] < size)
+	{
+		if (args[index[0]][0] == '-')
+		{
+			index[1] = 0;
+			while (args[index[0]][++index[1]])
+			{
+				if (args[index[0]][index[1]] != 'P' &&
+							args[index[0]][index[1]] != 'L')
+					return (1);
+				*logical_cd = (args[index[0]][index[1]] == 'L');
+			}
+		}
+		else
+			break ;
+	}
+	if (index[0] == size - 1)
+		*real_arg = args[index[0]];
+	else
+		return (1);
 	return (0);
 }
 
 void			builtin_cd(t_array_key ***list_env, char **args)
 {
-	char	*cwd;
 	char	*curpath;
+	char	*real_arg;
 	int		size;
+	t_bool	logical_cd;
 
 	size = 0;
 	while (args[size])
 		size++;
-	if (size >= 2)
+	logical_cd = TRUE;
+	if (parse_arg(args, &real_arg, &logical_cd, size))
 	{
-		ft_dprintf(2, "cd: Too many arguments\n");
+		ft_dprintf(2, "usage: cd [-L|-P] path\n");
 		return ;
 	}
-	curpath = 0;
-	if (real_cd(&curpath, *list_env, args) == 0)
-	{
-		cwd = getwd(0);
-		if (chdir(curpath) == -1)
-			ft_dprintf(2, "%s is unreachable\n", curpath);
-		else
-		{
-			set_env_local(list_env, ENV_CST_OLDPWD, cwd);
-			free(cwd);
-			cwd = getwd(0);
-			set_env_local(list_env, ENV_CST_PWD, cwd);
-		}
-		free(cwd);
-		free(curpath);
-	}
+	if (handle_exception(&curpath, *list_env, real_arg) == 0)
+		real_cd(curpath, list_env, real_arg, logical_cd);
+	free(curpath);
 }

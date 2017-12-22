@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/22 14:03:11 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/22 17:55:17 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ UTILS_PROJECT = ms_str_utils.c \
 				ms_env_utils.c \
 				ms_env_sys_utils.c \
 				ms_array_keys_utils.c \
+				ms_file_error_utils.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC_PROJECT))
 BUILTIN_FP = $(addprefix $(SRC_FOLDER)$(BUILTIN_FOLDER), $(BUILTIN_PROJECT))
