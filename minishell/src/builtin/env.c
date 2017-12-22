@@ -1,41 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_read_from_input.c                               :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/21 08:23:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:06:32 by jpriou           ###   ########.fr       */
+/*   Created: 2017/12/22 13:14:04 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/22 13:31:32 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		*read_from_input(void)
+void	builtin_env(t_array_key **env_actu)
 {
-	char	*res;
-	char	*tamp;
-	char	c;
-	size_t	size;
+	int		index;
 
-	size = 0;
-	res = ft_strnew(size);
-	tamp = 0;
-	while (1)
+	index = 0;
+	while (env_actu[index])
 	{
-		if (read(0, &c, 1) == -1)
-			ft_die("read aborted");
-		if (c == '\n')
-			break ;
-		if (c == '\t' || (c == ' ' && (size == 0 || res[size - 1] == ' ')))
-			continue ;
-		tamp = ft_strnew(size + 1);
-		ft_strncpy(tamp, res, size);
-		tamp[size] = c;
-		size++;
-		free(res);
-		res = tamp;
+		ft_printf("%s=%s\n", env_actu[index]->key, env_actu[index]->value);
+		index++;
 	}
-	return (res);
 }

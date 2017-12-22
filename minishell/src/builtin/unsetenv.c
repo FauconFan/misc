@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_utils.c                                     :+:      :+:    :+:   */
+/*   unsetenv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/21 09:02:45 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/21 19:01:21 by jpriou           ###   ########.fr       */
+/*   Created: 2017/12/22 13:15:00 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/22 13:31:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ms_env	*init_ms_env(char **env)
+void	builtin_unsetenv(t_array_key **env_actu, char **args)
 {
-	t_ms_env	*res;
+	int		number;
 
-	ft_memcheck((res = (t_ms_env *)malloc(sizeof(t_ms_env))));
-	res->cpy_env = build_cpy_env(env);
-	return (res);
-}
-
-void		free_ms_env(t_ms_env **ms_env)
-{
-	free_cpy_env(&((*ms_env)->cpy_env));
-	free(*ms_env);
-	*ms_env = 0;
+	number = 0;
+	while (args[number])
+		number++;
+	if (number != 1)
+		ft_dprintf(2, "usage: unsetenv VAR\n");
+	else
+	{
+		remove_env_local(&env_actu, args[0]);
+	}
 }

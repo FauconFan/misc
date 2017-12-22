@@ -1,41 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_read_from_input.c                               :+:      :+:    :+:   */
+/*   ms_env_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/21 08:23:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:06:32 by jpriou           ###   ########.fr       */
+/*   Created: 2017/12/21 09:02:45 by jpriou            #+#    #+#             */
+/*   Updated: 2017/12/22 13:51:19 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		*read_from_input(void)
+t_ms_env	*init_ms_env(char **env)
 {
-	char	*res;
-	char	*tamp;
-	char	c;
-	size_t	size;
+	t_ms_env	*res;
 
-	size = 0;
-	res = ft_strnew(size);
-	tamp = 0;
-	while (1)
-	{
-		if (read(0, &c, 1) == -1)
-			ft_die("read aborted");
-		if (c == '\n')
-			break ;
-		if (c == '\t' || (c == ' ' && (size == 0 || res[size - 1] == ' ')))
-			continue ;
-		tamp = ft_strnew(size + 1);
-		ft_strncpy(tamp, res, size);
-		tamp[size] = c;
-		size++;
-		free(res);
-		res = tamp;
-	}
+	ft_memcheck((res = (t_ms_env *)malloc(sizeof(t_ms_env))));
+	res->env_local = build_cpy_env(env);
 	return (res);
+}
+
+void		free_ms_env(t_ms_env **ms_env)
+{
+	free_cpy_env(&((*ms_env)->env_local));
+	free(*ms_env);
+	*ms_env = 0;
 }

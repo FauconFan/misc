@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/21 19:15:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/22 14:13:01 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,91 @@
 # include <sys/uio.h>
 # include <unistd.h>
 # include <stdlib.h>
-#include <errno.h>
 # include <dirent.h>
 # include "libft.h"
 
-# define	CST_CMD_NOT_FOUND	"Command not found."
+# define CST_CMD_NOT_FOUND	"Command not found."
 
-# define	CST_EXIT			"exit"
-# define	CST_ENV				"env"
-# define	CST_SETENV			"setenv"
-# define	CST_UNSETENV		"unsetenv"
+# define CST_EXIT			"exit"
+# define CST_ENV			"env"
+# define CST_SETENV			"setenv"
+# define CST_UNSETENV		"unsetenv"
+# define CST_CD				"cd"
+
+# define ENV_CST_HOME		"HOME"
+# define ENV_CST_OLDPWD		"OLDPWD"
+# define ENV_CST_PWD		"PWD"
+
+typedef struct			s_array_key
+{
+	char	*key;
+	char	*value;
+}						t_array_key;
 
 typedef struct			s_ms_env
 {
-	char			**cpy_env;
+	t_array_key		**env_local;
 }						t_ms_env;
+
+/*
+**	Init environment
+*/
 
 t_ms_env				*init_ms_env(char **env);
 void					free_ms_env(t_ms_env **ms_env);
 
+/*
+**	Read from standard input
+*/
+
 char					*read_from_input(void);
 int						treat_cmd(char *s, t_ms_env *ms_env);
 
-char					**build_cpy_env(char **env);
-void					free_cpy_env(char ***list);
-char					*get_env_local(char **list, char *key);
-void					set_env_local(char ***list, char *key, char *value);
-void					remove_env_local(char ***list, char *key);
+/*
+**	Init cpy_env_from system
+*/
+
+t_array_key				**build_cpy_env(char **env);
+void					free_cpy_env(t_array_key ***list);
+
+/*
+**	Get set remove env variable
+*/
+
+char					*get_env_local(t_array_key **list, char *key);
+void					set_env_local(
+							t_array_key ***list,
+							char *key,
+							char *value);
+void					remove_env_local(t_array_key ***list, char *key);
+void					fork_n_wait(
+							t_ms_env *ms_env,
+							char *directory,
+							char *cmd_real,
+							char **args);
+
+void					treat_from_scratch(
+							t_ms_env *ms_env,
+							char *cmd_real,
+							char **args);
+
+/*
+**	Builtins
+*/
+
+void					builtin_env(t_array_key **env_actu);
+void					builtin_setenv(t_array_key ***env_actu, char **args);
+void					builtin_unsetenv(t_array_key **env_actu, char **args);
+void					builtin_cd(t_array_key ***list_env, char **args);
+
+/*
+** Utilities functions
+*/
 
 char					*concat_dir_str(char *s1, char *s2);
-
-void					fork_n_wait(t_ms_env *ms_env, char *directory, char *cmd_real, char **args);
-
-void					treat_from_scratch(t_ms_env *ms_env, char *cmd_real, char **args);
-
-void					builtin_env(t_ms_env *ms_env);
-void					builtin_setenv(t_ms_env *ms_env, char **args);
-void					builtin_unsetenv(t_ms_env *ms_env, char **args);
+int						size_array_keys(t_array_key **env_local);
+char					**from_array_keys_to_array_string(
+							t_array_key **env_local);
+void					free_array_string(char **list);
 
 #endif
