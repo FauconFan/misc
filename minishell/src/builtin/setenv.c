@@ -3,18 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   setenv.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:14:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 13:31:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/23 16:02:56 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	handle_exception_n_run(t_array_key ***env_actu, char *key, char *value)
+{
+	if (ft_strlen(key) == 0)
+		ft_dprintf(2, "setenv: %s\n", ERROR_SETENV_EMPTY);
+	else if (ft_isalpha(*key) == FALSE)
+		ft_dprintf(2, "setenv: %s\n", ERROR_SETENV_BEGIN);
+	else if (ft_str_is_alnum(key) == FALSE)
+		ft_dprintf(2, "setenv: %s\n", ERROR_SETENV_ALNUM);
+	else
+		set_env_local(env_actu, key, value);
+}
+
 void	builtin_setenv(t_array_key ***env_actu, char **args)
 {
-	char	*if_no_value;
+	char	*new_value;
 	int		number;
 
 	number = 0;
@@ -25,10 +37,10 @@ void	builtin_setenv(t_array_key ***env_actu, char **args)
 	else
 	{
 		if (number == 1)
-			if_no_value = ft_strnew(0);
+			new_value = ft_strnew(0);
 		else
-			if_no_value = ft_strdup(args[1]);
-		set_env_local(env_actu, args[0], if_no_value);
-		free(if_no_value);
+			new_value = ft_strdup(args[1]);
+		handle_exception_n_run(env_actu, args[0], new_value);
+		free(new_value);
 	}
 }

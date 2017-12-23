@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:29 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 15:55:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/23 16:34:47 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		main(int argc, char **argv, char **env)
 	{
 		ft_putstr("$> ");
 		cmd = read_from_input();
-		if (treat_cmd(cmd, ms_env) == 1)
+		if (treat_cmd(cmd, &(ms_env->env_local)) == 1)
 			break ;
 	}
 	free_ms_env(&ms_env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:15:30 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 19:13:03 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/23 10:18:49 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int		parse_arg(
 	index[0] = -1;
 	while (++index[0] < size)
 	{
-		if (args[index[0]][0] == '-')
+		if (args[index[0]][0] == '-' && args[index[0]][1] != 0)
 		{
 			index[1] = 0;
 			while (args[index[0]][++index[1]])

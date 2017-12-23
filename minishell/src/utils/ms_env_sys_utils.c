@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_env_sys_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:41:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:09:32 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/23 16:34:24 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ t_array_key					**build_cpy_env(char **env)
 	return (cpy_env);
 }
 
+t_array_key					**build_empty_env(void)
+{
+	t_array_key		**cpy_env;
+
+	ft_memcheck((cpy_env = (t_array_key **)malloc(sizeof(t_array_key *))));
+	cpy_env[0] = 0;
+	return (cpy_env);
+}
+
 void						free_cpy_env(t_array_key ***list)
 {
 	int			index;
@@ -51,4 +60,36 @@ void						free_cpy_env(t_array_key ***list)
 	}
 	free((*list));
 	*list = 0;
+}
+
+t_array_key					**cpy_env_from_another(t_array_key **list)
+{
+	t_array_key		**res;
+	int				index;
+	int				size;
+
+	size = size_array_keys(list);
+	ft_memcheck((res = (t_array_key **)malloc(sizeof(t_array_key *) * (size + 1))));
+	index = 0;
+	while (list[index])
+	{
+		ft_memcheck((res[index] = (t_array_key *)malloc(sizeof(t_array_key))));
+		res[index]->key = ft_strdup(list[index]->key);
+		res[index]->value = ft_strdup(list[index]->value);
+		index++;
+	}
+	res[index] = 0;
+	return (res);
+}
+
+void						display_env(t_array_key **list)
+{
+	int		index;
+
+	index = 0;
+	while (list[index])
+	{
+		ft_printf("%s=%s\n", list[index]->key, list[index]->value);
+		index++;
+	}
 }

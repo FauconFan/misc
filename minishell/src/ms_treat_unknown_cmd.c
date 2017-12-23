@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ms_treat_unknown_cmd.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 18:15:31 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 16:53:57 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/23 10:24:42 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int			treat_if_path_is_defined(
-						t_ms_env *ms_env,
+						t_array_key **env_local,
 						char *cmd_real,
 						char **args,
 						char *path_variable)
@@ -34,7 +34,7 @@ static int			treat_if_path_is_defined(
 	}
 	if (is_found)
 	{
-		fork_n_wait(ms_env->env_local, parsed[index], cmd_real, args);
+		fork_n_wait(env_local, parsed[index], cmd_real, args);
 	}
 	index = -1;
 	while (parsed[++index])
@@ -46,15 +46,15 @@ static int			treat_if_path_is_defined(
 }
 
 void				treat_from_scratch(
-						t_ms_env *ms_env,
+						t_array_key **env_local,
 						char *cmd_real,
 						char **args)
 {
 	char	*path_variable;
 
-	path_variable = get_env_local(ms_env->env_local, "PATH");
+	path_variable = get_env_local(env_local, "PATH");
 	if (path_variable == 0 ||
-			treat_if_path_is_defined(ms_env, cmd_real, args, path_variable))
+			treat_if_path_is_defined(env_local, cmd_real, args, path_variable))
 		ft_dprintf(2, "%s: %s\n", cmd_real, CST_CMD_NOT_FOUND);
 	free(path_variable);
 }

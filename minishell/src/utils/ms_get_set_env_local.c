@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_set_env_local.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:39:19 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:11:08 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/23 16:11:54 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void					set_env_local(
 							char *key,
 							char *value)
 {
-	int				index;
 	t_array_key		**new_list;
+	int				index;
 
 	index = 0;
 	while ((*list)[index])

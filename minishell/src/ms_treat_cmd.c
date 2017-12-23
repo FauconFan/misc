@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_treat_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:33:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 16:32:55 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/23 16:32:20 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,31 @@ static void		free_parsed_cmd(char **cmd, char **real_cmd, char ***args)
 	*args = 0;
 }
 
-int				treat_cmd(char *s, t_ms_env *ms_env)
+int				treat_cmd(char *s, t_array_key ***env_local)
 {
 	char	**args;
 	char	*real_cmd;
 	int		ret;
 
 	parse_cmd(s, &real_cmd, &args);
-	ret = handle_cmd(real_cmd, args, ms_env);
+	ret = handle_cmd(real_cmd, args, env_local);
 	free_parsed_cmd(&s, &real_cmd, &args);
 	return (ret);
 }
 
-int				handle_cmd(char *real_cmd, char **args, t_ms_env *ms_env)
+int				handle_cmd(char *real_cmd, char **args, t_array_key ***env_local)
 {
 	if (ft_strcmp(real_cmd, CST_EXIT) == 0)
 		return (1);
 	else if (ft_strcmp(real_cmd, CST_ENV) == 0)
-		builtin_env(ms_env->env_local);
+		builtin_env(*env_local, args);
 	else if (ft_strcmp(real_cmd, CST_SETENV) == 0)
-		builtin_setenv(&(ms_env->env_local), args);
+		builtin_setenv(env_local, args);
 	else if (ft_strcmp(real_cmd, CST_UNSETENV) == 0)
-		builtin_unsetenv(ms_env->env_local, args);
+		builtin_unsetenv(*env_local, args);
 	else if (ft_strcmp(real_cmd, CST_CD) == 0)
-		builtin_cd(&(ms_env->env_local), args);
+		builtin_cd(env_local, args);
 	else if (ft_strcmp(real_cmd, ""))
-		treat_from_scratch(ms_env, real_cmd, args);
+		treat_from_scratch(*env_local, real_cmd, args);
 	return (0);
 }

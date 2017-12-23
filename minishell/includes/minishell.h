@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 19:13:29 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/23 16:32:41 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/uio.h>
+# include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <dirent.h>
@@ -35,6 +36,10 @@
 # define ENV_CST_HOME				"HOME"
 # define ENV_CST_OLDPWD				"OLDPWD"
 # define ENV_CST_PWD				"PWD"
+
+# define ERROR_SETENV_EMPTY			"Variable name can't be an empty string"
+# define ERROR_SETENV_BEGIN			"Variable name must begin with a letter"
+# define ERROR_SETENV_ALNUM			"Variable name must contain alphanumeric characters"
 
 typedef struct			s_array_key
 {
@@ -59,14 +64,17 @@ void					free_ms_env(t_ms_env **ms_env);
 */
 
 char					*read_from_input(void);
-int						treat_cmd(char *s, t_ms_env *ms_env);
+int						treat_cmd(char *s, t_array_key ***env_local);
 
 /*
 **	Init cpy_env_from system
 */
 
 t_array_key				**build_cpy_env(char **env);
+t_array_key				**build_empty_env(void);
 void					free_cpy_env(t_array_key ***list);
+t_array_key				**cpy_env_from_another(t_array_key **list);
+void					display_env(t_array_key **list);
 
 /*
 **	Get set remove env variable
@@ -85,22 +93,27 @@ void					fork_n_wait(
 							char **args);
 
 void					treat_from_scratch(
-							t_ms_env *ms_env,
+							t_array_key **env_local,
 							char *cmd_real,
 							char **args);
 
 int						handle_cmd(
 							char *real_cmd,
 							char **args,
-							t_ms_env *ms_env);
+							t_array_key ***env_local);
 /*
 **	Builtins
 */
 
-void					builtin_env(t_array_key **env_actu);
+void					builtin_env(t_array_key **env_actu, char **args);
 void					builtin_setenv(t_array_key ***env_actu, char **args);
 void					builtin_unsetenv(t_array_key **env_actu, char **args);
 void					builtin_cd(t_array_key ***list_env, char **args);
+
+void					handle_exception_n_run(
+							t_array_key ***env_actu,
+							char *key,
+							char *value);
 
 /*
 ** Utilities functions
