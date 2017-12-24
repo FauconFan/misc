@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:33:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/23 16:32:20 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/24 09:37:18 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int				handle_cmd(char *real_cmd, char **args, t_array_key ***env_local)
 		builtin_setenv(env_local, args);
 	else if (ft_strcmp(real_cmd, CST_UNSETENV) == 0)
 		builtin_unsetenv(*env_local, args);
+	else if (ft_strcmp(real_cmd, CST_ECHO) == 0)
+		builtin_echo(*env_local, args);
 	else if (ft_strcmp(real_cmd, CST_CD) == 0)
 		builtin_cd(env_local, args);
 	else if (ft_strcmp(real_cmd, ""))

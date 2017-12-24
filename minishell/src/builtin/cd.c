@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:15:30 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/23 10:18:49 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/23 16:55:53 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ static int		parse_arg(
 	index[0] = -1;
 	while (++index[0] < size)
 	{
-		if (args[index[0]][0] == '-' && args[index[0]][1] != 0)
+		if (args[index[0]][0] == '-' && args[index[0]][1] != 0 &&
+										args[index[0]][1] != '-')
 		{
 			index[1] = 0;
 			while (args[index[0]][++index[1]])
@@ -95,10 +96,10 @@ static int		parse_arg(
 				*logical_cd = (args[index[0]][index[1]] == 'L');
 			}
 		}
-		else
+		else if (ft_strcmp(args[index[0]], "--") != 0 || ++index[0])
 			break ;
 	}
-	if (index[0] == size - 1)
+	if (index[0] == size - 1 || index[0] == size)
 		*real_arg = args[index[0]];
 	else
 		return (1);
@@ -116,6 +117,7 @@ void			builtin_cd(t_array_key ***list_env, char **args)
 	while (args[size])
 		size++;
 	logical_cd = TRUE;
+	real_arg = 0;
 	if (parse_arg(args, &real_arg, &logical_cd, size))
 	{
 		ft_dprintf(2, "usage: cd [-L|-P] path\n");

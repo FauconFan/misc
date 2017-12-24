@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_str_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 16:56:44 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 16:24:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/24 10:25:13 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,13 @@ char			*normalize_path(t_array_key **env_actu, char *curpath)
 	char	*tmp;
 	char	*tmp2;
 
-	if (*curpath != '/')
+	if (ft_strncmp(curpath, "~/", 2) == 0)
+	{
+		tmp2 = get_env_local(env_actu, ENV_CST_HOME);
+		tmp = concat_dir_str(tmp2, curpath + 2);
+		free(tmp2);
+	}
+	else if (*curpath != '/')
 	{
 		tmp2 = get_env_local(env_actu, ENV_CST_PWD);
 		tmp = concat_dir_str(tmp2, curpath);
@@ -83,4 +89,23 @@ char			*concat_dir_str(char *s1, char *s2)
 		ft_strncpy(res + l1 + 1, s2, l2);
 	}
 	return (res);
+}
+
+char			*ft_strreplace_free_first(char *res, char *search, char *rep)
+{
+	char	*tmp;
+	int		pos;
+
+	if ((pos = ft_strpos(res, search)) == -1)
+	{
+		tmp = ft_strdup(res);
+		free(res);
+		return (tmp);
+	}
+	tmp = ft_strnew(pos + ft_strlen(rep) + ft_strlen(res + pos + ft_strlen(search)));
+	ft_strncpy(tmp, res, pos);
+	ft_strcpy(tmp + pos, rep);
+	ft_strcpy(tmp + pos + ft_strlen(rep), res + pos + ft_strlen(search));
+	free(res);
+	return (ft_strreplace_free_first(tmp, search, rep));
 }

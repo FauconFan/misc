@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
+#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/22 17:55:17 by jpriou           ###   ########.fr        #
+#    Updated: 2017/12/24 09:38:37 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ BUILTIN_PROJECT = cd.c \
 					env.c \
 					setenv.c \
 					unsetenv.c \
+					echo.c \
 
 UTILS_PROJECT = ms_str_utils.c \
 				ms_get_set_env_local.c \

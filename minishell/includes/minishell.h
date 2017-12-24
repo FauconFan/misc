@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/23 16:32:41 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/24 10:21:32 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define CST_SETENV					"setenv"
 # define CST_UNSETENV				"unsetenv"
 # define CST_CD						"cd"
+# define CST_ECHO					"echo"
 
 # define ENV_CST_HOME				"HOME"
 # define ENV_CST_OLDPWD				"OLDPWD"
@@ -109,6 +110,7 @@ void					builtin_env(t_array_key **env_actu, char **args);
 void					builtin_setenv(t_array_key ***env_actu, char **args);
 void					builtin_unsetenv(t_array_key **env_actu, char **args);
 void					builtin_cd(t_array_key ***list_env, char **args);
+void					builtin_echo(t_array_key **env_actu, char **args);
 
 void					handle_exception_n_run(
 							t_array_key ***env_actu,
@@ -125,6 +127,7 @@ int						size_array_keys(t_array_key **env_local);
 char					**from_array_keys_to_array_string(
 							t_array_key **env_local);
 void					free_array_string(char **list);
+char					*ft_strreplace_free_first(char *res, char *search, char *rep);
 
 t_bool					is_file_exist(char *directory, char *name_file);
 char					*why_a_folder_is_unreachable(char *abs_path);
