@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/24 10:21:32 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/24 11:10:51 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define ENV_CST_HOME				"HOME"
 # define ENV_CST_OLDPWD				"OLDPWD"
 # define ENV_CST_PWD				"PWD"
+# define ENV_CST_SHLVL				"SHLVL"
 
 # define ERROR_SETENV_EMPTY			"Variable name can't be an empty string"
 # define ERROR_SETENV_BEGIN			"Variable name must begin with a letter"
@@ -102,6 +103,12 @@ int						handle_cmd(
 							char *real_cmd,
 							char **args,
 							t_array_key ***env_local);
+
+t_bool					is_binary(char *real_cmd);
+void					treat_with_binary(
+							t_array_key **env_local,
+							char *real_cmd,
+							char **args);
 /*
 **	Builtins
 */

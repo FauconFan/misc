@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 16:56:44 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/24 10:25:13 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/24 11:15:24 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ char			*concat_dir_str(char *s1, char *s2)
 	int		l1;
 	int		l2;
 
+	if (s1 == 0 && s2 == 0)
+		return (0);
+	if (s1 == 0 || s2 == 0)
+		return ((s1 == 0) ? ft_strdup(s2) : ft_strdup(s1));
 	l1 = ft_strlen(s1);
 	l2 = ft_strlen(s2);
 	if (s1[l1 - 1] == '/')

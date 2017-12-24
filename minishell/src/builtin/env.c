@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:14:04 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/23 15:32:04 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/24 12:04:06 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,6 @@ void			builtin_env(t_array_key **env_actu, char **args)
 	if (*args == 0)
 		display_env(new_env);
 	else
-		treat_from_scratch(new_env, *args, args + 1);
+		handle_cmd(*args, args + 1, &new_env);
 	free_cpy_env(&new_env);
 }
