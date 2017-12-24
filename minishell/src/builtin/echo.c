@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 17:07:07 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/24 11:36:05 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/24 18:51:57 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char				*are_all_variables_exist(t_array_key **env_actu, char *str)
 		}
 		if (is_okay == FALSE)
 			return (str - 1 - pos_dolar);
-		str += size + 1;
+		str += size + (str[size] != 0);
 	}
 	return (0);
 }
