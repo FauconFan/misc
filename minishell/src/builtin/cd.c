@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:15:30 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/23 16:55:53 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 09:33:40 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ static void		real_cd(
 			set_env_local(list_env, ENV_CST_PWD, curpath);
 		else
 		{
-			tmp = ft_strnew(2048);
-			getcwd(tmp, 2048);
+			tmp = get_abs_path_from_getcwd();
 			set_env_local(list_env, ENV_CST_PWD, tmp);
 			free(tmp);
 		}

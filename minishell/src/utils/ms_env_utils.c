@@ -6,34 +6,55 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 09:02:45 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/24 10:58:56 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 09:20:53 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ms_env	*init_ms_env(char **env)
+static t_ms_env		*new_env(void)
+{
+	t_ms_env	*res;
+
+	ft_memcheck((res = (t_ms_env *)malloc(sizeof(t_ms_env))));
+	ft_memcheck((res->env_local =
+						(t_array_key ***)malloc(sizeof(t_array_key **))));
+	*(res->env_local) = 0;
+	return (res);
+}
+
+t_ms_env			*init_ms_env(char **env)
 {
 	t_ms_env	*res;
 	char		*shlvl;
 	char		*tmp;
 
-	ft_memcheck((res = (t_ms_env *)malloc(sizeof(t_ms_env))));
-	res->env_local = build_cpy_env(env);
-	shlvl = get_env_local(res->env_local, ENV_CST_SHLVL);
+	res = new_env();
+	*(res->env_local) = build_cpy_env(env);
+	shlvl = get_env_local(*(res->env_local), ENV_CST_SHLVL);
 	if (ft_str_is_numeric(shlvl))
 	{
 		tmp = ft_itoa(ft_atoi(shlvl) + 1);
-		set_env_local(&(res->env_local), ENV_CST_SHLVL, tmp);
+		set_env_local(res->env_local, ENV_CST_SHLVL, tmp);
 		free(tmp);
 	}
 	free(shlvl);
 	return (res);
 }
 
-void		free_ms_env(t_ms_env **ms_env)
+t_ms_env			*cpy_from_another_env(t_ms_env *ms_env)
 {
-	free_cpy_env(&((*ms_env)->env_local));
+	t_ms_env		*res;
+
+	res = new_env();
+	*(res->env_local) = cpy_env_from_another(*(ms_env->env_local));
+	return (res);
+}
+
+void				free_ms_env(t_ms_env **ms_env)
+{
+	free_cpy_env((*ms_env)->env_local);
+	free((*ms_env)->env_local);
 	free(*ms_env);
 	*ms_env = 0;
 }

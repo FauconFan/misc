@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:14:04 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/24 12:04:06 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 09:18:13 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,16 @@ static int		handle_args(t_array_key ***env_actu, char ***args)
 	return (0);
 }
 
-void			builtin_env(t_array_key **env_actu, char **args)
+void			builtin_env(t_ms_env *env_global, char **args)
 {
-	t_array_key		**new_env;
+	t_ms_env		*new_env;
 
-	new_env = cpy_env_from_another(env_actu);
-	if (handle_args(&new_env, &args) != 0)
+	new_env = cpy_from_another_env(env_global);
+	if (handle_args(new_env->env_local, &args) != 0)
 		ft_dprintf(2, "usage: env [-i|-u VALUE| NAME=VALUE]... [utility[argument]]...\n");
 	if (*args == 0)
-		display_env(new_env);
+		display_env(*(new_env->env_local));
 	else
-		handle_cmd(*args, args + 1, &new_env);
-	free_cpy_env(&new_env);
+		handle_cmd(*args, args + 1, new_env);
+	free_ms_env(&new_env);
 }

@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/24 11:10:51 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 09:36:20 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define CST_UNSETENV				"unsetenv"
 # define CST_CD						"cd"
 # define CST_ECHO					"echo"
+# define CST_PWD					"pwd"
 
 # define ENV_CST_HOME				"HOME"
 # define ENV_CST_OLDPWD				"OLDPWD"
@@ -51,7 +52,7 @@ typedef struct			s_array_key
 
 typedef struct			s_ms_env
 {
-	t_array_key		**env_local;
+	t_array_key		***env_local;
 }						t_ms_env;
 
 /*
@@ -60,13 +61,18 @@ typedef struct			s_ms_env
 
 t_ms_env				*init_ms_env(char **env);
 void					free_ms_env(t_ms_env **ms_env);
+t_ms_env				*cpy_from_another_env(t_ms_env *ms_env);
 
 /*
 **	Read from standard input
 */
 
 char					*read_from_input(void);
-int						treat_cmd(char *s, t_array_key ***env_local);
+int						treat_cmd(char *s, t_ms_env *ms_env);
+int						handle_cmd(
+							char *real_cmd,
+							char **args,
+							t_ms_env *ms_env);
 
 /*
 **	Init cpy_env_from system
@@ -99,11 +105,6 @@ void					treat_from_scratch(
 							char *cmd_real,
 							char **args);
 
-int						handle_cmd(
-							char *real_cmd,
-							char **args,
-							t_array_key ***env_local);
-
 t_bool					is_binary(char *real_cmd);
 void					treat_with_binary(
 							t_array_key **env_local,
@@ -113,11 +114,12 @@ void					treat_with_binary(
 **	Builtins
 */
 
-void					builtin_env(t_array_key **env_actu, char **args);
+void					builtin_env(t_ms_env *env_global, char **args);
 void					builtin_setenv(t_array_key ***env_actu, char **args);
 void					builtin_unsetenv(t_array_key **env_actu, char **args);
 void					builtin_cd(t_array_key ***list_env, char **args);
 void					builtin_echo(t_array_key **env_actu, char **args);
+void					builtin_pwd(t_array_key ***env_global, char **args);
 
 void					handle_exception_n_run(
 							t_array_key ***env_actu,
@@ -138,5 +140,7 @@ char					*ft_strreplace_free_first(char *res, char *search, char *rep);
 
 t_bool					is_file_exist(char *directory, char *name_file);
 char					*why_a_folder_is_unreachable(char *abs_path);
+
+char					*get_abs_path_from_getcwd(void);
 
 #endif
