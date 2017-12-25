@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:14:36 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/23 16:02:56 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 09:44:44 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	builtin_setenv(t_array_key ***env_actu, char **args)
 	while (args[number])
 		number++;
 	if (number > 2 || number == 0)
-		ft_dprintf(2, "usage: setenv VAR [VALUE]\n");
+		display_usage(CST_SETENV);
 	else
 	{
 		if (number == 1)

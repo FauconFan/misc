@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:14:04 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/25 09:18:13 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 09:43:39 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void			builtin_env(t_ms_env *env_global, char **args)
 
 	new_env = cpy_from_another_env(env_global);
 	if (handle_args(new_env->env_local, &args) != 0)
-		ft_dprintf(2, "usage: env [-i|-u VALUE| NAME=VALUE]... [utility[argument]]...\n");
+		display_usage(CST_ENV);
 	if (*args == 0)
 		display_env(*(new_env->env_local));
 	else

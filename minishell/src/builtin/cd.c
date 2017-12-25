@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:15:30 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/25 09:33:40 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 09:46:55 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void			builtin_cd(t_array_key ***list_env, char **args)
 	real_arg = 0;
 	if (parse_arg(args, &real_arg, &logical_cd, size))
 	{
-		ft_dprintf(2, "usage: cd [-L|-P] path\n");
+		display_usage(CST_CD);
 		return ;
 	}
 	if (handle_exception(&curpath, *list_env, real_arg) == 0)

@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/25 09:23:14 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/25 09:37:59 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 09:48:31 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void			builtin_pwd(t_array_key ***env_global, char **args)
 	char	*path;
 
 	if (treat_args(args, &logical_pwd) == 1)
-		ft_dprintf(2, "pwd: usage [-L|-P]...\n");
+		display_usage(CST_PWD);
 	else if (logical_pwd)
 	{
 		path = get_env_local(*env_global, ENV_CST_PWD);

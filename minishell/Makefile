@@ -6,7 +6,7 @@
 #    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/25 09:35:08 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/12/25 09:58:29 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ BUILTIN_PROJECT = cd.c \
 					unsetenv.c \
 					echo.c \
 					pwd.c \
+					minishell.c \
 
 UTILS_PROJECT = ms_str_utils.c \
 				ms_get_set_env_local.c \
@@ -42,6 +43,7 @@ UTILS_PROJECT = ms_str_utils.c \
 				ms_array_keys_utils.c \
 				ms_file_error_utils.c \
 				ms_file_sys_utils.c \
+				ms_display_usage.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC_PROJECT))
 BUILTIN_FP = $(addprefix $(SRC_FOLDER)$(BUILTIN_FOLDER), $(BUILTIN_PROJECT))

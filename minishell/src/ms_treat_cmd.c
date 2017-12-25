@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:33:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/25 09:36:59 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 09:59:10 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int				handle_cmd(char *real_cmd, char **args, t_ms_env *ms_env)
 		builtin_cd(ms_env->env_local, args);
 	else if (ft_strcmp(real_cmd, CST_PWD) == 0)
 		builtin_pwd(ms_env->env_local, args);
+	else if (ft_strcmp(real_cmd, CST_MINISHELL) == 0)
+		builtin_minishell(ms_env);
 	else if (is_binary(real_cmd))
 		treat_with_binary(*(ms_env->env_local), real_cmd, args);
 	else if (ft_strcmp(real_cmd, ""))
