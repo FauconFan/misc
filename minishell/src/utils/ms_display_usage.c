@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/25 09:40:16 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/25 09:57:37 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 10:20:56 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	display_all_usages(void)
 	display_usage(CST_CD);
 	display_usage(CST_ECHO);
 	display_usage(CST_PWD);
+	display_usage(CST_HISTORY);
 }
 
 void	display_usage(char *option)
@@ -36,4 +37,6 @@ void	display_usage(char *option)
 		ft_dprintf(2, "usage: %s\n", USAGE_ECHO);
 	else if (ft_strcmp(option, CST_PWD) == 0)
 		ft_dprintf(2, "usage: %s\n", USAGE_PWD);
+	else if (ft_strcmp(option, CST_HISTORY) == 0)
+		ft_dprintf(2, "usage: %s\n", USAGE_HISTORY);
 }

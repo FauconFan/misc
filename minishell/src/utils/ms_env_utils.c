@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 09:02:45 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/25 09:20:53 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 10:21:29 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ static t_ms_env		*new_env(void)
 	ft_memcheck((res->env_local =
 						(t_array_key ***)malloc(sizeof(t_array_key **))));
 	*(res->env_local) = 0;
+	ft_memcheck((res->history_local = (t_history *)malloc(sizeof(t_history))));
+	res->history_local->head = 0;
+	res->history_local->tail = 0;
 	return (res);
 }
 
@@ -55,6 +58,8 @@ void				free_ms_env(t_ms_env **ms_env)
 {
 	free_cpy_env((*ms_env)->env_local);
 	free((*ms_env)->env_local);
+	ft_lstfreeall(&((*ms_env)->history_local->head), free_history);
+	free((*ms_env)->history_local);
 	free(*ms_env);
 	*ms_env = 0;
 }

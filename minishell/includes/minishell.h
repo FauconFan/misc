@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/25 09:58:20 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 10:23:01 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define CST_ECHO					"echo"
 # define CST_PWD					"pwd"
 # define CST_MINISHELL				"minishell"
+# define CST_HISTORY				"history"
 
 # define USAGE_ENV					"env [-i|-u VALUE| NAME=VALUE]... [utility[argument]]..."
 # define USAGE_SETENV				"setenv VAR [VALUE]"
@@ -42,6 +43,7 @@
 # define USAGE_CD					"cd [-L|-P] path"
 # define USAGE_ECHO					"echo [message]..."
 # define USAGE_PWD					"pwd [-L|-P]..."
+# define USAGE_HISTORY				"history"
 
 # define ENV_CST_HOME				"HOME"
 # define ENV_CST_OLDPWD				"OLDPWD"
@@ -58,9 +60,16 @@ typedef struct			s_array_key
 	char	*value;
 }						t_array_key;
 
+typedef struct			s_history
+{
+	t_list	*head;
+	t_list	*tail;
+}						t_history;
+
 typedef struct			s_ms_env
 {
 	t_array_key		***env_local;
+	t_history		*history_local;
 }						t_ms_env;
 
 /*
@@ -128,6 +137,7 @@ void					builtin_unsetenv(t_array_key **env_actu, char **args);
 void					builtin_cd(t_array_key ***list_env, char **args);
 void					builtin_echo(t_array_key **env_actu, char **args);
 void					builtin_pwd(t_array_key ***env_global, char **args);
+void					builtin_history(t_ms_env *ms_env);
 
 void					builtin_minishell(t_ms_env *env_global);
 
@@ -152,6 +162,10 @@ t_bool					is_file_exist(char *directory, char *name_file);
 char					*why_a_folder_is_unreachable(char *abs_path);
 
 char					*get_abs_path_from_getcwd(void);
+
+void					free_history(void *content);
+void					add_in_history(t_ms_env *ms_env, char *cmd);
+void					display_history(t_ms_env *ms_env);
 
 void					display_all_usages(void);
 void					display_usage(char *option);
