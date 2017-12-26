@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:15:30 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/26 14:03:17 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/26 15:22:55 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int		handle_exception(
 			ft_dprintf(2, "cd: %s not set\n", ENV_CST_OLDPWD);
 			return (1);
 		}
+		ft_printf("%s\n", *curpath);
 	}
 	else
 		*curpath = handle_cd_path(list_env, real_args);

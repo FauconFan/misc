@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/26 13:59:13 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/26 14:19:11 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/26 15:22:39 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static char		*build_res(
 		if (S_ISDIR(stats.st_mode))
 		{
 			res = normalize_path(list_env, tmp);
+			ft_printf("%s\n", res);
 		}
 	}
 	free(tmp);

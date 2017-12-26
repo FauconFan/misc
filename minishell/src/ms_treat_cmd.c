@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:33:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/26 13:54:46 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/26 15:39:24 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ static void		parse_cmd(char *cmd, char **name_cmd, char ***args)
 	int		index;
 
 	if (*cmd == 0)
-	{
 		*name_cmd = ft_strnew(0);
-		ft_memcheck((*args = (char **)malloc(sizeof(char *))));
-		**args = 0;
-	}
 	else
 	{
+		while (ft_iswhitespace(*cmd) && *cmd != 0)
+			cmd++;
 		index = 0;
 		while (ft_iswhitespace(cmd[index]) == 0 && cmd[index] != 0)
 			index++;
@@ -31,14 +29,14 @@ static void		parse_cmd(char *cmd, char **name_cmd, char ***args)
 		cmd = cmd + index;
 		while (ft_iswhitespace(*cmd) && *cmd != 0)
 			cmd++;
-		if (*cmd == 0)
+		if (*cmd != 0)
 		{
-			*args = (char **)malloc(sizeof(char *) * 1);
-			**args = 0;
-		}
-		else
 			*args = ft_strsplit(cmd, ' ');
+			return ;
+		}
 	}
+	ft_memcheck((*args = (char **)malloc(sizeof(char *) * 1)));
+	**args = 0;
 }
 
 static void		free_parsed_cmd(char **cmd, char **real_cmd, char ***args)
@@ -46,28 +44,48 @@ static void		free_parsed_cmd(char **cmd, char **real_cmd, char ***args)
 	int		index;
 
 	index = 0;
-	free(*cmd);
+	if (cmd)
+	{
+		free(*cmd);
+		*cmd = 0;
+	}
 	free(*real_cmd);
+	*real_cmd = 0;
 	while ((*args)[index])
 	{
 		free((*args)[index]);
 		index++;
 	}
 	free(*args);
-	*cmd = 0;
-	*real_cmd = 0;
 	*args = 0;
 }
 
 int				treat_cmd(char *s, t_ms_env *ms_env)
 {
+	char	**splited;
 	char	**args;
 	char	*real_cmd;
 	int		ret;
+	int		index;
 
-	parse_cmd(s, &real_cmd, &args);
-	ret = handle_cmd(real_cmd, args, ms_env);
-	free_parsed_cmd(&s, &real_cmd, &args);
+	splited = ft_strsplit(s, ';');
+	index = 0;
+	while (splited[index])
+	{
+		parse_cmd(splited[index], &real_cmd, &args);
+		if ((ret = handle_cmd(real_cmd, args, ms_env)) == 1)
+		{
+			free_parsed_cmd(0, &real_cmd, &args);
+			break ;
+		}
+		free_parsed_cmd(0, &real_cmd, &args);
+		index++;
+	}
+	index = -1;
+	while (splited[++index])
+		free(splited[index]);
+	free(splited);
+	free(s);
 	return (ret);
 }
 
