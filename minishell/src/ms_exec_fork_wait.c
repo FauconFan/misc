@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exec_fork_wait.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 16:12:20 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:57:37 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/26 14:36:18 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,15 @@ void		fork_n_wait(
 	full_path_exe = concat_dir_str(directory, cmd_real);
 	argstmp = build_args_for_fork(full_path_exe, args);
 	env_tmp = from_array_keys_to_array_string(env_actu);
-	if (fork() == 0)
+	if ((g_child_pid = fork()) == 0)
 	{
 		execve(full_path_exe, argstmp, env_tmp);
 	}
 	else
-	{
+	{ 
 		wait(&status);
 	}
+	g_child_pid = 0;
 	free_array_string(env_tmp);
 	free(full_path_exe);
 	free(argstmp);

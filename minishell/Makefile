@@ -6,7 +6,7 @@
 #    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/26 14:01:38 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/12/26 14:30:00 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC_PROJECT = main.c \
 				ms_treat_unknown_cmd.c \
 				ms_exec_fork_wait.c \
 				ms_exec_binary.c \
+				ms_handle_signals.c \
 
 BUILTIN_PROJECT = cd.c \
 					cd_cdpath.c \

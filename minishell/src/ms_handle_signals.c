@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_handle_signals.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/21 08:15:29 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/26 14:47:37 by fauconfan        ###   ########.fr       */
+/*   Created: 2017/12/26 14:27:42 by fauconfan         #+#    #+#             */
+/*   Updated: 2017/12/26 14:50:19 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		main(int argc, char **argv, char **env)
+void		handle_sigint(int signal)
 {
-	t_ms_env	*ms_env;
-
-	(void)argc;
-	(void)argv;
-	ms_env = init_ms_env(env);
-	g_child_pid = 0;
-	g_cmd_actu = 0;
-	g_cmd_size_actu = 0;
-	signal(SIGINT, handle_sigint);
-	while (1)
+	if (g_child_pid != 0)
 	{
-		ft_putstr("$> ");
-		read_from_input();
-		if (treat_cmd(g_cmd_actu, ms_env) == 1)
-			break ;
+		kill(g_child_pid, signal);
+		ft_putstr("\n");
 	}
-	free_ms_env(&ms_env);
-	return (0);
+	else
+	{
+		if (g_cmd_actu != 0)
+		{
+			free(g_cmd_actu);
+			g_cmd_size_actu = 0;
+			g_cmd_actu = ft_strnew(0);
+			ft_putstr("\n$> ");
+		}
+	}
 }

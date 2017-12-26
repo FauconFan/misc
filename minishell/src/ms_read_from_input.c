@@ -3,24 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ms_read_from_input.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:23:48 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 14:06:32 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/26 14:45:54 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		*read_from_input(void)
+void		read_from_input(void)
 {
-	char	*res;
 	char	*tamp;
 	char	c;
-	size_t	size;
 
-	size = 0;
-	res = ft_strnew(size);
+	g_cmd_size_actu = 0;
+	g_cmd_actu = ft_strnew(g_cmd_size_actu);
 	tamp = 0;
 	while (1)
 	{
@@ -28,14 +26,14 @@ char		*read_from_input(void)
 			ft_die("read aborted");
 		if (c == '\n')
 			break ;
-		if (c == '\t' || (c == ' ' && (size == 0 || res[size - 1] == ' ')))
+		if (c == '\t' || (c == ' ' && (g_cmd_size_actu == 0 ||
+									g_cmd_actu[g_cmd_size_actu - 1] == ' ')))
 			continue ;
-		tamp = ft_strnew(size + 1);
-		ft_strncpy(tamp, res, size);
-		tamp[size] = c;
-		size++;
-		free(res);
-		res = tamp;
+		tamp = ft_strnew(g_cmd_size_actu + 1);
+		ft_strncpy(tamp, g_cmd_actu, g_cmd_size_actu);
+		tamp[g_cmd_size_actu] = c;
+		g_cmd_size_actu++;
+		free(g_cmd_actu);
+		g_cmd_actu = tamp;
 	}
-	return (res);
 }

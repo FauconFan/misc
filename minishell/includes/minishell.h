@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/26 14:03:39 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/26 14:47:59 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <dirent.h>
 # include "libft.h"
 
@@ -55,6 +56,10 @@
 # define ERROR_SETENV_BEGIN			"Variable name must begin with a letter"
 # define ERROR_SETENV_ALNUM			"Variable name must contain alphanumeric characters"
 
+int						g_child_pid;
+char					*g_cmd_actu;
+int						g_cmd_size_actu;
+
 typedef struct			s_array_key
 {
 	char	*key;
@@ -85,7 +90,7 @@ t_ms_env				*cpy_from_another_env(t_ms_env *ms_env);
 **	Read from standard input
 */
 
-char					*read_from_input(void);
+void					read_from_input(void);
 int						treat_cmd(char *s, t_ms_env *ms_env);
 int						handle_cmd(
 							char *real_cmd,
@@ -128,6 +133,13 @@ void					treat_with_binary(
 							t_array_key **env_local,
 							char *real_cmd,
 							char **args);
+
+/*
+**	Signals
+*/
+
+void					handle_sigint(int signal);
+
 /*
 **	Builtins
 */
