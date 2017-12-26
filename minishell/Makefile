@@ -6,7 +6,7 @@
 #    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/25 10:22:43 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/12/26 14:01:38 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC_PROJECT = main.c \
 				ms_exec_binary.c \
 
 BUILTIN_PROJECT = cd.c \
+					cd_cdpath.c \
 					env.c \
 					setenv.c \
 					unsetenv.c \

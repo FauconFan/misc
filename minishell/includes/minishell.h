@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/26 11:32:59 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/26 14:03:39 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,10 @@ void					builtin_echo(t_array_key **env_actu, char **args);
 void					builtin_pwd(t_array_key ***env_global, char **args);
 void					builtin_history(t_ms_env *ms_env);
 
+char					*handle_cd_path(
+							t_array_key **list_env,
+							char *real_arg);
+
 void					builtin_minishell(t_ms_env *env_global);
 
 void					handle_exception_n_run(
@@ -167,7 +171,7 @@ char					*why_a_folder_is_unreachable(char *abs_path);
 char					*get_abs_path_from_getcwd(void);
 
 void					free_history(void *content);
-void					add_in_history(t_ms_env *ms_env, char *cmd);
+void					add_in_history(t_ms_env *ms_env, char *cmd, char **args);
 void					display_history(t_ms_env *ms_env);
 
 void					display_all_usages(void);
