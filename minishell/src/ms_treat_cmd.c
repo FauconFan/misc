@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:33:22 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/25 10:19:38 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/26 11:34:02 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,11 @@ int				treat_cmd(char *s, t_ms_env *ms_env)
 
 int				handle_cmd(char *real_cmd, char **args, t_ms_env *ms_env)
 {
-	add_in_history(ms_env, real_cmd);
+	char	*builted_cmd;
+
+	builted_cmd = build_from_real_cmd_and_args(real_cmd, args);
+	add_in_history(ms_env, builted_cmd);
+	free(builted_cmd);
 	if (ft_strcmp(real_cmd, CST_EXIT) == 0)
 		return (1);
 	else if (ft_strcmp(real_cmd, CST_ENV) == 0)

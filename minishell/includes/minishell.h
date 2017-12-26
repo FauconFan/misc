@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/25 10:23:01 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/26 11:32:59 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define ENV_CST_OLDPWD				"OLDPWD"
 # define ENV_CST_PWD				"PWD"
 # define ENV_CST_SHLVL				"SHLVL"
+# define ENV_CDPATH					"CDPATH"
 
 # define ERROR_SETENV_EMPTY			"Variable name can't be an empty string"
 # define ERROR_SETENV_BEGIN			"Variable name must begin with a letter"
@@ -155,8 +156,10 @@ char					*normalize_path(t_array_key **env_actu, char *curpath);
 int						size_array_keys(t_array_key **env_local);
 char					**from_array_keys_to_array_string(
 							t_array_key **env_local);
+
 void					free_array_string(char **list);
 char					*ft_strreplace_free_first(char *res, char *search, char *rep);
+char					*build_from_real_cmd_and_args(char *cmd, char **args);
 
 t_bool					is_file_exist(char *directory, char *name_file);
 char					*why_a_folder_is_unreachable(char *abs_path);

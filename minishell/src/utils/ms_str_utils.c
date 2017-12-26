@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 16:56:44 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/24 11:15:24 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/26 11:32:38 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,29 @@ char			*ft_strreplace_free_first(char *res, char *search, char *rep)
 	ft_strcpy(tmp + pos + ft_strlen(rep), res + pos + ft_strlen(search));
 	free(res);
 	return (ft_strreplace_free_first(tmp, search, rep));
+}
+
+char			*build_from_real_cmd_and_args(char *cmd, char **args)
+{
+	char	*res;
+	int		index;
+	int		size;
+
+	size = ft_strlen(cmd);
+	index = 0;
+	while (args[index])
+	{
+		size += ft_strlen(args[index]) + 1;
+		index++;
+	}
+	res = ft_strnew(size);
+	ft_strcat(res, cmd);
+	index = 0;
+	while (args[index])
+	{
+		ft_strcat(res, " ");
+		ft_strcat(res, args[index]);
+		index++;
+	}
+	return (res);
 }

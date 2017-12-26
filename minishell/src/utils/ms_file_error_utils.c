@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_file_error_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 16:47:57 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/22 19:11:01 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/25 20:06:35 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,16 @@ static int		handle_next(char *directory, char *name_file)
 		return (1);
 	tmp = concat_dir_str(directory, name_file);
 	if (is_folder(tmp) == FALSE)
+	{
+		free(tmp);
 		return (2);
+	}
 	if (have_access_right(tmp) == FALSE)
+	{
+		free(tmp);
 		return (3);
+	}
+	free(tmp);
 	return (0);
 }
 
@@ -90,7 +97,7 @@ char			*why_a_folder_is_unreachable(char *abs_path)
 			return (CST_NO_SUCH_FOUND);
 		else if (ret >= 2)
 			return ((ret == 2) ? CST_NOT_A_DIRECTORY : CST_PERMISSION_DENIED);
-		size_actu += size_next + 1;
+		size_actu += size_next + (abs_path[size_actu + size_next] != 0);
 	}
 	return (0);
 }

@@ -6,16 +6,16 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:15:30 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/25 09:46:55 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/25 20:14:50 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int		handle_exception(
-				char **curpath,
-				t_array_key **list_env,
-				char *real_args)
+					char **curpath,
+					t_array_key **list_env,
+					char *real_args)
 {
 	if (real_args == 0)
 	{
