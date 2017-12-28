@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:15:40 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/26 14:47:59 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/28 10:11:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@
 # define CST_MINISHELL				"minishell"
 # define CST_HISTORY				"history"
 
-# define USAGE_ENV					"env [-i|-u VALUE| NAME=VALUE]... [utility[argument]]..."
+# define USAGE_ENV3					"[-i|-u VALUE| NAME=VALUE]..."
+# define USAGE_ENV2					"[utility[argument]]..."
+# define USAGE_ENV					"env "USAGE_ENV3" "USAGE_ENV2
 # define USAGE_SETENV				"setenv VAR [VALUE]"
 # define USAGE_UNSETENV				"unsetenv VAR"
 # define USAGE_CD					"cd [-L|-P] path"
@@ -52,9 +54,11 @@
 # define ENV_CST_SHLVL				"SHLVL"
 # define ENV_CDPATH					"CDPATH"
 
-# define ERROR_SETENV_EMPTY			"Variable name can't be an empty string"
-# define ERROR_SETENV_BEGIN			"Variable name must begin with a letter"
-# define ERROR_SETENV_ALNUM			"Variable name must contain alphanumeric characters"
+# define VAR_NAME					"Variable name"
+# define ERROR_SETENV_EMPTY			VAR_NAME" can't be an empty string"
+# define ERROR_SETENV_BEGIN			VAR_NAME" must begin with a letter"
+# define ERROR_ALPHANUM_2			"alphanumeric characters"
+# define ERROR_SETENV_ALNUM			VAR_NAME" must contain "ERROR_ALPHANUM_2
 
 int						g_child_pid;
 char					*g_cmd_actu;
@@ -174,7 +178,10 @@ char					**from_array_keys_to_array_string(
 							t_array_key **env_local);
 
 void					free_array_string(char **list);
-char					*ft_strreplace_free_first(char *res, char *search, char *rep);
+char					*ft_strreplace_free_first(
+							char *res,
+							char *search,
+							char *rep);
 char					*build_from_real_cmd_and_args(char *cmd, char **args);
 
 t_bool					is_file_exist(char *directory, char *name_file);
@@ -183,7 +190,10 @@ char					*why_a_folder_is_unreachable(char *abs_path);
 char					*get_abs_path_from_getcwd(void);
 
 void					free_history(void *content);
-void					add_in_history(t_ms_env *ms_env, char *cmd, char **args);
+void					add_in_history(
+							t_ms_env *ms_env,
+							char *cmd,
+							char **args);
 void					display_history(t_ms_env *ms_env);
 
 void					display_all_usages(void);

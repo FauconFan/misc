@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 17:07:07 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/24 18:51:57 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/28 10:14:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char				*are_all_variables_exist(t_array_key **env_actu, char *str)
+static char				*are_all_variables_exist(
+							t_array_key **env_actu,
+							char *str)
 {
 	int			index;
 	int			size;
@@ -41,7 +43,10 @@ static char				*are_all_variables_exist(t_array_key **env_actu, char *str)
 	return (0);
 }
 
-static char				*get_variable_simple(t_array_key **env_actu, char *arg, int *size)
+static char				*get_variable_simple(
+							t_array_key **env_actu,
+							char *arg,
+							int *size)
 {
 	int		index;
 	int		size_key;
@@ -63,7 +68,9 @@ static char				*get_variable_simple(t_array_key **env_actu, char *arg, int *size
 	return (0);
 }
 
-static void				treat_arg_env_variable(t_array_key **env_actu, char **arg)
+static void				treat_arg_env_variable(
+							t_array_key **env_actu,
+							char **arg)
 {
 	int		pos;
 	int		size_key;

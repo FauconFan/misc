@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:14:04 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/25 09:43:39 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/28 10:13:47 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ static void		handle_treatment_args(
 	}
 }
 
-static int		handle_simple_arg(t_array_key ***env_actu, char ***args, int *index)
+static int		handle_simple_arg(
+					t_array_key ***env_actu,
+					char ***args,
+					int *index)
 {
 	int		subindex;
 
@@ -79,7 +82,9 @@ static int		handle_args(t_array_key ***env_actu, char ***args)
 		else if ((posequals = ft_strcpos((*args)[index], '=')) != -1)
 		{
 			(*args)[index][posequals] = 0;
-			handle_treatment_args(env_actu, (*args)[index], (*args)[index] + posequals + 1, 3);
+			handle_treatment_args(env_actu,
+					(*args)[index],
+					(*args)[index] + posequals + 1, 3);
 		}
 		else
 			break ;

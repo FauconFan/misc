@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_env_sys_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 08:41:56 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/23 16:34:24 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/28 10:15:08 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ t_array_key					**cpy_env_from_another(t_array_key **list)
 	int				size;
 
 	size = size_array_keys(list);
-	ft_memcheck((res = (t_array_key **)malloc(sizeof(t_array_key *) * (size + 1))));
+	ft_memcheck((res = (t_array_key **)
+			malloc(sizeof(t_array_key *) * (size + 1))));
 	index = 0;
 	while (list[index])
 	{

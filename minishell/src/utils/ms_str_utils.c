@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_str_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 16:56:44 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/26 11:32:38 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/28 10:15:26 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ char			*ft_strreplace_free_first(char *res, char *search, char *rep)
 		free(res);
 		return (tmp);
 	}
-	tmp = ft_strnew(pos + ft_strlen(rep) + ft_strlen(res + pos + ft_strlen(search)));
+	tmp = ft_strnew(pos + ft_strlen(rep) +
+				ft_strlen(res + pos + ft_strlen(search)));
 	ft_strncpy(tmp, res, pos);
 	ft_strcpy(tmp + pos, rep);
 	ft_strcpy(tmp + pos + ft_strlen(rep), res + pos + ft_strlen(search));

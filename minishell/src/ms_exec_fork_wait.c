@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exec_fork_wait.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 16:12:20 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/26 14:36:18 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/28 10:14:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		fork_n_wait(
 		execve(full_path_exe, argstmp, env_tmp);
 	}
 	else
-	{ 
+	{
 		wait(&status);
 	}
 	g_child_pid = 0;

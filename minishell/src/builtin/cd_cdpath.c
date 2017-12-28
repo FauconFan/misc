@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cdpath.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/26 13:59:13 by fauconfan         #+#    #+#             */
-/*   Updated: 2017/12/26 15:22:39 by fauconfan        ###   ########.fr       */
+/*   Updated: 2017/12/28 10:12:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void		free_everything(char **str, char ***splited)
 {
 	int		index;
-	
+
 	ft_strdel(str);
 	index = 0;
 	while ((*splited)[index])
@@ -52,31 +52,31 @@ static char		*build_res(
 
 char			*handle_cd_path(
 					t_array_key **list_env,
-					char *real_arg)
+					char *re_arg)
 {
 	char		*cdpath;
-	char		**splited;
+	char		**spl;
 	char		*res;
 	int			index;
 
 	res = 0;
-	if (*real_arg != '/' && ft_strncmp(real_arg, "~/", 2) != 0)
+	if (*re_arg != '/' && ft_strncmp(re_arg, "~/", 2) != 0 && *re_arg != '.')
 	{
 		if ((cdpath = get_env_local(list_env, ENV_CDPATH)) != 0)
 		{
-			splited = ft_strsplit(cdpath, ':');
+			spl = ft_strsplit(cdpath, ':');
 			index = -1;
-			while (splited[++index])
+			while (spl[++index])
 			{
-				if (ft_strcmp(splited[index], ".") == 0 || splited[index][0] != '/')
+				if (ft_strcmp(spl[index], ".") == 0 || spl[index][0] != '/')
 					continue ;
-				if ((res = build_res(list_env, real_arg, splited[index])) != 0)
+				if ((res = build_res(list_env, re_arg, spl[index])) != 0)
 					break ;
 			}
-			free_everything(&cdpath, &splited);
+			free_everything(&cdpath, &spl);
 			if (res != 0)
 				return (res);
 		}
 	}
-	return (normalize_path(list_env, real_arg));
+	return (normalize_path(list_env, re_arg));
 }
