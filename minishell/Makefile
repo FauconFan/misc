@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2017/12/26 14:30:00 by fauconfan        ###   ########.fr        #
+#    Updated: 2017/12/28 10:40:38 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ BUILTIN_FOLDER = builtin/
 UTILS_FOLDER = utils/
 LIBFT_FOLDER = libft/
 
-GWW = gcc -g -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
+GWW = gcc -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
 LIBS = -L libft -l ft
 
 SRC_PROJECT = main.c \

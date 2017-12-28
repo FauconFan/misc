@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 13:14:04 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/28 10:13:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2017/12/28 10:42:49 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,10 @@ void			builtin_env(t_ms_env *env_global, char **args)
 
 	new_env = cpy_from_another_env(env_global);
 	if (handle_args(new_env->env_local, &args) != 0)
+	{
 		display_usage(CST_ENV);
+		return ;
+	}
 	if (*args == 0)
 		display_env(*(new_env->env_local));
 	else
