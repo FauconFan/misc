@@ -6,13 +6,14 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/11 14:45:34 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/11 14:46:21 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/11 16:04:16 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SELECT_H
 # define FT_SELECT_H
 
+# include <termcap.h>
 # include "libft.h"
 
 #endif
