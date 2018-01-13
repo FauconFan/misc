@@ -6,38 +6,38 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/11 14:45:22 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/11 16:26:52 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/13 15:32:53 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static void		check_conditions(void)
+static void		setup(t_select **env, int argc, char **argv)
 {
-	char	*tty_name;
-	int		res;
+	*env = init_select(argc, argv);
+	setup_termios(*env);
+}
 
-	tty_name = getenv("TERM");
-	if (tty_name == NULL)
+static void		ft_select(t_select *env)
+{
+	char		c;
+
+	while (1)
 	{
-		ft_die("Variable Term not set.");
-	}
-	if (isatty(STDOUT_FILENO) == 0 || isatty(STDERR_FILENO) == 0)
-	{
-		ft_die("Not running in a terminal");
-	}
-	ft_putendl(tty_name);
-	if ((res = tgetent(0, tty_name)) < 1)
-	{
-		if (res == -1)
-			ft_die("Terminfo database not found.");
-		else
-			ft_die("No such entry in the terminfo database.");
+		display_column(env);
+		read(0, &c, 1);
+		if (c == '\n')
+			break ;
 	}
 }
 
-int				main(void)
+int				main(int argc, char **argv)
 {
-	check_conditions();
+	t_select	*env;
+
+	setup(&env, argc - 1, argv + 1);
+	ft_select(env);
+	reset_termios(env);
+	free_select(&env);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 14:44:38 by fauconfan         #+#    #+#              #
-#    Updated: 2018/01/11 15:42:53 by fauconfan        ###   ########.fr        #
+#    Updated: 2018/01/13 14:09:13 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,23 @@ INCLUDES_FOLDER = includes/
 LIBFT_FOLDER = libft/
 
 SRC = main.c \
+		select_utils.c \
+		display_column.c \
+		termios_utils.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC))
 
 OBJ = $(SRC_FP:%.c=%.o)
 
 GWW = gcc -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
-LIBS = -L $(LIBFT_FOLDER) -l ft -l termcap
+LIBS = -L $(LIBFT_FOLDER) -l ft -l ncurses
+
+UNAME_S    = $(shell uname -s)
+ifeq ($(UNAME_S), Darwin)
+    LIBS += -l termcap
+else
+    LIBS += -l ncurses
+endif
 
 all : $(NAME)
 
@@ -32,7 +42,7 @@ $(NAME) : $(OBJ)
 	$(GWW) $(OBJ) -o $@ $(LIBS)
 
 %.o : %.c
-	$(GWW) -c $? -o $@
+	$(GWW) -c $? -o $@ $(LIBS)
 
 clean :
 	rm -rf $(OBJ)
