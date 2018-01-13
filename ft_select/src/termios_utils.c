@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 16:28:19 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/13 15:32:05 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/13 17:43:08 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void		check_conditions(void)
 	{
 		ft_die("Variable Term not set.");
 	}
-	if (isatty(STDOUT_FILENO) == 0 || isatty(STDERR_FILENO) == 0)
+	if (isatty(STDERR_FILENO) == 0)
 	{
 		ft_die("Not running in a terminal");
 	}
