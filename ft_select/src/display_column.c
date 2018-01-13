@@ -6,13 +6,26 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:29:47 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/13 17:55:06 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/13 22:10:07 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static int	count_max_len_args(t_arg **args)
+static t_bool	ft_match(char *s1, char *s2)
+{
+	if (*s1 != '\0' && *s2 == '*')
+    	return (ft_match(s1 + 1, s2) || ft_match(s1, s2 + 1));
+	if (*s1 == '\0' && *s2 == '*')
+    	return (ft_match(s1, s2 + 1));
+	if (*s1 == *s2 && *s1 != '\0' && *s2 != '\0')
+    	return (ft_match(s1 + 1, s2 + 1));
+	if (*s1 == *s2 && *s1 == '\0' && *s2 == '\0')
+    	return (TRUE);
+  	return (FALSE);
+}
+
+static int		count_max_len_args(t_arg **args)
 {
 	int		res;
 	int		tmp;
@@ -32,7 +45,21 @@ static int	count_max_len_args(t_arg **args)
 	return (res);
 }
 
-static void display_arg(t_select *env, int max_len)
+static void		display_color(char *str)
+{
+	if (ft_match(str, "*.c"))
+		ft_putstr_fd(C_COLOR, STDERR_FILENO);
+	else if (ft_match(str, "*.o"))
+		ft_putstr_fd(O_COLOR, STDERR_FILENO);
+	else if (ft_match(str, "*.h"))
+		ft_putstr_fd(H_COLOR, STDERR_FILENO);
+	else if (ft_strcmp(str, "Makefile") == 0 || ft_strcmp(str, "MAKEFILE") == 0)
+		ft_putstr_fd(MAKEFILE_COLOR, STDERR_FILENO);
+	else if (ft_match(str, "*.a"))
+		ft_putstr_fd(A_COLOR, STDERR_FILENO);
+}
+
+static void 	display_arg(t_select *env, int max_len)
 {
 	char	*str_actu;
 	int		index;
@@ -45,6 +72,7 @@ static void display_arg(t_select *env, int max_len)
 			ft_putstr_fd(UNDERLINED, STDERR_FILENO);
 		if (env->args[index]->is_selected)
 			ft_putstr_fd(REVERSE_VIDEO_COLOR, STDERR_FILENO);
+		display_color(str_actu);
 		ft_dprintf(STDERR_FILENO, "%s%s%*s",
 				str_actu,
 				DEFAULT_COLOR,
@@ -56,7 +84,7 @@ static void display_arg(t_select *env, int max_len)
 	}
 }
 
-void		display_column()
+void			display_column()
 {
 	int				max_len_arg;
 	int				cols;

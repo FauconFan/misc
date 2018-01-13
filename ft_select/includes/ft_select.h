@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/11 14:45:34 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/13 21:51:13 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/13 22:06:26 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # include <sys/ioctl.h>
 # include <signal.h>
 # include "libft.h"
+
+# define C_COLOR				"\033[35m"
+# define O_COLOR				"\033[36m"
+# define H_COLOR				"\033[34m"
+# define MAKEFILE_COLOR			"\033[33m"
+# define A_COLOR				"\033[31m"
 
 # define DEFAULT_COLOR			"\033[0m"
 # define REVERSE_VIDEO_COLOR	"\033[7m"
