@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 16:28:19 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/13 17:43:08 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/13 18:36:05 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void		check_conditions(void)
 	{
 		ft_die("Variable Term not set.");
 	}
-	if (isatty(STDERR_FILENO) == 0)
+	if (isatty(STDERR_FILENO) == 0 || isatty(STDIN_FILENO) == 0)
 	{
 		ft_die("Not running in a terminal");
 	}
@@ -40,22 +40,22 @@ int				ft_printnbr(int c)
 	return (write(STDERR_FILENO, &c, 1));
 }
 
-void			setup_termios(t_select *env)
+void			setup_termios()
 {
 	check_conditions();
-	tcgetattr(STDERR_FILENO, &env->ios_old);
-	tcgetattr(STDERR_FILENO, &env->ios_actu);
-	env->ios_actu.c_lflag &= ~ICANON;
-	env->ios_actu.c_cc[VMIN] = 1;
-	env->ios_actu.c_cc[VTIME] = 0;
-	tcsetattr(STDERR_FILENO, TCSANOW, &env->ios_actu);
+	tcgetattr(STDERR_FILENO, &g_select->ios_old);
+	tcgetattr(STDERR_FILENO, &g_select->ios_actu);
+	g_select->ios_actu.c_lflag &= ~ICANON;
+	g_select->ios_actu.c_cc[VMIN] = 1;
+	g_select->ios_actu.c_cc[VTIME] = 0;
+	tcsetattr(STDERR_FILENO, TCSANOW, &g_select->ios_actu);
 	tputs(tgetstr("ti", NULL), 1, ft_printnbr);
 	tputs(tgetstr("vi", NULL), 1, ft_printnbr);
 }
 
-void			reset_termios(t_select *env)
+void			reset_termios()
 {	
-	tcsetattr(STDERR_FILENO, TCSANOW, &env->ios_old);
+	tcsetattr(STDERR_FILENO, TCSANOW, &g_select->ios_old);
 	tputs(tgetstr("ve", NULL), 1, ft_printnbr);
 	tputs(tgetstr("te", NULL), 1, ft_printnbr);
 }

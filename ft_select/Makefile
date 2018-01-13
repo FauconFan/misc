@@ -6,7 +6,7 @@
 #    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 14:44:38 by fauconfan         #+#    #+#              #
-#    Updated: 2018/01/13 17:36:45 by fauconfan        ###   ########.fr        #
+#    Updated: 2018/01/13 17:51:51 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC = main.c \
 		display_column.c \
 		termios_utils.c \
 		move_utils.c \
+		signal_handler.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC))
 

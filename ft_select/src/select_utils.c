@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/11 17:22:11 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/13 17:37:30 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/13 21:49:57 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,32 @@ t_select			*init_select(int size, char **argv)
 	}
 	res->args[index] = 0;
 	return (res);
+}
+
+void				delete_arg(t_select *env)
+{
+	t_arg	**new_arg;
+	int		pk;
+
+	if (env->index_selected < 0 || env->index_selected >= env->tot_args)
+		return ;
+	if (env->tot_args == 1)
+		stop_program();
+	env->tot_args--;
+	ft_memcheck((new_arg = (t_arg **)malloc(sizeof(t_arg) * (env->tot_args + 1))));
+	pk = -1;
+	while (env->args[++pk])
+	{
+		if (pk == env->index_selected)
+			continue ;
+		new_arg[pk - (pk > env->index_selected)] = env->args[pk];
+	}
+	new_arg[pk - 1] = 0;
+	free(env->args[env->index_selected]->value);
+	free(env->args[env->index_selected]);
+	free(env->args);
+	env->args = new_arg;
+	env->index_selected %= env->tot_args;
 }
 
 void				free_select(t_select **sel)

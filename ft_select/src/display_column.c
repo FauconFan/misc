@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:29:47 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/13 17:32:08 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/13 17:55:06 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,30 @@ static void display_arg(t_select *env, int max_len)
 	}
 }
 
-void		display_column(t_select *env)
+void		display_column()
 {
 	int				max_len_arg;
 	int				cols;
 	int				rows;
 
-	if (env == 0 || env->args == 0)
+	if (g_select == 0 || g_select->args == 0)
 		return ;
 	tputs(tgetstr("cl", NULL), 1, ft_printnbr);
-	ioctl(STDERR_FILENO, TIOCGWINSZ, &env->ws);
-	max_len_arg = count_max_len_args(env->args);
-	if (max_len_arg > env->ws.ws_col)
+	ioctl(STDERR_FILENO, TIOCGWINSZ, &g_select->ws);
+	max_len_arg = count_max_len_args(g_select->args);
+	if (max_len_arg > g_select->ws.ws_col)
 		return ;
-	cols = env->ws.ws_col / (max_len_arg + 1);
+	cols = g_select->ws.ws_col / (max_len_arg + 1);
 	if (cols == 0)
 		cols++;
-	if ((max_len_arg + 1) * env->tot_args < env->ws.ws_col)
-		cols = env->tot_args;
-	rows = env->tot_args / cols;
-	if (rows > env->ws.ws_row)
+	if ((max_len_arg + 1) * g_select->tot_args < g_select->ws.ws_col)
+		cols = g_select->tot_args;
+	rows = g_select->tot_args / cols;
+	if (rows > g_select->ws.ws_row)
 		return ;
-	if (env->tot_args % cols)
+	if (g_select->tot_args % cols)
 		rows++;
-	env->rows = rows;
-	env->cols = cols;
-	display_arg(env, max_len_arg);
+	g_select->rows = rows;
+	g_select->cols = cols;
+	display_arg(g_select, max_len_arg);
 }
