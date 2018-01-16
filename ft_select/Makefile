@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 14:44:38 by fauconfan         #+#    #+#              #
-#    Updated: 2018/01/13 17:51:51 by fauconfan        ###   ########.fr        #
+#    Updated: 2018/01/16 11:37:32 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ $(NAME) : $(OBJ)
 	$(GWW) $(OBJ) -o $@ $(LIBS)
 
 %.o : %.c
-	$(GWW) -c $? -o $@ $(LIBS)
+	$(GWW) -c $? -o $@
 
 clean :
 	rm -rf $(OBJ)

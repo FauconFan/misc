@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_column.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:29:47 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/13 22:10:07 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/16 12:03:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static t_bool	ft_match(char *s1, char *s2)
 {
 	if (*s1 != '\0' && *s2 == '*')
-    	return (ft_match(s1 + 1, s2) || ft_match(s1, s2 + 1));
+		return (ft_match(s1 + 1, s2) || ft_match(s1, s2 + 1));
 	if (*s1 == '\0' && *s2 == '*')
-    	return (ft_match(s1, s2 + 1));
+		return (ft_match(s1, s2 + 1));
 	if (*s1 == *s2 && *s1 != '\0' && *s2 != '\0')
-    	return (ft_match(s1 + 1, s2 + 1));
+		return (ft_match(s1 + 1, s2 + 1));
 	if (*s1 == *s2 && *s1 == '\0' && *s2 == '\0')
-    	return (TRUE);
-  	return (FALSE);
+		return (TRUE);
+	return (FALSE);
 }
 
 static int		count_max_len_args(t_arg **args)
@@ -59,7 +59,7 @@ static void		display_color(char *str)
 		ft_putstr_fd(A_COLOR, STDERR_FILENO);
 }
 
-static void 	display_arg(t_select *env, int max_len)
+static void		display_arg(t_select *env, int max_len)
 {
 	char	*str_actu;
 	int		index;
@@ -84,7 +84,7 @@ static void 	display_arg(t_select *env, int max_len)
 	}
 }
 
-void			display_column()
+void			display_column(void)
 {
 	int				max_len_arg;
 	int				cols;
@@ -103,7 +103,7 @@ void			display_column()
 	if ((max_len_arg + 1) * g_select->tot_args < g_select->ws.ws_col)
 		cols = g_select->tot_args;
 	rows = g_select->tot_args / cols;
-	if (rows > g_select->ws.ws_row)
+	if (rows >= g_select->ws.ws_row || max_len_arg >= g_select->ws.ws_col)
 		return ;
 	if (g_select->tot_args % cols)
 		rows++;

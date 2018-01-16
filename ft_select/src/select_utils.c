@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   select_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/11 17:22:11 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/13 21:49:57 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/16 12:04:17 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void				delete_arg(t_select *env)
 	if (env->tot_args == 1)
 		stop_program();
 	env->tot_args--;
-	ft_memcheck((new_arg = (t_arg **)malloc(sizeof(t_arg) * (env->tot_args + 1))));
+	ft_memcheck((new_arg =
+		(t_arg **)malloc(sizeof(t_arg) * (env->tot_args + 1))));
 	pk = -1;
 	while (env->args[++pk])
 	{
