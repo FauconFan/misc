@@ -21,3 +21,6 @@
 bin/
 MANIFEST.MF
 laby3d.jar
+
+# VIM FILES
+*.swp
