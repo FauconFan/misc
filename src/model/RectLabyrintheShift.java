@@ -1,11 +1,12 @@
 package src.model;
 
-public class RectLabyrintheShift {
+public class RectLabyrintheShift
+{
 	private int x;
 	private int y;
 	private RectLabyrinthe rl;
 
-	public RectLabyrintheShift (){
-
+	public RectLabyrintheShift()
+	{
 	}
 }

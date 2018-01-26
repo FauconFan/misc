@@ -1,12 +1,13 @@
 package src.model;
 
-public class RectLabyrinthe {
+public class RectLabyrinthe
+{
 	private int size_x;
 	private int size_y;
 	private Case [] specialCases;
-	private Wall [] walls;
+	private LineWall [] linewalls;
 
-	public RectLabyrinthe (){
-
+	public RectLabyrinthe()
+	{
 	}
 }
