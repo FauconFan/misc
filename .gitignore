@@ -27,3 +27,6 @@ laby3d.jar
 
 # Path uncrustify
 scripts/path_uncrustify.txt
+
+# JavaDoc Folder
+doc/
