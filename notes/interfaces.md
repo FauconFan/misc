@@ -1,14 +1,15 @@
 ## Interfaces
 
+### Controller
+* getter/setter params
+
 ### Labyrinthe
 
 #### Attributs
 * private Player player
 * private int portee_vue
-* CaseSpec[]
-* TraitWall[]
 
-#### Main Labyrinthe
+#### Fonctions
 * RectLabyrinthe getAdaptedLabyrinthe()
 * private boolean canMove(int dx, int dyi)
 * Labyrinthe(Path p)
@@ -16,7 +17,9 @@
 * boolean movePlayer(int dx, int dy)
 
 ### RectLabyrinthe
-
+#### Fonctions
+* CasesSpec[]
+* LineWall[]
 
 ### Player
 #### Attributs
@@ -24,6 +27,6 @@
 * float posX
 * float posY
 
-### TraitWall
+### LineWall
 #### Attributs
 * int epaisseur
