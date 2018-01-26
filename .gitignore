@@ -24,3 +24,6 @@ laby3d.jar
 
 # VIM FILES
 *.swp
+
+# Path uncrustify
+scripts/path_uncrustify.txt

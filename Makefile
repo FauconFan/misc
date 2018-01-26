@@ -18,4 +18,7 @@ run:
 clean:
 	@rm -rf $(BIN_FOLDER) $(JAR) $(MANIFEST)
 
+norm:
+	sh scripts/uncrustify.sh
+
 re: clean all
