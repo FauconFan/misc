@@ -54,13 +54,24 @@ public class RectLabyrinthe
 		bf.append("size_y : " + this.getSizeY() + "\n");
 		if (specialCases.length == 0)
 		{
-			bf.append(StringManipulation.makeTabsProperly("No specialCases\n"));
+			bf.append("No specialCases\n");
 		}
 		else
 		{
 			for (int i = 0; i < specialCases.length; i++)
 			{
 				bf.append(StringManipulation.makeTabsProperly(specialCases[i].toString()));
+			}
+		}
+		if (linewalls.length == 0)
+		{
+			bf.append("No Walls\n");
+		}
+		else
+		{
+			for (int i = 0; i < linewalls.length; i++)
+			{
+				bf.append(StringManipulation.makeTabsProperly(linewalls[i].toString()));
 			}
 		}
 		return (bf.toString());
