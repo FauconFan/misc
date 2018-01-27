@@ -4,6 +4,7 @@ DOC_FOLDER = doc/
 
 MAIN_PATH = "src/Main"
 MAIN_PATH_MANIFEST = "src.Main"
+
 MANIFEST = "MANIFEST.MF"
 JAR = $(NAME).jar
 
@@ -12,6 +13,9 @@ all :
 	@javac -d $(BIN_FOLDER) $(MAIN_PATH).java
 	@echo "Main-Class: "$(MAIN_PATH_MANIFEST) > $(MANIFEST)
 	@jar -cvmf $(MANIFEST) $(JAR) -C $(BIN_FOLDER) ./
+
+testgen :
+	@make all MAIN_PATH="src/model/gen/Algo" MAIN_PATH_MANIFEST="src.model.gen.Algo"
 
 run:
 	@java -jar $(JAR)

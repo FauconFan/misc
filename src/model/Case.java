@@ -1,5 +1,7 @@
 package src.model;
 
+import java.lang.StringBuffer;
+
 /**
  * Case du labyrinthe quelconque.
  */
@@ -12,5 +14,14 @@ public abstract class Case
 	{
 		this.x = x;
 		this.y = y;
+	}
+
+	public String toString()
+	{
+		StringBuffer bf = new StringBuffer();
+
+		bf.append("x : " + this.x + "\n");
+		bf.append("y : " + this.y + "\n");
+		return (bf.toString());
 	}
 }
