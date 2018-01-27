@@ -1,5 +1,8 @@
 package src.model;
 
+/**
+ * Case du labyrinthe quelconque.
+ */
 public abstract class Case
 {
 	private int x;

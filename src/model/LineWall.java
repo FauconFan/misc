@@ -1,5 +1,10 @@
 package src.model;
 
+/**
+ * LineWall est la classe représentant un mur entre deux points.
+ * <br/>
+ * Le premier étant (x1, y1) et le deuxième (x2,y2)
+ */
 public class LineWall
 {
 	private int x1;
