@@ -11,7 +11,7 @@ public class MainLabyrinthe
 	{
 	}
 
-	public MainLabyrinthe(/*Algo algo*/)
+	public MainLabyrinthe(Algo algo)
 	{
 	}
 
