@@ -4,7 +4,7 @@ import java.lang.StringBuffer;
 
 /**
  * LineWall est la classe représentant un mur entre deux points.
- * <br/>
+ * <br>
  * Le premier étant (x1, y1) et le deuxième (x2,y2)
  */
 public class LineWall
