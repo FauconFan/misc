@@ -19,7 +19,12 @@ function doit {
   echo -e "${GREEN}[$1 SUCCESSED]${NC}"
 }
 
+make clean
+
 doit "NORMALISE" "make norm" "git diff"
 doit "GENDOC" "make doc" "" 
 
-git add -A
+for i in `git diff --cached --name-only`
+do
+	git add $i
+done
