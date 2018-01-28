@@ -4,6 +4,7 @@ import java.lang.StringBuffer;
 
 import src.model.gen.Algo;
 import src.utils.StringManipulation;
+import src.model.parser.Parser;
 
 /**
  * Structure de données du labyrinthe.
@@ -17,7 +18,7 @@ public class MainLabyrinthe
 
 	public MainLabyrinthe(String path)
 	{
-		subLabyrinthes = null;
+		subLabyrinthes = Parser.loadLaby(path);
 		name           = "";
 		p         = null;
 		porteeVue = 0;
