@@ -23,12 +23,12 @@ public class MainLabyrinthe
 		porteeVue = 0;
 	}
 
-	public MainLabyrinthe(Algo algo)
+	public MainLabyrinthe(Algo algo, int porteeVueP)
 	{
 		subLabyrinthes = algo.buildSubLabyrinthe();
 		name           = "";
 		p         = null;
-		porteeVue = 0;
+		porteeVue = porteeVueP;
 	}
 
 	/**

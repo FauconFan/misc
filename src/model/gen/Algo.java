@@ -13,7 +13,7 @@ public abstract class Algo
 		Algo           al;
 
 		al = new AlgoSample();
-		ml = new MainLabyrinthe(al);
+		ml = new MainLabyrinthe(al, 0);
 		System.out.print(ml);
 	}
 }
