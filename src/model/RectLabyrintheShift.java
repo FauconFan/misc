@@ -1,7 +1,5 @@
 package src.model;
 
-import java.lang.StringBuffer;
-
 import src.utils.StringManipulation;
 
 /**
@@ -46,11 +44,11 @@ public class RectLabyrintheShift
 	@Override
 	public String toString()
 	{
-		StringBuffer bf = new StringBuffer();
+		String str;
 
-		bf.append("dx : " + this.getDX() + "\n");
-		bf.append("dy : " + this.getDY() + "\n");
-		bf.append(StringManipulation.makeTabsProperly(rl.toString()));
-		return (bf.toString());
+		str  = "dx : " + this.getDX() + "\n";
+		str += "dy : " + this.getDY() + "\n";
+		str += StringManipulation.makeTabsProperly(rl.toString());
+		return (str);
 	}
 }

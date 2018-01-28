@@ -1,7 +1,5 @@
 package src.model;
 
-import java.lang.StringBuffer;
-
 import src.utils.StringManipulation;
 
 /**
@@ -48,32 +46,32 @@ public class RectLabyrinthe
 	 */
 	public String toString()
 	{
-		StringBuffer bf = new StringBuffer();
+		String str;
 
-		bf.append("size_x : " + this.getSizeX() + "\n");
-		bf.append("size_y : " + this.getSizeY() + "\n");
+		str  = "size_x : " + this.getSizeX() + "\n";
+		str += "size_y : " + this.getSizeY() + "\n";
 		if (specialCases.length == 0)
 		{
-			bf.append("No specialCases\n");
+			str += "No specialCases\n";
 		}
 		else
 		{
 			for (int i = 0; i < specialCases.length; i++)
 			{
-				bf.append(StringManipulation.makeTabsProperly(specialCases[i].toString()));
+				str += StringManipulation.makeTabsProperly(specialCases[i].toString());
 			}
 		}
 		if (linewalls.length == 0)
 		{
-			bf.append("No Walls\n");
+			str += "No Walls\n";
 		}
 		else
 		{
 			for (int i = 0; i < linewalls.length; i++)
 			{
-				bf.append(StringManipulation.makeTabsProperly(linewalls[i].toString()));
+				str += StringManipulation.makeTabsProperly(linewalls[i].toString());
 			}
 		}
-		return (bf.toString());
+		return (str);
 	}
 }

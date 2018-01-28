@@ -1,7 +1,5 @@
 package src.model;
 
-import java.lang.StringBuffer;
-
 import src.model.gen.Algo;
 import src.utils.StringManipulation;
 
@@ -69,30 +67,29 @@ public class MainLabyrinthe
 	@Override
 	public String toString()
 	{
-		StringBuffer bf = new StringBuffer();
+		String str = "Describing Labyrinthe\n";
 
-		bf.append("Describing Labyrinthe\n");
-		bf.append("name = " + this.name + "\n");
-		bf.append("player = " + this.p + "\n");
-		bf.append("porteeVue = " + this.porteeVue + "\n");
-		bf.append("\n");
-		bf.append("nb subLabyrinthes : " + this.subLabyrinthes.length + "\n");
+		str += "name = " + this.name + "\n";
+		str += "player = " + this.p + "\n";
+		str += "porteeVue = " + this.porteeVue + "\n";
+		str += "\n";
+		str += "nb subLabyrinthes : " + this.subLabyrinthes.length + "\n";
 		for (int i = 0; i < this.subLabyrinthes.length; i++)
 		{
 			if (this.subLabyrinthes[i] == null)
 			{
-				bf.append(StringManipulation.makeTabsProperly("subLabyrinthes index[" + i + "] is null\n"));
+				str += StringManipulation.makeTabsProperly("subLabyrinthes index[" + i + "] is null\n");
 			}
 			else
 			{
-				bf.append(StringManipulation.makeTabsProperly("Describing subLabyrinthesShift[" + i + "] :\n"));
-				bf.append(StringManipulation.makeTabsProperly(this.subLabyrinthes[i].toString()));
+				str += StringManipulation.makeTabsProperly("Describing subLabyrinthesShift[" + i + "] :\n");
+				str += StringManipulation.makeTabsProperly(this.subLabyrinthes[i].toString());
 			}
 			if (i != this.subLabyrinthes.length - 1)
 			{
-				bf.append("\n");
+				str += "\n";
 			}
 		}
-		return (bf.toString());
+		return (str);
 	}
 }

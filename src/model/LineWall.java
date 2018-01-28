@@ -1,7 +1,5 @@
 package src.model;
 
-import java.lang.StringBuffer;
-
 /**
  * LineWall est la classe représentant un mur entre deux points.
  * <br>
@@ -53,17 +51,6 @@ public class LineWall
 
 	public String toString()
 	{
-		StringBuffer bf = new StringBuffer();
-
-		bf.append("(");
-		bf.append(x1);
-		bf.append(", ");
-		bf.append(y1);
-		bf.append(") => (");
-		bf.append(x2);
-		bf.append(", ");
-		bf.append(y2);
-		bf.append(")\n");
-		return (bf.toString());
+		return ("(" + x1 + ", " + y1 + ") => (" + x2 + ", " + y2 + ")\n");
 	}
 }
