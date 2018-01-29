@@ -1,19 +1,19 @@
 package src.model.gen;
 
-import src.model.MainLabyrinthe;
-import src.model.RectLabyrintheShift;
+import src.model.gen.RectMazeShift;
+import src.model.MainMaze;
 
 public abstract class Algo
 {
-	public abstract RectLabyrintheShift[] buildSubLabyrinthe();
+	public abstract RectMazeShift[] buildSubMaze();
 
 	public static void main(String[] args)
 	{
-		MainLabyrinthe ml;
-		Algo           al;
+		MainMaze ml;
+		Algo     al;
 
 		al = new AlgoSample();
-		ml = new MainLabyrinthe(al, 0);
+		ml = new MainMaze(al, 0);
 		System.out.print(ml);
 	}
 }

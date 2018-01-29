@@ -1,12 +1,12 @@
 package src.model.gen;
 
-import src.model.Case;
-import src.model.EndCase;
+import src.model.board.Case;
+import src.model.board.EndCase;
+import src.model.board.LineWall;
+import src.model.board.StartCase;
 import src.model.gen.Algo;
-import src.model.LineWall;
-import src.model.RectLabyrinthe;
-import src.model.RectLabyrintheShift;
-import src.model.StartCase;
+import src.model.gen.RectMaze;
+import src.model.gen.RectMazeShift;
 
 import java.util.ArrayList;
 
@@ -76,25 +76,25 @@ public class AlgoSample extends Algo
 		return (res.toArray(new LineWall[0]));
 	}
 
-	private RectLabyrinthe buildOneSquareLabyrinthe(boolean hasStartCase, boolean hasEndCase, boolean door)
+	private RectMaze buildOneSquareLabyrinthe(boolean hasStartCase, boolean hasEndCase, boolean door)
 	{
-		RectLabyrinthe rl;
+		RectMaze rl;
 
 		Case[]     listSpecialeCases;
 		LineWall[] listWalls;
 
 		listSpecialeCases = this.buildCases(hasStartCase, hasEndCase);
 		listWalls         = this.buildWalls(door);
-		rl = new RectLabyrinthe(listSpecialeCases, listWalls, SIZE_SQUARE, SIZE_SQUARE);
+		rl = new RectMaze(listSpecialeCases, listWalls, SIZE_SQUARE, SIZE_SQUARE);
 		return (rl);
 	}
 
-	public RectLabyrintheShift[] buildSubLabyrinthe()
+	public RectMazeShift[] buildSubMaze()
 	{
-		RectLabyrintheShift[] res = new RectLabyrintheShift[2];
+		RectMazeShift[] res = new RectMazeShift[2];
 
-		res[0] = new RectLabyrintheShift(buildOneSquareLabyrinthe(false, false, true), 0, 0);
-		res[1] = new RectLabyrintheShift(buildOneSquareLabyrinthe(true, true, false), SIZE_SQUARE, SIZE_SQUARE / 2);;
+		res[0] = new RectMazeShift(buildOneSquareLabyrinthe(false, false, true), 0, 0);
+		res[1] = new RectMazeShift(buildOneSquareLabyrinthe(true, true, false), SIZE_SQUARE, SIZE_SQUARE / 2);;
 		return (res);
 	}
 }

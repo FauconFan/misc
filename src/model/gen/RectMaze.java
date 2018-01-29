@@ -1,18 +1,20 @@
-package src.model;
+package src.model.gen;
 
+import src.model.board.Case;
+import src.model.board.LineWall;
 import src.utils.StringManipulation;
 
 /**
  * Sous-labyrinthe rectangulaire qui compose le MainLabyrinthe (sans tenir compte du décalage).
  */
-public class RectLabyrinthe
+public class RectMaze
 {
 	private final Case [] specialCases;
 	private final LineWall [] linewalls;
 	private final int size_x;
 	private final int size_y;
 
-	public RectLabyrinthe(Case[] specialCases, LineWall[] linewalls, int x, int y)
+	public RectMaze(Case[] specialCases, LineWall[] linewalls, int x, int y)
 	{
 		this.specialCases = specialCases;
 		this.linewalls    = linewalls;
@@ -41,7 +43,7 @@ public class RectLabyrinthe
 	}
 
 	/**
-	 * RectLabyrinthe rep
+	 * RectMaze rep
 	 * @return String rep
 	 */
 	public String toString()

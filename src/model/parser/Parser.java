@@ -1,7 +1,7 @@
 package src.model.parser;
 
-import src.model.MainLabyrinthe;
-import src.model.RectLabyrintheShift;
+import src.model.gen.RectMazeShift;
+import src.model.MainMaze;
 
 public class Parser
 {
@@ -10,7 +10,7 @@ public class Parser
 	 * @param path Le chemin du fichier
 	 * @return Le labyrinthe
 	 */
-	public static RectLabyrintheShift[] loadLaby(String path)
+	public static RectMazeShift[] loadLaby(String path)
 	{
 		return (null);
 	}
@@ -21,7 +21,7 @@ public class Parser
 	 * @param path le chemin du fichier
 	 * @return Si la sauvegarde s'est bien passée
 	 */
-	public static boolean writeLabyrinthe(MainLabyrinthe laby, String path)
+	public static boolean writeLabyrinthe(MainMaze laby, String path)
 	{
 		return (false);
 	}

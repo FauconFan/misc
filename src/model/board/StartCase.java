@@ -1,4 +1,4 @@
-package src.model;
+package src.model.board;
 
 /**
  * Case du labyrinthe sur laquelle le joueur va débuter.

@@ -1,28 +1,28 @@
-package src.model;
+package src.model.gen;
 
 import src.utils.StringManipulation;
 
 /**
  * Sous-labyrinthe rectangulaire qui compose le MainLabyrinthe (en tenant compte du décalage).
  */
-public class RectLabyrintheShift
+public class RectMazeShift
 {
-	private final RectLabyrinthe rl;
+	private final RectMaze rl;
 	private final int x;
 	private final int y;
 
-	public RectLabyrintheShift(RectLabyrinthe rl, int dx, int dy)
+	public RectMazeShift(RectMaze rl, int dx, int dy)
 	{
 		if (rl == null)
 		{
-			throw new RuntimeException("RectLabyrintheShift can't be implemented with a null RectLabyrinthe");
+			throw new RuntimeException("RectMazeShift can't be implemented with a null RectMaze");
 		}
 		this.rl = rl;
 		this.x  = dx;
 		this.y  = dy;
 	}
 
-	public RectLabyrinthe getRectLabyrinthe()
+	public RectMaze getRectLabyrinthe()
 	{
 		return (this.rl);
 	}

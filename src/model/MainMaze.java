@@ -1,40 +1,42 @@
 package src.model;
 
 import src.model.gen.Algo;
-import src.utils.StringManipulation;
+import src.model.gen.RectMaze;
+import src.model.gen.RectMazeShift;
 import src.model.parser.Parser;
+import src.utils.StringManipulation;
 
 /**
  * Structure de données du labyrinthe.
  */
-public class MainLabyrinthe
+public class MainMaze
 {
-	private RectLabyrintheShift [] subLabyrinthes;
+	private RectMazeShift [] subMazes;
 	private String name;
 	private Player p;
 	private int porteeVue;
 
-	public MainLabyrinthe(String path)
+	public MainMaze(String path)
 	{
-		subLabyrinthes = Parser.loadLaby(path);
-		name           = "";
+		subMazes  = Parser.loadLaby(path);
+		name      = "";
 		p         = null;
 		porteeVue = 0;
 	}
 
-	public MainLabyrinthe(Algo algo, int porteeVueP)
+	public MainMaze(Algo algo, int porteeVueP)
 	{
-		subLabyrinthes = algo.buildSubLabyrinthe();
-		name           = "";
+		subMazes  = algo.buildSubMaze();
+		name      = "";
 		p         = null;
 		porteeVue = porteeVueP;
 	}
 
 	/**
-	 * Retourne un RectLabyrinthe centré sur la position du joueur de dimension porteeVue x porteeVue.
-	 * @return RectLabyrinthe centré sur le joueur.
+	 * Retourne un RectMaze centré sur la position du joueur de dimension porteeVue x porteeVue.
+	 * @return RectMaze centré sur le joueur.
 	 */
-	public RectLabyrinthe getAdaptedLabyrinthe()
+	public RectMaze getAdaptedMaze()
 	{
 		return (null);
 	}
@@ -68,25 +70,25 @@ public class MainLabyrinthe
 	@Override
 	public String toString()
 	{
-		String str = "Describing Labyrinthe\n";
+		String str = "Describing Maze\n";
 
 		str += "name = " + this.name + "\n";
 		str += "player = " + this.p + "\n";
 		str += "porteeVue = " + this.porteeVue + "\n";
 		str += "\n";
-		str += "nb subLabyrinthes : " + this.subLabyrinthes.length + "\n";
-		for (int i = 0; i < this.subLabyrinthes.length; i++)
+		str += "nb subMazes : " + this.subMazes.length + "\n";
+		for (int i = 0; i < this.subMazes.length; i++)
 		{
-			if (this.subLabyrinthes[i] == null)
+			if (this.subMazes[i] == null)
 			{
-				str += StringManipulation.makeTabsProperly("subLabyrinthes index[" + i + "] is null\n");
+				str += StringManipulation.makeTabsProperly("subMazes index[" + i + "] is null\n");
 			}
 			else
 			{
-				str += StringManipulation.makeTabsProperly("Describing subLabyrinthesShift[" + i + "] :\n");
-				str += StringManipulation.makeTabsProperly(this.subLabyrinthes[i].toString());
+				str += StringManipulation.makeTabsProperly("Describing subMazesShift[" + i + "] :\n");
+				str += StringManipulation.makeTabsProperly(this.subMazes[i].toString());
 			}
-			if (i != this.subLabyrinthes.length - 1)
+			if (i != this.subMazes.length - 1)
 			{
 				str += "\n";
 			}

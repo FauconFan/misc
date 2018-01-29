@@ -3,12 +3,12 @@ package src.controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import src.model.gen.Algo;
-import src.model.MainLabyrinthe;
+import src.model.MainMaze;
 import src.view.View;
 
 public class Controller extends Application
 {
-	private MainLabyrinthe laby;
+	private MainMaze laby;
 	private final View view;
 
 	public Controller()
@@ -30,6 +30,6 @@ public class Controller extends Application
 	 */
 	public void createLaby(Algo algo, int porteeVue)
 	{
-		this.laby = new MainLabyrinthe(algo, porteeVue);
+		this.laby = new MainMaze(algo, porteeVue);
 	}
 }

@@ -1,4 +1,4 @@
-package src.model;
+package src.model.board;
 
 /**
  * LineWall est la classe représentant un mur entre deux points.
