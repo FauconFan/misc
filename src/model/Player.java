@@ -1,9 +1,11 @@
 package src.model;
 
+import java.io.Serializable;
+
 /**
  * Player est la classe qui représente le joueur dans le labyrinthe.
  */
-public class Player
+public class Player implements Serializable
 {
 	private float hitBox;
 	private float posX;

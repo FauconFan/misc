@@ -1,5 +1,6 @@
 package src.model;
 
+import java.io.Serializable;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
@@ -9,19 +10,20 @@ import src.utils.StringManipulation;
 /**
  * Structure de données du labyrinthe.
  */
-public class MainMaze
+public class MainMaze implements Serializable
 {
 	private RectMazeShift [] subMazes;
 	private String name;
 	private Player p;
 	private int porteeVue;
 
-	public MainMaze(String path)
+
+	public MainMaze(RectMazeShift[] subMazes, String name, Player p, int porteeVue)
 	{
-		subMazes  = Parser.loadLaby(path);
-		name      = "";
-		p         = null;
-		porteeVue = 0;
+		this.subMazes  = subMazes;
+		this.name      = name;
+		this.p         = p;
+		this.porteeVue = porteeVue;
 	}
 
 	public MainMaze(Algo algo, int porteeVueP)

@@ -4,10 +4,12 @@ import src.model.board.Case;
 import src.model.board.LineWall;
 import src.utils.StringManipulation;
 
+import java.io.Serializable;
+
 /**
  * Sous-labyrinthe rectangulaire qui compose le MainLabyrinthe (sans tenir compte du décalage).
  */
-public class RectMaze
+public class RectMaze implements Serializable
 {
 	private final Case [] specialCases;
 	private final LineWall [] linewalls;

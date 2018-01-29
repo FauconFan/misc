@@ -1,11 +1,13 @@
 package src.model.gen;
 
+import java.io.Serializable;
+
 import src.utils.StringManipulation;
 
 /**
  * Sous-labyrinthe rectangulaire qui compose le MainLabyrinthe (en tenant compte du décalage).
  */
-public class RectMazeShift
+public class RectMazeShift implements Serializable
 {
 	private final RectMaze rl;
 	private final int x;

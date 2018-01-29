@@ -1,9 +1,11 @@
 package src.model.board;
 
+import java.io.Serializable;
+
 /**
  * Case du labyrinthe quelconque.
  */
-public abstract class Case
+public abstract class Case implements Serializable
 {
 	private int x;
 	private int y;
