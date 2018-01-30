@@ -10,7 +10,7 @@ import javafx.stage.Screen;
 
 public class Menu extends VBox
 {
-	public Menu(int padding)
+	public Menu()
 	{
 		super();
 		setPadding(new Insets(10));

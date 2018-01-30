@@ -13,7 +13,7 @@ public class View
 	public View(Controller con)
 	{
 		this.con  = con;
-		this.view = new Menu(10);
+		this.view = new Menu();
 	}
 
 	public Parent asParent()
