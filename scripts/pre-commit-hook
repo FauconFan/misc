@@ -8,7 +8,8 @@ NC='\033[0m' # No Color
 # $2 is a first command to be ran
 # $3 is a second one
 
-function doit {
+doit()
+{
   echo -e "${RED}[$1...]${NC}"
   $2
   if [ $? -ne 0 ]; then
@@ -21,7 +22,7 @@ function doit {
 
 make clean
 
-doit "NORMALISE" "make norm" "git diff"
+doit "NORMALISE" "make norm" ""
 doit "GENDOC" "make doc" "" 
 
 for i in `git diff --cached --name-only`
