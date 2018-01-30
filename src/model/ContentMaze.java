@@ -1,5 +1,6 @@
 package src.model;
 
+import java.io.Serializable;
 import src.model.board.*;
 import src.utils.StringManipulation;
 

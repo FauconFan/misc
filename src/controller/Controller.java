@@ -1,7 +1,5 @@
 package src.controller;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
 import src.model.gen.Algo;
 import src.model.gen.AlgoSample;
 import src.model.MainMaze;
@@ -13,7 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class Controller extends Application
+public class Controller
 {
 	private MainMaze maze;
 	private final View view;
@@ -23,13 +21,6 @@ public class Controller extends Application
 	public Controller()
 	{
 		this.view = new View(this);
-	}
-
-	@Override
-	public void start(Stage primaryStage)
-	{
-		primaryStage.setTitle("Laby");
-		primaryStage.show();
 	}
 
 	/**
@@ -106,16 +97,5 @@ public class Controller extends Application
 				ex.printStackTrace();
 			}
 		}
-	}
-
-	/** TEST
-	 */
-	public static void main(String[] args)
-	{
-		Controller con = new Controller();
-
-		con.createMaze(new AlgoSample(), 30);
-		con.saveMazeSerialized("./ser");
-		con.loadMaze("./ser");
 	}
 }
