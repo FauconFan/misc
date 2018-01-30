@@ -7,7 +7,7 @@
 
 #### Attributs
 * private Player player
-* private int portee_vue
+* private int porteeVue
 
 #### Fonctions
 * RectLabyrinthe getAdaptedLabyrinthe()
@@ -28,10 +28,11 @@
 
 ### Player
 #### Attributs
-* float Hitbox
+* float hitBoxWidth
+* float hitBoxLength
 * float posX
 * float posY
 
 ### LineWall
 #### Attributs
-* int epaisseur
+* float epaisseur

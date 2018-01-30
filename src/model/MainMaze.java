@@ -9,16 +9,16 @@ import src.utils.StringManipulation;
 /**
  * Structure de données du labyrinthe.
  */
-public class MainMaze
+public class MainMaze implements Serializable
 {
-	private RectMazeShift [] subMazes;
+	private ContentMaze m;
 	private String name;
 	private Player p;
 	private int porteeVue;
 
 	public MainMaze(String path)
 	{
-		subMazes  = Parser.loadLaby(path);
+		m         = null;
 		name      = "";
 		p         = null;
 		porteeVue = 0;
@@ -26,7 +26,7 @@ public class MainMaze
 
 	public MainMaze(Algo algo, int porteeVueP)
 	{
-		subMazes  = algo.buildSubMaze();
+		m         = null;
 		name      = "";
 		p         = null;
 		porteeVue = porteeVueP;
@@ -76,22 +76,10 @@ public class MainMaze
 		str += "player = " + this.p + "\n";
 		str += "porteeVue = " + this.porteeVue + "\n";
 		str += "\n";
-		str += "nb subMazes : " + this.subMazes.length + "\n";
-		for (int i = 0; i < this.subMazes.length; i++)
+		str += "labyrinthe :\n";
+		if (m != null)
 		{
-			if (this.subMazes[i] == null)
-			{
-				str += StringManipulation.makeTabsProperly("subMazes index[" + i + "] is null\n");
-			}
-			else
-			{
-				str += StringManipulation.makeTabsProperly("Describing subMazesShift[" + i + "] :\n");
-				str += StringManipulation.makeTabsProperly(this.subMazes[i].toString());
-			}
-			if (i != this.subMazes.length - 1)
-			{
-				str += "\n";
-			}
+			str += m.toString();
 		}
 		return (str);
 	}
