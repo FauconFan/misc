@@ -1,5 +1,7 @@
 package src.model;
 
+import java.io.Serializable;
+
 /**
  * Player est la classe qui représente le joueur dans le labyrinthe.
  */

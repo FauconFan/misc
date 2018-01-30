@@ -1,11 +1,13 @@
 package src.model.board;
 
+import java.io.Serializable;
+
 /**
  * LineWall est la classe représentant un mur entre deux points.
  * <br>
  * Le premier étant (x1, y1) et le deuxième (x2,y2)
  */
-public class LineWall
+public class LineWall implements Serializable
 {
 	public static final float EPAISSEUR_DEFAULT = 0.1f;
 

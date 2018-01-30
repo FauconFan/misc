@@ -10,7 +10,7 @@ public class Parser
 	 * @param path Le chemin du fichier
 	 * @return Le labyrinthe
 	 */
-	public static RectMazeShift[] loadLaby(String path)
+	public static MainMaze loadLaby(String path)
 	{
 		return (null);
 	}

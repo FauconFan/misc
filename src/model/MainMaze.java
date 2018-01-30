@@ -1,5 +1,6 @@
 package src.model;
 
+import java.io.Serializable;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
@@ -16,20 +17,21 @@ public class MainMaze implements Serializable
 	private Player p;
 	private int porteeVue;
 
-	public MainMaze(String path)
+
+	public MainMaze(ContentMaze m, String name, Player p, int porteeVue)
 	{
-		m         = null;
-		name      = "";
-		p         = null;
-		porteeVue = 0;
+		this.m         = m;
+		this.name      = name;
+		this.p         = p;
+		this.porteeVue = porteeVue;
 	}
 
 	public MainMaze(Algo algo, int porteeVueP)
 	{
-		m         = null;
-		name      = "";
-		p         = null;
-		porteeVue = porteeVueP;
+		this.m         = null;
+		this.name      = "";
+		this.p         = null;
+		this.porteeVue = porteeVueP;
 	}
 
 	/**
