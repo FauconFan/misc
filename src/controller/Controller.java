@@ -14,13 +14,13 @@ import java.io.ObjectOutputStream;
 public class Controller
 {
 	private MainMaze maze;
-	private final View view;
+	private View view;
 
 	public static String EXTENSION = ".maze";
 
-	public Controller()
+	public void initView(View v)
 	{
-		this.view = new View(this);
+		this.view = v;
 	}
 
 	/**
