@@ -7,8 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
-import javafx.stage.Screen;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 
 import src.controller.Controller;
 
@@ -17,35 +17,27 @@ public class View
 {
 	private final Controller con;
 	private VBox view;
-  private Scene scene;
+	private Scene scene;
 
 	public View(Controller con)
 	{
-		this.con  = con;
-		this.view = new Menu(con);
-	  this.scene = new Scene((Parent) view);
-  }
+		this.con   = con;
+		this.view  = new MenuStart();
+		this.scene = new Scene((Parent)view);
+	}
 
-	public Scene getScene(){
-    return this.scene;
-  }
-
-	public class Menu extends VBox
+	public Scene getScene()
 	{
-		private final Controller con;
-		public Menu(Controller con)
+		return (this.scene);
+	}
+
+	public class MenuStart extends Menu
+	{
+		public MenuStart()
 		{
 			super();
 
-      this.con = con;
-
-			setPadding(new Insets(10));
-			setSpacing(15);
-			setAlignment(Pos.CENTER);
-
 			Label label = new Label("Hello the Maze");
-
-			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
 			Button   buttonCreate = new Button("Create");
 			Button   buttonLoad   = new Button("Load");
@@ -63,8 +55,8 @@ public class View
 
 			buttonCreate.setOnAction(event->{
 				VBox menuc = new MenuCreation();
-				scene.setRoot((Parent) menuc);
-        view=menuc;
+				scene.setRoot((Parent)menuc);
+				view = menuc;
 			});
 
 
@@ -74,7 +66,7 @@ public class View
 		}
 	}
 
-	public class MenuCreation extends VBox
+	public class MenuCreation extends Menu
 	{
 	}
 }
