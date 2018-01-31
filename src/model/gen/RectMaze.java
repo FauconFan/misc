@@ -5,33 +5,27 @@ import src.model.board.LineWall;
 import src.utils.StringManipulation;
 
 import java.io.Serializable;
+import src.model.ContentMaze;
 
 /**
  * Sous-labyrinthe rectangulaire qui compose le MainLabyrinthe (sans tenir compte du décalage).
  */
 public class RectMaze implements Serializable
 {
-	private final Case [] specialCases;
-	private final LineWall [] linewalls;
+	private final ContentMaze cm;
 	private final int size_x;
 	private final int size_y;
 
-	public RectMaze(Case[] specialCases, LineWall[] linewalls, int x, int y)
+	public RectMaze(ContentMaze cm, int x, int y)
 	{
-		this.specialCases = specialCases;
-		this.linewalls    = linewalls;
-		this.size_x       = x;
-		this.size_y       = y;
+		this.cm     = cm;
+		this.size_x = x;
+		this.size_y = y;
 	}
 
-	public Case[] getSpecialCases()
+	public ContentMaze getContentMaze()
 	{
-		return (this.specialCases);
-	}
-
-	public LineWall[] getLineWalls()
-	{
-		return (this.linewalls);
+		return (this.cm);
 	}
 
 	public int getSizeX()
@@ -54,28 +48,7 @@ public class RectMaze implements Serializable
 
 		str  = "size_x : " + this.getSizeX() + "\n";
 		str += "size_y : " + this.getSizeY() + "\n";
-		if (specialCases.length == 0)
-		{
-			str += "No specialCases\n";
-		}
-		else
-		{
-			for (int i = 0; i < specialCases.length; i++)
-			{
-				str += StringManipulation.makeTabsProperly(specialCases[i].toString());
-			}
-		}
-		if (linewalls.length == 0)
-		{
-			str += "No Walls\n";
-		}
-		else
-		{
-			for (int i = 0; i < linewalls.length; i++)
-			{
-				str += StringManipulation.makeTabsProperly(linewalls[i].toString());
-			}
-		}
+		str += StringManipulation.makeTabsProperly(this.cm.toString());
 		return (str);
 	}
 }

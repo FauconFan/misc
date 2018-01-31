@@ -10,6 +10,11 @@ public class EndCase extends Case
 		super(x, y);
 	}
 
+	public EndCase clone()
+	{
+		return (new EndCase(this.x, this.y));
+	}
+
 	public String toString()
 	{
 		return ("EndCase\n" + super.toString());

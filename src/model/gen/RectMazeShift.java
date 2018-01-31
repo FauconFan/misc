@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import src.utils.StringManipulation;
 
+import src.model.ContentMaze;
+
 /**
  * Sous-labyrinthe rectangulaire qui compose le MainLabyrinthe (en tenant compte du décalage).
  */
@@ -24,9 +26,12 @@ public class RectMazeShift implements Serializable
 		this.y  = dy;
 	}
 
-	public RectMaze getRectLabyrinthe()
+	public ContentMaze getTranslatedContentMaze()
 	{
-		return (this.rl);
+		ContentMaze cmcpy = this.rl.getContentMaze().clone();
+
+		cmcpy.translate(this.x, this.y);
+		return (cmcpy);
 	}
 
 	public int getDX()

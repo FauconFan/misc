@@ -10,6 +10,11 @@ public class StartCase extends Case
 		super(x, y);
 	}
 
+	public StartCase clone()
+	{
+		return (new StartCase(this.x, this.y));
+	}
+
 	public String toString()
 	{
 		return ("StartCase\n" + super.toString());
