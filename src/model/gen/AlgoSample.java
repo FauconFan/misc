@@ -4,7 +4,9 @@ import src.model.board.Case;
 import src.model.board.EndCase;
 import src.model.board.LineWall;
 import src.model.board.StartCase;
+import src.model.ContentMaze;
 import src.model.gen.Algo;
+import src.model.gen.ContentMazeFactory;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 
@@ -13,6 +15,35 @@ import java.util.ArrayList;
 public class AlgoSample extends Algo
 {
 	public static int SIZE_SQUARE = 10;
+
+	public AlgoSample()
+	{
+		super();
+		this.cmfactory = new ContentMazeFactory();
+
+		RectMaze rm1 = buildOneSquareLabyrinthe(false, false);
+		RectMaze rm2 = buildOneSquareLabyrinthe(true, true);
+
+		RectMazeShift rms1 = new RectMazeShift(rm1, 0, 0);
+		RectMazeShift rms2 = new RectMazeShift(rm2, SIZE_SQUARE, SIZE_SQUARE / 2);
+
+		this.cmfactory.addContentMazeShift(rms1);
+		this.cmfactory.addContentMazeShift(rms2);
+		this.cm = new ContentMaze(this.cmfactory.getFinalSpecialCases(), this.cmfactory.getFinalLineWall());
+	}
+
+	private RectMaze buildOneSquareLabyrinthe(boolean hasStartCase, boolean hasEndCase)
+	{
+		RectMaze rl;
+
+		Case[]     listSpecialeCases;
+		LineWall[] listWalls;
+
+		listSpecialeCases = this.buildCases(hasStartCase, hasEndCase);
+		listWalls         = this.buildWalls();
+		rl = new RectMaze(new ContentMaze(listSpecialeCases, listWalls), SIZE_SQUARE, SIZE_SQUARE);
+		return (rl);
+	}
 
 	private Case[] buildCases(boolean hasStartCase, boolean hasEndCase)
 	{
@@ -43,22 +74,14 @@ public class AlgoSample extends Algo
 		return (listSpecialeCases);
 	}
 
-	private LineWall[] buildWalls(boolean door)
+	private LineWall[] buildWalls()
 	{
 		ArrayList <LineWall> res = new ArrayList <>();
 
 		res.add(new LineWall(0, 0, 0, SIZE_SQUARE));
 		res.add(new LineWall(SIZE_SQUARE, SIZE_SQUARE, SIZE_SQUARE, 0));
-		if (door)
-		{
-			res.add(new LineWall(0, SIZE_SQUARE, SIZE_SQUARE / 2 + 2, SIZE_SQUARE));
-			res.add(new LineWall(SIZE_SQUARE / 2 + 3, SIZE_SQUARE, SIZE_SQUARE, SIZE_SQUARE));
-			res.add(new LineWall(0, 0, SIZE_SQUARE, 0));
-		}
-		else
-		{
-			res.add(new LineWall(0, SIZE_SQUARE, SIZE_SQUARE, SIZE_SQUARE));
-		}
+		res.add(new LineWall(0, 0, SIZE_SQUARE, 0));
+		res.add(new LineWall(0, SIZE_SQUARE, SIZE_SQUARE, SIZE_SQUARE));
 		if (SIZE_SQUARE > 1)
 		{
 			for (int i = 1; i < SIZE_SQUARE; i++)
@@ -74,27 +97,5 @@ public class AlgoSample extends Algo
 			}
 		}
 		return (res.toArray(new LineWall[0]));
-	}
-
-	private RectMaze buildOneSquareLabyrinthe(boolean hasStartCase, boolean hasEndCase, boolean door)
-	{
-		RectMaze rl;
-
-		Case[]     listSpecialeCases;
-		LineWall[] listWalls;
-
-		listSpecialeCases = this.buildCases(hasStartCase, hasEndCase);
-		listWalls         = this.buildWalls(door);
-		rl = new RectMaze(listSpecialeCases, listWalls, SIZE_SQUARE, SIZE_SQUARE);
-		return (rl);
-	}
-
-	public RectMazeShift[] buildSubMaze()
-	{
-		RectMazeShift[] res = new RectMazeShift[2];
-
-		res[0] = new RectMazeShift(buildOneSquareLabyrinthe(false, false, true), 0, 0);
-		res[1] = new RectMazeShift(buildOneSquareLabyrinthe(true, true, false), SIZE_SQUARE, SIZE_SQUARE / 2);;
-		return (res);
 	}
 }

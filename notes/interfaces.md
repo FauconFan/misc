@@ -17,9 +17,7 @@
 * boolean movePlayer(int dx, int dy)
 
 ### Gen Maze
-* void algo.build();
-* LineWall[] algo.getWalls();
-* Case[] algo.getSpecialCase();
+* Change a lot
 
 ### RectLabyrinthe
 #### Fonctions

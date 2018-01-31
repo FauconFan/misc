@@ -1,6 +1,7 @@
 package src.model;
 
 import java.io.Serializable;
+import java.lang.Cloneable;
 import src.model.board.*;
 import src.utils.StringManipulation;
 
@@ -23,6 +24,37 @@ public class ContentMaze implements Serializable
 	public LineWall[] getLineWalls()
 	{
 		return (this.linewalls);
+	}
+
+	public void translate(int dx, int dy)
+	{
+		for (Case c : this.specialCases)
+		{
+			c.translate(dx, dy);
+		}
+		for (LineWall lw : this.linewalls)
+		{
+			lw.translate(dx, dy);
+		}
+	}
+
+	public ContentMaze clone()
+	{
+		Case[]     sccp;
+		LineWall[] wcp;
+
+		sccp = new Case[this.specialCases.length];
+		wcp  = new LineWall[this.linewalls.length];
+
+		for (int i = 0; i < this.specialCases.length; i++)
+		{
+			sccp[i] = this.specialCases[i].clone();
+		}
+		for (int i = 0; i < this.linewalls.length; i++)
+		{
+			wcp[i] = this.linewalls[i].clone();
+		}
+		return (new ContentMaze(sccp, wcp));
 	}
 
 	/**
