@@ -19,13 +19,8 @@ public class Main extends Application
 	public void start(Stage primaryStage)
 	{
 		Controller c = new Controller();
-		View       v = new View(c);
+		View       v = new View(primaryStage, c);
 
 		c.initView(v);
-
-		primaryStage.setTitle("Laby");
-
-		primaryStage.setScene(v.getScene());
-		primaryStage.show();
 	}
 }

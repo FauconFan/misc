@@ -5,6 +5,7 @@ import src.model.gen.AlgoSample;
 import src.model.MainMaze;
 import src.view.View;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,10 +36,12 @@ public class Controller
 
 	/**
 	 * Permet de charger un MainMaze (NE permet de charger pour l'instant qu'un objet sérialisé)
-	 * @param path Le chemin du fichier
+	 * @param file Le fichier
 	 */
-	public void loadMaze(String path)
+	public void loadMaze(File file)
 	{
+		String path = file.getPath();
+
 		if (path.length() > EXTENSION.length() && path.substring(path.length() - EXTENSION.length(), path.length()).equals(EXTENSION))
 		{
 			ObjectInputStream ois = null;

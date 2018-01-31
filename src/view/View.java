@@ -10,7 +10,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
+
+import java.io.File;
 
 import src.controller.Controller;
 
@@ -21,12 +25,19 @@ public class View
 	private Parent view;
 	private Parent prec;
 	private Scene scene;
+	private Stage stage;
 
-	public View(Controller con)
+	public View(Stage stage, Controller con)
 	{
 		this.con   = con;
 		this.view  = new MenuStart();
 		this.scene = new Scene((Parent)view);
+		this.stage = stage;
+
+		stage.setTitle("Laby");
+
+		stage.setScene(scene);
+		stage.show();
 	}
 
 	public Scene getScene()
@@ -43,10 +54,10 @@ public class View
 			Label label = new Label("Hello the Maze");
 			getChildren().add(label);
 
-			Button   buttonCreate = addButton("Create");
-			Button   buttonLoad   = addButton("Load");
-			Button   buttonExit   = addButton("Exit");
-			Button[] buttons      = { buttonLoad, buttonCreate, buttonExit };
+			final Button   buttonCreate = addButton("Create");
+			final Button   buttonLoad   = addButton("Load");
+			final Button   buttonExit   = addButton("Exit");
+			final Button[] buttons      = { buttonLoad, buttonCreate, buttonExit };
 			for (Button b: buttons)
 			{
 				b.setPrefWidth(primaryScreenBounds.getWidth() / 1.5);
@@ -54,8 +65,11 @@ public class View
 			}
 
 			buttonLoad.setOnAction(event->{
-				//TODO POPUP to ask a path
-				con.loadMaze("");
+				File file = new FileChooser().showOpenDialog(stage);
+				if (file != null)
+				{
+					con.loadMaze(file);
+				}
 			});
 
 			buttonCreate.setOnAction(event->{
@@ -74,13 +88,13 @@ public class View
 		{
 			super();
 
-			Button buttonPrevious = addButton("Previous");
+			final Button buttonPrevious = addButton("Previous");
 
-			Slider slidery = new Slider(0, 100, 50);
-			Slider sliderx = new Slider(0, 100, 50);
+			final Slider slidery = new Slider(0, 100, 50);
+			final Slider sliderx = new Slider(0, 100, 50);
 
-			Slider[] sliders = { slidery, sliderx };
-			String[] names   = { "Y axis", "X axis" };
+			final Slider[] sliders = { slidery, sliderx };
+			final String[] names   = { "Y axis", "X axis" };
 			for (int i = 0; i < sliders.length; i++)
 			{
 				Label label = new Label(names[i]);
