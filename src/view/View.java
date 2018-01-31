@@ -17,7 +17,8 @@ import src.controller.Controller;
 public class View
 {
 	private final Controller con;
-	private VBox view;
+	private Parent view;
+	private Parent prec;
 	private Scene scene;
 
 	public View(Controller con)
@@ -58,9 +59,7 @@ public class View
 			});
 
 			buttonCreate.setOnAction(event->{
-				VBox menuc = new MenuCreation();
-				scene.setRoot((Parent)menuc);
-				view = menuc;
+				changeView((Parent) new MenuCreation());
 			});
 
 			buttonExit.setOnAction(event->{
@@ -78,11 +77,40 @@ public class View
 			Button buttonPrevious = new Button("Previous");
 			getChildren().add(buttonPrevious);
 
+			Button buttonCreate = new Button("Create");
+			getChildren().add(buttonCreate);
+
 			buttonPrevious.setOnAction(event->{
-				VBox menus = new MenuStart();
-				scene.setRoot((Parent)menus);
-				view = menus;
+				view = prec;
+				changeView(view);
+			});
+
+			buttonCreate.setOnAction(event->{
+				//TODO
+				changeView(null);
 			});
 		}
+	}
+
+	public class MenuPause extends Menu
+	{
+		public MenuPause()
+		{
+			Button buttonUnPause = new Button("UnPause");
+
+			getChildren().add(buttonUnPause);
+
+			buttonUnPause.setOnAction(event->{
+				view = prec;
+				changeView(view);
+			});
+		}
+	}
+
+	private void changeView(Parent m)
+	{
+		prec = view;
+		view = m;
+		scene.setRoot(view);
 	}
 }
