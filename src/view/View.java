@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
 import javafx.stage.Screen;
+import javafx.scene.Scene;
 
 import src.controller.Controller;
 
@@ -16,17 +17,18 @@ public class View
 {
 	private final Controller con;
 	private VBox view;
+  private Scene scene;
 
 	public View(Controller con)
 	{
 		this.con  = con;
 		this.view = new Menu(con);
-	}
+	  this.scene = new Scene((Parent) view);
+  }
 
-	public Parent asParent()
-	{
-		return (this.view);
-	}
+	public Scene getScene(){
+    return this.scene;
+  }
 
 	public class Menu extends VBox
 	{
@@ -35,7 +37,7 @@ public class View
 		{
 			super();
 
-			this.con = con;
+      this.con = con;
 
 			setPadding(new Insets(10));
 			setSpacing(15);
@@ -60,9 +62,9 @@ public class View
 			});
 
 			buttonCreate.setOnAction(event->{
-				view = new MenuCreation();
-				view.requestLayout();
-				//TODO
+				VBox menuc = new MenuCreation();
+				scene.setRoot((Parent) menuc);
+        view=menuc;
 			});
 
 
