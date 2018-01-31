@@ -71,5 +71,18 @@ public class View
 
 	public class MenuCreation extends Menu
 	{
+		public MenuCreation()
+		{
+			super();
+
+			Button buttonPrevious = new Button("Previous");
+			getChildren().add(buttonPrevious);
+
+			buttonPrevious.setOnAction(event->{
+				VBox menus = new MenuStart();
+				scene.setRoot((Parent)menus);
+				view = menus;
+			});
+		}
 	}
 }
