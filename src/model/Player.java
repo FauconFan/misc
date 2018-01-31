@@ -23,4 +23,44 @@ public class Player implements Serializable
 		this.horizontalAngle = horizontalAngle;
 		this.verticalAngle   = verticalAngle;
 	}
+
+	public float getHitBoxWidth()
+	{
+		return (this.hitBoxWidth);
+	}
+
+	public float getHitBoxLength()
+	{
+		return (this.hitBoxLength);
+	}
+
+	public float getPosX()
+	{
+		return (this.posX);
+	}
+
+	public float getPosY()
+	{
+		return (this.posY);
+	}
+
+	public float getHorizontalAngle()
+	{
+		return (this.horizontalAngle);
+	}
+
+	public float getVerticalAngle()
+	{
+		return (this.verticalAngle);
+	}
+
+	public void setPosX(float x)
+	{
+		posX = x;
+	}
+
+	public void setPosY(float y)
+	{
+		posY = y;
+	}
 }

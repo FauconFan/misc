@@ -17,7 +17,6 @@ public class MainMaze implements Serializable
 	private Player p;
 	private int porteeVue;
 
-
 	public MainMaze(ContentMaze m, String name, Player p, int porteeVue)
 	{
 		this.m         = m;
@@ -49,7 +48,7 @@ public class MainMaze implements Serializable
 	 * @param dy Le deplacement vertical du joueur.
 	 * @return true si le joueur peut se déplacer.
 	 */
-	private boolean canMove(int dx, int dy)
+	private boolean canMove(float dx, float dy)
 	{
 		return (false);
 	}
@@ -60,8 +59,14 @@ public class MainMaze implements Serializable
 	 * @param dy Le deplacement vertical du joueur.
 	 * @return true si le joueur a pu se déplacer
 	 */
-	public boolean movePlayer(int dx, int dy)
+	public boolean movePlayer(float dx, float dy)
 	{
+		if (canMove(dx, dy))
+		{
+			p.setPosX(p.getPosX() + dx);
+			p.setPosY(p.getPosY() + dy);
+			return (true);
+		}
 		return (false);
 	}
 
