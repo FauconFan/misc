@@ -1,5 +1,6 @@
 package src.view;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -38,14 +39,17 @@ public class View
 			super();
 
 			Label label = new Label("Hello the Maze");
+			getChildren().add(label);
 
 			Button   buttonCreate = new Button("Create");
 			Button   buttonLoad   = new Button("Load");
-			Button[] buttons      = { buttonLoad, buttonCreate };
+			Button   buttonExit   = new Button("Exit");
+			Button[] buttons      = { buttonLoad, buttonCreate, buttonExit };
 			for (Button b: buttons)
 			{
 				b.setPrefWidth(primaryScreenBounds.getWidth() / 1.5);
-				b.setPrefHeight(primaryScreenBounds.getHeight() / 10);
+				b.setPrefHeight(primaryScreenBounds.getHeight() / 15);
+				getChildren().add(b);
 			}
 
 			buttonLoad.setOnAction(event->{
@@ -59,10 +63,9 @@ public class View
 				view = menuc;
 			});
 
-
-			getChildren().add(label);
-			getChildren().add(buttonLoad);
-			getChildren().add(buttonCreate);
+			buttonExit.setOnAction(event->{
+				Platform.exit();
+			});
 		}
 	}
 
