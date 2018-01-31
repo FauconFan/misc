@@ -23,12 +23,26 @@ public class AlgoSample extends Algo
 
 		RectMaze rm1 = buildOneSquareLabyrinthe(false, false);
 		RectMaze rm2 = buildOneSquareLabyrinthe(true, true);
+		RectMaze rm3 = buildOneSquareLabyrinthe(false, false);
+		RectMaze rm4 = buildOneSquareLabyrinthe(false, false);
+		RectMaze rm5 = buildOneSquareLabyrinthe(false, false);
+		RectMaze rm6 = buildOneSquareLabyrinthe(false, false);
 
 		RectMazeShift rms1 = new RectMazeShift(rm1, 0, 0);
 		RectMazeShift rms2 = new RectMazeShift(rm2, SIZE_SQUARE, SIZE_SQUARE / 2);
+		RectMazeShift rms3 = new RectMazeShift(rm3, 0, SIZE_SQUARE);
+		RectMazeShift rms4 = new RectMazeShift(rm4, -SIZE_SQUARE, 0);
+		RectMazeShift rms5 = new RectMazeShift(rm5, -SIZE_SQUARE, SIZE_SQUARE);
+		RectMazeShift rms6 = new RectMazeShift(rm6, SIZE_SQUARE * 3 / 2, -SIZE_SQUARE / 2);
 
 		this.cmfactory.addContentMazeShift(rms1);
 		this.cmfactory.addContentMazeShift(rms2);
+		this.cmfactory.addContentMazeShift(rms3);
+		this.cmfactory.addContentMazeShift(rms4);
+		this.cmfactory.addContentMazeShift(rms5);
+		this.cmfactory.addContentMazeShift(rms6);
+
+		this.cmfactory.normalize();
 		this.cm = new ContentMaze(this.cmfactory.getFinalSpecialCases(), this.cmfactory.getFinalLineWall());
 	}
 

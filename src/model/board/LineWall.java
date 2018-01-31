@@ -3,6 +3,8 @@ package src.model.board;
 import java.io.Serializable;
 import java.lang.Cloneable;
 
+import java.util.ArrayList;
+
 /**
  * LineWall est la classe représentant un mur entre deux points.
  * <br>

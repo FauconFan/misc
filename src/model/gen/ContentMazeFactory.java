@@ -47,21 +47,91 @@ public class ContentMazeFactory
 		}
 	}
 
-	public void test()
-	{
-		for (Map.Entry <Integer, ArrayList <LineWall> > entry : this.contentY.entrySet())
-		{
-			System.out.println(entry.getKey());
-			for (LineWall lw : entry.getValue())
-			{
-				System.out.println(lw);
-			}
-		}
-	}
-
 	public void addSpecialCase(Case c)
 	{
 		this.contentSpecialCases.add(c);
+	}
+
+	public void normalize()
+	{
+		normalizeEachDimension(this.contentX);
+		normalizeEachDimension(this.contentY);
+	}
+
+	private void normalizeEachDimension(HashMap <Integer, ArrayList <LineWall> > content)
+	{
+		for (Map.Entry <Integer, ArrayList <LineWall> > entry : content.entrySet())
+		{
+			ArrayList <LineWall> normalized = this.normalizeList(entry.getValue());
+			content.put(entry.getKey(), normalized);
+		}
+	}
+
+	public ArrayList <LineWall> normalizeList(ArrayList <LineWall> list)
+	{
+		ArrayList <LineWall> res = new ArrayList <>();
+		boolean modeX;
+
+		if (list.size() == 0)
+		{
+			return (res);
+		}
+		modeX = (list.get(0).getX1() == list.get(0).getX2());
+		while (list.size() != 0)
+		{
+			LineWall actu;
+			int      maxActu;
+			int      minActu;
+			boolean  isFinished;
+
+			actu = list.get(0);
+			list.remove(0);
+			maxActu    = ((modeX) ? Math.max(actu.getY1(), actu.getY2()) : Math.max(actu.getX1(), actu.getX2()));
+			minActu    = ((modeX) ? Math.min(actu.getY1(), actu.getY2()) : Math.min(actu.getX1(), actu.getX2()));
+			isFinished = false;
+			while (isFinished == false)
+			{
+				isFinished = true;
+				for (int i = 0; i < list.size(); i++)
+				{
+					LineWall tested;
+					int      maxTested;
+					int      minTested;
+
+					tested    = list.get(i);
+					maxTested = ((modeX) ? Math.max(tested.getY1(), tested.getY2()) : Math.max(tested.getX1(), tested.getX2()));
+					minTested = ((modeX) ? Math.min(tested.getY1(), tested.getY2()) : Math.min(tested.getX1(), tested.getX2()));
+					if ((maxTested >= minActu && maxTested <= maxActu) || (minTested >= minActu && minTested <= maxActu))
+					{
+						isFinished = false;
+						LineWall fusion;
+						if (modeX)
+						{
+							fusion = new LineWall(
+								actu.getX1(),
+								Math.min(minTested, minActu),
+								actu.getX2(),
+								Math.max(maxTested, maxActu),
+								Math.max(actu.getEpaisseur(), tested.getEpaisseur()));
+						}
+						else
+						{
+							fusion = new LineWall(
+								Math.min(minTested, minActu),
+								actu.getY1(),
+								Math.max(maxTested, maxActu),
+								actu.getY2(),
+								Math.max(actu.getEpaisseur(), tested.getEpaisseur()));
+						}
+						actu = fusion;
+						list.remove(i);
+						i--;
+					}
+				}
+			}
+			res.add(actu);
+		}
+		return (res);
 	}
 
 	public void addContentMazeShift(RectMazeShift cms)
