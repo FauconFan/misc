@@ -32,6 +32,5 @@ public abstract class Algo
 
 		al = new AlgoSample();
 		ml = new MainMaze(al, 0);
-		System.out.print(ml);
 	}
 }

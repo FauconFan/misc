@@ -3,6 +3,8 @@ package src.model.gen;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import src.model.board.Case;
 import src.model.board.LineWall;
 import src.model.ContentMaze;
@@ -33,15 +35,27 @@ public class ContentMazeFactory
 		}
 		else if (lw.getY1() == lw.getY2())
 		{
-			if (contentX.containsKey(lw.getY1()) == false)
+			if (contentY.containsKey(lw.getY1()) == false)
 			{
-				this.contentX.put(lw.getY1(), new ArrayList <LineWall>());
+				this.contentY.put(lw.getY1(), new ArrayList <LineWall>());
 			}
-			this.contentX.get(lw.getY1()).add(lw);
+			this.contentY.get(lw.getY1()).add(lw);
 		}
 		else
 		{
 			throw new RuntimeException("We suppose that we have only horizontal or vertical walls");
+		}
+	}
+
+	public void test()
+	{
+		for (Map.Entry <Integer, ArrayList <LineWall> > entry : this.contentY.entrySet())
+		{
+			System.out.println(entry.getKey());
+			for (LineWall lw : entry.getValue())
+			{
+				System.out.println(lw);
+			}
 		}
 	}
 
