@@ -25,8 +25,7 @@ public class Main extends Application
 
 		primaryStage.setTitle("Laby");
 
-		Scene scene = new Scene(v.asParent());
-		primaryStage.setScene(scene);
+		primaryStage.setScene(v.getScene());
 		primaryStage.show();
 	}
 }
