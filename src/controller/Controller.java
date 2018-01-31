@@ -17,7 +17,7 @@ public class Controller
 	private MainMaze maze;
 	private View view;
 
-	public static String EXTENSION = ".maze";
+	public static String EXTENSION = ".s.maze";
 
 	public void initView(View v)
 	{
@@ -49,13 +49,13 @@ public class Controller
 				ois       = new ObjectInputStream(new FileInputStream(path));
 				this.maze = (MainMaze)ois.readObject();
 			} catch (final ClassNotFoundException e) {
-				e.printStackTrace();
+				this.view.setMsg("ERROR: " + e);
 			} catch (final java.io.InvalidClassException e) {
 				e.printStackTrace();
 				//TODO DOSOMETHING
 			}  catch (final java.io.IOException e) {
 				e.printStackTrace();
-				//TODO DOSOMETHING
+				this.view.setMsg("ERROR: IO Exception");
 			}
 
 			finally {
@@ -68,6 +68,10 @@ public class Controller
 					ex.printStackTrace();
 				}
 			}
+		}
+		else
+		{
+			this.view.setMsg("ERROR: Incorrect extension (files must be on .s.maze or .h.maze)");
 		}
 	}
 

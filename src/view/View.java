@@ -10,6 +10,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -45,6 +46,14 @@ public class View
 		return (this.scene);
 	}
 
+	/**
+	 * Set the message box text
+	 */
+	public void setMsg(String str)
+	{
+		((Menu)this.view).setMsg(str);
+	}
+
 	public class MenuStart extends Menu
 	{
 		public MenuStart()
@@ -52,6 +61,7 @@ public class View
 			super();
 
 			Label label = new Label("Hello the Maze");
+			label.setFont(new Font("Arial", 35));
 			getChildren().add(label);
 
 			final Button   buttonCreate = addButton("Create");
@@ -79,6 +89,8 @@ public class View
 			buttonExit.setOnAction(event->{
 				Platform.exit();
 			});
+
+			putMsg();
 		}
 	}
 
@@ -118,6 +130,8 @@ public class View
 				//TODO
 				//changeView(null);
 			});
+
+			putMsg();
 		}
 	}
 
@@ -136,6 +150,8 @@ public class View
 			buttonReturn.setOnAction(event->{
 				changeView(new MenuStart());
 			});
+
+			putMsg();
 		}
 	}
 
