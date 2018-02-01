@@ -27,10 +27,7 @@ public class MainMaze implements Serializable
 
 	public MainMaze(Algo algo, int porteeVueP)
 	{
-		this.m         = algo.getContentMaze();
-		this.name      = "";
-		this.p         = null;
-		this.porteeVue = porteeVueP;
+		this(algo.getContentMaze(), "", null, porteeVueP);
 	}
 
 	/**
