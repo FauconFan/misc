@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 
-public class Menu extends VBox
+public class Menu extends VBox implements Msg
 {
 	protected Rectangle2D primaryScreenBounds;
 	protected Label msg;

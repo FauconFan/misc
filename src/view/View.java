@@ -48,10 +48,15 @@ public class View
 
 	/**
 	 * Set the message box text
+	 * @param str The string
 	 */
 	public void setMsg(String str)
 	{
-		((Menu)this.view).setMsg(str);
+		if (this.view instanceof Msg)
+		{
+			((Msg)this.view).setMsg(str);
+			System.out.println("cc");
+		}
 	}
 
 	public class MenuStart extends Menu
@@ -122,7 +127,7 @@ public class View
 			getChildren().add(buttonCreate);
 
 			buttonPrevious.setOnAction(event->{
-				view = prec;
+				view = new MenuStart();
 				changeView(view);
 			});
 
