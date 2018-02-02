@@ -133,7 +133,8 @@ public class View
 
 			buttonCreate.setOnAction(event->{
 				//TODO
-				//changeView(null);
+				scene = new ViewIngame().getScene();
+				stage.setScene(scene);
 			});
 
 			putMsg();

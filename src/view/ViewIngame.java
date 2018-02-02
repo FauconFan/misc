@@ -3,6 +3,7 @@ package src.view;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.Parent;
@@ -16,16 +17,19 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 
-
-public class ViewIngame extends Scene
+public class ViewIngame
 {
 	private PerspectiveCamera cam;
+	private Scene scene;
 
 	public ViewIngame()
 	{
-		super(createContent());
-
-		this.addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
+		try{
+			this.scene = new Scene(createContent());
+		}
+		catch (Exception e) {
+		}
+		this.scene.addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			if (key.getCode() == KeyCode.LEFT)
 			{
 				System.out.println("You pressed left");
@@ -43,6 +47,11 @@ public class ViewIngame extends Scene
 				System.out.println("You pressed backward");
 			}
 		});
+	}
+
+	public Scene getScene()
+	{
+		return (this.scene);
 	}
 
 	public Parent createContent() throws Exception
