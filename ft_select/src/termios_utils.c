@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   termios_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 16:28:19 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/01/13 18:36:05 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/01/16 12:03:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int				ft_printnbr(int c)
 	return (write(STDERR_FILENO, &c, 1));
 }
 
-void			setup_termios()
+void			setup_termios(void)
 {
 	check_conditions();
 	tcgetattr(STDERR_FILENO, &g_select->ios_old);
@@ -53,8 +53,8 @@ void			setup_termios()
 	tputs(tgetstr("vi", NULL), 1, ft_printnbr);
 }
 
-void			reset_termios()
-{	
+void			reset_termios(void)
+{
 	tcsetattr(STDERR_FILENO, TCSANOW, &g_select->ios_old);
 	tputs(tgetstr("ve", NULL), 1, ft_printnbr);
 	tputs(tgetstr("te", NULL), 1, ft_printnbr);
