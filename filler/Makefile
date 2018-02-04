@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/03 11:13:57 by fauconfan         #+#    #+#              #
-#    Updated: 2018/02/03 18:49:13 by fauconfan        ###   ########.fr        #
+#    Updated: 2018/02/04 19:33:47 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC = main.c \
 		fl_playerutils.c \
 		fl_nextmove.c \
 		fl_algo_findbestmove.c \
+		fl_adapt_strategy.c \
 		fl_math.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC))

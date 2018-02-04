@@ -3,22 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   fl_pieceutils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 16:18:16 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/03 16:58:40 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/04 18:24:17 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void		load_piece(t_fillerenv *fl_env, size_t size_x, size_t size_y)
+void		load_piece(t_fillerenv *fl_env)
+{
+	char	*line;
+	char	**splited;
+
+	get_next_line(0, &line, fl_env->env_gnl);
+	splited = ft_strsplit(line, ' ');
+	free_piece(fl_env);
+	load_new_piece(fl_env, ft_atoi(splited[2]), ft_atoi(splited[1]));
+	free(line);
+	free(splited[0]);
+	free(splited[1]);
+	free(splited[2]);
+	free(splited);
+}
+
+void		load_new_piece(t_fillerenv *fl_env, size_t size_x, size_t size_y)
 {
 	t_piece		*p;
 	char		**data;
 	size_t		index;
 
-	free_piece(fl_env);
 	ft_memcheck((p = (t_piece *)malloc(sizeof(t_piece))));
 	ft_memcheck((data = (char **)malloc(sizeof(char *) * (size_y))));
 	index = 0;
@@ -61,7 +76,7 @@ void		print_piece(t_fillerenv *fl_env)
 		index = 0;
 		while (index < fl_env->piece->size_y)
 		{
-			ft_printf("%s\n", fl_env->piece->content[index]);
+			ft_dprintf(2, "%s\n", fl_env->piece->content[index]);
 			index++;
 		}
 	}

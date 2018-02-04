@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 11:19:42 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/03 19:37:45 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/04 19:37:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,21 @@
 int			main(void)
 {
 	t_fillerenv		*fl_env;
+	t_nextmove		*move;
 
 	fl_env = init_env();
-	load_new_map(fl_env, 17, 15);
-	load_piece(fl_env, 2, 2);
-	print_map(fl_env);
-	print_piece(fl_env);
-
-	t_nextmove	*test;
-
-	test = find_nextmove(fl_env, PLAYER_O);
-	describe(test);
-
-
+	load_player(fl_env);
+	while (1)
+	{
+		load_map(fl_env);
+		load_piece(fl_env);
+		adapt_strategy(fl_env);
+		move = find_nextmove(fl_env);
+		describe(move);
+		if (move == NULL)
+			break ;
+		free(move);
+	}
 	free_env(&fl_env);
-	return(0);
+	return (0);
 }

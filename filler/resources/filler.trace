@@ -1,6 +1,5 @@
-seed = 4288
-O: error on input
-X: error on input
+seed = 7823
+O: timedout
 players/carli.filler won
 Score:
-0AGAINST0
+149AGAINST1789

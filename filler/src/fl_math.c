@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fl_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:55:43 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/03 18:37:21 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/04 18:23:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ double		my_sqrt(double n)
 	double res;
 
 	res = n;
-	while ((res * res >= n + PRECISION_SQRT) || (res * res <= n - PRECISION_SQRT))
+	while ((res * res >= n + PRECISION_SQRT) ||
+		(res * res <= n - PRECISION_SQRT))
 	{
 		res = (res + n / res) / 2;
 	}

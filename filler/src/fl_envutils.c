@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fl_envutils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 11:43:05 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/03 16:46:36 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/04 19:21:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_fillerenv		*init_env(void)
 	res->piece = NULL;
 	res->ai_id = 0;
 	res->env_gnl = init_env_gnl();
+	res->mode = NOT_SET;
 	return (res);
 }
 
