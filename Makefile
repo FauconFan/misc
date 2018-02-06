@@ -40,5 +40,5 @@ doc:
 re: fclean all
 
 dep: 
-	wget http://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar -o $(DEP)
+	wget http://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar -P deps/
 
