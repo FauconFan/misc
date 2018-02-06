@@ -67,6 +67,38 @@ public class LineWall implements Serializable, Cloneable
 		this.y2 = this.y2 + dy;
 	}
 
+	public boolean isHorizontal()
+	{
+		return (y1 == y2);
+	}
+
+	public boolean pointInWall(int x, int y)
+	{
+		if (isHorizontal())
+		{
+			if (y != y1)
+			{
+				return (false);
+			}
+			else if ((x1 > x && x2 > x) || (x1 < x && x2 < x))
+			{
+				return (false);
+			}
+		}
+		else
+		{
+			if (x != x1)
+			{
+				return (false);
+			}
+			else if ((y1 > y && y2 > y) || (y1 < y && y2 < y))
+			{
+				return (false);
+			}
+		}
+		return (true);
+	}
+
 	public LineWall clone()
 	{
 		return (new LineWall(this.getX1(), this.getY1(), this.getX2(), this.getY2(), this.getEpaisseur()));
