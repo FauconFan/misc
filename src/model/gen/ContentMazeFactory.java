@@ -160,6 +160,12 @@ public class ContentMazeFactory
 		{
 			all.addAll((ArrayList <LineWall> )al);
 		}
+		Collection <ArrayList <LineWall> > y = this.contentY.values();
+		Object[] listY = y.toArray();
+		for (Object al : listY)
+		{
+			all.addAll((ArrayList <LineWall> )al);
+		}
 
 		return (all.toArray(new LineWall[0]));
 	}
