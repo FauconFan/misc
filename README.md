@@ -11,3 +11,6 @@ cp scripts/pre-commit-hook .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit
 
 ```
+
+## GSON
+Penser à lancer au moins une fois `make dep` afin de télécharger la dépendance

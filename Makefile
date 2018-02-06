@@ -1,6 +1,8 @@
 NAME = laby3d
 BIN_FOLDER = bin/
 DOC_FOLDER = doc/
+DEP = "deps/gson-2.8.2.jar"
+DEPS_FOLDER = ".:"$(DEP)
 
 MAIN_PATH = "src/Main"
 MAIN_PATH_MANIFEST = "src.Main"
@@ -10,8 +12,9 @@ JAR = $(NAME).jar
 
 all :
 	@mkdir -p $(BIN_FOLDER)
-	@javac -d $(BIN_FOLDER) $(MAIN_PATH).java
+	@javac -cp $(DEPS_FOLDER) -d $(BIN_FOLDER) $(MAIN_PATH).java
 	@echo "Main-Class: "$(MAIN_PATH_MANIFEST) > $(MANIFEST)
+	@echo "Class-Path: "$(DEP) >> $(MANIFEST)
 	@jar -cvmf $(MANIFEST) $(JAR) -C $(BIN_FOLDER) ./
 
 testgen :
@@ -35,3 +38,7 @@ doc:
 	javadoc -subpackages src -charset utf-8 -d $(DOC_FOLDER)
 
 re: fclean all
+
+dep: 
+	wget http://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar -o $(DEP)
+

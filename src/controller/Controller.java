@@ -12,12 +12,29 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import com.google.gson.Gson;
+
 public class Controller
 {
 	private MainMaze maze;
 	private View view;
 
-	public static String EXTENSION = ".s.maze";
+	final static String EXTENSION = "maze";
+	public static enum SavesFormat
+	{
+		serialized(), json();
+
+		public static String prettyPrint()
+		{
+			String res="";
+
+			for (SavesFormat s: values())
+			{
+				res += s.name() + EXTENSION;
+			}
+			return (res);
+		}
+	}
 
 	public void initView(View v)
 	{
@@ -35,24 +52,32 @@ public class Controller
 	}
 
 	/**
-	 * Permet de charger un MainMaze (NE permet de charger pour l'instant qu'un objet sérialisé)
+	 * Permet de charger un MainMaze
 	 * @param file Le fichier
 	 */
 	public void loadMaze(File file)
 	{
-		String path = file.getPath();
+		String      path   = file.getPath();
+		SavesFormat format = checkExtension(path);
 
-		if (path.length() > EXTENSION.length() && path.substring(path.length() - EXTENSION.length(), path.length()).equals(EXTENSION))
+		if (format != null)
 		{
 			ObjectInputStream ois = null;
 			try{
-				ois       = new ObjectInputStream(new FileInputStream(path));
-				this.maze = (MainMaze)ois.readObject();
+				ois = new ObjectInputStream(new FileInputStream(path));
+				if (format == SavesFormat.serialized)
+				{
+					this.maze = (MainMaze)ois.readObject();
+				}
+				else
+				{
+					Gson gson = new Gson();
+					this.maze = gson.fromJson((String)ois.readObject(), MainMaze.class);
+				}
 			} catch (final ClassNotFoundException e) {
 				this.view.setMsg("ERROR: " + e);
 			} catch (final java.io.InvalidClassException e) {
 				e.printStackTrace();
-				//TODO DOSOMETHING
 			}  catch (final java.io.IOException e) {
 				e.printStackTrace();
 				this.view.setMsg("ERROR: IO Exception");
@@ -71,25 +96,35 @@ public class Controller
 		}
 		else
 		{
-			this.view.setMsg("ERROR: Incorrect extension (files must be on .s.maze or .h.maze)");
+			this.view.setMsg("ERROR: Incorrect extension (files must be on:\n" + SavesFormat.prettyPrint());
 		}
 	}
 
 	/**
-	 * Permet de sauvegarder un objet sérialisé
+	 * Permet de sauvegarder un objet sérialisé ou au format JSON
 	 * @param path Le chemin du fichier à sauvegader (l'extension sera ajoutée si elle n'est pas présente)
+	 * @param format Le format de sauvegarde
 	 */
-	public void saveMazeSerialized(String path)
+	public void saveMaze(String path, SavesFormat format)
 	{
 		ObjectOutputStream oos = null;
 
-		if (!(path.length() > EXTENSION.length() && path.substring(path.length() - EXTENSION.length(), path.length()).equals(EXTENSION)))
+		if (checkExtension(path) == null)
 		{
-			path += ".maze";
+			path += "." + format.name() + "." + EXTENSION;
 		}
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream(path));
-			oos.writeObject(this.maze);
+			switch (format)
+			{
+			case serialized:
+				oos.writeObject(this.maze);
+				break;
+
+			case json:
+				final Gson gson = new Gson();
+				oos.writeObject(gson.toJson(this.maze));
+			}
 			oos.flush();
 		} catch (final java.io.IOException e) {
 			e.printStackTrace();
@@ -104,5 +139,22 @@ public class Controller
 				ex.printStackTrace();
 			}
 		}
+	}
+
+	/** Get the extension format
+	 * @param str The string
+	 * @return The detected format or null
+	 */
+	private SavesFormat checkExtension(String str)
+	{
+		for (SavesFormat s: SavesFormat.values())
+		{
+			String ext = "." + s.name() + "." + EXTENSION;
+			if (str.length() > ext.length() && str.substring(str.length() - ext.length(), str.length()).equals(ext))
+			{
+				return (s);
+			}
+		}
+		return (null);
 	}
 }

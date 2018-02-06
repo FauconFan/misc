@@ -1,6 +1,7 @@
 package src;
 
 import src.controller.Controller;
+import src.model.gen.AlgoSample;
 import src.model.MainMaze;
 import src.view.View;
 
@@ -21,6 +22,10 @@ public class Main extends Application
 		Controller c = new Controller();
 		View       v = new View(primaryStage, c);
 
-		c.initView(v);
+		c.createMaze(new AlgoSample(), 30);
+		c.saveMaze("./ser", Controller.SavesFormat.json);
+		//c.loadMaze();
+
+		//c.initView(v);
 	}
 }
