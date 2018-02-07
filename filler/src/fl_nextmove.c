@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fl_nextmove.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:20:04 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/04 20:00:42 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/02/07 15:08:31 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,22 @@
 
 static void		update_distance(t_fillerenv *fl_env, int x, int y, double *res)
 {
-	size_t		py;
-	size_t		px;
-	char		actu;
+	t_list		*actu;
+	t_point		*pt;
 	double		tmp;
 
-	py = 0;
-	while (++py < fl_env->size_y)
+	actu = fl_env->list_oppositecases;
+	while (actu != NULL)
 	{
-		px = 0;
-		while (++px < fl_env->size_x)
-		{
-			actu = fl_env->map[py][px];
-			if (actu != EMPTY_CASE && is_occupied_by_this_player(actu,
-						inverse_player(fl_env->ai_id)))
-			{
-				if (fl_env->mode == NOT_SET || fl_env->mode == DEFAULT_MODE)
-					tmp = norme(px, py, x, y);
-				else
-					tmp = norme(x, y, x,
-						(fl_env->mode == HIGHWAY_TO_HELL) * fl_env->size_y);
-				if (tmp < *res)
-					*res = tmp;
-			}
-		}
+		pt = (t_point *)actu->content;
+		if (fl_env->mode == NOT_SET || fl_env->mode == DEFAULT_MODE)
+			tmp = norme(pt->x, pt->y, x, y);
+		else
+			tmp = norme(x, y, x,
+				(fl_env->mode == HIGHWAY_TO_HELL) * fl_env->size_y);
+		if (tmp < *res)
+			*res = tmp;
+		actu = actu->next;
 	}
 }
 
@@ -75,7 +67,7 @@ static t_bool	is_valid_move(t_fillerenv *fl_env, int dx, int dy,
 			if (fl_env->piece->content[y_actu - dy][x_actu - dx] != EMPTY_CASE)
 			{
 				if (handle_each_cara(fl_env->map[y_actu][x_actu],
-							fl_env->ai_id, &buffer_player) == FALSE)
+							fl_env->is_first_player, &buffer_player) == FALSE)
 					return (FALSE);
 				update_distance(fl_env, x_actu, y_actu, score);
 			}
@@ -97,14 +89,4 @@ t_nextmove		*init_nextmove(t_fillerenv *fl_env, int dx, int dy)
 	next_move->dy = dy;
 	next_move->score = score;
 	return (next_move);
-}
-
-void			describe(t_nextmove *move)
-{
-	if (move == NULL)
-		ft_dprintf(1, "Empty move\n");
-	else
-	{
-		ft_dprintf(1, "%d %d\n", move->dy, move->dx);
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fl_adapt_strategy.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/04 19:22:05 by jpriou            #+#    #+#             */
-/*   Updated: 2018/02/04 20:00:29 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/02/07 13:57:30 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void		not_set(t_fillerenv *fl_env)
 			if (c != EMPTY_CASE)
 			{
 				c = ft_toupper(c);
-				if ((c == 'O' && fl_env->ai_id == PLAYER_O) ||
-					(c == 'X' && fl_env->ai_id == PLAYER_X))
+				if ((c == 'O' && fl_env->is_first_player) ||
+					(c == 'X' && fl_env->is_first_player == FALSE))
 					fl_env->mode = HIGHWAY_TO_HELL;
 				else
 					fl_env->mode = HIGHWAY_TO_SKY;
@@ -59,7 +59,7 @@ void			adapt_strategy(t_fillerenv *fl_env)
 			str = fl_env->map[fl_env->size_y - 1];
 		while (i < (int)fl_env->size_x)
 		{
-			if (is_occupied_by_this_player(str[i], fl_env->ai_id))
+			if (is_occupied_by_this_player(str[i], fl_env->is_first_player))
 			{
 				fl_env->mode = DEFAULT_MODE;
 				return ;

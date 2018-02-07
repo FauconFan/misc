@@ -3,16 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   fl_maputils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 16:29:59 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/04 18:24:05 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/02/07 15:37:53 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void		load_map(t_fillerenv *fl_env)
+static char		*interpret_line(char *line)
+{
+	char	*res;
+	size_t	len;
+	size_t	index;
+
+	line += 4;
+	len = ft_strlen(line);
+	res = ft_strnew(len);
+	index = 0;
+	while (index < len)
+	{
+		res[index] = EMPTY_CASE;
+		if (line[index] == O_MAJ_CASE || line[index] == O_MIN_CASE)
+			res[index] = O_CASE;
+		else if (line[index] == X_MAJ_CASE || line[index] == X_MIN_CASE)
+			res[index] = X_CASE;
+		index++;
+	}
+	return (res);
+}
+
+void			load_map(t_fillerenv *fl_env)
 {
 	char	*line;
 	char	**splited;
@@ -28,7 +50,7 @@ void		load_map(t_fillerenv *fl_env)
 	free(splited);
 }
 
-void		load_new_map(t_fillerenv *fl_env, size_t size_x, size_t size_y)
+void			load_new_map(t_fillerenv *fl_env, size_t size_x, size_t size_y)
 {
 	char			**res;
 	char			*tmp;
@@ -41,7 +63,7 @@ void		load_new_map(t_fillerenv *fl_env, size_t size_x, size_t size_y)
 	while (index < size_y)
 	{
 		get_next_line(0, &tmp, fl_env->env_gnl);
-		res[index] = ft_strdup(tmp + 4);
+		res[index] = interpret_line(tmp);
 		free(tmp);
 		index++;
 	}
@@ -50,7 +72,7 @@ void		load_new_map(t_fillerenv *fl_env, size_t size_x, size_t size_y)
 	fl_env->size_y = size_y;
 }
 
-void		free_map(t_fillerenv *fl_env)
+void			free_map(t_fillerenv *fl_env)
 {
 	size_t		index;
 
@@ -67,7 +89,7 @@ void		free_map(t_fillerenv *fl_env)
 	}
 }
 
-void		print_map(t_fillerenv *fl_env)
+void			print_map(t_fillerenv *fl_env)
 {
 	size_t	index;
 
