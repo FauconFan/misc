@@ -25,29 +25,37 @@ public class ViewIngame extends Scene
 		setFill(Color.GREY);
 		Group root = (Group)this.getRoot();
 
-		root.getChildren().add(new Box(300.00, 300.00, 300.00));
+		root.getChildren().add(new Box(100.00, 100.00, 100.00));
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
 
 		setCamera(camera);
 
+		int change = 50;
+
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			if (key.getCode() == KeyCode.Q)
 			{
+				camera.setTranslateX(camera.getTranslateX() - change);
+
 				System.out.println("You pressed left");
 			}
 			if (key.getCode() == KeyCode.D)
 			{
+				camera.setTranslateX(camera.getTranslateX() + change);
 				System.out.println("You pressed right");
 			}
 			if (key.getCode() == KeyCode.Z)
 			{
+				camera.setTranslateZ(camera.getTranslateZ() + change);
 				System.out.println("You pressed forward");
 			}
 			if (key.getCode() == KeyCode.S)
 			{
+				camera.setTranslateZ(camera.getTranslateZ() - change);
+
 				System.out.println("You pressed backward");
 			}
 		});
