@@ -9,6 +9,7 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
@@ -16,40 +17,30 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-
 public class ViewIngame extends Scene
 {
-	private Scene scene;
-
-
 	public ViewIngame()
 	{
-		//Creation et rajout de scene
-		Scene scene = new Scene(this);
+		super(new Group());
+		setFill(Color.GREY);
+		Group root = (Group)this.getRoot();
 
-		this.getChildren().add(scene);
-		this.scene = scene;
+		root.getChildren().add(new Box(300.00, 300.00, 300.00));
+
 		//Creation de la camera
-		final PerspectiveCamera camera = new PerspectiveCamera(True);
-		camera.getTransforms().addAll(
-			new Rotate(-20, Rotate.Y_AXIS),
-			new Rotate(-20, Rotate.X_AXIS),
-			new Translate(0, 0, -15));
-		this.getChildren().add(camera);
-		this.scene.setCamera(camera);
+		final PerspectiveCamera camera = new PerspectiveCamera(true);
+
+		setCamera(camera);
+
 		//Key controller
-		this.scene.addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
-			if (key.getCode() == KeyCode.LEFT)
+		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
+			if (key.getCode() == KeyCode.Q)
 			{
 				System.out.println("You pressed left");
-				rotateX.setAngle(rotateX.getAngle() - 10);
-				System.out.println("You turned left for 10");
 			}
 			if (key.getCode() == KeyCode.D)
 			{
 				System.out.println("You pressed right");
-				rotateX.setAngle(rotateX.getAngle() + 10);
-				System.out.println("You turned right for 10");
 			}
 			if (key.getCode() == KeyCode.Z)
 			{
@@ -74,10 +65,5 @@ public class ViewIngame extends Scene
 		 *
 		 *  }
 		 * })*/
-	}
-
-	public Scene getScene()
-	{
-		return (this.scene);
 	}
 }
