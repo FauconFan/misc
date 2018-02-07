@@ -30,31 +30,43 @@ public class ViewIngame extends Scene
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
 
+		// Défini la camera pour la scène
 		setCamera(camera);
 
-		int change = 50;
+		// On tourne par rapport à Y
+		camera.setRotationAxis(Rotate.Y_AXIS);
+
+		// constantes de déplacements
+		final int change = 5;
+		final int rot    = 1; // En degré
+
+		// Recule la caméra pour la voir l'objet initalement
+		camera.setTranslateZ(-150);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			if (key.getCode() == KeyCode.Q)
 			{
-				camera.setTranslateX(camera.getTranslateX() - change);
+				camera.setRotate(camera.getRotate() - rot);
 
 				System.out.println("You pressed left");
 			}
 			if (key.getCode() == KeyCode.D)
 			{
-				camera.setTranslateX(camera.getTranslateX() + change);
+				camera.setRotate(camera.getRotate() + rot);
 				System.out.println("You pressed right");
 			}
 			if (key.getCode() == KeyCode.Z)
 			{
-				camera.setTranslateZ(camera.getTranslateZ() + change);
+				camera.setTranslateZ(camera.getTranslateZ() + (Math.cos(Math.toRadians(camera.getRotate()))) * change);
+				camera.setTranslateX(camera.getTranslateX() + (Math.sin(Math.toRadians(camera.getRotate()))) * change);
+
 				System.out.println("You pressed forward");
 			}
 			if (key.getCode() == KeyCode.S)
 			{
-				camera.setTranslateZ(camera.getTranslateZ() - change);
+				camera.setTranslateZ(camera.getTranslateZ() - (Math.cos(Math.toRadians(camera.getRotate()))) * change);
+				camera.setTranslateX(camera.getTranslateX() - (Math.sin(Math.toRadians(camera.getRotate()))) * change);
 
 				System.out.println("You pressed backward");
 			}
