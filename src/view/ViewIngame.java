@@ -17,26 +17,39 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 
-public class ViewIngame
+public class ViewIngame extends Scene
 {
-	private PerspectiveCamera cam;
 	private Scene scene;
+
 
 	public ViewIngame()
 	{
-		try{
-			this.scene = new Scene(createContent());
-		}
-		catch (Exception e) {
-		}
+		//Creation et rajout de scene
+		Scene scene = new Scene(this);
+
+		this.getChildren().add(scene);
+		this.scene = scene;
+		//Creation de la camera
+		final PerspectiveCamera camera = new PerspectiveCamera(True);
+		camera.getTransforms().addAll(
+			new Rotate(-20, Rotate.Y_AXIS),
+			new Rotate(-20, Rotate.X_AXIS),
+			new Translate(0, 0, -15));
+		this.getChildren().add(camera);
+		this.scene.setCamera(camera);
+		//Key controller
 		this.scene.addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			if (key.getCode() == KeyCode.LEFT)
 			{
 				System.out.println("You pressed left");
+				rotateX.setAngle(rotateX.getAngle() - 10);
+				System.out.println("You turned left for 10");
 			}
 			if (key.getCode() == KeyCode.D)
 			{
 				System.out.println("You pressed right");
+				rotateX.setAngle(rotateX.getAngle() + 10);
+				System.out.println("You turned right for 10");
 			}
 			if (key.getCode() == KeyCode.Z)
 			{
@@ -47,33 +60,24 @@ public class ViewIngame
 				System.out.println("You pressed backward");
 			}
 		});
+
+		//Mouse controller
+
+		/*this.scene.setOnMouseDragged(new EventHadler<MouseEvent>() {
+		 *  public void hadle(MouseEvent mEv){
+		 *      mouseOldX = mousePosX;
+		 *      mouseOldY = mousePosY;
+		 *      mousePosX = mEv.getX();
+		 *      mousePosY = mEv.getY();
+		 *      mouseDeltaX = mousePosX - mouseOldX;
+		 *      mouseDeltaY = mousePosY - mouseOldY;
+		 *
+		 *  }
+		 * })*/
 	}
 
 	public Scene getScene()
 	{
 		return (this.scene);
-	}
-
-	public Parent createContent() throws Exception
-	{
-		// Create and position camera
-		PerspectiveCamera camera = new PerspectiveCamera(true);
-
-		camera.getTransforms().addAll(
-			new Rotate(-20, Rotate.Y_AXIS),
-			new Rotate(-20, Rotate.X_AXIS),
-			new Translate(0, 0, -15));
-
-		// Build the Scene Graph
-		Group root = new Group();
-		root.getChildren().add(camera);
-
-		// Use a SubScene
-		SubScene subScene = new SubScene(root, 300, 300);
-		subScene.setFill(Color.ALICEBLUE);
-		subScene.setCamera(camera);
-		Group group = new Group();
-		group.getChildren().add(subScene);
-		return (group);
 	}
 }
