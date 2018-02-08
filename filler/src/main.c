@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 11:19:42 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/07 15:40:56 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/08 08:29:23 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int				main(void)
 		if (move == NULL)
 			break ;
 		free(move);
-		break ;
 	}
 	free_env(&fl_env);
 	return (0);

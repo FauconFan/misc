@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:55:43 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/07 12:15:53 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/08 08:11:08 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ static double		distance_manhattan(int x1, int y1, int x2, int y2)
 {
 	int		res;
 
-	res = 0;
-	res += ft_abs(x1 - x2);
+	res = ft_abs(x1 - x2);
 	res += ft_abs(y1 - y2);
 	return ((double)res);
 }

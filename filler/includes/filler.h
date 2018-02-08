@@ -6,13 +6,15 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 11:19:51 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/07 15:37:33 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/08 08:02:16 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
+# include <string.h>
+# include <errno.h>
 # include "libft.h"
 
 # define EMPTY_CASE			'.'

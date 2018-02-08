@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 16:29:59 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/07 15:37:53 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/08 08:05:22 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static char		*interpret_line(char *line)
 	size_t	len;
 	size_t	index;
 
-	line += 4;
 	len = ft_strlen(line);
 	res = ft_strnew(len);
 	index = 0;
@@ -31,6 +30,8 @@ static char		*interpret_line(char *line)
 			res[index] = X_CASE;
 		index++;
 	}
+	if (res[index - 1] == '\n')
+		res[index - 1] = '\0';
 	return (res);
 }
 
@@ -55,18 +56,21 @@ void			load_new_map(t_fillerenv *fl_env, size_t size_x, size_t size_y)
 	char			**res;
 	char			*tmp;
 	size_t			index;
+	int				ret;
 
 	ft_memcheck((res = (char **)malloc(sizeof(char *) * (size_y))));
 	index = 0;
 	get_next_line(0, res, fl_env->env_gnl);
 	free(*res);
+	tmp = ft_strnew(size_x + 4 + 1);
 	while (index < size_y)
 	{
-		get_next_line(0, &tmp, fl_env->env_gnl);
-		res[index] = interpret_line(tmp);
-		free(tmp);
+		if ((ret = read(0, tmp, size_x + 4 + 1)) == -1)
+			ft_die(strerror(errno));
+		res[index] = interpret_line(tmp + 4);
 		index++;
 	}
+	free(tmp);
 	fl_env->map = res;
 	fl_env->size_x = size_x;
 	fl_env->size_y = size_y;
