@@ -38,6 +38,7 @@ public class ViewIngame extends Scene
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
+		camera.setFieldOfView(20);
 
 		// Défini la camera pour la scène
 		setCamera(camera);
@@ -50,7 +51,7 @@ public class ViewIngame extends Scene
 		final int rot    = 1; // En degré
 
 		// Recule la caméra pour la voir l'objet initalement
-		camera.setTranslateZ(-15);
+		camera.setTranslateZ(-10);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -98,23 +99,22 @@ public class ViewIngame extends Scene
 
 	private void renderMaze()
 	{
-		final int hauteur = 15;
+		final int hauteur = 60;
 		Group     walls   = new Group();
 
+		final int facteur = 5;
+
 		root.getChildren().add(walls);
-		LineWall[] lineWalls = maze.getLineWalls();
+		LineWall[] lineWalls = { new LineWall(0, 0, 0, 5, (float)(0.5)), new LineWall(0, 5, 5, 5, (float)(0.5)), new LineWall(5, 5, 5, 0, (float)(0.5)), new LineWall(5, 0, 0, 0, (float)(0.5)) };//maze.getLineWalls();
 		for (LineWall l: lineWalls)
 		{
 			System.out.println(l);
-			Box w;
-			if (l.getX1() == l.getX1())                                                  // Mur "vertical" dans le plan
-			{
-				w = new Box(Math.abs(l.getY1() - l.getY2()), hauteur, l.getEpaisseur()); // Box(x,y,z)
-			}
-			else // Mur horizontal
-			{
-				w = new Box(l.getEpaisseur(), hauteur, Math.abs(l.getY1() - l.getY2()));
-			}
+			Box w = new Box();
+			w.setHeight(hauteur);
+			w.setWidth(1);
+			w.setDepth(1);
+			w.setTranslateX(l.getX1());
+			w.setTranslateZ(l.getY1());
 			walls.getChildren().add(w);
 		}
 	}
