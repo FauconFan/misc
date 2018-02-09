@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fl_nextmove.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:20:04 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/07 15:08:31 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/09 14:06:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,14 @@ static t_bool	is_valid_move(t_fillerenv *fl_env, int dx, int dy,
 	y_actu = dy - 1;
 	while (++y_actu < dy + (int)fl_env->piece->size_y)
 	{
-		if (y_actu < 0 || y_actu >= (int)fl_env->size_y)
-			return (FALSE);
 		x_actu = dx - 1;
 		while (++x_actu < dx + (int)fl_env->piece->size_x)
 		{
-			if (x_actu < 0 || x_actu >= (int)fl_env->size_x)
-				return (FALSE);
 			if (fl_env->piece->content[y_actu - dy][x_actu - dx] != EMPTY_CASE)
 			{
+				if (y_actu < 0 || y_actu >= (int)fl_env->size_y ||
+					x_actu < 0 || x_actu >= (int)fl_env->size_x)
+					return (FALSE);
 				if (handle_each_cara(fl_env->map[y_actu][x_actu],
 							fl_env->is_first_player, &buffer_player) == FALSE)
 					return (FALSE);
