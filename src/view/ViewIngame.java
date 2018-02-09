@@ -17,15 +17,24 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
+import src.model.board.LineWall;
+import src.model.ContentMaze;
+
 public class ViewIngame extends Scene
 {
-	public ViewIngame()
+	private final Group root;
+	private final ContentMaze maze;
+	public ViewIngame(ContentMaze m)
 	{
 		super(new Group());
-		setFill(Color.GREY);
-		Group root = (Group)this.getRoot();
+		root = (Group)this.getRoot();
+		maze = m;
 
-		root.getChildren().add(new Box(100.00, 100.00, 100.00));
+		setFill(Color.GREY);
+
+		renderMaze();
+
+		//root.getChildren().add(new Box(100.00, 100.00, 100.00));
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
@@ -37,11 +46,11 @@ public class ViewIngame extends Scene
 		camera.setRotationAxis(Rotate.Y_AXIS);
 
 		// constantes de déplacements
-		final int change = 5;
+		final int change = 1;
 		final int rot    = 1; // En degré
 
 		// Recule la caméra pour la voir l'objet initalement
-		camera.setTranslateZ(-150);
+		camera.setTranslateZ(-15);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -85,5 +94,28 @@ public class ViewIngame extends Scene
 		 *
 		 *  }
 		 * })*/
+	}
+
+	private void renderMaze()
+	{
+		final int hauteur = 15;
+		Group     walls   = new Group();
+
+		root.getChildren().add(walls);
+		LineWall[] lineWalls = maze.getLineWalls();
+		for (LineWall l: lineWalls)
+		{
+			System.out.println(l);
+			Box w;
+			if (l.getX1() == l.getX1())                                                  // Mur "vertical" dans le plan
+			{
+				w = new Box(Math.abs(l.getY1() - l.getY2()), hauteur, l.getEpaisseur()); // Box(x,y,z)
+			}
+			else // Mur horizontal
+			{
+				w = new Box(l.getEpaisseur(), hauteur, Math.abs(l.getY1() - l.getY2()));
+			}
+			walls.getChildren().add(w);
+		}
 	}
 }
