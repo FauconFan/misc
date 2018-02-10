@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fl_storeoppositecases.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 14:49:07 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/07 15:37:16 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/10 12:17:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void			calculate_list_opponent(t_fillerenv *fl_env)
 	size_t		x;
 
 	y = -1;
-	while(++y < fl_env->size_y)
+	while (++y < fl_env->size_y)
 	{
 		x = -1;
 		while (++x < fl_env->size_x)
@@ -48,8 +48,10 @@ void			calculate_list_opponent(t_fillerenv *fl_env)
 			{
 				if (((y == 0 || occ_opp(fl_env, y - 1, x)) &&
 					(x == 0 || occ_opp(fl_env, y, x - 1)) &&
-					(y == fl_env->size_y - 1 || occ_opp(fl_env, y + 1, x)) &&
-					(x == fl_env->size_x - 1 || occ_opp(fl_env, y, x + 1))) == FALSE)
+					(y == fl_env->size_y - 1 ||
+							occ_opp(fl_env, y + 1, x)) &&
+					(x == fl_env->size_x - 1 ||
+							occ_opp(fl_env, y, x + 1))) == FALSE)
 				{
 					store_one_point(fl_env, x, y);
 				}

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 16:15:24 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/04 15:03:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/02/10 08:55:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 **	Define Get next line
 */
 
-# define BUFF_SIZE_GNL			1
+# define BUFF_SIZE_GNL			25
 
 /*
 **	Own typedefs

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 13:42:36 by jpriou            #+#    #+#             */
-/*   Updated: 2018/02/04 17:13:57 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/02/10 08:55:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ static int		loop(const int fd, char **buff_prog)
 		tmp = ft_strjoin(*buff_prog, buff);
 		free(*buff_prog);
 		*buff_prog = tmp;
-		if (ft_strlen(buff) < BUFF_SIZE_GNL)
-			break ;
 	}
 	if (buff != 0)
 		free(buff);

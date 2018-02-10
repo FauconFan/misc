@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fl_maputils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 16:29:59 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/08 08:05:22 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/10 10:30:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,18 @@ void			load_new_map(t_fillerenv *fl_env, size_t size_x, size_t size_y)
 	char			**res;
 	char			*tmp;
 	size_t			index;
-	int				ret;
 
 	ft_memcheck((res = (char **)malloc(sizeof(char *) * (size_y))));
 	index = 0;
-	get_next_line(0, res, fl_env->env_gnl);
-	free(*res);
-	tmp = ft_strnew(size_x + 4 + 1);
+	get_next_line(0, &tmp, fl_env->env_gnl);
+	free(tmp);
 	while (index < size_y)
 	{
-		if ((ret = read(0, tmp, size_x + 4 + 1)) == -1)
-			ft_die(strerror(errno));
+		get_next_line(0, &tmp, fl_env->env_gnl);
 		res[index] = interpret_line(tmp + 4);
 		index++;
+		free(tmp);
 	}
-	free(tmp);
 	fl_env->map = res;
 	fl_env->size_x = size_x;
 	fl_env->size_y = size_y;

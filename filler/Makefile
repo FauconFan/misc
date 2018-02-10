@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/03 11:13:57 by fauconfan         #+#    #+#              #
-#    Updated: 2018/02/07 14:54:16 by fauconfan        ###   ########.fr        #
+#    Updated: 2018/02/10 12:17:43 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC_FOLDER = src/
 INCLUDES_FOLDER = includes/
 LIBFT_FOLDER = libft/
 
-GWW = gcc -g -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
+GWW = gcc -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
 LIBS = -L libft -l ft
 
 SRC = main.c \
