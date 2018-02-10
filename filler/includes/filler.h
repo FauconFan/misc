@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 11:19:51 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/08 08:02:16 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/11 00:16:31 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@
 # include <errno.h>
 # include "libft.h"
 
+# define WRONG_FORMAT		"WFIE : Wrong Format Input Exception"
+
 # define EMPTY_CASE			'.'
+# define FULL_PIECE_CASE	'*'
+
 # define X_MAJ_CASE			'X'
 # define X_MIN_CASE			'x'
 # define O_MAJ_CASE			'O'
@@ -83,7 +87,7 @@ typedef struct		s_fillerenv
 */
 
 t_fillerenv			*init_env(void);
-void				free_env(t_fillerenv **fl_env);
+void				free_env(t_fillerenv **fl_env, char *message_dying);
 
 /*
 **	fl_pieceutils.c
@@ -146,5 +150,33 @@ void				free_list_opposite(t_fillerenv *fl_env);
 void				store_one_point(t_fillerenv *fl_env, int x, int y);
 void				simple_display(void *content);
 void				calculate_list_opponent(t_fillerenv *fl_env);
+
+/*
+**	fl_formatutils.c
+*/
+
+t_bool				fl_verify_loader_player(char *str);
+t_bool				fl_verify_loader_map(char *str);
+t_bool				fl_verify_loader_piece(char *str);
+
+/*
+**	fl_formatutils_map.c
+*/
+
+void				fl_verify_header_map(t_fillerenv *fl_env, size_t x);
+t_bool				fl_verify_each_line_map(char *str, size_t y, size_t x);
+
+/*
+**	fl_formatutils_piece.c
+*/
+
+t_bool				fl_verify_each_line_piece(char *str, size_t x);
+
+/*
+**	fl_freeutils.c
+*/
+
+void				fl_free_parsed_string(char ***splited, char **line);
+void				fl_free_tab_strings(char ***tab, size_t y);
 
 #endif

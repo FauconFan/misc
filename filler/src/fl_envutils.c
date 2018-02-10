@@ -6,7 +6,7 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 11:43:05 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/07 14:53:56 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/10 21:47:17 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_fillerenv		*init_env(void)
 	return (res);
 }
 
-void			free_env(t_fillerenv **fl_env)
+void			free_env(t_fillerenv **fl_env, char *message_dying)
 {
 	if (fl_env != NULL && *fl_env != NULL)
 	{
@@ -40,4 +40,6 @@ void			free_env(t_fillerenv **fl_env)
 		free(*fl_env);
 		*fl_env = NULL;
 	}
+	if (message_dying != NULL)
+		ft_die(message_dying);
 }

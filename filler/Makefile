@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
+#    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/03 11:13:57 by fauconfan         #+#    #+#              #
-#    Updated: 2018/02/10 12:17:43 by jpriou           ###   ########.fr        #
+#    Updated: 2018/02/11 00:20:10 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,10 @@ SRC = main.c \
 		fl_adapt_strategy.c \
 		fl_math.c \
 		fl_storeoppositecases.c \
+		fl_formatutils.c \
+		fl_formatutils_map.c \
+		fl_formatutils_piece.c \
+		fl_freeutils.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC))
 

@@ -6,12 +6,11 @@
 /*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 11:19:42 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/08 08:29:23 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/11 00:22:15 by fauconfan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-#include <stdio.h>
 
 static void		describe_move(t_nextmove *move)
 {
@@ -43,6 +42,6 @@ int				main(void)
 			break ;
 		free(move);
 	}
-	free_env(&fl_env);
+	free_env(&fl_env, NULL);
 	return (0);
 }
