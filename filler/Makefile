@@ -6,7 +6,7 @@
 #    By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/03 11:13:57 by fauconfan         #+#    #+#              #
-#    Updated: 2018/02/11 00:20:10 by fauconfan        ###   ########.fr        #
+#    Updated: 2018/02/11 00:32:19 by fauconfan        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,19 +20,19 @@ GWW = gcc -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
 LIBS = -L libft -l ft
 
 SRC = main.c \
-		fl_envutils.c \
-		fl_pieceutils.c \
-		fl_maputils.c \
-		fl_playerutils.c \
-		fl_nextmove.c \
-		fl_algo_findbestmove.c \
-		fl_adapt_strategy.c \
-		fl_math.c \
-		fl_storeoppositecases.c \
-		fl_formatutils.c \
-		fl_formatutils_map.c \
-		fl_formatutils_piece.c \
-		fl_freeutils.c \
+		alloc/fl_envutils.c \
+		alloc/fl_freeutils.c \
+		formatIO/fl_formatutils.c \
+		formatIO/fl_formatutils_map.c \
+		formatIO/fl_formatutils_piece.c \
+		board/fl_pieceutils.c \
+		board/fl_maputils.c \
+		board/fl_playerutils.c \
+		algo/fl_nextmove.c \
+		algo/fl_algo_findbestmove.c \
+		algo/fl_adapt_strategy.c \
+		algo/fl_math.c \
+		algo/fl_storeoppositecases.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC))
 
