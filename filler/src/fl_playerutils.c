@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fl_playerutils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fauconfan <fauconfan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/03 17:28:29 by fauconfan         #+#    #+#             */
-/*   Updated: 2018/02/07 15:35:01 by fauconfan        ###   ########.fr       */
+/*   Updated: 2018/02/10 12:35:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		load_player(t_fillerenv *fl_env)
 	char		*line;
 
 	get_next_line(0, &line, fl_env->env_gnl);
-	fl_env->is_first_player = (strstr(line, "p1") != NULL);
+	fl_env->is_first_player = (ft_strstr(line, "p1") != NULL);
 	fl_env->opposite_player = (fl_env->is_first_player == FALSE);
 	free(line);
 }
