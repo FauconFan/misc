@@ -1,5 +1,6 @@
 package src.controller;
 
+import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.AlgoSample;
 import src.model.MainMaze;
@@ -175,6 +176,11 @@ public class Controller
 			}
 		}
 		return (null);
+	}
+
+	public ContentMaze getMaze()
+	{
+		return (this.maze.getAdaptedMaze());
 	}
 
 	// TEST

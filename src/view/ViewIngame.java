@@ -17,18 +17,28 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
+import src.model.board.LineWall;
+import src.model.ContentMaze;
+
 public class ViewIngame extends Scene
 {
-	public ViewIngame()
+	private final Group root;
+	private final ContentMaze maze;
+	public ViewIngame(ContentMaze m)
 	{
 		super(new Group());
-		setFill(Color.GREY);
-		Group root = (Group)this.getRoot();
+		root = (Group)this.getRoot();
+		maze = m;
 
-		root.getChildren().add(new Box(100.00, 100.00, 100.00));
+		setFill(Color.GREY);
+
+		renderMaze();
+
+		//root.getChildren().add(new Box(100.00, 100.00, 100.00));
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
+		camera.setFieldOfView(20);
 
 		// Défini la camera pour la scène
 		setCamera(camera);
@@ -37,11 +47,11 @@ public class ViewIngame extends Scene
 		camera.setRotationAxis(Rotate.Y_AXIS);
 
 		// constantes de déplacements
-		final int change = 5;
+		final int change = 1;
 		final int rot    = 1; // En degré
 
 		// Recule la caméra pour la voir l'objet initalement
-		camera.setTranslateZ(-150);
+		camera.setTranslateZ(-10);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -85,5 +95,27 @@ public class ViewIngame extends Scene
 		 *
 		 *  }
 		 * })*/
+	}
+
+	private void renderMaze()
+	{
+		final int hauteur = 60;
+		Group     walls   = new Group();
+
+		final int facteur = 5;
+
+		root.getChildren().add(walls);
+		LineWall[] lineWalls = { new LineWall(0, 0, 0, 5, (float)(0.5)), new LineWall(0, 5, 5, 5, (float)(0.5)), new LineWall(5, 5, 5, 0, (float)(0.5)), new LineWall(5, 0, 0, 0, (float)(0.5)) };//maze.getLineWalls();
+		for (LineWall l: lineWalls)
+		{
+			System.out.println(l);
+			Box w = new Box();
+			w.setHeight(hauteur);
+			w.setWidth(1);
+			w.setDepth(1);
+			w.setTranslateX(l.getX1());
+			w.setTranslateZ(l.getY1());
+			walls.getChildren().add(w);
+		}
 	}
 }

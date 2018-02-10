@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.File;
 
 import src.controller.Controller;
+import src.model.gen.AlgoSample;
 
 
 public class View
@@ -32,7 +33,7 @@ public class View
 	{
 		this.con   = con;
 		this.view  = new MenuStart();
-		this.scene = new Scene((Parent)view);
+		this.scene = new Scene(view);
 		this.stage = stage;
 
 		stage.setTitle("Laby");
@@ -133,7 +134,8 @@ public class View
 
 			buttonCreate.setOnAction(event->{
 				//TODO
-				scene = new ViewIngame();
+				con.createMaze(new AlgoSample(), 30);
+				scene = new ViewIngame(con.getMaze());
 				stage.setScene(scene);
 				stage.show();
 			});

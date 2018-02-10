@@ -37,9 +37,9 @@ public class MainMaze implements Serializable
 	 * Retourne un RectMaze centré sur la position du joueur de dimension porteeVue x porteeVue.
 	 * @return RectMaze centré sur le joueur.
 	 */
-	public RectMaze getAdaptedMaze()
+	public ContentMaze getAdaptedMaze()
 	{
-		return (null);
+		return (this.m);
 	}
 
 	/**
