@@ -8,6 +8,7 @@ import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 import src.model.parser.Parser;
 import src.utils.StringManipulation;
+import src.utils.DisplayMazeConsole;
 
 /**
  * Structure de données du labyrinthe.
@@ -18,22 +19,6 @@ public class MainMaze implements Serializable
 	private String name;
 	private Player p;
 	private int porteeVue;
-
-	/**
-	 * Constantes pour l'affichage du labyrinthe dans la console
-	 */
-	private static final char HORIZONTAL        = '\u2500';
-	private static final char VERTICAL          = '\u2502';
-	private static final char INTERSECTION      = '\u253C';
-	private static final char HORIZONTALTOP     = '\u2534';
-	private static final char HORIZONTALBOTTOM  = '\u252C';
-	private static final char VERTICALLEFT      = '\u2524';
-	private static final char VERTICALRIGHT     = '\u251C';
-	private static final char CORNERTOPLEFT     = '\u2510';
-	private static final char CORNERTOPRIGHT    = '\u250C';
-	private static final char CORNERBOTTOMLEFT  = '\u2518';
-	private static final char CORNERBOTTOMRIGHT = '\u2514';
-
 
 	public MainMaze(ContentMaze m, String name, Player p, int porteeVue)
 	{
@@ -90,54 +75,9 @@ public class MainMaze implements Serializable
 	 */
 	public void displayMaze()
 	{
-		System.out.println();
-		int        xStart = 0;
-		int        yStart = 0;
-		int        xEnd   = 0;
-		int        yEnd   = 0;
-		LineWall[] walls  = m.getLineWalls();
-		for (LineWall lw : walls)
-		{
-			xStart = Math.min(Math.min(lw.getX1(), lw.getX2()), xStart);
-			xEnd   = Math.max(Math.max(lw.getX1(), lw.getX2()), xEnd);
-			yStart = Math.min(Math.min(lw.getY1(), lw.getY2()), yStart);
-			yEnd   = Math.max(Math.max(lw.getY1(), lw.getY2()), yEnd);
-		}
-		char[][] maze = new char [yEnd - yStart + 1][xEnd - xStart + 1];
-		for (int i = 0; i < maze.length; i++)
-		{
-			for (int j = 0; j < maze[i].length; j++)
-			{
-				maze[i][j] = ' ';
-			}
-		}
-		for (LineWall lw : walls)
-		{
-			int xRef = Math.min(lw.getX1(), lw.getX2()) - xStart;
-			int yRef = Math.min(lw.getY1(), lw.getY2()) - yStart;
-			//System.out.println(lw.getX1() + " " + lw.getX2() + " " + lw.getY1() + " " + lw.getY2());
-			int distanceWall = Math.max(Math.abs(lw.getX1() - lw.getX2()), Math.abs(lw.getY1() - lw.getY2()));
-			//System.out.println(xRef + " " + yRef + " " + distanceWall);
-			boolean isHorizontal = lw.isHorizontal();
-			//System.out.println(xRef + " " + yRef + " " + distanceWall);
-			for (int d = 0; d < distanceWall; d++)
-			{
-				maze[yRef][xRef] = (isHorizontal) ? HORIZONTAL : VERTICAL;
-				xRef             = xRef + ((isHorizontal) ? 1 : 0);
-				yRef             = yRef + ((!isHorizontal) ? 1 : 0);
-				//System.out.println(xRef + " " + yRef);
-			}
-		}
-		for (int i = 0; i < maze.length; i++)
-		{
-			for (int j = 0; j < maze[i].length; j++)
-			{
-				System.out.print(maze[i][j]);
-			}
-			System.out.println();
-		}
-	}
-
+		DisplayMazeConsole.displayMaze(m);
+	}	
+	
 	/**
 	 * The obvious overwrited toString function
 	 * @return representation String
