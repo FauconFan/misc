@@ -7,8 +7,8 @@ import src.model.gen.Algo;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 import src.model.parser.Parser;
-import src.utils.StringManipulation;
 import src.utils.DisplayMazeConsole;
+import src.utils.StringManipulation;
 
 /**
  * Structure de données du labyrinthe.
@@ -76,8 +76,8 @@ public class MainMaze implements Serializable
 	public void displayMaze()
 	{
 		DisplayMazeConsole.displayMaze(m);
-	}	
-	
+	}
+
 	/**
 	 * The obvious overwrited toString function
 	 * @return representation String
