@@ -1,9 +1,12 @@
 package src.model.gen;
 
+import src.model.board.LineWall;
 import src.model.ContentMaze;
 import src.model.gen.ContentMazeFactory;
 import src.model.gen.RectMazeShift;
 import src.model.MainMaze;
+import src.utils.DiscreteStatMazeGenerator;
+import src.utils.DisplayMazeConsole;
 
 public abstract class Algo
 {
@@ -32,5 +35,6 @@ public abstract class Algo
 
 		al = new AlgoSample();
 		ml = new MainMaze(al, 0);
+		DisplayMazeConsole.displayMaze(ml.getAdaptedMaze());
 	}
 }

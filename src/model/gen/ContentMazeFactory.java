@@ -5,21 +5,27 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
 import src.model.board.Case;
 import src.model.board.LineWall;
 import src.model.ContentMaze;
 import src.model.gen.RectMazeShift;
+import src.utils.DiscreteStatMazeGenerator;
 
 public class ContentMazeFactory
 {
 	private HashMap <Integer, ArrayList <LineWall> > contentX;
 	private HashMap <Integer, ArrayList <LineWall> > contentY;
+	private HashMap <Integer, ArrayList <LineWall> > listDoorsX;
+	private HashMap <Integer, ArrayList <LineWall> > listDoorsY;
 	private ArrayList <Case> contentSpecialCases;
 
 	public ContentMazeFactory()
 	{
 		this.contentX            = new HashMap <>();
 		this.contentY            = new HashMap <>();
+		this.listDoorsX          = new HashMap <>();
+		this.listDoorsY          = new HashMap <>();
 		this.contentSpecialCases = new ArrayList <>();
 	}
 
@@ -52,22 +58,217 @@ public class ContentMazeFactory
 		this.contentSpecialCases.add(c);
 	}
 
-	public void normalize()
+	public void addContentMazeShift(RectMazeShift cms)
 	{
-		normalizeEachDimension(this.contentX);
-		normalizeEachDimension(this.contentY);
+		int x1;
+		int x2;
+		int y1;
+		int y2;
+
+		x1 = cms.getDX();
+		x2 = cms.getRectMazeSizeX() + x1;
+		y1 = cms.getDY();
+		y2 = cms.getRectMazeSizeY() + y1;
+
+		verifyIfMazeGenerationIsValid(cms, x1, x2, y1, y2);
+		addingDoors(cms, x1, x2, y1, y2);
+		reallyAddRectMazeShift(cms);
 	}
 
-	private void normalizeEachDimension(HashMap <Integer, ArrayList <LineWall> > content)
+	private void verifyIfMazeGenerationIsValid(RectMazeShift cms, int x1, int x2, int y1, int y2)
 	{
+		for (int i = x1 + 1; i < x2; i++)
+		{
+			ArrayList <LineWall> li = this.contentX.get(i);
+			if (li != null)
+			{
+				for (LineWall lw : li)
+				{
+					if (((y1 >= lw.getY1() && y1 >= lw.getY2()) ||
+						 (y2 <= lw.getY1() && y2 <= lw.getY2())) == false)
+					{
+						throw new RuntimeException("Maze Generation Not Valid");
+					}
+				}
+			}
+		}
+		for (int j = y1 + 1; j < y2; j++)
+		{
+			ArrayList <LineWall> li = this.contentY.get(j);
+			if (li != null)
+			{
+				for (LineWall lw : li)
+				{
+					if (((x1 >= lw.getX1() && x1 >= lw.getX2()) ||
+						 (x2 <= lw.getX1() && x2 <= lw.getX2())) == false)
+					{
+						throw new RuntimeException("Maze Generation Not Valid");
+					}
+				}
+			}
+		}
+	}
+
+	private void addingDoors(RectMazeShift cms, int x1, int x2, int y1, int y2)
+	{
+		// Handle row x1
+		ArrayList <LineWall> li;
+
+		li = new ArrayList <>();
+
+		li.addAll(calculateIntersection(this.contentX.get(x1), new LineWall(x1, y1, x1, y2)));
+		li.addAll(calculateIntersection(this.contentX.get(x2), new LineWall(x2, y1, x2, y2)));
+		li.addAll(calculateIntersection(this.contentY.get(y1), new LineWall(x1, y1, x2, y1)));
+		li.addAll(calculateIntersection(this.contentY.get(y2), new LineWall(x1, y2, x2, y2)));
+		for (LineWall lw : li)
+		{
+			LineWall lres;
+			int      nb_door;
+			int[]    index_doors;
+			boolean  mode;
+
+			nb_door     = (lw.getSize() - 1) / 5 + 1;
+			index_doors = DiscreteStatMazeGenerator.getKParmiN(nb_door, lw.getSize());
+			mode        = lw.isHorizontal();
+			for (int i : index_doors)
+			{
+				if (mode)
+				{
+					lres = new LineWall(lw.getX1() + i - 1, lw.getY1(), lw.getX1() + i, lw.getY1());
+					if (this.listDoorsY.containsKey(lw.getY1()) == false)
+					{
+						this.listDoorsY.put(lw.getY1(), new ArrayList <LineWall>());
+					}
+					this.listDoorsY.get(lw.getY1()).add(lres);
+				}
+				else
+				{
+					lres = new LineWall(lw.getX1(), lw.getY1() + i - 1, lw.getX1(), lw.getY1() + i);
+					if (this.listDoorsX.containsKey(lw.getX1()) == false)
+					{
+						this.listDoorsX.put(lw.getX1(), new ArrayList <LineWall>());
+					}
+					this.listDoorsX.get(lw.getX1()).add(lres);
+				}
+			}
+		}
+	}
+
+	private ArrayList <LineWall> calculateIntersection(ArrayList <LineWall> content, LineWall actu)
+	{
+		ArrayList <LineWall> result;
+
+		result = new ArrayList <>();
+		if (content != null)
+		{
+			for (LineWall lw : content)
+			{
+				LineWall linter;
+
+				linter = LineWall.getIntersection(lw, actu);
+				if (linter != null)
+				{
+					result.add(linter);
+				}
+			}
+		}
+		return (result);
+	}
+
+	private void reallyAddRectMazeShift(RectMazeShift cms)
+	{
+		ContentMaze cm;
+
+		cm = cms.getTranslatedContentMaze();
+		LineWall[] lw = cm.getLineWalls();
+		for (LineWall l : lw)
+		{
+			this.addWall(l);
+		}
+		Case[] cs = cm.getSpecialCases();
+		for (Case c : cs)
+		{
+			this.addSpecialCase(c);
+		}
+	}
+
+	/**
+	 * Normalizing ContentMaze
+	 */
+
+	public void normalize()
+	{
+		normalizeEachDimension(this.contentX, this.listDoorsX);
+		normalizeEachDimension(this.contentY, this.listDoorsY);
+		normalizeSpecialCases();
+
+		// System.out.println("size x " + this.listDoorsX.size());
+		// for (Map.Entry <Integer, ArrayList <LineWall>> entry : this.listDoorsX.entrySet())
+		// {
+		//  System.out.println("key : " + entry.getKey());
+		//  ArrayList <LineWall> li = entry.getValue();
+		//  for (LineWall lw : li)
+		//  {
+		//      System.out.println(lw);
+		//  }
+		// }
+		// System.out.println("size y " + this.listDoorsY.size());
+		// for (Map.Entry <Integer, ArrayList <LineWall>> entry : this.listDoorsY.entrySet())
+		// {
+		//  System.out.println("key : " + entry.getKey());
+		//  ArrayList <LineWall> li = entry.getValue();
+		//  for (LineWall lw : li)
+		//  {
+		//      System.out.println(lw);
+		//  }
+		// }
+	}
+
+	private void normalizeEachDimension(HashMap <Integer, ArrayList <LineWall> > content, HashMap <Integer, ArrayList <LineWall> > list_doors)
+	{
+		ArrayList <LineWall> normalized;
+		ArrayList <LineWall> doors;
+		ArrayList <LineWall> tmp;
+		ArrayList <LineWall> res_tmp;
+		int old_size;
+
 		for (Map.Entry <Integer, ArrayList <LineWall> > entry : content.entrySet())
 		{
-			ArrayList <LineWall> normalized = this.normalizeList(entry.getValue());
+			normalized = this.normalizeList(entry.getValue());
+			doors      = list_doors.get(entry.getKey());
+			if (doors != null)
+			{
+				res_tmp = new ArrayList <>();
+				for (LineWall wall : normalized)
+				{
+					tmp = new ArrayList <>();
+					tmp.add(wall);
+					while (true)
+					{
+						old_size = tmp.size();
+						for (int i = 0; i < tmp.size(); i++)
+						{
+							for (LineWall door : doors)
+							{
+								ArrayList <LineWall> ahah = tmp.get(i).except(door);
+								tmp.addAll(ahah);
+								tmp.remove(i);
+							}
+						}
+						if (old_size == tmp.size())
+						{
+							break;
+						}
+					}
+					res_tmp.addAll(tmp);
+				}
+				normalized = res_tmp;
+			}
 			content.put(entry.getKey(), normalized);
 		}
 	}
 
-	public ArrayList <LineWall> normalizeList(ArrayList <LineWall> list)
+	private ArrayList <LineWall> normalizeList(ArrayList <LineWall> list)
 	{
 		ArrayList <LineWall> res = new ArrayList <>();
 		boolean modeX;
@@ -134,21 +335,31 @@ public class ContentMazeFactory
 		return (res);
 	}
 
-	public void addContentMazeShift(RectMazeShift cms)
+	private void normalizeSpecialCases()
 	{
-		ContentMaze cm = cms.getTranslatedContentMaze();
+		Case c;
+		Case tmp;
 
-		LineWall[] lw = cm.getLineWalls();
-		for (LineWall l : lw)
+		for (int i = 0; i < this.contentSpecialCases.size(); i++)
 		{
-			this.addWall(l);
-		}
-		Case[] cs = cm.getSpecialCases();
-		for (Case c : cs)
-		{
-			this.addSpecialCase(c);
+			c = this.contentSpecialCases.get(i);
+			for (int j = i + 1; j < this.contentSpecialCases.size(); j++)
+			{
+				tmp = this.contentSpecialCases.get(j);
+				if (c.equals(tmp))
+				{
+					this.contentSpecialCases.remove(j);
+					j--;
+					continue;
+				}
+			}
 		}
 	}
+
+	/**
+	 * Final Getters for deploying ContentMaze
+	 * @return LineWall[] and Case[]
+	 */
 
 	public LineWall[] getFinalLineWall()
 	{
@@ -166,7 +377,6 @@ public class ContentMazeFactory
 		{
 			all.addAll((ArrayList <LineWall> )al);
 		}
-
 		return (all.toArray(new LineWall[0]));
 	}
 

@@ -12,8 +12,8 @@ import src.model.ContentMaze;
 public class RectMazeShift implements Serializable
 {
 	private final RectMaze rl;
-	private final int x;
-	private final int y;
+	private final int dx;
+	private final int dy;
 
 	public RectMazeShift(RectMaze rl, int dx, int dy)
 	{
@@ -22,26 +22,36 @@ public class RectMazeShift implements Serializable
 			throw new RuntimeException("RectMazeShift can't be implemented with a null RectMaze");
 		}
 		this.rl = rl;
-		this.x  = dx;
-		this.y  = dy;
+		this.dx = dx;
+		this.dy = dy;
 	}
 
 	public ContentMaze getTranslatedContentMaze()
 	{
 		ContentMaze cmcpy = this.rl.getContentMaze().clone();
 
-		cmcpy.translate(this.x, this.y);
+		cmcpy.translate(this.dx, this.dy);
 		return (cmcpy);
+	}
+
+	public int getRectMazeSizeX()
+	{
+		return (this.rl.getSizeX());
+	}
+
+	public int getRectMazeSizeY()
+	{
+		return (this.rl.getSizeY());
 	}
 
 	public int getDX()
 	{
-		return (this.x);
+		return (this.dx);
 	}
 
 	public int getDY()
 	{
-		return (this.y);
+		return (this.dy);
 	}
 
 	/**

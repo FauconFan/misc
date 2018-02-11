@@ -19,4 +19,9 @@ public class StartCase extends Case
 	{
 		return ("StartCase\n" + super.toString());
 	}
+
+	public TypeCase getTypeCase()
+	{
+		return (TypeCase.START);
+	}
 }

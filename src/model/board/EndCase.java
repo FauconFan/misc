@@ -19,4 +19,9 @@ public class EndCase extends Case
 	{
 		return ("EndCase\n" + super.toString());
 	}
+
+	public TypeCase getTypeCase()
+	{
+		return (TypeCase.END);
+	}
 }

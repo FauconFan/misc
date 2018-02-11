@@ -34,12 +34,30 @@ public abstract class Case implements Serializable, Cloneable
 	}
 
 	public abstract Case clone();
+	public abstract TypeCase getTypeCase();
 
+	public boolean coordsEquals(Case c)
+	{
+		return (this.x == c.getX() && this.y == c.getY());
+	}
+
+	public boolean equals(Case c)
+	{
+		return (this.getTypeCase() == c.getTypeCase() && this.coordsEquals(c));
+	}
+
+	@Override
 	public String toString()
 	{
 		String repX = "x : " + this.x + "\n";
 		String repY = "y : " + this.y + "\n";
 
 		return (repX + repY);
+	}
+
+	public enum TypeCase
+	{
+		START,
+		END;
 	}
 }
