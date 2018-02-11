@@ -108,18 +108,26 @@ public class ViewIngame extends Scene
 		final int facteur = 10;
 
 		root.getChildren().add(walls);
-		LineWall[] lineWalls = { new LineWall(0, 0, 0, 5, (float)(0.5)), new LineWall(0, 5, 5, 5, (float)(0.5)), new LineWall(5, 5, 5, 0, (float)(0.5)), new LineWall(5, 0, 0, 0, (float)(0.5)) };
-		//LineWall[] lineWalls = maze.getLineWalls();
+		//LineWall[] lineWalls = { new LineWall(0, 0, 0, 5, (float)(0.5)), new LineWall(0, 5, 5, 5, (float)(0.5)), new LineWall(5, 5, 5, 0, (float)(0.5)), new LineWall(5, 0, 0, 0, (float)(0.5)) };
+		LineWall[] lineWalls = maze.getLineWalls();
 
 		for (LineWall l: lineWalls)
 		{
 			System.out.println(l);
 			Box w = new Box();
 			w.setHeight(hauteur);
-			w.setWidth(10);
-			w.setDepth(10);
-			w.setTranslateX(l.getX1() * facteur);
-			w.setTranslateZ(l.getY1() * facteur);
+			if (l.getX1() == l.getX2())                                            // Mur "vertical" dans le plan
+			{
+				w.setDepth(Math.abs(l.getY1() - l.getY2()));
+				w.setWidth(l.getEpaisseur());
+			}
+			else // Mur horizontal
+			{
+				w.setWidth(Math.abs(l.getX1() - l.getX2()));
+				w.setDepth(l.getEpaisseur());
+			}
+			w.setTranslateX(l.getX1());
+			w.setTranslateZ(l.getY1());
 			walls.getChildren().add(w);
 		}
 	}
