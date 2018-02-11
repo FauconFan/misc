@@ -14,8 +14,10 @@ import javafx.scene.shape.DrawMode;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+
 
 import src.model.board.LineWall;
 import src.model.ContentMaze;
@@ -32,13 +34,12 @@ public class ViewIngame extends Scene
 
 		setFill(Color.GREY);
 
-		renderMaze();
-
-		//root.getChildren().add(new Box(100.00, 100.00, 100.00));
+		// Seul moyen d'obtenir quelque chose d'euclidien...
+		Scale s = new Scale(1, 1, 0.05f);
+		root.getTransforms().add(s);
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
-		camera.setFieldOfView(20);
 
 		// Défini la camera pour la scène
 		setCamera(camera);
@@ -52,6 +53,8 @@ public class ViewIngame extends Scene
 
 		// Recule la caméra pour la voir l'objet initalement
 		camera.setTranslateZ(-10);
+
+		renderMaze();
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -102,19 +105,21 @@ public class ViewIngame extends Scene
 		final int hauteur = 60;
 		Group     walls   = new Group();
 
-		final int facteur = 5;
+		final int facteur = 10;
 
 		root.getChildren().add(walls);
-		LineWall[] lineWalls = { new LineWall(0, 0, 0, 5, (float)(0.5)), new LineWall(0, 5, 5, 5, (float)(0.5)), new LineWall(5, 5, 5, 0, (float)(0.5)), new LineWall(5, 0, 0, 0, (float)(0.5)) };//maze.getLineWalls();
+		LineWall[] lineWalls = { new LineWall(0, 0, 0, 5, (float)(0.5)), new LineWall(0, 5, 5, 5, (float)(0.5)), new LineWall(5, 5, 5, 0, (float)(0.5)), new LineWall(5, 0, 0, 0, (float)(0.5)) };
+		//LineWall[] lineWalls = maze.getLineWalls();
+
 		for (LineWall l: lineWalls)
 		{
 			System.out.println(l);
 			Box w = new Box();
 			w.setHeight(hauteur);
-			w.setWidth(1);
-			w.setDepth(1);
-			w.setTranslateX(l.getX1());
-			w.setTranslateZ(l.getY1());
+			w.setWidth(10);
+			w.setDepth(10);
+			w.setTranslateX(l.getX1() * facteur);
+			w.setTranslateZ(l.getY1() * facteur);
 			walls.getChildren().add(w);
 		}
 	}
