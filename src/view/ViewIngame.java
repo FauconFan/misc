@@ -118,16 +118,16 @@ public class ViewIngame extends Scene
 			w.setHeight(hauteur);
 			if (l.getX1() == l.getX2())                                            // Mur "vertical" dans le plan
 			{
-				w.setDepth(Math.abs(l.getY1() - l.getY2()));
-				w.setWidth(l.getEpaisseur());
+				w.setDepth((l.getY2() - l.getY1()) * facteur);
+				w.setWidth(l.getEpaisseur() * facteur);
 			}
 			else // Mur horizontal
 			{
-				w.setWidth(Math.abs(l.getX1() - l.getX2()));
-				w.setDepth(l.getEpaisseur());
+				w.setWidth((l.getX2() - l.getX1()) * facteur);
+				w.setDepth(l.getEpaisseur() * facteur);
 			}
-			w.setTranslateX(l.getX1());
-			w.setTranslateZ(l.getY1());
+			w.setTranslateX(l.getX1() * facteur);
+			w.setTranslateZ(l.getY1() * facteur);
 			walls.getChildren().add(w);
 		}
 	}
