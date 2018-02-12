@@ -6,7 +6,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.shape.Box;
@@ -41,7 +40,12 @@ public class ViewIngame extends Scene
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
-		//final ParallelCamera camera = new ParallelCamera();
+
+		// Rotate
+		final Rotate rx = new Rotate();
+		rx.setAxis(Rotate.Y_AXIS);
+		camera.getTransforms().add(rx);
+
 		// Défini la camera pour la scène
 		setCamera(camera);
 
@@ -52,20 +56,18 @@ public class ViewIngame extends Scene
 		final int change = 1;
 		final int rot    = 1; // En degré
 
-		// Recule la caméra pour la voir l'objet initalement
-		//camera.setTranslateZ(-10);
-
 		renderMaze();
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			if (key.getCode() == KeyCode.Q)
 			{
-				camera.setRotate(camera.getRotate() - rot);
+			    //camera.setRotate(camera.getRotate() - rot);
+				rx.setAngle(rx.getAngle() - rot);
 			}
 			if (key.getCode() == KeyCode.D)
 			{
-				camera.setRotate(camera.getRotate() + rot);
+				rx.setAngle(rx.getAngle() + rot);
 			}
 			if (key.getCode() == KeyCode.Z)
 			{
