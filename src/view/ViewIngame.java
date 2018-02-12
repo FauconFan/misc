@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.shape.Box;
@@ -40,7 +41,7 @@ public class ViewIngame extends Scene
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
-
+		//final ParallelCamera camera = new ParallelCamera();
 		// Défini la camera pour la scène
 		setCamera(camera);
 
@@ -52,7 +53,7 @@ public class ViewIngame extends Scene
 		final int rot    = 1; // En degré
 
 		// Recule la caméra pour la voir l'objet initalement
-		camera.setTranslateZ(-10);
+		//camera.setTranslateZ(-10);
 
 		renderMaze();
 
@@ -98,7 +99,7 @@ public class ViewIngame extends Scene
 		final int hauteur = 60;
 		Group     walls   = new Group();
 
-		final int facteur = 10;
+		final int facteur = 30;
 
 		root.getChildren().add(walls);
 		//LineWall[] lineWalls = { new LineWall(0, 0, 0, 5, (float)(0.5)), new LineWall(0, 5, 5, 5, (float)(0.5)), new LineWall(5, 5, 5, 0, (float)(0.5)), new LineWall(5, 0, 0, 0, (float)(0.5)) };
@@ -121,6 +122,7 @@ public class ViewIngame extends Scene
 			}
 			w.setTranslateX(l.getX1() * facteur);
 			w.setTranslateZ(l.getY1() * facteur);
+			w.setMaterial(new PhongMaterial(Color.RED));
 			walls.getChildren().add(w);
 		}
 	}
