@@ -17,6 +17,8 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import javafx.scene.PointLight;
+import javafx.scene.AmbientLight;
 
 
 import src.model.board.LineWall;
@@ -45,6 +47,9 @@ public class ViewIngame extends Scene
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
+		root.getChildren().add(camera);
+		camera.setNearClip(0.1);
+		camera.setFarClip(100000.0);
 
 		// Rotate
 		final Rotate rx = new Rotate();
@@ -56,6 +61,25 @@ public class ViewIngame extends Scene
 
 		final Translate tr = new Translate();
 		camera.getTransforms().add(tr);
+
+		//Creation de la source de lumiere ompnipresente
+
+		root.getChildren().add(new AmbientLight(Color.WHITE));
+
+
+
+		//Source de lumiere sur le joueur
+			//TODO
+
+		/*
+		PointLight lightPlayer = new PointLight();
+		lightPlayer.setColor(Color.WHITE);
+
+		lightPlayer.setTranslateX(tr.getX());
+    lightPlayer.setTranslateY(tr.getY());
+		lightPlayer.setTranslateZ(tr.getZ());
+		this.root.getChildren().add(lightPlayer);
+		*/
 
 		// Défini la camera pour la scène
 		setCamera(camera);
@@ -73,7 +97,7 @@ public class ViewIngame extends Scene
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			if (key.getCode() == KeyCode.Q)
 			{
-				tr.setX(tr.getX() + change);
+				tr.setX(tr.getX() - change);
 			}
 			if (key.getCode() == KeyCode.D)
 			{
@@ -131,7 +155,7 @@ public class ViewIngame extends Scene
 			}
 			w.setTranslateX(l.getX1() * facteur);
 			w.setTranslateZ(l.getY1() * facteur);
-			w.setMaterial(new PhongMaterial(Color.RED));
+			w.setMaterial(new PhongMaterial(Color.GREEN));
 			walls.getChildren().add(w);
 		}
 	}
