@@ -61,27 +61,20 @@ public class ViewIngame extends Scene
 			if (key.getCode() == KeyCode.Q)
 			{
 				camera.setRotate(camera.getRotate() - rot);
-
-				System.out.println("You pressed left");
 			}
 			if (key.getCode() == KeyCode.D)
 			{
 				camera.setRotate(camera.getRotate() + rot);
-				System.out.println("You pressed right");
 			}
 			if (key.getCode() == KeyCode.Z)
 			{
 				camera.setTranslateZ(camera.getTranslateZ() + (Math.cos(Math.toRadians(camera.getRotate()))) * change);
 				camera.setTranslateX(camera.getTranslateX() + (Math.sin(Math.toRadians(camera.getRotate()))) * change);
-
-				System.out.println("You pressed forward");
 			}
 			if (key.getCode() == KeyCode.S)
 			{
 				camera.setTranslateZ(camera.getTranslateZ() - (Math.cos(Math.toRadians(camera.getRotate()))) * change);
 				camera.setTranslateX(camera.getTranslateX() - (Math.sin(Math.toRadians(camera.getRotate()))) * change);
-
-				System.out.println("You pressed backward");
 			}
 		});
 
