@@ -164,7 +164,7 @@ public class LineWall implements Serializable, Cloneable
 		int     n1;
 		int     n2;
 
-		if (lw1 == null&& lw2 == null)
+		if (lw1 == null && lw2 == null)
 		{
 			return (null);
 		}
