@@ -26,6 +26,11 @@ public class ViewIngame extends Scene
 {
 	private final Group root;
 	private final ContentMaze maze;
+
+	//To remind pos of the mouse
+	private double mousePosX = 0;
+	private double mousePosY = 0;
+
 	public ViewIngame(ContentMaze m)
 	{
 		super(new Group());
@@ -44,13 +49,19 @@ public class ViewIngame extends Scene
 		// Rotate
 		final Rotate rx = new Rotate();
 		rx.setAxis(Rotate.Y_AXIS);
-		camera.getTransforms().add(rx);
+
+		final Rotate ry = new Rotate();
+		ry.setAxis(Rotate.X_AXIS);
+		camera.getTransforms().addAll(rx, ry);
+
+		final Translate tr = new Translate();
+		camera.getTransforms().add(tr);
 
 		// Défini la camera pour la scène
 		setCamera(camera);
 
 		// On tourne par rapport à Y
-		camera.setRotationAxis(Rotate.Y_AXIS);
+		//camera.setRotationAxis(Rotate.Y_AXIS);
 
 		// constantes de déplacements
 		final int change = 1;
@@ -62,38 +73,34 @@ public class ViewIngame extends Scene
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			if (key.getCode() == KeyCode.Q)
 			{
-			    //camera.setRotate(camera.getRotate() - rot);
-				rx.setAngle(rx.getAngle() - rot);
+				tr.setX(tr.getX() + change);
 			}
 			if (key.getCode() == KeyCode.D)
 			{
-				rx.setAngle(rx.getAngle() + rot);
+				tr.setX(tr.getX() + change);
 			}
 			if (key.getCode() == KeyCode.Z)
 			{
-				camera.setTranslateZ(camera.getTranslateZ() + (Math.cos(Math.toRadians(camera.getRotate()))) * change);
-				camera.setTranslateX(camera.getTranslateX() + (Math.sin(Math.toRadians(camera.getRotate()))) * change);
+				tr.setZ(tr.getZ() + change);
 			}
 			if (key.getCode() == KeyCode.S)
 			{
-				camera.setTranslateZ(camera.getTranslateZ() - (Math.cos(Math.toRadians(camera.getRotate()))) * change);
-				camera.setTranslateX(camera.getTranslateX() - (Math.sin(Math.toRadians(camera.getRotate()))) * change);
+				tr.setZ(tr.getZ() - change);
 			}
 		});
 
 		//Mouse controller
-
-		/*this.scene.setOnMouseDragged(new EventHadler<MouseEvent>() {
-		 *  public void hadle(MouseEvent mEv){
-		 *      mouseOldX = mousePosX;
-		 *      mouseOldY = mousePosY;
-		 *      mousePosX = mEv.getX();
-		 *      mousePosY = mEv.getY();
-		 *      mouseDeltaX = mousePosX - mouseOldX;
-		 *      mouseDeltaY = mousePosY - mouseOldY;
-		 *
-		 *  }
-		 * })*/
+		//Remind the old pos
+		setOnMousePressed((me)->{
+			mousePosX = me.getSceneX();
+			mousePosY = me.getSceneY();
+		});
+		//End
+		setOnMouseDragged((mEv)->{
+			final double rotateConst = 0.005;
+			rx.setAngle(rx.getAngle() + (mousePosX - mEv.getSceneX()) * rotateConst);
+			ry.setAngle(ry.getAngle() + (mousePosY - mEv.getSceneY()) * rotateConst);
+		});
 	}
 
 	private void renderMaze()
