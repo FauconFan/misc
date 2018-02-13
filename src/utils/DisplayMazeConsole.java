@@ -8,7 +8,11 @@ public class DisplayMazeConsole
 	public enum charWall
 	{
 		HORIZONTAL('\u2500'),
+		HORIZONTALLEFT('\u2574'),
+		HORIZONTALRIGHT('\u2576'),
 		VERTICAL('\u2502'),
+		VERTICALUP('\u2575'),
+		VERTICALDOWN('\u2577'),
 		INTERSECTION('\u253C'),
 		HORIZONTALTOP('\u2534'),
 		HORIZONTALBOTTOM('\u252C'),
@@ -82,34 +86,36 @@ public class DisplayMazeConsole
 		{
 			for (int j = 0; j < maze[i].length; j++)
 			{
-				if (maze[i][j] == null)
-				{
-					System.out.print(" ");
-				}
-				else
-				{
-					System.out.print(maze[i][j]);
-				}
-			}
-			System.out.println();
-		}
-		for (int i = 0; i < maze.length; i++)
-		{
-			for (int j = 0; j < maze[i].length; j++)
-			{
 				boolean haut = (i > 0 && maze[i - 1][j] != null&&
 								(maze[i - 1][j].equals(charWall.VERTICAL) || maze[i - 1][j].equals(charWall.INTERSECTION)));
 				boolean gauche = (j > 0 && maze[i][j - 1] != null&&
 								  (maze[i][j - 1].equals(charWall.HORIZONTAL) || maze[i][j - 1].equals(charWall.INTERSECTION)));
 				boolean droit = (maze[i][j] != null&& (maze[i][j].equals(charWall.HORIZONTAL) || maze[i][j].equals(charWall.INTERSECTION)));
 				boolean bas   = (maze[i][j] != null&& (maze[i][j].equals(charWall.VERTICAL) || maze[i][j].equals(charWall.INTERSECTION)));
-				if ((droit && gauche && !haut && !bas) || (droit && !gauche && !bas && !haut) || (gauche && !droit && !bas && !haut))
+
+				if ((droit && gauche && !haut && !bas))
 				{
 					System.out.print(charWall.HORIZONTAL);
 				}
-				else if ((bas && haut && !droit && !gauche) || (bas && !haut && !gauche && !droit) || (haut && !bas && !gauche && !droit))
+				else if ((droit && !gauche && !bas && !haut))
+				{
+					System.out.print(charWall.HORIZONTALRIGHT);
+				}
+				else if ((!droit && gauche && !bas && !haut))
+				{
+					System.out.print(charWall.HORIZONTALLEFT);
+				}
+				else if ((bas && haut && !droit && !gauche))
 				{
 					System.out.print(charWall.VERTICAL);
+				}
+				else if ((bas && !haut && !gauche && !droit))
+				{
+					System.out.print(charWall.VERTICALDOWN);
+				}
+				else if ((haut && !bas && !gauche && !droit))
+				{
+					System.out.print(charWall.VERTICALUP);
 				}
 				else if (haut && droit && bas && gauche)
 				{

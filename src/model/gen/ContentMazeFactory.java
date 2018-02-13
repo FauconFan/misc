@@ -356,7 +356,6 @@ public class ContentMazeFactory
 		{
 			all.addAll((ArrayList <LineWall> )al);
 		}
-		System.out.println(all);
 		return (all.toArray(new LineWall[0]));
 	}
 
