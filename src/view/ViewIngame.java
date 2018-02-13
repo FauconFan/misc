@@ -66,8 +66,6 @@ public class ViewIngame extends Scene
 
 		root.getChildren().add(new AmbientLight(Color.WHITE));
 
-
-
 		//Source de lumiere sur le joueur
 		//TODO
 
@@ -85,7 +83,6 @@ public class ViewIngame extends Scene
 		setCamera(camera);
 
 		// On tourne par rapport à Y
-		//camera.setRotationAxis(Rotate.Y_AXIS);
 
 		// constantes de déplacements
 		final int change = 1;
@@ -95,21 +92,23 @@ public class ViewIngame extends Scene
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
-			if (key.getCode() == KeyCode.Q)
+			switch (key.getCode())
 			{
-				tr.setX(tr.getX() - change);
-			}
-			if (key.getCode() == KeyCode.D)
-			{
-				tr.setX(tr.getX() + change);
-			}
-			if (key.getCode() == KeyCode.Z)
-			{
-				tr.setZ(tr.getZ() + change);
-			}
-			if (key.getCode() == KeyCode.S)
-			{
-				tr.setZ(tr.getZ() - change);
+			case Q: tr.setX(tr.getX() - change); break;
+
+			case D: tr.setX(tr.getX() + change); break;
+
+			case Z: tr.setZ(tr.getZ() + change); break;
+
+			case S: tr.setZ(tr.getZ() - change); break;
+
+			case LEFT: rx.setAngle(rx.getAngle() - rot); break;
+
+			case RIGHT: rx.setAngle(rx.getAngle() + rot); break;
+
+			case UP: ry.setAngle(ry.getAngle() + rot); break;
+
+			case DOWN: ry.setAngle(ry.getAngle() - rot); break;
 			}
 		});
 
