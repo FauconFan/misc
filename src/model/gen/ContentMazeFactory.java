@@ -201,27 +201,6 @@ public class ContentMazeFactory
 		normalizeEachDimension(this.contentX, this.listDoorsX);
 		normalizeEachDimension(this.contentY, this.listDoorsY);
 		normalizeSpecialCases();
-
-		// System.out.println("size x " + this.listDoorsX.size());
-		// for (Map.Entry <Integer, ArrayList <LineWall>> entry : this.listDoorsX.entrySet())
-		// {
-		//  System.out.println("key : " + entry.getKey());
-		//  ArrayList <LineWall> li = entry.getValue();
-		//  for (LineWall lw : li)
-		//  {
-		//      System.out.println(lw);
-		//  }
-		// }
-		// System.out.println("size y " + this.listDoorsY.size());
-		// for (Map.Entry <Integer, ArrayList <LineWall>> entry : this.listDoorsY.entrySet())
-		// {
-		//  System.out.println("key : " + entry.getKey());
-		//  ArrayList <LineWall> li = entry.getValue();
-		//  for (LineWall lw : li)
-		//  {
-		//      System.out.println(lw);
-		//  }
-		// }
 	}
 
 	private void normalizeEachDimension(HashMap <Integer, ArrayList <LineWall> > content, HashMap <Integer, ArrayList <LineWall> > list_doors)

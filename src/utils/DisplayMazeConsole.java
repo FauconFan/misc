@@ -58,8 +58,6 @@ public class DisplayMazeConsole
 			int     yRef         = Math.min(lw.getY1(), lw.getY2()) - yStart;
 			int     distanceWall = Math.max(Math.abs(lw.getX1() - lw.getX2()), Math.abs(lw.getY1() - lw.getY2()));
 			boolean isHorizontal = lw.isHorizontal();
-			System.out.println("xRef " + xRef + " yRef " + yRef);
-			System.out.println("distance " + distanceWall);
 			for (int d = 0; d < distanceWall; d++)
 			{
 				if (maze[yRef][xRef] != null&& ((maze[yRef][xRef].equals(charWall.HORIZONTAL) && !isHorizontal) || (maze[yRef][xRef].equals(charWall.VERTICAL) && isHorizontal)))
@@ -79,6 +77,21 @@ public class DisplayMazeConsole
 					yRef++;
 				}
 			}
+		}
+		for (int i = 0; i < maze.length; i++)
+		{
+			for (int j = 0; j < maze[i].length; j++)
+			{
+				if (maze[i][j] == null)
+				{
+					System.out.print(" ");
+				}
+				else
+				{
+					System.out.print(maze[i][j]);
+				}
+			}
+			System.out.println();
 		}
 		for (int i = 0; i < maze.length; i++)
 		{
