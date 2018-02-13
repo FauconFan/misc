@@ -1,6 +1,7 @@
 package src.view;
 
 import javafx.application.Application;
+import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -8,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.PointLight;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
@@ -17,8 +19,6 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
-import javafx.scene.PointLight;
-import javafx.scene.AmbientLight;
 
 
 import src.model.board.LineWall;
@@ -69,17 +69,17 @@ public class ViewIngame extends Scene
 
 
 		//Source de lumiere sur le joueur
-			//TODO
+		//TODO
 
 		/*
-		PointLight lightPlayer = new PointLight();
-		lightPlayer.setColor(Color.WHITE);
-
-		lightPlayer.setTranslateX(tr.getX());
-    lightPlayer.setTranslateY(tr.getY());
-		lightPlayer.setTranslateZ(tr.getZ());
-		this.root.getChildren().add(lightPlayer);
-		*/
+		 * PointLight lightPlayer = new PointLight();
+		 * lightPlayer.setColor(Color.WHITE);
+		 *
+		 * lightPlayer.setTranslateX(tr.getX());
+		 * lightPlayer.setTranslateY(tr.getY());
+		 * lightPlayer.setTranslateZ(tr.getZ());
+		 * this.root.getChildren().add(lightPlayer);
+		 */
 
 		// Défini la camera pour la scène
 		setCamera(camera);
