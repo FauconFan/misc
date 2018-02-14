@@ -38,8 +38,10 @@ public class DisplayMazeConsole
 
 	/**
 	 * Affiche le labyrinthe dans la console
+	 * @param ContentMaze Labyrinthe a affiché
+	 * @param reverse Sens d'affichage par rapport aux ordonnées
 	 */
-	public static void displayMaze(ContentMaze cm)
+	public static void displayMaze(ContentMaze cm, boolean reverse)
 	{
 		int xStart = 0;
 		int yStart = 0;
@@ -64,7 +66,7 @@ public class DisplayMazeConsole
 			boolean isHorizontal = lw.isHorizontal();
 			for (int d = 0; d < distanceWall; d++)
 			{
-				if (maze[yRef][xRef] != null&& ((maze[yRef][xRef].equals(charWall.HORIZONTAL) && !isHorizontal) || (maze[yRef][xRef].equals(charWall.VERTICAL) && isHorizontal)))
+				if (maze[yRef][xRef] != null && ((maze[yRef][xRef].equals(charWall.HORIZONTAL) && !isHorizontal) || (maze[yRef][xRef].equals(charWall.VERTICAL) && isHorizontal)))
 				{
 					maze[yRef][xRef] = charWall.INTERSECTION;
 				}
@@ -82,16 +84,27 @@ public class DisplayMazeConsole
 				}
 			}
 		}
-		for (int i = 0; i < maze.length; i++)
+		int i = (reverse) ? maze.length - 1 : 0;
+		for (int index = 0; index < maze.length; index++)
 		{
-			for (int j = 0; j < maze[i].length; j++)
+			for (int j = 0; j < maze[index].length; j++)
 			{
-				boolean haut = (i > 0 && maze[i - 1][j] != null&&
-								(maze[i - 1][j].equals(charWall.VERTICAL) || maze[i - 1][j].equals(charWall.INTERSECTION)));
-				boolean gauche = (j > 0 && maze[i][j - 1] != null&&
+				boolean haut, bas;
+				if (reverse)
+				{
+					bas = (i > 0 && maze[i - 1][j] != null &&
+						   (maze[i - 1][j].equals(charWall.VERTICAL) || maze[i - 1][j].equals(charWall.INTERSECTION)));
+					haut = (maze[i][j] != null && (maze[i][j].equals(charWall.VERTICAL) || maze[i][j].equals(charWall.INTERSECTION)));
+				}
+				else
+				{
+					haut = (i > 0 && maze[i - 1][j] != null &&
+							(maze[i - 1][j].equals(charWall.VERTICAL) || maze[i - 1][j].equals(charWall.INTERSECTION)));
+					bas = (maze[i][j] != null && (maze[i][j].equals(charWall.VERTICAL) || maze[i][j].equals(charWall.INTERSECTION)));
+				}
+				boolean gauche = (j > 0 && maze[i][j - 1] != null &&
 								  (maze[i][j - 1].equals(charWall.HORIZONTAL) || maze[i][j - 1].equals(charWall.INTERSECTION)));
-				boolean droit = (maze[i][j] != null&& (maze[i][j].equals(charWall.HORIZONTAL) || maze[i][j].equals(charWall.INTERSECTION)));
-				boolean bas   = (maze[i][j] != null&& (maze[i][j].equals(charWall.VERTICAL) || maze[i][j].equals(charWall.INTERSECTION)));
+				boolean droit = (maze[i][j] != null && (maze[i][j].equals(charWall.HORIZONTAL) || maze[i][j].equals(charWall.INTERSECTION)));
 
 				if ((droit && gauche && !haut && !bas))
 				{
@@ -158,6 +171,7 @@ public class DisplayMazeConsole
 					System.out.print(" ");
 				}
 			}
+			i += (reverse) ? -1 : 1;
 			System.out.println();
 		}
 	}
