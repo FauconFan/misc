@@ -5,6 +5,9 @@ import java.lang.Cloneable;
 
 import java.util.ArrayList;
 
+import java.lang.Math;
+import src.utils.FloatVector;
+
 /**
  * LineWall est la classe représentant un mur entre deux points.
  * <br>
@@ -112,33 +115,6 @@ public class LineWall implements Serializable, Cloneable
 	public boolean isHorizontal()
 	{
 		return (y1 == y2);
-	}
-
-	public boolean pointInWall(int x, int y)
-	{
-		if (isHorizontal())
-		{
-			if (y != y1)
-			{
-				return (false);
-			}
-			else if ((x1 > x && x2 > x) || (x1 < x && x2 < x))
-			{
-				return (false);
-			}
-		}
-		else
-		{
-			if (x != x1)
-			{
-				return (false);
-			}
-			else if ((y1 > y && y2 > y) || (y1 < y && y2 < y))
-			{
-				return (false);
-			}
-		}
-		return (true);
 	}
 
 	public LineWall clone()

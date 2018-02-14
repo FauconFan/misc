@@ -185,7 +185,7 @@ public class Controller
 
 	public void showMaze()
 	{
-		this.maze.displayMaze();
+		this.maze.displayMaze(false);
 	}
 
 	// TEST

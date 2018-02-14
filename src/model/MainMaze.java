@@ -9,7 +9,10 @@ import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 import src.model.parser.Parser;
 import src.utils.DisplayMazeConsole;
+import src.utils.FloatVector;
 import src.utils.StringManipulation;
+
+import src.model.gen.AlgoSample2;
 
 /**
  * Structure de données du labyrinthe.
@@ -34,60 +37,78 @@ public class MainMaze implements Serializable
 		this(algo.getContentMaze(), "", null, porteeVueP);
 	}
 
-	/**
-	 * Retourne un RectMaze centré sur la position du joueur de dimension porteeVue x porteeVue.
-	 * @return RectMaze centré sur le joueur.
-	 */
 	public ContentMaze getAdaptedMaze()
 	{
 		return (this.m);
 	}
 
-	public Vector <Float> calculateDep(Vector <Float> v)
+	/**
+	 * Déplace le joueur à la position (x + v.get(0), y + v.get(1))
+	 * @param v Le vecteur de déplacement
+	 */
+	private void applyMove(FloatVector v)
 	{
-		/*for (LineWall lw : m.getLineWalls())
-		 * {
-		 *  if (lw.isHorizontal()){
-		 *      if (lw.pointInWall(p.getPosX() + (lw.getY1() - p.getPosX())/v.get(1) * v.get(0), lw.getY1())){
-		 *          Vector <Float> newDep = new Vector<Float>();
-		 *          newDep.add(p.getPosX() + v.get(0));
-		 *          newDep.add(lw.getY1());
-		 *              return calculateDep (newDep);
-		 *          }
-		 *  }
-		 *  else
-		 *  {
-		 *      if (lw.pointInWall(lw.getY0(), p.getPosY() + (lw.getX1() - p.getPosX())/v.get(0) * v.get(1))){
-		 *          Vector <Float> newDep = new Vector<Float>();
-		 *          newDep.add(lw.getX1());
-		 *          newDep.add(p.getPosY() + v.get(1));
-		 *          return calculateDep (newDep);
-		 *      }
-		 *  }
-		 * }*/
-		return (null);
+		p.setPosX(p.getPosX() + v.get(0));
+		p.setPosY(p.getPosY() + v.get(1));
 	}
 
 	/**
-	 * Déplace le joueur dans le labyrinthe depuis sa position (x,y) vers (x+dx,y+dy) si c'est possible.
+	 * Décompose le vecteur AD en deux vecteurs AB et BC avec B le point d'intersection entre AD et le mur le plus proche/
+	 * @param v Le vecteur déplacement qu'il faut décomposer
+	 * @return Tableau de deux vecteurs
+	 */
+	private FloatVector [] calculateSplitMoves(FloatVector v)
+	{
+		float erreur = 10e-5F;
+
+		FloatVector [] splitMove = new FloatVector[2];
+		splitMove[0] = v;
+		splitMove[1] = new FloatVector(0, 0);
+		float minNormNextMove = splitMove[0].norm();
+		for (LineWall lw : m.getLineWalls())
+		{
+			if (!v.isCollinearTo((lw.getX2() - lw.getX1()), (lw.getY2() - lw.getY1())))
+			{
+				boolean horizontalWall = lw.isHorizontal();
+				float   coefProp       = (horizontalWall) ? ((lw.getY1() - p.getPosY()) / v.get(1)) : ((lw.getX1() - p.getPosX()) / v.get(0));
+				if (coefProp >= 0 && coefProp <= 1)
+				{
+					FloatVector intersecPoint = (horizontalWall) ? new FloatVector(p.getPosX() + coefProp * v.get(0), (float)lw.getY1()) : new FloatVector((float)lw.getX1(), p.getPosY() + coefProp * v.get(1));
+					splitMove[0] = intersecPoint.rightSubstractLeft(p.getPosX(), p.getPosY());
+					if (minNormNextMove == -1 || minNormNextMove >= splitMove[0].norm())
+					{
+						minNormNextMove = splitMove[0].norm();
+						splitMove[1]    = (horizontalWall) ? intersecPoint.leftSubstractRight(p.getPosX() + v.get(0), lw.getY1()) : intersecPoint.leftSubstractRight(lw.getX1(), p.getPosY() + v.get(1));
+						System.out.println("nMove : " + splitMove[1] + " actMove" + splitMove[0]);
+					}
+				}
+			}
+		}
+		return (splitMove);
+	}
+
+	/**
+	 * Déplace le joueur dans le labyrinthe, si le joueur rencontre un mur, il longera ce mur.
 	 * @param dx Le deplacement horizontal du joueur.
 	 * @param dy Le deplacement vertical du joueur.
-	 * @return true si le joueur a pu se déplacer
+	 * @return Player
 	 */
-	public void movePlayer(float dx, float dy)
+	public Player movePlayer(float dx, float dy)
 	{
-		/*
-		 * Vector<Float> d = new Vector<Float>();
-		 * d.add(dx);
-		 * d.add(dy);
-		 * d = calculateDep(d);
-		 * p.setPosX(p.getPosX() + d.get(0));
-		 * p.setPosY(p.getPosY() + d.get(1));
-		 */
+		FloatVector v = new FloatVector(dx, dy);
+
+		while (!v.isNul())
+		{
+			FloatVector [] moves = this.calculateSplitMoves(v);
+			this.applyMove(moves[0]);
+			v = moves[1];
+		}
+		return (p);
 	}
 
 	/**
 	 * Affiche le labyrinthe dans la console
+	 * @param reverse Affichage du labyrinthe reverser si reverse = true
 	 */
 	public void displayMaze(boolean reverse)
 	{
