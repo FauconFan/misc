@@ -2,6 +2,7 @@ package src.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Vector;
 import src.model.board.LineWall;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
@@ -42,15 +43,29 @@ public class MainMaze implements Serializable
 		return (this.m);
 	}
 
-	/**
-	 * Retourne true si le joueur peut se déplacer depuis sa position (x,y) vers (x+dx, y+dy).
-	 * @param dx Le deplacement horizontal du joueur.
-	 * @param dy Le deplacement vertical du joueur.
-	 * @return true si le joueur peut se déplacer.
-	 */
-	private boolean canMove(float dx, float dy)
+	public Vector <Float> calculateDep(Vector <Float> v)
 	{
-		return (false);
+		/*for (LineWall lw : m.getLineWalls())
+		 * {
+		 *  if (lw.isHorizontal()){
+		 *      if (lw.pointInWall(p.getPosX() + (lw.getY1() - p.getPosX())/v.get(1) * v.get(0), lw.getY1())){
+		 *          Vector <Float> newDep = new Vector<Float>();
+		 *          newDep.add(p.getPosX() + v.get(0));
+		 *          newDep.add(lw.getY1());
+		 *              return calculateDep (newDep);
+		 *          }
+		 *  }
+		 *  else
+		 *  {
+		 *      if (lw.pointInWall(lw.getY0(), p.getPosY() + (lw.getX1() - p.getPosX())/v.get(0) * v.get(1))){
+		 *          Vector <Float> newDep = new Vector<Float>();
+		 *          newDep.add(lw.getX1());
+		 *          newDep.add(p.getPosY() + v.get(1));
+		 *          return calculateDep (newDep);
+		 *      }
+		 *  }
+		 * }*/
+		return (null);
 	}
 
 	/**
@@ -59,23 +74,24 @@ public class MainMaze implements Serializable
 	 * @param dy Le deplacement vertical du joueur.
 	 * @return true si le joueur a pu se déplacer
 	 */
-	public boolean movePlayer(float dx, float dy)
+	public void movePlayer(float dx, float dy)
 	{
-		if (canMove(dx, dy))
-		{
-			p.setPosX(p.getPosX() + dx);
-			p.setPosY(p.getPosY() + dy);
-			return (true);
-		}
-		return (false);
+		/*
+		 * Vector<Float> d = new Vector<Float>();
+		 * d.add(dx);
+		 * d.add(dy);
+		 * d = calculateDep(d);
+		 * p.setPosX(p.getPosX() + d.get(0));
+		 * p.setPosY(p.getPosY() + d.get(1));
+		 */
 	}
 
 	/**
 	 * Affiche le labyrinthe dans la console
 	 */
-	public void displayMaze()
+	public void displayMaze(boolean reverse)
 	{
-		DisplayMazeConsole.displayMaze(m);
+		DisplayMazeConsole.displayMaze(m, reverse);
 	}
 
 	/**
