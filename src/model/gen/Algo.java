@@ -33,8 +33,8 @@ public abstract class Algo
 		MainMaze ml;
 		Algo     al;
 
-		al = new AlgoSample();
+		al = new AlgoSample2();
 		ml = new MainMaze(al, 0);
-		DisplayMazeConsole.displayMaze(ml.getAdaptedMaze());
+		ml.displayMaze();
 	}
 }
