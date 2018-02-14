@@ -35,15 +35,15 @@ public class ViewIngame extends Scene
 
 	public ViewIngame(ContentMaze m)
 	{
-		super(new Group());
+		super(new Group(), 500, 750, true);
 		root = (Group)this.getRoot();
 		maze = m;
 
 		setFill(Color.GREY);
 
 		// Seul moyen d'obtenir quelque chose d'euclidien...
-		Scale s = new Scale(1, 1, 0.05f);
-		root.getTransforms().add(s);
+
+		root.getChildren().add(new Box(100, 0.1, 100));
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
