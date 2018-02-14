@@ -51,10 +51,14 @@ public class ViewIngame extends Scene
 		root.getChildren().add(floor);
 
 		//Creation de la camera
-		final PerspectiveCamera camera = new PerspectiveCamera(true);
-		root.getChildren().add(camera);
+		final Group             cameraGroup = new Group();
+		final PerspectiveCamera camera      = new PerspectiveCamera(true);
+		cameraGroup.getChildren().add(camera);
 		camera.setNearClip(0.1);
 		camera.setFarClip(100000.0);
+
+		final Translate tr = new Translate();
+		cameraGroup.getTransforms().add(tr);
 
 		// Rotate
 		final Rotate rx = new Rotate();
@@ -62,11 +66,9 @@ public class ViewIngame extends Scene
 
 		final Rotate ry = new Rotate();
 		ry.setAxis(Rotate.X_AXIS);
-		camera.getTransforms().addAll(rx, ry);
+		cameraGroup.getTransforms().addAll(rx, ry);
 
-		final Translate tr = new Translate();
-		camera.getTransforms().add(tr);
-
+		root.getChildren().add(cameraGroup);
 		//Creation de la source de lumiere ompnipresente
 
 		root.getChildren().add(new AmbientLight(Color.WHITE));
@@ -90,8 +92,8 @@ public class ViewIngame extends Scene
 		// On tourne par rapport à Y
 
 		// constantes de déplacements
-		final int change = 1;
-		final int rot    = 1; // En degré
+		final int change = 100;
+		final int rot    = 90; // En degré
 
 		renderMaze();
 
@@ -106,6 +108,10 @@ public class ViewIngame extends Scene
 			case Z: tr.setZ(tr.getZ() + change); break;
 
 			case S: tr.setZ(tr.getZ() - change); break;
+
+			case F: tr.setY(tr.getY() + change); break;
+
+			case R: tr.setY(tr.getY() - change); break;
 
 			case LEFT: rx.setAngle(rx.getAngle() - rot); break;
 
@@ -125,7 +131,7 @@ public class ViewIngame extends Scene
 		});
 		//End
 		setOnMouseDragged((mEv)->{
-			final double rotateConst = 0.005;
+			final double rotateConst = 0.0005;
 			rx.setAngle(rx.getAngle() + (mousePosX - mEv.getSceneX()) * rotateConst);
 			ry.setAngle(ry.getAngle() + (mousePosY - mEv.getSceneY()) * rotateConst);
 		});
