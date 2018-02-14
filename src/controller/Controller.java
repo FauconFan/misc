@@ -183,6 +183,11 @@ public class Controller
 		return (this.maze.getAdaptedMaze());
 	}
 
+	public void showMaze()
+	{
+		this.maze.displayMaze();
+	}
+
 	// TEST
 	public static void main(String[] args)
 	{

@@ -33,23 +33,32 @@ public class ViewIngame extends Scene
 	private double mousePosX = 0;
 	private double mousePosY = 0;
 
+	final int hauteur = 60;
+
 	public ViewIngame(ContentMaze m)
 	{
-		super(new Group());
+		super(new Group(), 500, 750, true);
 		root = (Group)this.getRoot();
 		maze = m;
 
 		setFill(Color.GREY);
 
 		// Seul moyen d'obtenir quelque chose d'euclidien...
-		Scale s = new Scale(1, 1, 0.05f);
-		root.getTransforms().add(s);
+
+		Box floor = new Box(1000, 0.5, 1000);
+		floor.setMaterial(new PhongMaterial(Color.RED));
+		floor.setTranslateY(hauteur / 2 - 1);
+		root.getChildren().add(floor);
 
 		//Creation de la camera
-		final PerspectiveCamera camera = new PerspectiveCamera(true);
-		root.getChildren().add(camera);
+		final Group             cameraGroup = new Group();
+		final PerspectiveCamera camera      = new PerspectiveCamera(true);
+		cameraGroup.getChildren().add(camera);
 		camera.setNearClip(0.1);
 		camera.setFarClip(100000.0);
+
+		final Translate tr = new Translate();
+		cameraGroup.getTransforms().add(tr);
 
 		// Rotate
 		final Rotate rx = new Rotate();
@@ -57,27 +66,18 @@ public class ViewIngame extends Scene
 
 		final Rotate ry = new Rotate();
 		ry.setAxis(Rotate.X_AXIS);
-		camera.getTransforms().addAll(rx, ry);
+		cameraGroup.getTransforms().addAll(rx, ry);
 
-		final Translate tr = new Translate();
-		camera.getTransforms().add(tr);
-
+		root.getChildren().add(cameraGroup);
 		//Creation de la source de lumiere ompnipresente
 
-		root.getChildren().add(new AmbientLight(Color.WHITE));
+		//root.getChildren().add(new AmbientLight(Color.WHITE));
 
 		//Source de lumiere sur le joueur
-		//TODO
 
-		/*
-		 * PointLight lightPlayer = new PointLight();
-		 * lightPlayer.setColor(Color.WHITE);
-		 *
-		 * lightPlayer.setTranslateX(tr.getX());
-		 * lightPlayer.setTranslateY(tr.getY());
-		 * lightPlayer.setTranslateZ(tr.getZ());
-		 * this.root.getChildren().add(lightPlayer);
-		 */
+		PointLight lightOnPlayer = new PointLight();
+		lightOnPlayer.setColor(Color.WHITE);
+		cameraGroup.getChildren().add(lightOnPlayer);
 
 		// Défini la camera pour la scène
 		setCamera(camera);
@@ -85,8 +85,8 @@ public class ViewIngame extends Scene
 		// On tourne par rapport à Y
 
 		// constantes de déplacements
-		final int change = 1;
-		final int rot    = 1; // En degré
+		final int change = 5;
+		final int rot    = 5; // En degré
 
 		renderMaze();
 
@@ -101,6 +101,10 @@ public class ViewIngame extends Scene
 			case Z: tr.setZ(tr.getZ() + change); break;
 
 			case S: tr.setZ(tr.getZ() - change); break;
+
+			case F: tr.setY(tr.getY() + change); break;
+
+			case R: tr.setY(tr.getY() - change); break;
 
 			case LEFT: rx.setAngle(rx.getAngle() - rot); break;
 
@@ -128,8 +132,7 @@ public class ViewIngame extends Scene
 
 	private void renderMaze()
 	{
-		final int hauteur = 60;
-		Group     walls   = new Group();
+		Group walls = new Group();
 
 		final int facteur = 30;
 
