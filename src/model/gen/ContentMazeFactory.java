@@ -8,6 +8,7 @@ import java.util.Set;
 
 import src.model.board.Case;
 import src.model.board.LineWall;
+import src.model.board.LineWallUtils;
 import src.model.ContentMaze;
 import src.model.gen.RectMazeShift;
 import src.utils.DiscreteStatMazeGenerator;
@@ -165,7 +166,7 @@ public class ContentMazeFactory
 			{
 				LineWall linter;
 
-				linter = LineWall.getIntersection(lw, actu);
+				linter = LineWallUtils.intersection(lw, actu);
 				if (linter != null)
 				{
 					result.add(linter);
@@ -229,7 +230,7 @@ public class ContentMazeFactory
 						{
 							for (LineWall door : doors)
 							{
-								ArrayList <LineWall> ahah = tmp.get(i).except(door);
+								ArrayList <LineWall> ahah = LineWallUtils.except(tmp.get(i), door);
 								tmp.addAll(ahah);
 								tmp.remove(i);
 							}

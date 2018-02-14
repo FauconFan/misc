@@ -1,6 +1,7 @@
 package src.model.gen;
 
 import src.model.board.LineWall;
+import src.model.board.LineWallUtils;
 import src.model.ContentMaze;
 import src.model.gen.ContentMazeFactory;
 import src.model.gen.RectMazeShift;
