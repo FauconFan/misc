@@ -17,13 +17,15 @@ import src.utils.StringManipulation;
 public class MainMaze implements Serializable
 {
 	private ContentMaze m;
+	private MazeDimension mazeDim;
 	private String name;
 	private Player p;
 	private int porteeVue;
 
-	public MainMaze(ContentMaze m, String name, Player p, int porteeVue)
+	public MainMaze(ContentMaze m, MazeDimension mz, String name, Player p, int porteeVue)
 	{
 		this.m         = m;
+		this.mazeDim   = mz;
 		this.name      = name;
 		this.p         = p;
 		this.porteeVue = porteeVue;
@@ -31,7 +33,7 @@ public class MainMaze implements Serializable
 
 	public MainMaze(Algo algo, int porteeVueP)
 	{
-		this(algo.getContentMaze(), "", null, porteeVueP);
+		this(algo.getContentMaze(), algo.getMazeDimension(), "", null, porteeVueP);
 	}
 
 	/**
@@ -41,6 +43,11 @@ public class MainMaze implements Serializable
 	public ContentMaze getAdaptedMaze()
 	{
 		return (this.m);
+	}
+
+	public MazeDimension getMazeDimension()
+	{
+		return (this.mazeDim);
 	}
 
 	public Vector <Float> calculateDep(Vector <Float> v)
@@ -72,7 +79,6 @@ public class MainMaze implements Serializable
 	 * Déplace le joueur dans le labyrinthe depuis sa position (x,y) vers (x+dx,y+dy) si c'est possible.
 	 * @param dx Le deplacement horizontal du joueur.
 	 * @param dy Le deplacement vertical du joueur.
-	 * @return true si le joueur a pu se déplacer
 	 */
 	public void movePlayer(float dx, float dy)
 	{
@@ -88,6 +94,7 @@ public class MainMaze implements Serializable
 
 	/**
 	 * Affiche le labyrinthe dans la console
+	 * @param reverse reverse axis y
 	 */
 	public void displayMaze(boolean reverse)
 	{
