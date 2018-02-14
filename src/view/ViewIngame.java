@@ -33,6 +33,8 @@ public class ViewIngame extends Scene
 	private double mousePosX = 0;
 	private double mousePosY = 0;
 
+	final int hauteur = 60;
+
 	public ViewIngame(ContentMaze m)
 	{
 		super(new Group(), 500, 750, true);
@@ -43,7 +45,10 @@ public class ViewIngame extends Scene
 
 		// Seul moyen d'obtenir quelque chose d'euclidien...
 
-		root.getChildren().add(new Box(100, 0.1, 100));
+		Box floor = new Box(1000, 0.5, 1000);
+		floor.setMaterial(new PhongMaterial(Color.RED));
+		floor.setTranslateY(hauteur / 2 - 1);
+		root.getChildren().add(floor);
 
 		//Creation de la camera
 		final PerspectiveCamera camera = new PerspectiveCamera(true);
@@ -128,8 +133,7 @@ public class ViewIngame extends Scene
 
 	private void renderMaze()
 	{
-		final int hauteur = 60;
-		Group     walls   = new Group();
+		Group walls = new Group();
 
 		final int facteur = 30;
 
