@@ -71,20 +71,13 @@ public class ViewIngame extends Scene
 		root.getChildren().add(cameraGroup);
 		//Creation de la source de lumiere ompnipresente
 
-		root.getChildren().add(new AmbientLight(Color.WHITE));
+		//root.getChildren().add(new AmbientLight(Color.WHITE));
 
 		//Source de lumiere sur le joueur
-		//TODO
 
-		/*
-		 * PointLight lightPlayer = new PointLight();
-		 * lightPlayer.setColor(Color.WHITE);
-		 *
-		 * lightPlayer.setTranslateX(tr.getX());
-		 * lightPlayer.setTranslateY(tr.getY());
-		 * lightPlayer.setTranslateZ(tr.getZ());
-		 * this.root.getChildren().add(lightPlayer);
-		 */
+		PointLight lightOnPlayer = new PointLight();
+		lightOnPlayer.setColor(Color.WHITE);
+		cameraGroup.getChildren().add(lightOnPlayer);
 
 		// Défini la camera pour la scène
 		setCamera(camera);
