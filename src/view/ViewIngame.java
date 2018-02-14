@@ -69,10 +69,6 @@ public class ViewIngame extends Scene
 		cameraGroup.getTransforms().addAll(rx, ry);
 
 		root.getChildren().add(cameraGroup);
-		//Creation de la source de lumiere ompnipresente
-
-		//root.getChildren().add(new AmbientLight(Color.WHITE));
-
 		//Source de lumiere sur le joueur
 
 		PointLight lightOnPlayer = new PointLight();
@@ -137,26 +133,29 @@ public class ViewIngame extends Scene
 		final int facteur = 30;
 
 		root.getChildren().add(walls);
-		//LineWall[] lineWalls = { new LineWall(0, 0, 0, 5, (float)(0.5)), new LineWall(0, 5, 5, 5, (float)(0.5)), new LineWall(5, 5, 5, 0, (float)(0.5)), new LineWall(5, 0, 0, 0, (float)(0.5)) };
-		LineWall[] lineWalls = maze.getLineWalls();
-
+		final LineWall[] lineWalls = maze.getLineWalls();
+		//LineWall[] lineWalls={new LineWall(0,0,10,0)};
 		for (LineWall l: lineWalls)
 		{
-			System.out.println(l);
 			Box w = new Box();
 			w.setHeight(hauteur);
-			if (l.getX1() == l.getX2())                                            // Mur "vertical" dans le plan
+			//System.out.println(l);
+			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
 			{
-				w.setDepth((l.getY2() - l.getY1()) * facteur);
+				int depth = l.getY2() - l.getY1();
+				w.setDepth(depth * facteur);
 				w.setWidth(l.getEpaisseur() * facteur);
+				w.setTranslateX(l.getX1() * facteur);
+				w.setTranslateZ((l.getY1() + depth / 2) * facteur);
 			}
 			else // Mur horizontal
 			{
-				w.setWidth((l.getX2() - l.getX1()) * facteur);
+				final int width = l.getX2() - l.getX1();
+				w.setWidth(width * facteur);
 				w.setDepth(l.getEpaisseur() * facteur);
+				w.setTranslateX((l.getX1() + width / 2) * facteur);
+				w.setTranslateZ(l.getY1() * facteur);
 			}
-			w.setTranslateX(l.getX1() * facteur);
-			w.setTranslateZ(l.getY1() * facteur);
 			w.setMaterial(new PhongMaterial(Color.GREEN));
 			walls.getChildren().add(w);
 		}
