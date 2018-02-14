@@ -92,8 +92,8 @@ public class ViewIngame extends Scene
 		// On tourne par rapport à Y
 
 		// constantes de déplacements
-		final int change = 100;
-		final int rot    = 90; // En degré
+		final int change = 5;
+		final int rot    = 5; // En degré
 
 		renderMaze();
 
@@ -131,7 +131,7 @@ public class ViewIngame extends Scene
 		});
 		//End
 		setOnMouseDragged((mEv)->{
-			final double rotateConst = 0.0005;
+			final double rotateConst = 0.005;
 			rx.setAngle(rx.getAngle() + (mousePosX - mEv.getSceneX()) * rotateConst);
 			ry.setAngle(ry.getAngle() + (mousePosY - mEv.getSceneY()) * rotateConst);
 		});
