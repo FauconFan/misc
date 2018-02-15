@@ -4,37 +4,42 @@ import java.util.ArrayList;
 
 public class MazeDimension
 {
-	public ArrayList <SquareInMaze> list_rectmaze;
+	private ArrayList <RectInMaze> list_rectmaze;
 
 	public MazeDimension()
 	{
 		this.list_rectmaze = new ArrayList <>();
 	}
 
+	public ArrayList <RectInMaze> getListRectMaze()
+	{
+		return (this.list_rectmaze);
+	}
+
 	public void append(int x1, int y1, int x2, int y2)
 	{
-		list_rectmaze.add(new SquareInMaze(x1, y1, x2, y2));
+		list_rectmaze.add(new RectInMaze(x1, y1, x2, y2));
 	}
 
 	public String toString()
 	{
 		String str = "";
 
-		for (SquareInMaze si : list_rectmaze)
+		for (RectInMaze si : list_rectmaze)
 		{
 			str += si + "\n";
 		}
 		return (str);
 	}
 
-	public static class SquareInMaze
+	public static class RectInMaze
 	{
 		public int x1;
 		public int y1;
 		public int x2;
 		public int y2;
 
-		public SquareInMaze(int x1, int y1, int x2, int y2)
+		public RectInMaze(int x1, int y1, int x2, int y2)
 		{
 			this.x1 = x1;
 			this.y1 = y1;
