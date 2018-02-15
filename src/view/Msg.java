@@ -1,6 +1,6 @@
 package src.view;
 
-interface Msg
+public interface Msg
 {
 	/**
 	 * Set the msg on the display

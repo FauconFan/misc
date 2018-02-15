@@ -1,4 +1,4 @@
-package src.view;
+package src.view.scene;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -16,12 +16,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-class ViewInMenuPause extends Scene
+import src.view.Menu;
+import src.view.View;
+
+class Pause extends Scene
 {
 	private Scene previous;
 	private final View v;
 
-	public ViewInMenuPause(View v, Scene p)
+	public Pause(View v, Scene p)
 	{
 		super(new Group());
 		((Group)getRoot()).getChildren().add(new MenuPause());
@@ -41,7 +44,7 @@ class ViewInMenuPause extends Scene
 
 			Button buttonReturn = addButton("Return to Menu");
 			buttonReturn.setOnAction(event->{
-				v.changeScene(new ViewInMenu(v));
+				v.changeScene(new Menus(v));
 			});
 
 			putMsg();

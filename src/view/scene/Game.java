@@ -1,4 +1,4 @@
-package src.view;
+package src.view.scene;
 
 import javafx.application.Application;
 import javafx.scene.AmbientLight;
@@ -24,7 +24,9 @@ import src.model.board.LineWall;
 import src.model.MainMaze;
 import src.model.MazeDimension;
 
-public class ViewIngame extends Scene
+import src.view.View;
+
+public class Game extends Scene
 {
 	private final Group root;
 	private final MainMaze maze;
@@ -40,7 +42,7 @@ public class ViewIngame extends Scene
 	// Facteur de multiplication général
 	final int facteur = 30;
 
-	public ViewIngame(View v, MainMaze m)
+	public Game(View v, MainMaze m)
 	{
 		super(new Group(), 500, 750, true);
 		this.v = v;
@@ -110,7 +112,7 @@ public class ViewIngame extends Scene
 
 			case DOWN: ry.setAngle(ry.getAngle() - rot); break;
 
-			case ESCAPE: v.changeScene(new ViewInMenuPause(v, this)); break;
+			case ESCAPE: v.changeScene(new Pause(v, this)); break;
 			}
 		});
 
@@ -128,6 +130,9 @@ public class ViewIngame extends Scene
 		});
 	}
 
+	/**
+	 * Dessine le Maze
+	 */
 	private void renderMaze()
 	{
 		Group walls = new Group();
@@ -160,6 +165,9 @@ public class ViewIngame extends Scene
 		}
 	}
 
+	/**
+	 * Dessine le sol
+	 */
 	public Group makeFloors()
 	{
 		final Group floors = new Group();

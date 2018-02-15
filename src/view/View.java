@@ -20,6 +20,9 @@ import java.io.File;
 import src.controller.Controller;
 import src.model.gen.Algo;
 
+import src.view.scene.Game;
+import src.view.scene.Menus;
+
 public class View
 {
 	private final Controller con;
@@ -29,7 +32,7 @@ public class View
 	public View(Stage stage, Controller con)
 	{
 		this.con   = con;
-		this.scene = new ViewInMenu(this);
+		this.scene = new Menus(this);
 		this.stage = stage;
 
 		stage.setTitle("Laby");
@@ -47,7 +50,7 @@ public class View
 	{
 		con.createMaze(a, c);
 		con.showMaze(true);
-		scene = new ViewIngame(this, con.getMaze());
+		scene = new Game(this, con.getMaze());
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -59,7 +62,7 @@ public class View
 
 	public void setMsg(String s)
 	{
-		((ViewInMenu)this.scene).setMsg(s);
+		((Menus)this.scene).setMsg(s);
 	}
 
 	public void changeScene(Scene s)

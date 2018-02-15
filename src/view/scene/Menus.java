@@ -1,4 +1,5 @@
-package src.view;
+package src.view.scene;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -6,6 +7,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.Group;
 import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,20 +22,24 @@ import src.controller.Controller;
 import src.model.gen.AlgoSample;
 import src.model.gen.AlgoSample2;
 
-public class ViewInMenu extends Scene
+import src.view.Menu;
+import src.view.Msg;
+import src.view.View;
+
+public class Menus extends Scene
 {
 	private Parent view;
 	private Parent prec;
 	private final View v;
 
-	public ViewInMenu(View v)
+	public Menus(View v)
 	{
-		super(new VBox());
-		changeView(new MenuStart());
+		super(new Group());
+		((Group)getRoot()).getChildren().add(new MenuStart());
 		this.v = v;
 	}
 
-	public ViewInMenu(View v, Menu m)
+	public Menus(View v, Menu m)
 	{
 		super(m);
 		this.v    = v;
@@ -136,7 +142,6 @@ public class ViewInMenu extends Scene
 		if (this.view instanceof Msg)
 		{
 			((Msg)this.view).setMsg(str);
-			System.out.println("cc");
 		}
 	}
 }
