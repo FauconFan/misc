@@ -65,5 +65,6 @@ public class View
 	public void changeScene(Scene s)
 	{
 		stage.setScene(s);
+		this.scene = s;
 	}
 }

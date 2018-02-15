@@ -49,8 +49,7 @@ public class ViewIngame extends Scene
 
 		setFill(Color.GREY);
 
-		// Seul moyen d'obtenir quelque chose d'euclidien...
-
+		// Ajoute le sol
 		root.getChildren().add(makeFloors());
 
 		//Creation de la camera
@@ -111,7 +110,7 @@ public class ViewIngame extends Scene
 
 			case DOWN: ry.setAngle(ry.getAngle() - rot); break;
 
-			case ESCAPE: v.changeScene(new ViewInMenu(v)); break;
+			case ESCAPE: v.changeScene(new ViewInMenuPause(v, this)); break;
 			}
 		});
 

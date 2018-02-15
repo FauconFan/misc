@@ -120,26 +120,6 @@ public class ViewInMenu extends Scene
 		}
 	}
 
-	public class MenuPause extends Menu
-	{
-		public MenuPause()
-		{
-			Button buttonUnPause = addButton("Unpause");
-
-			buttonUnPause.setOnAction(event->{
-				view = prec;
-				changeView(view);
-			});
-
-			Button buttonReturn = addButton("Return to Menu");
-			buttonReturn.setOnAction(event->{
-				changeView(new MenuStart());
-			});
-
-			putMsg();
-		}
-	}
-
 	private void changeView(Parent m)
 	{
 		prec = view;
