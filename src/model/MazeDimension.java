@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class MazeDimension
 {
-	private ArrayList <RectInMaze> list_rectmaze;
+	public final ArrayList <RectInMaze> list_rectmaze;
 
 	public MazeDimension()
 	{
@@ -34,10 +34,10 @@ public class MazeDimension
 
 	public static class RectInMaze
 	{
-		public int x1;
-		public int y1;
-		public int x2;
-		public int y2;
+		public final int x1;
+		public final int y1;
+		public final int x2;
+		public final int y2;
 
 		public RectInMaze(int x1, int y1, int x2, int y2)
 		{
