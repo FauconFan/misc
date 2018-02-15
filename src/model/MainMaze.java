@@ -20,13 +20,15 @@ import src.model.gen.AlgoSample2;
 public class MainMaze implements Serializable
 {
 	private ContentMaze m;
+	private MazeDimension mazeDim;
 	private String name;
 	private Player p;
 	private int porteeVue;
 
-	public MainMaze(ContentMaze m, String name, Player p, int porteeVue)
+	public MainMaze(ContentMaze m, MazeDimension mz, String name, Player p, int porteeVue)
 	{
 		this.m         = m;
+		this.mazeDim   = mz;
 		this.name      = name;
 		this.p         = p;
 		this.porteeVue = porteeVue;
@@ -34,12 +36,17 @@ public class MainMaze implements Serializable
 
 	public MainMaze(Algo algo, int porteeVueP)
 	{
-		this(algo.getContentMaze(), "", null, porteeVueP);
+		this(algo.getContentMaze(), algo.getMazeDimension(), "", null, porteeVueP);
 	}
 
 	public ContentMaze getAdaptedMaze()
 	{
 		return (this.m);
+	}
+
+	public MazeDimension getMazeDimension()
+	{
+		return (this.mazeDim);
 	}
 
 	/**
@@ -108,7 +115,7 @@ public class MainMaze implements Serializable
 
 	/**
 	 * Affiche le labyrinthe dans la console
-	 * @param reverse Affichage du labyrinthe reverser si reverse = true
+	 * @param reverse reverse axis y
 	 */
 	public void displayMaze(boolean reverse)
 	{

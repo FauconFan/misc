@@ -6,6 +6,7 @@ import src.model.ContentMaze;
 import src.model.gen.ContentMazeFactory;
 import src.model.gen.RectMazeShift;
 import src.model.MainMaze;
+import src.model.MazeDimension;
 import src.utils.DiscreteStatMazeGenerator;
 import src.utils.DisplayMazeConsole;
 
@@ -29,14 +30,23 @@ public abstract class Algo
 		return (this.cm);
 	}
 
+	public MazeDimension getMazeDimension()
+	{
+		if (this.cmfactory == null)
+		{
+			throw new RuntimeException("Should never happen. The maze should be generated");
+		}
+		return (this.cmfactory.getMazeDimension());
+	}
+
 	public static void main(String[] args)
 	{
 		MainMaze ml;
 		Algo     al;
 
-		al = new AlgoSample2();
+		al = new AlgoBackTracker();
 		ml = new MainMaze(al, 0);
-		ml.displayMaze(true);
 		ml.displayMaze(false);
+		System.out.println(ml.getMazeDimension());
 	}
 }

@@ -11,10 +11,12 @@ import src.model.board.LineWall;
 import src.model.board.LineWallUtils;
 import src.model.ContentMaze;
 import src.model.gen.RectMazeShift;
+import src.model.MazeDimension;
 import src.utils.DiscreteStatMazeGenerator;
 
 public class ContentMazeFactory
 {
+	private MazeDimension mazeDim;
 	private HashMap <Integer, ArrayList <LineWall> > contentX;
 	private HashMap <Integer, ArrayList <LineWall> > contentY;
 	private HashMap <Integer, ArrayList <LineWall> > listDoorsX;
@@ -23,6 +25,7 @@ public class ContentMazeFactory
 
 	public ContentMazeFactory()
 	{
+		this.mazeDim             = new MazeDimension();
 		this.contentX            = new HashMap <>();
 		this.contentY            = new HashMap <>();
 		this.listDoorsX          = new HashMap <>();
@@ -71,6 +74,7 @@ public class ContentMazeFactory
 		y1 = cms.getDY();
 		y2 = cms.getRectMazeSizeY() + y1;
 
+		this.mazeDim.append(x1, y1, x2, y2);
 		verifyIfMazeGenerationIsValid(cms, x1, x2, y1, y2);
 		addingDoors(cms, x1, x2, y1, y2);
 		reallyAddRectMazeShift(cms);
@@ -363,5 +367,10 @@ public class ContentMazeFactory
 	public Case[] getFinalSpecialCases()
 	{
 		return (this.contentSpecialCases.toArray(new Case[0]));
+	}
+
+	public MazeDimension getMazeDimension()
+	{
+		return (this.mazeDim);
 	}
 }

@@ -38,7 +38,7 @@ public class DisplayMazeConsole
 
 	/**
 	 * Affiche le labyrinthe dans la console
-	 * @param ContentMaze Labyrinthe a affiché
+	 * @param cm Labyrinthe a affiché
 	 * @param reverse Sens d'affichage par rapport aux ordonnées
 	 */
 	public static void displayMaze(ContentMaze cm, boolean reverse)

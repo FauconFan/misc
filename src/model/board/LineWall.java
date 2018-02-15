@@ -122,6 +122,14 @@ public class LineWall implements Serializable, Cloneable
 		return (new LineWall(this.getX1(), this.getY1(), this.getX2(), this.getY2(), this.getEpaisseur()));
 	}
 
+	public boolean equals(LineWall lw)
+	{
+		return (this.x1 == lw.getX1() &&
+				this.x2 == lw.getX2() &&
+				this.y1 == lw.getY1() &&
+				this.y2 == lw.getY2());
+	}
+
 	public String toString()
 	{
 		return ("(" + x1 + ", " + y1 + ") => (" + x2 + ", " + y2 + ")");
