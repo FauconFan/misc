@@ -44,9 +44,9 @@ public abstract class Algo
 		MainMaze ml;
 		Algo     al;
 
-		al = new AlgoSample();
+		al = new AlgoBackTracker();
 		ml = new MainMaze(al, 0);
-		ml.displayMaze(true);
+		ml.displayMaze(false);
 		System.out.println(ml.getMazeDimension());
 	}
 }
