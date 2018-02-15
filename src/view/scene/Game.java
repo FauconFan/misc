@@ -141,7 +141,6 @@ public class Game extends Scene
 		final LineWall[] lineWalls = maze.getAdaptedMaze().getLineWalls();
 		for (LineWall l: lineWalls)
 		{
-			System.out.println(l);
 			Box w = new Box();
 			w.setHeight(hauteur);
 			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
