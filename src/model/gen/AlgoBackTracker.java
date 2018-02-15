@@ -15,9 +15,12 @@ import src.model.gen.Algo;
 import src.model.gen.ContentMazeFactory;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
+import src.utils.DisplayMazeConsole;
 
 public class AlgoBackTracker extends Algo
 {
+	private static final boolean DEBUG_MODE = false;
+
 	public AlgoBackTracker()
 	{
 		super();
@@ -39,8 +42,8 @@ public class AlgoBackTracker extends Algo
 
 		Case[]     listSpecialeCases;
 		LineWall[] listWalls;
-		int        size_x = 100;
-		int        size_y = 20;
+		int        size_x = 80;
+		int        size_y = 40;
 
 		listSpecialeCases = this.buildCases(hasStartCase, hasEndCase);
 		listWalls         = this.buildWalls(size_x, size_y);
@@ -81,10 +84,12 @@ public class AlgoBackTracker extends Algo
 	{
 		HashMap <Integer, ArrayList <LineWall> > list_X = new HashMap <>();
 		HashMap <Integer, ArrayList <LineWall> > list_Y = new HashMap <>();
-		ArrayList <LineWall> final_res       = new ArrayList <>();
-		ArrayList <Point>    unvisited_cases = new ArrayList <>();
-		Point  current_position_agent        = null;
-		Random ran = new Random();
+		ArrayList <Point> unvisited_cases        = new ArrayList <>();
+		ArrayList <Point> neighborhoods          = new ArrayList <>();
+		Point             ptActu                 = null;
+		Point             next                   = null;
+		Point             current_position_agent = null;
+		Random            ran = new Random();
 
 		// Initialize Walls : Fill it
 		for (int i = 0; i <= size_y; i++)
@@ -116,32 +121,21 @@ public class AlgoBackTracker extends Algo
 
 		while (unvisited_cases.isEmpty() == false)
 		{
-			ArrayList <Point> neighborhoods = new ArrayList <>();
-			Point             ptLeft;
-			Point             ptRight;
-			Point             ptUp;
-			Point             ptDown;
-
-			ptLeft  = Point.getArrayListLeft(unvisited_cases, current_position_agent);
-			ptRight = Point.getArrayListRight(unvisited_cases, current_position_agent);
-			ptUp    = Point.getArrayListUp(unvisited_cases, current_position_agent);
-			ptDown  = Point.getArrayListDown(unvisited_cases, current_position_agent);
-
-			if (ptLeft != null)
+			if ((ptActu = Point.getArrayListLeft(unvisited_cases, current_position_agent)) != null)
 			{
-				neighborhoods.add(ptLeft);
+				neighborhoods.add(ptActu);
 			}
-			if (ptRight != null)
+			if ((ptActu = Point.getArrayListRight(unvisited_cases, current_position_agent)) != null)
 			{
-				neighborhoods.add(ptRight);
+				neighborhoods.add(ptActu);
 			}
-			if (ptUp != null)
+			if ((ptActu = Point.getArrayListUp(unvisited_cases, current_position_agent)) != null)
 			{
-				neighborhoods.add(ptUp);
+				neighborhoods.add(ptActu);
 			}
-			if (ptDown != null)
+			if ((ptActu = Point.getArrayListDown(unvisited_cases, current_position_agent)) != null)
 			{
-				neighborhoods.add(ptDown);
+				neighborhoods.add(ptActu);
 			}
 
 			if (neighborhoods.isEmpty())
@@ -150,28 +144,47 @@ public class AlgoBackTracker extends Algo
 				continue;
 			}
 
-			Point next = neighborhoods.get(ran.nextInt(neighborhoods.size()));
+			next = neighborhoods.get(ran.nextInt(neighborhoods.size()));
 			unvisited_cases.remove(next);
 			Point.removeWalls(list_Y, list_X, current_position_agent, next);
 			current_position_agent = next;
+
+			if (DEBUG_MODE)
+			{
+				DisplayMazeConsole.displayMaze(new ContentMaze(null, buildFinal(list_X, list_Y)), false);
+				try
+				{
+					Thread.sleep(50);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+					System.exit(1);
+				}
+			}
 		}
 
-		// Build the answer
-		Collection <ArrayList <LineWall> > content_y = list_Y.values();
+		return (buildFinal(list_Y, list_X));
+	}
+
+	private LineWall[] buildFinal(HashMap <Integer, ArrayList <LineWall> > list1, HashMap <Integer, ArrayList <LineWall> > list2)
+	{
+		ArrayList <LineWall> res = new ArrayList <>();
+
+		Collection <ArrayList <LineWall> > content_y = list1.values();
 		Object[] content_y2 = content_y.toArray();
 		for (Object obj : content_y2)
 		{
-			final_res.addAll((ArrayList <LineWall> )obj);
+			res.addAll((ArrayList <LineWall> )obj);
 		}
 
-		Collection <ArrayList <LineWall> > content_x = list_X.values();
+		Collection <ArrayList <LineWall> > content_x = list2.values();
 		Object[] content_x2 = content_x.toArray();
 		for (Object obj : content_x2)
 		{
-			final_res.addAll((ArrayList <LineWall> )obj);
+			res.addAll((ArrayList <LineWall> )obj);
 		}
-
-		return (final_res.toArray(new LineWall[0]));
+		return (res.toArray(new LineWall[0]));
 	}
 
 	private static class Point
