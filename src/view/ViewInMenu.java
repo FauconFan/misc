@@ -33,6 +33,13 @@ public class ViewInMenu extends Scene
 		this.v = v;
 	}
 
+	public ViewInMenu(View v, Menu m)
+	{
+		super(m);
+		this.v    = v;
+		this.view = m;
+	}
+
 	public class MenuStart extends Menu
 	{
 		public MenuStart()

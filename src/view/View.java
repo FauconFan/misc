@@ -47,7 +47,7 @@ public class View
 	{
 		con.createMaze(a, c);
 		con.showMaze(true);
-		scene = new ViewIngame(con.getMaze());
+		scene = new ViewIngame(this, con.getMaze());
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -60,5 +60,10 @@ public class View
 	public void setMsg(String s)
 	{
 		((ViewInMenu)this.scene).setMsg(s);
+	}
+
+	public void changeScene(Scene s)
+	{
+		stage.setScene(s);
 	}
 }

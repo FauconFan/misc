@@ -20,7 +20,6 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-
 import src.model.board.LineWall;
 import src.model.MainMaze;
 import src.model.MazeDimension;
@@ -29,6 +28,7 @@ public class ViewIngame extends Scene
 {
 	private final Group root;
 	private final MainMaze maze;
+	private final View v;
 
 	// Anciennes positions de la souris
 	private double mousePosX = 0;
@@ -40,11 +40,12 @@ public class ViewIngame extends Scene
 	// Facteur de multiplication général
 	final int facteur = 30;
 
-	public ViewIngame(MainMaze m)
+	public ViewIngame(View v, MainMaze m)
 	{
 		super(new Group(), 500, 750, true);
-		root = (Group)this.getRoot();
-		maze = m;
+		this.v = v;
+		root   = (Group)this.getRoot();
+		maze   = m;
 
 		setFill(Color.GREY);
 
@@ -109,6 +110,8 @@ public class ViewIngame extends Scene
 			case UP: ry.setAngle(ry.getAngle() + rot); break;
 
 			case DOWN: ry.setAngle(ry.getAngle() - rot); break;
+
+			case ESCAPE: v.changeScene(new ViewInMenu(v)); break;
 			}
 		});
 
