@@ -22,20 +22,25 @@ import javafx.stage.Stage;
 
 
 import src.model.board.LineWall;
-import src.model.ContentMaze;
+import src.model.MainMaze;
+import src.model.MazeDimension;
 
 public class ViewIngame extends Scene
 {
 	private final Group root;
-	private final ContentMaze maze;
+	private final MainMaze maze;
 
-	//To remind pos of the mouse
+	// Anciennes positions de la souris
 	private double mousePosX = 0;
 	private double mousePosY = 0;
 
+	//Hauteur des murs
 	final int hauteur = 60;
 
-	public ViewIngame(ContentMaze m)
+	// Facteur de multiplication général
+	final int facteur = 30;
+
+	public ViewIngame(MainMaze m)
 	{
 		super(new Group(), 500, 750, true);
 		root = (Group)this.getRoot();
@@ -45,10 +50,7 @@ public class ViewIngame extends Scene
 
 		// Seul moyen d'obtenir quelque chose d'euclidien...
 
-		Box floor = new Box(1000, 0.5, 1000);
-		floor.setMaterial(new PhongMaterial(Color.RED));
-		floor.setTranslateY(hauteur / 2 - 1);
-		root.getChildren().add(floor);
+		root.getChildren().add(makeFloors());
 
 		//Creation de la camera
 		final Group             cameraGroup = new Group();
@@ -77,8 +79,6 @@ public class ViewIngame extends Scene
 
 		// Défini la camera pour la scène
 		setCamera(camera);
-
-		// On tourne par rapport à Y
 
 		// constantes de déplacements
 		final int change = 5;
@@ -130,16 +130,12 @@ public class ViewIngame extends Scene
 	{
 		Group walls = new Group();
 
-		final int facteur = 30;
-
 		root.getChildren().add(walls);
-		final LineWall[] lineWalls = maze.getLineWalls();
-		//LineWall[] lineWalls={new LineWall(0,0,10,0)};
+		final LineWall[] lineWalls = maze.getAdaptedMaze().getLineWalls();
 		for (LineWall l: lineWalls)
 		{
 			Box w = new Box();
 			w.setHeight(hauteur);
-			//System.out.println(l);
 			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
 			{
 				int depth = l.getY2() - l.getY1();
@@ -159,5 +155,23 @@ public class ViewIngame extends Scene
 			w.setMaterial(new PhongMaterial(Color.GREEN));
 			walls.getChildren().add(w);
 		}
+	}
+
+	public Group makeFloors()
+	{
+		final Group floors = new Group();
+
+		for (MazeDimension.RectInMaze md: maze.getMazeDimension().list_rectmaze)
+		{
+			final int w = md.x2 - md.x1;
+			final int h = md.y2 - md.y1;
+			Box       f = new Box(w * facteur, 0.5, h * facteur);
+			f.setTranslateX((md.x1 + w / 2) * facteur);
+			f.setTranslateZ((md.y1 + h / 2) * facteur);
+			f.setMaterial(new PhongMaterial(Color.RED));
+			f.setTranslateY(hauteur / 2 - 1);
+			floors.getChildren().add(f);
+		}
+		return (floors);
 	}
 }

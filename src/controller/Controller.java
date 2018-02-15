@@ -178,9 +178,9 @@ public class Controller
 		return (null);
 	}
 
-	public ContentMaze getMaze()
+	public MainMaze getMaze()
 	{
-		return (this.maze.getAdaptedMaze());
+		return (this.maze);
 	}
 
 	public void showMaze()
