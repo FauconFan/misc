@@ -18,8 +18,8 @@ import javafx.stage.Stage;
 import java.io.File;
 
 import src.controller.Controller;
+import src.model.gen.AlgoSample;
 import src.model.gen.AlgoSample2;
-
 
 public class View
 {
@@ -134,7 +134,7 @@ public class View
 
 			buttonCreate.setOnAction(event->{
 				//TODO
-				con.createMaze(new AlgoSample2(), 30);
+				con.createMaze(new AlgoSample(), 30);
 				con.showMaze(true);
 				scene = new ViewIngame(con.getMaze());
 				stage.setScene(scene);
