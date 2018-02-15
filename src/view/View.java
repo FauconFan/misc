@@ -135,7 +135,7 @@ public class View
 			buttonCreate.setOnAction(event->{
 				//TODO
 				con.createMaze(new AlgoSample2(), 30);
-				con.showMaze();
+				con.showMaze(true);
 				scene = new ViewIngame(con.getMaze());
 				stage.setScene(scene);
 				stage.show();
