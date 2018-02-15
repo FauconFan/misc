@@ -85,11 +85,12 @@ public class AlgoBackTracker extends Algo
 		HashMap <Integer, ArrayList <LineWall> > list_X = new HashMap <>();
 		HashMap <Integer, ArrayList <LineWall> > list_Y = new HashMap <>();
 		ArrayList <Point> unvisited_cases        = new ArrayList <>();
-		ArrayList <Point> neighborhoods          = new ArrayList <>();
-		Point             ptActu                 = null;
-		Point             next                   = null;
+		ArrayList <Point> neighborhoods          = null;
 		Point             current_position_agent = null;
-		Random            ran = new Random();
+		Point             ptActu = null;
+		Point             res    = null;
+		Point             next   = null;
+		Random            ran    = new Random();
 
 		// Initialize Walls : Fill it
 		for (int i = 0; i <= size_y; i++)
@@ -121,6 +122,8 @@ public class AlgoBackTracker extends Algo
 
 		while (unvisited_cases.isEmpty() == false)
 		{
+			neighborhoods = new ArrayList <>();
+
 			if ((ptActu = Point.getArrayListLeft(unvisited_cases, current_position_agent)) != null)
 			{
 				neighborhoods.add(ptActu);
@@ -140,7 +143,7 @@ public class AlgoBackTracker extends Algo
 
 			if (neighborhoods.isEmpty())
 			{
-				current_position_agent = Point.getRandomWhenNoNeighboors(unvisited_cases, size_y, size_x);
+				current_position_agent = Point.getRandomWhenNoNeighboors(unvisited_cases, size_y, size_x, ran);
 				continue;
 			}
 
@@ -295,11 +298,10 @@ public class AlgoBackTracker extends Algo
 			}
 		}
 
-		public static Point getRandomWhenNoNeighboors(ArrayList <Point> unvisited_cases, int size_y, int size_x)
+		public static Point getRandomWhenNoNeighboors(ArrayList <Point> unvisited_cases, int size_y, int size_x, Random ran)
 		{
-			Point  res;
-			Point  tmp;
-			Random ran = new Random();
+			Point res;
+			Point tmp;
 
 			tmp = unvisited_cases.get(ran.nextInt(unvisited_cases.size()));
 			if (tmp.y > 0 && getArrayListUp(unvisited_cases, tmp) == null)
@@ -318,7 +320,7 @@ public class AlgoBackTracker extends Algo
 			{
 				return (new Point(tmp.y, tmp.x + 1));
 			}
-			return (getRandomWhenNoNeighboors(unvisited_cases, size_y, size_x));
+			return (getRandomWhenNoNeighboors(unvisited_cases, size_y, size_x, ran));
 		}
 	}
 }
