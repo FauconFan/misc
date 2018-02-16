@@ -42,6 +42,23 @@ public class Game extends Scene
 	// Facteur de multiplication général
 	final int facteur = 30;
 
+	//Est on en mode ghost ?
+	private boolean ghostMode = false;
+
+	//Translate
+	final Translate tr;
+
+	public boolean getGhostMode()
+	{
+		return (ghostMode);
+	}
+
+	public void setGhostMode(boolean b)
+	{
+		tr.setY(0); // Retour au sol
+		this.ghostMode = b;
+	}
+
 	public Game(View v, MainMaze m)
 	{
 		super(new Group(), 500, 750, true);
@@ -61,7 +78,7 @@ public class Game extends Scene
 		camera.setNearClip(0.1);
 		camera.setFarClip(100000.0);
 
-		final Translate tr = new Translate();
+		tr = new Translate();
 		cameraGroup.getTransforms().add(tr);
 
 		// Rotate
@@ -100,9 +117,17 @@ public class Game extends Scene
 
 			case S: tr.setZ(tr.getZ() - change); break;
 
-			case F: tr.setY(tr.getY() + change); break;
+			case F: if (ghostMode)
+				{
+					tr.setY(tr.getY() + change);
+				}
+				break;
 
-			case R: tr.setY(tr.getY() - change); break;
+			case R: if (ghostMode)
+				{
+					tr.setY(tr.getY() - change);
+				}
+				break;
 
 			case LEFT: rx.setAngle(rx.getAngle() - rot); break;
 
