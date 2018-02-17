@@ -14,7 +14,6 @@ import javafx.scene.shape.Box;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.Scene;
-import javafx.scene.SubScene;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
@@ -43,7 +42,7 @@ public class Game extends Scene
 	final int facteur = 30;
 
 	//Est on en mode ghost ?
-	private boolean ghostMode = false;
+	private boolean ghostMode = true;
 
 	//Translate
 	final Translate tr;

@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.Group;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -53,6 +55,14 @@ class Pause extends Scene
 			Button buttonReturn = addButton("Return to Menu");
 			buttonReturn.setOnAction(event->{
 				v.changeScene(new Menus(v));
+			});
+
+			//Key controller
+			addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
+				switch (key.getCode())
+				{
+				case ESCAPE: v.changeScene(previous); break;
+				}
 			});
 
 			putMsg();
