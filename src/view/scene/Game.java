@@ -109,13 +109,13 @@ public class Game extends Scene
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			switch (key.getCode())
 			{
-			case Q: tr.setX(tr.getX() - change); break;
+			case Q: setTrX(rx, -1 * change); break;
 
-			case D: tr.setX(tr.getX() + change); break;
+			case D: setTrX(rx, change); break;
 
-			case Z: tr.setZ(tr.getZ() + change); break;
+			case Z: setTrZ(rx, change); break;
 
-			case S: tr.setZ(tr.getZ() - change); break;
+			case S: setTrZ(rx, -1 * change); break;
 
 			case F: if (ghostMode)
 				{
@@ -153,6 +153,22 @@ public class Game extends Scene
 			rx.setAngle(rx.getAngle() + (mousePosX - mEv.getSceneX()) * rotateConst);
 			ry.setAngle(ry.getAngle() + (mousePosY - mEv.getSceneY()) * rotateConst);
 		});
+	}
+
+	private void setTrZ(Rotate rx, int change)
+	{
+		final double r = Math.toRadians(rx.getAngle());
+
+		tr.setZ(tr.getZ() + Math.cos(r) * change);
+		tr.setX(tr.getX() + Math.sin(r) * change);
+	}
+
+	private void setTrX(Rotate rx, int change)
+	{
+		final double r = Math.toRadians(rx.getAngle());
+
+		tr.setZ(tr.getZ() + Math.sin(r) * change);
+		tr.setX(tr.getX() + Math.cos(r) * change);
 	}
 
 	/**
