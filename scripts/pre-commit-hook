@@ -20,7 +20,7 @@ doit()
   echo -e "${GREEN}[$1 SUCCESSED]${NC}"
 }
 
-make clean
+make fclean
 
 doit "NORMALISE" "make norm" ""
 doit "MAKE" "make" ""
@@ -31,3 +31,5 @@ for i in `git diff --cached --name-only`
 do
 	git add $i
 done
+
+make fclean
