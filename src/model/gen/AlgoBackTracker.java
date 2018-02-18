@@ -26,58 +26,28 @@ public class AlgoBackTracker extends Algo
 		super();
 		this.cmfactory = new ContentMazeFactory();
 
-		RectMaze rm = buildRect(true, true);
+		RectMaze rm = buildRect();
 
 		RectMazeShift rms = new RectMazeShift(rm, 0, 0);
 
 		this.cmfactory.addContentMazeShift(rms);
 
+		this.cmfactory.initiateSpecialCases();
 		this.cmfactory.normalize();
 		this.cm = new ContentMaze(this.cmfactory.getFinalSpecialCases(), this.cmfactory.getFinalLineWall());
 	}
 
-	public RectMaze buildRect(boolean hasStartCase, boolean hasEndCase)
+	public RectMaze buildRect()
 	{
 		RectMaze rm;
 
-		Case[]     listSpecialeCases;
 		LineWall[] listWalls;
 		int        size_x = 80;
 		int        size_y = 40;
 
-		listSpecialeCases = this.buildCases(hasStartCase, hasEndCase);
-		listWalls         = this.buildWalls(size_x, size_y);
-		rm = new RectMaze(new ContentMaze(listSpecialeCases, listWalls), size_x, size_y);
+		listWalls = this.buildWalls(size_x, size_y);
+		rm        = new RectMaze(new ContentMaze(new Case[0], listWalls), size_x, size_y);
 		return (rm);
-	}
-
-	private Case[] buildCases(boolean hasStartCase, boolean hasEndCase)
-	{
-		Case[] listSpecialeCases;
-
-		if (hasStartCase && hasEndCase)
-		{
-			listSpecialeCases    = new Case[2];
-			listSpecialeCases[0] = new StartCase(2, 2);
-			listSpecialeCases[1] = new EndCase(8, 8);
-		}
-		else if (hasStartCase || hasEndCase)
-		{
-			listSpecialeCases = new Case[1];
-			if (hasStartCase)
-			{
-				listSpecialeCases[0] = new StartCase(2, 2);
-			}
-			else
-			{
-				listSpecialeCases[0] = new EndCase(8, 8);
-			}
-		}
-		else
-		{
-			listSpecialeCases = new Case[0];
-		}
-		return (listSpecialeCases);
 	}
 
 	private LineWall[] buildWalls(int size_x, int size_y)

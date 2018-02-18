@@ -21,10 +21,10 @@ public class AlgoSample2 extends Algo
 		super();
 		this.cmfactory = new ContentMazeFactory();
 
-		RectMaze rm1 = buildOneSquareLabyrinthe(false, false, true);
-		RectMaze rm2 = buildOneSquareLabyrinthe(true, true, false);
-		RectMaze rm3 = buildOneSquareLabyrinthe(false, false, true);
-		RectMaze rm4 = buildOneSquareLabyrinthe(false, false, false);
+		RectMaze rm1 = buildOneSquareLabyrinthe(true);
+		RectMaze rm2 = buildOneSquareLabyrinthe(false);
+		RectMaze rm3 = buildOneSquareLabyrinthe(true);
+		RectMaze rm4 = buildOneSquareLabyrinthe(false);
 
 		RectMazeShift rms1 = new RectMazeShift(rm1, 0, 0);
 		RectMazeShift rms2 = new RectMazeShift(rm2, SIZE_SQUARE, 0);
@@ -36,50 +36,20 @@ public class AlgoSample2 extends Algo
 		this.cmfactory.addContentMazeShift(rms3);
 		this.cmfactory.addContentMazeShift(rms4);
 
+		this.cmfactory.initiateSpecialCases();
 		this.cmfactory.normalize();
 		this.cm = new ContentMaze(this.cmfactory.getFinalSpecialCases(), this.cmfactory.getFinalLineWall());
 	}
 
-	private RectMaze buildOneSquareLabyrinthe(boolean hasStartCase, boolean hasEndCase, boolean is_left)
+	private RectMaze buildOneSquareLabyrinthe(boolean is_left)
 	{
 		RectMaze rl;
 
-		Case[]     listSpecialeCases;
 		LineWall[] listWalls;
 
-		listSpecialeCases = this.buildCases(hasStartCase, hasEndCase);
-		listWalls         = this.buildWalls(is_left);
-		rl = new RectMaze(new ContentMaze(listSpecialeCases, listWalls), SIZE_SQUARE, SIZE_SQUARE);
+		listWalls = this.buildWalls(is_left);
+		rl        = new RectMaze(new ContentMaze(new Case[0], listWalls), SIZE_SQUARE, SIZE_SQUARE);
 		return (rl);
-	}
-
-	private Case[] buildCases(boolean hasStartCase, boolean hasEndCase)
-	{
-		Case[] listSpecialeCases;
-
-		if (hasStartCase && hasEndCase)
-		{
-			listSpecialeCases    = new Case[2];
-			listSpecialeCases[0] = new StartCase(2, 2);
-			listSpecialeCases[1] = new EndCase(8, 8);
-		}
-		else if (hasStartCase || hasEndCase)
-		{
-			listSpecialeCases = new Case[1];
-			if (hasStartCase)
-			{
-				listSpecialeCases[0] = new StartCase(2, 2);
-			}
-			else
-			{
-				listSpecialeCases[0] = new EndCase(8, 8);
-			}
-		}
-		else
-		{
-			listSpecialeCases = new Case[0];
-		}
-		return (listSpecialeCases);
 	}
 
 	private LineWall[] buildWalls(boolean is_left)

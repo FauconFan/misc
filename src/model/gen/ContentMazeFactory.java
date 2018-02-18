@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import src.model.board.Case;
+import src.model.board.EndCase;
 import src.model.board.LineWall;
 import src.model.board.LineWallUtils;
+import src.model.board.StartCase;
 import src.model.ContentMaze;
 import src.model.gen.RectMazeShift;
 import src.model.MazeDimension;
+import src.model.MazeDimension.RectInMaze;
 import src.utils.DiscreteStatMazeGenerator;
 
 public class ContentMazeFactory
@@ -340,6 +344,34 @@ public class ContentMazeFactory
 		}
 	}
 
+	public void initiateSpecialCases()
+	{
+		ArrayList <RectInMaze> li;
+		RectInMaze             rim;
+		Random ran;
+		int    x;
+		int    y;
+		Case   c;
+
+		ran = new Random();
+		li  = this.mazeDim.getListRectMaze();
+		for (int i = 0; i < 2; i++)
+		{
+			rim = li.get(ran.nextInt(li.size()));
+			x   = ran.nextInt(Math.abs(rim.x1 - rim.x2)) + Math.min(rim.x1, rim.x2);
+			y   = ran.nextInt(Math.abs(rim.y1 - rim.y2)) + Math.min(rim.y1, rim.y2);
+			if (i == 0)
+			{
+				c = new StartCase(x, y);
+			}
+			else
+			{
+				c = new EndCase(x, y);
+			}
+			this.contentSpecialCases.add(c);
+		}
+	}
+
 	/**
 	 * Final Getters for deploying ContentMaze
 	 * @return LineWall[] and Case[]
@@ -366,6 +398,7 @@ public class ContentMazeFactory
 
 	public Case[] getFinalSpecialCases()
 	{
+		System.out.println(this.contentSpecialCases);
 		return (this.contentSpecialCases.toArray(new Case[0]));
 	}
 
