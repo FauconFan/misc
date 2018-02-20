@@ -31,7 +31,7 @@ public class FloatVector extends Vector <Float>
 
 	/**
 	 * Calcule la norme du vecteur
-	 * @return la norme du vecteur
+	 * @return norme du vecteur
 	 */
 	public float norm()
 	{
@@ -46,6 +46,11 @@ public class FloatVector extends Vector <Float>
 	public FloatVector sum(FloatVector fv)
 	{
 		return (new FloatVector(fv.get(0) + this.get(0), fv.get(1) + this.get(1)));
+	}
+
+	public FloatVector multiplicate(float k)
+	{
+		return (new FloatVector(this.get(0) * k, this.get(1) * k));
 	}
 
 	/**
@@ -99,6 +104,18 @@ public class FloatVector extends Vector <Float>
 	public boolean isCollinearTo(float vx, float vy)
 	{
 		return (this.isCollinearTo(new FloatVector(vx, vy)));
+	}
+
+	/**
+	 * Applique une rotation sur le vecteur courant
+	 * @param angle Angle de la rotation en degré
+	 * @return Vecteur résultant de la rotation
+	 */
+
+	public FloatVector rotate(float angle)
+	{
+		angle = (float)((angle * Math.PI) / 180);
+		return (new FloatVector((float)Math.cos(angle) * this.get(0) - (float)Math.sin(angle) * this.get(1), (float)Math.sin(angle) * this.get(0) + (float)Math.cos(angle) * this.get(1)));
 	}
 
 	/**
