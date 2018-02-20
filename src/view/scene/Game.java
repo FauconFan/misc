@@ -19,6 +19,11 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
+/*
+ * Pour remettre le curseur au centre de l'ecran
+ * import java.awt.AWTException;
+ * import java.awt.Robot;
+ */
 import src.model.board.LineWall;
 import src.model.MainMaze;
 import src.model.MazeDimension;
@@ -75,7 +80,7 @@ public class Game extends Scene
 		final PerspectiveCamera camera      = new PerspectiveCamera(true);
 		cameraGroup.getChildren().add(camera);
 		camera.setNearClip(0.1);
-		camera.setFarClip(100000.0);
+		camera.setFarClip(1000.0);
 
 		tr = new Translate();
 		cameraGroup.getTransforms().add(tr);
@@ -88,12 +93,12 @@ public class Game extends Scene
 		ry.setAxis(Rotate.X_AXIS);
 		cameraGroup.getTransforms().addAll(rx, ry);
 
-		root.getChildren().add(cameraGroup);
 		//Source de lumiere sur le joueur
-
 		PointLight lightOnPlayer = new PointLight();
 		lightOnPlayer.setColor(Color.WHITE);
 		cameraGroup.getChildren().add(lightOnPlayer);
+
+		root.getChildren().add(cameraGroup);
 
 		// Défini la camera pour la scène
 		setCamera(camera);
@@ -108,9 +113,9 @@ public class Game extends Scene
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			switch (key.getCode())
 			{
-			case Q: setTrX(rx, -1 * change); break;
+			case Q: setTrX(ry, -1 * change); break;
 
-			case D: setTrX(rx, change); break;
+			case D: setTrX(ry, change); break;
 
 			case Z: setTrZ(rx, change); break;
 
@@ -142,7 +147,7 @@ public class Game extends Scene
 
 		//Mouse controller
 		setOnMouseMoved((mm)->{
-			final double rotateConst = 0.05;
+			final double rotateConst = 0.1;
 			rx.setAngle(rx.getAngle() - (mousePosX - mm.getSceneX()) * rotateConst);
 			ry.setAngle(ry.getAngle() + (mousePosY - mm.getSceneY()) * rotateConst);
 			mousePosX = mm.getSceneX();
