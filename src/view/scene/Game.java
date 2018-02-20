@@ -181,19 +181,19 @@ public class Game extends Scene
 			w.setHeight(hauteur);
 			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
 			{
-				int depth = l.getY2() - l.getY1();
+				final int depth = l.getY2() - l.getY1();
 				w.setDepth(depth * facteur);
 				w.setWidth(l.getEpaisseur() * facteur);
-				w.setTranslateX((l.getX1() + l.getEpaisseur() / 2) * facteur);
-				w.setTranslateZ((l.getY1() + depth / 2) * facteur);
+				w.setTranslateX((l.getX1() + l.getEpaisseur() / 2.0) * facteur);
+				w.setTranslateZ((l.getY1() + depth / 2.0) * facteur);
 			}
 			else // Mur horizontal
 			{
 				final int width = l.getX2() - l.getX1();
 				w.setWidth(width * facteur);
 				w.setDepth(l.getEpaisseur() * facteur);
-				w.setTranslateX((l.getX1() + width / 2) * facteur);
-				w.setTranslateZ((l.getY1() + l.getEpaisseur() / 2) * facteur);
+				w.setTranslateX((l.getX1() + width / 2.0) * facteur);
+				w.setTranslateZ((l.getY1() + l.getEpaisseur() / 2.0) * facteur);
 			}
 			w.setMaterial(new PhongMaterial(Color.GREEN));
 			walls.getChildren().add(w);
