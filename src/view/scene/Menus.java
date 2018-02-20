@@ -119,7 +119,7 @@ public class Menus extends Scene
 			});
 
 			buttonCreate.setOnAction(event->{
-				v.createMaze(new AlgoSample(), 30);
+				v.createMaze(new AlgoSample2(), 30);
 			});
 
 			putMsg();

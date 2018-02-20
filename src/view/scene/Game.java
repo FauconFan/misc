@@ -141,16 +141,12 @@ public class Game extends Scene
 		});
 
 		//Mouse controller
-		//Remind the old pos
-		setOnMousePressed((me)->{
-			mousePosX = me.getSceneX();
-			mousePosY = me.getSceneY();
-		});
-		//End
-		setOnMouseDragged((mEv)->{
-			final double rotateConst = 0.005;
-			rx.setAngle(rx.getAngle() + (mousePosX - mEv.getSceneX()) * rotateConst);
-			ry.setAngle(ry.getAngle() + (mousePosY - mEv.getSceneY()) * rotateConst);
+		setOnMouseMoved((mm)->{
+			final double rotateConst = 0.05;
+			rx.setAngle(rx.getAngle() - (mousePosX - mm.getSceneX()) * rotateConst);
+			ry.setAngle(ry.getAngle() + (mousePosY - mm.getSceneY()) * rotateConst);
+			mousePosX = mm.getSceneX();
+			mousePosY = mm.getSceneY();
 		});
 	}
 
@@ -185,19 +181,19 @@ public class Game extends Scene
 			w.setHeight(hauteur);
 			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
 			{
-				int depth = l.getY2() - l.getY1();
+				final int depth = l.getY2() - l.getY1();
 				w.setDepth(depth * facteur);
 				w.setWidth(l.getEpaisseur() * facteur);
-				w.setTranslateX((l.getX1() + l.getEpaisseur() / 2) * facteur);
-				w.setTranslateZ((l.getY1() + depth / 2) * facteur);
+				w.setTranslateX((l.getX1() + l.getEpaisseur() / 2.0) * facteur);
+				w.setTranslateZ((l.getY1() + depth / 2.0) * facteur);
 			}
 			else // Mur horizontal
 			{
 				final int width = l.getX2() - l.getX1();
 				w.setWidth(width * facteur);
 				w.setDepth(l.getEpaisseur() * facteur);
-				w.setTranslateX((l.getX1() + width / 2) * facteur);
-				w.setTranslateZ((l.getY1() + l.getEpaisseur() / 2) * facteur);
+				w.setTranslateX((l.getX1() + width / 2.0) * facteur);
+				w.setTranslateZ((l.getY1() + l.getEpaisseur() / 2.0) * facteur);
 			}
 			w.setMaterial(new PhongMaterial(Color.GREEN));
 			walls.getChildren().add(w);
