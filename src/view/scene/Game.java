@@ -141,16 +141,12 @@ public class Game extends Scene
 		});
 
 		//Mouse controller
-		//Remind the old pos
-		setOnMousePressed((me)->{
-			mousePosX = me.getSceneX();
-			mousePosY = me.getSceneY();
-		});
-		//End
-		setOnMouseDragged((mEv)->{
-			final double rotateConst = 0.005;
-			rx.setAngle(rx.getAngle() + (mousePosX - mEv.getSceneX()) * rotateConst);
-			ry.setAngle(ry.getAngle() + (mousePosY - mEv.getSceneY()) * rotateConst);
+		setOnMouseMoved((mm)->{
+			final double rotateConst = 0.05;
+			rx.setAngle(rx.getAngle() - (mousePosX - mm.getSceneX()) * rotateConst);
+			ry.setAngle(ry.getAngle() + (mousePosY - mm.getSceneY()) * rotateConst);
+			mousePosX = mm.getSceneX();
+			mousePosY = mm.getSceneY();
 		});
 	}
 
