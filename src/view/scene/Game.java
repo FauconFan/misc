@@ -153,10 +153,12 @@ public class Game extends Scene
 		//Mouse controller
 		setOnMouseMoved((mm)->{
 			final double rotateConst = 0.1;
-			rx.setAngle(rx.getAngle() - (mousePosX - mm.getSceneX()) * rotateConst);
-			ry.setAngle(ry.getAngle() + (mousePosY - mm.getSceneY()) * rotateConst);
+			maze.getPlayer().addHorizontalAngle((float)(-1 * (mousePosX - mm.getSceneX()) * rotateConst));
+			maze.getPlayer().addVerticalAngle((float)((mousePosY - mm.getSceneY()) * rotateConst));
 			mousePosX = mm.getSceneX();
 			mousePosY = mm.getSceneY();
+
+			updatePlayer(rx, ry);
 		});
 	}
 
