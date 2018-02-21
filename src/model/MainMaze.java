@@ -21,20 +21,18 @@ public class MainMaze implements Serializable
 	private MazeDimension mazeDim;
 	private String name;
 	private Player p;
-	private int porteeVue;
 
-	public MainMaze(ContentMaze m, MazeDimension mz, String name, Player p, int porteeVue)
+	public MainMaze(ContentMaze m, MazeDimension mz, String name, Player p)
 	{
-		this.m         = m;
-		this.mazeDim   = mz;
-		this.name      = name;
-		this.p         = p;
-		this.porteeVue = porteeVue;
+		this.m       = m;
+		this.mazeDim = mz;
+		this.name    = name;
+		this.p       = p;
 	}
 
-	public MainMaze(Algo algo, int porteeVueP)
+	public MainMaze(Algo algo)
 	{
-		this(algo.getContentMaze(), algo.getMazeDimension(), "", null, porteeVueP);
+		this(algo.getContentMaze(), algo.getMazeDimension(), "", null);
 	}
 
 	public ContentMaze getAdaptedMaze()
@@ -166,7 +164,6 @@ public class MainMaze implements Serializable
 
 		str += "name = " + this.name + "\n";
 		str += "player = " + this.p + "\n";
-		str += "porteeVue = " + this.porteeVue + "\n";
 		str += "\n";
 		str += "labyrinthe :\n";
 		if (m != null)
