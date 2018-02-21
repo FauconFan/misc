@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.File;
 
 import src.controller.Controller;
+import src.model.gen.AlgoBackTracker;
 import src.model.gen.AlgoSample;
 import src.model.gen.AlgoSample2;
 
@@ -94,8 +95,8 @@ public class Menus extends Scene
 
 			final Button buttonPrevious = addButton("Previous");
 
-			final Slider slidery = new Slider(0, 100, 50);
-			final Slider sliderx = new Slider(0, 100, 50);
+			final Slider slidery = new Slider(0, 100, 20);
+			final Slider sliderx = new Slider(0, 100, 20);
 
 			final Slider[] sliders = { slidery, sliderx };
 			final String[] names   = { "Y axis", "X axis" };
@@ -119,7 +120,7 @@ public class Menus extends Scene
 			});
 
 			buttonCreate.setOnAction(event->{
-				v.createMaze(new AlgoSample2(), 30);
+				v.createMaze(new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue()), 30);
 			});
 
 			putMsg();

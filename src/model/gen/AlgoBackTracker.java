@@ -21,12 +21,12 @@ public class AlgoBackTracker extends Algo
 {
 	private static final boolean DEBUG_MODE = false;
 
-	public AlgoBackTracker()
+	public AlgoBackTracker(int y, int x)
 	{
 		super();
 		this.cmfactory = new ContentMazeFactory();
 
-		RectMaze rm = buildRect();
+		RectMaze rm = buildRect(y, x);
 
 		RectMazeShift rms = new RectMazeShift(rm, 0, 0);
 
@@ -37,13 +37,11 @@ public class AlgoBackTracker extends Algo
 		this.cm = new ContentMaze(this.cmfactory.getFinalSpecialCases(), this.cmfactory.getFinalLineWall());
 	}
 
-	public RectMaze buildRect()
+	public RectMaze buildRect(int size_y, int size_x)
 	{
 		RectMaze rm;
 
 		LineWall[] listWalls;
-		int        size_x = 80;
-		int        size_y = 40;
 
 		listWalls = this.buildWalls(size_x, size_y);
 		rm        = new RectMaze(new ContentMaze(new Case[0], listWalls), size_x, size_y);
