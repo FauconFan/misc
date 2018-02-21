@@ -32,7 +32,7 @@ public class MainMaze implements Serializable
 
 	public MainMaze(Algo algo)
 	{
-		this(algo.getContentMaze(), algo.getMazeDimension(), "", null);
+		this(algo.getContentMaze(), algo.getMazeDimension(), "", new Player(0.005f, 0.01f, 0.5f, 0.5f, 0f, 0f));
 	}
 
 	public ContentMaze getAdaptedMaze()
@@ -43,6 +43,11 @@ public class MainMaze implements Serializable
 	public MazeDimension getMazeDimension()
 	{
 		return (this.mazeDim);
+	}
+
+	public Player getPlayer()
+	{
+		return (this.p);
 	}
 
 	/**
@@ -128,9 +133,8 @@ public class MainMaze implements Serializable
 	 * Déplace le joueur dans le labyrinthe, si le joueur rencontre un mur, il longera ce mur.
 	 * @param dx Deplacement horizontal du joueur.
 	 * @param dy Deplacement vertical du joueur.
-	 * @return Player
 	 */
-	public Player movePlayer(float dx, float dy)
+	public void movePlayer(float dx, float dy)
 	{
 		FloatVector v = new FloatVector(dx, dy);
 
@@ -141,7 +145,6 @@ public class MainMaze implements Serializable
 			this.applyMove(moves[0]);
 			v = moves[1];
 		}
-		return (p);
 	}
 
 	/**

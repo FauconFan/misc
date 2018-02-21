@@ -99,13 +99,16 @@ public class Game extends Scene
 		cameraGroup.getChildren().add(lightOnPlayer);
 
 		root.getChildren().add(cameraGroup);
+		cameraGroup.setTranslateZ(maze.getPlayer().getPosY() * facteur);
+
+		cameraGroup.setTranslateX(maze.getPlayer().getPosX() * facteur);
 
 		// Défini la camera pour la scène
 		setCamera(camera);
 
 		// constantes de déplacements
-		final int change = 5;
-		final int rot    = 5; // En degré
+		final float change = 0.2f;
+		final int   rot    = 5; // En degré
 
 		renderMaze();
 
@@ -133,42 +136,52 @@ public class Game extends Scene
 				}
 				break;
 
-			case LEFT: rx.setAngle(rx.getAngle() - rot); break;
+			case LEFT: maze.getPlayer().addHorizontalAngle(-1 * rot); break;
 
-			case RIGHT: rx.setAngle(rx.getAngle() + rot); break;
+			case RIGHT: maze.getPlayer().addHorizontalAngle(1 * rot); break;
 
-			case UP: ry.setAngle(ry.getAngle() + rot); break;
+			case UP: maze.getPlayer().addVerticalAngle(1 * rot); break;
 
-			case DOWN: ry.setAngle(ry.getAngle() - rot); break;
+			case DOWN: maze.getPlayer().addVerticalAngle(-1 * rot); break;
 
 			case ESCAPE: v.changeScene(new Pause(v, this)); break;
 			}
+
+			updatePlayer(rx, ry);
 		});
 
 		//Mouse controller
 		setOnMouseMoved((mm)->{
 			final double rotateConst = 0.1;
-			rx.setAngle(rx.getAngle() - (mousePosX - mm.getSceneX()) * rotateConst);
-			ry.setAngle(ry.getAngle() + (mousePosY - mm.getSceneY()) * rotateConst);
+			maze.getPlayer().addHorizontalAngle((float)(-1 * (mousePosX - mm.getSceneX()) * rotateConst));
+			maze.getPlayer().addVerticalAngle((float)((mousePosY - mm.getSceneY()) * rotateConst));
 			mousePosX = mm.getSceneX();
 			mousePosY = mm.getSceneY();
+
+			updatePlayer(rx, ry);
 		});
 	}
 
-	private void setTrZ(Rotate rx, int change)
+	private void setTrZ(Rotate rx, float change)
 	{
 		final double r = Math.toRadians(rx.getAngle());
 
-		tr.setZ(tr.getZ() + Math.cos(r) * change);
-		tr.setX(tr.getX() + Math.sin(r) * change);
+		maze.movePlayer((float)(tr.getX() + Math.sin(r) * change), (float)(tr.getZ() + Math.cos(r) * change));
 	}
 
-	private void setTrX(Rotate rx, int change)
+	private void setTrX(Rotate rx, float change)
 	{
 		final double r = Math.toRadians(rx.getAngle());
 
-		tr.setZ(tr.getZ() + Math.sin(r) * change);
-		tr.setX(tr.getX() + Math.cos(r) * change);
+		maze.movePlayer((float)(tr.getX() + Math.cos(r) * change), (float)(tr.getZ() + Math.sin(r) * change));
+	}
+
+	private void updatePlayer(Rotate rx, Rotate ry)
+	{
+		tr.setZ(maze.getPlayer().getPosY());
+		tr.setX(maze.getPlayer().getPosX());
+		rx.setAngle(maze.getPlayer().getHorizontalAngle());
+		ry.setAngle(maze.getPlayer().getVerticalAngle());
 	}
 
 	/**

@@ -63,4 +63,14 @@ public class Player implements Serializable
 	{
 		posY = y;
 	}
+
+	public void addHorizontalAngle(float x)
+	{
+		horizontalAngle += x;
+	}
+
+	public void addVerticalAngle(float y)
+	{
+		verticalAngle += y;
+	}
 }
