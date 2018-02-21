@@ -107,8 +107,8 @@ public class Game extends Scene
 		setCamera(camera);
 
 		// constantes de déplacements
-		final int change = 5;
-		final int rot    = 5; // En degré
+		final float change = 0.2f;
+		final int   rot    = 5; // En degré
 
 		renderMaze();
 
@@ -162,14 +162,14 @@ public class Game extends Scene
 		});
 	}
 
-	private void setTrZ(Rotate rx, int change)
+	private void setTrZ(Rotate rx, float change)
 	{
 		final double r = Math.toRadians(rx.getAngle());
 
 		maze.movePlayer((float)(tr.getX() + Math.sin(r) * change), (float)(tr.getZ() + Math.cos(r) * change));
 	}
 
-	private void setTrX(Rotate rx, int change)
+	private void setTrX(Rotate rx, float change)
 	{
 		final double r = Math.toRadians(rx.getAngle());
 
