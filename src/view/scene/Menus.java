@@ -120,7 +120,7 @@ public class Menus extends Scene
 			});
 
 			buttonCreate.setOnAction(event->{
-				v.createMaze(new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue()), 30);
+				v.createMaze(new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue()));
 			});
 
 			putMsg();

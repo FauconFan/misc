@@ -46,9 +46,9 @@ public class View
 		return (this.scene);
 	}
 
-	public void createMaze(Algo a, int c)
+	public void createMaze(Algo a)
 	{
-		con.createMaze(a, c);
+		con.createMaze(a);
 		con.showMaze(true);
 		scene = new Game(this, con.getMaze());
 		stage.setScene(scene);

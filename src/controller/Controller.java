@@ -33,11 +33,10 @@ public class Controller
 	/**
 	 * Créer un labyrinthe avec les paramètres passés en arguments
 	 * @param algo L'algorithme de création
-	 * @param porteeVue La portée de la vue du joueur
 	 */
-	public void createMaze(Algo algo, int porteeVue)
+	public void createMaze(Algo algo)
 	{
-		this.maze = new MainMaze(algo, porteeVue);
+		this.maze = new MainMaze(algo);
 	}
 
 	/**

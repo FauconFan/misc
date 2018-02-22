@@ -45,7 +45,7 @@ public abstract class Algo
 		Algo     al;
 
 		al = new AlgoSample2();
-		ml = new MainMaze(al, 0);
+		ml = new MainMaze(al);
 		ml.displayMaze(false);
 		System.out.println(ml.getMazeDimension());
 	}
