@@ -20,13 +20,14 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 /*
- * Pour remettre le curseur au centre de l'ecran
+ * Pour remettre le curseur au centre de l''ecran
  * import java.awt.AWTException;
  * import java.awt.Robot;
  */
 import src.model.board.LineWall;
 import src.model.MainMaze;
 import src.model.MazeDimension;
+import src.model.Player;
 
 import src.view.View;
 
@@ -41,27 +42,14 @@ public class Game extends Scene
 	private double mousePosY = 0;
 
 	//Hauteur des murs
-	final int hauteur = 60;
+	private final int hauteur = 60;
 
 	// Facteur de multiplication général
-	final int facteur = 30;
-
-	//Est on en mode ghost ?
-	private boolean ghostMode = true;
+	private final int facteur = 50;
 
 	//Translate
-	final Translate tr;
-
-	public boolean getGhostMode()
-	{
-		return (ghostMode);
-	}
-
-	public void setGhostMode(boolean b)
-	{
-		tr.setY(0); // Retour au sol
-		this.ghostMode = b;
-	}
+	private final Translate tr;
+	private final Rotate rx, ry;
 
 	public Game(View v, MainMaze m)
 	{
@@ -74,6 +62,8 @@ public class Game extends Scene
 
 		// Ajoute le sol
 		root.getChildren().add(makeFloors());
+
+		// Le plafond est juste un sol décalé vers le haut
 		final Group roof = makeFloors();
 		roof.setTranslateY(-1 * hauteur);
 		root.getChildren().add(roof);
@@ -85,14 +75,15 @@ public class Game extends Scene
 		camera.setNearClip(0.1);
 		camera.setFarClip(1000.0);
 
+		//Translate
 		tr = new Translate();
 		cameraGroup.getTransforms().add(tr);
 
 		// Rotate
-		final Rotate rx = new Rotate();
+		rx = new Rotate();
 		rx.setAxis(Rotate.Y_AXIS);
 
-		final Rotate ry = new Rotate();
+		ry = new Rotate();
 		ry.setAxis(Rotate.X_AXIS);
 		cameraGroup.getTransforms().addAll(rx, ry);
 
@@ -110,7 +101,7 @@ public class Game extends Scene
 		setCamera(camera);
 
 		// constantes de déplacements
-		final float change = 0.2f;
+		final float change = 2f;
 		final int   rot    = 5; // En degré
 
 		renderMaze();
@@ -119,25 +110,18 @@ public class Game extends Scene
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			switch (key.getCode())
 			{
-			case Q: setTrX(ry, -1 * change); break;
+			case Q: setTr(true, -1 * change); break;
 
-			case D: setTrX(ry, change); break;
+			case D: setTr(true, change); break;
 
-			case Z: setTrZ(rx, change); break;
+			case Z: setTr(false, change); break;
 
-			case S: setTrZ(rx, -1 * change); break;
+			case S: setTr(false, -1 * change); break;
 
-			case F: if (ghostMode)
-				{
-					tr.setY(tr.getY() + change);
-				}
-				break;
+			// Le déplacement vertical ne demande pour l'instant aucun calcul particulier
+			case F: maze.movePlayer(0, 0, change);  break;
 
-			case R: if (ghostMode)
-				{
-					tr.setY(tr.getY() - change);
-				}
-				break;
+			case R: maze.movePlayer(0, 0, -1 * change); break;
 
 			case LEFT: maze.getPlayer().addHorizontalAngle(-1 * rot); break;
 
@@ -150,7 +134,7 @@ public class Game extends Scene
 			case ESCAPE: v.changeScene(new Pause(v, this)); break;
 			}
 
-			updatePlayer(rx, ry);
+			updatePlayer();
 		});
 
 		//Mouse controller
@@ -161,30 +145,42 @@ public class Game extends Scene
 			mousePosX = mm.getSceneX();
 			mousePosY = mm.getSceneY();
 
-			updatePlayer(rx, ry);
+			updatePlayer();
 		});
 	}
 
-	private void setTrZ(Rotate rx, float change)
+	/**
+	 * Set the translate
+	 * @param xOrNot Est-ce que lon se déplace selon x ou y ?
+	 * @param change Le déplacement
+	 */
+	private void setTr(boolean xOrNot, float change)
 	{
-		final double r = Math.toRadians(rx.getAngle());
+		final double r1 = Math.toRadians(rx.getAngle());
+		final double r2 = Math.toRadians(ry.getAngle());
 
-		maze.movePlayer((float)(Math.sin(r) * change), (float)(Math.cos(r) * change));
+		if (!xOrNot)
+		{
+			maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change), 0);
+		}
+		else
+		{
+			maze.movePlayer((float)(Math.cos(r2) * change), (float)(Math.sin(r2) * change), 0);
+		}
 	}
 
-	private void setTrX(Rotate rx, float change)
+	/**
+	 * Update the camera position according to the player
+	 */
+	private void updatePlayer()
 	{
-		final double r = Math.toRadians(rx.getAngle());
+		final Player p = maze.getPlayer();
 
-		maze.movePlayer((float)(Math.cos(r) * change), (float)(Math.sin(r) * change));
-	}
-
-	private void updatePlayer(Rotate rx, Rotate ry)
-	{
-		tr.setZ(maze.getPlayer().getPosY());
-		tr.setX(maze.getPlayer().getPosX());
-		rx.setAngle(maze.getPlayer().getHorizontalAngle());
-		ry.setAngle(maze.getPlayer().getVerticalAngle());
+		tr.setZ(p.getPosY());
+		tr.setX(p.getPosX());
+		tr.setY(p.getPosZ());
+		rx.setAngle(p.getHorizontalAngle());
+		ry.setAngle(p.getVerticalAngle());
 	}
 
 	/**
@@ -240,5 +236,10 @@ public class Game extends Scene
 			floors.getChildren().add(f);
 		}
 		return (floors);
+	}
+
+	public MainMaze getMaze()
+	{
+		return (this.maze);
 	}
 }

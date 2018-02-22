@@ -32,7 +32,7 @@ public class MainMaze
 
 	public MainMaze(Algo algo)
 	{
-		this(algo.getContentMaze(), algo.getMazeDimension(), "", new Player(0.005f, 0.01f, 0.5f, 0.5f, 0f, 0f));
+		this(algo.getContentMaze(), algo.getMazeDimension(), "", new Player(0.005f, 0.01f, 0.5f, 0.5f, 0f, 0f, 0f));
 	}
 
 	public ContentMaze getAdaptedMaze()
@@ -133,17 +133,28 @@ public class MainMaze
 	 * Déplace le joueur dans le labyrinthe, si le joueur rencontre un mur, il longera ce mur.
 	 * @param dx Deplacement horizontal du joueur.
 	 * @param dy Deplacement vertical du joueur.
+	 * @param dz Deplacement selon la troisième coordonnées (ne sera pas pris en compte dans le calcul des collisions)
 	 */
-	public void movePlayer(float dx, float dy)
+	public void movePlayer(float dx, float dy, float dz)
 	{
-		FloatVector v = new FloatVector(dx, dy);
-
-		while (!v.isNul())
+		if (p.getGhostMode())
 		{
-			FloatVector [] moves = this.calculateSplitMoves(v);
-			System.out.println("moves 1 : " + moves[0] + " moves 2 : " + moves[1]);
-			this.applyMove(moves[0]);
-			v = moves[1];
+			p.setPosZ(p.getPosZ() + dz);
+			p.setPosX(p.getPosX() + dx);
+			p.setPosY(p.getPosY() + dy);
+		}
+
+		else
+		{
+			FloatVector v = new FloatVector(dx, dy);
+
+			while (!v.isNul())
+			{
+				FloatVector [] moves = this.calculateSplitMoves(v);
+				System.out.println("moves 1 : " + moves[0] + " moves 2 : " + moves[1]);
+				this.applyMove(moves[0]);
+				v = moves[1];
+			}
 		}
 	}
 
