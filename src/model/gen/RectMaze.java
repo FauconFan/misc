@@ -4,13 +4,12 @@ import src.model.board.Case;
 import src.model.board.LineWall;
 import src.utils.StringManipulation;
 
-import java.io.Serializable;
 import src.model.ContentMaze;
 
 /**
  * Sous-labyrinthe rectangulaire qui compose le MainLabyrinthe (sans tenir compte du décalage).
  */
-public class RectMaze implements Serializable
+public class RectMaze
 {
 	private final ContentMaze cm;
 	private final int size_x;

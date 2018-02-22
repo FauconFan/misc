@@ -1,14 +1,14 @@
 package src.model.board;
 
 import com.google.gson.*;
-import java.io.Serializable;
+
 import java.lang.Cloneable;
 import java.lang.reflect.Type;
 
 /**
  * Case du labyrinthe quelconque.
  */
-public abstract class Case implements Serializable, Cloneable
+public abstract class Case implements Cloneable
 {
 	protected int x;
 	protected int y;

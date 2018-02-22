@@ -1,6 +1,7 @@
 package src.model.parser;
 
 import src.model.board.Case;
+import src.model.board.LineWall;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.AlgoSample;
@@ -43,6 +44,15 @@ public class Parser
 		}
 	}
 
+	private static Gson buildGsonMaze()
+	{
+		return (new GsonBuilder()
+				.registerTypeAdapter(Case.class, new Case.CaseAdapter())
+				.registerTypeAdapter(LineWall.class, new LineWall.LineWallAdapter())
+				.setPrettyPrinting()
+				.create());
+	}
+
 	/**
 	 * Permet de charger un MainMaze
 	 * @param file Le fichier
@@ -66,9 +76,7 @@ public class Parser
 					{
 						text += sCurrentLine;
 					}
-					gson = new GsonBuilder()
-						   .registerTypeAdapter(Case.class, new Case.CaseAdapter())
-						   .create();
+					gson = buildGsonMaze();
 					return (gson.fromJson(text, MainMaze.class));
 				}
 
@@ -102,9 +110,7 @@ public class Parser
 			try
 			{
 				PrintWriter out  = new PrintWriter(path);
-				Gson        gson = new GsonBuilder()
-								   .registerTypeAdapter(Case.class, new Case.CaseAdapter())
-								   .create();
+				Gson        gson = buildGsonMaze();
 				out.println(gson.toJson(maze));
 				out.close();
 			}

@@ -1,7 +1,9 @@
 package src.model.board;
 
-import java.io.Serializable;
+import com.google.gson.*;
+
 import java.lang.Cloneable;
+import java.lang.reflect.Type;
 
 import java.util.ArrayList;
 
@@ -13,7 +15,7 @@ import src.utils.FloatVector;
  * <br>
  * Le premier étant (x1, y1) et le deuxième (x2,y2)
  */
-public class LineWall implements Serializable, Cloneable
+public class LineWall implements Cloneable
 {
 	public static final float EPAISSEUR_DEFAULT = 0.1f;
 
@@ -162,5 +164,40 @@ public class LineWall implements Serializable, Cloneable
 	public String toString()
 	{
 		return ("(" + x1 + ", " + y1 + ") => (" + x2 + ", " + y2 + ")" + ", " + epaisseur);
+	}
+
+	public static class LineWallAdapter implements JsonSerializer <LineWall>, JsonDeserializer <LineWall>
+	{
+		private static final String X1 = "x1";
+		private static final String Y1 = "y1";
+		private static final String X2 = "x2";
+		private static final String Y2 = "y2";
+		private static final String E  = "e";
+
+		@Override
+		public JsonElement serialize(LineWall ln, Type tp, JsonSerializationContext context)
+		{
+			JsonObject result = new JsonObject();
+
+			result.add(X1, new JsonPrimitive(ln.getX1()));
+			result.add(Y1, new JsonPrimitive(ln.getY1()));
+			result.add(X2, new JsonPrimitive(ln.getX2()));
+			result.add(Y2, new JsonPrimitive(ln.getY2()));
+			result.add(E, new JsonPrimitive(ln.getEpaisseur()));
+
+			return (result);
+		}
+
+		@Override
+		public LineWall deserialize(JsonElement json, Type tp, JsonDeserializationContext context)
+		{
+			JsonObject object = json.getAsJsonObject();
+
+			return (new LineWall(object.get(X1).getAsInt(),
+								 object.get(Y1).getAsInt(),
+								 object.get(X2).getAsInt(),
+								 object.get(Y2).getAsInt(),
+								 object.get(E).getAsFloat()));
+		}
 	}
 }
