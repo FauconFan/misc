@@ -74,6 +74,9 @@ public class Game extends Scene
 
 		// Ajoute le sol
 		root.getChildren().add(makeFloors());
+		final Group roof = makeFloors();
+		roof.setTranslateY(-1 * hauteur);
+		root.getChildren().add(roof);
 
 		//Creation de la camera
 		final Group             cameraGroup = new Group();
@@ -166,14 +169,14 @@ public class Game extends Scene
 	{
 		final double r = Math.toRadians(rx.getAngle());
 
-		maze.movePlayer((float)(tr.getX() + Math.sin(r) * change), (float)(tr.getZ() + Math.cos(r) * change));
+		maze.movePlayer((float)(Math.sin(r) * change), (float)(Math.cos(r) * change));
 	}
 
 	private void setTrX(Rotate rx, float change)
 	{
 		final double r = Math.toRadians(rx.getAngle());
 
-		maze.movePlayer((float)(tr.getX() + Math.cos(r) * change), (float)(tr.getZ() + Math.sin(r) * change));
+		maze.movePlayer((float)(Math.cos(r) * change), (float)(Math.sin(r) * change));
 	}
 
 	private void updatePlayer(Rotate rx, Rotate ry)
