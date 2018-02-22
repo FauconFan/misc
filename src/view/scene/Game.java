@@ -74,6 +74,9 @@ public class Game extends Scene
 
 		// Ajoute le sol
 		root.getChildren().add(makeFloors());
+		final Group roof = makeFloors();
+		roof.setTranslateY(-1 * hauteur);
+		root.getChildren().add(roof);
 
 		//Creation de la camera
 		final Group             cameraGroup = new Group();
