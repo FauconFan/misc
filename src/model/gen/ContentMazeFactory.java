@@ -398,7 +398,6 @@ public class ContentMazeFactory
 
 	public Case[] getFinalSpecialCases()
 	{
-		System.out.println(this.contentSpecialCases);
 		return (this.contentSpecialCases.toArray(new Case[0]));
 	}
 

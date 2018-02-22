@@ -1,5 +1,6 @@
 package src.model.parser;
 
+import src.model.board.Case;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.AlgoSample;
@@ -17,16 +18,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.Exception;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 
 import java.io.PrintWriter;
 
 public class Parser
 {
 	final static String EXTENSION = "maze";
+
 	public static enum SavesFormat
 	{
-		serialized(), json();
+		gson(),
+		unknown();
 
 		public static String prettyPrint()
 		{
@@ -53,36 +56,25 @@ public class Parser
 		{
 			switch (format)
 			{
-			case serialized:
-				ObjectInputStream ois = null;
-				try{
-					ois = new ObjectInputStream(new FileInputStream(path));
-					return ((MainMaze)ois.readObject());
-				} catch (final ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (final java.io.InvalidClassException e) {
-					e.printStackTrace();
-				}
-				finally {
-					if (ois != null)
-					{
-						ois.close();
-					}
-				}
-				break;
-
-			case json:
-				try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+			case gson:
+				try (BufferedReader br = new BufferedReader(new FileReader(path)))
+				{
+					Gson   gson;
 					String sCurrentLine;
 					String text = "";
 					while ((sCurrentLine = br.readLine()) != null)
 					{
 						text += sCurrentLine;
 					}
-					return ((new Gson()).fromJson(text, MainMaze.class));
+					gson = new GsonBuilder()
+						   .registerTypeAdapter(Case.class, new Case.CaseAdapter())
+						   .create();
+					return (gson.fromJson(text, MainMaze.class));
 				}
+
+			default:
+				throw new ExtensionException();
 			}
-			return (null);
 		}
 		else
 		{
@@ -96,7 +88,7 @@ public class Parser
 	 * @param format Le format de sauvegarde
 	 * @param maze The maze
 	 */
-	public static void saveMaze(String path, SavesFormat format, MainMaze maze)
+	public static void saveMaze(String path, SavesFormat format, MainMaze maze) throws ExtensionException
 	{
 		ObjectOutputStream oos = null;
 
@@ -106,34 +98,23 @@ public class Parser
 		}
 		switch (format)
 		{
-		case serialized:
-			try {
-				oos = new ObjectOutputStream(new FileOutputStream(path));
-				oos.writeObject(maze);
-				oos.flush();
-			} catch (final java.io.IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (oos != null)
-					{
-						oos.flush();
-						oos.close();
-					}
-				} catch (final IOException ex) {
-					ex.printStackTrace();
-				}
+		case gson:
+			try
+			{
+				PrintWriter out  = new PrintWriter(path);
+				Gson        gson = new GsonBuilder()
+								   .registerTypeAdapter(Case.class, new Case.CaseAdapter())
+								   .create();
+				out.println(gson.toJson(maze));
+				out.close();
 			}
-			break;
-
-		case json:
-			try{ PrintWriter out = new PrintWriter(path);
-				 out.println((new Gson()).toJson(maze));
-				 out.close(); }
 			catch (final java.io.FileNotFoundException e) {
 				e.printStackTrace();
 			}
 			break;
+
+		default:
+			throw new ExtensionException();
 		}
 	}
 
@@ -141,7 +122,7 @@ public class Parser
 	 * @param str The string
 	 * @return The detected format or null
 	 */
-	private static SavesFormat checkExtension(String str)
+	public static SavesFormat checkExtension(String str)
 	{
 		for (SavesFormat s: SavesFormat.values())
 		{

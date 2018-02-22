@@ -20,6 +20,9 @@ all :
 testgen :
 	@make all MAIN_PATH="src/model/gen/Algo" MAIN_PATH_MANIFEST="src.model.gen.Algo"
 
+testparser :
+	@make all MAIN_PATH="src/model/parser/ParserTest" MAIN_PATH_MANIFEST="src.model.parser.ParserTest"
+
 run:
 	@java -jar $(JAR)
 

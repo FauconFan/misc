@@ -1,8 +1,8 @@
 package src.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
+
 import src.model.board.LineWall;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
@@ -15,7 +15,7 @@ import src.utils.StringManipulation;
 /**
  * Structure de données du labyrinthe.
  */
-public class MainMaze implements Serializable
+public class MainMaze
 {
 	private ContentMaze m;
 	private MazeDimension mazeDim;
