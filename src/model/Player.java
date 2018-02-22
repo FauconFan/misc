@@ -5,6 +5,9 @@ package src.model;
  */
 public class Player
 {
+	//Est on en mode ghost ?
+	private boolean ghostMode = true;
+
 	private float hitBoxWidth;
 	private float hitBoxLength;
 	private float posX;
@@ -20,6 +23,16 @@ public class Player
 		this.posY            = posY;
 		this.horizontalAngle = horizontalAngle;
 		this.verticalAngle   = verticalAngle;
+	}
+
+	public boolean getGhostMode()
+	{
+		return (ghostMode);
+	}
+
+	public void setGhostMode(boolean b)
+	{
+		this.ghostMode = b;
 	}
 
 	public float getHitBoxWidth()

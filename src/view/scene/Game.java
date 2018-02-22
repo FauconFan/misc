@@ -41,27 +41,14 @@ public class Game extends Scene
 	private double mousePosY = 0;
 
 	//Hauteur des murs
-	final int hauteur = 60;
+	private final int hauteur = 60;
 
 	// Facteur de multiplication général
-	final int facteur = 30;
-
-	//Est on en mode ghost ?
-	private boolean ghostMode = true;
+	private final int facteur = 30;
 
 	//Translate
-	final Translate tr;
-
-	public boolean getGhostMode()
-	{
-		return (ghostMode);
-	}
-
-	public void setGhostMode(boolean b)
-	{
-		tr.setY(0); // Retour au sol
-		this.ghostMode = b;
-	}
+	private final Translate tr;
+	private final Rotate rx, ry;
 
 	public Game(View v, MainMaze m)
 	{
@@ -74,6 +61,8 @@ public class Game extends Scene
 
 		// Ajoute le sol
 		root.getChildren().add(makeFloors());
+
+		// Le plafond est juste un sol décalé vers le haut
 		final Group roof = makeFloors();
 		roof.setTranslateY(-1 * hauteur);
 		root.getChildren().add(roof);
@@ -85,14 +74,15 @@ public class Game extends Scene
 		camera.setNearClip(0.1);
 		camera.setFarClip(1000.0);
 
+		//Translate
 		tr = new Translate();
 		cameraGroup.getTransforms().add(tr);
 
 		// Rotate
-		final Rotate rx = new Rotate();
+		rx = new Rotate();
 		rx.setAxis(Rotate.Y_AXIS);
 
-		final Rotate ry = new Rotate();
+		ry = new Rotate();
 		ry.setAxis(Rotate.X_AXIS);
 		cameraGroup.getTransforms().addAll(rx, ry);
 
@@ -119,21 +109,21 @@ public class Game extends Scene
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			switch (key.getCode())
 			{
-			case Q: setTrX(ry, -1 * change); break;
+			case Q: setTr(true, -1 * change); break;
 
-			case D: setTrX(ry, change); break;
+			case D: setTr(true, change); break;
 
-			case Z: setTrZ(rx, change); break;
+			case Z: setTr(false, change); break;
 
-			case S: setTrZ(rx, -1 * change); break;
+			case S: setTr(false, -1 * change); break;
 
-			case F: if (ghostMode)
+			case F: if (maze.getPlayer().getGhostMode())
 				{
 					tr.setY(tr.getY() + change);
 				}
 				break;
 
-			case R: if (ghostMode)
+			case R: if (maze.getPlayer().getGhostMode())
 				{
 					tr.setY(tr.getY() - change);
 				}
@@ -165,18 +155,18 @@ public class Game extends Scene
 		});
 	}
 
-	private void setTrZ(Rotate rx, float change)
+	private void setTr(boolean xOrNot, float change)
 	{
-		final double r = Math.toRadians(rx.getAngle());
+		final double r1 = Math.toRadians(rx.getAngle());
 
-		maze.movePlayer((float)(Math.sin(r) * change), (float)(Math.cos(r) * change));
-	}
-
-	private void setTrX(Rotate rx, float change)
-	{
-		final double r = Math.toRadians(rx.getAngle());
-
-		maze.movePlayer((float)(Math.cos(r) * change), (float)(Math.sin(r) * change));
+		if (xOrNot)
+		{
+			maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change));
+		}
+		else
+		{
+			maze.movePlayer((float)(Math.cos(r1) * change), (float)(Math.sin(r1) * change));
+		}
 	}
 
 	private void updatePlayer(Rotate rx, Rotate ry)
@@ -240,5 +230,10 @@ public class Game extends Scene
 			floors.getChildren().add(f);
 		}
 		return (floors);
+	}
+
+	public MainMaze getMaze()
+	{
+		return (this.maze);
 	}
 }

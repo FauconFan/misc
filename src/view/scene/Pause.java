@@ -47,9 +47,9 @@ class Pause extends Scene
 
 			ToggleButton buttonGhostMode = new ToggleButton("Ghost Mode");
 			getChildren().add(buttonGhostMode);
-			buttonGhostMode.setSelected(previous.getGhostMode());
+			buttonGhostMode.setSelected(previous.getMaze().getPlayer().getGhostMode());
 			buttonGhostMode.setOnAction(event->{
-				previous.setGhostMode(buttonGhostMode.isSelected());
+				previous.getMaze().getPlayer().setGhostMode(buttonGhostMode.isSelected());
 			});
 
 			Button buttonReturn = addButton("Return to Menu");
