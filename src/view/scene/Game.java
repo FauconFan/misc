@@ -20,13 +20,14 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 /*
- * Pour remettre le curseur au centre de l'ecran
+ * Pour remettre le curseur au centre de l''ecran
  * import java.awt.AWTException;
  * import java.awt.Robot;
  */
 import src.model.board.LineWall;
 import src.model.MainMaze;
 import src.model.MazeDimension;
+import src.model.Player;
 
 import src.view.View;
 
@@ -44,7 +45,7 @@ public class Game extends Scene
 	private final int hauteur = 60;
 
 	// Facteur de multiplication général
-	private final int facteur = 30;
+	private final int facteur = 50;
 
 	//Translate
 	private final Translate tr;
@@ -100,7 +101,7 @@ public class Game extends Scene
 		setCamera(camera);
 
 		// constantes de déplacements
-		final float change = 0.2f;
+		final float change = 2f;
 		final int   rot    = 5; // En degré
 
 		renderMaze();
@@ -117,17 +118,10 @@ public class Game extends Scene
 
 			case S: setTr(false, -1 * change); break;
 
-			case F: if (maze.getPlayer().getGhostMode())
-				{
-					tr.setY(tr.getY() + change);
-				}
-				break;
+			// Le déplacement vertical ne demande pour l'instant aucun calcul particulier
+			case F: maze.movePlayer(0, 0, change);  break;
 
-			case R: if (maze.getPlayer().getGhostMode())
-				{
-					tr.setY(tr.getY() - change);
-				}
-				break;
+			case R: maze.movePlayer(0, 0, -1 * change); break;
 
 			case LEFT: maze.getPlayer().addHorizontalAngle(-1 * rot); break;
 
@@ -140,7 +134,7 @@ public class Game extends Scene
 			case ESCAPE: v.changeScene(new Pause(v, this)); break;
 			}
 
-			updatePlayer(rx, ry);
+			updatePlayer();
 		});
 
 		//Mouse controller
@@ -151,30 +145,42 @@ public class Game extends Scene
 			mousePosX = mm.getSceneX();
 			mousePosY = mm.getSceneY();
 
-			updatePlayer(rx, ry);
+			updatePlayer();
 		});
 	}
 
+	/**
+	 * Set the translate
+	 * @param xOrNot Est-ce que lon se déplace selon x ou y ?
+	 * @param change Le déplacement
+	 */
 	private void setTr(boolean xOrNot, float change)
 	{
 		final double r1 = Math.toRadians(rx.getAngle());
+		final double r2 = Math.toRadians(ry.getAngle());
 
-		if (xOrNot)
+		if (!xOrNot)
 		{
-			maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change));
+			maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change), 0);
 		}
 		else
 		{
-			maze.movePlayer((float)(Math.cos(r1) * change), (float)(Math.sin(r1) * change));
+			maze.movePlayer((float)(Math.cos(r2) * change), (float)(Math.sin(r2) * change), 0);
 		}
 	}
 
-	private void updatePlayer(Rotate rx, Rotate ry)
+	/**
+	 * Update the camera position according to the player
+	 */
+	private void updatePlayer()
 	{
-		tr.setZ(maze.getPlayer().getPosY());
-		tr.setX(maze.getPlayer().getPosX());
-		rx.setAngle(maze.getPlayer().getHorizontalAngle());
-		ry.setAngle(maze.getPlayer().getVerticalAngle());
+		final Player p = maze.getPlayer();
+
+		tr.setZ(p.getPosY());
+		tr.setX(p.getPosX());
+		tr.setY(p.getPosZ());
+		rx.setAngle(p.getHorizontalAngle());
+		ry.setAngle(p.getVerticalAngle());
 	}
 
 	/**
