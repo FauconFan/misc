@@ -17,7 +17,7 @@ import src.utils.FloatVector;
  */
 public class LineWall implements Cloneable
 {
-	public static final float EPAISSEUR_DEFAULT = 0.1f;
+	private static final float EPAISSEUR_DEFAULT = 0.01f;
 
 	private int x1;
 	private int y1;

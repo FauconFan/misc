@@ -42,14 +42,14 @@ public class Game extends Scene
 	private double mousePosY = 0;
 
 	//Hauteur des murs
-	private final int hauteur = 60;
-
-	// Facteur de multiplication général
-	private final int facteur = 50;
+	private final int hauteur = 20;
 
 	//Translate
 	private final Translate tr;
 	private final Rotate rx, ry;
+
+	// Scale
+	private final Scale sc = new Scale(10, 1, 10);
 
 	public Game(View v, MainMaze m)
 	{
@@ -66,7 +66,7 @@ public class Game extends Scene
 		// Le plafond est juste un sol décalé vers le haut
 		final Group roof = makeFloors();
 		roof.setTranslateY(-1 * hauteur);
-		root.getChildren().add(roof);
+		//root.getChildren().add(roof);
 
 		//Creation de la camera
 		final Group             cameraGroup = new Group();
@@ -93,15 +93,16 @@ public class Game extends Scene
 		cameraGroup.getChildren().add(lightOnPlayer);
 
 		root.getChildren().add(cameraGroup);
-		cameraGroup.setTranslateZ(maze.getPlayer().getPosY() * facteur);
+		cameraGroup.setTranslateZ(maze.getPlayer().getPosY());
 
-		cameraGroup.setTranslateX(maze.getPlayer().getPosX() * facteur);
+		cameraGroup.setTranslateX(maze.getPlayer().getPosX());
 
 		// Défini la camera pour la scène
 		setCamera(camera);
+		//camera.setFieldOfView(10f);
 
 		// constantes de déplacements
-		final float change = 2f;
+		final float change = 1f;
 		final int   rot    = 5; // En degré
 
 		renderMaze();
@@ -190,6 +191,7 @@ public class Game extends Scene
 	{
 		Group walls = new Group();
 
+		walls.getTransforms().add(sc);
 		root.getChildren().add(walls);
 		final LineWall[] lineWalls = maze.getAdaptedMaze().getLineWalls();
 		for (LineWall l: lineWalls)
@@ -199,18 +201,18 @@ public class Game extends Scene
 			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
 			{
 				final int depth = l.getY2() - l.getY1();
-				w.setDepth(depth * facteur);
-				w.setWidth(l.getEpaisseur() * facteur);
-				w.setTranslateX((l.getX1() + l.getEpaisseur() / 2.0) * facteur);
-				w.setTranslateZ((l.getY1() + depth / 2.0) * facteur);
+				w.setDepth(depth);
+				w.setWidth(l.getEpaisseur());
+				w.setTranslateX(l.getX1() + l.getEpaisseur() / 2.0);
+				w.setTranslateZ(l.getY1() + depth / 2.0);
 			}
 			else // Mur horizontal
 			{
 				final int width = l.getX2() - l.getX1();
-				w.setWidth(width * facteur);
-				w.setDepth(l.getEpaisseur() * facteur);
-				w.setTranslateX((l.getX1() + width / 2.0) * facteur);
-				w.setTranslateZ((l.getY1() + l.getEpaisseur() / 2.0) * facteur);
+				w.setWidth(width);
+				w.setDepth(l.getEpaisseur());
+				w.setTranslateX(l.getX1() + width / 2.0);
+				w.setTranslateZ(l.getY1() + l.getEpaisseur() / 2.0);
 			}
 			w.setMaterial(new PhongMaterial(Color.GREEN));
 			walls.getChildren().add(w);
@@ -224,15 +226,17 @@ public class Game extends Scene
 	{
 		final Group floors = new Group();
 
+		floors.getTransforms().add(sc);
+
 		for (MazeDimension.RectInMaze md: maze.getMazeDimension().list_rectmaze)
 		{
 			final int w = md.x2 - md.x1;
 			final int h = md.y2 - md.y1;
-			Box       f = new Box(w * facteur, 0.5, h * facteur);
-			f.setTranslateX((md.x1 + w / 2) * facteur);
-			f.setTranslateZ((md.y1 + h / 2) * facteur);
+			Box       f = new Box(w, 0.5, h);
+			f.setTranslateX(md.x1 + w / 2);
+			f.setTranslateZ(md.y1 + h / 2);
 			f.setMaterial(new PhongMaterial(Color.RED));
-			f.setTranslateY(hauteur / 2 - 1);
+			f.setTranslateY(hauteur / 2);
 			floors.getChildren().add(f);
 		}
 		return (floors);
