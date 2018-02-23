@@ -12,13 +12,16 @@ JAR = $(NAME).jar
 
 all :
 	@mkdir -p $(BIN_FOLDER)
-	@javac -cp $(DEPS_FOLDER) -d $(BIN_FOLDER) $(MAIN_PATH).java
+	@javac -cp $(DEPS_FOLDER) -d $(BIN_FOLDER) $(MAIN_PATH).java -Xlint
 	@echo "Main-Class: "$(MAIN_PATH_MANIFEST) > $(MANIFEST)
 	@echo "Class-Path: "$(DEP) >> $(MANIFEST)
 	@jar -cvmf $(MANIFEST) $(JAR) -C $(BIN_FOLDER) ./
 
 testgen :
 	@make all MAIN_PATH="src/model/gen/Algo" MAIN_PATH_MANIFEST="src.model.gen.Algo"
+
+testparser :
+	@make all MAIN_PATH="src/model/parser/ParserTest" MAIN_PATH_MANIFEST="src.model.parser.ParserTest"
 
 run:
 	@java -jar $(JAR)

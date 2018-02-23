@@ -1,12 +1,14 @@
 package src.model.board;
 
-import java.io.Serializable;
+import com.google.gson.*;
+
 import java.lang.Cloneable;
+import java.lang.reflect.Type;
 
 /**
  * Case du labyrinthe quelconque.
  */
-public abstract class Case implements Serializable, Cloneable
+public abstract class Case implements Cloneable
 {
 	protected int x;
 	protected int y;
@@ -59,5 +61,36 @@ public abstract class Case implements Serializable, Cloneable
 	{
 		START,
 		END;
+	}
+
+	public static class CaseAdapter implements JsonSerializer <Case>, JsonDeserializer <Case>
+	{
+		@Override
+		public JsonElement serialize(Case cs, Type tp, JsonSerializationContext context)
+		{
+			JsonObject result = new JsonObject();
+
+			result.add("type", new JsonPrimitive(cs.getClass().getSimpleName()));
+			result.add("properties", context.serialize(cs, cs.getClass()));
+
+			return (result);
+		}
+
+		@Override
+		public Case deserialize(JsonElement json, Type tp, JsonDeserializationContext context)
+		{
+			JsonObject  object = json.getAsJsonObject();
+			String      type   = object.get("type").getAsString();
+			JsonElement jele   = object.get("properties");
+
+			try
+			{
+				return (context.deserialize(jele, Class.forName("src.model.board." + type)));
+			}
+			catch (Exception e)
+			{
+				throw new RuntimeException();
+			}
+		}
 	}
 }

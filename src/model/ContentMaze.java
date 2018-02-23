@@ -1,11 +1,10 @@
 package src.model;
 
-import java.io.Serializable;
 import java.lang.Cloneable;
 import src.model.board.*;
 import src.utils.StringManipulation;
 
-public class ContentMaze implements Serializable
+public class ContentMaze
 {
 	private Case[] specialCases;
 	private LineWall[] linewalls;

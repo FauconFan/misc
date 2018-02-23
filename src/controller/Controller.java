@@ -60,7 +60,14 @@ public class Controller
 	 */
 	public void saveMaze(String path, Parser.SavesFormat format)
 	{
-		Parser.saveMaze(path, format, this.maze);
+		try
+		{
+			Parser.saveMaze(path, format, this.maze);
+		}
+		catch (Parser.ExtensionException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public MainMaze getMaze()

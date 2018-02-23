@@ -1,8 +1,8 @@
 package src.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
+
 import src.model.board.LineWall;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
@@ -17,7 +17,7 @@ import src.model.gen.AlgoSample2;
 /**
  * Structure de données du labyrinthe.
  */
-public class MainMaze implements Serializable
+public class MainMaze
 {
 	private ContentMaze m;
 	private MazeDimension mazeDim;
@@ -34,7 +34,7 @@ public class MainMaze implements Serializable
 
 	public MainMaze(Algo algo)
 	{
-		this(algo.getContentMaze(), algo.getMazeDimension(), "", new Player(0.01f, 0.5f, 0.5f, 0f, 0f));
+		this(algo.getContentMaze(), algo.getMazeDimension(), "", new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f));
 	}
 
 	public ContentMaze getAdaptedMaze()
@@ -148,16 +148,26 @@ public class MainMaze implements Serializable
 	 * Déplace le joueur dans le labyrinthe, si le joueur rencontre un mur, il longera ce mur.
 	 * @param dx Deplacement horizontal du joueur.
 	 * @param dy Deplacement vertical du joueur.
+	 * @param dz Deplacement selon la troisième coordonnées (ne sera pas pris en compte dans le calcul des collisions)
 	 */
-	public void movePlayer(float dx, float dy)
+	public void movePlayer(float dx, float dy, float dz)
 	{
-		FloatVector v = new FloatVector(dx, dy);
-
-		while (!v.isNul())
+		if (p.getGhostMode())
 		{
-			FloatVector [] moves = this.calculateSplitMoves(v);
-			this.applyMove(moves[0]);
-			v = moves[1];
+			p.setPosZ(p.getPosZ() + dz);
+			p.setPosX(p.getPosX() + dx);
+			p.setPosY(p.getPosY() + dy);
+		}
+
+		else
+		{
+			FloatVector v = new FloatVector(dx, dy);
+			while (!v.isNul())
+			{
+				FloatVector [] moves = this.calculateSplitMoves(v);
+				this.applyMove(moves[0]);
+				v = moves[1];
+			}
 		}
 	}
 
