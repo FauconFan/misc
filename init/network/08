@@ -1,0 +1,17 @@
+On peut connaître l'hébergeur du site slash16.org grâce à la commande host -C slash16.org
+
+```
+$> host -C slash16.org
+
+Nameserver 205.251.199.197:
+	slash16.org has SOA record ns-144.awsdns-18.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
+Nameserver 205.251.192.144:
+	slash16.org has SOA record ns-144.awsdns-18.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
+Nameserver 205.251.196.212:
+	slash16.org has SOA record ns-144.awsdns-18.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
+Nameserver 205.251.194.174:
+	slash16.org has SOA record ns-144.awsdns-18.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
+
+```
+
+On voit bien ici que l'hébergeur est amazon web services

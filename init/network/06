@@ -1,0 +1,4 @@
+Lire le man 5 resolver
+
+Il est indiqué qu'on trouve le chemin absolu de fichier de configuration par défaut des DNS:
+	/etc/resolve.conf

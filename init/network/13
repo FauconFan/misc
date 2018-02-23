@@ -1,0 +1,5 @@
+Il s'agit d'un serveur dhcp.
+
+```
+nslookup 10.51.1.253
+```
