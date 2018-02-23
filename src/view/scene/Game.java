@@ -19,11 +19,11 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-/*
- * Pour remettre le curseur au centre de l''ecran
- * import java.awt.AWTException;
- * import java.awt.Robot;
- */
+//Pour remettre le curseur au centre de l'ecran
+import java.awt.AWTException;
+import java.awt.Robot;
+import javafx.stage.Screen;
+
 import src.model.board.LineWall;
 import src.model.MainMaze;
 import src.model.MazeDimension;
@@ -37,9 +37,13 @@ public class Game extends Scene
 	private final MainMaze maze;
 	private final View v;
 
+	//Dimensions de l'ecran
+	private static int screenWidth  = (int)Screen.getPrimary().getBounds().getWidth();
+	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
+
 	// Anciennes positions de la souris
-	private double mousePosX = 0;
-	private double mousePosY = 0;
+	private double mousePosX = (double)(screenWidth / 2);
+	private double mousePosY = (double)(screenHeight / 2);
 
 	//Hauteur des murs
 	private final int hauteur = 20;
@@ -53,7 +57,7 @@ public class Game extends Scene
 
 	public Game(View v, MainMaze m)
 	{
-		super(new Group(), 500, 750, true);
+		super(new Group(), screenWidth, screenHeight, true);
 		this.v = v;
 		root   = (Group)this.getRoot();
 		maze   = m;
@@ -88,9 +92,12 @@ public class Game extends Scene
 		cameraGroup.getTransforms().addAll(rx, ry);
 
 		//Source de lumiere sur le joueur
+		Group      light         = new Group();
 		PointLight lightOnPlayer = new PointLight();
 		lightOnPlayer.setColor(Color.WHITE);
-		cameraGroup.getChildren().add(lightOnPlayer);
+		light.getChildren().add(lightOnPlayer);
+		light.setTranslateY(-10);
+		cameraGroup.getChildren().add(light);
 
 		root.getChildren().add(cameraGroup);
 		cameraGroup.setTranslateZ(maze.getPlayer().getPosY());
@@ -133,6 +140,8 @@ public class Game extends Scene
 			case DOWN: maze.getPlayer().addVerticalAngle(-1 * rot); break;
 
 			case ESCAPE: v.changeScene(new Pause(v, this)); break;
+
+			case T: centerMouse(); break;
 			}
 
 			updatePlayer();
@@ -145,9 +154,32 @@ public class Game extends Scene
 			maze.getPlayer().addVerticalAngle((float)((mousePosY - mm.getSceneY()) * rotateConst));
 			mousePosX = mm.getSceneX();
 			mousePosY = mm.getSceneY();
-
+			//centerMouse();
 			updatePlayer();
 		});
+	}
+
+	//Place le curseur au centre de l'ecran
+	private void centerMouse()
+	{
+		mousePosX = (double)(screenWidth / 2);
+		mousePosY = (double)(screenHeight / 2);
+		try{
+			Robot robo = new Robot();
+			robo.mouseMove(screenWidth / 2, screenHeight / 2);
+		}catch (AWTException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Teste si le curseur est au centre de l'ecran
+	private boolean isInCenter()
+	{
+		if (mousePosX == screenWidth / 2 && mousePosY == screenHeight / 2)
+		{
+			return (true);
+		}
+		return (false);
 	}
 
 	/**
