@@ -123,22 +123,22 @@ public class LineWall implements Serializable, Cloneable
 
 		if (this.isHorizontal())
 		{
-			if (Math.abs(point.get(1) - this.y1) > erreur)
+			if (Math.abs(point.getY() - this.y1) > epaisseur + erreur)
 			{
 				return (false);
 			}
-			if ((this.x1 <= point.get(0) && point.get(0) <= this.x2) || (this.x1 >= point.get(0) && point.get(0) >= this.x2))
+			if ((this.x1 <= point.getX() && point.getX() <= this.x2) || (this.x1 >= point.getX() && point.getX() >= this.x2))
 			{
 				return (true);
 			}
 		}
 		else
 		{
-			if (Math.abs(point.get(0) - this.x1) > erreur)
+			if (Math.abs(point.getX() - this.x1) > epaisseur + erreur)
 			{
 				return (false);
 			}
-			if ((this.y1 <= point.get(1) && point.get(1) <= this.y2) || (this.y1 >= point.get(1) && point.get(1) >= this.y2))
+			if ((this.y1 <= point.getY() && point.getY() <= this.y2) || (this.y1 >= point.getY() && point.getY() >= this.y2))
 			{
 				return (true);
 			}

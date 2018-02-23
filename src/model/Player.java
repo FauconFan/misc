@@ -7,31 +7,24 @@ import java.io.Serializable;
  */
 public class Player implements Serializable
 {
-	private float hitBoxWidth;
-	private float hitBoxLength;
+	private float hitBoxCircle;
 	private float posX;
 	private float posY;
 	private float horizontalAngle;
 	private float verticalAngle;
 
-	public Player(float hitBoxWidth, float hitBoxLength, float posX, float posY, float horizontalAngle, float verticalAngle)
+	public Player(float hitBoxCircle, float posX, float posY, float horizontalAngle, float verticalAngle)
 	{
-		this.hitBoxWidth     = hitBoxWidth;
-		this.hitBoxLength    = hitBoxLength;
+		this.hitBoxCircle    = hitBoxCircle;
 		this.posX            = posX;
 		this.posY            = posY;
 		this.horizontalAngle = horizontalAngle;
 		this.verticalAngle   = verticalAngle;
 	}
 
-	public float getHitBoxWidth()
+	public float getHitBoxCircle()
 	{
-		return (this.hitBoxWidth);
-	}
-
-	public float getHitBoxLength()
-	{
-		return (this.hitBoxLength);
+		return (this.hitBoxCircle);
 	}
 
 	public float getPosX()

@@ -4,20 +4,32 @@ import java.lang.Math;
 import java.util.Vector;
 import src.model.board.LineWall;
 
-public class FloatVector extends Vector <Float>
+public class FloatVector
 {
+	private float x;
+	private float y;
 	private float erreur;
 
 	public FloatVector(float x, float y, float err)
 	{
-		this.add(x);
-		this.add(y);
+		this.x      = x;
+		this.y      = y;
 		this.erreur = err;
 	}
 
 	public FloatVector(float x, float y)
 	{
-		this(x, y, 10e-10F);
+		this(x, y, 10e-4F);
+	}
+
+	public float getX()
+	{
+		return (this.x);
+	}
+
+	public float getY()
+	{
+		return (this.y);
 	}
 
 	/**
@@ -26,16 +38,12 @@ public class FloatVector extends Vector <Float>
 	 */
 	public boolean isNul()
 	{
-		return (Math.abs(this.get(0)) < erreur && Math.abs(this.get(1)) < erreur);
+		return (Math.abs(this.x) < erreur && Math.abs(this.y) < erreur);
 	}
 
-	/**
-	 * Calcule la norme du vecteur
-	 * @return norme du vecteur
-	 */
-	public float norm()
+	public FloatVector multiplicate(float k)
 	{
-		return ((float)Math.sqrt(Math.pow(this.get(0), 2) + Math.pow(this.get(1), 2)));
+		return (new FloatVector(this.x * k, this.y * k));
 	}
 
 	/**
@@ -45,12 +53,7 @@ public class FloatVector extends Vector <Float>
 	 */
 	public FloatVector sum(FloatVector fv)
 	{
-		return (new FloatVector(fv.get(0) + this.get(0), fv.get(1) + this.get(1)));
-	}
-
-	public FloatVector multiplicate(float k)
-	{
-		return (new FloatVector(this.get(0) * k, this.get(1) * k));
+		return (new FloatVector(fv.getX() + this.x, fv.getY() + this.y));
 	}
 
 	/**
@@ -66,7 +69,7 @@ public class FloatVector extends Vector <Float>
 
 	public FloatVector leftSubstractRight(FloatVector fv)
 	{
-		return (new FloatVector(fv.get(0) - this.get(0), fv.get(1) - this.get(1)));
+		return (new FloatVector(fv.getX() - this.x, fv.getY() - this.y));
 	}
 
 	public FloatVector leftSubstractRight(float vx, float vy)
@@ -76,7 +79,7 @@ public class FloatVector extends Vector <Float>
 
 	public FloatVector rightSubstractLeft(FloatVector fv)
 	{
-		return (new FloatVector(this.get(0) - fv.get(0), this.get(1) - fv.get(1)));
+		return (new FloatVector(this.x - fv.getX(), this.y - fv.getY()));
 	}
 
 	public FloatVector rightSubstractLeft(float vx, float vy)
@@ -92,7 +95,7 @@ public class FloatVector extends Vector <Float>
 
 	public boolean isCollinearTo(FloatVector fv)
 	{
-		return (Math.abs(this.get(0) * fv.get(1) - this.get(1) * fv.get(0)) < erreur);
+		return (Math.abs(this.x * fv.getY() - this.y * fv.getX()) < erreur);
 	}
 
 	/**
@@ -107,24 +110,12 @@ public class FloatVector extends Vector <Float>
 	}
 
 	/**
-	 * Applique une rotation sur le vecteur courant
-	 * @param angle Angle de la rotation en degré
-	 * @return Vecteur résultant de la rotation
-	 */
-
-	public FloatVector rotate(float angle)
-	{
-		angle = (float)((angle * Math.PI) / 180);
-		return (new FloatVector((float)Math.cos(angle) * this.get(0) - (float)Math.sin(angle) * this.get(1), (float)Math.sin(angle) * this.get(0) + (float)Math.cos(angle) * this.get(1)));
-	}
-
-	/**
 	 * Réécriture de la méthode toString()
 	 * @return représentation du vecteur dans une chaîne de caractères
 	 */
 	@Override
 	public String toString()
 	{
-		return ("(" + this.get(0) + " ; " + this.get(1) + ")");
+		return ("(" + this.x + " ; " + this.y + ")");
 	}
 }

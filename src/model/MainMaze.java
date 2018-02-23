@@ -12,6 +12,8 @@ import src.utils.DisplayMazeConsole;
 import src.utils.FloatVector;
 import src.utils.StringManipulation;
 
+import src.model.gen.AlgoSample2;
+
 /**
  * Structure de données du labyrinthe.
  */
@@ -32,7 +34,7 @@ public class MainMaze implements Serializable
 
 	public MainMaze(Algo algo)
 	{
-		this(algo.getContentMaze(), algo.getMazeDimension(), "", new Player(0.005f, 0.01f, 0.5f, 0.5f, 0f, 0f));
+		this(algo.getContentMaze(), algo.getMazeDimension(), "", new Player(0.01f, 0.5f, 0.5f, 0f, 0f));
 	}
 
 	public ContentMaze getAdaptedMaze()
@@ -51,13 +53,13 @@ public class MainMaze implements Serializable
 	}
 
 	/**
-	 * Déplace le joueur à la position (x + v.get(0), y + v.get(1))
+	 * Déplace le joueur à la position (x + v.getX(), y + v.getY())
 	 * @param v Vecteur de déplacement
 	 */
 	private void applyMove(FloatVector v)
 	{
-		p.setPosX(p.getPosX() + v.get(0));
-		p.setPosY(p.getPosY() + v.get(1));
+		p.setPosX(p.getPosX() + v.getX());
+		p.setPosY(p.getPosY() + v.getY());
 	}
 
 	/**
@@ -67,64 +69,77 @@ public class MainMaze implements Serializable
 	 */
 	private FloatVector [] calculateSplitMoves(FloatVector v)
 	{
+		float       coefPropMin = 1;
+		float       coefProp;
+		float       epaisEff     = 0;
+		LineWall    closestWall  = null;
+		FloatVector closestPoint = new FloatVector(0, 0);
+
 		FloatVector [] splitMove = new FloatVector[2];
+		FloatVector    hitboxPoint;
 		splitMove[0] = v;
 		splitMove[1] = new FloatVector(0, 0);
-		float          minNormMove = splitMove[0].norm();
-		float          coefPropMin = 1;
-		float          coefProp;
-		LineWall       closestWall  = null;
-		FloatVector    closestPoint = null;
-		FloatVector [] hitboxPoints = new FloatVector [4];
-		hitboxPoints[0] = (new FloatVector(p.getHitBoxLength() / 2, p.getHitBoxWidth() / 2)).rotate(p.getHorizontalAngle()).sum(p.getPosX(), p.getPosY());
-		hitboxPoints[1] = (new FloatVector(-p.getHitBoxLength() / 2, p.getHitBoxWidth() / 2)).rotate(p.getHorizontalAngle()).sum(p.getPosX(), p.getPosY());
-		hitboxPoints[2] = (new FloatVector(p.getHitBoxLength() / 2, -p.getHitBoxWidth() / 2)).rotate(p.getHorizontalAngle()).sum(p.getPosX(), p.getPosY());
-		hitboxPoints[3] = (new FloatVector(-p.getHitBoxLength() / 2, -p.getHitBoxWidth() / 2)).rotate(p.getHorizontalAngle()).sum(p.getPosX(), p.getPosY());
 		for (LineWall lw : m.getLineWalls())
 		{
 			boolean horizontalWall = lw.isHorizontal();
-			for (int i = 0; i < 4; i++)
+			if (horizontalWall)
 			{
-				if (lw.pointInWall(hitboxPoints[i]))
+				epaisEff    = ((lw.getY1() < p.getPosY()) ? 1 : -1) * lw.getEpaisseur();
+				hitboxPoint = new FloatVector(p.getPosX(), p.getPosY() + ((epaisEff > 0) ? -1 : 1) * p.getHitBoxCircle());
+			}
+			else
+			{
+				epaisEff    = ((lw.getX1() < p.getPosX()) ? 1 : -1) * lw.getEpaisseur();
+				hitboxPoint = new FloatVector(p.getPosX() + ((epaisEff > 0) ? -1 : 1) * p.getHitBoxCircle(), p.getPosY());
+			}
+			if (lw.pointInWall(hitboxPoint))
+			{
+				if (horizontalWall)
 				{
-					if (horizontalWall)
+					if ((epaisEff > 0 && v.getY() < 0) ||
+						(epaisEff < 0 && v.getY() > 0))
 					{
-						if ((p.getPosY() < lw.getY1() && p.getPosY() + v.get(1) > p.getPosY()) ||
-							(p.getPosY() > lw.getY1() && p.getPosY() + v.get(1) < p.getPosY()))
-						{
-							splitMove[0] = new FloatVector(0, 0);
-							splitMove[1] = new FloatVector(v.get(0), 0);
-							return (splitMove);
-						}
-					}
-					else
-					{
-						if ((p.getPosX() > lw.getX1() && p.getPosX() + v.get(0) < p.getPosX()) ||
-							(p.getPosX() < lw.getX1() && p.getPosX() + v.get(0) > p.getPosX()))
-						{
-							splitMove[0] = new FloatVector(0, 0);
-							splitMove[1] = new FloatVector(0, v.get(1));
-							return (splitMove);
-						}
+						splitMove[0] = new FloatVector(0, 0);
+						splitMove[1] = new FloatVector(v.getX(), 0);
+						return (splitMove);
 					}
 				}
-				if (!v.isCollinearTo((lw.getX2() - lw.getX1()), (lw.getY2() - lw.getY1())))
+				else
 				{
-					coefProp = (horizontalWall) ? ((lw.getY1() - hitboxPoints[i].get(1)) / v.get(1)) : ((lw.getX1() - hitboxPoints[i].get(0)) / v.get(0));
-					if (0 < coefProp && coefProp < 1 && lw.pointInWall(hitboxPoints[i].sum(v.multiplicate(coefProp))) && coefProp < coefPropMin)
+					if ((epaisEff > 0 && v.getX() < 0) ||
+						(epaisEff < 0 && v.getX() > 0))
 					{
-						coefPropMin  = coefProp;
-						closestWall  = lw;
-						closestPoint = hitboxPoints[i];
+						splitMove[0] = new FloatVector(0, 0);
+						splitMove[1] = new FloatVector(0, v.getY());
+						return (splitMove);
 					}
+				}
+			}
+			else if (!v.isCollinearTo((lw.getX2() - lw.getX1()), (lw.getY2() - lw.getY1())))
+			{
+				coefProp = (horizontalWall) ? ((lw.getY1() + epaisEff - hitboxPoint.getY()) / v.getY()) : ((lw.getX1() + epaisEff - hitboxPoint.getX()) / v.getX());
+				if (0 < coefProp && coefProp < 1 && lw.pointInWall(hitboxPoint.sum(v.multiplicate(coefProp))) && coefProp < coefPropMin)
+				{
+					coefPropMin  = coefProp;
+					closestPoint = hitboxPoint;
+					closestWall  = lw;
 				}
 			}
 		}
 		if (coefPropMin > 0 && coefPropMin < 1)
 		{
-			FloatVector intersecPoint = (closestWall.isHorizontal()) ? new FloatVector(closestPoint.get(0) + coefPropMin * v.get(0), (float)closestWall.getY1()) : new FloatVector((float)closestWall.getX1(), closestPoint.get(1) + coefPropMin * v.get(1));
-			splitMove[0] = intersecPoint.rightSubstractLeft(closestPoint);
-			splitMove[1] = (closestWall.isHorizontal()) ? intersecPoint.leftSubstractRight(closestPoint.get(0) + v.get(0), closestWall.getY1()) : intersecPoint.leftSubstractRight(closestWall.getX1(), closestPoint.get(1) + v.get(1));
+			if (closestWall.isHorizontal())
+			{
+				epaisEff     = ((closestWall.getY1() < p.getPosY()) ? 1 : -1) * closestWall.getEpaisseur();
+				splitMove[0] = new FloatVector(coefPropMin * v.getX(), coefPropMin * v.getY());
+				splitMove[1] = new FloatVector(v.getX() * (1 - coefPropMin), 0);
+			}
+			else
+			{
+				epaisEff     = ((closestWall.getX1() < p.getPosX()) ? 1 : -1) * closestWall.getEpaisseur();
+				splitMove[0] = new FloatVector(coefPropMin * v.getX(), coefPropMin * v.getY());
+				splitMove[1] = new FloatVector(0, v.getY() * (1 - coefPropMin));
+			}
 		}
 		return (splitMove);
 	}
@@ -141,7 +156,6 @@ public class MainMaze implements Serializable
 		while (!v.isNul())
 		{
 			FloatVector [] moves = this.calculateSplitMoves(v);
-			System.out.println("moves 1 : " + moves[0] + " moves 2 : " + moves[1]);
 			this.applyMove(moves[0]);
 			v = moves[1];
 		}
