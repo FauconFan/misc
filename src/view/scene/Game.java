@@ -102,7 +102,7 @@ public class Game extends Scene
 		//camera.setFieldOfView(10f);
 
 		// constantes de déplacements
-		final float change = 1f;
+		final float change = 0.01f;
 		final int   rot    = 5; // En degré
 
 		renderMaze();
@@ -111,13 +111,13 @@ public class Game extends Scene
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			switch (key.getCode())
 			{
-			case Q: setTr(true, -1 * change); break;
+			case Q: setTr(-90, change); break;
 
-			case D: setTr(true, change); break;
+			case D: setTr(90, change); break;
 
-			case Z: setTr(false, change); break;
+			case Z: setTr(0, change); break;
 
-			case S: setTr(false, -1 * change); break;
+			case S: setTr(180, change); break;
 
 			// Le déplacement vertical ne demande pour l'instant aucun calcul particulier
 			case F: maze.movePlayer(0, 0, change);  break;
@@ -152,22 +152,14 @@ public class Game extends Scene
 
 	/**
 	 * Set the translate
-	 * @param xOrNot Est-ce que lon se déplace selon x ou y ?
+	 * @param diff la différence à ajouter à l'angle
 	 * @param change Le déplacement
 	 */
-	private void setTr(boolean xOrNot, float change)
+	private void setTr(int diff, float change)
 	{
-		final double r1 = Math.toRadians(rx.getAngle());
-		final double r2 = Math.toRadians(ry.getAngle());
+		final double r1 = Math.toRadians(rx.getAngle() + diff);
 
-		if (!xOrNot)
-		{
-			maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change), 0);
-		}
-		else
-		{
-			maze.movePlayer((float)(Math.cos(r2) * change), (float)(Math.sin(r2) * change), 0);
-		}
+		maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change), 0);
 	}
 
 	/**
@@ -177,9 +169,9 @@ public class Game extends Scene
 	{
 		final Player p = maze.getPlayer();
 
-		tr.setZ(p.getPosY());
-		tr.setX(p.getPosX());
-		tr.setY(p.getPosZ());
+		tr.setZ(p.getPosY() * sc.getZ());
+		tr.setX(p.getPosX() * sc.getX());
+		tr.setY(p.getPosZ() * sc.getY());
 		rx.setAngle(p.getHorizontalAngle());
 		ry.setAngle(p.getVerticalAngle());
 	}
