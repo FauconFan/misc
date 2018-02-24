@@ -1,8 +1,10 @@
-Il faut éditer le crontab avec :
-```
-crontab -e
-```
+#!/bin/bash
 
-Puis rajouter la ligne suivante:
+CRON_TMP=/tmp/cron_tmp
 
-"0 4 * * 1 root ret=`date` && ret=${ret}`sudo apt-get update` && ret=${ret}`echo "" | sudo apt-get upgrade` && echo $ret >> /var/log/update_script.log"
+crontab -l > ${CRON_TMP}
+
+echo "0 4 * * 1 (sudo apt-get update -y && sudo apt-get upgrade -y) | sudo tee /var/log/update_script.log" >> ${CRON_TMP}
+
+crontab ${CRON_TMP}
+rm -f ${CRON_TMP}

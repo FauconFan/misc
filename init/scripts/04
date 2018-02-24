@@ -20,7 +20,8 @@ md5sum ${CRONTAB} > ${CRON_MD5}
 EOF
 
 crontab -l > ${CRON_TMP}
-chmod 755 ${NAME} \
-	&& echo "0 0 * * * ${NAME}" >> ${CRON_TMP} \
-	&& crontab ${CRON_TMP} \
-	&& rm -f ${CRON_TMP}
+chmod 755 ${NAME} 
+echo "0 0 * * * ${NAME}" >> ${CRON_TMP}
+
+crontab ${CRON_TMP}
+rm -f ${CRON_TMP}
