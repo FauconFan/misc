@@ -92,20 +92,19 @@ public class Game extends Scene
 		cameraGroup.getTransforms().addAll(rx, ry);
 
 		//Source de lumiere sur le joueur
-		Group      light         = new Group();
-		PointLight lightOnPlayer = new PointLight();
-		lightOnPlayer.setColor(Color.WHITE);
-		light.getChildren().add(lightOnPlayer);
-		cameraGroup.getChildren().add(light);
+
+		/*Group      light         = new Group();
+		 * PointLight lightOnPlayer = new PointLight();
+		 * lightOnPlayer.setColor(Color.WHITE);
+		 * light.getChildren().add(lightOnPlayer);
+		 * cameraGroup.getChildren().add(light);*/
 
 		root.getChildren().add(cameraGroup);
-		cameraGroup.setTranslateZ(maze.getPlayer().getPosY());
 
-		cameraGroup.setTranslateX(maze.getPlayer().getPosX());
+		updatePlayer();
 
 		// Défini la camera pour la scène
 		setCamera(camera);
-		//camera.setFieldOfView(10f);
 
 		// constantes de déplacements
 		final float change = 0.5f;
