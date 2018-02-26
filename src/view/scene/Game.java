@@ -96,7 +96,6 @@ public class Game extends Scene
 		PointLight lightOnPlayer = new PointLight();
 		lightOnPlayer.setColor(Color.WHITE);
 		light.getChildren().add(lightOnPlayer);
-		light.setTranslateY(-10);
 		cameraGroup.getChildren().add(light);
 
 		root.getChildren().add(cameraGroup);
@@ -109,7 +108,7 @@ public class Game extends Scene
 		//camera.setFieldOfView(10f);
 
 		// constantes de déplacements
-		final float change = 0.01f;
+		final float change = 0.5f;
 		final int   rot    = 5; // En degré
 
 		renderMaze();
@@ -148,15 +147,16 @@ public class Game extends Scene
 		});
 
 		//Mouse controller
-		setOnMouseMoved((mm)->{
-			final double rotateConst = 0.1;
-			maze.getPlayer().addHorizontalAngle((float)(-1 * (mousePosX - mm.getSceneX()) * rotateConst));
-			maze.getPlayer().addVerticalAngle((float)((mousePosY - mm.getSceneY()) * rotateConst));
-			mousePosX = mm.getSceneX();
-			mousePosY = mm.getSceneY();
-			//centerMouse();
-			updatePlayer();
-		});
+
+		/*setOnMouseMoved((mm)->{
+		 *  final double rotateConst = 0.1;
+		 *  maze.getPlayer().addHorizontalAngle((float)(-1 * (mousePosX - mm.getSceneX()) * rotateConst));
+		 *  maze.getPlayer().addVerticalAngle((float)((mousePosY - mm.getSceneY()) * rotateConst));
+		 *  mousePosX = mm.getSceneX();
+		 *  mousePosY = mm.getSceneY();
+		 *  //centerMouse();
+		 *  updatePlayer();
+		 * });*/
 	}
 
 	//Place le curseur au centre de l'ecran
