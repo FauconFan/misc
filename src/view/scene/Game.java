@@ -25,17 +25,17 @@ import java.awt.Robot;
 import javafx.stage.Screen;
 
 import src.model.board.LineWall;
+import src.model.ContentMaze;
 import src.model.MainMaze;
 import src.model.MazeDimension;
 import src.model.Player;
 
 import src.view.View;
 
-public class Game extends Scene
+public class Game extends ScenePlus
 {
 	private final Group root;
 	private final MainMaze maze;
-	private final View v;
 
 	//Dimensions de l'ecran
 	private static int screenWidth  = (int)Screen.getPrimary().getBounds().getWidth();
@@ -57,10 +57,9 @@ public class Game extends Scene
 
 	public Game(View v, MainMaze m)
 	{
-		super(new Group(), screenWidth, screenHeight, true);
-		this.v = v;
-		root   = (Group)this.getRoot();
-		maze   = m;
+		super(new Group(), screenWidth, screenHeight, true, v);
+		root = (Group)this.getRoot();
+		maze = m;
 
 		setFill(Color.GREY);
 
@@ -207,6 +206,14 @@ public class Game extends Scene
 		ry.setAngle(p.getVerticalAngle());
 	}
 
+	private void checkWin()
+	{
+		if (maze.getPlayer().hasWin(maze.getContentMaze().getSpecialCases()))
+		{
+			v.changeScene(new Winner(v));
+		}
+	}
+
 	/**
 	 * Dessine le Maze
 	 */
@@ -216,7 +223,7 @@ public class Game extends Scene
 
 		walls.getTransforms().add(sc);
 		root.getChildren().add(walls);
-		final LineWall[] lineWalls = maze.getAdaptedMaze().getLineWalls();
+		final LineWall[] lineWalls = maze.getContentMaze().getLineWalls();
 		for (LineWall l: lineWalls)
 		{
 			Box w = new Box();

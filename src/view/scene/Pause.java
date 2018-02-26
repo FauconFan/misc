@@ -22,17 +22,15 @@ import javafx.stage.Stage;
 import src.view.Menu;
 import src.view.View;
 
-class Pause extends Scene
+class Pause extends ScenePlus
 {
 	private Game previous;
-	private final View v;
 
 	public Pause(View v, Game p)
 	{
-		super(new Group());
+		super(new Group(), v);
 		this.previous = p;
 		((Group)getRoot()).getChildren().add(new MenuPause());
-		this.v = v;
 	}
 
 	public class MenuPause extends Menu
@@ -64,6 +62,8 @@ class Pause extends Scene
 				case ESCAPE: v.changeScene(previous); break;
 				}
 			});
+
+			addButtonQuit();
 
 			putMsg();
 		}

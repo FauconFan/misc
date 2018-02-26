@@ -38,7 +38,7 @@ public class MainMaze
 		this(algo.getContentMaze(), algo.getMazeDimension(), "", new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f));
 	}
 
-	public ContentMaze getAdaptedMaze()
+	public ContentMaze getContentMaze()
 	{
 		return (this.m);
 	}
