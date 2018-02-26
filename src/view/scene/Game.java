@@ -53,7 +53,7 @@ public class Game extends Scene
 	private final Rotate rx, ry;
 
 	// Scale
-	private final Scale sc = new Scale(10, 1, 10);
+	private final Scale sc = new Scale(30, 1, 30);
 
 	public Game(View v, MainMaze m)
 	{
@@ -93,11 +93,11 @@ public class Game extends Scene
 
 		//Source de lumiere sur le joueur
 
-		/*Group      light         = new Group();
-		 * PointLight lightOnPlayer = new PointLight();
-		 * lightOnPlayer.setColor(Color.WHITE);
-		 * light.getChildren().add(lightOnPlayer);
-		 * cameraGroup.getChildren().add(light);*/
+		Group      light         = new Group();
+		PointLight lightOnPlayer = new PointLight();
+		lightOnPlayer.setColor(Color.WHITE);
+		light.getChildren().add(lightOnPlayer);
+		cameraGroup.getChildren().add(light);
 
 		root.getChildren().add(cameraGroup);
 
@@ -107,7 +107,7 @@ public class Game extends Scene
 		setCamera(camera);
 
 		// constantes de déplacements
-		final float change = 0.5f;
+		final float change = 0.1f;
 		final int   rot    = 5; // En degré
 
 		renderMaze();
