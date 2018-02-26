@@ -41,6 +41,11 @@ public class FloatVector
 		return (Math.abs(this.x) < erreur && Math.abs(this.y) < erreur);
 	}
 
+	/**
+	 * Multiple un vecteur par un scalaire
+	 * @param k Coefficient de multiplication
+	 * @return vecteur multiplié par le scalaire
+	 */
 	public FloatVector multiplicate(float k)
 	{
 		return (new FloatVector(this.x * k, this.y * k));
@@ -57,56 +62,14 @@ public class FloatVector
 	}
 
 	/**
-	 * Calcule la somme avec le vecteur (vx, vy)
-	 * @param vx Composante en x du vecteur à sommer
-	 * @param vy Composante en y du vecteur à sommer
-	 * @return vecteur somme avec (x, y)
-	 */
-	public FloatVector sum(float vx, float vy)
-	{
-		return (this.sum(new FloatVector(vx, vy)));
-	}
-
-	public FloatVector leftSubstractRight(FloatVector fv)
-	{
-		return (new FloatVector(fv.getX() - this.x, fv.getY() - this.y));
-	}
-
-	public FloatVector leftSubstractRight(float vx, float vy)
-	{
-		return (this.leftSubstractRight(new  FloatVector(vx, vy)));
-	}
-
-	public FloatVector rightSubstractLeft(FloatVector fv)
-	{
-		return (new FloatVector(this.x - fv.getX(), this.y - fv.getY()));
-	}
-
-	public FloatVector rightSubstractLeft(float vx, float vy)
-	{
-		return (this.rightSubstractLeft(new  FloatVector(vx, vy)));
-	}
-
-	/**
-	 * Teste la collinéarité avec le vecteur fv
-	 * @param fv Vecteur
-	 * @return true si le vecteur est collinéaire au vecteur fv
-	 */
-
-	public boolean isCollinearTo(FloatVector fv)
-	{
-		return (Math.abs(this.x * fv.getY() - this.y * fv.getX()) < erreur);
-	}
-
-	/**
-	 * Teste la collinéarité avec le vecteur (vx, vy)
-	 * @param vx Composante en x du vecteur
-	 * @param vy Composante en y du vecteur
-	 * @return true si le vecteur est collinéaire au vecteur (vx, vy)
+	 * Teste la collinéarité avec le vecteur v = (vx, vy)
+	 * @param vx Composante en x du vecteur v
+	 * @param vy Composante en y du vecteur v
+	 * @return true si le vecteur est collinéaire au vecteur v = (vx, vy)
 	 */
 	public boolean isCollinearTo(float vx, float vy)
 	{
-		return (this.isCollinearTo(new FloatVector(vx, vy)));
+		return (Math.abs(this.x * vy - this.y * vx) < erreur);
 	}
 
 	/**

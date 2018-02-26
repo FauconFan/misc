@@ -13,8 +13,6 @@ import src.utils.DisplayMazeConsole;
 import src.utils.FloatVector;
 import src.utils.StringManipulation;
 
-import src.model.gen.AlgoSample2;
-
 /**
  * Structure de données du labyrinthe.
  */
@@ -66,7 +64,7 @@ public class MainMaze
 	}
 
 	/**
-	 * Décompose le vecteur AD en deux vecteurs AB et BC avec B le point d'intersection entre AD et le mur le plus proche/
+	 * Décompose le vecteur AD en deux vecteurs AB et BC avec B le point d'intersection entre AD et le mur le plus proche
 	 * @param v Vecteur déplacement qu'il faut décomposer
 	 * @return Tableau de deux vecteurs
 	 */
