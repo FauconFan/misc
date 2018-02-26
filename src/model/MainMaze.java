@@ -3,6 +3,7 @@ package src.model;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import src.model.board.Case;
 import src.model.board.LineWall;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
@@ -30,6 +31,8 @@ public class MainMaze
 		this.mazeDim = mz;
 		this.name    = name;
 		this.p       = p;
+
+		p.goTo(Case.TypeCase.START, m.getSpecialCases());
 	}
 
 	public MainMaze(Algo algo)

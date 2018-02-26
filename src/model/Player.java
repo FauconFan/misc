@@ -1,5 +1,7 @@
 package src.model;
 
+import src.model.board.Case;
+
 /**
  * Player est la classe qui représente le joueur dans le labyrinthe.
  */
@@ -88,5 +90,19 @@ public class Player
 	public void addVerticalAngle(float y)
 	{
 		verticalAngle += y;
+	}
+
+	public boolean goTo(Case.TypeCase t, Case[] sc)
+	{
+		for (Case c:sc)
+		{
+			if (c.getTypeCase() == t)
+			{
+				posX = c.getX() + Case.getTailleCase() / 2;
+				posY = c.getY() + Case.getTailleCase() / 2;
+				return (true);
+			}
+		}
+		return (false);
 	}
 }

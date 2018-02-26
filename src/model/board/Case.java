@@ -5,6 +5,8 @@ import com.google.gson.*;
 import java.lang.Cloneable;
 import java.lang.reflect.Type;
 
+import src.model.board.LineWall;
+
 /**
  * Case du labyrinthe quelconque.
  */
@@ -12,6 +14,8 @@ public abstract class Case implements Cloneable
 {
 	protected int x;
 	protected int y;
+
+	private static float tailleCase = 1 + LineWall.getEpaisseurDefault() / 2;
 
 	public Case(int x, int y)
 	{
@@ -27,6 +31,11 @@ public abstract class Case implements Cloneable
 	public int getY()
 	{
 		return (this.y);
+	}
+
+	public static float getTailleCase()
+	{
+		return (tailleCase);
 	}
 
 	public void translate(int dx, int dy)

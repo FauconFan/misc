@@ -97,6 +97,11 @@ public class LineWall implements Cloneable
 		return (this.epaisseur);
 	}
 
+	public static float getEpaisseurDefault()
+	{
+		return (EPAISSEUR_DEFAULT);
+	}
+
 	public int getSize()
 	{
 		if (this.isHorizontal())
