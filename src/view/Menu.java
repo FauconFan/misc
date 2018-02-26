@@ -1,5 +1,6 @@
 package src.view;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -49,5 +50,14 @@ public class Menu extends VBox implements Msg
 	public void setMsg(String str)
 	{
 		this.msg.setText(str);
+	}
+
+	public void addButtonQuit()
+	{
+		Button b = addButton("Quit");
+
+		b.setOnAction(event->{
+			Platform.exit();
+		});
 	}
 }

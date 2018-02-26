@@ -1,6 +1,5 @@
 package src.view.scene;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -27,23 +26,20 @@ import src.view.Menu;
 import src.view.Msg;
 import src.view.View;
 
-public class Menus extends Scene
+public class Menus extends ScenePlus
 {
 	private Parent view;
 	private Parent prec;
-	private final View v;
 
 	public Menus(View v)
 	{
-		super(new Group());
+		super(new Group(), v);
 		((Group)getRoot()).getChildren().add(new MenuStart());
-		this.v = v;
 	}
 
 	public Menus(View v, Menu m)
 	{
-		super(m);
-		this.v    = v;
+		super(m, v);
 		this.view = m;
 	}
 
@@ -59,8 +55,7 @@ public class Menus extends Scene
 
 			final Button   buttonCreate = addButton("Create");
 			final Button   buttonLoad   = addButton("Load");
-			final Button   buttonExit   = addButton("Exit");
-			final Button[] buttons      = { buttonLoad, buttonCreate, buttonExit };
+			final Button[] buttons      = { buttonLoad, buttonCreate };
 			for (Button b: buttons)
 			{
 				b.setPrefWidth(primaryScreenBounds.getWidth() / 1.5);
@@ -79,9 +74,7 @@ public class Menus extends Scene
 				changeView((Parent) new MenuCreation());
 			});
 
-			buttonExit.setOnAction(event->{
-				Platform.exit();
-			});
+			addButtonQuit();
 
 			putMsg();
 		}

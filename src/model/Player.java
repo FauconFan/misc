@@ -105,4 +105,16 @@ public class Player
 		}
 		return (false);
 	}
+
+	public boolean hasWin(Case[] sc)
+	{
+		for (Case c:sc)
+		{
+			if (c.getTypeCase() == Case.TypeCase.END && Math.abs(posX - c.getX()) < Case.getTailleCase() / 2 && Math.abs(posY - c.getY()) < Case.getTailleCase() / 2)
+			{
+				return (true);
+			}
+		}
+		return (false);
+	}
 }
