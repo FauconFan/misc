@@ -1,11 +1,14 @@
 package src.view.scene;
 
+import java.io.FileInputStream;
 import javafx.application.Application;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
@@ -219,6 +222,16 @@ public class Game extends ScenePlus
 	 */
 	private void renderMaze()
 	{
+		Image    img;
+		Material mat;
+
+		try{
+			img = new Image(new FileInputStream("assets/bricks2.jpg"));
+			mat = new PhongMaterial(Color.WHITE, img, null, null, null);
+		}
+		catch (Exception e) {
+			mat = new PhongMaterial(Color.GREEN);
+		}
 		Group walls = new Group();
 
 		walls.getTransforms().add(sc);
@@ -244,7 +257,7 @@ public class Game extends ScenePlus
 				w.setTranslateX(l.getX1() + width / 2.0);
 				w.setTranslateZ(l.getY1() + l.getEpaisseur() / 2.0);
 			}
-			w.setMaterial(new PhongMaterial(Color.GREEN));
+			w.setMaterial(mat);
 			walls.getChildren().add(w);
 		}
 	}
