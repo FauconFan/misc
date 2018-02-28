@@ -255,7 +255,7 @@ public class Game extends ScenePlus
 			w.setHeight(hauteur);
 			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
 			{
-				final int depth = l.getY2() - l.getY1();
+				final float depth = l.getY2() - l.getY1() + l.getEpaisseur();
 				w.setDepth(depth);
 				w.setWidth(l.getEpaisseur());
 				w.setTranslateX(l.getX1() + l.getEpaisseur() / 2.0);
@@ -263,7 +263,7 @@ public class Game extends ScenePlus
 			}
 			else // Mur horizontal
 			{
-				final int width = l.getX2() - l.getX1();
+				final float width = l.getX2() - l.getX1() + l.getEpaisseur();
 				w.setWidth(width);
 				w.setDepth(l.getEpaisseur());
 				w.setTranslateX(l.getX1() + width / 2.0);
