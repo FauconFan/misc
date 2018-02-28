@@ -58,6 +58,12 @@ public class Game extends ScenePlus
 	// Scale
 	private final Scale sc = new Scale(30, 1, 30);
 
+	// constantes de déplacements
+	private final float change = 0.1f;
+	private final float goUp   = 1f;
+	private final int rot      = 5; // En degré
+
+
 	public Game(View v, MainMaze m)
 	{
 		super(new Group(), screenWidth, screenHeight, true, v);
@@ -81,11 +87,11 @@ public class Game extends ScenePlus
 		camera.setNearClip(0.1);
 		camera.setFarClip(1000.0);
 
-		//Translate
+		//Translate for the camera
 		tr = new Translate();
 		cameraGroup.getTransforms().add(tr);
 
-		// Rotate
+		// Rotate for the camera
 		rx = new Rotate();
 		rx.setAxis(Rotate.Y_AXIS);
 
@@ -103,17 +109,13 @@ public class Game extends ScenePlus
 
 		root.getChildren().add(cameraGroup);
 
+		// Met le joueur sur la startCase
 		updatePlayer();
 
 		// Défini la camera pour la scène
 		setCamera(camera);
 
-		// constantes de déplacements
-		final float change = 0.1f;
-		final float goUp   = 1f;
-		final int   rot    = 5; // En degré
-
-		renderMaze();
+		root.getChildren().add(makeWalls());
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -221,6 +223,9 @@ public class Game extends ScenePlus
 		checkWin();
 	}
 
+	/**
+	 *  Teste si on a gagné et agit en conséquence
+	 */
 	private void checkWin()
 	{
 		if (maze.getPlayer().hasWin(maze.getContentMaze().getSpecialCases()))
@@ -231,8 +236,9 @@ public class Game extends ScenePlus
 
 	/**
 	 * Dessine le Maze
+	 * @return Le groupe contenant les murs
 	 */
-	private void renderMaze()
+	private Group makeWalls()
 	{
 		Image    img;
 		Material mat;
@@ -246,8 +252,8 @@ public class Game extends ScenePlus
 		}
 		Group walls = new Group();
 
+		// On scale les murs
 		walls.getTransforms().add(sc);
-		root.getChildren().add(walls);
 		final LineWall[] lineWalls = maze.getContentMaze().getLineWalls();
 		for (LineWall l: lineWalls)
 		{
@@ -272,6 +278,7 @@ public class Game extends ScenePlus
 			w.setMaterial(mat);
 			walls.getChildren().add(w);
 		}
+		return (walls);
 	}
 
 	/**
