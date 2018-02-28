@@ -8,7 +8,7 @@ import src.model.board.Case;
 public class Player
 {
 	//Est on en mode ghost ?
-	private boolean ghostMode = true;
+	private boolean ghostMode = false;
 
 	private float hitBoxCircle;
 	private float posX;
@@ -84,12 +84,12 @@ public class Player
 
 	public void addHorizontalAngle(float x)
 	{
-		horizontalAngle += x;
+		this.horizontalAngle += x;
 	}
 
 	public void addVerticalAngle(float y)
 	{
-		verticalAngle += y;
+		this.verticalAngle += y;
 	}
 
 	public boolean goTo(Case.TypeCase t, Case[] sc)

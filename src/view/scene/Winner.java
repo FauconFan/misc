@@ -30,7 +30,6 @@ class Winner extends ScenePlus
 			buttonNew.setOnAction(event->{
 				v.changeScene(new Menus(v));
 			});
-			getChildren().add(buttonNew);
 
 			addButtonQuit();
 		}
