@@ -288,10 +288,10 @@ public class Game extends ScenePlus
 			final int w = md.x2 - md.x1;
 			final int h = md.y2 - md.y1;
 			Box       f = new Box(w, 0.5, h);
-			f.setTranslateX(md.x1 + w / 2);
-			f.setTranslateZ(md.y1 + h / 2);
+			f.setTranslateX(md.x1 + w / 2.0);
+			f.setTranslateZ(md.y1 + h / 2.0);
 			f.setMaterial(new PhongMaterial(Color.RED));
-			f.setTranslateY(hauteur / 2);
+			f.setTranslateY(hauteur / 2.0);
 			floors.getChildren().add(f);
 		}
 		return (floors);
