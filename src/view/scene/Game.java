@@ -54,12 +54,19 @@ public class Game extends ScenePlus
 	//Hauteur des murs
 	private final int hauteur = 20;
 
-	//Translate
-	private final Translate tr;
-	private final Rotate rx, ry;
+	//Transforms pour la camera
+	private final Translate tr = new Translate();
+	private final Rotate rx    = new Rotate(0, Rotate.Y_AXIS);
+	private final Rotate ry    = new Rotate(0, Rotate.X_AXIS);
 
-	// Scale
+	// Scale pour les murs
 	private final Scale sc = new Scale(30, 1, 30);
+
+	// Constantes de déplacements
+	private final float change = 0.1f;
+	private final float goUp   = 1f;
+	private final int rot      = 5; // En degré
+
 
 	public Game(View v, MainMaze m)
 	{
@@ -72,10 +79,13 @@ public class Game extends ScenePlus
 		// Ajoute le sol
 		root.getChildren().add(makeFloors());
 
-		// Le plafond est juste un sol décalé vers le haut
-		final Group roof = makeFloors();
-		roof.setTranslateY(-1 * hauteur);
-		//root.getChildren().add(roof);
+		/* Le plafond est juste un sol décalé vers le haut
+		 * final Group roof = makeFloors();
+		 * roof.setTranslateY(-1 * hauteur);
+		 * root.getChildren().add(roof);*/
+
+		//Ajoute les murs
+		root.getChildren().add(makeWalls());
 
 		//Creation de la camera
 		final Group             cameraGroup = new Group();
@@ -84,20 +94,10 @@ public class Game extends ScenePlus
 		camera.setNearClip(0.1);
 		camera.setFarClip(1000.0);
 
-		//Translate
-		tr = new Translate();
-		cameraGroup.getTransforms().add(tr);
-
-		// Rotate
-		rx = new Rotate();
-		rx.setAxis(Rotate.Y_AXIS);
-
-		ry = new Rotate();
-		ry.setAxis(Rotate.X_AXIS);
-		cameraGroup.getTransforms().addAll(rx, ry);
+		// On met les tranforms sur la camera
+		cameraGroup.getTransforms().addAll(tr, rx, ry);
 
 		//Source de lumiere sur le joueur
-
 		Group      light         = new Group();
 		PointLight lightOnPlayer = new PointLight();
 		lightOnPlayer.setColor(Color.WHITE);
@@ -106,17 +106,11 @@ public class Game extends ScenePlus
 
 		root.getChildren().add(cameraGroup);
 
+		// Met le joueur sur la startCase
 		updatePlayer();
 
 		// Défini la camera pour la scène
 		setCamera(camera);
-
-		// constantes de déplacements
-		final float change = 0.1f;
-		final float goUp   = 1f;
-		final int   rot    = 5; // En degré
-
-		renderMaze();
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -213,6 +207,9 @@ public class Game extends ScenePlus
 		checkWin();
 	}
 
+	/**
+	 *  Teste si on a gagné et agit en conséquence
+	 */
 	private void checkWin()
 	{
 		if (maze.getPlayer().hasWin(maze.getContentMaze().getSpecialCases()))
@@ -223,8 +220,9 @@ public class Game extends ScenePlus
 
 	/**
 	 * Dessine le Maze
+	 * @return Le groupe contenant les murs
 	 */
-	private void renderMaze()
+	private Group makeWalls()
 	{
 		Image    img;
 		Material mat;
@@ -238,8 +236,8 @@ public class Game extends ScenePlus
 		}
 		Group walls = new Group();
 
+		// On scale les murs
 		walls.getTransforms().add(sc);
-		root.getChildren().add(walls);
 		final LineWall[] lineWalls = maze.getContentMaze().getLineWalls();
 		for (LineWall l: lineWalls)
 		{
@@ -247,7 +245,7 @@ public class Game extends ScenePlus
 			w.setHeight(hauteur);
 			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
 			{
-				final int depth = l.getY2() - l.getY1();
+				final float depth = l.getY2() - l.getY1() + l.getEpaisseur();
 				w.setDepth(depth);
 				w.setWidth(l.getEpaisseur());
 				w.setTranslateX(l.getX1() + l.getEpaisseur() / 2.0);
@@ -255,7 +253,7 @@ public class Game extends ScenePlus
 			}
 			else // Mur horizontal
 			{
-				final int width = l.getX2() - l.getX1();
+				final float width = l.getX2() - l.getX1() + l.getEpaisseur();
 				w.setWidth(width);
 				w.setDepth(l.getEpaisseur());
 				w.setTranslateX(l.getX1() + width / 2.0);
@@ -264,10 +262,12 @@ public class Game extends ScenePlus
 			w.setMaterial(mat);
 			walls.getChildren().add(w);
 		}
+		return (walls);
 	}
 
 	/**
 	 * Dessine le sol
+	 * @return Un groupe contenant le sol
 	 */
 	public Group makeFloors()
 	{
@@ -280,10 +280,10 @@ public class Game extends ScenePlus
 			final int w = md.x2 - md.x1;
 			final int h = md.y2 - md.y1;
 			Box       f = new Box(w, 0.5, h);
-			f.setTranslateX(md.x1 + w / 2);
-			f.setTranslateZ(md.y1 + h / 2);
+			f.setTranslateX(md.x1 + w / 2.0);
+			f.setTranslateZ(md.y1 + h / 2.0);
 			f.setMaterial(new PhongMaterial(Color.RED));
-			f.setTranslateY(hauteur / 2);
+			f.setTranslateY(hauteur / 2.0);
 			floors.getChildren().add(f);
 		}
 		return (floors);

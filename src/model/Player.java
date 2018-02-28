@@ -8,7 +8,7 @@ import src.model.board.Case;
 public class Player
 {
 	//Est on en mode ghost ?
-	private boolean ghostMode = true;
+	private boolean ghostMode = false;
 
 	private float hitBoxCircle;
 	private float posX;
