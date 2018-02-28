@@ -49,7 +49,8 @@ public class View
 	public void createMaze(Algo a)
 	{
 		con.createMaze(a);
-		con.showMaze(true);
+		//con.showMaze(true);
+		System.out.println(con.getMaze());
 		scene = new Game(this, con.getMaze());
 		stage.setScene(scene);
 		stage.show();
