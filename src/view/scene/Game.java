@@ -110,6 +110,7 @@ public class Game extends ScenePlus
 
 		// constantes de déplacements
 		final float change = 0.1f;
+		final float goUp   = 1f;
 		final int   rot    = 5; // En degré
 
 		renderMaze();
@@ -127,9 +128,9 @@ public class Game extends ScenePlus
 			case S: setTr(180, change); break;
 
 			// Le déplacement vertical ne demande pour l'instant aucun calcul particulier
-			case F: maze.movePlayer(0, 0, change);  break;
+			case F: maze.movePlayer(0, 0, goUp);  break;
 
-			case R: maze.movePlayer(0, 0, -1 * change); break;
+			case R: maze.movePlayer(0, 0, -1 * goUp); break;
 
 			case LEFT: maze.getPlayer().addHorizontalAngle(-1 * rot); break;
 
@@ -216,6 +217,8 @@ public class Game extends ScenePlus
 		tr.setY(p.getPosZ() * sc.getY());
 		rx.setAngle(p.getHorizontalAngle());
 		ry.setAngle(p.getVerticalAngle());
+
+		checkWin();
 	}
 
 	private void checkWin()

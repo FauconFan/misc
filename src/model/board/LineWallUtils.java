@@ -32,7 +32,7 @@ public class LineWallUtils
 		ArrayList <LineWall> res;
 		CoordsUtils          cu;
 
-		if (lw1 == null && lw2 == null)
+		if (lw1 == null&& lw2 == null)
 		{
 			return (null);
 		}
