@@ -43,6 +43,9 @@ public class Game extends ScenePlus
 	//Dimensions de l'ecran
 	private static int screenWidth  = (int)Screen.getPrimary().getBounds().getWidth();
 	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
+	private static int screenOffset = 0;
+
+
 
 	// Anciennes positions de la souris
 	private double mousePosX = (double)(screenWidth / 2);
@@ -148,24 +151,25 @@ public class Game extends ScenePlus
 			updatePlayer();
 		});
 
+
 		//Mouse controller
+		//screenOffset : decalage en Y par rapport au centre de l'ecran
+
 
 		setOnMouseMoved((mm)->{
-			final double rotateConst = 0.01;
+			final double rotateConst = 0.1;
+			int screenOffset         = (int)Screen.getPrimary().getVisualBounds().getMaxY() - (int)getHeight();
 			double newX = mm.getSceneX();
 			double newY = mm.getSceneY();
 			double dX   = newX - mousePosX;
-			double dY   = newY - mousePosY;
-			if (dX != 0 && dY != 0)
+			double dY   = newY - mousePosY + screenOffset;
+			if (dX != 0 || dY != 0)
 			{
 				centerMouse();
 			}
-			maze.getPlayer().addHorizontalAngle((float)(-1 * dX * rotateConst));
-			maze.getPlayer().addVerticalAngle((float)(dY * rotateConst));
-
-			//mousePosX = mm.getSceneX();
-			//mousePosY = mm.getSceneY();
-
+			System.out.println(dX + " " + dY);
+			maze.getPlayer().addHorizontalAngle((float)(dX * rotateConst));
+			maze.getPlayer().addVerticalAngle((float)(-1 * dY * rotateConst));
 			updatePlayer();
 		});
 	}
@@ -173,24 +177,12 @@ public class Game extends ScenePlus
 	//Place le curseur au centre de l'ecran
 	private void centerMouse()
 	{
-		//mousePosX = (double)(screenWidth / 2);
-		//mousePosY = (double)(screenHeight / 2);
 		try{
 			Robot robo = new Robot();
 			robo.mouseMove(screenWidth / 2, screenHeight / 2);
 		}catch (AWTException e) {
 			e.printStackTrace();
 		}
-	}
-
-	// Teste si le curseur est au centre de l'ecran
-	private boolean isInCenter()
-	{
-		if (mousePosX == screenWidth / 2 && mousePosY == screenHeight / 2)
-		{
-			return (true);
-		}
-		return (false);
 	}
 
 	/**
