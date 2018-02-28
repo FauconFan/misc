@@ -3,6 +3,7 @@ package src.view.scene;
 import java.io.FileInputStream;
 import javafx.application.Application;
 import javafx.scene.AmbientLight;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -72,6 +73,7 @@ public class Game extends ScenePlus
 		maze = m;
 
 		setFill(Color.GREY);
+		setCursor(Cursor.NONE);
 
 		// Ajoute le sol
 		root.getChildren().add(makeFloors());
