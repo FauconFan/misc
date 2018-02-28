@@ -84,12 +84,12 @@ public class Player
 
 	public void addHorizontalAngle(float x)
 	{
-		horizontalAngle += x;
+		this.horizontalAngle += x;
 	}
 
 	public void addVerticalAngle(float y)
 	{
-		verticalAngle += y;
+		this.verticalAngle += y;
 	}
 
 	public boolean goTo(Case.TypeCase t, Case[] sc)

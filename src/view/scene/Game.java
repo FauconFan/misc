@@ -149,22 +149,31 @@ public class Game extends ScenePlus
 
 		//Mouse controller
 
-		/*setOnMouseMoved((mm)->{
-		 *  final double rotateConst = 0.1;
-		 *  maze.getPlayer().addHorizontalAngle((float)(-1 * (mousePosX - mm.getSceneX()) * rotateConst));
-		 *  maze.getPlayer().addVerticalAngle((float)((mousePosY - mm.getSceneY()) * rotateConst));
-		 *  mousePosX = mm.getSceneX();
-		 *  mousePosY = mm.getSceneY();
-		 *  //centerMouse();
-		 *  updatePlayer();
-		 * });*/
+		setOnMouseMoved((mm)->{
+			final double rotateConst = 0.01;
+			double newX = mm.getSceneX();
+			double newY = mm.getSceneY();
+			double dX   = newX - mousePosX;
+			double dY   = newY - mousePosY;
+			if (dX != 0 && dY != 0)
+			{
+				centerMouse();
+			}
+			maze.getPlayer().addHorizontalAngle((float)(-1 * dX * rotateConst));
+			maze.getPlayer().addVerticalAngle((float)(dY * rotateConst));
+
+			//mousePosX = mm.getSceneX();
+			//mousePosY = mm.getSceneY();
+
+			updatePlayer();
+		});
 	}
 
 	//Place le curseur au centre de l'ecran
 	private void centerMouse()
 	{
-		mousePosX = (double)(screenWidth / 2);
-		mousePosY = (double)(screenHeight / 2);
+		//mousePosX = (double)(screenWidth / 2);
+		//mousePosY = (double)(screenHeight / 2);
 		try{
 			Robot robo = new Robot();
 			robo.mouseMove(screenWidth / 2, screenHeight / 2);
