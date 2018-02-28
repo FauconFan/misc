@@ -382,16 +382,14 @@ public class ContentMazeFactory
 		ArrayList <LineWall> all = new ArrayList <>();
 
 		Collection <ArrayList <LineWall> > x = this.contentX.values();
-		Object[] listX = x.toArray();
-		for (Object al : listX)
+		for (ArrayList <LineWall> al : x)
 		{
-			all.addAll((ArrayList <LineWall> )al);
+			all.addAll(al);
 		}
 		Collection <ArrayList <LineWall> > y = this.contentY.values();
-		Object[] listY = y.toArray();
-		for (Object al : listY)
+		for (ArrayList <LineWall> al : y)
 		{
-			all.addAll((ArrayList <LineWall> )al);
+			all.addAll(al);
 		}
 		return (all.toArray(new LineWall[0]));
 	}

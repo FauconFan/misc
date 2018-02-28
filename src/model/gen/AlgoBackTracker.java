@@ -143,17 +143,15 @@ public class AlgoBackTracker extends Algo
 		ArrayList <LineWall> res = new ArrayList <>();
 
 		Collection <ArrayList <LineWall> > content_y = list1.values();
-		Object[] content_y2 = content_y.toArray();
-		for (Object obj : content_y2)
+		for (ArrayList <LineWall> obj : content_y)
 		{
-			res.addAll((ArrayList <LineWall> )obj);
+			res.addAll(obj);
 		}
 
 		Collection <ArrayList <LineWall> > content_x = list2.values();
-		Object[] content_x2 = content_x.toArray();
-		for (Object obj : content_x2)
+		for (ArrayList <LineWall> obj : content_x)
 		{
-			res.addAll((ArrayList <LineWall> )obj);
+			res.addAll(obj);
 		}
 		return (res.toArray(new LineWall[0]));
 	}

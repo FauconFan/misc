@@ -143,6 +143,8 @@ public class Parser
 
 	public static class ExtensionException extends Exception
 	{
+		private static final long serialVersionUID = 0x4635999428371203L;
+
 		public ExtensionException()
 		{
 			super();
