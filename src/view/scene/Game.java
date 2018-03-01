@@ -38,7 +38,6 @@ import src.view.View;
 
 public class Game extends ScenePlus
 {
-	private final Group root;
 	private final MainMaze maze;
 
 	//Dimensions de l'ecran
@@ -46,19 +45,12 @@ public class Game extends ScenePlus
 	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
 	private static int screenOffset = 0;
 
-
-
 	// Anciennes positions de la souris
 	private double mousePosX = (double)(screenWidth / 2);
 	private double mousePosY = (double)(screenHeight / 2);
 
 	//Hauteur des murs
 	private final int hauteur = 20;
-
-	//Transforms pour la camera
-	private final Translate tr = new Translate();
-	private final Rotate rx    = new Rotate(0, Rotate.Y_AXIS);
-	private final Rotate ry    = new Rotate(0, Rotate.X_AXIS);
 
 	// Scale pour les murs
 	private final Scale sc = new Scale(30, 1, 30);
@@ -68,11 +60,12 @@ public class Game extends ScenePlus
 	private final float goUp   = 1f;
 	private final int rot      = 5; // En degré
 
+	private final GroupCameraPlus groupCameraPlus = new GroupCameraPlus();
 
 	public Game(View v, MainMaze m)
 	{
 		super(new Group(), screenWidth, screenHeight, true, v);
-		root = (Group)this.getRoot();
+		final Group root = (Group)this.getRoot();
 		maze = m;
 
 		setFill(Color.GREY);
@@ -86,33 +79,17 @@ public class Game extends ScenePlus
 		 * roof.setTranslateY(-1 * hauteur);
 		 * root.getChildren().add(roof);*/
 
-		//Ajoute les murs
+		// Ajoute les murs
 		root.getChildren().add(makeWalls());
 
-		//Creation de la camera
-		final Group             cameraGroup = new Group();
-		final PerspectiveCamera camera      = new PerspectiveCamera(true);
-		cameraGroup.getChildren().add(camera);
-		camera.setNearClip(0.1);
-		camera.setFarClip(1000.0);
+		// Ajoute la caméra
+		root.getChildren().add(groupCameraPlus);
 
-		// On met les tranforms sur la camera
-		cameraGroup.getTransforms().addAll(tr, rx, ry);
-
-		//Source de lumiere sur le joueur
-		Group      light         = new Group();
-		PointLight lightOnPlayer = new PointLight();
-		lightOnPlayer.setColor(Color.WHITE);
-		light.getChildren().add(lightOnPlayer);
-		cameraGroup.getChildren().add(light);
-
-		root.getChildren().add(cameraGroup);
+		// Défini la camera pour la scène
+		setCamera(groupCameraPlus.camera);
 
 		// Met le joueur sur la startCase
 		updatePlayer();
-
-		// Défini la camera pour la scène
-		setCamera(camera);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -188,7 +165,7 @@ public class Game extends ScenePlus
 	 */
 	private void setTr(int diff, float change)
 	{
-		final double r1 = Math.toRadians(rx.getAngle() + diff);
+		final double r1 = Math.toRadians(groupCameraPlus.rx.getAngle() + diff);
 
 		maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change), 0);
 	}
@@ -200,11 +177,11 @@ public class Game extends ScenePlus
 	{
 		final Player p = maze.getPlayer();
 
-		tr.setZ(p.getPosY() * sc.getZ());
-		tr.setX(p.getPosX() * sc.getX());
-		tr.setY(p.getPosZ() * sc.getY());
-		rx.setAngle(p.getHorizontalAngle());
-		ry.setAngle(p.getVerticalAngle());
+		groupCameraPlus.tr.setZ(p.getPosY() * sc.getZ());
+		groupCameraPlus.tr.setX(p.getPosX() * sc.getX());
+		groupCameraPlus.tr.setY(p.getPosZ() * sc.getY());
+		groupCameraPlus.rx.setAngle(p.getHorizontalAngle());
+		groupCameraPlus.ry.setAngle(p.getVerticalAngle());
 
 		checkWin();
 	}
@@ -294,5 +271,33 @@ public class Game extends ScenePlus
 	public MainMaze getMaze()
 	{
 		return (this.maze);
+	}
+
+	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
+	private static class GroupCameraPlus extends Group
+	{
+		//Transforms pour la camera
+		public final Translate tr             = new Translate();
+		public final Rotate rx                = new Rotate(0, Rotate.Y_AXIS);
+		public final Rotate ry                = new Rotate(0, Rotate.X_AXIS);
+		public final PerspectiveCamera camera = new PerspectiveCamera(true);
+
+		public GroupCameraPlus()
+		{
+			camera.setNearClip(0.1);
+			camera.setFarClip(1000.0);
+
+			getChildren().add(camera);
+
+			// On met les tranforms sur la camera
+			getTransforms().addAll(tr, rx, ry);
+
+			//Source de lumiere sur le joueur
+			final Group      light         = new Group();
+			final PointLight lightOnPlayer = new PointLight();
+			lightOnPlayer.setColor(Color.WHITE);
+			light.getChildren().add(lightOnPlayer);
+			getChildren().add(light);
+		}
 	}
 }
