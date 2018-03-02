@@ -89,21 +89,22 @@ public class Game extends ScenePlus
 		setCamera(groupCameraPlus.camera);
 
 		// Met le joueur sur la startCase
-		updatePlayer();
+		updatePlayer(false);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
+			boolean reallyMove = false;
 			switch (key.getCode())
 			{
-			case Q: setTr(-90, change); break;
+			case Q: setTr(-90, change); reallyMove = true; break;
 
-			case D: setTr(90, change); break;
+			case D: setTr(90, change); reallyMove = true; break;
 
-			case Z: setTr(0, change); break;
+			case Z: setTr(0, change); reallyMove = true; break;
 
-			case S: setTr(180, change); break;
+			case S: setTr(180, change); reallyMove = true; break;
 
-			// Le déplacement vertical ne demande pour l'instant aucun calcul particulier
+			// Le déplacement vertical ne demande pour l'instant aucun calcul particulié
 			case F: maze.movePlayer(0, 0, goUp);  break;
 
 			case R: maze.movePlayer(0, 0, -1 * goUp); break;
@@ -121,7 +122,7 @@ public class Game extends ScenePlus
 			case T: centerMouse(); break;
 			}
 
-			updatePlayer();
+			updatePlayer(reallyMove);
 		});
 
 
@@ -143,7 +144,7 @@ public class Game extends ScenePlus
 			System.out.println(dX + " " + dY);
 			maze.getPlayer().addHorizontalAngle((float)(dX * rotateConst));
 			maze.getPlayer().addVerticalAngle((float)(-1 * dY * rotateConst));
-			updatePlayer();
+			updatePlayer(false);
 		});
 	}
 
@@ -172,8 +173,9 @@ public class Game extends ScenePlus
 
 	/**
 	 * Update the camera position according to the player
+	 * @param b Si le joueur a vraiment bougé
 	 */
-	private void updatePlayer()
+	private void updatePlayer(boolean b)
 	{
 		final Player p = maze.getPlayer();
 
@@ -183,7 +185,10 @@ public class Game extends ScenePlus
 		groupCameraPlus.rx.setAngle(p.getHorizontalAngle());
 		groupCameraPlus.ry.setAngle(p.getVerticalAngle());
 
-		checkWin();
+		if (b)
+		{
+			checkWin();
+		}
 	}
 
 	/**
