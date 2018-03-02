@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
@@ -63,6 +64,8 @@ public class Game extends ScenePlus
 
 	private final GroupCameraPlus groupCameraPlus = new GroupCameraPlus();
 
+	private final Group walls;
+
 	public Game(View v, MainMaze m)
 	{
 		super(new Group(), screenWidth, screenHeight, true, v);
@@ -83,7 +86,8 @@ public class Game extends ScenePlus
 		 * root.getChildren().add(roof);*/
 
 		// Ajoute les murs
-		root.getChildren().add(makeWalls());
+		walls = makeWalls();
+		root.getChildren().add(walls);
 
 		// Ajoute la caméra
 		root.getChildren().add(groupCameraPlus);
@@ -125,6 +129,8 @@ public class Game extends ScenePlus
 			case T: centerMouse(); break;
 
 			case G: this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode()); break;
+
+			case H: makeTransparentWallsOrNot(); break;
 			}
 
 			updatePlayer(reallyMove);
@@ -181,8 +187,6 @@ public class Game extends ScenePlus
 	private void updatePlayer(boolean b)
 	{
 		final Player p = maze.getPlayer();
-
-		System.out.println(p);
 
 		groupCameraPlus.tr.setZ(p.getPosY() * sc.getZ());
 		groupCameraPlus.tr.setX(p.getPosX() * sc.getX());
@@ -322,5 +326,22 @@ public class Game extends ScenePlus
 		res.setTranslateY(hauteur / 2 - 1);
 		res.setMaterial(new PhongMaterial(Color.GREEN));
 		return (res);
+	}
+
+	private void makeTransparentWallsOrNot()
+	{
+		for (Node n : walls.getChildren())
+		{
+			PhongMaterial ph = (PhongMaterial)((Box)n).getMaterial();
+			if (ph.getDiffuseColor() == Color.WHITE)
+			{
+				ph.setDiffuseColor(new Color(1, 1, 1, 0.25));
+			}
+			else
+			{
+				ph.setDiffuseColor(Color.WHITE);
+			}
+			((Box)n).setMaterial(ph);
+		}
 	}
 }
