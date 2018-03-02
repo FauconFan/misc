@@ -217,12 +217,12 @@ public class Game extends ScenePlus
 	 */
 	private Group makeWalls()
 	{
-		Image    img;
 		Material mat;
 
 		try{
-			img = new Image(new FileInputStream("assets/bricks2.jpg"));
-			mat = new PhongMaterial(Color.WHITE, img, null, null, null);
+			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"));
+			Image nrm = new Image(new FileInputStream("assets/Wall_Stone_003_NRM.jpg"));
+			mat = new PhongMaterial(Color.WHITE, img, null, nrm, null);
 		}
 		catch (Exception e) {
 			mat = new PhongMaterial(Color.GREEN);
@@ -232,25 +232,26 @@ public class Game extends ScenePlus
 		// On scale les murs
 		walls.getTransforms().add(sc);
 		final LineWall[] lineWalls = maze.getContentMaze().getLineWalls();
+		final float      delta     = 0.001f;
 		for (LineWall l: lineWalls)
 		{
 			Box w = new Box();
 			w.setHeight(hauteur);
 			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
 			{
-				final float depth = l.getY2() - l.getY1() + l.getEpaisseur();
+				final float depth = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
 				w.setDepth(depth);
 				w.setWidth(l.getEpaisseur());
-				w.setTranslateX(l.getX1() + l.getEpaisseur() / 2.0);
+				w.setTranslateX(l.getX1() + l.getEpaisseur() / 2.0 - delta);
 				w.setTranslateZ(l.getY1() + depth / 2.0);
 			}
 			else // Mur horizontal
 			{
-				final float width = l.getX2() - l.getX1() + l.getEpaisseur();
+				final float width = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
 				w.setWidth(width);
 				w.setDepth(l.getEpaisseur());
 				w.setTranslateX(l.getX1() + width / 2.0);
-				w.setTranslateZ(l.getY1() + l.getEpaisseur() / 2.0);
+				w.setTranslateZ(l.getY1() + l.getEpaisseur() / 2.0 - delta);
 			}
 			w.setMaterial(mat);
 			walls.getChildren().add(w);
