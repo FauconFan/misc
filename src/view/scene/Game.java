@@ -28,6 +28,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import javafx.stage.Screen;
 
+import src.model.board.Case;
 import src.model.board.LineWall;
 import src.model.ContentMaze;
 import src.model.MainMaze;
@@ -72,7 +73,9 @@ public class Game extends ScenePlus
 		setCursor(Cursor.NONE);
 
 		// Ajoute le sol
-		root.getChildren().add(makeFloors());
+		Group floors = makeFloors();
+		floors.getChildren().add(makeEndCase());
+		root.getChildren().add(floors);
 
 		/* Le plafond est juste un sol décalé vers le haut
 		 * final Group roof = makeFloors();
@@ -120,6 +123,8 @@ public class Game extends ScenePlus
 			case ESCAPE: v.changeScene(new Pause(v, this)); break;
 
 			case T: centerMouse(); break;
+
+			case G: this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode()); break;
 			}
 
 			updatePlayer(reallyMove);
@@ -128,7 +133,6 @@ public class Game extends ScenePlus
 
 		//Mouse controller
 		//screenOffset : decalage en Y par rapport au centre de l'ecran
-
 
 		setOnMouseMoved((mm)->{
 			final double rotateConst = 0.1;
@@ -141,7 +145,6 @@ public class Game extends ScenePlus
 			{
 				centerMouse();
 			}
-			System.out.println(dX + " " + dY);
 			maze.getPlayer().addHorizontalAngle((float)(dX * rotateConst));
 			maze.getPlayer().addVerticalAngle((float)(-1 * dY * rotateConst));
 			updatePlayer(false);
@@ -178,6 +181,8 @@ public class Game extends ScenePlus
 	private void updatePlayer(boolean b)
 	{
 		final Player p = maze.getPlayer();
+
+		System.out.println(p);
 
 		groupCameraPlus.tr.setZ(p.getPosY() * sc.getZ());
 		groupCameraPlus.tr.setX(p.getPosX() * sc.getX());
@@ -304,5 +309,18 @@ public class Game extends ScenePlus
 			light.getChildren().add(lightOnPlayer);
 			getChildren().add(light);
 		}
+	}
+
+	private Box makeEndCase()
+	{
+		final Case  ec  = this.maze.getEndCase();
+		final float tc  = Case.getTailleCase();
+		final Box   res = new Box(tc, 0.01f, tc);
+
+		res.setTranslateX(ec.getX() + tc / 2.0);
+		res.setTranslateZ(ec.getY() + tc / 2.0);
+		res.setTranslateY(hauteur / 2 - 1);
+		res.setMaterial(new PhongMaterial(Color.GREEN));
+		return (res);
 	}
 }
