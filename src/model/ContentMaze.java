@@ -88,4 +88,16 @@ public class ContentMaze
 		}
 		return (str);
 	}
+
+	public Case getCase(Case.TypeCase t)
+	{
+		for (Case c:this.specialCases)
+		{
+			if (c.getTypeCase() == t)
+			{
+				return (c);
+			}
+		}
+		return (null);
+	}
 }

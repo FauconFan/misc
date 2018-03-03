@@ -15,7 +15,7 @@ public abstract class Case implements Cloneable
 	protected int x;
 	protected int y;
 
-	private static float tailleCase = 1 + LineWall.getEpaisseurDefault() / 2;
+	private static float tailleCase = 1;
 
 	public Case(int x, int y)
 	{

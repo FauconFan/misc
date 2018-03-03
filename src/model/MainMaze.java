@@ -31,7 +31,7 @@ public class MainMaze
 		this.name    = name;
 		this.p       = p;
 
-		p.goTo(Case.TypeCase.START, m.getSpecialCases());
+		p.goTo(Case.TypeCase.START, m);
 	}
 
 	public MainMaze(Algo algo)
@@ -52,6 +52,11 @@ public class MainMaze
 	public Player getPlayer()
 	{
 		return (this.p);
+	}
+
+	public Case getEndCase()
+	{
+		return (m.getCase(Case.TypeCase.END));
 	}
 
 	/**

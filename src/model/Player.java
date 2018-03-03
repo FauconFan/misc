@@ -92,29 +92,38 @@ public class Player
 		this.verticalAngle += y;
 	}
 
-	public boolean goTo(Case.TypeCase t, Case[] sc)
+	public boolean goTo(Case.TypeCase t, ContentMaze cm)
 	{
+		Case c = cm.getCase(t);
+
+		if (c != null)
+		{
+			posX = c.getX() + Case.getTailleCase() / 2;
+			posY = c.getY() + Case.getTailleCase() / 2;
+			return (true);
+		}
+		else
+		{
+			return (false);
+		}
+	}
+
+	public boolean hasWin(Case[] sc)
+	{
+		float diff = Case.getTailleCase() / 2;
+
 		for (Case c:sc)
 		{
-			if (c.getTypeCase() == t)
+			if (c.getTypeCase() == Case.TypeCase.END && Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff)
 			{
-				posX = c.getX() + Case.getTailleCase() / 2;
-				posY = c.getY() + Case.getTailleCase() / 2;
 				return (true);
 			}
 		}
 		return (false);
 	}
 
-	public boolean hasWin(Case[] sc)
+	public String toString()
 	{
-		for (Case c:sc)
-		{
-			if (c.getTypeCase() == Case.TypeCase.END && Math.abs(posX - c.getX()) < Case.getTailleCase() / 2 && Math.abs(posY - c.getY()) < Case.getTailleCase() / 2)
-			{
-				return (true);
-			}
-		}
-		return (false);
+		return ("posX = " + posX + " posY = " + posY + " other things");
 	}
 }

@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
@@ -28,6 +29,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import javafx.stage.Screen;
 
+import src.model.board.Case;
 import src.model.board.LineWall;
 import src.model.ContentMaze;
 import src.model.MainMaze;
@@ -62,6 +64,8 @@ public class Game extends ScenePlus
 
 	private final GroupCameraPlus groupCameraPlus = new GroupCameraPlus();
 
+	private final Group walls;
+
 	public Game(View v, MainMaze m)
 	{
 		super(new Group(), screenWidth, screenHeight, true, v);
@@ -72,7 +76,9 @@ public class Game extends ScenePlus
 		setCursor(Cursor.NONE);
 
 		// Ajoute le sol
-		root.getChildren().add(makeFloors());
+		Group floors = makeFloors();
+		floors.getChildren().add(makeEndCase());
+		root.getChildren().add(floors);
 
 		/* Le plafond est juste un sol décalé vers le haut
 		 * final Group roof = makeFloors();
@@ -80,7 +86,8 @@ public class Game extends ScenePlus
 		 * root.getChildren().add(roof);*/
 
 		// Ajoute les murs
-		root.getChildren().add(makeWalls());
+		walls = makeWalls();
+		root.getChildren().add(walls);
 
 		// Ajoute la caméra
 		root.getChildren().add(groupCameraPlus);
@@ -89,21 +96,22 @@ public class Game extends ScenePlus
 		setCamera(groupCameraPlus.camera);
 
 		// Met le joueur sur la startCase
-		updatePlayer();
+		updatePlayer(false);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
+			boolean reallyMove = false;
 			switch (key.getCode())
 			{
-			case Q: setTr(-90, change); break;
+			case Q: setTr(-90, change); reallyMove = true; break;
 
-			case D: setTr(90, change); break;
+			case D: setTr(90, change); reallyMove = true; break;
 
-			case Z: setTr(0, change); break;
+			case Z: setTr(0, change); reallyMove = true; break;
 
-			case S: setTr(180, change); break;
+			case S: setTr(180, change); reallyMove = true; break;
 
-			// Le déplacement vertical ne demande pour l'instant aucun calcul particulier
+			// Le déplacement vertical ne demande pour l'instant aucun calcul particulié
 			case F: maze.movePlayer(0, 0, goUp);  break;
 
 			case R: maze.movePlayer(0, 0, -1 * goUp); break;
@@ -119,15 +127,18 @@ public class Game extends ScenePlus
 			case ESCAPE: v.changeScene(new Pause(v, this)); break;
 
 			case T: centerMouse(); break;
+
+			case G: this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode()); break;
+
+			case H: makeTransparentWallsOrNot(); break;
 			}
 
-			updatePlayer();
+			updatePlayer(reallyMove);
 		});
 
 
 		//Mouse controller
 		//screenOffset : decalage en Y par rapport au centre de l'ecran
-
 
 		setOnMouseMoved((mm)->{
 			final double rotateConst = 0.1;
@@ -140,10 +151,9 @@ public class Game extends ScenePlus
 			{
 				centerMouse();
 			}
-			System.out.println(dX + " " + dY);
 			maze.getPlayer().addHorizontalAngle((float)(dX * rotateConst));
 			maze.getPlayer().addVerticalAngle((float)(-1 * dY * rotateConst));
-			updatePlayer();
+			updatePlayer(false);
 		});
 	}
 
@@ -172,8 +182,9 @@ public class Game extends ScenePlus
 
 	/**
 	 * Update the camera position according to the player
+	 * @param b Si le joueur a vraiment bougé
 	 */
-	private void updatePlayer()
+	private void updatePlayer(boolean b)
 	{
 		final Player p = maze.getPlayer();
 
@@ -183,7 +194,10 @@ public class Game extends ScenePlus
 		groupCameraPlus.rx.setAngle(p.getHorizontalAngle());
 		groupCameraPlus.ry.setAngle(p.getVerticalAngle());
 
-		checkWin();
+		if (b)
+		{
+			checkWin();
+		}
 	}
 
 	/**
@@ -203,12 +217,12 @@ public class Game extends ScenePlus
 	 */
 	private Group makeWalls()
 	{
-		Image    img;
 		Material mat;
 
 		try{
-			img = new Image(new FileInputStream("assets/bricks2.jpg"));
-			mat = new PhongMaterial(Color.WHITE, img, null, null, null);
+			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"));
+			Image nrm = new Image(new FileInputStream("assets/Wall_Stone_003_NRM.jpg"));
+			mat = new PhongMaterial(Color.WHITE, img, null, nrm, null);
 		}
 		catch (Exception e) {
 			mat = new PhongMaterial(Color.GREEN);
@@ -218,25 +232,26 @@ public class Game extends ScenePlus
 		// On scale les murs
 		walls.getTransforms().add(sc);
 		final LineWall[] lineWalls = maze.getContentMaze().getLineWalls();
+		final float      delta     = 0.001f;
 		for (LineWall l: lineWalls)
 		{
 			Box w = new Box();
 			w.setHeight(hauteur);
 			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
 			{
-				final float depth = l.getY2() - l.getY1() + l.getEpaisseur();
+				final float depth = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
 				w.setDepth(depth);
 				w.setWidth(l.getEpaisseur());
-				w.setTranslateX(l.getX1() + l.getEpaisseur() / 2.0);
+				w.setTranslateX(l.getX1() + l.getEpaisseur() / 2.0 - delta);
 				w.setTranslateZ(l.getY1() + depth / 2.0);
 			}
 			else // Mur horizontal
 			{
-				final float width = l.getX2() - l.getX1() + l.getEpaisseur();
+				final float width = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
 				w.setWidth(width);
 				w.setDepth(l.getEpaisseur());
 				w.setTranslateX(l.getX1() + width / 2.0);
-				w.setTranslateZ(l.getY1() + l.getEpaisseur() / 2.0);
+				w.setTranslateZ(l.getY1() + l.getEpaisseur() / 2.0 - delta);
 			}
 			w.setMaterial(mat);
 			walls.getChildren().add(w);
@@ -298,6 +313,36 @@ public class Game extends ScenePlus
 			lightOnPlayer.setColor(Color.WHITE);
 			light.getChildren().add(lightOnPlayer);
 			getChildren().add(light);
+		}
+	}
+
+	private Box makeEndCase()
+	{
+		final Case  ec  = this.maze.getEndCase();
+		final float tc  = Case.getTailleCase();
+		final Box   res = new Box(tc, 0.01f, tc);
+
+		res.setTranslateX(ec.getX() + tc / 2.0);
+		res.setTranslateZ(ec.getY() + tc / 2.0);
+		res.setTranslateY(hauteur / 2 - 1);
+		res.setMaterial(new PhongMaterial(Color.GREEN));
+		return (res);
+	}
+
+	private void makeTransparentWallsOrNot()
+	{
+		for (Node n : walls.getChildren())
+		{
+			PhongMaterial ph = (PhongMaterial)((Box)n).getMaterial();
+			if (ph.getDiffuseColor() == Color.WHITE)
+			{
+				ph.setDiffuseColor(new Color(1, 1, 1, 0.25));
+			}
+			else
+			{
+				ph.setDiffuseColor(Color.WHITE);
+			}
+			((Box)n).setMaterial(ph);
 		}
 	}
 }
