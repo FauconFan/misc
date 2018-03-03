@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import java.lang.Math;
+import java.util.ArrayList;
 import src.utils.FloatVector;
 
 /**
@@ -124,33 +125,65 @@ public class LineWall implements Cloneable
 		return (y1 == y2);
 	}
 
-	public boolean pointInWall(FloatVector point)
+	public float effectiveEpaisseur(float x, float y)
 	{
-		float erreur = 10e-5F;
-
 		if (this.isHorizontal())
 		{
-			if (Math.abs(point.getY() - this.y1) > epaisseur + erreur)
+			return (((this.y1 < y) ? 1 : -1) * epaisseur);
+		}
+		else
+		{
+			return (((this.x1 < x) ? 1 : -1) * epaisseur);
+		}
+	}
+
+	public FloatVector [][] effWalls(float x, float y)
+	{
+		FloatVector [][] wall = new FloatVector [0][2];
+		float            epaisseurEffective = effectiveEpaisseur(x, y);
+		if (this.isHorizontal())
+		{
+			if (this.x1 - this.epaisseur > x)
 			{
-				return (false);
+				wall = FloatVector.append(wall,
+										  new FloatVector(this.x1 - this.epaisseur, this.y1 - this.epaisseur),
+										  new FloatVector(this.x1 - this.epaisseur, this.y1 + this.epaisseur));
 			}
-			if ((this.x1 <= point.getX() && point.getX() <= this.x2) || (this.x1 >= point.getX() && point.getX() >= this.x2))
+			if (this.y1 + this.epaisseur < y || y < this.y1 - this.epaisseur)
 			{
-				return (true);
+				wall = FloatVector.append(wall,
+										  new FloatVector(this.x1 - this.epaisseur, this.y1 + epaisseurEffective),
+										  new FloatVector(this.x2 + this.epaisseur, this.y1 + epaisseurEffective));
+			}
+			if (this.x2 + this.epaisseur < x)
+			{
+				wall = FloatVector.append(wall,
+										  new FloatVector(this.x2 + this.epaisseur, this.y1 - this.epaisseur),
+										  new FloatVector(this.x2 + this.epaisseur, this.y1 + this.epaisseur));
 			}
 		}
 		else
 		{
-			if (Math.abs(point.getX() - this.x1) > epaisseur + erreur)
+			if (this.y1 - this.epaisseur > y)
 			{
-				return (false);
+				wall = FloatVector.append(wall,
+										  new FloatVector(this.x1 - this.epaisseur, this.y1 - this.epaisseur),
+										  new FloatVector(this.x1 + this.epaisseur, this.y1 - this.epaisseur));
 			}
-			if ((this.y1 <= point.getY() && point.getY() <= this.y2) || (this.y1 >= point.getY() && point.getY() >= this.y2))
+			if (this.x1 + this.epaisseur < x || x < this.x1 - this.epaisseur)
 			{
-				return (true);
+				wall = FloatVector.append(wall,
+										  new FloatVector(this.x1 + epaisseurEffective, this.y1 - this.epaisseur),
+										  new FloatVector(this.x1 + epaisseurEffective, this.y2 + this.epaisseur));
+			}
+			if (this.y2 + this.epaisseur < y)
+			{
+				wall = FloatVector.append(wall,
+										  new FloatVector(this.x1 - this.epaisseur, this.y2 + this.epaisseur),
+										  new FloatVector(this.x1 + this.epaisseur, this.y2 + this.epaisseur));
 			}
 		}
-		return (false);
+		return (wall);
 	}
 
 	public LineWall clone()

@@ -3,6 +3,7 @@ package src.model;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import java.lang.Math;
 import src.model.board.Case;
 import src.model.board.LineWall;
 import src.model.gen.Algo;
@@ -70,76 +71,41 @@ public class MainMaze
 	 */
 	private FloatVector [] calculateSplitMoves(FloatVector v)
 	{
-		float       coefPropMin = 1;
-		float       coefProp;
-		float       epaisEff     = 0;
-		LineWall    closestWall  = null;
-		FloatVector closestPoint = new FloatVector(0, 0);
+		float coefPropMin = 1;
+		float coefProp;
 
 		FloatVector [] splitMove = new FloatVector[2];
-		FloatVector    hitboxPoint;
 		splitMove[0] = v;
 		splitMove[1] = new FloatVector(0, 0);
+		FloatVector [] closestWall = new FloatVector [2];
 		for (LineWall lw : m.getLineWalls())
 		{
-			boolean horizontalWall = lw.isHorizontal();
-			if (horizontalWall)
+			FloatVector [][] effectWalls = lw.effWalls(p.getPosX(), p.getPosY());
+			for (int i = 0; i < effectWalls.length; i++)
 			{
-				epaisEff    = ((lw.getY1() < p.getPosY()) ? 1 : -1) * lw.getEpaisseur();
-				hitboxPoint = new FloatVector(p.getPosX(), p.getPosY() + ((epaisEff > 0) ? -1 : 1) * p.getHitBoxCircle());
-			}
-			else
-			{
-				epaisEff    = ((lw.getX1() < p.getPosX()) ? 1 : -1) * lw.getEpaisseur();
-				hitboxPoint = new FloatVector(p.getPosX() + ((epaisEff > 0) ? -1 : 1) * p.getHitBoxCircle(), p.getPosY());
-			}
-			if (lw.pointInWall(hitboxPoint))
-			{
-				if (horizontalWall)
+				boolean horizontalWall = (Math.abs(effectWalls[i][1].getY() - effectWalls[i][0].getY()) < 10e-4f);
+				if (!v.isCollinearTo((effectWalls[i][1].getX() - effectWalls[i][0].getX()), (effectWalls[i][1].getY() - effectWalls[i][0].getY())))
 				{
-					if ((epaisEff > 0 && v.getY() < 0) ||
-						(epaisEff < 0 && v.getY() > 0))
+					coefProp = (horizontalWall) ? ((effectWalls[i][0].getY() - p.getPosY()) / v.getY()) : ((effectWalls[i][0].getX() - p.getPosX()) / v.getX());
+					if (0 < coefProp && coefProp < 1 && FloatVector.pointInWall(new FloatVector(p.getPosX(), p.getPosY()).sum(v.multiplicate(coefProp)), effectWalls[i]) && coefProp < coefPropMin)
 					{
-						splitMove[0] = new FloatVector(0, 0);
-						splitMove[1] = new FloatVector(v.getX(), 0);
-						return (splitMove);
+						coefPropMin = coefProp;
+						closestWall = effectWalls[i];
 					}
-				}
-				else
-				{
-					if ((epaisEff > 0 && v.getX() < 0) ||
-						(epaisEff < 0 && v.getX() > 0))
-					{
-						splitMove[0] = new FloatVector(0, 0);
-						splitMove[1] = new FloatVector(0, v.getY());
-						return (splitMove);
-					}
-				}
-			}
-			else if (!v.isCollinearTo((lw.getX2() - lw.getX1()), (lw.getY2() - lw.getY1())))
-			{
-				coefProp = (horizontalWall) ? ((lw.getY1() + epaisEff - hitboxPoint.getY()) / v.getY()) : ((lw.getX1() + epaisEff - hitboxPoint.getX()) / v.getX());
-				if (0 < coefProp && coefProp < 1 && lw.pointInWall(hitboxPoint.sum(v.multiplicate(coefProp))) && coefProp < coefPropMin)
-				{
-					coefPropMin  = coefProp;
-					closestPoint = hitboxPoint;
-					closestWall  = lw;
 				}
 			}
 		}
 		if (coefPropMin > 0 && coefPropMin < 1)
 		{
-			if (closestWall.isHorizontal())
+			float t = 1 - p.getHitBoxCircle() / (coefPropMin * (float)Math.sqrt(Math.pow(v.getX(), 2) + Math.pow(v.getY(), 2)));
+			splitMove[0] = v.multiplicate(t * coefPropMin);
+			if (Math.abs(closestWall[0].getY() - closestWall[1].getY()) < 10e-4f)
 			{
-				epaisEff     = ((closestWall.getY1() < p.getPosY()) ? 1 : -1) * closestWall.getEpaisseur();
-				splitMove[0] = new FloatVector(coefPropMin * v.getX(), coefPropMin * v.getY());
-				splitMove[1] = new FloatVector(v.getX() * (1 - coefPropMin), 0);
+				splitMove[1] = new FloatVector(v.getX() * (1 - t * coefPropMin), 0);
 			}
 			else
 			{
-				epaisEff     = ((closestWall.getX1() < p.getPosX()) ? 1 : -1) * closestWall.getEpaisseur();
-				splitMove[0] = new FloatVector(coefPropMin * v.getX(), coefPropMin * v.getY());
-				splitMove[1] = new FloatVector(0, v.getY() * (1 - coefPropMin));
+				splitMove[1] = new FloatVector(0, v.getY() * (1 - t * coefPropMin));
 			}
 		}
 		return (splitMove);
