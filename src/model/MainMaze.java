@@ -1,11 +1,10 @@
 package src.model;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
-import java.lang.Math;
 import src.model.board.Case;
 import src.model.board.LineWall;
+import src.model.CollisionsManager;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
@@ -70,53 +69,6 @@ public class MainMaze
 	}
 
 	/**
-	 * Décompose le vecteur AD en deux vecteurs AB et BC avec B le point d'intersection entre AD et le mur le plus proche
-	 * @param v Vecteur déplacement qu'il faut décomposer
-	 * @return Tableau de deux vecteurs
-	 */
-	private FloatVector [] calculateSplitMoves(FloatVector v)
-	{
-		float coefPropMin = 1;
-		float coefProp;
-
-		FloatVector [] splitMove = new FloatVector[2];
-		splitMove[0] = v;
-		splitMove[1] = new FloatVector(0, 0);
-		FloatVector [] closestWall = new FloatVector [2];
-		for (LineWall lw : m.getLineWalls())
-		{
-			FloatVector [][] effectWalls = lw.effWalls(p.getPosX(), p.getPosY());
-			for (int i = 0; i < effectWalls.length; i++)
-			{
-				boolean horizontalWall = (Math.abs(effectWalls[i][1].getY() - effectWalls[i][0].getY()) < 10e-4f);
-				if (!v.isCollinearTo((effectWalls[i][1].getX() - effectWalls[i][0].getX()), (effectWalls[i][1].getY() - effectWalls[i][0].getY())))
-				{
-					coefProp = (horizontalWall) ? ((effectWalls[i][0].getY() - p.getPosY()) / v.getY()) : ((effectWalls[i][0].getX() - p.getPosX()) / v.getX());
-					if (0 < coefProp && coefProp < 1 && FloatVector.pointInWall(new FloatVector(p.getPosX(), p.getPosY()).sum(v.multiplicate(coefProp)), effectWalls[i]) && coefProp < coefPropMin)
-					{
-						coefPropMin = coefProp;
-						closestWall = effectWalls[i];
-					}
-				}
-			}
-		}
-		if (coefPropMin > 0 && coefPropMin < 1)
-		{
-			float t = 1 - p.getHitBoxCircle() / (coefPropMin * (float)Math.sqrt(Math.pow(v.getX(), 2) + Math.pow(v.getY(), 2)));
-			splitMove[0] = v.multiplicate(t * coefPropMin);
-			if (Math.abs(closestWall[0].getY() - closestWall[1].getY()) < 10e-4f)
-			{
-				splitMove[1] = new FloatVector(v.getX() * (1 - t * coefPropMin), 0);
-			}
-			else
-			{
-				splitMove[1] = new FloatVector(0, v.getY() * (1 - t * coefPropMin));
-			}
-		}
-		return (splitMove);
-	}
-
-	/**
 	 * Déplace le joueur dans le labyrinthe, si le joueur rencontre un mur, il longera ce mur.
 	 * @param dx Deplacement horizontal du joueur.
 	 * @param dy Deplacement vertical du joueur.
@@ -133,12 +85,12 @@ public class MainMaze
 
 		else
 		{
-			FloatVector v = new FloatVector(dx, dy);
-			while (!v.isNul())
+			CollisionsManager colManage = new CollisionsManager(m.getLineWalls(), p, new FloatVector(dx, dy));
+			while (!colManage.getNextMove().isNul())
 			{
-				FloatVector [] moves = this.calculateSplitMoves(v);
-				this.applyMove(moves[0]);
-				v = moves[1];
+				colManage.updateMove();
+				this.applyMove(colManage.getNextMove());
+				colManage.next();
 			}
 		}
 	}

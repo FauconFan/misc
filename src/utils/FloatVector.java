@@ -78,35 +78,6 @@ public class FloatVector
 		return (newTab);
 	}
 
-	public static boolean pointInWall(FloatVector point, FloatVector [] wall)
-	{
-		float erreur = 10e-5F;
-
-		if (wall[0].getY() == wall[1].getY())
-		{
-			if (Math.abs(point.getY() - wall[0].getY()) > erreur)
-			{
-				return (false);
-			}
-			if ((wall[0].getX() <= point.getX() && point.getX() <= wall[1].getX()) || (wall[0].getX() >= point.getX() && point.getX() >= wall[1].getX()))
-			{
-				return (true);
-			}
-		}
-		else
-		{
-			if (Math.abs(point.getX() - wall[0].getX()) > erreur)
-			{
-				return (false);
-			}
-			if ((wall[0].getY() <= point.getY() && point.getY() <= wall[1].getY()) || (wall[0].getY() >= point.getY() && point.getY() >= wall[1].getY()))
-			{
-				return (true);
-			}
-		}
-		return (false);
-	}
-
 	/**
 	 * Réécriture de la méthode toString()
 	 * @return représentation du vecteur dans une chaîne de caractères
