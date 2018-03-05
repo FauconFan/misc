@@ -222,8 +222,8 @@ public class Game extends ScenePlus
 		Material mat;
 
 		try{
-			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"),400,400,true, false);
-			Image nrm =null ;//new Image(new FileInputStream("assets/Wall_Stone_003_NRM.jpg"),400,400,true, false);
+			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"), 400, 400, true, false);
+			Image nrm = null;//new Image(new FileInputStream("assets/Wall_Stone_003_NRM.jpg"),400,400,true, false);
 			mat = new PhongMaterial(Color.WHITE, img, null, nrm, null);
 		}
 		catch (Exception e) {
@@ -248,16 +248,16 @@ public class Game extends ScenePlus
 			if (!l.isHorizontal())                                                // Mur "vertical" dans le plan
 			{
 				largeur  = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
-				setLarg  = w::setDepth;
-				setEpais = w::setWidth;
+				setLarg  = w :: setDepth;
+				setEpais = w :: setWidth;
 				trX      = l.getX1() + l.getEpaisseur() / 2.0 - delta;
 				trZ      = l.getY1() + largeur / 2.0;
 			}
 			else     // Mur horizontal
 			{
 				largeur  = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
-				setLarg  = w::setWidth;
-				setEpais = w::setDepth;
+				setLarg  = w :: setWidth;
+				setEpais = w :: setDepth;
 				trX      = l.getX1() + largeur / 2.0;
 				trZ      = l.getY1() + l.getEpaisseur() / 2.0 - delta;
 			}
