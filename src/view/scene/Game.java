@@ -29,6 +29,8 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import javafx.stage.Screen;
 
+import java.util.function.Consumer;
+
 import src.model.board.Case;
 import src.model.board.LineWall;
 import src.model.ContentMaze;
@@ -212,7 +214,7 @@ public class Game extends ScenePlus
 	}
 
 	/**
-	 * Dessine le Maze
+	 * Dessine les murs du Maze
 	 * @return Le groupe contenant les murs
 	 */
 	private Group makeWalls()
@@ -236,23 +238,36 @@ public class Game extends ScenePlus
 		for (LineWall l: lineWalls)
 		{
 			Box w = new Box();
+
+			Consumer <Float> setEpais;
+			Consumer <Float> setLarg;
+
+			float  largeur;
+			double trX;
+			double trZ;
+			if (!l.isHorizontal())                                                // Mur "vertical" dans le plan
+			{
+				largeur  = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
+				setLarg  = w::setDepth;
+				setEpais = w::setWidth;
+				trX      = l.getX1() + l.getEpaisseur() / 2.0 - delta;
+				trZ      = l.getY1() + largeur / 2.0;
+			}
+			else     // Mur horizontal
+			{
+				largeur  = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
+				setLarg  = w::setWidth;
+				setEpais = w::setDepth;
+				trX      = l.getX1() + largeur / 2.0;
+				trZ      = l.getY1() + l.getEpaisseur() / 2.0 - delta;
+			}
+
 			w.setHeight(hauteur);
-			if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
-			{
-				final float depth = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
-				w.setDepth(depth);
-				w.setWidth(l.getEpaisseur());
-				w.setTranslateX(l.getX1() + l.getEpaisseur() / 2.0 - delta);
-				w.setTranslateZ(l.getY1() + depth / 2.0);
-			}
-			else // Mur horizontal
-			{
-				final float width = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
-				w.setWidth(width);
-				w.setDepth(l.getEpaisseur());
-				w.setTranslateX(l.getX1() + width / 2.0);
-				w.setTranslateZ(l.getY1() + l.getEpaisseur() / 2.0 - delta);
-			}
+			setEpais.accept(l.getEpaisseur());
+			setLarg.accept(largeur);
+			w.setTranslateX(trX);
+			w.setTranslateZ(trZ);
+
 			w.setMaterial(mat);
 			walls.getChildren().add(w);
 		}
