@@ -15,7 +15,7 @@ else
 	echo $path_unc
 	for elem in $ret; do
 		$path_unc -c $G_PATH_CONFIG --replace --no-backup --mtime $elem
-		cat ${elem} | sed 's/: :/::/g' > ${TMP_FILE}
+		cat ${elem} | sed 's/ : : /::/g' > ${TMP_FILE}
 		cp ${TMP_FILE} ${elem}
 	done
 	rm -f ${TMP_FILE}
