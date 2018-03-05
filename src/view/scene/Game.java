@@ -222,8 +222,8 @@ public class Game extends ScenePlus
 		Material mat;
 
 		try{
-			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"));
-			Image nrm = new Image(new FileInputStream("assets/Wall_Stone_003_NRM.jpg"));
+			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"),400,400,true, false);
+			Image nrm =null ;//new Image(new FileInputStream("assets/Wall_Stone_003_NRM.jpg"),400,400,true, false);
 			mat = new PhongMaterial(Color.WHITE, img, null, nrm, null);
 		}
 		catch (Exception e) {
