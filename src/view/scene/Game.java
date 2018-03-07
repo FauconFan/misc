@@ -29,6 +29,16 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import javafx.stage.Screen;
 
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
+
+import javafx.scene.SubScene;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
+
 import java.util.function.Consumer;
 
 import src.model.board.Case;
@@ -64,19 +74,25 @@ public class Game extends ScenePlus
 	private final float goUp   = 1f;
 	private final int rot      = 5; // En degré
 
-	private final GroupCameraPlus groupCameraPlus = new GroupCameraPlus();
 
 	private final Group walls;
 
+	private final StackPane layout;
+	private final GroupCameraPlus groupCameraPlus;
+
+
 	public Game(View v, MainMaze m)
 	{
-		super(new Group(), screenWidth, screenHeight, true, v);
-		final Group root = (Group)this.getRoot();
-		maze = m;
+		super(new StackPane(), screenWidth, screenHeight, true, v);
+		Group root = new Group();
+		layout = (StackPane)this.getRoot();
+		maze   = m;
 
 		setFill(Color.GREY);
 		setCursor(Cursor.NONE);
 
+		SubScene root3D = new SubScene(root, screenWidth, screenHeight, true, null);
+		groupCameraPlus = new GroupCameraPlus();
 		// Ajoute le sol
 		Group floors = makeFloors();
 		floors.getChildren().add(makeEndCase());
@@ -95,10 +111,23 @@ public class Game extends ScenePlus
 		root.getChildren().add(groupCameraPlus);
 
 		// Défini la camera pour la scène
-		setCamera(groupCameraPlus.camera);
+		root3D.setCamera(groupCameraPlus.camera);
 
 		// Met le joueur sur la startCase
 		updatePlayer(false);
+
+
+		//Greetings label
+		Label hello = new Label("Welcome to the maze");
+		hello.setFont(Font.font("Verdana", 100));
+		Group    root2D   = new Group();
+		SubScene subscene = new SubScene(root2D, screenWidth, screenHeight, true, null);
+		root2D.getChildren().add(hello);
+
+
+		layout.getChildren().addAll(root3D, subscene);
+
+
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
