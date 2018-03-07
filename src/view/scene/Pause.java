@@ -1,5 +1,7 @@
 package src.view.scene;
 
+import java.io.File;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -48,6 +50,15 @@ class Pause extends ScenePlus
 			buttonGhostMode.setSelected(previous.getMaze().getPlayer().getGhostMode());
 			buttonGhostMode.setOnAction(event->{
 				previous.getMaze().getPlayer().setGhostMode(buttonGhostMode.isSelected());
+			});
+
+			Button buttonSave = addButton("Save");
+			buttonSave.setOnAction(event->{
+				File f = new FileChooser().showSaveDialog(v.stage);
+				if (f != null)
+				{
+					v.con.saveMaze(f.getAbsolutePath());
+				}
 			});
 
 			Button buttonReturn = addButton("Return to Menu");
