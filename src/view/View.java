@@ -25,7 +25,7 @@ import src.view.scene.Menus;
 
 public class View
 {
-	private final Controller con;
+	public final Controller con;
 	private Scene scene;
 	public final Stage stage;
 
@@ -46,19 +46,10 @@ public class View
 		return (this.scene);
 	}
 
-	public void createMaze(Algo a)
+	public void showGame()
 	{
-		con.createMaze(a);
-		//con.showMaze(true);
-		System.out.println(con.getMaze());
 		scene = new Game(this, con.getMaze());
 		stage.setScene(scene);
-		stage.show();
-	}
-
-	public void loadMaze(File f)
-	{
-		con.loadMaze(f);
 	}
 
 	public void setMsg(String s)

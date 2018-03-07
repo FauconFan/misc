@@ -50,19 +50,19 @@ public class Controller
 		}
 		catch (Exception e) {
 			this.view.setMsg(e.toString());
+			System.out.println(e.toString());
 		}
 	}
 
 	/**
 	 * Permet de sauvegarder un objet sérialisé ou au format JSON
 	 * @param path Le chemin du fichier à sauvegader (l'extension sera ajoutée si elle n'est pas présente)
-	 * @param format Le format de sauvegarde
 	 */
-	public void saveMaze(String path, Parser.SavesFormat format)
+	public void saveMaze(String path)
 	{
 		try
 		{
-			Parser.saveMaze(path, format, this.maze);
+			Parser.saveMaze(path, Parser.SavesFormat.gson, this.maze);
 		}
 		catch (Parser.ExtensionException e)
 		{

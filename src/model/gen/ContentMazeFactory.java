@@ -366,6 +366,12 @@ public class ContentMazeFactory
 			}
 			else
 			{
+				if (x == this.contentSpecialCases.get(0).getX() &&
+					y == this.contentSpecialCases.get(0).getY())
+				{
+					i--;
+					continue;
+				}
 				c = new EndCase(x, y);
 			}
 			this.contentSpecialCases.add(c);

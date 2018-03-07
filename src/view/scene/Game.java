@@ -38,7 +38,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-
 import java.util.function.Consumer;
 
 import src.model.board.Case;
@@ -74,29 +73,36 @@ public class Game extends ScenePlus
 	private final float goUp   = 1f;
 	private final int rot      = 5; // En degré
 
-
 	private final Group walls;
 
 	private final StackPane layout;
 	private final GroupCameraPlus groupCameraPlus;
 
-
 	public Game(View v, MainMaze m)
 	{
 		super(new StackPane(), screenWidth, screenHeight, true, v);
-		Group root = new Group();
+		Group root3D = new Group();
+		Group root2D = new Group();
 		layout = (StackPane)this.getRoot();
 		maze   = m;
 
 		setFill(Color.GREY);
 		setCursor(Cursor.NONE);
 
-		SubScene root3D = new SubScene(root, screenWidth, screenHeight, true, null);
+		// AmbientLight
+		AmbientLight al = new AmbientLight(Color.WHITE);
+		root3D.getChildren().add(al);
+
+		SubScene scene3D = new SubScene(root3D, screenWidth, screenHeight, true, null);
+		SubScene scene2D = new SubScene(root2D, screenWidth, screenHeight, true, null);
+
+
 		groupCameraPlus = new GroupCameraPlus();
+
 		// Ajoute le sol
 		Group floors = makeFloors();
 		floors.getChildren().add(makeEndCase());
-		root.getChildren().add(floors);
+		root3D.getChildren().add(floors);
 
 		/* Le plafond est juste un sol décalé vers le haut
 		 * final Group roof = makeFloors();
@@ -105,29 +111,24 @@ public class Game extends ScenePlus
 
 		// Ajoute les murs
 		walls = makeWalls();
-		root.getChildren().add(walls);
+		root3D.getChildren().add(walls);
 
 		// Ajoute la caméra
-		root.getChildren().add(groupCameraPlus);
+		root3D.getChildren().add(groupCameraPlus);
 
 		// Défini la camera pour la scène
-		root3D.setCamera(groupCameraPlus.camera);
+		scene3D.setCamera(groupCameraPlus.camera);
 
 		// Met le joueur sur la startCase
 		updatePlayer(false);
 
-
 		//Greetings label
 		Label hello = new Label("Welcome to the maze");
 		hello.setFont(Font.font("Verdana", 100));
-		Group    root2D   = new Group();
-		SubScene subscene = new SubScene(root2D, screenWidth, screenHeight, true, null);
 		root2D.getChildren().add(hello);
 
-
-		layout.getChildren().addAll(root3D, subscene);
-
-
+		//Ajout des subscenes
+		layout.getChildren().addAll(scene3D, scene2D);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -320,7 +321,7 @@ public class Game extends ScenePlus
 			Box       f = new Box(w, 0.5, h);
 			f.setTranslateX(md.x1 + w / 2.0);
 			f.setTranslateZ(md.y1 + h / 2.0);
-			f.setMaterial(new PhongMaterial(Color.RED));
+			f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
 			f.setTranslateY(hauteur / 2.0);
 			floors.getChildren().add(f);
 		}
@@ -350,13 +351,6 @@ public class Game extends ScenePlus
 
 			// On met les tranforms sur la camera
 			getTransforms().addAll(tr, rx, ry);
-
-			//Source de lumiere sur le joueur
-			final Group      light         = new Group();
-			final PointLight lightOnPlayer = new PointLight();
-			lightOnPlayer.setColor(Color.WHITE);
-			light.getChildren().add(lightOnPlayer);
-			getChildren().add(light);
 		}
 	}
 

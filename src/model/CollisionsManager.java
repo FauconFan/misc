@@ -29,31 +29,6 @@ public class CollisionsManager
 		closestWall = null;
 	}
 
-	private void putClosestWall(FloatVector v)
-	{
-		float coefProp;
-
-		for (LineWall lw : this.walls)
-		{
-			FloatVector [][] effectWalls = lw.effWalls(p.getPosX(), p.getPosY());
-			for (int i = 0; i < effectWalls.length; i++)
-			{
-				boolean horizontalWall = CollisionsManager.effectWallIsHorizontal(effectWalls[i]);
-				if (!v.isCollinearTo((effectWalls[i][1].getX() - effectWalls[i][0].getX()), (effectWalls[i][1].getY() - effectWalls[i][0].getY())))
-				{
-					coefProp = (horizontalWall) ? ((effectWalls[i][0].getY() - p.getPosY()) / v.getY()) : ((effectWalls[i][0].getX() - p.getPosX()) / v.getX());
-					if (0 < coefProp && coefProp < 1 &&
-						CollisionsManager.pointInWall(new FloatVector(p.getPosX(), p.getPosY()).sum(v.multiplicate(coefProp)), effectWalls[i]) &&
-						coefProp < this.coefPropMin)
-					{
-						this.coefPropMin = coefProp;
-						this.closestWall = effectWalls[i];
-					}
-				}
-			}
-		}
-	}
-
 	public FloatVector getNextMove()
 	{
 		return (splitMove[0]);
@@ -66,60 +41,92 @@ public class CollisionsManager
 	}
 
 	/**
+	 * Cherche le mur le plus proche qui gène le déplacement.
+	 */
+	private void putClosestWall()
+	{
+		float coefProp;
+		float positionEff;
+
+		for (LineWall lw : this.walls)
+		{
+			FloatVector [][] effectWalls = lw.effWalls(p.getPosX(), p.getPosY());
+			for (int i = 0; i < effectWalls.length; i++)
+			{
+				boolean horizontalWall = CollisionsManager.effectWallIsHorizontal(effectWalls[i]);
+				if (!splitMove[0].isCollinearTo((effectWalls[i][1].getX() - effectWalls[i][0].getX()), (effectWalls[i][1].getY() - effectWalls[i][0].getY())))
+				{
+					if (horizontalWall)
+					{
+						positionEff = (p.getPosY() < effectWalls[i][0].getY()) ? -1 : 1;
+						coefProp    = (effectWalls[i][0].getY() + p.getHitBoxCircle() * positionEff - p.getPosY()) / splitMove[0].getY();
+					}
+					else
+					{
+						positionEff = (p.getPosX() < effectWalls[i][0].getX()) ? -1 : 1;
+						coefProp    = (effectWalls[i][0].getX() + p.getHitBoxCircle() * positionEff - p.getPosX()) / splitMove[0].getX();
+					}
+					if ((coefProp < this.coefPropMin && coefProp < 1 && isConsideredWall(coefProp, effectWalls[i], horizontalWall)) &&
+						(0 < coefProp || (Math.abs(coefProp) < 10e-4f && ((horizontalWall && splitMove[0].getY() * positionEff < 0) || (!horizontalWall && splitMove[0].getX() * positionEff < 0)))))
+					{
+						this.coefPropMin = coefProp;
+						this.closestWall = effectWalls[i];
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Décompose le vecteur AD en deux vecteurs AB et BC avec B le point d'intersection entre AD et le mur le plus proche
 	 */
 	public void updateMove()
 	{
 		init();
-		FloatVector v = splitMove[0];
-		putClosestWall(v);
+		putClosestWall();
 
-		if (this.coefPropMin > 0 && this.coefPropMin < 1)
+		if (this.coefPropMin >= 0 && this.coefPropMin < 1)
 		{
-			float t = 1 - p.getHitBoxCircle() / (coefPropMin * (float)Math.sqrt(Math.pow(v.getX(), 2) + Math.pow(v.getY(), 2)));
-			splitMove[0] = v.multiplicate(t * this.coefPropMin);
 			if (CollisionsManager.effectWallIsHorizontal(this.closestWall))
 			{
-				splitMove[1] = new FloatVector(v.getX() * (1 - t * this.coefPropMin), 0);
+				splitMove[1] = new FloatVector(splitMove[0].getX() * (1 - this.coefPropMin), 0);
 			}
 			else
 			{
-				splitMove[1] = new FloatVector(0, v.getY() * (1 - t * this.coefPropMin));
+				splitMove[1] = new FloatVector(0, splitMove[0].getY() * (1 - this.coefPropMin));
 			}
+			splitMove[0] = splitMove[0].multiplicate(coefPropMin);
 		}
 	}
 
-	private static boolean effectWallIsHorizontal(FloatVector [] w)
+	/**
+	 * Teste si le mur gène le déplacement
+	 * @param k Coefficient de proportionnalité
+	 * @param wall Vecteurs représentant un mur
+	 * @param isHorizontal Test de l'horizontalité du mur
+	 * @return true si le mur peut gener le déplacement
+	 */
+	private boolean isConsideredWall(float k, FloatVector [] wall, boolean isHorizontal)
 	{
-		return (Math.abs(w[0].getY() - w[1].getY()) < 10e-4f);
-	}
-
-	public static boolean pointInWall(FloatVector point, FloatVector [] wall)
-	{
-		float erreur = 10e-5F;
-
-		if (wall[0].getY() == wall[1].getY())
+		if (isHorizontal)
 		{
-			if (Math.abs(point.getY() - wall[0].getY()) > erreur)
-			{
-				return (false);
-			}
-			if ((wall[0].getX() <= point.getX() && point.getX() <= wall[1].getX()) || (wall[0].getX() >= point.getX() && point.getX() >= wall[1].getX()))
-			{
-				return (true);
-			}
+			return ((wall[0].getX() - p.getHitBoxCircle() < p.getPosX() + k * splitMove[0].getX() && p.getPosX() + k * splitMove[0].getX() < wall[1].getX() + p.getHitBoxCircle()) ||
+					(wall[1].getX() - p.getHitBoxCircle() < p.getPosX() + k * splitMove[0].getX() && p.getPosX() + k * splitMove[0].getX() < wall[0].getX() + p.getHitBoxCircle()));
 		}
 		else
 		{
-			if (Math.abs(point.getX() - wall[0].getX()) > erreur)
-			{
-				return (false);
-			}
-			if ((wall[0].getY() <= point.getY() && point.getY() <= wall[1].getY()) || (wall[0].getY() >= point.getY() && point.getY() >= wall[1].getY()))
-			{
-				return (true);
-			}
+			return ((wall[0].getY() - p.getHitBoxCircle() < p.getPosY() + k * splitMove[0].getY() && p.getPosY() + k * splitMove[0].getY() < wall[1].getY() + p.getHitBoxCircle()) ||
+					(wall[1].getY() - p.getHitBoxCircle() < p.getPosY() + k * splitMove[0].getY() && p.getPosY() + k * splitMove[0].getY() < wall[0].getY() + p.getHitBoxCircle()));
 		}
-		return (false);
+	}
+
+	/**
+	 * Teste l'horizontalité du mur à 10e-4 près
+	 * @param w Mur
+	 * @return true si le mur est horzontal
+	 */
+	private static boolean effectWallIsHorizontal(FloatVector [] w)
+	{
+		return (Math.abs(w[0].getY() - w[1].getY()) < 10e-4f);
 	}
 }

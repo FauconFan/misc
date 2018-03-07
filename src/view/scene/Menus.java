@@ -22,6 +22,7 @@ import src.model.gen.AlgoBackTracker;
 import src.model.gen.AlgoSample;
 import src.model.gen.AlgoSample2;
 
+import src.model.parser.Parser;
 import src.view.Menu;
 import src.view.Msg;
 import src.view.View;
@@ -66,7 +67,8 @@ public class Menus extends ScenePlus
 				File file = new FileChooser().showOpenDialog(v.stage);
 				if (file != null)
 				{
-					v.loadMaze(file);
+					v.con.loadMaze(file);
+					v.showGame();
 				}
 			});
 
@@ -113,7 +115,8 @@ public class Menus extends ScenePlus
 			});
 
 			buttonCreate.setOnAction(event->{
-				v.createMaze(new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue()));
+				v.con.createMaze(new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue()));
+				v.showGame();
 			});
 
 			putMsg();
