@@ -77,6 +77,10 @@ public class Game extends ScenePlus
 		setFill(Color.GREY);
 		setCursor(Cursor.NONE);
 
+		// AmbientLight
+		AmbientLight al = new AmbientLight(Color.WHITE);
+		root.getChildren().add(al);
+
 		// Ajoute le sol
 		Group floors = makeFloors();
 		floors.getChildren().add(makeEndCase());
@@ -291,7 +295,7 @@ public class Game extends ScenePlus
 			Box       f = new Box(w, 0.5, h);
 			f.setTranslateX(md.x1 + w / 2.0);
 			f.setTranslateZ(md.y1 + h / 2.0);
-			f.setMaterial(new PhongMaterial(Color.RED));
+			f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
 			f.setTranslateY(hauteur / 2.0);
 			floors.getChildren().add(f);
 		}
@@ -321,13 +325,6 @@ public class Game extends ScenePlus
 
 			// On met les tranforms sur la camera
 			getTransforms().addAll(tr, rx, ry);
-
-			//Source de lumiere sur le joueur
-			final Group      light         = new Group();
-			final PointLight lightOnPlayer = new PointLight();
-			lightOnPlayer.setColor(Color.WHITE);
-			light.getChildren().add(lightOnPlayer);
-			getChildren().add(light);
 		}
 	}
 
