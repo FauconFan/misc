@@ -179,7 +179,6 @@ public class Game extends ScenePlus
 			updatePlayer(reallyMove);
 		});
 
-
 		//Mouse controller
 		//screenOffset : decalage en Y par rapport au centre de l'ecran
 
@@ -233,13 +232,13 @@ public class Game extends ScenePlus
 
 		groupCameraPlus3D.tr.setZ(p.getPosY() * sc.getZ());
 		groupCameraPlus3D.tr.setX(p.getPosX() * sc.getX());
-		groupCameraPlus2D.tr.setY(-p.getPosY() * sc2d.getY());
-		groupCameraPlus2D.tr.setX(-p.getPosX() * sc2d.getX());
 		groupCameraPlus3D.tr.setY(p.getPosZ() * sc.getY());
 		groupCameraPlus3D.rx.setAngle(p.getHorizontalAngle());
 		groupCameraPlus3D.ry.setAngle(p.getVerticalAngle());
-		groupCameraPlus2D.ry.setAngle(p.getVerticalAngle());
 
+		groupCameraPlus2D.rz.setAngle(p.getHorizontalAngle());
+		//groupCameraPlus2D.tr.setZ(-p.getPosY() * sc2d.getY());
+		//groupCameraPlus2D.tr.setX(p.getPosX() * sc2d.getX());
 		if (b)
 		{
 			checkWin();
@@ -267,7 +266,7 @@ public class Game extends ScenePlus
 
 		try{
 			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"), 400, 400, true, false);
-			Image nrm = null;//new Image(new FileInputStream("assets/Wall_Stone_003_NRM.jpg"),400,400,true, false);
+			Image nrm = null;
 			mat = new PhongMaterial(Color.WHITE, img, null, nrm, null);
 		}
 		catch (Exception e) {
@@ -369,27 +368,28 @@ public class Game extends ScenePlus
 	private static class GroupCameraPlus extends Group
 	{
 		//Transforms pour la camera
-		public final Translate tr = new Translate();
-		public final Rotate rx    = new Rotate(0, Rotate.Y_AXIS);
-		public final Rotate ry;
-		public final Camera camera;
+		public Translate tr = new Translate();
+		public Rotate rx    = new Rotate(0, Rotate.Y_AXIS);
+		public Rotate ry    = new Rotate(0, Rotate.X_AXIS);
+		public Rotate rz    = new Rotate(0, Rotate.Z_AXIS);
+		public Camera camera;
+
+		private void create(Camera c)
+		{
+			this.camera = c;
+			getChildren().add(camera);
+			getTransforms().addAll(tr, rx, ry, rz);
+		}
 
 		public GroupCameraPlus(ParallelCamera c)
 		{
-			this.camera = c;
-			ry          = new Rotate(0, Rotate.Z_AXIS);
-			getChildren().add(camera);
-			getTransforms().addAll(tr, rx, ry);
+			create(c);
 		}
 
 		public GroupCameraPlus(PerspectiveCamera p)
 		{
-			this.camera = p;
-			ry          = new Rotate(0, Rotate.X_AXIS);
+			create(p);
 			camera.setNearClip(0.1);
-			camera.setFarClip(1000.0);
-			getChildren().add(camera);
-			getTransforms().addAll(tr, rx, ry);
 		}
 	}
 
