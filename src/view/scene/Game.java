@@ -3,6 +3,7 @@ package src.view.scene;
 import java.io.FileInputStream;
 import javafx.application.Application;
 import javafx.scene.AmbientLight;
+import javafx.scene.Camera;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -12,14 +13,13 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
-import javafx.scene.Camera;
-import javafx.scene.ParallelCamera;
 import javafx.scene.PointLight;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.DrawMode;
+import javafx.scene.shape.Line;
 import javafx.scene.Scene;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
@@ -68,8 +68,8 @@ public class Game extends ScenePlus
 	private final int hauteur = 20;
 
 	// Scale pour les murs
-	private final Scale sc = new Scale(30, 1, 30);
-  private final Scale sc2d = new Scale(sc.getX(),sc.getZ());
+	private final Scale sc   = new Scale(30, 1, 30);
+	private final Scale sc2d = new Scale(sc.getX(), sc.getZ());
 
 	// Constantes de déplacements
 	private final float change = 0.1f;
@@ -79,14 +79,15 @@ public class Game extends ScenePlus
 	private final Group walls;
 
 	private final StackPane layout;
-	private final GroupCameraPlus groupCameraPlus;
+	private final GroupCameraPlus groupCameraPlus3D;
+	private final GroupCameraPlus groupCameraPlus2D;
 
 	public Game(View v, MainMaze m)
 	{
 		super(new StackPane(), screenWidth, screenHeight, true, v);
-		Group root3D = new Group();
-    Group rootMiniMap = new Group();
-		Group root2D = new Group();
+		Group root3D      = new Group();
+		Group rootMiniMap = new Group();
+		Group root2D      = new Group();
 		layout = (StackPane)this.getRoot();
 		maze   = m;
 
@@ -97,11 +98,12 @@ public class Game extends ScenePlus
 		AmbientLight al = new AmbientLight(Color.WHITE);
 		root3D.getChildren().add(al);
 
-		SubScene scene3D = new SubScene(root3D, screenWidth, screenHeight, true, null);
-		SubScene scene2D = new SubScene(root2D, screenWidth, screenHeight, true, null);
-    SubScene sceneMiniMap = new SubScene(rootMiniMap, 400,400);
+		SubScene scene3D      = new SubScene(root3D, screenWidth, screenHeight, true, null);
+		SubScene scene2D      = new SubScene(root2D, screenWidth, screenHeight, true, null);
+		SubScene sceneMiniMap = new SubScene(rootMiniMap, 400, 400);
 
-		groupCameraPlus = new GroupCameraPlus();
+		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
+		groupCameraPlus2D = new GroupCameraPlus(new ParallelCamera());
 
 		// Ajoute le sol
 		Group floors = makeFloors();
@@ -117,10 +119,10 @@ public class Game extends ScenePlus
 		walls = makeWalls();
 		root3D.getChildren().add(walls);
 		// Ajoute la caméra
-		root3D.getChildren().add(groupCameraPlus);
+		root3D.getChildren().add(groupCameraPlus3D);
 
 		// Défini la camera pour la scène
-		scene3D.setCamera(groupCameraPlus.camera);
+		scene3D.setCamera(groupCameraPlus3D.camera);
 
 		// Met le joueur sur la startCase
 		updatePlayer(false);
@@ -130,16 +132,15 @@ public class Game extends ScenePlus
 		hello.setFont(Font.font("Verdana", 100));
 		root2D.getChildren().add(hello);
 
-    //Minimap
-    GroupCameraPlus cp = new GroupCameraPlus(new ParallelCamera());
-    rootMiniMap.getChildren().add(cp);
-    sceneMiniMap.setFill(null);
-    sceneMiniMap.setCamera(cp.camera);
-    rootMiniMap.getChildren().add(makeLineWalls());
+		//Minimap
+		rootMiniMap.getChildren().add(groupCameraPlus2D);
+		sceneMiniMap.setFill(null);
+		sceneMiniMap.setCamera(groupCameraPlus2D.camera);
+		rootMiniMap.getChildren().add(makeLineWalls());
 
-    //Ajout des subscenes
+		//Ajout des subscenes
 		layout.getChildren().addAll(scene3D, scene2D, sceneMiniMap);
-    
+
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			boolean reallyMove = false;
@@ -217,7 +218,7 @@ public class Game extends ScenePlus
 	 */
 	private void setTr(int diff, float change)
 	{
-		final double r1 = Math.toRadians(GroupCameraPlus.rx.getAngle() + diff);
+		final double r1 = Math.toRadians(groupCameraPlus3D.rx.getAngle() + diff);
 
 		maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change), 0);
 	}
@@ -230,11 +231,14 @@ public class Game extends ScenePlus
 	{
 		final Player p = maze.getPlayer();
 
-		GroupCameraPlus.tr.setZ(p.getPosY() * sc.getZ());
-		GroupCameraPlus.tr.setX(p.getPosX() * sc.getX());
-		GroupCameraPlus.tr.setY(p.getPosZ() * sc.getY());
-		GroupCameraPlus.rx.setAngle(p.getHorizontalAngle());
-		GroupCameraPlus.ry.setAngle(p.getVerticalAngle());
+		groupCameraPlus3D.tr.setZ(p.getPosY() * sc.getZ());
+		groupCameraPlus3D.tr.setX(p.getPosX() * sc.getX());
+		groupCameraPlus2D.tr.setY(-p.getPosY() * sc2d.getY());
+		groupCameraPlus2D.tr.setX(-p.getPosX() * sc2d.getX());
+		groupCameraPlus3D.tr.setY(p.getPosZ() * sc.getY());
+		groupCameraPlus3D.rx.setAngle(p.getHorizontalAngle());
+		groupCameraPlus3D.ry.setAngle(p.getVerticalAngle());
+		groupCameraPlus2D.ry.setAngle(p.getVerticalAngle());
 
 		if (b)
 		{
@@ -314,20 +318,23 @@ public class Game extends ScenePlus
 		return (walls);
 	}
 
-  private Group makeLineWalls(){
-    final LineWall[] lineWalls = maze.getContentMaze().getLineWalls();
-    final Group res = new Group();
-    res.getTransforms().add(sc2d);
-    AmbientLight am = new AmbientLight(Color.WHITE);
-    res.getChildren().add(am);
-    for(LineWall l: lineWalls){
-      Line li = new Line(l.getX1(), l.getY1(),l.getX2(),l.getY2());
-      li.setFill(Color.BLUE);
-      li.setStrokeWidth(0.1f);
-      res.getChildren().add(li);
-    }
-    return res;
-  }
+	private Group makeLineWalls()
+	{
+		final LineWall[] lineWalls = maze.getContentMaze().getLineWalls();
+		final Group      res       = new Group();
+
+		res.getTransforms().add(sc2d);
+		AmbientLight am = new AmbientLight(Color.WHITE);
+		res.getChildren().add(am);
+		for (LineWall l: lineWalls)
+		{
+			Line li = new Line(l.getX1(), l.getY1(), l.getX2(), l.getY2());
+			li.setFill(Color.BLUE);
+			li.setStrokeWidth(0.1f);
+			res.getChildren().add(li);
+		}
+		return (res);
+	}
 
 	/**
 	 * Dessine le sol
@@ -362,24 +369,27 @@ public class Game extends ScenePlus
 	private static class GroupCameraPlus extends Group
 	{
 		//Transforms pour la camera
-		public static Translate tr = new Translate();
-		public static Rotate rx = new Rotate(0,Rotate.Y_AXIS);
-		public static Rotate ry = new Rotate(0, Rotate.X_AXIS);
+		public final Translate tr = new Translate();
+		public final Rotate rx    = new Rotate(0, Rotate.Y_AXIS);
+		public final Rotate ry;
 		public final Camera camera;
 
-        public GroupCameraPlus(Camera c){
-            this.camera = c;
-        // On met les tranforms sur la camera
-			getTransforms().addAll(tr, rx, ry);
-        }
-
-		public GroupCameraPlus()
+		public GroupCameraPlus(ParallelCamera c)
 		{
-      this(new PerspectiveCamera(true));
+			this.camera = c;
+			ry          = new Rotate(0, Rotate.Z_AXIS);
+			getChildren().add(camera);
+			getTransforms().addAll(tr, rx, ry);
+		}
+
+		public GroupCameraPlus(PerspectiveCamera p)
+		{
+			this.camera = p;
+			ry          = new Rotate(0, Rotate.X_AXIS);
 			camera.setNearClip(0.1);
 			camera.setFarClip(1000.0);
-
 			getChildren().add(camera);
+			getTransforms().addAll(tr, rx, ry);
 		}
 	}
 
