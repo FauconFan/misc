@@ -29,6 +29,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import javafx.stage.Screen;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -123,9 +124,10 @@ public class Game extends ScenePlus
 		updatePlayer(false);
 
 		//Greetings label
-		Label hello = new Label("Welcome to the maze");
-		hello.setFont(Font.font("Verdana", 100));
-		root2D.getChildren().add(hello);
+		Label msg = new Label("Welcome to the maze\n Press ENTER to close the message");
+		msg.setFont(Font.font("Verdana", 46));
+		msg.setTextAlignment(TextAlignment.CENTER);
+		root2D.getChildren().add(msg);
 
 		//Ajout des subscenes
 		layout.getChildren().addAll(scene3D, scene2D);
@@ -157,6 +159,8 @@ public class Game extends ScenePlus
 			case DOWN: maze.getPlayer().addVerticalAngle(-1 * rot); break;
 
 			case ESCAPE: v.changeScene(new Pause(v, this)); break;
+
+			case ENTER: msg.setText(""); break;
 
 			case T: centerMouse(); break;
 
