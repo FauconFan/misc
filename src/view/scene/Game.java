@@ -241,6 +241,7 @@ public class Game extends ScenePlus
 		//groupCameraPlus2D.tr.setX(p.getPosX() * sc2d.getX());
 		if (b)
 		{
+			p.actionCase(maze.getContentMaze().getSpecialCases());
 			checkWin();
 		}
 	}
@@ -250,7 +251,7 @@ public class Game extends ScenePlus
 	 */
 	private void checkWin()
 	{
-		if (maze.getPlayer().hasWin(maze.getContentMaze().getSpecialCases()))
+		if (maze.getPlayer().getHasWin())
 		{
 			v.changeScene(new Winner(v));
 		}
