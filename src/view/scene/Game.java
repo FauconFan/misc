@@ -390,6 +390,7 @@ public class Game extends ScenePlus
 		{
 			create(p);
 			camera.setNearClip(0.1);
+			camera.setFarClip(500);
 		}
 	}
 
