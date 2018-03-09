@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
-class Winner extends ScenePlus
+public class Winner extends ScenePlus
 {
 	public Winner(View v)
 	{

@@ -1,8 +1,10 @@
-package src.view.scene;
+package src.view.scene.game;
 
 import java.io.FileInputStream;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.AmbientLight;
+import javafx.scene.Camera;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -12,13 +14,15 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
+import javafx.scene.shape.Line;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
@@ -34,7 +38,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
-import javafx.scene.SubScene;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -47,7 +50,9 @@ import src.model.ContentMaze;
 import src.model.MainMaze;
 import src.model.MazeDimension;
 import src.model.Player;
-
+import src.view.scene.Pause;
+import src.view.scene.ScenePlus;
+import src.view.scene.Winner;
 import src.view.View;
 
 public class Game extends ScenePlus
@@ -77,7 +82,8 @@ public class Game extends ScenePlus
 	private final Group walls;
 
 	private final StackPane layout;
-	private final GroupCameraPlus groupCameraPlus;
+	private final GroupCameraPlus groupCameraPlus3D;
+	private final MiniMap sceneMiniMap;
 
 	public Game(View v, MainMaze m)
 	{
@@ -96,9 +102,9 @@ public class Game extends ScenePlus
 
 		SubScene scene3D = new SubScene(root3D, screenWidth, screenHeight, true, null);
 		SubScene scene2D = new SubScene(root2D, screenWidth, screenHeight, true, null);
+		sceneMiniMap = new MiniMap(400, 400, new Scale(sc.getX(), sc.getZ()), m.getContentMaze().getLineWalls());
 
-
-		groupCameraPlus = new GroupCameraPlus();
+		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
 
 		// Ajoute le sol
 		Group floors = makeFloors();
@@ -113,12 +119,11 @@ public class Game extends ScenePlus
 		// Ajoute les murs
 		walls = makeWalls();
 		root3D.getChildren().add(walls);
-
 		// Ajoute la caméra
-		root3D.getChildren().add(groupCameraPlus);
+		root3D.getChildren().add(groupCameraPlus3D);
 
 		// Défini la camera pour la scène
-		scene3D.setCamera(groupCameraPlus.camera);
+		scene3D.setCamera(groupCameraPlus3D.camera);
 
 		// Met le joueur sur la startCase
 		updatePlayer(false);
@@ -129,8 +134,11 @@ public class Game extends ScenePlus
 		msg.setTextAlignment(TextAlignment.CENTER);
 		root2D.getChildren().add(msg);
 
+		// Minimap en haut à doite
+		StackPane.setAlignment(sceneMiniMap, Pos.TOP_RIGHT);
+
 		//Ajout des subscenes
-		layout.getChildren().addAll(scene3D, scene2D);
+		layout.getChildren().addAll(scene3D, scene2D, sceneMiniMap);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -172,7 +180,6 @@ public class Game extends ScenePlus
 			updatePlayer(reallyMove);
 		});
 
-
 		//Mouse controller
 		//screenOffset : decalage en Y par rapport au centre de l'ecran
 
@@ -211,7 +218,7 @@ public class Game extends ScenePlus
 	 */
 	private void setTr(int diff, float change)
 	{
-		final double r1 = Math.toRadians(groupCameraPlus.rx.getAngle() + diff);
+		final double r1 = Math.toRadians(groupCameraPlus3D.rx.getAngle() + diff);
 
 		maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change), 0);
 	}
@@ -224,14 +231,16 @@ public class Game extends ScenePlus
 	{
 		final Player p = maze.getPlayer();
 
-		groupCameraPlus.tr.setZ(p.getPosY() * sc.getZ());
-		groupCameraPlus.tr.setX(p.getPosX() * sc.getX());
-		groupCameraPlus.tr.setY(p.getPosZ() * sc.getY());
-		groupCameraPlus.rx.setAngle(p.getHorizontalAngle());
-		groupCameraPlus.ry.setAngle(p.getVerticalAngle());
+		groupCameraPlus3D.tr.setZ(p.getPosY() * sc.getZ());
+		groupCameraPlus3D.tr.setX(p.getPosX() * sc.getX());
+		groupCameraPlus3D.tr.setY(p.getPosZ() * sc.getY());
+		groupCameraPlus3D.rx.setAngle(p.getHorizontalAngle());
+		groupCameraPlus3D.ry.setAngle(p.getVerticalAngle());
 
+		sceneMiniMap.updateCamera(p);
 		if (b)
 		{
+			p.actionCase(maze.getContentMaze().getSpecialCases());
 			checkWin();
 		}
 	}
@@ -241,7 +250,7 @@ public class Game extends ScenePlus
 	 */
 	private void checkWin()
 	{
-		if (maze.getPlayer().hasWin(maze.getContentMaze().getSpecialCases()))
+		if (maze.getPlayer().getHasWin())
 		{
 			v.changeScene(new Winner(v));
 		}
@@ -257,7 +266,7 @@ public class Game extends ScenePlus
 
 		try{
 			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"), 400, 400, true, false);
-			Image nrm = null;//new Image(new FileInputStream("assets/Wall_Stone_003_NRM.jpg"),400,400,true, false);
+			Image nrm = null;
 			mat = new PhongMaterial(Color.WHITE, img, null, nrm, null);
 		}
 		catch (Exception e) {
@@ -338,26 +347,6 @@ public class Game extends ScenePlus
 	}
 
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
-	private static class GroupCameraPlus extends Group
-	{
-		//Transforms pour la camera
-		public final Translate tr             = new Translate();
-		public final Rotate rx                = new Rotate(0, Rotate.Y_AXIS);
-		public final Rotate ry                = new Rotate(0, Rotate.X_AXIS);
-		public final PerspectiveCamera camera = new PerspectiveCamera(true);
-
-		public GroupCameraPlus()
-		{
-			camera.setNearClip(0.1);
-			camera.setFarClip(1000.0);
-
-			getChildren().add(camera);
-
-			// On met les tranforms sur la camera
-			getTransforms().addAll(tr, rx, ry);
-		}
-	}
-
 	private Box makeEndCase()
 	{
 		final Case  ec  = this.maze.getEndCase();

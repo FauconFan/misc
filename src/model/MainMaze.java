@@ -29,8 +29,7 @@ public class MainMaze
 		this.mazeDim = mz;
 		this.name    = name;
 		this.p       = p;
-
-		p.goTo(Case.TypeCase.START, m);
+		p.goTo(m.getCase(Case.TypeCase.START));
 	}
 
 	public MainMaze(Algo algo)
@@ -82,7 +81,6 @@ public class MainMaze
 			p.setPosX(p.getPosX() + dx);
 			p.setPosY(p.getPosY() + dy);
 		}
-
 		else
 		{
 			CollisionsManager colManage = new CollisionsManager(m.getLineWalls(), p, new FloatVector(dx, dy));

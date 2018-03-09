@@ -1,6 +1,7 @@
 package src.model;
 
 import src.model.board.Case;
+import src.model.board.TeleportCase;
 
 /**
  * Player est la classe qui représente le joueur dans le labyrinthe.
@@ -16,6 +17,7 @@ public class Player
 	private float posZ;
 	private float horizontalAngle;
 	private float verticalAngle;
+	private boolean hasWin = false;
 
 	public Player(float hitBoxCircle, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
 	{
@@ -67,6 +69,11 @@ public class Player
 		return (this.verticalAngle);
 	}
 
+	public boolean getHasWin()
+	{
+		return (this.hasWin);
+	}
+
 	public void setPosX(float x)
 	{
 		posX = x;
@@ -92,10 +99,8 @@ public class Player
 		this.verticalAngle += y;
 	}
 
-	public boolean goTo(Case.TypeCase t, ContentMaze cm)
+	public boolean goTo(Case c)
 	{
-		Case c = cm.getCase(t);
-
 		if (c != null)
 		{
 			posX = c.getX() + Case.getTailleCase() / 2;
@@ -108,18 +113,25 @@ public class Player
 		}
 	}
 
-	public boolean hasWin(Case[] sc)
+	public void actionCase(Case [] sc)
 	{
 		float diff = Case.getTailleCase() / 2;
 
-		for (Case c:sc)
+		for (Case c : sc)
 		{
-			if (c.getTypeCase() == Case.TypeCase.END && Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff)
+			if (Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff)
 			{
-				return (true);
+				switch (c.getTypeCase())
+				{
+				case END:      this.hasWin = true;
+					break;
+
+				case TELEPORT: this.setPosX(((TeleportCase)c).getXDest() + Case.getTailleCase() / 2);
+					this.setPosY(((TeleportCase)c).getYDest() + Case.getTailleCase() / 2);
+					break;
+				}
 			}
 		}
-		return (false);
 	}
 
 	public String toString()

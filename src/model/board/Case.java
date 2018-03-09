@@ -69,7 +69,8 @@ public abstract class Case implements Cloneable
 	public enum TypeCase
 	{
 		START,
-		END;
+		END,
+		TELEPORT;
 	}
 
 	public static class CaseAdapter implements JsonSerializer <Case>, JsonDeserializer <Case>
