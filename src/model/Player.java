@@ -1,7 +1,6 @@
 package src.model;
 
 import src.model.board.Case;
-import src.model.board.TeleportCase;
 
 /**
  * Player est la classe qui représente le joueur dans le labyrinthe.
@@ -89,6 +88,11 @@ public class Player
 		posZ = z;
 	}
 
+	public void setWin(boolean b)
+	{
+		hasWin = b;
+	}
+
 	public void addHorizontalAngle(float x)
 	{
 		this.horizontalAngle += x;
@@ -97,6 +101,13 @@ public class Player
 	public void addVerticalAngle(float y)
 	{
 		this.verticalAngle += y;
+	}
+
+	public boolean playerInCase(Case c)
+	{
+		float diff = Case.getTailleCase() / 2;
+
+		return (Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff);
 	}
 
 	public boolean goTo(Case c)
@@ -110,27 +121,6 @@ public class Player
 		else
 		{
 			return (false);
-		}
-	}
-
-	public void actionCase(Case [] sc)
-	{
-		float diff = Case.getTailleCase() / 2;
-
-		for (Case c : sc)
-		{
-			if (Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff)
-			{
-				switch (c.getTypeCase())
-				{
-				case END:      this.hasWin = true;
-					break;
-
-				case TELEPORT: this.setPosX(((TeleportCase)c).getXDest() + Case.getTailleCase() / 2);
-					this.setPosY(((TeleportCase)c).getYDest() + Case.getTailleCase() / 2);
-					break;
-				}
-			}
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import src.model.board.Case;
 import src.model.board.LineWall;
+import src.model.board.TeleportCase;
 import src.model.CollisionsManager;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
@@ -29,7 +30,7 @@ public class MainMaze
 		this.mazeDim = mz;
 		this.name    = name;
 		this.p       = p;
-		p.goTo(m.getCase(Case.TypeCase.START));
+		this.p.goTo(m.getCase(Case.TypeCase.START));
 	}
 
 	public MainMaze(Algo algo)
@@ -63,8 +64,8 @@ public class MainMaze
 	 */
 	private void applyMove(FloatVector v)
 	{
-		p.setPosX(p.getPosX() + v.getX());
-		p.setPosY(p.getPosY() + v.getY());
+		this.p.setPosX(p.getPosX() + v.getX());
+		this.p.setPosY(p.getPosY() + v.getY());
 	}
 
 	/**
@@ -75,20 +76,39 @@ public class MainMaze
 	 */
 	public void movePlayer(float dx, float dy, float dz)
 	{
-		if (p.getGhostMode())
+		if (this.p.getGhostMode())
 		{
-			p.setPosZ(p.getPosZ() + dz);
-			p.setPosX(p.getPosX() + dx);
-			p.setPosY(p.getPosY() + dy);
+			this.p.setPosZ(this.p.getPosZ() + dz);
+			this.p.setPosX(this.p.getPosX() + dx);
+			this.p.setPosY(this.p.getPosY() + dy);
 		}
 		else
 		{
-			CollisionsManager colManage = new CollisionsManager(m.getLineWalls(), p, new FloatVector(dx, dy));
+			CollisionsManager colManage = new CollisionsManager(this.m.getLineWalls(), this.p, new FloatVector(dx, dy));
 			while (!colManage.getNextMove().isNul())
 			{
 				colManage.updateMove();
 				this.applyMove(colManage.getNextMove());
 				colManage.next();
+			}
+		}
+	}
+
+	public void actionCase()
+	{
+		for (Case c : m.getSpecialCases())
+		{
+			if (this.p.playerInCase(c))
+			{
+				switch (c.getTypeCase())
+				{
+				case END:       this.p.setWin(true);
+					break;
+
+				case TELEPORT:  this.p.setPosX(((TeleportCase)c).getXDest() + Case.getTailleCase() / 2);
+					this.p.setPosY(((TeleportCase)c).getYDest() + Case.getTailleCase() / 2);
+					break;
+				}
 			}
 		}
 	}

@@ -240,7 +240,7 @@ public class Game extends ScenePlus
 		sceneMiniMap.updateCamera(p);
 		if (b)
 		{
-			p.actionCase(maze.getContentMaze().getSpecialCases());
+			maze.actionCase();
 			checkWin();
 		}
 	}
