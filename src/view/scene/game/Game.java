@@ -128,11 +128,16 @@ public class Game extends ScenePlus
 		// Met le joueur sur la startCase
 		updatePlayer(false);
 
+
 		//Greetings label
-		Label msg = new Label("Welcome to the maze\n Press ENTER to close the message");
-		msg.setFont(Font.font("Verdana", 46));
+		System.out.println(screenOffset);
+		Label msg = new Label("Welcome to the maze\n Press ENTER to close the message\nor H to see HELP");
+		msg.setFont(Font.font("Verdana", 30));
 		msg.setTextAlignment(TextAlignment.CENTER);
+		msg.setLayoutY(screenOffset);
 		root2D.getChildren().add(msg);
+
+		StackPane.setAlignment(msg, Pos.BOTTOM_CENTER);
 
 		// Minimap en haut à doite
 		StackPane.setAlignment(sceneMiniMap, Pos.TOP_RIGHT);
@@ -170,11 +175,11 @@ public class Game extends ScenePlus
 
 			case ENTER: msg.setText(""); break;
 
-			case T: centerMouse(); break;
-
 			case G: this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode()); break;
 
-			case H: makeTransparentWallsOrNot(); break;
+			case T: makeTransparentWallsOrNot(); break;
+
+			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\nBlue - teleportates you in a random position.\nPress ENTER to close"); break;
 			}
 
 			updatePlayer(reallyMove);
