@@ -103,6 +103,7 @@ public class Game extends ScenePlus
 		SubScene scene3D = new SubScene(root3D, screenWidth, screenHeight, true, null);
 		SubScene scene2D = new SubScene(root2D, screenWidth, screenHeight, true, null);
 		sceneMiniMap = new MiniMap(400, 400, new Scale(sc.getX(), sc.getZ()), m.getContentMaze().getLineWalls());
+		SubScene cross = sceneMiniMap.new Cross();
 
 		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
 
@@ -141,9 +142,10 @@ public class Game extends ScenePlus
 
 		// Minimap en haut à doite
 		StackPane.setAlignment(sceneMiniMap, Pos.TOP_RIGHT);
+		StackPane.setAlignment(cross, Pos.TOP_RIGHT);
 
 		//Ajout des subscenes
-		layout.getChildren().addAll(scene3D, scene2D, sceneMiniMap);
+		layout.getChildren().addAll(scene3D, scene2D, sceneMiniMap, cross);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{

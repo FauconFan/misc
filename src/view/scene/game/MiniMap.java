@@ -21,6 +21,7 @@ import javafx.scene.PointLight;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.transform.Rotate;
@@ -36,10 +37,13 @@ class MiniMap extends SubScene
 	private final Translate fstTr;
 	private final Scale sc2d;
 	private final GroupCameraPlus groupCameraPlus2D;
+	private final int w, h;
 
 	public MiniMap(int w, int h, Scale sc, LineWall[] walls)
 	{
 		super(new Group(), w, h);
+		this.w = w;
+		this.h = h;
 		Group rootMiniMap = (Group)getRoot();
 		this.fstTr = new Translate(w / 2.0, h / 2.0);
 		this.sc2d  = sc;
@@ -74,5 +78,35 @@ class MiniMap extends SubScene
 			res.getChildren().add(li);
 		}
 		return (res);
+	}
+
+	/**
+	 * Destinée à être affichée au dessus de la minimap
+	 */
+	public class Cross extends SubScene
+	{
+		public Cross()
+		{
+			super(new Group(), w, h);
+			setFill(null);
+			int   larg = 15;
+			Group root = (Group)this.getRoot();
+			Line  hLi  = new Line(w / 2.0 - larg, h / 2.0, w / 2.0 + larg, h / 2.0);
+			hLi.setStroke(Color.RED);
+			hLi.setStrokeWidth(3);
+			Line vLi = new Line(w / 2.0, h / 2.0 - larg, w / 2.0, h / 2.0 + larg);
+			vLi.setStroke(Color.RED);
+			vLi.setStrokeWidth(3);
+
+			Rectangle r = new Rectangle(0, 0, w, h);
+			r.setFill(null);
+			r.setStroke(Color.BLACK);
+			r.setStrokeWidth(5);
+
+			root.getChildren().addAll(vLi, hLi, r);
+
+			ParallelCamera p = new ParallelCamera();
+			setCamera(p);
+		}
 	}
 }
