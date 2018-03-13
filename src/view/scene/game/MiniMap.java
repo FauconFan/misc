@@ -54,7 +54,7 @@ class MiniMap extends SubScene
 	public void updateCamera(Player p)
 	{
 		groupCameraPlus2D.rz.setAngle(p.getHorizontalAngle());
-		groupCameraPlus2D.tr.setY(p.getPosY() * sc2d.getY());
+		groupCameraPlus2D.tr.setY(-p.getPosY() * sc2d.getY());
 		groupCameraPlus2D.tr.setX(p.getPosX() * sc2d.getX());
 	}
 
@@ -67,7 +67,7 @@ class MiniMap extends SubScene
 		res.getChildren().add(am);
 		for (LineWall l: lineWalls)
 		{
-			Line li = new Line(l.getX1(), l.getY1(), l.getX2(), l.getY2());
+			Line li = new Line(l.getX1(), -l.getY1(), l.getX2(), -l.getY2());
 			li.setFill(Color.BLUE);
 			li.setStrokeWidth(0.1f);
 			res.getChildren().add(li);
