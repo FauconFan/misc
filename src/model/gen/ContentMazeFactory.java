@@ -362,7 +362,7 @@ public class ContentMazeFactory
 			y   = ran.nextInt(Math.abs(rim.y1 - rim.y2)) + Math.min(rim.y1, rim.y2);
 			if (i == 0)
 			{
-				c = new StartCase(0, 0);// new StartCase(x, y);
+				c = new StartCase(x, y);
 			}
 			else
 			{
