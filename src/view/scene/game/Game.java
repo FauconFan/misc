@@ -109,7 +109,7 @@ public class Game extends ScenePlus
 
 		// Ajoute le sol
 		Group floors = makeFloors();
-		floors.getChildren().add(makeEndCase());
+		floors.getChildren().add(makeSpecialCases());
 		root3D.getChildren().add(floors);
 
 		/* Le plafond est juste un sol décalé vers le haut
@@ -354,17 +354,29 @@ public class Game extends ScenePlus
 	}
 
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
-	private Box makeEndCase()
+	private Group makeSpecialCases()
 	{
-		final Case  ec  = this.maze.getEndCase();
-		final float tc  = Case.getTailleCase();
-		final Box   res = new Box(tc, 0.01f, tc);
+		Group spc = new Group();
 
-		res.setTranslateX(ec.getX() + tc / 2.0);
-		res.setTranslateZ(ec.getY() + tc / 2.0);
-		res.setTranslateY(hauteur / 2 - 1);
-		res.setMaterial(new PhongMaterial(Color.GREEN));
-		return (res);
+		for (Case ec: this.maze.getContentMaze().getSpecialCases())
+		{
+			final float tc  = Case.getTailleCase();
+			final Box   res = new Box(tc, 0.01f, tc);
+
+			res.setTranslateX(ec.getX() + tc / 2.0);
+			res.setTranslateZ(ec.getY() + tc / 2.0);
+			res.setTranslateY(hauteur / 2 - 1);
+			Color color = Color.BLACK;
+			switch (ec.getTypeCase())
+			{
+			case END: color = Color.GREEN; break;
+
+			case TELEPORT: color = Color.PURPLE; break;
+			}
+			res.setMaterial(new PhongMaterial(color));
+			spc.getChildren().add(res);
+		}
+		return (spc);
 	}
 
 	private void makeTransparentWallsOrNot()
