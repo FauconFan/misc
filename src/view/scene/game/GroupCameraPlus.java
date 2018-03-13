@@ -29,8 +29,8 @@ public class GroupCameraPlus extends Group
 
 	public GroupCameraPlus(ParallelCamera c, Translate trFst)
 	{
+		//getTransforms().add(trFst);
 		create(c);
-		getTransforms().add(trFst);
 	}
 
 	public GroupCameraPlus(PerspectiveCamera p)
