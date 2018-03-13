@@ -1,23 +1,16 @@
 package src.view.scene.game;
 
-import java.io.FileInputStream;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.AmbientLight;
 import javafx.scene.Camera;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.PointLight;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.Line;
@@ -27,7 +20,6 @@ import javafx.scene.SubScene;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
-import javafx.stage.Stage;
 
 import src.model.board.LineWall;
 import src.model.Player;
@@ -50,7 +42,10 @@ class MiniMap extends SubScene
 
 		setFill(null);
 
-		groupCameraPlus2D = new GroupCameraPlus(new ParallelCamera(), fstTr);
+		//getTransforms().add(fstTr);
+
+		groupCameraPlus2D = new GroupCameraPlus(new ParallelCamera());
+		groupCameraPlus2D.getTransforms().add(fstTr.createInverse());
 		rootMiniMap.getChildren().add(groupCameraPlus2D);
 		setCamera(groupCameraPlus2D.camera);
 		rootMiniMap.getChildren().add(makeLineWalls(walls));
@@ -67,7 +62,7 @@ class MiniMap extends SubScene
 	{
 		final Group res = new Group();
 
-		res.getTransforms().addAll(fstTr, sc2d);
+		res.getTransforms().addAll(sc2d);
 		AmbientLight am = new AmbientLight(Color.WHITE);
 		res.getChildren().add(am);
 		for (LineWall l: lineWalls)

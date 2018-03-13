@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.ParallelCamera;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.Scene;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
@@ -27,9 +28,8 @@ public class GroupCameraPlus extends Group
 		getTransforms().addAll(tr, rx, ry, rz);
 	}
 
-	public GroupCameraPlus(ParallelCamera c, Translate trFst)
+	public GroupCameraPlus(ParallelCamera c)
 	{
-		//getTransforms().add(trFst);
 		create(c);
 	}
 
