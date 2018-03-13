@@ -17,6 +17,7 @@ public class Player
 	private float horizontalAngle;
 	private float verticalAngle;
 	private boolean hasWin = false;
+	private float speed    = 1;
 
 	public Player(float hitBoxCircle, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
 	{
@@ -71,6 +72,16 @@ public class Player
 	public boolean getHasWin()
 	{
 		return (this.hasWin);
+	}
+
+	public float getSpeed()
+	{
+		return (this.speed);
+	}
+
+	public void setSpeed(float f)
+	{
+		speed = f;
 	}
 
 	public void setPosX(float x)

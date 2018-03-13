@@ -152,13 +152,13 @@ public class Game extends ScenePlus
 			boolean reallyMove = false;
 			switch (key.getCode())
 			{
-			case Q: setTr(-90, change); reallyMove = true; break;
+			case Q: setTr(-90, change * this.maze.getPlayer().getSpeed()); reallyMove = true; break;
 
-			case D: setTr(90, change); reallyMove = true; break;
+			case D: setTr(90, change * this.maze.getPlayer().getSpeed()); reallyMove = true; break;
 
-			case Z: setTr(0, change); reallyMove = true; break;
+			case Z: setTr(0, change * this.maze.getPlayer().getSpeed()); reallyMove = true; break;
 
-			case S: setTr(180, change); reallyMove = true; break;
+			case S: setTr(180, change * this.maze.getPlayer().getSpeed()); reallyMove = true; break;
 
 			// Le déplacement vertical ne demande pour l'instant aucun calcul particulié
 			case F: maze.movePlayer(0, 0, goUp);  break;
@@ -372,6 +372,8 @@ public class Game extends ScenePlus
 			case END: color = Color.GREEN; break;
 
 			case TELEPORT: color = Color.PURPLE; break;
+
+			case SPEED: color = Color.RED; break;
 			}
 			res.setMaterial(new PhongMaterial(color));
 			spc.getChildren().add(res);

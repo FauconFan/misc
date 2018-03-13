@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import src.model.board.Case;
 import src.model.board.LineWall;
+import src.model.board.SpeedCase;
 import src.model.board.TeleportCase;
 import src.model.CollisionsManager;
 import src.model.gen.Algo;
@@ -31,6 +32,9 @@ public class MainMaze
 		this.name    = name;
 		this.p       = p;
 		this.p.goTo(m.getCase(Case.TypeCase.START));
+
+		//m.addSP(new TeleportCase(1, 1, 3, 1));
+		//m.addSP(new SpeedCase(1, 0, 0.5f, false));
 	}
 
 	public MainMaze(Algo algo)
@@ -102,11 +106,21 @@ public class MainMaze
 			{
 				switch (c.getTypeCase())
 				{
-				case END:       this.p.setWin(true);
+				case END:
+					this.p.setWin(true);
 					break;
 
-				case TELEPORT:  this.p.setPosX(((TeleportCase)c).getXDest() + Case.getTailleCase() / 2);
+				case TELEPORT:
+					this.p.setPosX(((TeleportCase)c).getXDest() + Case.getTailleCase() / 2);
 					this.p.setPosY(((TeleportCase)c).getYDest() + Case.getTailleCase() / 2);
+					break;
+
+				case SPEED:
+					if (!((SpeedCase)c).isActivated())
+					{
+						((SpeedCase)c).activate();
+						this.p.setSpeed(((SpeedCase)c).getSpeedModif() + this.p.getSpeed());
+					}
 					break;
 				}
 			}

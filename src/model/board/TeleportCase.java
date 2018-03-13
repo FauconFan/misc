@@ -14,12 +14,12 @@ public class TeleportCase extends Case
 
 	public int getXDest()
 	{
-		return (xDest);
+		return (this.xDest);
 	}
 
 	public int getYDest()
 	{
-		return (yDest);
+		return (this.yDest);
 	}
 
 	public TeleportCase clone()
@@ -29,7 +29,7 @@ public class TeleportCase extends Case
 
 	public String toString()
 	{
-		return ("TeleportCase\n" + super.toString());
+		return ("TeleportCase\n" + super.toString() + "xDest : " + this.xDest + "\nyDest : " + this.yDest);
 	}
 
 	public TypeCase getTypeCase()
