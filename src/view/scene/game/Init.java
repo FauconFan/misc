@@ -49,7 +49,7 @@ import src.view.View;
 public class Init
 {
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
-	public static Group makeSpecialCases(int hauteur, MainMaze maze)
+	public static Group makeSpecialCases(int hauteur, Scale sc, MainMaze maze)
 	{
 		Group spc = new Group();
 
@@ -73,6 +73,7 @@ public class Init
 			res.setMaterial(new PhongMaterial(color));
 			spc.getChildren().add(res);
 		}
+		spc.getTransforms().add(sc);
 		return (spc);
 	}
 

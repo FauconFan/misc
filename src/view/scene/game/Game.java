@@ -109,7 +109,7 @@ public class Game extends ScenePlus
 		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
 
 		// Ajoute le sol
-		root3D.getChildren().add(Init.makeSpecialCases(hauteur, this.maze));
+		root3D.getChildren().add(Init.makeSpecialCases(hauteur, sc, this.maze));
 		root3D.getChildren().add(Init.makeFloors(hauteur, sc, this.maze));
 
 		/* Le plafond est juste un sol décalé vers le haut
