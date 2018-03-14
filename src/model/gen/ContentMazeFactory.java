@@ -11,7 +11,10 @@ import src.model.board.Case;
 import src.model.board.EndCase;
 import src.model.board.LineWall;
 import src.model.board.LineWallUtils;
+import src.model.board.SpeedCase;
 import src.model.board.StartCase;
+import src.model.board.TeleportCase;
+import src.model.board.TimeCase;
 import src.model.ContentMaze;
 import src.model.gen.RectMazeShift;
 import src.model.MazeDimension;
@@ -344,37 +347,64 @@ public class ContentMazeFactory
 		}
 	}
 
+	private Point genRandomPoint(Random ran, ArrayList <RectInMaze> li, ArrayList <Point> oldPoints)
+	{
+		Point      res;
+		RectInMaze rim;
+		int        x;
+		int        y;
+
+		rim = li.get(ran.nextInt(li.size()));
+		x   = ran.nextInt(rim.x2 - rim.x1) + rim.x1;
+		y   = ran.nextInt(rim.y2 - rim.y1) + rim.y1;
+		res = new Point(x, y);
+		if (oldPoints.contains(res))
+		{
+			return (genRandomPoint(ran, li, oldPoints));
+		}
+		oldPoints.add(res);
+		return (res);
+	}
+
 	public void initiateSpecialCases()
 	{
+		ArrayList <Point>      oldPoints;
 		ArrayList <RectInMaze> li;
 		RectInMaze             rim;
 		Random ran;
 		int    x;
 		int    y;
-		Case   c;
+		int    max;
+		Point  tmp;
+		Point  tmp2;
 
-		ran = new Random();
-		li  = this.mazeDim.getListRectMaze();
-		for (int i = 0; i < 2; i++)
+		ran       = new Random();
+		li        = this.mazeDim.getListRectMaze();
+		oldPoints = new ArrayList <>();
+
+		tmp = this.genRandomPoint(ran, li, oldPoints);
+		this.contentSpecialCases.add(new StartCase(tmp.x, tmp.y));
+		tmp = this.genRandomPoint(ran, li, oldPoints);
+		this.contentSpecialCases.add(new EndCase(tmp.x, tmp.y));
+
+		max = 0;
+		if (this.mazeDim.size() >= 200)
 		{
-			rim = li.get(ran.nextInt(li.size()));
-			x   = ran.nextInt(Math.abs(rim.x1 - rim.x2)) + Math.min(rim.x1, rim.x2);
-			y   = ran.nextInt(Math.abs(rim.y1 - rim.y2)) + Math.min(rim.y1, rim.y2);
-			if (i == 0)
-			{
-				c = new StartCase(x, y);
-			}
-			else
-			{
-				if (x == this.contentSpecialCases.get(0).getX() &&
-					y == this.contentSpecialCases.get(0).getY())
-				{
-					i--;
-					continue;
-				}
-				c = new EndCase(x, y);
-			}
-			this.contentSpecialCases.add(c);
+			max = 3;
+		}
+		else if (this.mazeDim.size() >= 100)
+		{
+			max = 2;
+		}
+		for (int i = 0; i < max; i++)
+		{
+			tmp = this.genRandomPoint(ran, li, oldPoints);
+			this.contentSpecialCases.add(new SpeedCase(tmp.x, tmp.y, 0.5f));
+			tmp = this.genRandomPoint(ran, li, oldPoints);
+			this.contentSpecialCases.add(new TimeCase(tmp.x, tmp.y, 1000));
+			tmp  = this.genRandomPoint(ran, li, oldPoints);
+			tmp2 = this.genRandomPoint(ran, li, oldPoints);
+			this.contentSpecialCases.add(new TeleportCase(tmp.x, tmp.y, tmp2.x, tmp2.y));
 		}
 	}
 
@@ -408,5 +438,22 @@ public class ContentMazeFactory
 	public MazeDimension getMazeDimension()
 	{
 		return (this.mazeDim);
+	}
+
+	private static class Point
+	{
+		public int x;
+		public int y;
+
+		public Point(int x, int y)
+		{
+			this.x = x;
+			this.y = y;
+		}
+
+		public boolean isEquals(Point pt)
+		{
+			return (this.x == pt.x && this.y == pt.y);
+		}
 	}
 }

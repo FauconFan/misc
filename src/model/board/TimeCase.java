@@ -3,13 +3,12 @@ package src.model.board;
 public class TimeCase extends Case
 {
 	private long timeMillis;
-	private boolean activated;
+	private boolean activated = false;
 
-	public TimeCase(int x, int y, long val, boolean b)
+	public TimeCase(int x, int y, long val)
 	{
 		super(x, y);
 		this.timeMillis = val;
-		this.activated  = b;
 	}
 
 	public long getTimeMillis()
@@ -19,7 +18,7 @@ public class TimeCase extends Case
 
 	public TimeCase clone()
 	{
-		return (new TimeCase(this.x, this.y, this.timeMillis, this.activated));
+		return (new TimeCase(this.x, this.y, this.timeMillis));
 	}
 
 	public boolean isActivated()

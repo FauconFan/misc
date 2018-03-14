@@ -3,13 +3,12 @@ package src.model.board;
 public class SpeedCase extends Case
 {
 	private float speedModif;
-	private boolean activated;
+	private boolean activated = false;
 
-	public SpeedCase(int x, int y, float val, boolean b)
+	public SpeedCase(int x, int y, float val)
 	{
 		super(x, y);
 		this.speedModif = val;
-		this.activated  = b;
 	}
 
 	public float getSpeedModif()
@@ -19,7 +18,7 @@ public class SpeedCase extends Case
 
 	public SpeedCase clone()
 	{
-		return (new SpeedCase(this.x, this.y, this.speedModif, this.activated));
+		return (new SpeedCase(this.x, this.y, this.speedModif));
 	}
 
 	public boolean isActivated()
