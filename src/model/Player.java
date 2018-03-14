@@ -1,5 +1,6 @@
 package src.model;
 
+import java.util.Date;
 import src.model.board.Case;
 
 /**
@@ -18,6 +19,7 @@ public class Player
 	private float verticalAngle;
 	private boolean hasWin = false;
 	private float speed    = 1;
+	private Date time;
 
 	public Player(float hitBoxCircle, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
 	{
@@ -27,6 +29,7 @@ public class Player
 		this.posZ            = posZ;
 		this.horizontalAngle = horizontalAngle;
 		this.verticalAngle   = verticalAngle;
+		this.time            = new Date(System.currentTimeMillis());
 	}
 
 	public boolean getGhostMode()
@@ -77,6 +80,11 @@ public class Player
 	public float getSpeed()
 	{
 		return (this.speed);
+	}
+
+	public Date getDate()
+	{
+		return (this.time);
 	}
 
 	public void setSpeed(float f)

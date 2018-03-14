@@ -1,11 +1,13 @@
 package src.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import src.model.board.Case;
 import src.model.board.LineWall;
 import src.model.board.SpeedCase;
 import src.model.board.TeleportCase;
+import src.model.board.TimeCase;
 import src.model.CollisionsManager;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
@@ -35,6 +37,7 @@ public class MainMaze
 
 		//m.addSP(new TeleportCase(1, 1, 3, 1));
 		//m.addSP(new SpeedCase(1, 0, 0.5f, false));
+		//m.addSP(new TimeCase(1, 2, 100, false));
 	}
 
 	public MainMaze(Algo algo)
@@ -120,6 +123,15 @@ public class MainMaze
 					{
 						((SpeedCase)c).activate();
 						this.p.setSpeed(((SpeedCase)c).getSpeedModif() + this.p.getSpeed());
+					}
+					break;
+
+				case TIME:
+					if (!((TimeCase)c).isActivated())
+					{
+						((TimeCase)c).activate();
+						Date d = this.p.getDate();
+						d.setTime(d.getTime() + ((TimeCase)c).getTimeMillis());
 					}
 					break;
 				}

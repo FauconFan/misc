@@ -374,6 +374,8 @@ public class Game extends ScenePlus
 			case TELEPORT: color = Color.PURPLE; break;
 
 			case SPEED: color = Color.RED; break;
+
+			case TIME: color = Color.YELLOW; break;
 			}
 			res.setMaterial(new PhongMaterial(color));
 			spc.getChildren().add(res);
