@@ -42,8 +42,6 @@ class MiniMap extends SubScene
 
 		setFill(null);
 
-		//getTransforms().add(fstTr);
-
 		groupCameraPlus2D = new GroupCameraPlus(new ParallelCamera());
 		groupCameraPlus2D.getTransforms().add(fstTr.createInverse());
 		rootMiniMap.getChildren().add(groupCameraPlus2D);

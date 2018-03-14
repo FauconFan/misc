@@ -1,6 +1,7 @@
 package src.view.scene.game;
 
 import java.io.FileInputStream;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.AmbientLight;
@@ -108,9 +109,8 @@ public class Game extends ScenePlus
 		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
 
 		// Ajoute le sol
-		Group floors = makeFloors();
-		floors.getChildren().add(makeSpecialCases());
-		root3D.getChildren().add(floors);
+		root3D.getChildren().add(Init.makeSpecialCases(hauteur, this.maze));
+		root3D.getChildren().add(Init.makeFloors(hauteur, sc, this.maze));
 
 		/* Le plafond est juste un sol décalé vers le haut
 		 * final Group roof = makeFloors();
@@ -118,7 +118,7 @@ public class Game extends ScenePlus
 		 * root.getChildren().add(roof);*/
 
 		// Ajoute les murs
-		walls = makeWalls();
+		walls = Init.makeWalls(hauteur, sc, this.maze);
 		root3D.getChildren().add(walls);
 		// Ajoute la caméra
 		root3D.getChildren().add(groupCameraPlus3D);
@@ -263,122 +263,9 @@ public class Game extends ScenePlus
 		}
 	}
 
-	/**
-	 * Dessine les murs du Maze
-	 * @return Le groupe contenant les murs
-	 */
-	private Group makeWalls()
-	{
-		Material mat;
-
-		try{
-			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"), 400, 400, true, false);
-			Image nrm = null;
-			mat = new PhongMaterial(Color.WHITE, img, null, nrm, null);
-		}
-		catch (Exception e) {
-			mat = new PhongMaterial(Color.GREEN);
-		}
-		Group walls = new Group();
-
-		// On scale les murs
-		walls.getTransforms().add(sc);
-		final LineWall[] lineWalls = maze.getContentMaze().getLineWalls();
-		final float      delta     = 0.001f;
-		for (LineWall l: lineWalls)
-		{
-			Box w = new Box();
-
-			Consumer <Float> setEpais;
-			Consumer <Float> setLarg;
-
-			float  largeur;
-			double trX;
-			double trZ;
-			if (!l.isHorizontal())                                                // Mur "vertical" dans le plan
-			{
-				largeur  = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
-				setLarg  = w::setDepth;
-				setEpais = w::setWidth;
-				trX      = l.getX1() + l.getEpaisseur() / 2.0 - delta;
-				trZ      = l.getY1() + largeur / 2.0;
-			}
-			else     // Mur horizontal
-			{
-				largeur  = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
-				setLarg  = w::setWidth;
-				setEpais = w::setDepth;
-				trX      = l.getX1() + largeur / 2.0;
-				trZ      = l.getY1() + l.getEpaisseur() / 2.0 - delta;
-			}
-
-			w.setHeight(hauteur);
-			setEpais.accept(l.getEpaisseur());
-			setLarg.accept(largeur);
-			w.setTranslateX(trX);
-			w.setTranslateZ(trZ);
-
-			w.setMaterial(mat);
-			walls.getChildren().add(w);
-		}
-		return (walls);
-	}
-
-	/**
-	 * Dessine le sol
-	 * @return Un groupe contenant le sol
-	 */
-	public Group makeFloors()
-	{
-		final Group floors = new Group();
-
-		floors.getTransforms().add(sc);
-
-		for (MazeDimension.RectInMaze md: maze.getMazeDimension().list_rectmaze)
-		{
-			final int w = md.x2 - md.x1;
-			final int h = md.y2 - md.y1;
-			Box       f = new Box(w, 0.5, h);
-			f.setTranslateX(md.x1 + w / 2.0);
-			f.setTranslateZ(md.y1 + h / 2.0);
-			f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
-			f.setTranslateY(hauteur / 2.0);
-			floors.getChildren().add(f);
-		}
-		return (floors);
-	}
-
 	public MainMaze getMaze()
 	{
 		return (this.maze);
-	}
-
-	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
-	private Group makeSpecialCases()
-	{
-		Group spc = new Group();
-
-		for (Case ec: this.maze.getContentMaze().getSpecialCases())
-		{
-			final float tc  = Case.getTailleCase();
-			final Box   res = new Box(tc, 0.01f, tc);
-
-			res.setTranslateX(ec.getX() + tc / 2.0);
-			res.setTranslateZ(ec.getY() + tc / 2.0);
-			res.setTranslateY(hauteur / 2 - 1);
-			Color color = Color.BLACK;
-			switch (ec.getTypeCase())
-			{
-			case END: color = Color.GREEN; break;
-
-			case TELEPORT: color = Color.PURPLE; break;
-
-			case SPEED: color = Color.RED; break;
-			}
-			res.setMaterial(new PhongMaterial(color));
-			spc.getChildren().add(res);
-		}
-		return (spc);
 	}
 
 	private void makeTransparentWallsOrNot()
@@ -395,6 +282,13 @@ public class Game extends ScenePlus
 				ph.setDiffuseColor(Color.WHITE);
 			}
 			((Box)n).setMaterial(ph);
+		}
+	}
+
+	private class Timer extends AnimationTimer
+	{
+		public void handle(long l)
+		{
 		}
 	}
 }
