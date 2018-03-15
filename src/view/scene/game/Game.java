@@ -15,7 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
@@ -36,7 +35,6 @@ import javafx.stage.Screen;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
@@ -47,7 +45,6 @@ import javafx.scene.text.TextAlignment;
 import java.util.function.Consumer;
 
 import src.model.board.Case;
-import src.model.board.LineWall;
 import src.model.ContentMaze;
 import src.model.MainMaze;
 import src.model.MazeDimension;

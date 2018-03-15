@@ -1,8 +1,6 @@
 package src.view.scene.game;
 
-import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
-import javafx.scene.AmbientLight;
 import javafx.scene.Camera;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -11,10 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.PointLight;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.Line;
