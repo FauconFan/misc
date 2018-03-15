@@ -36,6 +36,7 @@ import javafx.stage.Screen;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
@@ -104,8 +105,9 @@ public class Game extends ScenePlus
 		SubScene scene3D = new SubScene(root3D, screenWidth, screenHeight, true, null);
 		SubScene scene2D = new SubScene(root2D, screenWidth, screenHeight, true, null);
 		sceneMiniMap = new MiniMap(400, 400, new Scale(sc.getX(), sc.getZ()), m.getContentMaze().getLineWalls());
+		sceneMiniMap.setVisible(false); // On cache la minimap
 		SubScene cross = sceneMiniMap.new Cross();
-
+		cross.setVisible(false);
 		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
 
 		// Ajoute le sol
@@ -128,7 +130,6 @@ public class Game extends ScenePlus
 
 		// Met le joueur sur la startCase
 		updatePlayer(false);
-
 
 		//Greetings label
 		System.out.println(screenOffset);
@@ -182,6 +183,8 @@ public class Game extends ScenePlus
 			case T: makeTransparentWallsOrNot(); break;
 
 			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\nBlue - teleportates you in a random position.\nPress ENTER to close"); break;
+
+			case M: sceneMiniMap.setVisible(!sceneMiniMap.isVisible()); cross.setVisible(!cross.isVisible()); break;
 			}
 
 			updatePlayer(reallyMove);
