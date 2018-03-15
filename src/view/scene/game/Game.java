@@ -81,8 +81,6 @@ public class Game extends ScenePlus
 	private final float goUp   = 1f;
 	private final int rot      = 5; // En degré
 
-	private final Group walls;
-
 	private final StackPane layout;
 	private final GroupCameraPlus groupCameraPlus3D;
 	private final MiniMap sceneMiniMap;
@@ -120,7 +118,7 @@ public class Game extends ScenePlus
 		 * root.getChildren().add(roof);*/
 
 		// Ajoute les murs
-		walls = Init.makeWalls(hauteur, sc, this.maze);
+		Group walls = Init.makeWalls(hauteur, sc, this.maze);
 		root3D.getChildren().add(walls);
 		// Ajoute la caméra
 		root3D.getChildren().add(groupCameraPlus3D);
@@ -180,7 +178,7 @@ public class Game extends ScenePlus
 
 			case G: this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode()); break;
 
-			case T: makeTransparentWallsOrNot(); break;
+			case T: walls.setVisible(!walls.isVisible()); break;
 
 			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\nBlue - teleportates you in a random position.\nPress ENTER to close"); break;
 
@@ -269,23 +267,6 @@ public class Game extends ScenePlus
 	public MainMaze getMaze()
 	{
 		return (this.maze);
-	}
-
-	private void makeTransparentWallsOrNot()
-	{
-		for (Node n : walls.getChildren())
-		{
-			PhongMaterial ph = (PhongMaterial)((Box)n).getMaterial();
-			if (ph.getDiffuseColor() == Color.WHITE)
-			{
-				ph.setDiffuseColor(new Color(1, 1, 1, 0.25));
-			}
-			else
-			{
-				ph.setDiffuseColor(Color.WHITE);
-			}
-			((Box)n).setMaterial(ph);
-		}
 	}
 
 	private class Timer extends AnimationTimer
