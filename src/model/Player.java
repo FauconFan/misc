@@ -205,8 +205,8 @@ public class Player
 	{
 		final double r1 = Math.toRadians(horizontalAngle + diff);
 
-		final float dx = (float)(Math.sin(r1) * change);
-		final float dy = (float)(Math.cos(r1) * change);
+		final float dx = (float)(Math.sin(r1) * change * speed);
+		final float dy = (float)(Math.cos(r1) * change * speed);
 
 		if (ghostMode)
 		{
