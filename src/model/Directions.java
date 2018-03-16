@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public class Directions
 {
-	public enum Dir { north, east, west, south, left, right, up, down };
+	public enum Dir { north, east, west, south, goUp, goDown, left, right, up, down };
 
 	private HashSet <Dir> actualsDirs = new HashSet <Dir>();
 

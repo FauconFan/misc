@@ -180,6 +180,18 @@ public class Player
 			case up: verticalAngle += rot; break;
 
 			case down: verticalAngle -= rot; break;
+
+			case goUp: if (ghostMode)
+				{
+					posZ += change * 10;
+				}
+				break;
+
+			case goDown: if (ghostMode)
+				{
+					posZ -= change * 10;
+				}
+				break;
 			}
 		}
 	}
@@ -195,13 +207,11 @@ public class Player
 
 		final float dx = (float)(Math.sin(r1) * change);
 		final float dy = (float)(Math.cos(r1) * change);
-		final float dz = 0;
 
 		if (ghostMode)
 		{
 			posX += dx;
 			posY += dy;
-			posZ += dz;
 		}
 		else
 		{

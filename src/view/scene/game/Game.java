@@ -153,11 +153,6 @@ public class Game extends ScenePlus
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			switch (key.getCode())
 			{
-			// Le déplacement vertical ne demande pour l'instant aucun calcul particulier
-			case F: maze.getPlayer().addPosZ(goUp);  break;
-
-			case R: maze.getPlayer().addPosZ(-goUp);  break;
-
 			case ESCAPE: v.changeScene(new Pause(v, this)); timer.stop(); break;
 
 			case ENTER: msg.setText(""); break;
@@ -205,6 +200,10 @@ public class Game extends ScenePlus
 			case Z: cons.accept(Directions.Dir.north); break;
 
 			case S: cons.accept(Directions.Dir.south); break;
+
+			case F: cons.accept(Directions.Dir.goUp); break;
+
+			case R: cons.accept(Directions.Dir.goDown); break;
 
 			case LEFT: cons.accept(Directions.Dir.left); break;
 
