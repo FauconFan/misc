@@ -186,6 +186,31 @@ public class LineWall implements Cloneable
 		return (wall);
 	}
 
+	public static LineWall[] breakWallsIntoSimpleOnes(LineWall[] lws)
+	{
+		ArrayList <LineWall> res;
+
+		res = new ArrayList <>();
+		for (LineWall lw : lws)
+		{
+			if (lw.isHorizontal())
+			{
+				for (int j = lw.getX1(); j < lw.getX2(); j++)
+				{
+					res.add(new LineWall(j, lw.getY1(), j + 1, lw.getY2(), lw.getEpaisseur()));
+				}
+			}
+			else
+			{
+				for (int i = lw.getY1(); i < lw.getY2(); i++)
+				{
+					res.add(new LineWall(lw.getX1(), i, lw.getX2(), i + 1, lw.getEpaisseur()));
+				}
+			}
+		}
+		return (res.toArray(new LineWall[0]));
+	}
+
 	public LineWall clone()
 	{
 		return (new LineWall(this.getX1(), this.getY1(), this.getX2(), this.getY2(), this.getEpaisseur()));
