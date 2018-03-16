@@ -20,7 +20,7 @@ import java.io.File;
 import src.controller.Controller;
 import src.model.gen.Algo;
 
-import src.view.scene.Game;
+import src.view.scene.game.Game;
 import src.view.scene.Menus;
 
 public class View

@@ -1,5 +1,6 @@
 package src.model;
 
+import java.util.Date;
 import src.model.board.Case;
 
 /**
@@ -16,6 +17,9 @@ public class Player
 	private float posZ;
 	private float horizontalAngle;
 	private float verticalAngle;
+	private boolean hasWin = false;
+	private float speed    = 1;
+	private Date time;
 
 	public Player(float hitBoxCircle, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
 	{
@@ -25,6 +29,7 @@ public class Player
 		this.posZ            = posZ;
 		this.horizontalAngle = horizontalAngle;
 		this.verticalAngle   = verticalAngle;
+		this.time            = new Date(System.currentTimeMillis());
 	}
 
 	public boolean getGhostMode()
@@ -67,6 +72,26 @@ public class Player
 		return (this.verticalAngle);
 	}
 
+	public boolean getHasWin()
+	{
+		return (this.hasWin);
+	}
+
+	public float getSpeed()
+	{
+		return (this.speed);
+	}
+
+	public Date getDate()
+	{
+		return (this.time);
+	}
+
+	public void setSpeed(float f)
+	{
+		speed = f;
+	}
+
 	public void setPosX(float x)
 	{
 		posX = x;
@@ -82,6 +107,11 @@ public class Player
 		posZ = z;
 	}
 
+	public void setWin(boolean b)
+	{
+		hasWin = b;
+	}
+
 	public void addHorizontalAngle(float x)
 	{
 		this.horizontalAngle += x;
@@ -92,10 +122,15 @@ public class Player
 		this.verticalAngle += y;
 	}
 
-	public boolean goTo(Case.TypeCase t, ContentMaze cm)
+	public boolean playerInCase(Case c)
 	{
-		Case c = cm.getCase(t);
+		float diff = Case.getTailleCase() / 2;
 
+		return (Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff);
+	}
+
+	public boolean goTo(Case c)
+	{
 		if (c != null)
 		{
 			posX = c.getX() + Case.getTailleCase() / 2;
@@ -106,20 +141,6 @@ public class Player
 		{
 			return (false);
 		}
-	}
-
-	public boolean hasWin(Case[] sc)
-	{
-		float diff = Case.getTailleCase() / 2;
-
-		for (Case c:sc)
-		{
-			if (c.getTypeCase() == Case.TypeCase.END && Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff)
-			{
-				return (true);
-			}
-		}
-		return (false);
 	}
 
 	public String toString()

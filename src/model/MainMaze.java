@@ -1,9 +1,13 @@
 package src.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import src.model.board.Case;
 import src.model.board.LineWall;
+import src.model.board.SpeedCase;
+import src.model.board.TeleportCase;
+import src.model.board.TimeCase;
 import src.model.CollisionsManager;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
@@ -29,8 +33,11 @@ public class MainMaze
 		this.mazeDim = mz;
 		this.name    = name;
 		this.p       = p;
+		this.p.goTo(m.getCase(Case.TypeCase.START));
 
-		p.goTo(Case.TypeCase.START, m);
+		//m.addSP(new TeleportCase(1, 1, 3, 1));
+		//m.addSP(new SpeedCase(1, 0, 0.5f, false));
+		//m.addSP(new TimeCase(1, 2, 100, false));
 	}
 
 	public MainMaze(Algo algo)
@@ -64,8 +71,8 @@ public class MainMaze
 	 */
 	private void applyMove(FloatVector v)
 	{
-		p.setPosX(p.getPosX() + v.getX());
-		p.setPosY(p.getPosY() + v.getY());
+		this.p.setPosX(p.getPosX() + v.getX());
+		this.p.setPosY(p.getPosY() + v.getY());
 	}
 
 	/**
@@ -76,21 +83,58 @@ public class MainMaze
 	 */
 	public void movePlayer(float dx, float dy, float dz)
 	{
-		if (p.getGhostMode())
+		if (this.p.getGhostMode())
 		{
-			p.setPosZ(p.getPosZ() + dz);
-			p.setPosX(p.getPosX() + dx);
-			p.setPosY(p.getPosY() + dy);
+			this.p.setPosZ(this.p.getPosZ() + dz);
+			this.p.setPosX(this.p.getPosX() + dx);
+			this.p.setPosY(this.p.getPosY() + dy);
 		}
-
 		else
 		{
-			CollisionsManager colManage = new CollisionsManager(m.getLineWalls(), p, new FloatVector(dx, dy));
+			CollisionsManager colManage = new CollisionsManager(this.m.getLineWalls(), this.p, new FloatVector(dx, dy));
 			while (!colManage.getNextMove().isNul())
 			{
 				colManage.updateMove();
 				this.applyMove(colManage.getNextMove());
 				colManage.next();
+			}
+		}
+	}
+
+	public void actionCase()
+	{
+		for (Case c : m.getSpecialCases())
+		{
+			if (this.p.playerInCase(c))
+			{
+				switch (c.getTypeCase())
+				{
+				case END:
+					this.p.setWin(true);
+					break;
+
+				case TELEPORT:
+					this.p.setPosX(((TeleportCase)c).getXDest() + Case.getTailleCase() / 2);
+					this.p.setPosY(((TeleportCase)c).getYDest() + Case.getTailleCase() / 2);
+					break;
+
+				case SPEED:
+					if (!((SpeedCase)c).isActivated())
+					{
+						((SpeedCase)c).activate();
+						this.p.setSpeed(((SpeedCase)c).getSpeedModif() + this.p.getSpeed());
+					}
+					break;
+
+				case TIME:
+					if (!((TimeCase)c).isActivated())
+					{
+						((TimeCase)c).activate();
+						Date d = this.p.getDate();
+						d.setTime(d.getTime() + ((TimeCase)c).getTimeMillis());
+					}
+					break;
+				}
 			}
 		}
 	}

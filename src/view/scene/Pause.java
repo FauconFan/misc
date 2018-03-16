@@ -22,9 +22,10 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import src.view.Menu;
+import src.view.scene.game.Game;
 import src.view.View;
 
-class Pause extends ScenePlus
+public class Pause extends ScenePlus
 {
 	private Game previous;
 
