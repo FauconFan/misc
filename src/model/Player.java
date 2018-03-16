@@ -24,8 +24,8 @@ public class Player
 	private Date time;
 
 	//Constante de déplacement
-	public final float change = 0.01f;
-	public final int rot      = 2; // En degré
+	public final float change = 0.025f;
+	public final float rot    = 1.5f;    // En degré
 
 	public final Directions dirs = new Directions();
 
@@ -161,7 +161,7 @@ public class Player
 	 */
 	public void update(LineWall[] lw)
 	{
-		for (Directions.Dir d: dirs.getArrayList())
+		for (Directions.Dir d: dirs.getHashSet())
 		{
 			switch (d)
 			{

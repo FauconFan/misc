@@ -82,6 +82,8 @@ public class Game extends ScenePlus
 	private final GroupCameraPlus groupCameraPlus3D;
 	private final MiniMap sceneMiniMap;
 
+	public final Timer timer;
+
 	public Game(View v, MainMaze m)
 	{
 		super(new StackPane(), screenWidth, screenHeight, true, v);
@@ -143,7 +145,8 @@ public class Game extends ScenePlus
 		//Ajout des subscenes
 		layout.getChildren().addAll(scene3D, scene2D, sceneMiniMap, cross);
 
-		Timer timer = new Timer();
+		// Initialise le timer
+		timer = new Timer();
 		timer.start();
 
 		//Key controller
@@ -155,7 +158,7 @@ public class Game extends ScenePlus
 
 			case R: maze.getPlayer().addPosZ(-goUp);  break;
 
-			case ESCAPE: v.changeScene(new Pause(v, this)); break;
+			case ESCAPE: v.changeScene(new Pause(v, this)); timer.stop(); break;
 
 			case ENTER: msg.setText(""); break;
 
@@ -265,6 +268,11 @@ public class Game extends ScenePlus
 	public MainMaze getMaze()
 	{
 		return (this.maze);
+	}
+
+	public void startTimer()
+	{
+		timer.start();
 	}
 
 	private class Timer extends AnimationTimer

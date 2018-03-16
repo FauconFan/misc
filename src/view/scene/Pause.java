@@ -44,6 +44,7 @@ public class Pause extends ScenePlus
 
 			buttonUnPause.setOnAction(event->{
 				v.changeScene(previous);
+				previous.startTimer();
 			});
 
 			ToggleButton buttonGhostMode = new ToggleButton("Ghost Mode");

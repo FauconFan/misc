@@ -1,14 +1,14 @@
 package src.model;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Directions
 {
 	public enum Dir { north, east, west, south, left, right, up, down };
 
-	private ArrayList <Dir> actualsDirs = new ArrayList <Dir>();
+	private HashSet <Dir> actualsDirs = new HashSet <Dir>();
 
-	public ArrayList <Dir> getArrayList()
+	public HashSet <Dir> getHashSet()
 	{
 		return (actualsDirs);
 	}
