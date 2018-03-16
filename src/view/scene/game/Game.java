@@ -124,7 +124,7 @@ public class Game extends ScenePlus
 		scene3D.setCamera(groupCameraPlus3D.camera);
 
 		// Met le joueur sur la startCase
-		updatePlayer(false);
+		updatePlayer();
 
 		//Greetings label
 		System.out.println(screenOffset);
@@ -148,7 +148,6 @@ public class Game extends ScenePlus
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
-			boolean reallyMove = false;
 			switch (key.getCode())
 			{
 			// Le déplacement vertical ne demande pour l'instant aucun calcul particulier
@@ -169,7 +168,7 @@ public class Game extends ScenePlus
 			case M: sceneMiniMap.setVisible(!sceneMiniMap.isVisible()); cross.setVisible(!cross.isVisible()); break;
 			}
 
-			updatePlayer(reallyMove);
+			updatePlayer();
 		});
 
 		//Mouse controller
@@ -188,7 +187,7 @@ public class Game extends ScenePlus
 			}
 			maze.getPlayer().addHorizontalAngle((float)(dX * rotateConst));
 			maze.getPlayer().addVerticalAngle((float)(-1 * dY * rotateConst));
-			updatePlayer(false);
+			updatePlayer();
 		});
 
 		BiConsumer <? super KeyEvent, Boolean> onkey = (key, bool)->{
@@ -236,9 +235,8 @@ public class Game extends ScenePlus
 
 	/**
 	 * Update the camera position according to the player
-	 * @param b Si le joueur a vraiment bougé
 	 */
-	private void updatePlayer(boolean b)
+	private void updatePlayer()
 	{
 		final Player p = maze.getPlayer();
 
@@ -249,11 +247,8 @@ public class Game extends ScenePlus
 		groupCameraPlus3D.ry.setAngle(p.getVerticalAngle());
 
 		sceneMiniMap.updateCamera(p);
-		if (b)
-		{
-			maze.actionCase();
-			checkWin();
-		}
+		maze.actionCase();
+		checkWin();
 	}
 
 	/**
@@ -277,7 +272,7 @@ public class Game extends ScenePlus
 		public void handle(long l)
 		{
 			maze.updatePlayer();
-			updatePlayer(true);
+			updatePlayer();
 		}
 	}
 }

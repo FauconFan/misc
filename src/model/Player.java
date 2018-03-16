@@ -137,6 +137,10 @@ public class Player
 		return (Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff);
 	}
 
+	/**
+	 * Transport the player to the specified case
+	 * @param c The case
+	 */
 	public boolean goTo(Case c)
 	{
 		if (c != null)
@@ -151,6 +155,10 @@ public class Player
 		}
 	}
 
+	/**
+	 * Update the player position with the collisions with walls
+	 * @param lw the walls
+	 */
 	public void update(LineWall[] lw)
 	{
 		for (Directions.Dir d: dirs.getArrayList())
@@ -176,6 +184,11 @@ public class Player
 		}
 	}
 
+	/**
+	 * Really move the player
+	 * @param lw the walls
+	 * @param diff The difference of orientation
+	 */
 	private void reallyMove(LineWall[] lw, int diff)
 	{
 		final double r1 = Math.toRadians(horizontalAngle + diff);
