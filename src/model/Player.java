@@ -25,7 +25,7 @@ public class Player
 
 	//Constante de déplacement
 	public final float change = 0.025f;
-	public final float rot    = 1.5f;    // En degré
+	public final float rot    = 2f;    // En degré
 
 	public final Directions dirs = new Directions();
 

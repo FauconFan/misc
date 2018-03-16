@@ -117,7 +117,7 @@ public class Init
 
 		// On scale les murs
 		walls.getTransforms().add(sc);
-		final LineWall[] lineWalls = maze.getContentMaze().getLineWalls();
+		final LineWall[] lineWalls = LineWall.breakWallsIntoSimpleOnes(maze.getContentMaze().getLineWalls());
 		final float      delta     = 0.001f;
 		for (LineWall l: lineWalls)
 		{
