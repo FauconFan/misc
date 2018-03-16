@@ -2,6 +2,8 @@ package src.model;
 
 import java.util.Date;
 import src.model.board.Case;
+import src.model.board.LineWall;
+import src.utils.FloatVector;
 
 /**
  * Player est la classe qui représente le joueur dans le labyrinthe.
@@ -20,6 +22,12 @@ public class Player
 	private boolean hasWin = false;
 	private float speed    = 1;
 	private Date time;
+
+	//Constante de déplacement
+	public final float change = 0.01f;
+	public final int rot      = 2; // En degré
+
+	public final Directions dirs = new Directions();
 
 	public Player(float hitBoxCircle, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
 	{
@@ -102,9 +110,9 @@ public class Player
 		posY = y;
 	}
 
-	public void setPosZ(float z)
+	public void addPosZ(float z)
 	{
-		posZ = z;
+		posZ += z;
 	}
 
 	public void setWin(boolean b)
@@ -141,6 +149,67 @@ public class Player
 		{
 			return (false);
 		}
+	}
+
+	public void update(LineWall[] lw)
+	{
+		for (Directions.Dir d: dirs.getArrayList())
+		{
+			switch (d)
+			{
+			case north: reallyMove(lw, 0); break;
+
+			case east: reallyMove(lw, 90); break;
+
+			case south: reallyMove(lw, 180); break;
+
+			case west: reallyMove(lw, -90); break;
+
+			case left: horizontalAngle -= rot; break;
+
+			case right: horizontalAngle += rot; break;
+
+			case up: verticalAngle += rot; break;
+
+			case down: verticalAngle -= rot; break;
+			}
+		}
+	}
+
+	private void reallyMove(LineWall[] lw, int diff)
+	{
+		final double r1 = Math.toRadians(horizontalAngle + diff);
+
+		final float dx = (float)(Math.sin(r1) * change);
+		final float dy = (float)(Math.cos(r1) * change);
+		final float dz = 0;
+
+		if (ghostMode)
+		{
+			posX += dx;
+			posY += dy;
+			posZ += dz;
+		}
+		else
+		{
+			CollisionsManager colManage = new CollisionsManager(lw, this, new FloatVector(dx, dy));
+			while (!colManage.getNextMove().isNul())
+			{
+				colManage.updateMove();
+				applyMove(colManage.getNextMove());
+				colManage.next();
+			}
+		}
+	}
+
+	/**
+	 * Déplace le joueur à la position (x + v.getX(), y + v.getY())
+	 * @param v Vecteur de déplacement
+	 */
+	public void applyMove(FloatVector v)
+	{
+		posX += v.getX();
+		posY += v.getY();
 	}
 
 	public String toString()

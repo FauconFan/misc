@@ -34,10 +34,6 @@ public class MainMaze
 		this.name    = name;
 		this.p       = p;
 		this.p.goTo(m.getCase(Case.TypeCase.START));
-
-		//m.addSP(new TeleportCase(1, 1, 3, 1));
-		//m.addSP(new SpeedCase(1, 0, 0.5f, false));
-		//m.addSP(new TimeCase(1, 2, 100, false));
 	}
 
 	public MainMaze(Algo algo)
@@ -66,39 +62,11 @@ public class MainMaze
 	}
 
 	/**
-	 * Déplace le joueur à la position (x + v.getX(), y + v.getY())
-	 * @param v Vecteur de déplacement
-	 */
-	private void applyMove(FloatVector v)
-	{
-		this.p.setPosX(p.getPosX() + v.getX());
-		this.p.setPosY(p.getPosY() + v.getY());
-	}
-
-	/**
 	 * Déplace le joueur dans le labyrinthe, si le joueur rencontre un mur, il longera ce mur.
-	 * @param dx Deplacement horizontal du joueur.
-	 * @param dy Deplacement vertical du joueur.
-	 * @param dz Deplacement selon la troisième coordonnées (ne sera pas pris en compte dans le calcul des collisions)
 	 */
-	public void movePlayer(float dx, float dy, float dz)
+	public void updatePlayer()
 	{
-		if (this.p.getGhostMode())
-		{
-			this.p.setPosZ(this.p.getPosZ() + dz);
-			this.p.setPosX(this.p.getPosX() + dx);
-			this.p.setPosY(this.p.getPosY() + dy);
-		}
-		else
-		{
-			CollisionsManager colManage = new CollisionsManager(this.m.getLineWalls(), this.p, new FloatVector(dx, dy));
-			while (!colManage.getNextMove().isNul())
-			{
-				colManage.updateMove();
-				this.applyMove(colManage.getNextMove());
-				colManage.next();
-			}
-		}
+		this.p.update(this.m.getLineWalls());
 	}
 
 	public void actionCase()

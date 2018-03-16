@@ -42,10 +42,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import src.model.board.Case;
 import src.model.ContentMaze;
+import src.model.Directions;
 import src.model.MainMaze;
 import src.model.MazeDimension;
 import src.model.Player;
@@ -74,9 +76,7 @@ public class Game extends ScenePlus
 	private final Scale sc = new Scale(30, 1, 30);
 
 	// Constantes de déplacements
-	private final float change = 0.1f;
-	private final float goUp   = 1f;
-	private final int rot      = 5; // En degré
+	private final float goUp = 1f;
 
 	private final StackPane layout;
 	private final GroupCameraPlus groupCameraPlus3D;
@@ -143,31 +143,18 @@ public class Game extends ScenePlus
 		//Ajout des subscenes
 		layout.getChildren().addAll(scene3D, scene2D, sceneMiniMap, cross);
 
+		Timer timer = new Timer();
+		timer.start();
+
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			boolean reallyMove = false;
 			switch (key.getCode())
 			{
-			case Q: setTr(-90, change * this.maze.getPlayer().getSpeed()); reallyMove = true; break;
+			// Le déplacement vertical ne demande pour l'instant aucun calcul particulier
+			case F: maze.getPlayer().addPosZ(goUp);  break;
 
-			case D: setTr(90, change * this.maze.getPlayer().getSpeed()); reallyMove = true; break;
-
-			case Z: setTr(0, change * this.maze.getPlayer().getSpeed()); reallyMove = true; break;
-
-			case S: setTr(180, change * this.maze.getPlayer().getSpeed()); reallyMove = true; break;
-
-			// Le déplacement vertical ne demande pour l'instant aucun calcul particulié
-			case F: maze.movePlayer(0, 0, goUp);  break;
-
-			case R: maze.movePlayer(0, 0, -1 * goUp); break;
-
-			case LEFT: maze.getPlayer().addHorizontalAngle(-1 * rot); break;
-
-			case RIGHT: maze.getPlayer().addHorizontalAngle(1 * rot); break;
-
-			case UP: maze.getPlayer().addVerticalAngle(1 * rot); break;
-
-			case DOWN: maze.getPlayer().addVerticalAngle(-1 * rot); break;
+			case R: maze.getPlayer().addPosZ(-goUp);  break;
 
 			case ESCAPE: v.changeScene(new Pause(v, this)); break;
 
@@ -203,6 +190,37 @@ public class Game extends ScenePlus
 			maze.getPlayer().addVerticalAngle((float)(-1 * dY * rotateConst));
 			updatePlayer(false);
 		});
+
+		BiConsumer <? super KeyEvent, Boolean> onkey = (key, bool)->{
+			final Player p = maze.getPlayer();
+			final Consumer <Directions.Dir> cons = (bool) ? (p.dirs::add) : (p.dirs::remove);
+			switch (key.getCode())
+			{
+			case Q: cons.accept(Directions.Dir.west); break;
+
+			case D: cons.accept(Directions.Dir.east); break;
+
+			case Z: cons.accept(Directions.Dir.north); break;
+
+			case S: cons.accept(Directions.Dir.south); break;
+
+			case LEFT: cons.accept(Directions.Dir.left); break;
+
+			case RIGHT: cons.accept(Directions.Dir.right); break;
+
+			case UP: cons.accept(Directions.Dir.up); break;
+
+			case DOWN: cons.accept(Directions.Dir.down); break;
+			}
+		};
+
+		setOnKeyPressed((key)->{
+			onkey.accept(key, true);
+		});
+
+		setOnKeyReleased((key)->{
+			onkey.accept(key, false);
+		});
 	}
 
 	//Place le curseur au centre de l'ecran
@@ -214,18 +232,6 @@ public class Game extends ScenePlus
 		}catch (AWTException e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Set the translate
-	 * @param diff la différence à ajouter à l'angle
-	 * @param change Le déplacement
-	 */
-	private void setTr(int diff, float change)
-	{
-		final double r1 = Math.toRadians(groupCameraPlus3D.rx.getAngle() + diff);
-
-		maze.movePlayer((float)(Math.sin(r1) * change), (float)(Math.cos(r1) * change), 0);
 	}
 
 	/**
@@ -270,6 +276,8 @@ public class Game extends ScenePlus
 	{
 		public void handle(long l)
 		{
+			maze.updatePlayer();
+			updatePlayer(true);
 		}
 	}
 }
