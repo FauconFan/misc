@@ -27,6 +27,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
+import java.util.EnumMap;
 import java.util.function.Consumer;
 
 import src.model.board.Case;
@@ -40,11 +41,10 @@ import src.view.scene.ScenePlus;
 import src.view.scene.Winner;
 import src.view.View;
 
-
 public class Init
 {
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
-	public static Group makeSpecialCases(int hauteur, Scale sc, MainMaze maze)
+	public static Group makeSpecialCases(int hauteur, Scale sc, MainMaze maze, CaseColor caseColor)
 	{
 		Group spc = new Group();
 
@@ -56,18 +56,7 @@ public class Init
 			res.setTranslateX(ec.getX() + tc / 2.0);
 			res.setTranslateZ(ec.getY() + tc / 2.0);
 			res.setTranslateY(hauteur / 2 - 1);
-			Color color = Color.BLACK;
-			switch (ec.type)
-			{
-			case END: color = Color.GREEN; break;
-
-			case TELEPORT: color = Color.PURPLE; break;
-
-			case SPEED: color = Color.RED; break;
-
-			case TIME: color = Color.YELLOW; break;
-			}
-			res.setMaterial(new PhongMaterial(color));
+			res.setMaterial(new PhongMaterial(caseColor.get(ec.type)));
 			spc.getChildren().add(res);
 		}
 		spc.getTransforms().add(sc);

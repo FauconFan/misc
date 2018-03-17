@@ -75,14 +75,14 @@ public class Game extends ScenePlus
 	// Scale pour les murs
 	private final Scale sc = new Scale(30, 1, 30);
 
-	// Constantes de déplacements
-	private final float goUp = 1f;
-
 	private final StackPane layout;
 	private final GroupCameraPlus groupCameraPlus3D;
 	private final MiniMap sceneMiniMap;
 
 	public final Timer timer;
+
+	// Map associants cases et couleurs
+	private final CaseColor caseColor = new CaseColor();
 
 	public Game(View v, MainMaze m)
 	{
@@ -108,7 +108,7 @@ public class Game extends ScenePlus
 		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
 
 		// Ajoute le sol
-		root3D.getChildren().add(Init.makeSpecialCases(hauteur, sc, this.maze));
+		root3D.getChildren().add(Init.makeSpecialCases(hauteur, sc, this.maze, caseColor));
 		root3D.getChildren().add(Init.makeFloors(hauteur, sc, this.maze));
 
 		/* Le plafond est juste un sol décalé vers le haut
