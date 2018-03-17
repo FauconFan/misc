@@ -55,7 +55,7 @@ public class Init
 
 			res.setTranslateX(ec.getX() + tc / 2.0);
 			res.setTranslateZ(ec.getY() + tc / 2.0);
-			res.setTranslateY(hauteur / 2 - 1);
+			res.setTranslateY(hauteur / 2.0 - 0.1);
 			res.setMaterial(new PhongMaterial(caseColor.get(ec.type).color));
 			spc.getChildren().add(res);
 		}
@@ -107,7 +107,7 @@ public class Init
 		// On scale les murs
 		walls.getTransforms().add(sc);
 		final LineWall[] lineWalls = LineWall.breakWallsIntoSimpleOnes(maze.getContentMaze().getLineWalls());
-		final float      delta     = 0.001f;
+		final float      delta     = 0.01f;
 		for (LineWall l: lineWalls)
 		{
 			Box w = new Box();

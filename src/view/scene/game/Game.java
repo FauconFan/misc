@@ -129,7 +129,6 @@ public class Game extends ScenePlus
 		updatePlayer();
 
 		//Greetings label
-		System.out.println(screenOffset);
 		Label msg = new Label("Welcome to the maze\n Press ENTER to close the message\nor H to see HELP");
 		msg.setFont(Font.font("Verdana", 30));
 		msg.setTextAlignment(TextAlignment.CENTER);
