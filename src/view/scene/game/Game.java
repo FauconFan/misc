@@ -161,7 +161,7 @@ public class Game extends ScenePlus
 
 			case T: walls.setVisible(!walls.isVisible()); break;
 
-			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\nBlue - teleportates you in a random position.\nPress ENTER to close"); break;
+			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\n" + caseColor.prettify() + "Press ENTER to close"); break;
 
 			case M: sceneMiniMap.setVisible(!sceneMiniMap.isVisible()); cross.setVisible(!cross.isVisible()); break;
 			}
