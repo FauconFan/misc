@@ -75,7 +75,7 @@ public class MainMaze
 		{
 			if (this.p.playerInCase(c))
 			{
-				switch (c.getTypeCase())
+				switch (c.type)
 				{
 				case END:
 					this.p.setWin(true);

@@ -14,13 +14,15 @@ public abstract class Case implements Cloneable
 {
 	protected int x;
 	protected int y;
+	public final TypeCase type;
 
 	private static float tailleCase = 1;
 
-	public Case(int x, int y)
+	public Case(int x, int y, TypeCase t)
 	{
-		this.x = x;
-		this.y = y;
+		this.x    = x;
+		this.y    = y;
+		this.type = t;
 	}
 
 	public int getX()
@@ -45,7 +47,6 @@ public abstract class Case implements Cloneable
 	}
 
 	public abstract Case clone();
-	public abstract TypeCase getTypeCase();
 
 	public boolean coordsEquals(Case c)
 	{
@@ -54,7 +55,7 @@ public abstract class Case implements Cloneable
 
 	public boolean equals(Case c)
 	{
-		return (this.getTypeCase() == c.getTypeCase() && this.coordsEquals(c));
+		return (this.type == c.type && this.coordsEquals(c));
 	}
 
 	@Override

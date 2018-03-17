@@ -57,7 +57,7 @@ public class Init
 			res.setTranslateZ(ec.getY() + tc / 2.0);
 			res.setTranslateY(hauteur / 2 - 1);
 			Color color = Color.BLACK;
-			switch (ec.getTypeCase())
+			switch (ec.type)
 			{
 			case END: color = Color.GREEN; break;
 

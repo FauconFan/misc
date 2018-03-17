@@ -7,7 +7,7 @@ public class TeleportCase extends Case
 
 	public TeleportCase(int x, int y, int xDest, int yDest)
 	{
-		super(x, y);
+		super(x, y, TypeCase.TELEPORT);
 		this.xDest = xDest;
 		this.yDest = yDest;
 	}
@@ -30,10 +30,5 @@ public class TeleportCase extends Case
 	public String toString()
 	{
 		return ("TeleportCase\n" + super.toString() + "xDest : " + this.xDest + "\nyDest : " + this.yDest);
-	}
-
-	public TypeCase getTypeCase()
-	{
-		return (TypeCase.TELEPORT);
 	}
 }

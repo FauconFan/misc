@@ -7,7 +7,7 @@ public class TimeCase extends Case
 
 	public TimeCase(int x, int y, long val)
 	{
-		super(x, y);
+		super(x, y, TypeCase.TIME);
 		this.timeMillis = val;
 	}
 
@@ -34,10 +34,5 @@ public class TimeCase extends Case
 	public String toString()
 	{
 		return ("TimeCase\n" + super.toString() + "Reduce time : " + this.timeMillis);
-	}
-
-	public TypeCase getTypeCase()
-	{
-		return (TypeCase.TIME);
 	}
 }

@@ -7,7 +7,7 @@ public class StartCase extends Case
 {
 	public StartCase(int x, int y)
 	{
-		super(x, y);
+		super(x, y, TypeCase.START);
 	}
 
 	public StartCase clone()
@@ -18,10 +18,5 @@ public class StartCase extends Case
 	public String toString()
 	{
 		return ("StartCase\n" + super.toString());
-	}
-
-	public TypeCase getTypeCase()
-	{
-		return (TypeCase.START);
 	}
 }

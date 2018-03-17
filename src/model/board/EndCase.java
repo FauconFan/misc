@@ -7,7 +7,7 @@ public class EndCase extends Case
 {
 	public EndCase(int x, int y)
 	{
-		super(x, y);
+		super(x, y, TypeCase.END);
 	}
 
 	public EndCase clone()
@@ -18,10 +18,5 @@ public class EndCase extends Case
 	public String toString()
 	{
 		return ("EndCase\n" + super.toString());
-	}
-
-	public TypeCase getTypeCase()
-	{
-		return (TypeCase.END);
 	}
 }

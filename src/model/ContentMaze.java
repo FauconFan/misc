@@ -93,7 +93,7 @@ public class ContentMaze
 	{
 		for (Case c:this.specialCases)
 		{
-			if (c.getTypeCase() == t)
+			if (c.type == t)
 			{
 				return (c);
 			}
