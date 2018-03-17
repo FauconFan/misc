@@ -1,6 +1,8 @@
 package src.model;
 
 import java.util.Date;
+import java.util.HashSet;
+
 import src.model.board.Case;
 import src.model.board.LineWall;
 import src.utils.FloatVector;
@@ -27,7 +29,8 @@ public class Player
 	public final float change = 0.025f;
 	public final float rot    = 2f;    // En degré
 
-	public final Directions dirs = new Directions();
+	//Ensemble de déplacements à faire
+	public final HashSet <Directions> dirs = new HashSet <Directions>();
 
 	public Player(float hitBoxCircle, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
 	{
@@ -161,7 +164,7 @@ public class Player
 	 */
 	public void update(LineWall[] lw)
 	{
-		for (Directions.Dir d: dirs.getHashSet())
+		for (Directions d: dirs)
 		{
 			switch (d)
 			{

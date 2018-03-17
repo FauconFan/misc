@@ -190,28 +190,28 @@ public class Game extends ScenePlus
 
 		BiConsumer <? super KeyEvent, Boolean> onkey = (key, bool)->{
 			final Player p = maze.getPlayer();
-			final Consumer <Directions.Dir> cons = (bool) ? (p.dirs::add) : (p.dirs::remove);
+			final Consumer <Directions> cons = (bool) ? (p.dirs::add) : (p.dirs::remove);
 			switch (key.getCode())
 			{
-			case Q: cons.accept(Directions.Dir.west); break;
+			case Q: cons.accept(Directions.west); break;
 
-			case D: cons.accept(Directions.Dir.east); break;
+			case D: cons.accept(Directions.east); break;
 
-			case Z: cons.accept(Directions.Dir.north); break;
+			case Z: cons.accept(Directions.north); break;
 
-			case S: cons.accept(Directions.Dir.south); break;
+			case S: cons.accept(Directions.south); break;
 
-			case F: cons.accept(Directions.Dir.goUp); break;
+			case F: cons.accept(Directions.goUp); break;
 
-			case R: cons.accept(Directions.Dir.goDown); break;
+			case R: cons.accept(Directions.goDown); break;
 
-			case LEFT: cons.accept(Directions.Dir.left); break;
+			case LEFT: cons.accept(Directions.left); break;
 
-			case RIGHT: cons.accept(Directions.Dir.right); break;
+			case RIGHT: cons.accept(Directions.right); break;
 
-			case UP: cons.accept(Directions.Dir.up); break;
+			case UP: cons.accept(Directions.up); break;
 
-			case DOWN: cons.accept(Directions.Dir.down); break;
+			case DOWN: cons.accept(Directions.down); break;
 			}
 		};
 
