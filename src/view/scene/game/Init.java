@@ -55,7 +55,7 @@ public class Init
 
 			res.setTranslateX(ec.getX() + tc / 2.0);
 			res.setTranslateZ(ec.getY() + tc / 2.0);
-			res.setTranslateY(hauteur / 2.0 - 0.1);
+			res.setTranslateY(hauteur / 2.0 - 0.5);
 			res.setMaterial(new PhongMaterial(caseColor.get(ec.type).color));
 			spc.getChildren().add(res);
 		}
