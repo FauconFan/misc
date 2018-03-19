@@ -163,6 +163,8 @@ public class Game extends ScenePlus
 			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\n" + caseColor.prettify() + "Press ENTER to close"); break;
 
 			case M: sceneMiniMap.setVisible(!sceneMiniMap.isVisible()); cross.setVisible(!cross.isVisible()); break;
+
+			case SHIFT: maze.getPlayer().invertRun();
 			}
 
 			updatePlayer();

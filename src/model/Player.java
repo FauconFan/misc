@@ -21,8 +21,9 @@ public class Player
 	private float posZ;
 	private float horizontalAngle;
 	private float verticalAngle;
-	private boolean hasWin = false;
-	private float speed    = 1;
+	private boolean hasWin    = false;
+	private float speed       = 1;
+	private boolean isRunning = false;
 	private Date time;
 
 	//Constante de déplacement
@@ -140,6 +141,11 @@ public class Player
 		return (Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff);
 	}
 
+	public void invertRun()
+	{
+		isRunning = !isRunning;
+	}
+
 	/**
 	 * Transport the player to the specified case
 	 * @param c The case
@@ -207,6 +213,8 @@ public class Player
 	private void reallyMove(LineWall[] lw, int diff)
 	{
 		final double r1 = Math.toRadians(horizontalAngle + diff);
+
+		float speed = (this.isRunning) ? this.speed * 2 : this.speed;
 
 		final float dx = (float)(Math.sin(r1) * change * speed);
 		final float dy = (float)(Math.cos(r1) * change * speed);
