@@ -8,7 +8,6 @@ import src.model.board.LineWall;
 import src.model.board.SpeedCase;
 import src.model.board.TeleportCase;
 import src.model.board.TimeCase;
-import src.model.CollisionsManager;
 import src.model.gen.Algo;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;

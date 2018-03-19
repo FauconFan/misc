@@ -74,7 +74,6 @@ public abstract class Case implements Cloneable
 		TELEPORT,
 		SPEED,
 		TIME;
-		//MECHANISM;
 	}
 
 	public static class CaseAdapter implements JsonSerializer <Case>, JsonDeserializer <Case>

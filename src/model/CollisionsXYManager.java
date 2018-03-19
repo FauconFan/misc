@@ -6,7 +6,7 @@ import src.utils.FloatVector;
 
 import java.lang.Math;
 
-public class CollisionsManager
+public class CollisionsXYManager
 {
 	private LineWall [] walls;
 	private Player p;
@@ -14,7 +14,7 @@ public class CollisionsManager
 	private FloatVector [] closestWall;
 	private FloatVector [] splitMove;
 
-	public CollisionsManager(LineWall [] lws, Player p, FloatVector dep)
+	public CollisionsXYManager(LineWall [] lws, Player p, FloatVector dep)
 	{
 		this.walls        = lws;
 		this.p            = p;
@@ -53,7 +53,7 @@ public class CollisionsManager
 			FloatVector [][] effectWalls = lw.effWalls(p.getPosX(), p.getPosY());
 			for (int i = 0; i < effectWalls.length; i++)
 			{
-				boolean horizontalWall = CollisionsManager.effectWallIsHorizontal(effectWalls[i]);
+				boolean horizontalWall = CollisionsXYManager.effectWallIsHorizontal(effectWalls[i]);
 				if (!splitMove[0].isCollinearTo((effectWalls[i][1].getX() - effectWalls[i][0].getX()), (effectWalls[i][1].getY() - effectWalls[i][0].getY())))
 				{
 					if (horizontalWall)
@@ -87,7 +87,7 @@ public class CollisionsManager
 
 		if (this.coefPropMin >= 0 && this.coefPropMin < 1)
 		{
-			if (CollisionsManager.effectWallIsHorizontal(this.closestWall))
+			if (CollisionsXYManager.effectWallIsHorizontal(this.closestWall))
 			{
 				splitMove[1] = new FloatVector(splitMove[0].getX() * (1 - this.coefPropMin), 0);
 			}

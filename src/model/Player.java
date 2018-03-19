@@ -218,12 +218,12 @@ public class Player
 		}
 		else
 		{
-			CollisionsManager colManage = new CollisionsManager(lw, this, new FloatVector(dx, dy));
-			while (!colManage.getNextMove().isNul())
+			CollisionsXYManager xyCol = new CollisionsXYManager(lw, this, new FloatVector(dx, dy));
+			while (!xyCol.getNextMove().isNul())
 			{
-				colManage.updateMove();
-				applyMove(colManage.getNextMove());
-				colManage.next();
+				xyCol.updateMove();
+				applyMove(xyCol.getNextMove());
+				xyCol.next();
 			}
 		}
 	}
