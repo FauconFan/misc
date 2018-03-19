@@ -31,3 +31,6 @@ scripts/path_uncrustify.txt
 
 # JavaDoc Folder
 doc/
+
+# Music Ignored
+assets/music/Bg1_BXDN_Return.mp3

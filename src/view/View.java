@@ -8,12 +8,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 
@@ -36,6 +39,18 @@ public class View
 		this.stage = stage;
 
 		stage.setTitle("Laby");
+
+		Media       sound       = new Media(new File("assets/music/Bg1_BXDN_Return.mp3").toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(sound);
+		mediaPlayer.setOnEndOfMedia(new Runnable()
+		{
+			public void run()
+			{
+				mediaPlayer.seek(Duration.ZERO);
+			}
+		});
+		mediaPlayer.setVolume(0.6);
+		mediaPlayer.play();
 
 		stage.setScene(scene);
 		stage.show();

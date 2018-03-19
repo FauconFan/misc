@@ -4,13 +4,15 @@ DOC_FOLDER = doc/
 DEP = "deps/gson-2.8.2.jar"
 DEPS_FOLDER = ".:"$(DEP)
 
+music1 = assets/music/Bg1_BXDN_Return.mp3
+
 MAIN_PATH = "src/Main"
 MAIN_PATH_MANIFEST = "src.Main"
 
 MANIFEST = "MANIFEST.MF"
 JAR = $(NAME).jar
 
-all :
+all : dep musics
 	@mkdir -p $(BIN_FOLDER)
 	@javac -cp $(DEPS_FOLDER) -d $(BIN_FOLDER) $(MAIN_PATH).java -Xlint
 	@echo "Main-Class: "$(MAIN_PATH_MANIFEST) > $(MANIFEST)
@@ -42,6 +44,8 @@ doc:
 
 re: fclean all
 
-dep: 
-	curl http://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar -o deps/gson-2.8.2.jar 
+dep:
+	@test -e $(DEP) || curl http://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar --output $(DEP)
 
+musics:
+	@test -e $(music1) || curl https://whoo.fr/wp-content/uploads/2017/06/Musique-libre-de-droits-BXDN-Return.mp3 --output $(music1)
