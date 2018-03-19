@@ -18,9 +18,12 @@ import javafx.stage.Stage;
 import java.io.File;
 
 import src.controller.Controller;
+import src.model.gen.Algo;
 import src.model.gen.AlgoBackTracker;
 import src.model.gen.AlgoSample;
 import src.model.gen.AlgoSample2;
+
+import src.model.maps.MapIntroBuilder;
 
 import src.model.parser.Parser;
 import src.view.Menu;
@@ -115,7 +118,9 @@ public class Menus extends ScenePlus
 			});
 
 			buttonCreate.setOnAction(event->{
-				v.con.createMaze(new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue()));
+				Algo al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue());
+				//Algo al = MapIntroBuilder.getMapIntro(4);
+				v.con.createMaze(al);
 				v.showGame();
 			});
 
