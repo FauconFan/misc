@@ -89,7 +89,7 @@ public class MainMaze
 					if (!((SpeedCase)c).isActivated())
 					{
 						((SpeedCase)c).activate();
-						this.p.setSpeed(((SpeedCase)c).getSpeedModif() + this.p.getSpeed());
+						this.p.setSpeed(((SpeedCase)c).getSpeedModif() * this.p.getSpeed());
 					}
 					break;
 

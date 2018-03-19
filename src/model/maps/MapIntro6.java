@@ -33,11 +33,11 @@ public class MapIntro6 extends Algo
 		this.cmfactory.addSpecialCase(new EndCase(0, size_y - 1));
 		for (int i = 1; i < size_y / 4; i++)
 		{
-			this.cmfactory.addSpecialCase(new SpeedCase(0, i, 1.5f));
+			this.cmfactory.addSpecialCase(new SpeedCase(0, i, 1.3f));
 		}
 		for (int i = size_y / 2; i < 3 * size_y / 4; i++)
 		{
-			this.cmfactory.addSpecialCase(new SpeedCase(0, i, 0.1f));
+			this.cmfactory.addSpecialCase(new SpeedCase(0, i, 0.8f));
 		}
 		this.cmfactory.normalize();
 		this.cm = new ContentMaze(this.cmfactory.getFinalSpecialCases(), this.cmfactory.getFinalLineWall());
