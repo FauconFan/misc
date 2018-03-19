@@ -28,6 +28,7 @@ import src.model.maps.MapIntroBuilder;
 import src.model.parser.Parser;
 import src.view.Menu;
 import src.view.Msg;
+import src.view.scene.creator.Creator;
 import src.view.View;
 
 public class Menus extends ScenePlus
@@ -78,6 +79,12 @@ public class Menus extends ScenePlus
 			buttonCreate.setOnAction(event->{
 				changeView((Parent) new MenuCreation());
 			});
+
+			final Button buttonCreator = addButton("Creator");
+			buttonCreator.setOnAction(event->{
+				v.changeScene(new Creator(v));
+			});
+
 
 			addButtonQuit();
 
