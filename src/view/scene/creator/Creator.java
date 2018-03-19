@@ -1,10 +1,8 @@
 package src.view.scene.creator;
 
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 
@@ -22,21 +20,21 @@ public class Creator extends ScenePlus
 
 		Group root = (Group)getRoot();
 
-		Canvas canvas = new Canvas(screenWidth, screenHeight);
+		final int separator = 100;
+		final int start     = 50;
 
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-
+		Group dots = new Group();
 
 		// Draw the circle
-		for (int i = 50; i < screenWidth; i += 100)
+		for (int i = start; i < screenWidth; i += separator)
 		{
-			for (int j = 50; j < screenHeight; j += 100)
+			for (int j = start; j < screenHeight; j += separator)
 			{
-				gc.strokeArc(i, j, 10, 10, 0, 360, ArcType.OPEN);
+				Circle c = new Circle(i, j, 5, Color.BLACK);
+				dots.getChildren().add(c);
 			}
 		}
 
-
-		root.getChildren().add(canvas);
+		root.getChildren().addAll(dots);
 	}
 }
