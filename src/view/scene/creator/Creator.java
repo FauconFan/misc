@@ -1,5 +1,7 @@
 package src.view.scene.creator;
 
+import java.util.ArrayList;
+
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Point2D;
@@ -8,12 +10,16 @@ import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.Scene;
+import javafx.scene.transform.Scale;
 import javafx.stage.Screen;
 
+import src.model.board.Case;
+import src.model.board.LineWall;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
@@ -24,6 +30,8 @@ public class Creator extends ScenePlus
 
 	private Circle startedDraw = null;
 
+	private final Scale sc = new Scale(100, 100);
+
 	public Creator(View v)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
@@ -32,19 +40,20 @@ public class Creator extends ScenePlus
 
 		HBox  pane = (HBox)getRoot();
 		Group root = new Group();
-
-		final int separator = 100;
-		final int start     = 50;
+		root.getTransforms().add(sc);
 
 		Group dots  = new Group();
 		Group walls = new Group();
 
-		// Draw the circle
-		for (int i = start; i < screenWidth; i += separator)
+		final double dotWidth = 0.1;
+
+		// Draw circles
+		// They are with almost integer values (modified by dotWidth)
+		for (double i = dotWidth; i < 20; i++)
 		{
-			for (int j = start; j < screenHeight; j += separator)
+			for (double j = dotWidth; j < 10; j++)
 			{
-				final Circle c = new Circle(i, j, 8, Color.BLACK);
+				final Circle c = new Circle(i, j, dotWidth, Color.BLACK);
 				c.setOnMouseClicked((ev)->{
 					if (startedDraw == null)
 					{
@@ -63,6 +72,7 @@ public class Creator extends ScenePlus
 							final LinePlus l = new LinePlus(startedDraw.getCenterX(), startedDraw.getCenterY(), c.getCenterX(), c.getCenterY());
 							if (!removeLine(walls.getChildren(), l)) // Si on ne l'avait pas déjà
 							{
+								l.setStrokeWidth(0.05);
 								walls.getChildren().add(l);
 							}
 						}
@@ -81,9 +91,15 @@ public class Creator extends ScenePlus
 
 		button.setOnAction((ev)->{
 			//TODO -> Transformer les Line en LineWall et créer le MainMaze qui va bien.
+			ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
+			for (Node l: walls.getChildren())
+			{
+				Line li = (Line)l;
+				lineWalls.add(new LineWall((int)(li.getStartX() - dotWidth), (int)(li.getStartY() - dotWidth), (int)(li.getEndX() - dotWidth), (int)(li.getEndY() - dotWidth)));
+			}
 		});
 
-		panel.getChildren().add(button);
+		panel.getChildren().addAll(button);
 
 		pane.getChildren().addAll(panel, root);
 	}
