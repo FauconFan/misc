@@ -6,6 +6,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -24,11 +26,12 @@ public class Creator extends ScenePlus
 
 	public Creator(View v)
 	{
-		super(new Group(), screenWidth, screenWidth, false, v);
+		super(new HBox(), screenWidth, screenWidth, false, v);
 
 		setFill(Color.GRAY);
 
-		Group root = (Group)getRoot();
+		HBox  pane = (HBox)getRoot();
+		Group root = new Group();
 
 		final int separator = 100;
 		final int start     = 50;
@@ -71,13 +74,18 @@ public class Creator extends ScenePlus
 			}
 		}
 
+		root.getChildren().addAll(dots, walls);
+
+		VBox   panel  = new VBox();
 		Button button = new Button("Finish");
 
 		button.setOnAction((ev)->{
 			//TODO -> Transformer les Line en LineWall et créer le MainMaze qui va bien.
 		});
 
-		root.getChildren().addAll(dots, walls, button);
+		panel.getChildren().add(button);
+
+		pane.getChildren().addAll(panel, root);
 	}
 
 	private < E > boolean removeLine(ObservableList <E> g, LinePlus l)
