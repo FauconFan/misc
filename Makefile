@@ -48,4 +48,5 @@ dep:
 	@test -e $(DEP) || curl http://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar --output $(DEP)
 
 musics:
+	@mkdir -p assets/music/
 	@test -e $(music1) || curl https://whoo.fr/wp-content/uploads/2017/06/Musique-libre-de-droits-BXDN-Return.mp3 --output $(music1)
