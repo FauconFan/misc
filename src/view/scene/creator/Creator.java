@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.Scene;
 import javafx.scene.transform.Scale;
 import javafx.stage.Screen;
@@ -44,14 +45,17 @@ public class Creator extends ScenePlus
 
 		Group dots  = new Group();
 		Group walls = new Group();
+		Group cases = new Group();
 
 		final double dotWidth = 0.1;
+		final int    width    = 20;
+		final int    height   = 10;
 
 		// Draw circles
 		// They are with almost integer values (modified by dotWidth)
-		for (double i = dotWidth; i < 20; i++)
+		for (double i = dotWidth; i < width; i++)
 		{
-			for (double j = dotWidth; j < 10; j++)
+			for (double j = dotWidth; j < height; j++)
 			{
 				final Circle c = new Circle(i, j, dotWidth, Color.BLACK);
 				c.setOnMouseClicked((ev)->{
@@ -80,17 +84,25 @@ public class Creator extends ScenePlus
 						startedDraw = null;
 					}
 				});
+				if (!(j + 1 >= height || i + 1 >= width))// Si on n'est pas sur une ligne du "bord"
+				{
+					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1, (int)(i - dotWidth), (int)(j - dotWidth));
+					rect.setStrokeWidth(0.001);
+					rect.setStroke(Color.BLACK);
+					rect.setFill(null);
+					cases.getChildren().add(rect);
+				}
 				dots.getChildren().add(c);
 			}
 		}
 
-		root.getChildren().addAll(dots, walls);
+		root.getChildren().addAll(dots, walls, cases);
 
 		VBox   panel  = new VBox();
 		Button button = new Button("Finish");
 
 		button.setOnAction((ev)->{
-			//TODO -> Transformer les Line en LineWall et créer le MainMaze qui va bien.
+			//TODO
 			ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
 			for (Node l: walls.getChildren())
 			{
@@ -131,6 +143,18 @@ public class Creator extends ScenePlus
 		public boolean equals(Line l1)
 		{
 			return ((l1.getStartX() == getStartX() && l1.getStartY() == getStartY() && l1.getEndX() == getEndX() && l1.getEndY() == getEndY()) || (l1.getStartX() == getEndX() && l1.getStartY() == getEndY() && l1.getEndX() == getStartX() && l1.getEndY() == getStartY()));
+		}
+	}
+
+	// Hold the x/y center of the rectangle
+	private class RectanglePlus extends Rectangle
+	{
+		public final int x, y;
+		public RectanglePlus(double a, double b, double c, double d, int x, int y)
+		{
+			super(a, b, c, d);
+			this.x = x;
+			this.y = y;
 		}
 	}
 }
