@@ -1,0 +1,14 @@
+sudo : disabled
+language : java
+
+before_script : make
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+      env:
+         - NAME="Single Compile test"
