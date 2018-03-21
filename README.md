@@ -41,7 +41,7 @@ où la première clé est le niveau de profondeur (le niveau de profondeur comme
 | instruction_exec | DrawCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> FillCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> DrawRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> FillRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) |
 | instruction_cont | Begin {instructions-next} End <br> If {expr} Then {instruction } Else {instruction} Fi <br> If {expr} Then {instruction } Fi <br> While {expr} Do {instruction} Done |
 | instruction_imp | Const {identificateur} = {expr} <br> Var {identificateur} = {expr} <br> {identificateur} = {expr} |
-| expr | {nombre} \| ( {expr} {operator} {expr} ) \| identificateur |
+| expr | {nombre} \| ( {expr} {operator} {expr} ) \| {identificateur} |
 
 ## Auteurs / Contributeurs
 - Pierre Gimalac
