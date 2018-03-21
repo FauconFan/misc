@@ -35,6 +35,7 @@ class Parser
 		}
 	}
 
+	// return true if it does something, or false
 	private boolean instruction() throws Exception
 	{
 		// Exec Instruction
