@@ -39,10 +39,7 @@ On admet que le Else se rattache au dernier If croisé (hors Begin End)
 | identificateur | [a-z][a-zA-Z]* |
 | program | {instructions-next} |
 | instructions-next | {instruction} ; {instructions-next} \| &#x3b5; |
-| instruction | {instruction_exec} \| {instruction_cont} \| {instruction_imp} |
-| instruction_exec | DrawCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> FillCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> DrawRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> FillRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) |
-| instruction_cont | Begin {instructions-next} End <br> If {expr} Then {instruction } Else {instruction} <br> If {expr} Then {instruction} <br> While {expr} Do {instruction} Done |
-| instruction_imp | Const {identificateur} = {expr} <br> Var {identificateur} = {expr} <br> {identificateur} = {expr} |
+| instruction | ##Exec Instruction <br> DrawCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> FillCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> DrawRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> FillRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> ##Control Instruction <br> Begin {instructions-next} End <br> If {expr} Then {instruction } Else {instruction} <br> If {expr} Then {instruction} <br> While {expr} Do {instruction} Done <br> ##Imp Instruction <br> Const {identificateur} = {expr} <br> Var {identificateur} = {expr} <br> {identificateur} = {expr} |
 | expr | {nombre} \| ( {expr} {operator} {expr} ) \| {identificateur} |
 
 ## Auteurs / Contributeurs
