@@ -10,7 +10,9 @@ Pour gérer la portée des variables, on utiliser la structure suivante :
 ```
 HashMap <Integer, HashMap<String, Integer>>
 ```
-où la première clé est le niveau de profondeur (le niveau de profondeur commence à 0, s'incrémente avec Begin et se décrémente avec End)
+où la première clé est le niveau de profondeur (le niveau de profondeur commence à 0, s'incrémente avec Begin et se décrémente avec End)  
+
+On admet que le Else se rattache au dernier If croisé (hors Begin End)  
 
 ## To Do List
 
@@ -39,7 +41,7 @@ où la première clé est le niveau de profondeur (le niveau de profondeur comme
 | instructions-next | {instruction} ; {instructions-next} \| &#x3b5; |
 | instruction | {instruction_exec} \| {instruction_cont} \| {instruction_imp} |
 | instruction_exec | DrawCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> FillCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> DrawRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> FillRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) |
-| instruction_cont | Begin {instructions-next} End <br> If {expr} Then {instruction } Else {instruction} Fi <br> If {expr} Then {instruction } Fi <br> While {expr} Do {instruction} Done |
+| instruction_cont | Begin {instructions-next} End <br> If {expr} Then {instruction } Else {instruction} <br> If {expr} Then {instruction} <br> While {expr} Do {instruction} Done |
 | instruction_imp | Const {identificateur} = {expr} <br> Var {identificateur} = {expr} <br> {identificateur} = {expr} |
 | expr | {nombre} \| ( {expr} {operator} {expr} ) \| {identificateur} |
 
