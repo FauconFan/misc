@@ -66,14 +66,16 @@ class MyCanvas extends JComponent
 				LexerFlex lexer = new LexerFlex(reader);
 				LookAhead1 look = new LookAhead1(lexer);
 				Parser parser = new Parser(look);
-				parser.walkThrough();
+				if (parser.buildProg())
+				{
+					System.out.println("HALLELUJAH");
+				}
 				// AST ast = parser.progNonTerm();
 				// ast.exec(g2d);
 			}
 			catch (Exception e)
 			{
 				System.err.println(e.getMessage());
-				e.printStackTrace();
 				System.exit(1);
 			}
 		}
