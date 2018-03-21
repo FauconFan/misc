@@ -26,7 +26,7 @@ où la première clé est le niveau de profondeur (le niveau de profondeur comme
  - [ ] Pouvoir définir des fonctions
  - [ ] Pouvoir définir des structures
 
-## Lexical Grammar
+## Grammaire Lexicale
 
 | Identifier | Content |
 | ---------- | ------- |
