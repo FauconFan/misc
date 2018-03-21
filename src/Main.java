@@ -58,16 +58,24 @@ class MyCanvas extends JComponent
 			// Appelez ici votre analyseur et interpréteur, en leur fournissant
 			// l'objet g2d de type Graphics2D. Ils pourront ainsi appeler les fonctions
 			// g2d.drawCircle, g2d.setColor, etc...
-			//
-			// Par exemple :
-			//
-			// File input = new File(filename);
-			// Reader reader = new FileReader(input);
-			// Lexer lexer = new Lexer(reader);
-			// LookAhead1 look = new LookAhead1(lexer);
-			// Parser parser = new Parser(look);
-			// AST ast = parser.progNonTerm();
-			// ast.exec(g2d);
+			
+			try
+			{
+				File input = new File(filename);
+				Reader reader = new FileReader(input);
+				LexerFlex lexer = new LexerFlex(reader);
+				LookAhead1 look = new LookAhead1(lexer);
+				Parser parser = new Parser(look);
+				parser.walkThrough();
+				// AST ast = parser.progNonTerm();
+				// ast.exec(g2d);
+			}
+			catch (Exception e)
+			{
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+				System.exit(1);
+			}
 		}
 	}
 }

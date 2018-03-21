@@ -36,7 +36,7 @@ On admet que le Else se rattache au dernier If croisé (hors Begin End)
 | hex | [0-9A-F] |
 | couleur | #{hex}{hex}{hex}{hex}{hex}{hex} |
 | operator | "+" <br> "-" <br> "/" <br> "*" |
-| identificateur | [a-z][a-zA-Z]* |
+| identificateur | [a-z][a-zA-Z_]* |
 | program | {instructions-next} |
 | instructions-next | {instruction} ; {instructions-next} <br> &#x3b5; |
 | instruction | <b>## Exec Instruction</b> <br> DrawCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> FillCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> DrawRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> FillRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> <b>## Control Instruction</b> <br> Begin {instructions-next} End <br> If {if_statement} <br> While {expr} Do {instruction} Done <br> <b>## Imp Instruction</b> <br> Const {identificateur} = {expr} <br> Var {identificateur} = {expr} <br> {identificateur} = {expr} |
