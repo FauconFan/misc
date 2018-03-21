@@ -25,7 +25,6 @@ import javafx.stage.Screen;
 import src.model.board.*;
 import src.model.board.LineWall;
 import src.view.scene.game.CaseColor;
-import src.view.scene.game.ColorWithName;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
@@ -84,7 +83,7 @@ public class Creator extends ScenePlus
 					{
 						if (startedDraw.getCenterX() == c.getCenterX() || startedDraw.getCenterY() == c.getCenterY())
 						{
-							final LinePlus l = new LinePlus(startedDraw.getCenterX() - dotWidth / 2, startedDraw.getCenterY(), c.getCenterX() - dotWidth / 2, c.getCenterY());
+							final LinePlus l = new LinePlus(startedDraw.getCenterX() - dotWidth / 2, startedDraw.getCenterY() - dotWidth / 2, c.getCenterX() - dotWidth / 2, c.getCenterY() - dotWidth / 2);
 							if (!removeLine(walls.getChildren(), l)) // Si on ne l'avait pas déjà
 							{
 								l.setStrokeWidth(0.05);
@@ -117,6 +116,13 @@ public class Creator extends ScenePlus
 			{
 				Line li = (Line)l;
 				lineWalls.add(new LineWall((int)(li.getStartX() - dotWidth), (int)(li.getStartY() - dotWidth), (int)(li.getEndX() - dotWidth), (int)(li.getEndY() - dotWidth)));
+			}
+
+			ArrayList <Case> specialCases = new ArrayList <Case>();
+			for (Node l: cases.getChildren())
+			{
+				RectanglePlus rect = (RectanglePlus)l;
+				specialCases.add(rect.getCase());
 			}
 		});
 
@@ -174,10 +180,13 @@ public class Creator extends ScenePlus
 			});
 		}
 
+		public Case getCase()
+		{
+			return (this.cas);
+		}
+
 		private void changeCase()
 		{
-			CaseColor cc = new CaseColor();
-
 			Case.TypeCase t = circ.next();
 			if (t == null)
 			{
@@ -198,7 +207,7 @@ public class Creator extends ScenePlus
 
 				case TELEPORT: cas = new TeleportCase(x, y, 0, 0); break;
 				}
-				setFill(cc.get(t).color);
+				setFill(CaseColor.getColor(t));
 			}
 		}
 
