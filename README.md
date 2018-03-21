@@ -16,7 +16,7 @@ On admet que le Else se rattache au dernier If croisé (hors Begin End)
 
 ## To Do List
 
- - [ ] Créer le flex
+ - [x] Créer le flex
  - [ ] Créer le Parser
  - [ ] Gestion des variables
 
