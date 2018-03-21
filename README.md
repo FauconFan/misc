@@ -39,9 +39,10 @@ On admet que le Else se rattache au dernier If croisé (hors Begin End)
 | identificateur | [a-z][a-zA-Z]* |
 | program | {instructions-next} |
 | instructions-next | {instruction} ; {instructions-next} \| &#x3b5; |
-| instruction | ##Exec Instruction <br> DrawCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> FillCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> DrawRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> FillRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> ##Control Instruction <br> Begin {instructions-next} End <br> If {expr} Then {instruction } Else {instruction} <br> If {expr} Then {instruction} <br> While {expr} Do {instruction} Done <br> ##Imp Instruction <br> Const {identificateur} = {expr} <br> Var {identificateur} = {expr} <br> {identificateur} = {expr} |
+| instruction | <b>##Exec Instruction</b> <br> DrawCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> FillCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> DrawRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> FillRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> <b>##Control Instruction</b> <br> Begin {instructions-next} End <br> If {expr} Then {instruction } Else {instruction} <br> If {expr} Then {instruction} <br> While {expr} Do {instruction} Done <br> <b>##Imp Instruction</b> <br> Const {identificateur} = {expr} <br> Var {identificateur} = {expr} <br> {identificateur} = {expr} |
 | expr | {nombre} \| ( {expr} {operator} {expr} ) \| {identificateur} |
 
 ## Auteurs / Contributeurs
 - Pierre Gimalac
 - Joseph Priou
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
