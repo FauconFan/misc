@@ -5,7 +5,6 @@
  - Etages
  - Murs transparent
  - Torches
- - Solver / Help
  - Labyrinthe Non euclidiens
  - Hochement de tête lors d'un déplacement
  - Chronomètre

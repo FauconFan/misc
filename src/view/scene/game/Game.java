@@ -81,9 +81,6 @@ public class Game extends ScenePlus
 
 	public final Timer timer;
 
-	// Map associants cases et couleurs
-	private final CaseColor caseColor = new CaseColor();
-
 	public Game(View v, MainMaze m)
 	{
 		super(new StackPane(), screenWidth, screenHeight, true, v);
@@ -108,7 +105,7 @@ public class Game extends ScenePlus
 		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
 
 		// Ajoute le sol
-		root3D.getChildren().add(Init.makeSpecialCases(hauteur, sc, this.maze, caseColor));
+		root3D.getChildren().add(Init.makeSpecialCases(hauteur, sc, this.maze));
 		root3D.getChildren().add(Init.makeFloors(hauteur, sc, this.maze));
 
 		/* Le plafond est juste un sol décalé vers le haut
@@ -160,7 +157,7 @@ public class Game extends ScenePlus
 
 			case T: walls.setVisible(!walls.isVisible()); break;
 
-			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\n" + caseColor.prettify() + "Press ENTER to close"); break;
+			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\n" + CaseColor.prettify() + "Press ENTER to close"); break;
 
 			case M: sceneMiniMap.setVisible(!sceneMiniMap.isVisible()); cross.setVisible(!cross.isVisible()); break;
 

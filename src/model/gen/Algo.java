@@ -10,6 +10,8 @@ import src.model.MazeDimension;
 import src.utils.DiscreteStatMazeGenerator;
 import src.utils.DisplayMazeConsole;
 
+import src.utils.Tuple;
+
 public abstract class Algo
 {
 	protected ContentMaze cm;
@@ -48,5 +50,8 @@ public abstract class Algo
 		ml = new MainMaze(al);
 		ml.displayMaze(false);
 		System.out.println(ml.getMazeDimension());
+
+		Tuple <Integer, String> tu = new Tuple <>(4, "coucou");
+		System.out.println(tu.getFirst() + " " + tu.getSecond());
 	}
 }
