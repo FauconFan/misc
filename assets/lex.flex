@@ -7,30 +7,30 @@
 %column
 
 %{
-  public src.tokens.Token token(Sym type) {
-      return new src.tokens.Token(type);
-  }
+    public src.tokens.Token token(Sym type) {
+        return new src.tokens.Token(type);
+    }
 
-  public src.tokens.NumberToken token(Sym type, int value) {
-      return new src.tokens.NumberToken(type,value);
-  }	     
+    public src.tokens.NumberToken token(Sym type, int value) {
+        return new src.tokens.NumberToken(type,value);
+    }
 
-  public src.tokens.Token token(Sym type, String value) {
-      if (type == Sym.IDENTIFIER)
-      {
-      	return new src.tokens.IdentifierToken(type,value);
-      }
-      else if (type == Sym.OPERATOR)
-      {
-      	return new src.tokens.OperatorToken(type,value);
-      }
-      else if (type == Sym.COLOR)
-      {
-      	return new src.tokens.ColorToken(type,value);
-      }
-      System.err.println("SNA parsing in flex");
-      return (null);
-  }
+    public src.tokens.Token token(Sym type, String value) {
+        if (type == Sym.IDENTIFIER)
+        {
+            return new src.tokens.IdentifierToken(type,value);
+        }
+        else if (type == Sym.OPERATOR)
+        {
+            return new src.tokens.OperatorToken(type,value);
+        }
+        else if (type == Sym.COLOR)
+        {
+            return new src.tokens.ColorToken(type,value);
+        }
+        System.err.println("SNA parsing in flex");
+        return (null);
+    }
 %}
 
 %yylexthrow{
@@ -51,14 +51,14 @@ color = #{hex}{hex}{hex}{hex}{hex}{hex}
 {string}			{return token(Sym.IDENTIFIER, yytext());}
 ","					{return token(Sym.COMMA);}
 ";"					{return token(Sym.SEMICOLON);}
-"("         		{return token(Sym.LPAR);}
-")"         		{return token(Sym.RPAR);}
+"("             	{return token(Sym.LPAR);}
+")"                 {return token(Sym.RPAR);}
 "Begin"				{return token(Sym.BEGIN);}
 "End"				{return token(Sym.END);}
 "While"				{return token(Sym.WHILE);}
 "Do"				{return token(Sym.DO);}
 "Done"				{return token(Sym.DONE);}
-"If"        		{return token(Sym.IF);}
+"If"	            {return token(Sym.IF);}
 "Elif"      		{return token(Sym.ELIF);}
 "Then"      		{return token(Sym.THEN);}
 "Else"      		{return token(Sym.ELSE);}
@@ -70,4 +70,4 @@ color = #{hex}{hex}{hex}{hex}{hex}{hex}
 "DrawRect"			{return token(Sym.DRAWRECT);}
 "FillRect"			{return token(Sym.FILLRECT);}
 {blank}     		{}
-[^]         		{throw new LexerException(yytext(), yyline, yycolumn);}
+[^]		            {throw new LexerException(yytext(), yyline, yycolumn);}
