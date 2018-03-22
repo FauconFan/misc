@@ -1,4 +1,4 @@
 GraphTXT.jar
 MANIFEST.MF
 bin/
-src/LexerFlex.java
+src/lexer_parser/LexerFlex.java
