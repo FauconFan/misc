@@ -2,18 +2,31 @@ package src.tokens;
 
 import src.lexer_parser.Sym;
 
+import java.awt.Color;
+
 public class ColorToken extends Token
 {
-	private String value;
+	private Color color;
 
 	public ColorToken(Sym c, String v)
 	{
 		super(c);
-		this.value = v;
+		int r;
+		int g;
+		int b;
+
+		if (v.length() != 7)
+		{
+			throw new RuntimeException("SNA constructor ColorToken");
+		}
+		r = Integer.parseInt(v.substring(1, 3), 16);
+		g = Integer.parseInt(v.substring(3, 5), 16);
+		b = Integer.parseInt(v.substring(5, 7), 16);
+		this.color = new Color(r, g, b);
 	}
 
-	public String value()
+	public Color getValue()
 	{
-		return (value);
+		return (this.color);
 	}
 }

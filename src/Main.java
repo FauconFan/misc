@@ -8,6 +8,8 @@ import src.lexer_parser.LexerFlex;
 import src.lexer_parser.LexerException;
 import src.lexer_parser.LookAhead1;
 
+import src.prog.AST;
+
 public class Main
 {
 	public static void runProg(String filename)
@@ -30,7 +32,9 @@ public class Main
 			LexerFlex lexer = new LexerFlex(reader);
 			LookAhead1 look = new LookAhead1(lexer);
 			Parser parser = new Parser(look);
-			if (parser.buildProg())
+			AST ast = parser.buildProg();
+			System.out.println(ast);
+			if (ast != null)
 			{
 				System.out.println("HALLELUJAH");
 			}

@@ -10,6 +10,8 @@ import src.lexer_parser.LexerFlex;
 import src.lexer_parser.LexerException;
 import src.lexer_parser.LookAhead1;
 
+import src.prog.AST;
+
 @SuppressWarnings("serial")
 class MyCanvas extends JComponent
 {
@@ -39,7 +41,8 @@ class MyCanvas extends JComponent
 				LexerFlex lexer = new LexerFlex(reader);
 				LookAhead1 look = new LookAhead1(lexer);
 				Parser parser = new Parser(look);
-				if (parser.buildProg())
+				AST ast = parser.buildProg();
+				if (ast != null)
 				{
 					System.out.println("HALLELUJAH");
 				}

@@ -12,7 +12,7 @@ public class NumberToken extends Token
 		this.value = n;
 	}
 
-	public int value()
+	public int getValue()
 	{
 		return (value);
 	}

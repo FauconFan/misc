@@ -1,6 +1,25 @@
 package src.lexer_parser;
 
 import java.io.*;
+import java.awt.Color;
+
+import src.prog.ASTExpr;
+
+import src.tokens.Token;
+import src.tokens.IdentifierToken;
+import src.tokens.NumberToken;
+import src.tokens.ColorToken;
+import src.tokens.OperatorToken;
+
+import src.prog.AST;
+import src.prog.ASTExpr;
+import src.prog.ASTInstr;
+import src.prog.ASTInstrIf;
+import src.prog.ASTInstrExec;
+import src.prog.ASTInstrWhile;
+import src.prog.ASTInstrDecl;
+import src.prog.ASTInstrAssign;
+import src.prog.ASTInstrBeginEnd;
 
 public class Parser
 {
@@ -11,178 +30,252 @@ public class Parser
 		reader = r;
 	}
 
-	private void expr() throws Exception
+	private ASTExpr expr() throws Exception
 	{
+		ASTExpr res;
+
 		if (reader.check(Sym.LPAR))
 		{
+			ASTExpr left;
+			ASTExpr right;
+			char	op;
+
 			reader.eat(Sym.LPAR);
-			expr();
-			reader.eat(Sym.OPERATOR);
-			expr();
+			left = expr();
+			op = ((OperatorToken)reader.pop(Sym.OPERATOR)).getOp();
+			right = expr();
 			reader.eat(Sym.RPAR);
+			res = new ASTExpr(left, op, right);
 		}
 		else if (reader.check(Sym.NUMBER))
 		{
-			reader.eat(Sym.NUMBER);
+			int number;
+
+			number = ((NumberToken)reader.pop(Sym.NUMBER)).getValue();
+			res = new ASTExpr(number);
 		}
 		else if (reader.check(Sym.IDENTIFIER))
 		{
-			reader.eat(Sym.IDENTIFIER);
+			String identifier;
+
+			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
+			res = new ASTExpr(identifier);
 		}
 		else
 		{
 			throw new Exception("Expected a expression here");
 		}
+		return (res);
 	}
 
 	// return true if it does something, or false
-	private boolean instruction() throws Exception
+	private ASTInstr instruction() throws Exception
 	{
+		ASTInstr res = null;
+
 		// Exec Instruction
 		if (reader.check(Sym.DRAWCIRCLE))
 		{
+			ASTExpr[] args = new ASTExpr[3];
+			Color[] colors = new Color[1];
+
 			reader.eat(Sym.DRAWCIRCLE);
 			reader.eat(Sym.LPAR);
-			expr();
+			args[0] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[1] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[2] = expr();
 			reader.eat(Sym.COMMA);
-			reader.eat(Sym.COLOR);
+			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
 			reader.eat(Sym.RPAR);
+
+			res = new ASTInstrExec(Sym.DRAWCIRCLE, args, colors);
 		}
 		else if (reader.check(Sym.FILLCIRCLE))
 		{
+			ASTExpr[] args = new ASTExpr[3];
+			Color[] colors = new Color[1];
+
 			reader.eat(Sym.FILLCIRCLE);
 			reader.eat(Sym.LPAR);
-			expr();
+			args[0] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[1] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[2] = expr();
 			reader.eat(Sym.COMMA);
-			reader.eat(Sym.COLOR);
+			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
 			reader.eat(Sym.RPAR);
+
+			res = new ASTInstrExec(Sym.FILLCIRCLE, args, colors);
 		}
 		else if (reader.check(Sym.DRAWRECT))
 		{
+			ASTExpr[] args = new ASTExpr[4];
+			Color[] colors = new Color[1];
+
 			reader.eat(Sym.DRAWRECT);
 			reader.eat(Sym.LPAR);
-			expr();
+			args[0] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[1] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[2] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[3] = expr();
 			reader.eat(Sym.COMMA);
-			reader.eat(Sym.COLOR);
+			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
 			reader.eat(Sym.RPAR);
+
+			res = new ASTInstrExec(Sym.DRAWRECT, args, colors);
 		}
 		else if (reader.check(Sym.FILLRECT))
 		{
+			ASTExpr[] args = new ASTExpr[4];
+			Color[] colors = new Color[1];
+
 			reader.eat(Sym.FILLRECT);
 			reader.eat(Sym.LPAR);
-			expr();
+			args[0] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[1] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[2] = expr();
 			reader.eat(Sym.COMMA);
-			expr();
+			args[3] = expr();
 			reader.eat(Sym.COMMA);
-			reader.eat(Sym.COLOR);
+			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
 			reader.eat(Sym.RPAR);
+
+			res = new ASTInstrExec(Sym.FILLRECT, args, colors);
 		}
 		// Control Instruction
 		else if (reader.check(Sym.BEGIN))
 		{
+			AST		next;
+
 			reader.eat(Sym.BEGIN);
-			instruction_next();
+			next = instruction_next();
 			reader.eat(Sym.END);
+
+			res = new ASTInstrBeginEnd(next);
 		}
 		else if (reader.check(Sym.IF))
 		{
 			reader.eat(Sym.IF);
-			if_statement();
+			res = if_statement();
 		}
 		else if (reader.check(Sym.WHILE))
 		{
+			ASTExpr expr;
+			ASTInstr instr;
+
 			reader.eat(Sym.WHILE);
-			expr();
+			expr = expr();
 			reader.eat(Sym.DO);
-			instruction();
+			instr = instruction();
 			reader.eat(Sym.DONE);
+
+			res = new ASTInstrWhile(expr, instr);
 		}
 		// Imp Instruction
 		else if (reader.check(Sym.CONST))
 		{
+			String identifier;
+			ASTExpr expr;
+			
 			reader.eat(Sym.CONST);
-			reader.eat(Sym.IDENTIFIER);
+			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
 			reader.eat(Sym.EQUALS);
-			expr();
+			expr = expr();
+
+			res = new ASTInstrDecl(true, identifier, expr);
 		}
 		else if (reader.check(Sym.VAR))
 		{
+			String identifier;
+			ASTExpr expr;
+
 			reader.eat(Sym.VAR);
-			reader.eat(Sym.IDENTIFIER);
+			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
 			reader.eat(Sym.EQUALS);
-			expr();
+			expr = expr();
+
+			res = new ASTInstrDecl(false, identifier, expr);
 		}
 		else if (reader.check(Sym.IDENTIFIER))
 		{
-			reader.eat(Sym.IDENTIFIER);
+			String identifier;
+			ASTExpr expr;
+
+			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
 			reader.eat(Sym.EQUALS);
-			expr();
+			expr = expr();
+
+			res = new ASTInstrAssign(identifier, expr);
 		}
-		else
-			return (false);
-		return (true);
+
+		//null if no match
+		return (res);
 	}
 
-	private void if_statement() throws Exception
+	private ASTInstrIf if_statement() throws Exception
 	{
-		expr();
+		ASTExpr expr;
+		ASTInstr instr;
+		ASTInstrIf follow;
+
+		expr = expr();
 		reader.eat(Sym.THEN);
-		instruction();
-		if_follow();
+		instr = instruction();
+		follow = if_follow();
+		return (new ASTInstrIf(expr, instr, follow));
 	}
 
-	private void if_follow() throws Exception
+	private ASTInstrIf if_follow() throws Exception
 	{
+		ASTInstrIf res = null;
+		ASTExpr expr;
+		ASTInstr instr;
+		ASTInstrIf follow;
+
 		if (reader.check(Sym.ELIF))
 		{
 			reader.eat(Sym.ELIF);
-			expr();
+			expr = expr();
 			reader.eat(Sym.THEN);
-			instruction();
-			if_follow();
+			instr = instruction();
+			follow = if_follow();
+			res = new ASTInstrIf(expr, instr, follow);
 		}
 		else if (reader.check(Sym.ELSE))
 		{
 			reader.eat(Sym.ELSE);
-			instruction();
+			instr = instruction();
+			res = new ASTInstrIf(instr);
 		}
+		return (res);
 	}
 
-	private void instruction_next() throws Exception
+	private AST instruction_next() throws Exception
 	{
-		boolean ret_instruction;
+		ASTInstr	instr;
+		AST			next;
 
 		if (reader.isEmpty())
-			return ;
-		ret_instruction = instruction();
-		if (ret_instruction == false)
-			return ;
+			return (new AST());
+		instr = instruction();
+		if (instr == null)
+			return (new AST());
 		reader.eat(Sym.SEMICOLON);
-		instruction_next();
+		next = instruction_next();
+		return (new AST(instr, next));
 	}
 
-	public boolean buildProg() throws Exception
+	public AST buildProg() throws Exception
 	{
-		instruction_next();
-		return (true);
+		return (instruction_next());
 	}
 
 	public void walkThrough() throws Exception

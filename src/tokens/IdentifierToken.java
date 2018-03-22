@@ -12,7 +12,7 @@ public class IdentifierToken extends Token
 		this.value = v;
 	}
 
-	public String value()
+	public String getValue()
 	{
 		return (value);
 	}

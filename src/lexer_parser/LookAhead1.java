@@ -18,19 +18,29 @@ public class LookAhead1
 
 	public boolean check(Sym s)
 	{
-		/* check whether the first character is of type s*/
 		return (current.symbol() == s);
 	}
 
 	public void eat(Sym s) throws Exception
 	{
-		/* consumes a token of type s from the stream,
-		 * exception when the contents does not start on s.   */
-		if (!check(s))
+		if (check(s) == false)
 		{
 			throw new Exception("Token " + s + " expected...");
 		}
 		current = lexer.yylex();
+	}
+
+	public Token pop(Sym s) throws Exception
+	{
+		Token ret;
+
+		if (check(s) == false)
+		{
+			throw new Exception("Token " + s + " expected...");
+		}
+		ret = current;
+		current = lexer.yylex();
+		return (ret);
 	}
 
 	public Token walkThrough() throws Exception

@@ -9,20 +9,15 @@ public class OperatorToken extends Token
 	public OperatorToken(Sym s, String match)
 	{
 		super(s);
+		if (match.length() != 1)
+		{
+			throw new RuntimeException("SNA in OperatorToken Constructor");
+		}
 		this.op = match.charAt(0);
 	}
 
-	public int apply(int a, int b)
+	public char getOp()
 	{
-		if (op == '+')
-			return (a + b);
-		else if (op == '-')
-			return (a - b);
-		else if (op == '*')
-			return (a * b);
-		else if (op == '/')
-			return (a / b);
-		System.err.println("SNA apply OperatorToken");
-		return (0);
+		return (this.op);
 	}
 }
