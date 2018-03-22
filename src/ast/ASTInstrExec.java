@@ -1,4 +1,4 @@
-package src.prog;
+package src.ast;
 
 import java.awt.Color;
 import src.lexer_parser.Sym;

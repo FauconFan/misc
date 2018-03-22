@@ -1,4 +1,4 @@
-package src.prog;
+package src.ast;
 
 public class AST
 {

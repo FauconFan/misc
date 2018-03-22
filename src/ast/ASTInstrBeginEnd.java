@@ -1,4 +1,4 @@
-package src.prog;
+package src.ast;
 
 import src.lexer_parser.Sym;
 

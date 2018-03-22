@@ -10,7 +10,7 @@ import src.lexer_parser.LexerFlex;
 import src.lexer_parser.LexerException;
 import src.lexer_parser.LookAhead1;
 
-import src.prog.AST;
+import src.ast.AST;
 
 @SuppressWarnings("serial")
 class MyCanvas extends JComponent

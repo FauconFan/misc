@@ -3,23 +3,21 @@ package src.lexer_parser;
 import java.io.*;
 import java.awt.Color;
 
-import src.prog.ASTExpr;
-
 import src.tokens.Token;
 import src.tokens.IdentifierToken;
 import src.tokens.NumberToken;
 import src.tokens.ColorToken;
 import src.tokens.OperatorToken;
 
-import src.prog.AST;
-import src.prog.ASTExpr;
-import src.prog.ASTInstr;
-import src.prog.ASTInstrIf;
-import src.prog.ASTInstrExec;
-import src.prog.ASTInstrWhile;
-import src.prog.ASTInstrDecl;
-import src.prog.ASTInstrAssign;
-import src.prog.ASTInstrBeginEnd;
+import src.ast.AST;
+import src.ast.ASTExpr;
+import src.ast.ASTInstr;
+import src.ast.ASTInstrIf;
+import src.ast.ASTInstrExec;
+import src.ast.ASTInstrWhile;
+import src.ast.ASTInstrDecl;
+import src.ast.ASTInstrAssign;
+import src.ast.ASTInstrBeginEnd;
 
 public class Parser
 {
