@@ -5,9 +5,12 @@ import java.util.Iterator;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -34,6 +37,7 @@ public class Creator extends ScenePlus
 	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
 
 	private Circle startedDraw = null;
+	private final VBox leftPaneGr;
 
 	private final Scale sc = new Scale(100, 100);
 
@@ -97,20 +101,26 @@ public class Creator extends ScenePlus
 				if (!(j + 1 >= height || i + 1 >= width))// Si on n'est pas sur une ligne du "bord"
 				{
 					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1, (int)(i - dotWidth), (int)(j - dotWidth));
-					rect.setStrokeWidth(0.001);
-					rect.setStroke(Color.BLACK);
-					rect.setFill(Color.WHITE);
 					cases.getChildren().add(rect);
 				}
 				dots.getChildren().add(c);
 			}
 		}
 
-		VBox   panel  = new VBox();
+		VBox panel = new VBox();
+		panel.setMinSize(150, 0);
+		panel.setAlignment(Pos.TOP_CENTER);
+		panel.setPadding(new Insets(20, 0, 20, 0));
+
 		Button button = new Button("Finish");
 
+		leftPaneGr = new VBox();
+		leftPaneGr.setAlignment(Pos.TOP_CENTER);
+		leftPaneGr.setPadding(new Insets(20, 0, 20, 0));
+
+		panel.getChildren().addAll(button, leftPaneGr);
+
 		button.setOnAction((ev)->{
-			//TODO
 			ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
 			for (Node l: walls.getChildren())
 			{
@@ -126,9 +136,50 @@ public class Creator extends ScenePlus
 			}
 		});
 
-		panel.getChildren().addAll(button);
-
 		pane.getChildren().addAll(panel, root);
+	}
+
+	/**
+	 * Update the left pane according to the new case
+	 */
+	private void updateLeftPane(RectanglePlus startedRect)
+	{
+		leftPaneGr.getChildren().clear();
+		Case c = startedRect.getCase();
+
+		if (c != null)
+		{
+			leftPaneGr.getChildren().add(new Label(c.type + " case"));
+			Slider slider = new Slider();
+			switch (c.type)
+			{
+			case TIME:
+				slider.setMin(-5);
+				slider.setValue(((TimeCase)c).getTimeMillis());
+				slider.setMax(5);
+				slider.setShowTickLabels(true);
+				slider.setMajorTickUnit(0.25f);
+				slider.setBlockIncrement(0.25f);
+				slider.valueProperty().addListener((ov, x, z)->{
+					((TimeCase)c).setTimeMilis(z.longValue());
+				});
+				leftPaneGr.getChildren().add(slider);
+				break;
+
+			case SPEED:
+				slider.setMin(0);
+				slider.setValue(((SpeedCase)c).getSpeedModif());
+				slider.setMax(5);
+				slider.setShowTickLabels(true);
+				slider.setMajorTickUnit(0.25f);
+				slider.setBlockIncrement(0.25f);
+				slider.valueProperty().addListener((ov, x, z)->{
+					((SpeedCase)c).setSpeedModif(z.floatValue());
+				});
+				leftPaneGr.getChildren().add(slider);
+				break;
+			}
+		}
 	}
 
 	private < E > boolean removeLine(ObservableList <E> g, LinePlus l)
@@ -175,8 +226,14 @@ public class Creator extends ScenePlus
 			this.x = x;
 			this.y = y;
 
+			setStrokeWidth(0.001);
+			setStroke(Color.BLACK);
+			setFill(Color.WHITE);
+
+
 			setOnMouseClicked((ev)->{
 				changeCase();
+				updateLeftPane(this);
 			});
 		}
 
@@ -185,7 +242,7 @@ public class Creator extends ScenePlus
 			return (this.cas);
 		}
 
-		private void changeCase()
+		public void changeCase()
 		{
 			Case.TypeCase t = circ.next();
 			if (t == null)
@@ -211,9 +268,14 @@ public class Creator extends ScenePlus
 			}
 		}
 
+		public void changeCase(Case c)
+		{
+			this.cas = c;
+		}
+
 		private class CircularArray implements Iterator <Case.TypeCase>
 		{
-			private int ind = 0;
+			private int ind = -1;
 			private final Case.TypeCase[] liste = Case.TypeCase.values();
 
 			public boolean hasNext()

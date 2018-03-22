@@ -17,7 +17,7 @@ public final class CaseColor
 	static
 	{
 		colorCases = new EnumMap <>(Case.TypeCase.class);
-		colorCases.put(Case.TypeCase.START, new Tuple <>(Color.BLACK, "BLACK"));
+		colorCases.put(Case.TypeCase.START, new Tuple <>(Color.DARKGRAY, "DARKGRAY"));
 		colorCases.put(Case.TypeCase.END, new Tuple <>(Color.GREEN, "GREEN"));
 		colorCases.put(Case.TypeCase.TELEPORT, new Tuple <>(Color.PURPLE, "PURPLE"));
 		colorCases.put(Case.TypeCase.SPEED, new Tuple <>(Color.RED, "RED"));

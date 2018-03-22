@@ -31,6 +31,11 @@ public class TimeCase extends Case
 		activated = true;
 	}
 
+	public void setTimeMilis(long l)
+	{
+		timeMillis = l;
+	}
+
 	public String toString()
 	{
 		return ("TimeCase\n" + super.toString() + "Reduce time : " + this.timeMillis);
