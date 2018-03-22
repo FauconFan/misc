@@ -95,7 +95,7 @@ public class Creator extends ScenePlus
 							{
 								LinePlus li             = (LinePlus)n;
 								ArrayList <LineWall> lw = LineWallUtils.exceptIfIntersectOrUnion(li.lw, newLineWall.lw);
-								if (lw.size() == 0 || lw.size() == 1 || lw.size() == 2 && !(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw))
+								if (lw.size() == 0 || lw.size() == 1 || (lw.size() == 2 && !(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw)))
 								{
 									walls.getChildren().remove(li);
 									for (LineWall l: lw)
