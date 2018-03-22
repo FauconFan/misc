@@ -17,8 +17,10 @@ On admet que le Else se rattache au dernier If croisé (hors Begin End)
 ## To Do List
 
  - [x] Créer le flex
- - [ ] Créer le Parser
- - [ ] Gestion des variables
+ - [x] Créer le Parser
+ - [x] Créer l'arbre de syntaxe abstraite (AST)
+ - [ ] Gestion des variables Analyse sémantique
+ - [ ] Evaluation
 
 ## Idées
 
