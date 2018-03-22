@@ -25,8 +25,8 @@ import javafx.scene.Scene;
 import javafx.scene.transform.Scale;
 import javafx.stage.Screen;
 
+import src.model.*;
 import src.model.board.*;
-import src.model.board.LineWall;
 import src.view.scene.game.CaseColor;
 import src.view.scene.ScenePlus;
 import src.view.View;
@@ -132,8 +132,24 @@ public class Creator extends ScenePlus
 			for (Node l: cases.getChildren())
 			{
 				RectanglePlus rect = (RectanglePlus)l;
-				specialCases.add(rect.getCase());
+				Case c             = rect.getCase();
+				if (c != null)
+				{
+					specialCases.add(c);
+				}
 			}
+
+			MazeDimension md = new MazeDimension();
+			md.append(0, 0, 20, 20);
+
+			Case[] cc = specialCases.toArray(new Case[specialCases.size()]);
+
+			LineWall[] ll = lineWalls.toArray(new LineWall[lineWalls.size()]);
+
+			MainMaze mm = new MainMaze(new ContentMaze(cc, ll), md, "", new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f));
+
+			v.con.setMaze(mm);
+			v.showGame();
 		});
 
 		pane.getChildren().addAll(panel, root);

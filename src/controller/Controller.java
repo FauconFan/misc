@@ -54,6 +54,11 @@ public class Controller
 		}
 	}
 
+	public void setMaze(MainMaze m)
+	{
+		this.maze = m;
+	}
+
 	/**
 	 * Permet de sauvegarder un objet sérialisé ou au format JSON
 	 * @param path Le chemin du fichier à sauvegader (l'extension sera ajoutée si elle n'est pas présente)
