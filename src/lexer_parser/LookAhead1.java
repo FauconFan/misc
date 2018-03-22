@@ -1,9 +1,9 @@
-package src;
+package src.lexer_parser;
 
 import java.io.*;
 import src.tokens.Token;
 
-class LookAhead1
+public class LookAhead1
 {
 	/* Simulating a reader class for a stream of Token */
 

@@ -1,6 +1,6 @@
 package src.tokens;
 
-import src.Sym;
+import src.lexer_parser.Sym;
 
 public class OperatorToken extends Token
 {

@@ -5,6 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import src.lexer_parser.Parser;
+import src.lexer_parser.LexerFlex;
+import src.lexer_parser.LexerException;
+import src.lexer_parser.LookAhead1;
+
 @SuppressWarnings("serial")
 class MyCanvas extends JComponent
 {

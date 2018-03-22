@@ -1,3 +1,5 @@
+package src.lexer_parser;
+
 %%
 %public
 %class LexerFlex

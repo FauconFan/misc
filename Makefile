@@ -8,8 +8,7 @@ MANIFEST = "MANIFEST.MF"
 JAR = $(NAME).jar
 
 PATH_FLEX = assets/lex.flex
-PATH_FLEX_RENDER = src/LexerFlex.java
-PATH_FLEX_TMP = LexerFlex.java
+PATH_FLEX_RENDER = src/lexer_parser/LexerFlex.java
 
 all : genflex
 	@mkdir -p $(BIN_FOLDER)
@@ -18,13 +17,10 @@ all : genflex
 	@jar -cvmf $(MANIFEST) $(JAR) -C $(BIN_FOLDER) ./
 
 genflex : cleanflex
-	@jflex -d . $(PATH_FLEX)
-	@printf "package src;\\n\\n" > $(PATH_FLEX_RENDER)
-	@cat $(PATH_FLEX_TMP) >> $(PATH_FLEX_RENDER)
-	@rm -f $(PATH_FLEX_TMP)
+	@jflex -d src/lexer_parser $(PATH_FLEX)
 
 cleanflex :
-	@rm -rf src/LexerFlex.java
+	@rm -rf $(PATH_FLEX_RENDER)
 
 clean: cleanflex
 	@rm -rf $(BIN_FOLDER)

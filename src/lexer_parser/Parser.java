@@ -1,8 +1,8 @@
-package src;
+package src.lexer_parser;
 
 import java.io.*;
 
-class Parser
+public class Parser
 {
 	protected LookAhead1 reader;
 

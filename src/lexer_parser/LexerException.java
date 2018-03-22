@@ -1,4 +1,4 @@
-package src;
+package src.lexer_parser;
 
 public class LexerException extends Exception
 {
