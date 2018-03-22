@@ -16,16 +16,12 @@ import src.view.View;
 // Hold the x/y center of the rectangle + The possible Case
 class RectanglePlus extends Rectangle
 {
-	public final int x, y;
-
 	private Case cas;
 	private final CircularArray circ = new CircularArray();
 
-	public RectanglePlus(double a, double b, double c, double d, int x, int y)
+	public RectanglePlus(double a, double b, double c, double d)
 	{
 		super(a, b, c, d);
-		this.x = x;
-		this.y = y;
 
 		setStrokeWidth(0.001);
 		setStroke(Color.BLACK);
@@ -35,6 +31,16 @@ class RectanglePlus extends Rectangle
 	public Case getCase()
 	{
 		return (this.cas);
+	}
+
+	public int getIntX()
+	{
+		return ((int)getX());
+	}
+
+	public int getIntY()
+	{
+		return ((int)getY());
 	}
 
 	public void changeCase()
@@ -49,15 +55,15 @@ class RectanglePlus extends Rectangle
 		{
 			switch (t)
 			{
-			case START: cas = new StartCase(x, y); break;
+			case START: cas = new StartCase(getIntX(), getIntY()); break;
 
-			case END: cas = new EndCase(x, y); break;
+			case END: cas = new EndCase(getIntX(), getIntY()); break;
 
-			case TIME: cas = new TimeCase(x, y, 0); break;
+			case TIME: cas = new TimeCase(getIntX(), getIntY(), 0); break;
 
-			case SPEED: cas = new SpeedCase(x, y, 1); break;
+			case SPEED: cas = new SpeedCase(getIntX(), getIntY(), 1); break;
 
-			case TELEPORT: cas = new TeleportCase(x, y, 0, 0); break;
+			case TELEPORT: cas = new TeleportCase(getIntX(), getIntY(), 0, 0); break;
 			}
 			setFill(CaseColor.getColor(t));
 		}

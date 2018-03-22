@@ -89,11 +89,43 @@ public class Creator extends ScenePlus
 					{
 						if (startedDraw.getCenterX() == c.getCenterX() || startedDraw.getCenterY() == c.getCenterY())
 						{
-							final LinePlus l = new LinePlus(startedDraw.getCenterX(), startedDraw.getCenterY(), c.getCenterX(), c.getCenterY());
-							if (!removeLine(walls.getChildren(), l)) // Si on ne l'avait pas déjà
+							final LinePlus newLineWall = new LinePlus((int)startedDraw.getCenterX(), (int)startedDraw.getCenterY(), (int)c.getCenterX(), (int)c.getCenterY());
+
+							boolean isGood = false;
+							for (Node n: walls.getChildren())
 							{
-								l.setStrokeWidth(0.05);
-								walls.getChildren().add(l);
+								LinePlus li             = (LinePlus)n;
+								ArrayList <LineWall> lw = LineWallUtils.exceptIfIntersectOrUnion(li.lw, newLineWall.lw);
+								switch (lw.size())
+								{
+								case 0:     //Les murs se superposaient totalement
+									isGood = true;
+									walls.getChildren().remove(li);
+									break;
+
+								case 1:     //Les murs se superposaient à moitié
+									isGood = true;
+									walls.getChildren().remove(li);
+									walls.getChildren().add(new LinePlus(lw.get(0)));
+									break;
+
+								case 2:
+									if (!(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw))    //Les se superposaient
+									{
+										isGood = true;
+										walls.getChildren().remove(li);
+										walls.getChildren().addAll(new LinePlus(lw.get(0)), new LinePlus(lw.get(1)));
+									}
+									break;
+								}
+								if (isGood)
+								{
+									break;
+								}
+							}
+							if (!isGood)// Les murs ne se superposaient pas
+							{
+								walls.getChildren().add(newLineWall);
 							}
 						}
 						startedDraw.setFill(Color.BLACK);
@@ -102,7 +134,7 @@ public class Creator extends ScenePlus
 				});
 				if (!(j + 1 >= height || i + 1 >= width))// Si on n'est pas sur une ligne du "bord"
 				{
-					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1, i, j);
+					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1);
 					rect.setOnMouseClicked((ev)->{
 						rect.changeCase();
 						updateLeftPane(rect);
@@ -130,8 +162,8 @@ public class Creator extends ScenePlus
 			ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
 			for (Node l: walls.getChildren())
 			{
-				Line li = (Line)l;
-				lineWalls.add(new LineWall((int)li.getStartX(), (int)li.getStartY(), (int)li.getEndX(), (int)li.getEndY()));
+				LinePlus li = (LinePlus)l;
+				lineWalls.add(li.lw);
 			}
 
 			ArrayList <Case> specialCases = new ArrayList <Case>();
@@ -201,36 +233,6 @@ public class Creator extends ScenePlus
 				leftPaneGr.getChildren().add(sliderS);
 				break;
 			}
-		}
-	}
-
-	private < E > boolean removeLine(ObservableList <E> g, LinePlus l)
-	{
-		FilteredList <E> fil = g.filtered((li)->((LinePlus)li).equals(l));
-		if (fil.size() == 0)
-		{
-			return (false);
-		}
-		try{
-			for (E e: fil)
-			{
-				g.remove(e);
-			}
-		}catch (Exception E) {}
-
-		return (true);
-	}
-
-	class LinePlus extends Line
-	{
-		public LinePlus(double a, double b, double c, double d)
-		{
-			super(a, b, c, d);
-		}
-
-		public boolean equals(Line l1)
-		{
-			return ((l1.getStartX() == getStartX() && l1.getStartY() == getStartY() && l1.getEndX() == getEndX() && l1.getEndY() == getEndY()) || (l1.getStartX() == getEndX() && l1.getStartY() == getEndY() && l1.getEndX() == getStartX() && l1.getEndY() == getStartY()));
 		}
 	}
 }
