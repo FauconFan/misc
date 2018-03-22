@@ -1,34 +1,40 @@
 package src.lexer_parser;
 
+import src.lexer_parser.tokens.ColorToken;
+import src.lexer_parser.tokens.IdentifierToken;
+import src.lexer_parser.tokens.NumberToken;
+import src.lexer_parser.tokens.OperatorToken;
+import src.lexer_parser.tokens.Token;
+
 %%
 %public
 %class LexerFlex
 %unicode
-%type src.tokens.Token
+%type Token
 %line
 %column
 
 %{
-    public src.tokens.Token token(Sym type) {
-        return new src.tokens.Token(type);
+    public Token token(Sym type) {
+        return new Token(type);
     }
 
-    public src.tokens.NumberToken token(Sym type, int value) {
-        return new src.tokens.NumberToken(type,value);
+    public NumberToken token(Sym type, int value) {
+        return new NumberToken(type,value);
     }
 
-    public src.tokens.Token token(Sym type, String value) {
+    public Token token(Sym type, String value) {
         if (type == Sym.IDENTIFIER)
         {
-            return new src.tokens.IdentifierToken(type,value);
+            return new IdentifierToken(type,value);
         }
         else if (type == Sym.OPERATOR)
         {
-            return new src.tokens.OperatorToken(type,value);
+            return new OperatorToken(type,value);
         }
         else if (type == Sym.COLOR)
         {
-            return new src.tokens.ColorToken(type,value);
+            return new ColorToken(type,value);
         }
         System.err.println("SNA parsing in flex");
         return (null);

@@ -1,7 +1,7 @@
 package src.lexer_parser;
 
 import java.io.*;
-import src.tokens.Token;
+import src.lexer_parser.tokens.Token;
 
 public class LookAhead1
 {

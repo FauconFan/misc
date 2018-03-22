@@ -1,4 +1,4 @@
-package src.tokens;
+package src.lexer_parser.tokens;
 
 import src.lexer_parser.Sym;
 

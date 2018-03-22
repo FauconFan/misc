@@ -3,11 +3,11 @@ package src.lexer_parser;
 import java.io.*;
 import java.awt.Color;
 
-import src.tokens.Token;
-import src.tokens.IdentifierToken;
-import src.tokens.NumberToken;
-import src.tokens.ColorToken;
-import src.tokens.OperatorToken;
+import src.lexer_parser.tokens.Token;
+import src.lexer_parser.tokens.IdentifierToken;
+import src.lexer_parser.tokens.NumberToken;
+import src.lexer_parser.tokens.ColorToken;
+import src.lexer_parser.tokens.OperatorToken;
 
 import src.ast.AST;
 import src.ast.ASTExpr;
