@@ -22,6 +22,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.Scene;
 import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 import javafx.stage.Screen;
 
 import src.model.*;
@@ -50,6 +51,12 @@ public class Creator extends ScenePlus
 		pane.setAlignment(Pos.BASELINE_LEFT);
 		StackPane root = new StackPane();
 
+		root.setAlignment(Pos.TOP_LEFT);
+
+		final double dotWidth = 0.1;
+		final int    width    = 20;
+		final int    height   = 10;
+
 		Group dots  = new Group();
 		Group walls = new Group();
 		Group cases = new Group();
@@ -58,17 +65,13 @@ public class Creator extends ScenePlus
 		walls.getTransforms().add(sc);
 		cases.getTransforms().add(sc);
 
-		root.getChildren().addAll(cases, dots, walls);
-
-		final double dotWidth = 0.1;
-		final int    width    = 20;
-		final int    height   = 10;
+		root.getChildren().addAll(cases, walls, dots);
 
 		// Draw circles
 		// They are with almost integer values (modified by dotWidth)
-		for (double i = dotWidth; i < width; i++)
+		for (int i = 0; i < width; i++)
 		{
-			for (double j = dotWidth; j < height; j++)
+			for (int j = 0; j < height; j++)
 			{
 				final Circle c = new Circle(i, j, dotWidth, Color.BLACK);
 				c.setOnMouseClicked((ev)->{
@@ -86,7 +89,7 @@ public class Creator extends ScenePlus
 					{
 						if (startedDraw.getCenterX() == c.getCenterX() || startedDraw.getCenterY() == c.getCenterY())
 						{
-							final LinePlus l = new LinePlus(startedDraw.getCenterX() - dotWidth / 2, startedDraw.getCenterY() - dotWidth / 2, c.getCenterX() - dotWidth / 2, c.getCenterY() - dotWidth / 2);
+							final LinePlus l = new LinePlus(startedDraw.getCenterX(), startedDraw.getCenterY(), c.getCenterX(), c.getCenterY());
 							if (!removeLine(walls.getChildren(), l)) // Si on ne l'avait pas déjà
 							{
 								l.setStrokeWidth(0.05);
@@ -99,7 +102,7 @@ public class Creator extends ScenePlus
 				});
 				if (!(j + 1 >= height || i + 1 >= width))// Si on n'est pas sur une ligne du "bord"
 				{
-					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1, (int)(i - dotWidth), (int)(j - dotWidth));
+					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1, i, j);
 					rect.setOnMouseClicked((ev)->{
 						rect.changeCase();
 						updateLeftPane(rect);
@@ -128,14 +131,13 @@ public class Creator extends ScenePlus
 			for (Node l: walls.getChildren())
 			{
 				Line li = (Line)l;
-				lineWalls.add(new LineWall((int)(li.getStartX() - dotWidth), (int)(li.getStartY() - dotWidth), (int)(li.getEndX() - dotWidth), (int)(li.getEndY() - dotWidth)));
+				lineWalls.add(new LineWall((int)li.getStartX(), (int)li.getStartY(), (int)li.getEndX(), (int)li.getEndY()));
 			}
 
 			ArrayList <Case> specialCases = new ArrayList <Case>();
 			for (Node l: cases.getChildren())
 			{
-				RectanglePlus rect = (RectanglePlus)l;
-				Case c             = rect.getCase();
+				Case c = ((RectanglePlus)l).getCase();
 				if (c != null)
 				{
 					specialCases.add(c);
