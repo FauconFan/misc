@@ -161,8 +161,17 @@ public class Parser
 		}
 		else if (reader.check(Sym.IF))
 		{
+			ASTExpr expr;
+			ASTInstr instr;
+			ASTInstrIf follow;
+
 			reader.eat(Sym.IF);
-			res = if_statement();
+			expr = expr();
+			reader.eat(Sym.THEN);
+			instr = instruction();
+			follow = if_follow();
+
+			res = new ASTInstrIf(expr, instr, follow);
 		}
 		else if (reader.check(Sym.WHILE))
 		{
@@ -216,19 +225,6 @@ public class Parser
 
 		//null if no match
 		return (res);
-	}
-
-	private ASTInstrIf if_statement() throws Exception
-	{
-		ASTExpr expr;
-		ASTInstr instr;
-		ASTInstrIf follow;
-
-		expr = expr();
-		reader.eat(Sym.THEN);
-		instr = instruction();
-		follow = if_follow();
-		return (new ASTInstrIf(expr, instr, follow));
 	}
 
 	private ASTInstrIf if_follow() throws Exception
