@@ -68,7 +68,6 @@ public class Creator extends ScenePlus
 		root.getChildren().addAll(cases, walls, dots);
 
 		// Draw circles
-		// They are with almost integer values (modified by dotWidth)
 		for (int i = 0; i < width; i++)
 		{
 			for (int j = 0; j < height; j++)
@@ -96,30 +95,14 @@ public class Creator extends ScenePlus
 							{
 								LinePlus li             = (LinePlus)n;
 								ArrayList <LineWall> lw = LineWallUtils.exceptIfIntersectOrUnion(li.lw, newLineWall.lw);
-								switch (lw.size())
+								if (lw.size() == 0 || lw.size() == 1 || lw.size() == 2 && !(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw))
 								{
-								case 0:     //Les murs se superposaient totalement
-									isGood = true;
 									walls.getChildren().remove(li);
-									break;
-
-								case 1:     //Les murs se superposaient à moitié
-									isGood = true;
-									walls.getChildren().remove(li);
-									walls.getChildren().add(new LinePlus(lw.get(0)));
-									break;
-
-								case 2:
-									if (!(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw))    //Les se superposaient
+									for (LineWall l: lw)
 									{
-										isGood = true;
-										walls.getChildren().remove(li);
-										walls.getChildren().addAll(new LinePlus(lw.get(0)), new LinePlus(lw.get(1)));
+										walls.getChildren().add(new LinePlus(l));
 									}
-									break;
-								}
-								if (isGood)
-								{
+									isGood = true;
 									break;
 								}
 							}
