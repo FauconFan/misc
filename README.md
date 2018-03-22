@@ -14,6 +14,12 @@ où la première clé est le niveau de profondeur (le niveau de profondeur comme
 
 On admet que le Else se rattache au dernier If croisé (hors Begin End)  
 
+On fait une interprétation en plusieurs étapes :
+ 1. Analyse lexical (jflex)
+ 2. Analyse syntaxique (création de l'AST)
+ 3. Analyse sémantique (gestion de la portée de variables)
+ 4. Evaluation de l'AST (éxécution)
+
 ## To Do List
 
  - [x] Créer le flex
