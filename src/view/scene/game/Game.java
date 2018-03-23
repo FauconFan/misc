@@ -191,13 +191,29 @@ public class Game extends ScenePlus
 			final Consumer <Directions> cons = (bool) ? (p.dirs::add) : (p.dirs::remove);
 			switch (key.getCode())
 			{
-			case Q: cons.accept(Directions.west); break;
+			case Q: if (!bool || (bool && !p.dirs.contains(Directions.east)))
+				{
+					cons.accept(Directions.west);
+				}
+				break;
 
-			case D: cons.accept(Directions.east); break;
+			case D: if (!bool || (bool && !p.dirs.contains(Directions.west)))
+				{
+					cons.accept(Directions.east);
+				}
+				break;
 
-			case Z: cons.accept(Directions.north); break;
+			case Z: if (!bool || (bool && !p.dirs.contains(Directions.south)))
+				{
+					cons.accept(Directions.north);
+				}
+				break;
 
-			case S: cons.accept(Directions.south); break;
+			case S: if (!bool || (bool && !p.dirs.contains(Directions.north)))
+				{
+					cons.accept(Directions.south);
+				}
+				break;
 
 			case F: cons.accept(Directions.goUp); break;
 
