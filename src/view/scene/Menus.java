@@ -82,13 +82,6 @@ public class Menus extends ScenePlus
 				changeView((Parent) new MenuCreation());
 			});
 
-			final Button buttonCreator = addButton("Creator");
-			buttonCreator.setStyle("-fx-text-fill: #D2691E; -fx-background-color: #DFB951; -fx-border-radius: 20; -fx-background-radius: 20;-fx-padding: 5;");
-			buttonCreator.setOnAction(event->{
-				v.changeScene(new Creator(v));
-			});
-
-
 			addButtonQuit();
 
 			putMsg();
@@ -120,7 +113,7 @@ public class Menus extends ScenePlus
 				sliders[i].setShowTickLabels(true);
 				sliders[i].setMajorTickUnit(10);
 			}
-			final Button buttonCreate = addButton("Create");
+			final Button buttonCreate = addButton("Create randomly");
 
 			buttonPrevious.setOnAction(event->{
 				view = new MenuStart();
@@ -132,6 +125,12 @@ public class Menus extends ScenePlus
 				//Algo al = MapIntroBuilder.getMapIntro(6);
 				v.con.createMaze(al);
 				v.showGame();
+			});
+
+			final Button buttonCreator = addButton("Creator");
+			buttonCreator.setStyle("-fx-text-fill: #D2691E; -fx-background-color: #DFB951; -fx-border-radius: 20; -fx-background-radius: 20;-fx-padding: 5;");
+			buttonCreator.setOnAction(event->{
+				v.changeScene(new Creator(v, (int)sliders[0].getValue(), (int)sliders[1].getValue()));
 			});
 
 			putMsg();

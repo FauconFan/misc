@@ -41,7 +41,7 @@ public class Creator extends ScenePlus
 
 	private final Scale sc = new Scale(100, 100);
 
-	public Creator(View v)
+	public Creator(View v, int width, int height)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
 
@@ -54,8 +54,6 @@ public class Creator extends ScenePlus
 		root.setAlignment(Pos.TOP_LEFT);
 
 		final double dotWidth = 0.1;
-		final int    width    = 20;
-		final int    height   = 10;
 
 		Group dots  = new Group();
 		Group walls = new Group();
