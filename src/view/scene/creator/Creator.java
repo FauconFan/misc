@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -55,13 +57,15 @@ public class Creator extends ScenePlus
 
 		final double dotWidth = 0.1;
 
+		final Translate tr = new Translate();
+
 		Group dots  = new Group();
 		Group walls = new Group();
 		Group cases = new Group();
 
-		dots.getTransforms().add(sc);
-		walls.getTransforms().add(sc);
-		cases.getTransforms().add(sc);
+		dots.getTransforms().addAll(tr, sc);
+		walls.getTransforms().addAll(tr, sc);
+		cases.getTransforms().addAll(tr, sc);
 
 		root.getChildren().addAll(cases, walls, dots);
 
@@ -166,7 +170,13 @@ public class Creator extends ScenePlus
 			v.showGame();
 		});
 
-		pane.getChildren().addAll(panel, root);
+		ScrollBar verticalScroll = new ScrollBar();
+		verticalScroll.setOrientation(Orientation.VERTICAL);
+		verticalScroll.valueProperty().addListener((ov, old_val, new_val)->{
+			tr.setY(-new_val.doubleValue());
+		});
+
+		pane.getChildren().addAll(panel, root, verticalScroll);
 	}
 
 	/**
