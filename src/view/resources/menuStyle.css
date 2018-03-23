@@ -60,7 +60,7 @@
   -fx-stroke-width: 1;
 }
 
-#ghostmode{
+#ghostmodeoff{
   -fx-text-fill: white;
   -fx-base: white;
   -fx-background-color: black;
@@ -70,7 +70,16 @@
   -fx-padding: 5;
 }
 
-#ghostmode:hover{
+#ghostmodeoff:hover{
+  -fx-text-fill: red;
+  -fx-background-color: black;
+  -fx-border-radius: 20;
+  -fx-background-radius: 20;
+  -fx-border-color: red;
+  -fx-padding: 5;
+}
+
+#ghostmodeon{
   -fx-text-fill: red;
   -fx-background-color: black;
   -fx-border-radius: 20;

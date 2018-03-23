@@ -52,13 +52,21 @@ public class Pause extends ScenePlus
 			});
 
 			ToggleButton buttonGhostMode = new ToggleButton("Ghost Mode");
-			buttonGhostMode.setId("ghostmode");
+			buttonGhostMode.setId("ghostmodeoff");
 			buttonGhostMode.setPrefWidth(primaryScreenBounds.getWidth() / 3);
 			buttonGhostMode.setPrefHeight(primaryScreenBounds.getHeight() / 15);
 			getChildren().add(buttonGhostMode);
 			buttonGhostMode.setSelected(previous.getMaze().getPlayer().getGhostMode());
 			buttonGhostMode.setOnAction(event->{
 				previous.getMaze().getPlayer().setGhostMode(buttonGhostMode.isSelected());
+				if (buttonGhostMode.isSelected())
+				{
+					buttonGhostMode.setId("ghostmodeon");
+				}
+				else
+				{
+					buttonGhostMode.setId("ghostmodeoff");
+				}
 			});
 
 			Button buttonSave = addButton("Save");
