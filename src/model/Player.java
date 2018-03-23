@@ -30,12 +30,12 @@ public class Player
 	public final float rot = 2f;       // En degré
 
 	//Constantes d'accélération et de vitesse max
-	private static final float ACCELERATIONXY = 0.0005f;
+	private static final float ACCELERATIONXY = 0.001f;
 	private static final float VMAX           = 0.04f;
-	private static final float ACCELERATIONZ  = -0.015f;
+	private static final float PESANTEUR      = -0.015f;
 
-	private float vXY;
-	private float vZ = 0.025f;
+	private float velocityXY;
+	private float velocityZ = 0.025f;
 
 	//Ensemble de déplacements à faire
 	public final HashSet <Directions> dirs = new HashSet <Directions>();
@@ -219,15 +219,14 @@ public class Player
 		}
 		else
 		{
-			vXY = Math.max(0, vXY - ACCELERATIONXY * 2);
+			velocityXY = Math.max(0, velocityXY - ACCELERATIONXY * 2);
 		}
 		if (!ghostMode)
 		{
-			vZ = Math.min(0, vZ + ACCELERATIONZ);
-			CollisionsZManager zCol = new CollisionsZManager(this, vZ);
-			zCol.updateMove();
+			velocityZ = velocityZ + PESANTEUR;
+			CollisionsZManager zCol = new CollisionsZManager(this, velocityZ);
 			this.posZ = zCol.getMove() + this.posZ;
-			vZ        = zCol.getMove();
+			velocityZ = zCol.getMove();
 		}
 	}
 
@@ -242,10 +241,10 @@ public class Player
 
 		float speed = (this.isRunning) ? this.speed * 2 : this.speed;
 
-		vXY = Math.min(VMAX, vXY + ACCELERATIONXY);
+		velocityXY = Math.min(VMAX, velocityXY + ACCELERATIONXY);
 
-		final float dx = (float)(Math.sin(r1) * vXY * speed);
-		final float dy = (float)(Math.cos(r1) * vXY * speed);
+		final float dx = (float)(Math.sin(r1) * velocityXY * speed);
+		final float dy = (float)(Math.cos(r1) * velocityXY * speed);
 
 		if (ghostMode)
 		{
@@ -256,7 +255,7 @@ public class Player
 		{
 			CollisionsXYManager xyCol = new CollisionsXYManager(lw, this, new FloatVector(dx, dy));
 			this.applyMove(xyCol.getMove());
-			vXY = xyCol.getNorm();
+			velocityXY = xyCol.getNorm();
 		}
 	}
 

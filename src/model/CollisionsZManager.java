@@ -13,6 +13,7 @@ public class CollisionsZManager
 	{
 		this.p     = p;
 		this.zMove = dz;
+		this.updateMove();
 	}
 
 	public float getMove()
@@ -28,7 +29,7 @@ public class CollisionsZManager
 		}
 		else
 		{
-			this.zMove = (this.p.getPosZ() + this.zMove < 0) ? this.p.getPosZ() : this.zMove;
+			this.zMove = (this.p.getPosZ() + this.zMove < 0) ? -this.p.getPosZ() : this.zMove;
 		}
 	}
 }
