@@ -11,6 +11,9 @@ import src.lexer_parser.tokens.OperatorToken;
 
 import src.ast.AST;
 import src.ast.ast_expr.ASTExpr;
+import src.ast.ast_expr.ASTExprCalculus;
+import src.ast.ast_expr.ASTExprIdentifier;
+import src.ast.ast_expr.ASTExprNumber;
 import src.ast.ast_instr.ASTInstr;
 import src.ast.ast_instr.ASTInstrIf;
 import src.ast.ast_instr.ASTInstrExec;
@@ -43,21 +46,21 @@ public class Parser
 			op    = ((OperatorToken)reader.pop(Sym.OPERATOR)).getOp();
 			right = expr();
 			reader.eat(Sym.RPAR);
-			res = new ASTExpr(left, op, right);
+			res = new ASTExprCalculus(left, op, right);
 		}
 		else if (reader.check(Sym.NUMBER))
 		{
 			int number;
 
 			number = ((NumberToken)reader.pop(Sym.NUMBER)).getValue();
-			res    = new ASTExpr(number);
+			res    = new ASTExprNumber(number);
 		}
 		else if (reader.check(Sym.IDENTIFIER))
 		{
 			String identifier;
 
 			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
-			res        = new ASTExpr(identifier);
+			res        = new ASTExprIdentifier(identifier);
 		}
 		else
 		{
