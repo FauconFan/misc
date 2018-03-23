@@ -70,6 +70,7 @@ class MyCanvas extends JComponent
 		frame.getContentPane().add(new MyCanvas(filename));
 
 		frame.pack();
+		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 }
