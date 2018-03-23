@@ -19,7 +19,6 @@ public class ASTInstrDecl extends ASTInstr
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
 	{
 		expr.checkSemantic(sa);
-		sa.verify_if_not_present_in_registre(identifier);
 		sa.add_in_registre(identifier, is_cst);
 	}
 

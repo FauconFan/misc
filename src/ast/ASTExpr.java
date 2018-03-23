@@ -91,7 +91,7 @@ public class ASTExpr
 			case NUMBER:
 				return ;
 			case IDENTIFIER:
-				sa.verify_if_present_in_registre(this.identifier, false);
+				sa.can_access_var_in_registre(this.identifier);
 				return ;
 			case CALCULUS:
 				this.left.checkSemantic(sa);

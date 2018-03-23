@@ -35,9 +35,25 @@ public class SemanticAnalyser
 		this.current_depth--;
 	}
 
-	private boolean is_present_in_registre(String identifier, boolean need_to_modify) throws SemanticAnalyserException
+	public void can_access_var_in_registre(String identifier) throws SemanticAnalyserException
 	{
-		for (int i = 0; i <= this.current_depth; i++)
+		for (int i = this.current_depth; i >= 0; i--)
+		{
+			ArrayList <AccessDataTmp> registre_i;
+
+			registre_i = this.registre_verify.get(i);
+			for (AccessDataTmp adt : registre_i)
+			{
+				if (adt.getIdentifier().equals(identifier))
+					return ;
+			}
+		}
+		throw new SemanticAnalyserException("The variable " + identifier + " doesn't exist");
+	}
+
+	public void can_modify_var_in_registre(String identifier) throws SemanticAnalyserException
+	{
+		for (int i = this.current_depth; i >= 0; i--)
 		{
 			ArrayList <AccessDataTmp> registre_i;
 
@@ -46,13 +62,31 @@ public class SemanticAnalyser
 			{
 				if (adt.getIdentifier().equals(identifier))
 				{
-					if (need_to_modify == true && adt.is_cst() == true)
-						throw new SemanticAnalyserException("Modifying constant " + identifier);
-					return (true);
+					if (adt.is_cst())
+					{
+						throw new SemanticAnalyserException("Cannot modify the constant " + identifier);
+					}
+					return ;
 				}
 			}
 		}
-		return (false);
+		throw new SemanticAnalyserException("The varibale " + identifier + " doesn't exist");
+	}
+
+	public void add_in_registre(String identifier, boolean is_cst) throws SemanticAnalyserException
+	{
+		ArrayList <AccessDataTmp> registre_last;
+
+		registre_last = this.registre_verify.get(this.current_depth);
+		for (AccessDataTmp adt : registre_last)
+		{
+			if (adt.getIdentifier().equals(identifier))
+			{
+				throw new SemanticAnalyserException("A data " + identifier + " already exists");
+			}
+		}
+		this.registre_verify.get(this.current_depth).add(new AccessDataTmp(is_cst, identifier));
+		describe();
 	}
 
 	public void describe()
@@ -69,32 +103,6 @@ public class SemanticAnalyser
 			}
 			System.out.println("]");
 		}
-	}
-
-	public void verify_if_present_in_registre(String identifier, boolean need_to_modify) throws SemanticAnalyserException
-	{
-		if (is_present_in_registre(identifier, need_to_modify) == false)
-		{
-			throw new SemanticAnalyserException("Identifier " + identifier + " doesn't exist");
-		}
-	}
-
-	public void verify_if_not_present_in_registre(String identifier) throws SemanticAnalyserException
-	{
-		if (is_present_in_registre(identifier, false))
-		{
-			throw new SemanticAnalyserException("Identifier " + identifier + " does exist");
-		}
-	}
-
-	public void add_in_registre(String identifier, boolean is_cst) throws SemanticAnalyserException
-	{
-		if (is_present_in_registre(identifier, false))
-		{
-			throw new SemanticAnalyserException("Identifier " + identifier + " is already used");
-		}
-		this.registre_verify.get(this.current_depth).add(new AccessDataTmp(is_cst, identifier));
-		describe();
 	}
 
 	private static class AccessDataTmp

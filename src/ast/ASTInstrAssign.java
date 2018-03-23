@@ -16,7 +16,7 @@ public class ASTInstrAssign extends ASTInstr
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
 	{
-		sa.verify_if_present_in_registre(identifier, true);
+		sa.can_modify_var_in_registre(identifier);
 		expr.checkSemantic(sa);
 	}
 

@@ -12,7 +12,12 @@ HashMap <Integer, HashMap<String, Integer>>
 ```
 où la première clé est le niveau de profondeur (le niveau de profondeur commence à 0, s'incrémente avec Begin et se décrémente avec End)  
 
-On admet que le Else se rattache au dernier If croisé (hors Begin End)  
+On admet que le Else se rattache au dernier If croisé (hors Begin End) (Dangling Else Problem)
+
+Gestion de la portée des variables :
+ - Si une variable est défini dans un bloc de profondeur d, si on essaie d'accéder à cette varible dans un bloc de profondeur inférieur, on a une erreur sémantique
+ - Une variable ne peut pas étre redéfini dans le même bloc, mais elle peut être redéfini dans un bloc plus profond, elle reprend son ancienne valeur quand on quitte ce sous-bloc
+ - Une constante ne peut être modifié
 
 On fait une interprétation en plusieurs étapes :
  1. Analyse lexical (jflex)
@@ -27,8 +32,6 @@ On fait une interprétation en plusieurs étapes :
  - [x] Créer l'arbre de syntaxe abstraite (AST)
  - [x] Gestion des variables Analyse sémantique
  - [ ] Evaluation
-
-Est-ce qu'on autorise le fait de changer une variable ou son type (variable ou constante dans un sous-block...)
 
 ## Idées
 
