@@ -15,13 +15,20 @@ public class CollisionsZManager
 		this.zMove = dz;
 	}
 
-	public float getNextMove()
+	public float getMove()
 	{
 		return (this.zMove);
 	}
 
 	public void updateMove()
 	{
-		this.zMove = (this.p.getPosZ() + this.zMove > 0) ? this.p.getPosZ() : this.zMove;
+		if (this.p.getPosZ() < 0)
+		{
+			this.zMove = 0;
+		}
+		else
+		{
+			this.zMove = (this.p.getPosZ() + this.zMove < 0) ? this.p.getPosZ() : this.zMove;
+		}
 	}
 }

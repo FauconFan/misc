@@ -27,8 +27,15 @@ public class Player
 	private Date time;
 
 	//Constante de déplacement
-	public final float change = 0.025f;
-	public final float rot    = 2f;    // En degré
+	public final float rot = 2f;       // En degré
+
+	//Constantes d'accélération et de vitesse max
+	private static final float ACCELERATIONXY = 0.0005f;
+	private static final float VMAX           = 0.04f;
+	private static final float ACCELERATIONZ  = -0.015f;
+
+	private float vXY;
+	private float vZ = 0.025f;
 
 	//Ensemble de déplacements à faire
 	public final HashSet <Directions> dirs = new HashSet <Directions>();
@@ -168,19 +175,22 @@ public class Player
 	 * Update the player position with the collisions with walls
 	 * @param lw the walls
 	 */
-	public void update(LineWall[] lw)
+	public void update(LineWall [] lw)
 	{
+		int angle       = 0;
+		int nbDirPushed = 0;
+
 		for (Directions d: dirs)
 		{
 			switch (d)
 			{
-			case north: reallyMove(lw, 0); break;
+			case north: angle += 0; nbDirPushed++; break;
 
-			case east: reallyMove(lw, 90); break;
+			case east: angle += 90; nbDirPushed++; break;
 
-			case south: reallyMove(lw, 180); break;
+			case south: angle += 180; nbDirPushed++; break;
 
-			case west: reallyMove(lw, -90); break;
+			case west: angle += -90; nbDirPushed++; break;
 
 			case left: horizontalAngle -= rot; break;
 
@@ -192,16 +202,32 @@ public class Player
 
 			case goUp: if (ghostMode)
 				{
-					posZ += change * 10;
+					posZ += 1f;
 				}
 				break;
 
 			case goDown: if (ghostMode)
 				{
-					posZ -= change * 10;
+					posZ -= 1f;
 				}
 				break;
 			}
+		}
+		if (nbDirPushed != 0)
+		{
+			reallyMove(lw, (dirs.contains(Directions.south) && dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushed));
+		}
+		else
+		{
+			vXY = Math.max(0, vXY - ACCELERATIONXY * 2);
+		}
+		if (!ghostMode)
+		{
+			vZ = Math.min(0, vZ + ACCELERATIONZ);
+			CollisionsZManager zCol = new CollisionsZManager(this, vZ);
+			zCol.updateMove();
+			this.posZ = zCol.getMove() + this.posZ;
+			vZ        = zCol.getMove();
 		}
 	}
 
@@ -216,8 +242,10 @@ public class Player
 
 		float speed = (this.isRunning) ? this.speed * 2 : this.speed;
 
-		final float dx = (float)(Math.sin(r1) * change * speed);
-		final float dy = (float)(Math.cos(r1) * change * speed);
+		vXY = Math.min(VMAX, vXY + ACCELERATIONXY);
+
+		final float dx = (float)(Math.sin(r1) * vXY * speed);
+		final float dy = (float)(Math.cos(r1) * vXY * speed);
 
 		if (ghostMode)
 		{
@@ -227,12 +255,8 @@ public class Player
 		else
 		{
 			CollisionsXYManager xyCol = new CollisionsXYManager(lw, this, new FloatVector(dx, dy));
-			while (!xyCol.getNextMove().isNul())
-			{
-				xyCol.updateMove();
-				applyMove(xyCol.getNextMove());
-				xyCol.next();
-			}
+			this.applyMove(xyCol.getMove());
+			vXY = xyCol.getNorm();
 		}
 	}
 

@@ -13,6 +13,7 @@ public class CollisionsXYManager
 	private float coefPropMin;
 	private FloatVector [] closestWall;
 	private FloatVector [] splitMove;
+	private FloatVector finalMove;
 
 	public CollisionsXYManager(LineWall [] lws, Player p, FloatVector dep)
 	{
@@ -21,6 +22,7 @@ public class CollisionsXYManager
 		this.splitMove    = new FloatVector[2];
 		this.splitMove[0] = dep;
 		this.splitMove[1] = new FloatVector(0, 0);
+		this.finalMove    = new FloatVector(0, 0);
 	}
 
 	private void init()
@@ -29,15 +31,26 @@ public class CollisionsXYManager
 		closestWall = null;
 	}
 
-	public FloatVector getNextMove()
+	public FloatVector getMove()
 	{
-		return (splitMove[0]);
+		do
+		{
+			this.updateMove();
+			this.finalMove.sum(this.splitMove[0]);
+			this.next();
+		} while (!this.splitMove[0].isNul());
+		return (this.finalMove);
+	}
+
+	public float getNorm()
+	{
+		return (this.finalMove.norm());
 	}
 
 	public void next()
 	{
-		splitMove[0] = splitMove[1];
-		splitMove[1] = new FloatVector(0, 0);
+		this.splitMove[0] = this.splitMove[1];
+		this.splitMove[1] = new FloatVector(0, 0);
 	}
 
 	/**
@@ -50,24 +63,24 @@ public class CollisionsXYManager
 
 		for (LineWall lw : this.walls)
 		{
-			FloatVector [][] effectWalls = lw.effWalls(p.getPosX(), p.getPosY());
+			FloatVector [][] effectWalls = lw.effWalls(this.p.getPosX(), this.p.getPosY());
 			for (int i = 0; i < effectWalls.length; i++)
 			{
 				boolean horizontalWall = CollisionsXYManager.effectWallIsHorizontal(effectWalls[i]);
-				if (!splitMove[0].isCollinearTo((effectWalls[i][1].getX() - effectWalls[i][0].getX()), (effectWalls[i][1].getY() - effectWalls[i][0].getY())))
+				if (!this.splitMove[0].isCollinearTo((effectWalls[i][1].getX() - effectWalls[i][0].getX()), (effectWalls[i][1].getY() - effectWalls[i][0].getY())))
 				{
 					if (horizontalWall)
 					{
-						positionEff = (p.getPosY() < effectWalls[i][0].getY()) ? -1 : 1;
-						coefProp    = (effectWalls[i][0].getY() + p.getHitBoxCircle() * positionEff - p.getPosY()) / splitMove[0].getY();
+						positionEff = (this.p.getPosY() < effectWalls[i][0].getY()) ? -1 : 1;
+						coefProp    = (effectWalls[i][0].getY() + this.p.getHitBoxCircle() * positionEff - this.p.getPosY()) / this.splitMove[0].getY();
 					}
 					else
 					{
-						positionEff = (p.getPosX() < effectWalls[i][0].getX()) ? -1 : 1;
-						coefProp    = (effectWalls[i][0].getX() + p.getHitBoxCircle() * positionEff - p.getPosX()) / splitMove[0].getX();
+						positionEff = (this.p.getPosX() < effectWalls[i][0].getX()) ? -1 : 1;
+						coefProp    = (effectWalls[i][0].getX() + this.p.getHitBoxCircle() * positionEff - this.p.getPosX()) / this.splitMove[0].getX();
 					}
-					if ((coefProp < this.coefPropMin && coefProp < 1 && isConsideredWall(coefProp, effectWalls[i], horizontalWall)) &&
-						(0 < coefProp || (Math.abs(coefProp) < 10e-4f && ((horizontalWall && splitMove[0].getY() * positionEff < 0) || (!horizontalWall && splitMove[0].getX() * positionEff < 0)))))
+					if ((coefProp < this.coefPropMin && coefProp < 1 && this.isConsideredWall(coefProp, effectWalls[i], horizontalWall)) &&
+						(0 < coefProp || (Math.abs(coefProp) < 10e-4f && ((horizontalWall && this.splitMove[0].getY() * positionEff < 0) || (!horizontalWall && this.splitMove[0].getX() * positionEff < 0)))))
 					{
 						this.coefPropMin = coefProp;
 						this.closestWall = effectWalls[i];
@@ -82,20 +95,20 @@ public class CollisionsXYManager
 	 */
 	public void updateMove()
 	{
-		init();
-		putClosestWall();
+		this.init();
+		this.putClosestWall();
 
 		if (this.coefPropMin >= 0 && this.coefPropMin < 1)
 		{
 			if (CollisionsXYManager.effectWallIsHorizontal(this.closestWall))
 			{
-				splitMove[1] = new FloatVector(splitMove[0].getX() * (1 - this.coefPropMin), 0);
+				this.splitMove[1] = new FloatVector(this.splitMove[0].getX() * (1 - this.coefPropMin), 0);
 			}
 			else
 			{
-				splitMove[1] = new FloatVector(0, splitMove[0].getY() * (1 - this.coefPropMin));
+				this.splitMove[1] = new FloatVector(0, this.splitMove[0].getY() * (1 - this.coefPropMin));
 			}
-			splitMove[0] = splitMove[0].multiplicate(coefPropMin);
+			this.splitMove[0] = this.splitMove[0].multiplicate(this.coefPropMin);
 		}
 	}
 
@@ -110,13 +123,17 @@ public class CollisionsXYManager
 	{
 		if (isHorizontal)
 		{
-			return ((wall[0].getX() - p.getHitBoxCircle() < p.getPosX() + k * splitMove[0].getX() && p.getPosX() + k * splitMove[0].getX() < wall[1].getX() + p.getHitBoxCircle()) ||
-					(wall[1].getX() - p.getHitBoxCircle() < p.getPosX() + k * splitMove[0].getX() && p.getPosX() + k * splitMove[0].getX() < wall[0].getX() + p.getHitBoxCircle()));
+			return ((wall[0].getX() - this.p.getHitBoxCircle() < this.p.getPosX() + k * this.splitMove[0].getX() &&
+					 this.p.getPosX() + k * this.splitMove[0].getX() < wall[1].getX() + this.p.getHitBoxCircle()) ||
+					(wall[1].getX() - this.p.getHitBoxCircle() < this.p.getPosX() + k * this.splitMove[0].getX() &&
+					 this.p.getPosX() + k * this.splitMove[0].getX() < wall[0].getX() + this.p.getHitBoxCircle()));
 		}
 		else
 		{
-			return ((wall[0].getY() - p.getHitBoxCircle() < p.getPosY() + k * splitMove[0].getY() && p.getPosY() + k * splitMove[0].getY() < wall[1].getY() + p.getHitBoxCircle()) ||
-					(wall[1].getY() - p.getHitBoxCircle() < p.getPosY() + k * splitMove[0].getY() && p.getPosY() + k * splitMove[0].getY() < wall[0].getY() + p.getHitBoxCircle()));
+			return ((wall[0].getY() - this.p.getHitBoxCircle() < this.p.getPosY() + k * this.splitMove[0].getY() &&
+					 this.p.getPosY() + k * this.splitMove[0].getY() < wall[1].getY() + this.p.getHitBoxCircle()) ||
+					(wall[1].getY() - this.p.getHitBoxCircle() < this.p.getPosY() + k * this.splitMove[0].getY() &&
+					 this.p.getPosY() + k * this.splitMove[0].getY() < wall[0].getY() + this.p.getHitBoxCircle()));
 		}
 	}
 
