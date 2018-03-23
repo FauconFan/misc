@@ -2,6 +2,7 @@ package src.ast;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
+import src.prog.Prog;
 
 public class AST
 {
@@ -18,6 +19,18 @@ public class AST
 	{
 		this.instr = instr;
 		this.next  = next;
+	}
+
+	public void exec(Prog prog)
+	{
+		if (instr != null)
+		{
+			instr.exec(prog);
+		}
+		if (next != null)
+		{
+			next.exec(prog);
+		}
 	}
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException

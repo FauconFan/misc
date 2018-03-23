@@ -2,7 +2,9 @@ package src.ast;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
+import src.prog.Prog;
 
+// We accept that expr and follow can be null
 public class ASTInstrIf extends ASTInstr
 {
 	private ASTExpr expr;
@@ -21,6 +23,16 @@ public class ASTInstrIf extends ASTInstr
 		this.expr   = null;
 		this.instr  = instr;
 		this.follow = null;
+	}
+
+	public void exec(Prog prog)
+	{
+		if ((this.expr != null && this.expr.evalExpr(prog) != 0) == false)
+		{
+			this.instr.exec(prog);
+		}
+		if (this.follow != null)
+			this.follow.exec(prog);
 	}
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException

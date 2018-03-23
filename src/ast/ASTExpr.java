@@ -2,6 +2,7 @@ package src.ast;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
+import src.prog.Prog;
 
 public class ASTExpr
 {
@@ -55,7 +56,7 @@ public class ASTExpr
 		this.right      = right;
 	}
 
-	public int evalExpr()
+	public int evalExpr(Prog prog)
 	{
 		switch (this.mode)
 		{
@@ -63,15 +64,14 @@ public class ASTExpr
 			return (this.number);
 
 		case IDENTIFIER:
-			System.err.println("Variables not implemented yet");
-			return (0);
+			return (prog.getData(this.identifier));
 
 		case CALCULUS:
 			int a;
 			int b;
 
-			a = this.left.evalExpr();
-			b = this.right.evalExpr();
+			a = this.left.evalExpr(prog);
+			b = this.right.evalExpr(prog);
 			if (this.op == '+')
 			{
 				return (a + b);

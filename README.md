@@ -31,7 +31,7 @@ On fait une interprétation en plusieurs étapes :
  - [x] Créer le Parser
  - [x] Créer l'arbre de syntaxe abstraite (AST)
  - [x] Gestion des variables Analyse sémantique
- - [ ] Evaluation
+ - [x] Evaluation
 
 ## Idées
 

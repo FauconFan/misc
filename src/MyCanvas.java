@@ -12,6 +12,9 @@ import src.lexer_parser.LookAhead1;
 
 import src.ast.AST;
 
+import src.prog.Prog;
+import src.prog.SemanticAnalyser;
+
 @SuppressWarnings("serial")
 class MyCanvas extends JComponent
 {
@@ -42,10 +45,10 @@ class MyCanvas extends JComponent
 				LookAhead1 look   = new LookAhead1(lexer);
 				Parser     parser = new Parser(look);
 				AST        ast    = parser.buildProg();
-				if (ast != null)
-				{
-					System.out.println("HALLELUJAH");
-				}
+				SemanticAnalyser sa     = new SemanticAnalyser();
+				sa.checkAST(ast);
+				Prog prog = new Prog(ast, g2d);
+				prog.exec();
 				// AST ast = parser.progNonTerm();
 				// ast.exec(g2d);
 			}

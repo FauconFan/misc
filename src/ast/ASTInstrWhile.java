@@ -2,6 +2,7 @@ package src.ast;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
+import src.prog.Prog;
 
 public class ASTInstrWhile extends ASTInstr
 {
@@ -18,6 +19,14 @@ public class ASTInstrWhile extends ASTInstr
 	{
 		this.expr.checkSemantic(sa);
 		this.content.checkSemantic(sa);
+	}
+
+	public void exec(Prog prog)
+	{
+		while (expr.evalExpr(prog) != 0)
+		{
+			this.content.exec(prog);
+		}
 	}
 
 	public String toString()

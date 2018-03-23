@@ -88,7 +88,7 @@ public class SemanticAnalyser
 			}
 		}
 		this.registre_verify.get(this.current_depth).add(new AccessDataTmp(is_cst, identifier));
-		describe();
+		// describe();
 	}
 
 	public void describe()

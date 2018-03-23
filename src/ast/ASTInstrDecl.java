@@ -2,6 +2,7 @@ package src.ast;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
+import src.prog.Prog;
 
 public class ASTInstrDecl extends ASTInstr
 {
@@ -14,6 +15,11 @@ public class ASTInstrDecl extends ASTInstr
 		this.is_cst     = is_cst;
 		this.identifier = identifier;
 		this.expr       = expr;
+	}
+
+	public void exec(Prog prog)
+	{
+		prog.addData(this.identifier, this.expr.evalExpr(prog), this.is_cst);
 	}
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
