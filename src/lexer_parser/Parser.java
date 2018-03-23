@@ -14,9 +14,13 @@ import src.ast.ast_expr.ASTExpr;
 import src.ast.ast_expr.ASTExprCalculus;
 import src.ast.ast_expr.ASTExprIdentifier;
 import src.ast.ast_expr.ASTExprNumber;
+import src.ast.ast_instr.ast_instr_exec.ASTInstrExec;
+import src.ast.ast_instr.ast_instr_exec.ASTInstrExecDrawCircle;
+import src.ast.ast_instr.ast_instr_exec.ASTInstrExecFillCircle;
+import src.ast.ast_instr.ast_instr_exec.ASTInstrExecDrawRect;
+import src.ast.ast_instr.ast_instr_exec.ASTInstrExecFillRect;
 import src.ast.ast_instr.ASTInstr;
 import src.ast.ast_instr.ASTInstrIf;
-import src.ast.ast_instr.ASTInstrExec;
 import src.ast.ast_instr.ASTInstrWhile;
 import src.ast.ast_instr.ASTInstrDecl;
 import src.ast.ast_instr.ASTInstrAssign;
@@ -91,7 +95,7 @@ public class Parser
 			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
 			reader.eat(Sym.RPAR);
 
-			res = new ASTInstrExec(Sym.DRAWCIRCLE, args, colors);
+			res = new ASTInstrExecDrawCircle(args, colors);
 		}
 		else if (reader.check(Sym.FILLCIRCLE))
 		{
@@ -109,7 +113,7 @@ public class Parser
 			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
 			reader.eat(Sym.RPAR);
 
-			res = new ASTInstrExec(Sym.FILLCIRCLE, args, colors);
+			res = new ASTInstrExecFillCircle(args, colors);
 		}
 		else if (reader.check(Sym.DRAWRECT))
 		{
@@ -129,7 +133,7 @@ public class Parser
 			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
 			reader.eat(Sym.RPAR);
 
-			res = new ASTInstrExec(Sym.DRAWRECT, args, colors);
+			res = new ASTInstrExecDrawRect(args, colors);
 		}
 		else if (reader.check(Sym.FILLRECT))
 		{
@@ -149,7 +153,7 @@ public class Parser
 			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
 			reader.eat(Sym.RPAR);
 
-			res = new ASTInstrExec(Sym.FILLRECT, args, colors);
+			res = new ASTInstrExecFillRect(args, colors);
 		}
 		// Control Instruction
 		else if (reader.check(Sym.BEGIN))
