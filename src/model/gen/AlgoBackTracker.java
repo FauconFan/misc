@@ -13,6 +13,7 @@ import src.model.board.StartCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeFactory;
+import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 import src.utils.DisplayMazeConsole;
@@ -21,7 +22,7 @@ public class AlgoBackTracker extends Algo
 {
 	private static final boolean DEBUG_MODE = false;
 
-	public AlgoBackTracker(int y, int x)
+	public AlgoBackTracker(int y, int x) throws GenFactoryException
 	{
 		super();
 		this.cmfactory = new ContentMazeFactory();

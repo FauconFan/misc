@@ -1,0 +1,80 @@
+.root{
+  -fx-cursor: hand;
+  -fx-font-family: "confidential";
+  -fx-background-image: url("blackwall.jpg");
+
+}
+
+.button{
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-border-radius: 20;
+    -fx-border-color: white;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+.button:hover{
+    -fx-text-fill: red;
+    -fx-background-color: black;
+    -fx-border-color: red;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+
+.vbox{
+  -fx-background-image: url("blackwall.jpg");
+}
+
+.slider{
+  -fx-padding: 0.333333em;
+  -fx-control-inner-background: gray;
+}
+
+
+@font-face {
+    font-family: 'confidential';
+    src: url('fonts/confidential.ttf');
+}
+
+.label{
+  -fx-font: 28px Vivaldi;
+  -fx-font-family: "confidential";
+}
+
+#create{
+  -fx-font: 20 Tahoma;
+  -fx-text-fill: white;
+}
+
+#pane{
+  -fx-background-image: url("blackwall.jpg");
+}
+
+#hello{
+  -fx-font: 100px Tahoma;
+  -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, white 0%, gray 35%);
+  -fx-stroke: black;
+  -fx-stroke-width: 1;
+}
+
+#ghostmode{
+  -fx-text-fill: white;
+  -fx-base: white;
+  -fx-background-color: black;
+  -fx-border-radius: 20;
+  -fx-border-color: white;
+  -fx-background-radius: 20;
+  -fx-padding: 5;
+}
+
+#ghostmode:hover{
+  -fx-text-fill: red;
+  -fx-background-color: black;
+  -fx-border-radius: 20;
+  -fx-background-radius: 20;
+  -fx-border-color: red;
+  -fx-padding: 5;
+}

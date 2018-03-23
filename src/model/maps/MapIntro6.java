@@ -10,6 +10,7 @@ import src.model.board.StartCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeFactory;
+import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 
@@ -18,7 +19,7 @@ public class MapIntro6 extends Algo
 	private static int size_x = 1;
 	private static int size_y = 200;
 
-	public MapIntro6()
+	public MapIntro6() throws GenFactoryException
 	{
 		super();
 		this.cmfactory = new ContentMazeFactory();

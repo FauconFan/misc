@@ -10,6 +10,8 @@ import src.model.MazeDimension;
 import src.utils.DiscreteStatMazeGenerator;
 import src.utils.DisplayMazeConsole;
 
+import src.model.gen.CreatorHelper;
+
 public abstract class Algo
 {
 	protected ContentMaze cm;
@@ -44,7 +46,16 @@ public abstract class Algo
 		MainMaze ml;
 		Algo     al;
 
-		al = new AlgoSample2();
+		al = null;
+		try
+		{
+			al = new AlgoSample2();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.exit(1);
+		}
 		ml = new MainMaze(al);
 		ml.displayMaze(false);
 		System.out.println(ml.getMazeDimension());

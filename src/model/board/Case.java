@@ -35,6 +35,11 @@ public abstract class Case implements Cloneable
 		return (this.y);
 	}
 
+	public TypeCase getType()
+	{
+		return (this.type);
+	}
+
 	public static float getTailleCase()
 	{
 		return (tailleCase);

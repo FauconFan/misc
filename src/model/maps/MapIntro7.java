@@ -12,13 +12,15 @@ import src.model.board.TimeCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeFactory;
+import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 
 public class MapIntro7 extends Algo
 {
 	public int size_y = 9;
-	public MapIntro7()
+
+	public MapIntro7() throws GenFactoryException
 	{
 		super();
 		this.cmfactory = new ContentMazeFactory();

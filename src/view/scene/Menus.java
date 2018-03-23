@@ -84,12 +84,6 @@ public class Menus extends ScenePlus
 				changeView((Parent) new MenuCreation());
 			});
 
-			final Button buttonCreator = addButton("Creator");
-			buttonCreator.setOnAction(event->{
-				v.changeScene(new Creator(v));
-			});
-
-
 			addButtonQuit();
 
 			putMsg();
@@ -121,7 +115,7 @@ public class Menus extends ScenePlus
 				sliders[i].setShowTickLabels(true);
 				sliders[i].setMajorTickUnit(10);
 			}
-			final Button buttonCreate = addButton("Create");
+			final Button buttonCreate = addButton("Create randomly");
 
 			buttonPrevious.setOnAction(event->{
 				view = new MenuStart();
@@ -129,10 +123,24 @@ public class Menus extends ScenePlus
 			});
 
 			buttonCreate.setOnAction(event->{
-				Algo al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue());
-				//Algo al = MapIntroBuilder.getMapIntro(6);
+				Algo al = null;
+				try
+				{
+					al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue());
+				    //al = MapIntroBuilder.getMapIntro(6);
+				}
+				catch (Exception e)
+				{
+					setMsg(e.getMessage());
+					putMsg();
+				}
 				v.con.createMaze(al);
 				v.showGame();
+			});
+
+			final Button buttonCreator = addButton("Creator");
+			buttonCreator.setOnAction(event->{
+				v.changeScene(new Creator(v, (int)sliders[0].getValue(), (int)sliders[1].getValue()));
 			});
 
 			putMsg();
