@@ -32,9 +32,9 @@ public class Pause extends ScenePlus
 	public Pause(View v, Game p)
 	{
 		super(new Group(), v);
-		getStylesheets().add("assets/sss.css");
 		this.previous = p;
 		((Group)getRoot()).getChildren().add(new MenuPause());
+		getStylesheets().add("menuStyle.css");
 	}
 
 	public class MenuPause extends Menu
@@ -43,16 +43,13 @@ public class Pause extends ScenePlus
 		{
 			Button buttonUnPause = addButton("Unpause");
 
-			buttonUnPause.setPrefWidth(primaryScreenBounds.getWidth() / 3);
-			buttonUnPause.setPrefHeight(primaryScreenBounds.getHeight() / 15);
-
 			buttonUnPause.setOnAction(event->{
 				v.changeScene(previous);
 				previous.startTimer();
 			});
 
 			ToggleButton buttonGhostMode = new ToggleButton("Ghost Mode");
-			buttonGhostMode.setStyle("-fx-text-fill: #D2691E; -fx-background-color: #DFB951; -fx-border-radius: 20; -fx-background-radius: 20;-fx-padding: 5;");
+			buttonGhostMode.setId("ghostmode");
 			buttonGhostMode.setPrefWidth(primaryScreenBounds.getWidth() / 3);
 			buttonGhostMode.setPrefHeight(primaryScreenBounds.getHeight() / 15);
 			getChildren().add(buttonGhostMode);
