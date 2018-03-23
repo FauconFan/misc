@@ -11,15 +11,15 @@ public class ASTInstrIf extends ASTInstr
 
 	public ASTInstrIf(ASTExpr expr, ASTInstr instr, ASTInstrIf follow)
 	{
-		this.expr = expr;
-		this.instr = instr;
+		this.expr   = expr;
+		this.instr  = instr;
 		this.follow = follow;
 	}
 
 	public ASTInstrIf(ASTInstr instr)
 	{
-		this.expr = null;
-		this.instr = instr;
+		this.expr   = null;
+		this.instr  = instr;
 		this.follow = null;
 	}
 

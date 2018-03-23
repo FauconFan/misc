@@ -7,15 +7,15 @@ import src.ast.AST;
 
 public class SemanticAnalyser
 {
-	private HashMap <Integer, ArrayList<AccessDataTmp>> registre_verify;
+	private HashMap <Integer, ArrayList <AccessDataTmp> > registre_verify;
 	private int current_depth;
 
 	public SemanticAnalyser()
 	{
-		this.registre_verify = new HashMap<>();
-		this.current_depth = 0;
+		this.registre_verify = new HashMap <>();
+		this.current_depth   = 0;
 
-		this.registre_verify.put(0, new ArrayList<>());
+		this.registre_verify.put(0, new ArrayList <>());
 	}
 
 	public void checkAST(AST ast) throws SemanticAnalyserException
@@ -26,7 +26,7 @@ public class SemanticAnalyser
 	public void incremente()
 	{
 		this.current_depth++;
-		this.registre_verify.put(this.current_depth, new ArrayList<>());
+		this.registre_verify.put(this.current_depth, new ArrayList <>());
 	}
 
 	public void decremente()
@@ -45,7 +45,9 @@ public class SemanticAnalyser
 			for (AccessDataTmp adt : registre_i)
 			{
 				if (adt.getIdentifier().equals(identifier))
-					return ;
+				{
+					return;
+				}
 			}
 		}
 		throw new SemanticAnalyserException("The variable " + identifier + " doesn't exist");
@@ -66,7 +68,7 @@ public class SemanticAnalyser
 					{
 						throw new SemanticAnalyserException("Cannot modify the constant " + identifier);
 					}
-					return ;
+					return;
 				}
 			}
 		}
@@ -112,7 +114,7 @@ public class SemanticAnalyser
 
 		public AccessDataTmp(boolean is_cst, String identifier)
 		{
-			this.is_cst = is_cst;
+			this.is_cst     = is_cst;
 			this.identifier = identifier;
 		}
 

@@ -36,11 +36,11 @@ public class Parser
 		{
 			ASTExpr left;
 			ASTExpr right;
-			char	op;
+			char    op;
 
 			reader.eat(Sym.LPAR);
-			left = expr();
-			op = ((OperatorToken)reader.pop(Sym.OPERATOR)).getOp();
+			left  = expr();
+			op    = ((OperatorToken)reader.pop(Sym.OPERATOR)).getOp();
 			right = expr();
 			reader.eat(Sym.RPAR);
 			res = new ASTExpr(left, op, right);
@@ -50,14 +50,14 @@ public class Parser
 			int number;
 
 			number = ((NumberToken)reader.pop(Sym.NUMBER)).getValue();
-			res = new ASTExpr(number);
+			res    = new ASTExpr(number);
 		}
 		else if (reader.check(Sym.IDENTIFIER))
 		{
 			String identifier;
 
 			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
-			res = new ASTExpr(identifier);
+			res        = new ASTExpr(identifier);
 		}
 		else
 		{
@@ -74,8 +74,8 @@ public class Parser
 		// Exec Instruction
 		if (reader.check(Sym.DRAWCIRCLE))
 		{
-			ASTExpr[] args = new ASTExpr[3];
-			Color[] colors = new Color[1];
+			ASTExpr[] args   = new ASTExpr[3];
+			Color[]   colors = new Color[1];
 
 			reader.eat(Sym.DRAWCIRCLE);
 			reader.eat(Sym.LPAR);
@@ -92,8 +92,8 @@ public class Parser
 		}
 		else if (reader.check(Sym.FILLCIRCLE))
 		{
-			ASTExpr[] args = new ASTExpr[3];
-			Color[] colors = new Color[1];
+			ASTExpr[] args   = new ASTExpr[3];
+			Color[]   colors = new Color[1];
 
 			reader.eat(Sym.FILLCIRCLE);
 			reader.eat(Sym.LPAR);
@@ -110,8 +110,8 @@ public class Parser
 		}
 		else if (reader.check(Sym.DRAWRECT))
 		{
-			ASTExpr[] args = new ASTExpr[4];
-			Color[] colors = new Color[1];
+			ASTExpr[] args   = new ASTExpr[4];
+			Color[]   colors = new Color[1];
 
 			reader.eat(Sym.DRAWRECT);
 			reader.eat(Sym.LPAR);
@@ -130,8 +130,8 @@ public class Parser
 		}
 		else if (reader.check(Sym.FILLRECT))
 		{
-			ASTExpr[] args = new ASTExpr[4];
-			Color[] colors = new Color[1];
+			ASTExpr[] args   = new ASTExpr[4];
+			Color[]   colors = new Color[1];
 
 			reader.eat(Sym.FILLRECT);
 			reader.eat(Sym.LPAR);
@@ -151,7 +151,7 @@ public class Parser
 		// Control Instruction
 		else if (reader.check(Sym.BEGIN))
 		{
-			AST		next;
+			AST next;
 
 			reader.eat(Sym.BEGIN);
 			next = instruction_next();
@@ -161,21 +161,21 @@ public class Parser
 		}
 		else if (reader.check(Sym.IF))
 		{
-			ASTExpr expr;
-			ASTInstr instr;
+			ASTExpr    expr;
+			ASTInstr   instr;
 			ASTInstrIf follow;
 
 			reader.eat(Sym.IF);
 			expr = expr();
 			reader.eat(Sym.THEN);
-			instr = instruction();
+			instr  = instruction();
 			follow = if_follow();
 
 			res = new ASTInstrIf(expr, instr, follow);
 		}
 		else if (reader.check(Sym.WHILE))
 		{
-			ASTExpr expr;
+			ASTExpr  expr;
 			ASTInstr instr;
 
 			reader.eat(Sym.WHILE);
@@ -189,9 +189,9 @@ public class Parser
 		// Imp Instruction
 		else if (reader.check(Sym.CONST))
 		{
-			String identifier;
+			String  identifier;
 			ASTExpr expr;
-			
+
 			reader.eat(Sym.CONST);
 			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
 			reader.eat(Sym.EQUALS);
@@ -201,7 +201,7 @@ public class Parser
 		}
 		else if (reader.check(Sym.VAR))
 		{
-			String identifier;
+			String  identifier;
 			ASTExpr expr;
 
 			reader.eat(Sym.VAR);
@@ -213,7 +213,7 @@ public class Parser
 		}
 		else if (reader.check(Sym.IDENTIFIER))
 		{
-			String identifier;
+			String  identifier;
 			ASTExpr expr;
 
 			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
@@ -230,8 +230,8 @@ public class Parser
 	private ASTInstrIf if_follow() throws Exception
 	{
 		ASTInstrIf res = null;
-		ASTExpr expr;
-		ASTInstr instr;
+		ASTExpr    expr;
+		ASTInstr   instr;
 		ASTInstrIf follow;
 
 		if (reader.check(Sym.ELIF))
@@ -239,29 +239,33 @@ public class Parser
 			reader.eat(Sym.ELIF);
 			expr = expr();
 			reader.eat(Sym.THEN);
-			instr = instruction();
+			instr  = instruction();
 			follow = if_follow();
-			res = new ASTInstrIf(expr, instr, follow);
+			res    = new ASTInstrIf(expr, instr, follow);
 		}
 		else if (reader.check(Sym.ELSE))
 		{
 			reader.eat(Sym.ELSE);
 			instr = instruction();
-			res = new ASTInstrIf(instr);
+			res   = new ASTInstrIf(instr);
 		}
 		return (res);
 	}
 
 	private AST instruction_next() throws Exception
 	{
-		ASTInstr	instr;
-		AST			next;
+		ASTInstr instr;
+		AST      next;
 
 		if (reader.isEmpty())
+		{
 			return (new AST());
+		}
 		instr = instruction();
 		if (instr == null)
+		{
 			return (new AST());
+		}
 		reader.eat(Sym.SEMICOLON);
 		next = instruction_next();
 		return (new AST(instr, next));

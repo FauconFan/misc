@@ -19,9 +19,9 @@ public class ColorToken extends Token
 		{
 			throw new RuntimeException("SNA constructor ColorToken");
 		}
-		r = Integer.parseInt(v.substring(1, 3), 16);
-		g = Integer.parseInt(v.substring(3, 5), 16);
-		b = Integer.parseInt(v.substring(5, 7), 16);
+		r          = Integer.parseInt(v.substring(1, 3), 16);
+		g          = Integer.parseInt(v.substring(3, 5), 16);
+		b          = Integer.parseInt(v.substring(5, 7), 16);
 		this.color = new Color(r, g, b);
 	}
 

@@ -61,9 +61,11 @@ public class ASTExpr
 		{
 		case NUMBER:
 			return (this.number);
+
 		case IDENTIFIER:
 			System.err.println("Variables not implemented yet");
 			return (0);
+
 		case CALCULUS:
 			int a;
 			int b;
@@ -71,16 +73,25 @@ public class ASTExpr
 			a = this.left.evalExpr();
 			b = this.right.evalExpr();
 			if (this.op == '+')
+			{
 				return (a + b);
+			}
 			else if (this.op == '-')
+			{
 				return (a - b);
+			}
 			else if (this.op == '*')
+			{
 				return (a * b);
+			}
 			else if (this.op == '/')
+			{
 				return (a / b);
-			throw new RuntimeException ("SNA evalExpr in ASTExpr");
-		default :
-			throw new RuntimeException ("SNA evalExpr in ASTExpr");
+			}
+			throw new RuntimeException("SNA evalExpr in ASTExpr");
+
+		default:
+			throw new RuntimeException("SNA evalExpr in ASTExpr");
 		}
 	}
 
@@ -88,17 +99,20 @@ public class ASTExpr
 	{
 		switch (this.mode)
 		{
-			case NUMBER:
-				return ;
-			case IDENTIFIER:
-				sa.can_access_var_in_registre(this.identifier);
-				return ;
-			case CALCULUS:
-				this.left.checkSemantic(sa);
-				this.right.checkSemantic(sa);
-				return ;
-			default :
-				throw new RuntimeException ("SNA checkSemantic");
+		case NUMBER:
+			return;
+
+		case IDENTIFIER:
+			sa.can_access_var_in_registre(this.identifier);
+			return;
+
+		case CALCULUS:
+			this.left.checkSemantic(sa);
+			this.right.checkSemantic(sa);
+			return;
+
+		default:
+			throw new RuntimeException("SNA checkSemantic");
 		}
 	}
 

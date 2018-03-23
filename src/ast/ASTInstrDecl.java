@@ -11,9 +11,9 @@ public class ASTInstrDecl extends ASTInstr
 
 	public ASTInstrDecl(boolean is_cst, String identifier, ASTExpr expr)
 	{
-		this.is_cst = is_cst;
+		this.is_cst     = is_cst;
 		this.identifier = identifier;
-		this.expr = expr;
+		this.expr       = expr;
 	}
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException

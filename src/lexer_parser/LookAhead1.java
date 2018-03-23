@@ -38,7 +38,7 @@ public class LookAhead1
 		{
 			throw new Exception("Token " + s + " expected...");
 		}
-		ret = current;
+		ret     = current;
 		current = lexer.yylex();
 		return (ret);
 	}
@@ -47,7 +47,7 @@ public class LookAhead1
 	{
 		Token res;
 
-		res = current;
+		res     = current;
 		current = lexer.yylex();
 		return (res);
 	}

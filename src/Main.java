@@ -29,13 +29,13 @@ public class Main
 	{
 		try
 		{
-			File input = new File(filename);
-			Reader reader = new FileReader(input);
-			LexerFlex lexer = new LexerFlex(reader);
-			LookAhead1 look = new LookAhead1(lexer);
-			Parser parser = new Parser(look);
-			AST ast = parser.buildProg();
-			SemanticAnalyser sa = new SemanticAnalyser();
+			File             input  = new File(filename);
+			Reader           reader = new FileReader(input);
+			LexerFlex        lexer  = new LexerFlex(reader);
+			LookAhead1       look   = new LookAhead1(lexer);
+			Parser           parser = new Parser(look);
+			AST              ast    = parser.buildProg();
+			SemanticAnalyser sa     = new SemanticAnalyser();
 			sa.checkAST(ast);
 			if (ast != null)
 			{
@@ -52,8 +52,8 @@ public class Main
 	public static void main(String[] args)
 	{
 		boolean quietMode = false;
-		boolean helpMode = false;
-		String filename = null;
+		boolean helpMode  = false;
+		String  filename  = null;
 
 		for (String str : args)
 		{

@@ -10,7 +10,7 @@ public class ASTInstrWhile extends ASTInstr
 
 	public ASTInstrWhile(ASTExpr expr, ASTInstr content)
 	{
-		this.expr = expr;
+		this.expr    = expr;
 		this.content = content;
 	}
 

@@ -22,10 +22,10 @@ public class ASTInstrBeginEnd extends ASTInstr
 
 	public String toString()
 	{
-		String in;
+		String  in;
 		boolean hasLastNL = false;
 
-		in = content.toString();
+		in        = content.toString();
 		hasLastNL = (in.charAt(in.length() - 1) == '\n');
 		if (hasLastNL)
 		{

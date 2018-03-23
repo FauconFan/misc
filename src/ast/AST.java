@@ -11,26 +11,30 @@ public class AST
 	public AST()
 	{
 		this.instr = null;
-		this.next = null;
+		this.next  = null;
 	}
 
 	public AST(ASTInstr instr, AST next)
 	{
 		this.instr = instr;
-		this.next = next;
+		this.next  = next;
 	}
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
 	{
 		if (instr != null)
+		{
 			instr.checkSemantic(sa);
+		}
 		if (next != null)
+		{
 			next.checkSemantic(sa);
+		}
 	}
 
 	public String toString()
 	{
-		if (instr == null && next == null)
+		if (instr == null&& next == null)
 		{
 			return ("");
 		}

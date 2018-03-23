@@ -11,7 +11,7 @@ public class ASTInstrAssign extends ASTInstr
 	public ASTInstrAssign(String identifier, ASTExpr expr)
 	{
 		this.identifier = identifier;
-		this.expr = expr;
+		this.expr       = expr;
 	}
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
