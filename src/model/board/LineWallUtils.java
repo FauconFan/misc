@@ -104,7 +104,7 @@ public class LineWallUtils
 		CoordsUtils          cu;
 
 		res = new ArrayList <>();
-		if (lw1.isHorizontal() != lw2.isHorizontal() || (lw1.isHorizontal() && lw2.isHorizontal() && lw1.getY1() != lw2.getY1()) || (!lw1.isHorizontal() && !lw2.isHorizontal() && lw1.getX1() != lw2.getX1()))
+		if (lw1.onSameLine(lw2) == false)
 		{
 			res.add(lw1);
 			res.add(lw2);

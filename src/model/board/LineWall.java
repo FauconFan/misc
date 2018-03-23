@@ -125,6 +125,18 @@ public class LineWall implements Cloneable
 		return (y1 == y2);
 	}
 
+	public boolean onSameLine(LineWall lw)
+	{
+		boolean min;
+		boolean oth;
+
+		min = this.isHorizontal();
+		oth = lw.isHorizontal();
+		return ((min != oth ||
+				 (min && oth && this.getY1() != lw.getY1()) ||
+				 (min == false && oth == false && this.getX1() != lw.getX1())) == false);
+	}
+
 	public float effectiveEpaisseur(float x, float y)
 	{
 		if (this.isHorizontal())
