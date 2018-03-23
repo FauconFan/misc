@@ -27,14 +27,14 @@ public class Menu extends VBox implements Msg
 	protected Rectangle2D primaryScreenBounds;
 	protected Label msg;
 
-	private static int screenWidth  = (int)Screen.getPrimary().getBounds().getWidth();
-	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
+	private static int screenWidth  = (int)Screen.getPrimary().getVisualBounds().getMaxX();
+	private static int screenHeight = (int)Screen.getPrimary().getVisualBounds().getMaxY();
 
 	public Menu()
 	{
 		super();
 		setId("pane");
-		this.setPrefSize(800, 600);
+
 
 		setPadding(new Insets(10));
 		setSpacing(15);
@@ -42,6 +42,7 @@ public class Menu extends VBox implements Msg
 
 
 		primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		setPrefSize(primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
 
 		msg = new Label();
 		msg.setTextFill(Color.web("#DC143C"));

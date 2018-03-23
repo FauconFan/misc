@@ -43,6 +43,9 @@ public class Pause extends ScenePlus
 		{
 			Button buttonUnPause = addButton("Unpause");
 
+			buttonUnPause.setPrefWidth(primaryScreenBounds.getWidth() / 3);
+			buttonUnPause.setPrefHeight(primaryScreenBounds.getHeight() / 15);
+
 			buttonUnPause.setOnAction(event->{
 				v.changeScene(previous);
 				previous.startTimer();
