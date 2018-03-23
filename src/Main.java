@@ -10,6 +10,8 @@ import src.lexer_parser.LookAhead1;
 
 import src.ast.AST;
 
+import src.prog.SemanticAnalyser;
+
 public class Main
 {
 	public static void runProg(String filename)
@@ -33,7 +35,8 @@ public class Main
 			LookAhead1 look = new LookAhead1(lexer);
 			Parser parser = new Parser(look);
 			AST ast = parser.buildProg();
-			System.out.println(ast);
+			SemanticAnalyser sa = new SemanticAnalyser();
+			sa.checkAST(ast);
 			if (ast != null)
 			{
 				System.out.println("HALLELUJAH");

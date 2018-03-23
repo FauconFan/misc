@@ -1,5 +1,8 @@
 package src.ast;
 
+import src.prog.SemanticAnalyserException;
+import src.prog.SemanticAnalyser;
+
 public class ASTInstrDecl extends ASTInstr
 {
 	private boolean is_cst;
@@ -11,6 +14,13 @@ public class ASTInstrDecl extends ASTInstr
 		this.is_cst = is_cst;
 		this.identifier = identifier;
 		this.expr = expr;
+	}
+
+	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
+	{
+		expr.checkSemantic(sa);
+		sa.verify_if_not_present_in_registre(identifier);
+		sa.add_in_registre(identifier, is_cst);
 	}
 
 	public String toString()

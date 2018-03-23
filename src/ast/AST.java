@@ -1,5 +1,8 @@
 package src.ast;
 
+import src.prog.SemanticAnalyserException;
+import src.prog.SemanticAnalyser;
+
 public class AST
 {
 	private final ASTInstr instr;
@@ -15,6 +18,14 @@ public class AST
 	{
 		this.instr = instr;
 		this.next = next;
+	}
+
+	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
+	{
+		if (instr != null)
+			instr.checkSemantic(sa);
+		if (next != null)
+			next.checkSemantic(sa);
 	}
 
 	public String toString()

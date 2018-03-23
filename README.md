@@ -25,8 +25,10 @@ On fait une interprétation en plusieurs étapes :
  - [x] Créer le flex
  - [x] Créer le Parser
  - [x] Créer l'arbre de syntaxe abstraite (AST)
- - [ ] Gestion des variables Analyse sémantique
+ - [x] Gestion des variables Analyse sémantique
  - [ ] Evaluation
+
+Est-ce qu'on autorise le fait de changer une variable ou son type (variable ou constante dans un sous-block...)
 
 ## Idées
 

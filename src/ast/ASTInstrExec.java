@@ -2,6 +2,8 @@ package src.ast;
 
 import java.awt.Color;
 import src.lexer_parser.Sym;
+import src.prog.SemanticAnalyserException;
+import src.prog.SemanticAnalyser;
 
 public class ASTInstrExec extends ASTInstr
 {
@@ -42,6 +44,14 @@ public class ASTInstrExec extends ASTInstr
 		}
 		this.args = args;
 		this.colors = colors;
+	}
+
+	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
+	{
+		for (ASTExpr expr : args)
+		{
+			expr.checkSemantic(sa);
+		}
 	}
 
 	public String toString()

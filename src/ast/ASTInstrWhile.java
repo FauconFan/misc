@@ -1,5 +1,8 @@
 package src.ast;
 
+import src.prog.SemanticAnalyserException;
+import src.prog.SemanticAnalyser;
+
 public class ASTInstrWhile extends ASTInstr
 {
 	private ASTExpr expr;
@@ -9,6 +12,12 @@ public class ASTInstrWhile extends ASTInstr
 	{
 		this.expr = expr;
 		this.content = content;
+	}
+
+	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
+	{
+		this.expr.checkSemantic(sa);
+		this.content.checkSemantic(sa);
 	}
 
 	public String toString()

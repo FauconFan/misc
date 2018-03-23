@@ -1,5 +1,8 @@
 package src.ast;
 
+import src.prog.SemanticAnalyserException;
+import src.prog.SemanticAnalyser;
+
 public class ASTExpr
 {
 	private enum ASTExprType
@@ -75,9 +78,27 @@ public class ASTExpr
 				return (a * b);
 			else if (this.op == '/')
 				return (a / b);
-			throw new RuntimeException ("SAN evalExpr in ASTExpr");
+			throw new RuntimeException ("SNA evalExpr in ASTExpr");
 		default :
-			throw new RuntimeException ("SAN evalExpr in ASTExpr");
+			throw new RuntimeException ("SNA evalExpr in ASTExpr");
+		}
+	}
+
+	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
+	{
+		switch (this.mode)
+		{
+			case NUMBER:
+				return ;
+			case IDENTIFIER:
+				sa.verify_if_present_in_registre(this.identifier, false);
+				return ;
+			case CALCULUS:
+				this.left.checkSemantic(sa);
+				this.right.checkSemantic(sa);
+				return ;
+			default :
+				throw new RuntimeException ("SNA checkSemantic");
 		}
 	}
 

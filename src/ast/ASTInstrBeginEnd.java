@@ -1,6 +1,8 @@
 package src.ast;
 
 import src.lexer_parser.Sym;
+import src.prog.SemanticAnalyserException;
+import src.prog.SemanticAnalyser;
 
 public class ASTInstrBeginEnd extends ASTInstr
 {
@@ -9,6 +11,13 @@ public class ASTInstrBeginEnd extends ASTInstr
 	public ASTInstrBeginEnd(AST content)
 	{
 		this.content = content;
+	}
+
+	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
+	{
+		sa.incremente();
+		content.checkSemantic(sa);
+		sa.decremente();
 	}
 
 	public String toString()
