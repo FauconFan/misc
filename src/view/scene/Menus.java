@@ -40,7 +40,7 @@ public class Menus extends ScenePlus
 	{
 		super(new Group(), v);
 		((Group)getRoot()).getChildren().add(new MenuStart());
-		getStylesheets().add("assets/menuBackground.jpg");
+		getStylesheets().add("assets/menuStyle.css");
 	}
 
 	public Menus(View v, Menu m)
