@@ -1,11 +1,12 @@
-package src.ast;
+package src.ast.ast_instr;
 
 import src.lexer_parser.Sym;
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
+import src.ast.AST;
 
-public class ASTInstrBeginEnd extends ASTInstr
+public class ASTInstrBeginEnd implements ASTInstr
 {
 	private AST content;
 

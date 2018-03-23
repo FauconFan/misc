@@ -10,14 +10,14 @@ import src.lexer_parser.tokens.ColorToken;
 import src.lexer_parser.tokens.OperatorToken;
 
 import src.ast.AST;
-import src.ast.ASTExpr;
-import src.ast.ASTInstr;
-import src.ast.ASTInstrIf;
-import src.ast.ASTInstrExec;
-import src.ast.ASTInstrWhile;
-import src.ast.ASTInstrDecl;
-import src.ast.ASTInstrAssign;
-import src.ast.ASTInstrBeginEnd;
+import src.ast.ast_expr.ASTExpr;
+import src.ast.ast_instr.ASTInstr;
+import src.ast.ast_instr.ASTInstrIf;
+import src.ast.ast_instr.ASTInstrExec;
+import src.ast.ast_instr.ASTInstrWhile;
+import src.ast.ast_instr.ASTInstrDecl;
+import src.ast.ast_instr.ASTInstrAssign;
+import src.ast.ast_instr.ASTInstrBeginEnd;
 
 public class Parser
 {

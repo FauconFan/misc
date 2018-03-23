@@ -1,14 +1,15 @@
-package src.ast;
+package src.ast.ast_instr;
 
 import java.awt.Color;
 import src.lexer_parser.Sym;
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
+import src.ast.ast_expr.ASTExpr;
 
 import java.awt.Graphics2D;
 
-public class ASTInstrExec extends ASTInstr
+public class ASTInstrExec implements ASTInstr
 {
 	private enum ASTInstrExecType
 	{

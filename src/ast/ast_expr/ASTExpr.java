@@ -1,4 +1,4 @@
-package src.ast;
+package src.ast.ast_expr;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;

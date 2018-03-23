@@ -4,6 +4,8 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 
+import src.ast.ast_instr.ASTInstr;
+
 public class AST
 {
 	private final ASTInstr instr;

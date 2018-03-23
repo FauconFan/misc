@@ -1,10 +1,11 @@
-package src.ast;
+package src.ast.ast_instr;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
+import src.ast.ast_expr.ASTExpr;
 
-public class ASTInstrWhile extends ASTInstr
+public class ASTInstrWhile implements ASTInstr
 {
 	private ASTExpr expr;
 	private ASTInstr content;
