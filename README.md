@@ -50,11 +50,11 @@ On fait une interprétation en plusieurs étapes :
 | couleur | #{hex}{hex}{hex}{hex}{hex}{hex} |
 | operator | "+" <br> "-" <br> "/" <br> "*" |
 | identificateur | [a-z][a-zA-Z_]* |
-| program | {instructions-next} |
-| instructions-next | {instruction} ; {instructions-next} <br> &#x3b5; |
-| instruction | <b>## Exec Instruction</b> <br> DrawCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> FillCircle ( {expr} , {expr} , {expr} , {couleur} ) <br> DrawRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> FillRect ( {expr} , {expr} , {expr} , {expr} , {couleur} ) <br> <b>## Control Instruction</b> <br> Begin {instructions-next} End <br> If {expr} Then {instrument} {if_follow} <br> While {expr} Do {instruction} Done <br> <b>## Imp Instruction</b> <br> Const {identificateur} = {expr} <br> Var {identificateur} = {expr} <br> {identificateur} = {expr} |
-| if_follow | Elif {expr} Then {instruction} {if_follow} <br> Else {instruction} <br> &#x3b5; |
-| expr | {nombre} <br> ( {expr} {operator} {expr} ) <br> {identificateur} |
+| <i><b>program</b></i> | <i><b>{instructions-next}</i></b> |
+| <i><b>instructions-next</i></b> | <i><b>{instruction}</i></b> ; <i><b>{instructions-next}</i></b> <br> &#x3b5; |
+| <i><b>instruction</i></b> | <i>## Exec Instruction</i> <br> DrawCircle ( <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , {couleur} ) <br> FillCircle ( <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , {couleur} ) <br> DrawRect ( <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , {couleur} ) <br> FillRect ( <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , {couleur} ) <br> <i>## Control Instruction</i> <br> Begin <i><b>{instructions-next}</i></b> End <br> If <i><b>{expr}</i></b> Then <i><b>{instrument}</i></b> <i><b>{if_follow}</i></b> <br> While <i><b>{expr}</i></b> Do <i><b>{instruction}</i></b> Done <br> <i>## Imp Instruction</i> <br> Const {identificateur} = <i><b>{expr}</i></b> <br> Var {identificateur} = <i><b>{expr}</i></b> <br> {identificateur} = <i><b>{expr}</i></b> |
+| if_follow | Elif <i><b>{expr}</i></b> Then <i><b>{instruction}</i></b> <i><b>{if_follow}</i></b> <br> Else <i><b>{instruction}</i></b> <br> &#x3b5; |
+| expr | {nombre} <br> ( <i><b>{expr}</i></b> {operator} <i><b>{expr}</i></b> ) <br> {identificateur} |
 
 ## Auteurs / Contributeurs
 - Pierre Gimalac
