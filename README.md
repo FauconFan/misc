@@ -53,8 +53,8 @@ On fait une interprétation en plusieurs étapes :
 | <i><b>program</b></i> | <i><b>{instructions-next}</i></b> |
 | <i><b>instructions-next</i></b> | <i><b>{instruction}</i></b> ; <i><b>{instructions-next}</i></b> <br> &#x3b5; |
 | <i><b>instruction</i></b> | <i>## Exec Instruction</i> <br> DrawCircle ( <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , {couleur} ) <br> FillCircle ( <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , {couleur} ) <br> DrawRect ( <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , {couleur} ) <br> FillRect ( <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , <i><b>{expr}</i></b> , {couleur} ) <br> <i>## Control Instruction</i> <br> Begin <i><b>{instructions-next}</i></b> End <br> If <i><b>{expr}</i></b> Then <i><b>{instrument}</i></b> <i><b>{if_follow}</i></b> <br> While <i><b>{expr}</i></b> Do <i><b>{instruction}</i></b> Done <br> <i>## Imp Instruction</i> <br> Const {identificateur} = <i><b>{expr}</i></b> <br> Var {identificateur} = <i><b>{expr}</i></b> <br> {identificateur} = <i><b>{expr}</i></b> |
-| if_follow | Elif <i><b>{expr}</i></b> Then <i><b>{instruction}</i></b> <i><b>{if_follow}</i></b> <br> Else <i><b>{instruction}</i></b> <br> &#x3b5; |
-| expr | {nombre} <br> ( <i><b>{expr}</i></b> {operator} <i><b>{expr}</i></b> ) <br> {identificateur} |
+| <i><b>if_follow </i></b>| Elif <i><b>{expr}</i></b> Then <i><b>{instruction}</i></b> <i><b>{if_follow}</i></b> <br> Else <i><b>{instruction}</i></b> <br> &#x3b5; |
+| <i><b>expr</i></b> | {nombre} <br> ( <i><b>{expr}</i></b> {operator} <i><b>{expr}</i></b> ) <br> {identificateur} |
 
 ## Auteurs / Contributeurs
 - Pierre Gimalac
