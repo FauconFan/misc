@@ -10,12 +10,13 @@ import src.model.board.TeleportCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeFactory;
+import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 
 public class MapIntro5 extends Algo
 {
-	public MapIntro5()
+	public MapIntro5() throws GenFactoryException
 	{
 		super();
 		this.cmfactory = new ContentMazeFactory();

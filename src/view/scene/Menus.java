@@ -121,8 +121,17 @@ public class Menus extends ScenePlus
 			});
 
 			buttonCreate.setOnAction(event->{
-				Algo al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue());
-				//Algo al = MapIntroBuilder.getMapIntro(6);
+				Algo al = null;
+				try
+				{
+					al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue());
+				    //al = MapIntroBuilder.getMapIntro(6);
+				}
+				catch (Exception e)
+				{
+					setMsg(e.getMessage());
+					putMsg();
+				}
 				v.con.createMaze(al);
 				v.showGame();
 			});

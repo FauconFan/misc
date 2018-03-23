@@ -7,6 +7,7 @@ import src.model.board.StartCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeFactory;
+import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 
@@ -16,7 +17,7 @@ public class AlgoSample2 extends Algo
 {
 	public static int SIZE_SQUARE = 10;
 
-	public AlgoSample2()
+	public AlgoSample2() throws GenFactoryException
 	{
 		super();
 		this.cmfactory = new ContentMazeFactory();
