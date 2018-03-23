@@ -98,6 +98,40 @@ public class LineWallUtils
 		return (res);
 	}
 
+	public static ArrayList <LineWall> exceptIfIntersectOrUnion(LineWall lw1, LineWall lw2)
+	{
+		ArrayList <LineWall> res;
+		CoordsUtils          cu;
+
+		res = new ArrayList <>();
+		if (lw1.isHorizontal() != lw2.isHorizontal() || (lw1.isHorizontal() && lw2.isHorizontal() && lw1.getY1() != lw2.getY1()) || (!lw1.isHorizontal() && !lw2.isHorizontal() && lw1.getX1() != lw2.getX1()))
+		{
+			res.add(lw1);
+			res.add(lw2);
+			return (res);
+		}
+		cu = new CoordsUtils(lw1, lw2);
+		if (cu.is_intersect())
+		{
+			if (cu.m1 < cu.n1)
+			{
+				res.add((cu.mode
+						 ?   new LineWall(cu.m1, lw2.getY1(), cu.n1, lw2.getY1())
+						 :   new LineWall(lw2.getX1(), cu.m1, lw2.getX1(), cu.n1)));
+			}
+			if (cu.m2 > cu.n2)
+			{
+				res.add(cu.mode
+						?   new LineWall(cu.n2, lw2.getY1(), cu.m2, lw2.getY1())
+						:   new LineWall(lw2.getX1(), cu.n2, lw2.getX1(), cu.m2));
+			}
+			return (res);
+		}
+		res.add(lw1);
+		res.add(lw2);
+		return (res);
+	}
+
 	private static class CoordsUtils
 	{
 		public boolean mode;

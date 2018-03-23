@@ -6,28 +6,37 @@ import javafx.scene.paint.Color;
 
 import src.model.board.Case;
 
-class CaseColor extends EnumMap <Case.TypeCase, ColorWithName>
+import src.utils.Tuple;
+
+public final class CaseColor
 {
 	private static final long serialVersionUID = 354054054055L;
 
-	public CaseColor()
+	private static final EnumMap <Case.TypeCase, Tuple <Color, String> > colorCases;
+
+	static
 	{
-		super(Case.TypeCase.class);
-		put(Case.TypeCase.START, new ColorWithName(Color.BLACK, "BLACK"));
-		put(Case.TypeCase.END, new ColorWithName(Color.GREEN, "GREEN"));
-		put(Case.TypeCase.TELEPORT, new ColorWithName(Color.PURPLE, "PURPLE"));
-		put(Case.TypeCase.SPEED, new ColorWithName(Color.RED, "RED"));
-		put(Case.TypeCase.TIME, new ColorWithName(Color.YELLOW, "YELLOW"));
+		colorCases = new EnumMap <>(Case.TypeCase.class);
+		colorCases.put(Case.TypeCase.START, new Tuple <>(Color.DARKGRAY, "DARKGRAY"));
+		colorCases.put(Case.TypeCase.END, new Tuple <>(Color.GREEN, "GREEN"));
+		colorCases.put(Case.TypeCase.TELEPORT, new Tuple <>(Color.PURPLE, "PURPLE"));
+		colorCases.put(Case.TypeCase.SPEED, new Tuple <>(Color.RED, "RED"));
+		colorCases.put(Case.TypeCase.TIME, new Tuple <>(Color.YELLOW, "YELLOW"));
 	}
 
-	public String prettify()
+	public static String prettify()
 	{
 		String res = "";
 
-		for (Map.Entry <Case.TypeCase, ColorWithName> entry: entrySet())
+		for (Map.Entry <Case.TypeCase, Tuple <Color, String> > entry: colorCases.entrySet())
 		{
-			res += entry.getKey().toString() + " cells are in " + entry.getValue().name + "\n";
+			res += entry.getKey().toString() + " cells are in " + entry.getValue().getSecond() + "\n";
 		}
 		return (res);
+	}
+
+	public static Color getColor(Case.TypeCase ct)
+	{
+		return (colorCases.get(ct).getFirst());
 	}
 }

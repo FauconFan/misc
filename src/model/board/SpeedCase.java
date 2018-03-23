@@ -31,6 +31,11 @@ public class SpeedCase extends Case
 		activated = true;
 	}
 
+	public void setSpeedModif(float f)
+	{
+		this.speedModif = f;
+	}
+
 	public String toString()
 	{
 		return ("SpeedCase\n" + super.toString() + "Speed modification : " + this.speedModif);

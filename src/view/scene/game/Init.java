@@ -44,7 +44,7 @@ import src.view.View;
 public class Init
 {
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
-	public static Group makeSpecialCases(int hauteur, Scale sc, MainMaze maze, CaseColor caseColor)
+	public static Group makeSpecialCases(int hauteur, Scale sc, MainMaze maze)
 	{
 		Group spc = new Group();
 
@@ -56,7 +56,7 @@ public class Init
 			res.setTranslateX(ec.getX() + tc / 2.0);
 			res.setTranslateZ(ec.getY() + tc / 2.0);
 			res.setTranslateY(hauteur / 2.0 - 0.5);
-			res.setMaterial(new PhongMaterial(caseColor.get(ec.type).color));
+			res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
 			spc.getChildren().add(res);
 		}
 		spc.getTransforms().add(sc);

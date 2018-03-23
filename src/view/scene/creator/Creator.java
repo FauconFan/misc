@@ -4,11 +4,16 @@ import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -17,10 +22,12 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.Scene;
 import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 import javafx.stage.Screen;
 
-import src.model.board.Case;
-import src.model.board.LineWall;
+import src.model.*;
+import src.model.board.*;
+import src.view.scene.game.CaseColor;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
@@ -30,6 +37,7 @@ public class Creator extends ScenePlus
 	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
 
 	private Circle startedDraw = null;
+	private final VBox leftPaneGr;
 
 	private final Scale sc = new Scale(100, 100);
 
@@ -39,23 +47,30 @@ public class Creator extends ScenePlus
 
 		setFill(Color.GRAY);
 
-		HBox  pane = (HBox)getRoot();
-		Group root = new Group();
-		root.getTransforms().add(sc);
+		HBox pane = (HBox)getRoot();
+		pane.setAlignment(Pos.BASELINE_LEFT);
+		StackPane root = new StackPane();
 
-		Group dots  = new Group();
-		Group walls = new Group();
-		Group cases = new Group();
+		root.setAlignment(Pos.TOP_LEFT);
 
 		final double dotWidth = 0.1;
 		final int    width    = 20;
 		final int    height   = 10;
 
+		Group dots  = new Group();
+		Group walls = new Group();
+		Group cases = new Group();
+
+		dots.getTransforms().add(sc);
+		walls.getTransforms().add(sc);
+		cases.getTransforms().add(sc);
+
+		root.getChildren().addAll(cases, walls, dots);
+
 		// Draw circles
-		// They are with almost integer values (modified by dotWidth)
-		for (double i = dotWidth; i < width; i++)
+		for (int i = 0; i < width; i++)
 		{
-			for (double j = dotWidth; j < height; j++)
+			for (int j = 0; j < height; j++)
 			{
 				final Circle c = new Circle(i, j, dotWidth, Color.BLACK);
 				c.setOnMouseClicked((ev)->{
@@ -73,11 +88,27 @@ public class Creator extends ScenePlus
 					{
 						if (startedDraw.getCenterX() == c.getCenterX() || startedDraw.getCenterY() == c.getCenterY())
 						{
-							final LinePlus l = new LinePlus(startedDraw.getCenterX(), startedDraw.getCenterY(), c.getCenterX(), c.getCenterY());
-							if (!removeLine(walls.getChildren(), l)) // Si on ne l'avait pas déjà
+							final LinePlus newLineWall = new LinePlus((int)startedDraw.getCenterX(), (int)startedDraw.getCenterY(), (int)c.getCenterX(), (int)c.getCenterY());
+
+							boolean isGood = false;
+							for (Node n: walls.getChildren())
 							{
-								l.setStrokeWidth(0.05);
-								walls.getChildren().add(l);
+								LinePlus li             = (LinePlus)n;
+								ArrayList <LineWall> lw = LineWallUtils.exceptIfIntersectOrUnion(li.lw, newLineWall.lw);
+								if (lw.size() == 0 || lw.size() == 1 || (lw.size() == 2 && !(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw)))
+								{
+									walls.getChildren().remove(li);
+									for (LineWall l: lw)
+									{
+										walls.getChildren().add(new LinePlus(l));
+									}
+									isGood = true;
+									break;
+								}
+							}
+							if (!isGood)// Les murs ne se superposaient pas
+							{
+								walls.getChildren().add(newLineWall);
 							}
 						}
 						startedDraw.setFill(Color.BLACK);
@@ -86,75 +117,105 @@ public class Creator extends ScenePlus
 				});
 				if (!(j + 1 >= height || i + 1 >= width))// Si on n'est pas sur une ligne du "bord"
 				{
-					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1, (int)(i - dotWidth), (int)(j - dotWidth));
-					rect.setStrokeWidth(0.001);
-					rect.setStroke(Color.BLACK);
-					rect.setFill(null);
+					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1);
+					rect.setOnMouseClicked((ev)->{
+						rect.changeCase();
+						updateLeftPane(rect);
+					});
 					cases.getChildren().add(rect);
 				}
 				dots.getChildren().add(c);
 			}
 		}
 
-		root.getChildren().addAll(dots, walls, cases);
+		VBox panel = new VBox();
+		panel.setMinSize(150, 0);
+		panel.setAlignment(Pos.TOP_CENTER);
+		panel.setPadding(new Insets(20, 0, 20, 0));
 
-		VBox   panel  = new VBox();
 		Button button = new Button("Finish");
 
+		leftPaneGr = new VBox();
+		leftPaneGr.setAlignment(Pos.TOP_CENTER);
+		leftPaneGr.setPadding(new Insets(20, 0, 20, 0));
+
+		panel.getChildren().addAll(button, leftPaneGr);
+
 		button.setOnAction((ev)->{
-			//TODO
 			ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
 			for (Node l: walls.getChildren())
 			{
-				Line li = (Line)l;
-				lineWalls.add(new LineWall((int)(li.getStartX() - dotWidth), (int)(li.getStartY() - dotWidth), (int)(li.getEndX() - dotWidth), (int)(li.getEndY() - dotWidth)));
+				LinePlus li = (LinePlus)l;
+				lineWalls.add(li.lw);
 			}
-		});
 
-		panel.getChildren().addAll(button);
+			ArrayList <Case> specialCases = new ArrayList <Case>();
+			for (Node l: cases.getChildren())
+			{
+				Case c = ((RectanglePlus)l).getCase();
+				if (c != null)
+				{
+					specialCases.add(c);
+				}
+			}
+
+			MazeDimension md = new MazeDimension();
+			md.append(0, 0, 20, 20);
+
+			MainMaze mm = new MainMaze(new ContentMaze(specialCases.toArray(new Case[specialCases.size()]), lineWalls.toArray(new LineWall[lineWalls.size()])), md, "", new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f));
+
+			v.con.setMaze(mm);
+			v.showGame();
+		});
 
 		pane.getChildren().addAll(panel, root);
 	}
 
-	private < E > boolean removeLine(ObservableList <E> g, LinePlus l)
+	/**
+	 * Update the left pane according to the new case
+	 */
+	private void updateLeftPane(RectanglePlus startedRect)
 	{
-		FilteredList <E> fil = g.filtered((li)->((LinePlus)li).equals(l));
-		if (fil.size() == 0)
+		leftPaneGr.getChildren().clear();
+		Case c = startedRect.getCase();
+
+		if (c != null)
 		{
-			return (false);
-		}
-		try{
-			for (E e: fil)
+			leftPaneGr.getChildren().add(new Label(c.type + " case"));
+			switch (c.type)
 			{
-				g.remove(e);
+			case TELEPORT:
+				//TODO
+				break;
+
+			case TIME:
+				Slider slider = new Slider();
+				slider.setMin(-5);
+				slider.setValue(((TimeCase)c).getTimeMillis());
+				slider.setMax(5);
+				slider.setShowTickLabels(true);
+				slider.setMajorTickUnit(0.25f);
+				slider.setBlockIncrement(0.25f);
+				slider.valueProperty().addListener((ov, x, z)->{
+					((TimeCase)c).setTimeMilis(z.longValue());
+				});
+				leftPaneGr.getChildren().add(slider);
+				break;
+
+			case SPEED:
+				Slider sliderS = new Slider();
+				sliderS.setMin(0);
+				sliderS.setValue(((SpeedCase)c).getSpeedModif());
+				sliderS.setMax(5);
+				sliderS.setShowTickLabels(true);
+				sliderS.setMajorTickUnit(0.25f);
+				sliderS.setBlockIncrement(0.25f);
+				sliderS.valueProperty().addListener((ov, x, z)->{
+					((SpeedCase)c).setSpeedModif(z.floatValue());
+				});
+				leftPaneGr.getChildren().add(sliderS);
+				break;
 			}
-		}catch (Exception E) {}
-
-		return (true);
-	}
-
-	class LinePlus extends Line
-	{
-		public LinePlus(double a, double b, double c, double d)
-		{
-			super(a, b, c, d);
-		}
-
-		public boolean equals(Line l1)
-		{
-			return ((l1.getStartX() == getStartX() && l1.getStartY() == getStartY() && l1.getEndX() == getEndX() && l1.getEndY() == getEndY()) || (l1.getStartX() == getEndX() && l1.getStartY() == getEndY() && l1.getEndX() == getStartX() && l1.getEndY() == getStartY()));
-		}
-	}
-
-	// Hold the x/y center of the rectangle
-	private class RectanglePlus extends Rectangle
-	{
-		public final int x, y;
-		public RectanglePlus(double a, double b, double c, double d, int x, int y)
-		{
-			super(a, b, c, d);
-			this.x = x;
-			this.y = y;
 		}
 	}
 }
