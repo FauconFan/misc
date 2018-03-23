@@ -16,16 +16,16 @@ public class ASTInstrExecFillRect extends ASTInstrExec
 	public void exec(Prog prog)
 	{
 		Graphics2D g2d;
-		int x;
-		int y;
-		int width;
-		int height;
+		int        x;
+		int        y;
+		int        width;
+		int        height;
 
 		g2d = prog.getGraphics();
 		g2d.setColor(this.colors[0]);
-		x = this.args[0].evalExpr(prog);
-		y = this.args[1].evalExpr(prog);
-		width = this.args[2].evalExpr(prog);
+		x      = this.args[0].evalExpr(prog);
+		y      = this.args[1].evalExpr(prog);
+		width  = this.args[2].evalExpr(prog);
 		height = this.args[3].evalExpr(prog);
 		g2d.fillRect(x, y, width, height);
 	}

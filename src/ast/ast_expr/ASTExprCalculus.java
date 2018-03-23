@@ -12,9 +12,9 @@ public class ASTExprCalculus implements ASTExpr
 
 	public ASTExprCalculus(ASTExpr left, char op, ASTExpr right)
 	{
-		this.left       = left;
-		this.op         = op;
-		this.right      = right;
+		this.left  = left;
+		this.op    = op;
+		this.right = right;
 	}
 
 	public int evalExpr(Prog prog)

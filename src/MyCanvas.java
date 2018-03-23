@@ -39,12 +39,12 @@ class MyCanvas extends JComponent
 
 			try
 			{
-				File       input  = new File(filename);
-				Reader     reader = new FileReader(input);
-				LexerFlex  lexer  = new LexerFlex(reader);
-				LookAhead1 look   = new LookAhead1(lexer);
-				Parser     parser = new Parser(look);
-				AST        ast    = parser.buildProg();
+				File             input  = new File(filename);
+				Reader           reader = new FileReader(input);
+				LexerFlex        lexer  = new LexerFlex(reader);
+				LookAhead1       look   = new LookAhead1(lexer);
+				Parser           parser = new Parser(look);
+				AST              ast    = parser.buildProg();
 				SemanticAnalyser sa     = new SemanticAnalyser();
 				sa.checkAST(ast);
 				Prog prog = new Prog(ast, g2d);

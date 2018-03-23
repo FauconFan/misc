@@ -14,12 +14,12 @@ public class Prog
 
 	public Prog(AST ast, Graphics2D g2d)
 	{
-		this.ast      = ast;
-		this.g2d      = g2d;
-		this.registre = new HashMap <>();
+		this.ast           = ast;
+		this.g2d           = g2d;
+		this.registre      = new HashMap <>();
 		this.current_depth = 0;
 
-		this.registre.put(0, new HashMap<>());
+		this.registre.put(0, new HashMap <>());
 	}
 
 	public void exec()
@@ -35,7 +35,7 @@ public class Prog
 	public void incremente()
 	{
 		this.current_depth++;
-		this.registre.put(this.current_depth, new HashMap<>());
+		this.registre.put(this.current_depth, new HashMap <>());
 	}
 
 	public void decremente()
@@ -50,7 +50,9 @@ public class Prog
 		{
 			AccessData ad = this.registre.get(i).get(identifier);
 			if (ad == null)
-				continue ;
+			{
+				continue;
+			}
 			return (ad.getValue());
 		}
 		throw new RuntimeException("SNA varible " + identifier + " not exist sould be check before calling in Samantic Analyser");
@@ -62,9 +64,11 @@ public class Prog
 		{
 			AccessData ad = this.registre.get(i).get(identifier);
 			if (ad == null)
-				continue ;
+			{
+				continue;
+			}
 			ad.setValue(value);
-			return ;
+			return;
 		}
 		throw new RuntimeException("SNA varible " + identifier + " not exist sould be check before calling in Samantic Analyser");
 	}
@@ -74,7 +78,7 @@ public class Prog
 	// shall we ?
 	public void addData(String identifier, int value, boolean is_cst)
 	{
-		HashMap<String, AccessData> current_registre;
+		HashMap <String, AccessData> current_registre;
 
 		current_registre = this.registre.get(this.current_depth);
 		current_registre.put(identifier, new AccessData(is_cst, value));
@@ -110,6 +114,4 @@ public class Prog
 			this.value = value;
 		}
 	}
-
-
 }

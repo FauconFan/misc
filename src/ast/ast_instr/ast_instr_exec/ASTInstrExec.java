@@ -16,7 +16,7 @@ public abstract class ASTInstrExec implements ASTInstr
 
 	public ASTInstrExec(ASTExpr[] args, Color[] colors)
 	{
-		this.args = args;
+		this.args   = args;
 		this.colors = colors;
 	}
 

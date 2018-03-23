@@ -16,9 +16,9 @@ public class ASTInstrExecDrawCircle extends ASTInstrExec
 	public void exec(Prog prog)
 	{
 		Graphics2D g2d;
-		int x;
-		int y;
-		int r;
+		int        x;
+		int        y;
+		int        r;
 
 		g2d = prog.getGraphics();
 		g2d.setColor(this.colors[0]);

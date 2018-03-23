@@ -20,7 +20,7 @@ public class ASTExprNumber implements ASTExpr
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
 	{
-		return ;
+		return;
 	}
 
 	public String toString()

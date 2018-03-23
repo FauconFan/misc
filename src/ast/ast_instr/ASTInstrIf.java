@@ -28,12 +28,14 @@ public class ASTInstrIf implements ASTInstr
 
 	public void exec(Prog prog)
 	{
-		if ((this.expr != null && this.expr.evalExpr(prog) != 0) == false)
+		if ((this.expr != null&& this.expr.evalExpr(prog) != 0) == false)
 		{
 			this.instr.exec(prog);
 		}
 		if (this.follow != null)
+		{
 			this.follow.exec(prog);
+		}
 	}
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
