@@ -31,6 +31,8 @@ import src.view.Msg;
 import src.view.scene.creator.Creator;
 import src.view.View;
 
+import javafx.scene.text.Text;
+
 public class Menus extends ScenePlus
 {
 	private Parent view;
@@ -40,13 +42,14 @@ public class Menus extends ScenePlus
 	{
 		super(new Group(), v);
 		((Group)getRoot()).getChildren().add(new MenuStart());
-		getStylesheets().add("assets/menuStyle.css");
+		getStylesheets().add("menuStyle.css");
 	}
 
 	public Menus(View v, Menu m)
 	{
 		super(m, v);
 		this.view = m;
+		getStylesheets().add("menuStyle.css");
 	}
 
 	public class MenuStart extends Menu
@@ -55,9 +58,8 @@ public class Menus extends ScenePlus
 		{
 			super();
 
-			Label label = new Label("Hello the Maze");;
-			label.setFont(new Font("Arial", 35));
-			//label.setFont(Font.loadFont("assets/fonts/confidential.ttf", 35));
+			Text label = new Text("Hello the Maze");
+			label.setId("hello");
 			getChildren().add(label);
 
 			final Button   buttonCreate = addButton("Create");
@@ -83,7 +85,6 @@ public class Menus extends ScenePlus
 			});
 
 			final Button buttonCreator = addButton("Creator");
-			buttonCreator.setStyle("-fx-text-fill: #D2691E; -fx-background-color: #DFB951; -fx-border-radius: 20; -fx-background-radius: 20;-fx-padding: 5;");
 			buttonCreator.setOnAction(event->{
 				v.changeScene(new Creator(v));
 			});
@@ -110,8 +111,8 @@ public class Menus extends ScenePlus
 			final String[] names   = { "Y axis", "X axis" };
 			for (int i = 0; i < sliders.length; i++)
 			{
-				sliders[i].setStyle("-fx-background-color: #CCFF99; -fx-padding: 0.333333em; -fx-control-inner-background: #DFB951;");
 				Label label = new Label(names[i]);
+				label.setId("create");
 				getChildren().add(label);
 
 				sliders[i].setBlockIncrement(1);
