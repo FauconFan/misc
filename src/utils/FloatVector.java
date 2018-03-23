@@ -26,6 +26,11 @@ public class FloatVector
 		return (this.y);
 	}
 
+	public float norm()
+	{
+		return ((float)Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
+	}
+
 	/**
 	 * Teste si le vecteur est le vecteur nul à une ERREUR près
 	 * @return true si le vecteur est (0, 0)
@@ -48,11 +53,11 @@ public class FloatVector
 	/**
 	 * Calcule la somme avec le vecteur fv
 	 * @param fv Vecteur à sommer
-	 * @return vecteur somme avec fv
 	 */
-	public FloatVector sum(FloatVector fv)
+	public void sum(FloatVector fv)
 	{
-		return (new FloatVector(fv.getX() + this.x, fv.getY() + this.y));
+		this.x += fv.getX();
+		this.y += fv.getY();
 	}
 
 	/**
