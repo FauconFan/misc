@@ -29,6 +29,7 @@ import javafx.stage.Screen;
 
 import src.model.*;
 import src.model.board.*;
+import src.model.gen.CreatorHelper;
 import src.view.scene.game.CaseColor;
 import src.view.scene.ScenePlus;
 import src.view.View;
@@ -161,13 +162,14 @@ public class Creator extends ScenePlus
 				}
 			}
 
-			MazeDimension md = new MazeDimension();
-			md.append(0, 0, 20, 20);
-
-			MainMaze mm = new MainMaze(new ContentMaze(specialCases.toArray(new Case[specialCases.size()]), lineWalls.toArray(new LineWall[lineWalls.size()])), md, "", new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f));
-
-			v.con.setMaze(mm);
-			v.showGame();
+			CreatorHelper ch = new CreatorHelper(0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
+			try{
+				v.con.setMaze(ch.buildMainMaze("", new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f)));
+				v.showGame();
+			}
+			catch (Exception e) {
+				System.out.println(e);
+			}
 		});
 
 		ScrollBar verticalScroll = new ScrollBar();

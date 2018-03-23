@@ -16,7 +16,7 @@ all : dep musics
 	@mkdir -p $(BIN_FOLDER)
 	@javac -cp $(DEPS_FOLDER) -d $(BIN_FOLDER) $(MAIN_PATH).java -Xlint
 	@echo "Main-Class: "$(MAIN_PATH_MANIFEST) > $(MANIFEST)
-	@echo "Class-Path: "$(DEP) >> $(MANIFEST)
+	@echo "Class-Path: "$(DEP)" src/view/resources/" >> $(MANIFEST)
 	@jar -cvmf $(MANIFEST) $(JAR) -C $(BIN_FOLDER) ./
 
 testgen :

@@ -33,28 +33,25 @@ public class Menu extends VBox implements Msg
 	public Menu()
 	{
 		super();
+		setId("pane");
 		this.setPrefSize(800, 600);
 
 		setPadding(new Insets(10));
 		setSpacing(15);
 		setAlignment(Pos.CENTER);
 
-		//BackgroundImage myBI= new BackgroundImage(new Image("assets/menuBackground.jpg", 800, 600, false, true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		//setBackground(new Background(myBI));
-		setStyle("-fx-background-color: #CCFF99;");
 
 		primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
 		msg = new Label();
 		msg.setTextFill(Color.web("#DC143C"));
-		msg.setFont(new Font("Arial", 30));
+		msg.setFont(new Font("Comic Sans", 46));
 	}
 
 	protected Button addButton(String name)
 	{
 		Button b = new Button(name);
 
-		b.setStyle("-fx-text-fill: #D2691E; -fx-background-color: #DFB951; -fx-border-radius: 20; -fx-background-radius: 20;-fx-padding: 5;");
 
 		getChildren().add(b);
 		return (b);
