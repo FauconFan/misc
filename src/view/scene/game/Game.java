@@ -108,11 +108,6 @@ public class Game extends ScenePlus
 		root3D.getChildren().add(Init.makeSpecialCases(hauteur, sc, this.maze));
 		root3D.getChildren().add(Init.makeFloors(hauteur, sc, this.maze));
 
-		/* Le plafond est juste un sol décalé vers le haut
-		 * final Group roof = makeFloors();
-		 * roof.setTranslateY(-1 * hauteur);
-		 * root.getChildren().add(roof);*/
-
 		// Ajoute les murs
 		Group walls = Init.makeWalls(hauteur, sc, this.maze);
 		root3D.getChildren().add(walls);
@@ -233,9 +228,9 @@ public class Game extends ScenePlus
 				}
 				break;
 
-			case F: cons.accept(Directions.goUp); break;
+			case F: cons.accept(Directions.goDown); break;
 
-			case R: cons.accept(Directions.goDown); break;
+			case R: cons.accept(Directions.goUp); break;
 
 			case LEFT: cons.accept(Directions.left); break;
 
@@ -276,7 +271,7 @@ public class Game extends ScenePlus
 
 		groupCameraPlus3D.tr.setZ(p.getPosY() * sc.getZ());
 		groupCameraPlus3D.tr.setX(p.getPosX() * sc.getX());
-		groupCameraPlus3D.tr.setY(p.getPosZ() * sc.getY());
+		groupCameraPlus3D.tr.setY(-p.getPosZ() * sc.getY());
 		groupCameraPlus3D.rx.setAngle(p.getHorizontalAngle());
 		groupCameraPlus3D.ry.setAngle(p.getVerticalAngle());
 
