@@ -7,7 +7,6 @@ import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMazeShift;
 import src.model.MainMaze;
 import src.model.MazeDimension;
-import src.model.Player;
 
 public class CreatorHelper
 {
@@ -28,7 +27,7 @@ public class CreatorHelper
 		cmf.addContentMazeShift(rms);
 	}
 
-	public MainMaze buildMainMaze(String name, Player pl) throws GenFactoryException
+	public MainMaze buildMainMaze(String name) throws GenFactoryException
 	{
 		ContentMaze   cm;
 		MazeDimension md;
@@ -42,6 +41,6 @@ public class CreatorHelper
 		md = this.cmf.getMazeDimension();
 		cm = new ContentMaze(cs, lw);
 
-		return (new MainMaze(cm, md, name, pl));
+		return (new MainMaze(cm, md, name));
 	}
 }

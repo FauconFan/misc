@@ -168,7 +168,7 @@ public class Creator extends ScenePlus
 
 			CreatorHelper ch = new CreatorHelper(0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
 			try{
-				v.con.setMaze(ch.buildMainMaze("", new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f)));
+				v.con.setMaze(ch.buildMainMaze(""));
 				v.showGame();
 			}
 			catch (Exception e) {

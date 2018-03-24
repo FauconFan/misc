@@ -26,18 +26,18 @@ public class MainMaze
 	private String name;
 	private Player p;
 
-	public MainMaze(ContentMaze m, MazeDimension mz, String name, Player p)
+	public MainMaze(ContentMaze m, MazeDimension mz, String name)
 	{
 		this.m       = m;
 		this.mazeDim = mz;
 		this.name    = name;
-		this.p       = p;
+		this.p       = new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f);
 		this.p.goTo(m.getCase(Case.TypeCase.START));
 	}
 
 	public MainMaze(Algo algo)
 	{
-		this(algo.getContentMaze(), algo.getMazeDimension(), "", new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f));
+		this(algo.getContentMaze(), algo.getMazeDimension(), "");
 	}
 
 	public ContentMaze getContentMaze()
