@@ -15,32 +15,12 @@ public class CreatorHelper
 	public CreatorHelper(int minX, int maxX, int minY, int maxY, LineWall[] lw, Case[] cases)
 	{
 		cmf = new ContentMazeFactory();
-
-		ContentMaze   cm;
-		RectMaze      rm;
-		RectMazeShift rms;
-
-		cm  = new ContentMaze(cases, lw);
-		rm  = new RectMaze(cm, Math.abs(maxX - minX), Math.abs(maxY - minY));
-		rms = new RectMazeShift(rm, 0, 0);
-
-		cmf.addContentMazeShift(rms);
+		cmf.addContentMazeShift(new RectMazeShift(new RectMaze(new ContentMaze(cases, lw), Math.abs(maxX - minX), Math.abs(maxY - minY)), 0, 0));
 	}
 
 	public MainMaze buildMainMaze(String name) throws GenFactoryException
 	{
-		ContentMaze   cm;
-		MazeDimension md;
-
-		LineWall[] lw;
-		Case[]     cs;
-
 		this.cmf.normalize();
-		lw = this.cmf.getFinalLineWall();
-		cs = this.cmf.getFinalSpecialCases();
-		md = this.cmf.getMazeDimension();
-		cm = new ContentMaze(cs, lw);
-
-		return (new MainMaze(cm, md, name));
+		return (new MainMaze(new ContentMaze(this.cmf.getFinalSpecialCases(), this.cmf.getFinalLineWall()), this.cmf.getMazeDimension(), name));
 	}
 }
