@@ -11,6 +11,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Slider;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -42,6 +44,8 @@ public class Creator extends ScenePlus
 	private Circle startedDraw = null;
 	private final VBox leftPaneGr;
 
+	private final int leftPaneGrSize = 150;
+
 	private final Scale sc = new Scale(100, 100);
 
 	public Creator(View v, int width, int height)
@@ -51,7 +55,7 @@ public class Creator extends ScenePlus
 		setFill(Color.GRAY);
 
 		HBox pane = (HBox)getRoot();
-		pane.setAlignment(Pos.BASELINE_LEFT);
+		pane.setAlignment(Pos.CENTER_LEFT);
 		StackPane root = new StackPane();
 
 		root.setAlignment(Pos.TOP_LEFT);
@@ -132,7 +136,7 @@ public class Creator extends ScenePlus
 		}
 
 		VBox panel = new VBox();
-		panel.setMinSize(150, 0);
+		panel.setMinSize(leftPaneGrSize, 0);
 		panel.setAlignment(Pos.TOP_CENTER);
 		panel.setPadding(new Insets(20, 0, 20, 0));
 
@@ -172,13 +176,13 @@ public class Creator extends ScenePlus
 			}
 		});
 
-		ScrollBar verticalScroll = new ScrollBar();
-		verticalScroll.setOrientation(Orientation.VERTICAL);
-		verticalScroll.valueProperty().addListener((ov, old_val, new_val)->{
-			tr.setY(-new_val.doubleValue());
-		});
+		ScrollPane sp = new ScrollPane(root);
+		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
+		sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+		sp.setPadding(new Insets(10, 10, 10, 10));
 
-		pane.getChildren().addAll(panel, root, verticalScroll);
+		pane.getChildren().addAll(panel, sp);
 	}
 
 	/**
