@@ -6,7 +6,7 @@ On utiliser jflex en tant que dépendance.
 Le code est écrit en Anglais.  
 On accepte les fichiers en extension 'gtxt'.  
 
-Pour gérer la portée des variables, on utiliser la structure suivante :  
+Pour gérer la portée des variables, on utilise la structure suivante :  
 ```
 HashMap <Integer, HashMap<String, AccessData> >
 
@@ -29,12 +29,12 @@ où la première clé est le niveau de profondeur (le niveau de profondeur comme
 On admet que le Else se rattache au dernier If croisé (hors Begin End) (Dangling Else Problem)
 
 Gestion de la portée des variables :
- - Si une variable est défini dans un bloc de profondeur d, si on essaie d'accéder à cette varible dans un bloc de profondeur inférieur, on a une erreur sémantique
- - Une variable ne peut pas étre redéfini dans le même bloc, mais elle peut être redéfini dans un bloc plus profond, elle reprend son ancienne valeur quand on quitte ce sous-bloc
- - Une constante ne peut être modifié
+ - Si une variable est définie dans un bloc de profondeur d, si on essaie d'accéder à cette varible dans un bloc de profondeur inférieure à d, on a une erreur sémantique
+ - Une variable ne peut pas étre redéfinie dans le même bloc, mais elle peut être redéfinie dans un bloc plus profond, elle reprend son ancienne valeur quand on quitte ce sous-bloc
+ - Une constante ne peut être modifiée
 
 On fait une interprétation en plusieurs étapes :
- 1. Analyse lexical (jflex)
+ 1. Analyse lexicale (jflex)
  2. Analyse syntaxique (création de l'AST)
  3. Analyse sémantique (gestion de la portée de variables)
  4. Evaluation de l'AST (éxécution)
@@ -59,7 +59,8 @@ On fait une interprétation en plusieurs étapes :
  - [ ] Savoir si un fichier est correctement parsé pour de l'intégration continue (Travis CI)
  - [ ] Pouvoir définir des fonctions
  - [ ] Pouvoir définir des structures
- - [ ] Faire des Exceptions avec le numéro de la ligne et de la colonne, et faire une interprétation dynamique (afficher toutes les erreurs et pas juste la première erreur croisé)
+ - [ ] Faire des Exceptions avec le numéro de la ligne et de la colonne
+ - [ ] Faire une interprétation dynamique des erreurs (afficher toutes les erreurs et pas juste la première erreur croisée)
 
 ## Grammaire Lexicale
 

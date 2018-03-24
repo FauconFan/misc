@@ -5,13 +5,18 @@ import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
 
+import java.awt.Point;
+
 public class ASTInstrWhile implements ASTInstr
 {
 	private ASTExpr expr;
 	private ASTInstr content;
+	private Point begin, end;
 
-	public ASTInstrWhile(ASTExpr expr, ASTInstr content)
+	public ASTInstrWhile(Point begin, Point end, ASTExpr expr, ASTInstr content)
 	{
+		this.begin	 = begin;
+		this.end 	 = end;
 		this.expr    = expr;
 		this.content = content;
 	}
@@ -33,5 +38,13 @@ public class ASTInstrWhile implements ASTInstr
 	public String toString()
 	{
 		return ("ASTInstrWhile");
+	}
+
+	public Point begin(){
+		return begin;
+	}
+
+	public Point end(){
+		return end;
 	}
 }

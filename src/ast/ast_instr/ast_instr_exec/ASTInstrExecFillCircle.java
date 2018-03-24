@@ -2,15 +2,16 @@ package src.ast.ast_instr.ast_instr_exec;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
 
 public class ASTInstrExecFillCircle extends ASTInstrExec
 {
-	public ASTInstrExecFillCircle(ASTExpr[] e, Color[] c)
+	public ASTInstrExecFillCircle(Point begin, Point end, ASTExpr[] e, Color[] c)
 	{
-		super(e, c);
+		super(begin, end, e, c);
 	}
 
 	public void exec(Prog prog)

@@ -13,8 +13,7 @@ public class AST
 
 	public AST()
 	{
-		this.instr = null;
-		this.next  = null;
+		this(null, null);
 	}
 
 	public AST(ASTInstr instr, AST next)
@@ -49,7 +48,7 @@ public class AST
 
 	public String toString()
 	{
-		if (instr == null&& next == null)
+		if (instr == null && next == null)
 		{
 			return ("");
 		}

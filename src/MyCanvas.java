@@ -7,7 +7,6 @@ import javax.swing.*;
 
 import src.lexer_parser.Parser;
 import src.lexer_parser.LexerFlex;
-import src.lexer_parser.LexerException;
 import src.lexer_parser.LookAhead1;
 
 import src.ast.AST;

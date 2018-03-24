@@ -8,20 +8,26 @@ public class ColorToken extends Token
 {
 	private Color color;
 
-	public ColorToken(Sym c, String v)
+	public ColorToken(Sym c, String v, int lign, int column)
 	{
-		super(c);
+		super(c, lign, column);
 		int r;
 		int g;
 		int b;
 
-		if (v.length() != 7)
-		{
-			throw new RuntimeException("SNA constructor ColorToken");
+		try{
+			if (v.length() != 7)
+				throw new Exception();
+
+			r          = Integer.parseInt(v.substring(1, 3), 16);
+			g          = Integer.parseInt(v.substring(3, 5), 16);
+			b          = Integer.parseInt(v.substring(5, 7), 16);
+
+			if (r < 0 || g < 0 || b < 0 || r > 255 || g > 255 || b > 255)
+				throw new Exception();
+		}catch(Exception e){
+			throw new RuntimeException("Invalid color declaration lign " + lign + " at position " + column);
 		}
-		r          = Integer.parseInt(v.substring(1, 3), 16);
-		g          = Integer.parseInt(v.substring(3, 5), 16);
-		b          = Integer.parseInt(v.substring(5, 7), 16);
 		this.color = new Color(r, g, b);
 	}
 

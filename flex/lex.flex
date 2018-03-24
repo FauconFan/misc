@@ -16,25 +16,25 @@ import src.lexer_parser.tokens.Token;
 
 %{
     public Token token(Sym type) {
-        return new Token(type);
+        return new Token(type, yyline + 1, yycolumn + 1);
     }
 
-    public NumberToken token(Sym type, int value) {
-        return new NumberToken(type,value);
+    public NumberToken token(int value) {
+        return new NumberToken(Sym.NUMBER, value, yyline + 1, yycolumn + 1);
     }
 
     public Token token(Sym type, String value) {
         if (type == Sym.IDENTIFIER)
         {
-            return new IdentifierToken(type,value);
+            return new IdentifierToken(type,value, yyline + 1, yycolumn + 1);
         }
         else if (type == Sym.OPERATOR)
         {
-            return new OperatorToken(type,value);
+            return new OperatorToken(type,value, yyline + 1, yycolumn + 1);
         }
         else if (type == Sym.COLOR)
         {
-            return new ColorToken(type,value);
+            return new ColorToken(type,value, yyline + 1, yycolumn + 1);
         }
         System.err.println("SNA parsing in flex");
         return (null);
@@ -53,7 +53,7 @@ hex = [0-9A-F]
 color = #{hex}{hex}{hex}{hex}{hex}{hex}
 
 %%
-{number}    		{return token(Sym.NUMBER,Integer.parseInt(yytext()));}
+{number}    		{return token(Integer.parseInt(yytext()));}
 {color}				{return token(Sym.COLOR,yytext());}
 {operator}			{return token(Sym.OPERATOR,yytext());}
 {string}			{return token(Sym.IDENTIFIER, yytext());}
@@ -78,4 +78,4 @@ color = #{hex}{hex}{hex}{hex}{hex}{hex}
 "DrawRect"			{return token(Sym.DRAWRECT);}
 "FillRect"			{return token(Sym.FILLRECT);}
 {blank}     		{}
-[^]		            {throw new LexerException(yytext(), yyline, yycolumn);}
+[^]		            {throw new LexerException(yytext(), yyline + 1, yycolumn + 1);}

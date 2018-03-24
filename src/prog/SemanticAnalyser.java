@@ -50,7 +50,7 @@ public class SemanticAnalyser
 				}
 			}
 		}
-		throw new SemanticAnalyserException("The variable " + identifier + " doesn't exist");
+		throw new SemanticAnalyserException("variable " + identifier + " doesn't exist");
 	}
 
 	public void can_modify_var_in_registre(String identifier) throws SemanticAnalyserException
@@ -66,13 +66,13 @@ public class SemanticAnalyser
 				{
 					if (adt.is_cst())
 					{
-						throw new SemanticAnalyserException("Cannot modify the constant " + identifier);
+						throw new SemanticAnalyserException("cannot modify the constant " + identifier);
 					}
 					return;
 				}
 			}
 		}
-		throw new SemanticAnalyserException("The varibale " + identifier + " doesn't exist");
+		throw new SemanticAnalyserException("variable " + identifier + " doesn't exist");
 	}
 
 	public void add_in_registre(String identifier, boolean is_cst) throws SemanticAnalyserException
@@ -84,7 +84,7 @@ public class SemanticAnalyser
 		{
 			if (adt.getIdentifier().equals(identifier))
 			{
-				throw new SemanticAnalyserException("A data " + identifier + " already exists");
+				throw new SemanticAnalyserException("variable " + identifier + " already exists");
 			}
 		}
 		this.registre_verify.get(this.current_depth).add(new AccessDataTmp(is_cst, identifier));

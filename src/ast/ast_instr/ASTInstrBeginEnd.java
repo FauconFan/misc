@@ -6,12 +6,17 @@ import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.AST;
 
+import java.awt.Point;
+
 public class ASTInstrBeginEnd implements ASTInstr
 {
 	private AST content;
+	private final Point begin, end;
 
-	public ASTInstrBeginEnd(AST content)
+	public ASTInstrBeginEnd(Point begin, Point end, AST content)
 	{
+		this.begin   = begin;
+		this.end 	 = end;
 		this.content = content;
 	}
 
@@ -46,5 +51,13 @@ public class ASTInstrBeginEnd implements ASTInstr
 			in += "\n";
 		}
 		return ("Begin ASTInstrBeginEnd" + "\n\t" + in + "End ASTInstrBeginEnd");
+	}
+
+	public Point begin(){
+		return begin;
+	}
+
+	public Point end(){
+		return end;
 	}
 }

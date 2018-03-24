@@ -25,7 +25,7 @@ public class LookAhead1
 	{
 		if (check(s) == false)
 		{
-			throw new Exception("Token " + s + " expected...");
+			throw new Exception("Token " + s + " expected lign " + current.getLign() +" position " + current.getColumn() + ", found " + current);
 		}
 		current = lexer.yylex();
 	}
@@ -36,7 +36,7 @@ public class LookAhead1
 
 		if (check(s) == false)
 		{
-			throw new Exception("Token " + s + " expected...");
+			throw new Exception("Token " + s + " expected lign " + current.getLign() +" position " + current.getColumn() + ", found " + current);
 		}
 		ret     = current;
 		current = lexer.yylex();
@@ -55,5 +55,13 @@ public class LookAhead1
 	public boolean isEmpty()
 	{
 		return (current == null);
+	}
+
+	public int getLign(){
+		return current.getLign();
+	}
+
+	public int getColumn(){
+		return current.getColumn();
 	}
 }

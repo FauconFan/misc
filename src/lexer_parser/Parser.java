@@ -2,6 +2,7 @@ package src.lexer_parser;
 
 import java.io.*;
 import java.awt.Color;
+import java.awt.Point;
 
 import src.lexer_parser.tokens.Token;
 import src.lexer_parser.tokens.IdentifierToken;
@@ -50,25 +51,21 @@ public class Parser
 			op    = ((OperatorToken)reader.pop(Sym.OPERATOR)).getOp();
 			right = expr();
 			reader.eat(Sym.RPAR);
-			res = new ASTExprCalculus(left, op, right);
+			res = new ASTExprCalculus(left.begin(), right.end(), left, op, right);
 		}
 		else if (reader.check(Sym.NUMBER))
 		{
-			int number;
-
-			number = ((NumberToken)reader.pop(Sym.NUMBER)).getValue();
-			res    = new ASTExprNumber(number);
+			NumberToken nt = (NumberToken)reader.pop(Sym.NUMBER);
+			res    = new ASTExprNumber(nt.getLocation(), nt.getLocation(), nt.getValue());
 		}
 		else if (reader.check(Sym.IDENTIFIER))
 		{
-			String identifier;
-
-			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
-			res        = new ASTExprIdentifier(identifier);
+			IdentifierToken identifier = (IdentifierToken)reader.pop(Sym.IDENTIFIER);
+			res        = new ASTExprIdentifier(identifier.getLocation(), identifier.getLocation(), identifier.getValue());
 		}
 		else
 		{
-			throw new Exception("Expected a expression here");
+			throw new Exception("Expecting an expression lign " + reader.getLign() + " at position " + reader.getColumn());
 		}
 		return (res);
 	}
@@ -84,7 +81,7 @@ public class Parser
 			ASTExpr[] args   = new ASTExpr[3];
 			Color[]   colors = new Color[1];
 
-			reader.eat(Sym.DRAWCIRCLE);
+			Point begin = reader.pop(Sym.DRAWCIRCLE).getLocation();
 			reader.eat(Sym.LPAR);
 			args[0] = expr();
 			reader.eat(Sym.COMMA);
@@ -93,16 +90,16 @@ public class Parser
 			args[2] = expr();
 			reader.eat(Sym.COMMA);
 			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
-			reader.eat(Sym.RPAR);
+			Point end = reader.pop(Sym.RPAR).getLocation();
 
-			res = new ASTInstrExecDrawCircle(args, colors);
+			res = new ASTInstrExecDrawCircle(begin, end, args, colors);
 		}
 		else if (reader.check(Sym.FILLCIRCLE))
 		{
 			ASTExpr[] args   = new ASTExpr[3];
 			Color[]   colors = new Color[1];
 
-			reader.eat(Sym.FILLCIRCLE);
+			Point begin = reader.pop(Sym.FILLCIRCLE).getLocation();
 			reader.eat(Sym.LPAR);
 			args[0] = expr();
 			reader.eat(Sym.COMMA);
@@ -111,16 +108,16 @@ public class Parser
 			args[2] = expr();
 			reader.eat(Sym.COMMA);
 			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
-			reader.eat(Sym.RPAR);
+			Point end = reader.pop(Sym.RPAR).getLocation();
 
-			res = new ASTInstrExecFillCircle(args, colors);
+			res = new ASTInstrExecFillCircle(begin, end, args, colors);
 		}
 		else if (reader.check(Sym.DRAWRECT))
 		{
 			ASTExpr[] args   = new ASTExpr[4];
 			Color[]   colors = new Color[1];
 
-			reader.eat(Sym.DRAWRECT);
+			Point begin = reader.pop(Sym.DRAWRECT).getLocation();
 			reader.eat(Sym.LPAR);
 			args[0] = expr();
 			reader.eat(Sym.COMMA);
@@ -131,16 +128,16 @@ public class Parser
 			args[3] = expr();
 			reader.eat(Sym.COMMA);
 			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
-			reader.eat(Sym.RPAR);
+			Point end = reader.pop(Sym.RPAR).getLocation();
 
-			res = new ASTInstrExecDrawRect(args, colors);
+			res = new ASTInstrExecDrawRect(begin, end, args, colors);
 		}
 		else if (reader.check(Sym.FILLRECT))
 		{
 			ASTExpr[] args   = new ASTExpr[4];
 			Color[]   colors = new Color[1];
 
-			reader.eat(Sym.FILLRECT);
+			Point begin = reader.pop(Sym.FILLRECT).getLocation();
 			reader.eat(Sym.LPAR);
 			args[0] = expr();
 			reader.eat(Sym.COMMA);
@@ -151,20 +148,20 @@ public class Parser
 			args[3] = expr();
 			reader.eat(Sym.COMMA);
 			colors[0] = ((ColorToken)reader.pop(Sym.COLOR)).getValue();
-			reader.eat(Sym.RPAR);
+			Point end = reader.pop(Sym.RPAR).getLocation();
 
-			res = new ASTInstrExecFillRect(args, colors);
+			res = new ASTInstrExecFillRect(begin, end, args, colors);
 		}
 		// Control Instruction
 		else if (reader.check(Sym.BEGIN))
 		{
 			AST next;
 
-			reader.eat(Sym.BEGIN);
+			Point begin = reader.pop(Sym.BEGIN).getLocation();
 			next = instruction_next();
-			reader.eat(Sym.END);
+			Point end = reader.pop(Sym.END).getLocation();
 
-			res = new ASTInstrBeginEnd(next);
+			res = new ASTInstrBeginEnd(begin, end, next);
 		}
 		else if (reader.check(Sym.IF))
 		{
@@ -172,26 +169,26 @@ public class Parser
 			ASTInstr   instr;
 			ASTInstrIf follow;
 
-			reader.eat(Sym.IF);
+			Point begin = reader.pop(Sym.IF).getLocation();
 			expr = expr();
 			reader.eat(Sym.THEN);
 			instr  = instruction();
 			follow = if_follow();
 
-			res = new ASTInstrIf(expr, instr, follow);
+			res = new ASTInstrIf(begin, follow.end(), expr, instr, follow);
 		}
 		else if (reader.check(Sym.WHILE))
 		{
 			ASTExpr  expr;
 			ASTInstr instr;
 
-			reader.eat(Sym.WHILE);
+			Point begin = reader.pop(Sym.WHILE).getLocation();
 			expr = expr();
 			reader.eat(Sym.DO);
 			instr = instruction();
-			reader.eat(Sym.DONE);
+			Point end = reader.pop(Sym.DONE).getLocation();
 
-			res = new ASTInstrWhile(expr, instr);
+			res = new ASTInstrWhile(begin, end, expr, instr);
 		}
 		// Imp Instruction
 		else if (reader.check(Sym.CONST))
@@ -199,35 +196,35 @@ public class Parser
 			String  identifier;
 			ASTExpr expr;
 
-			reader.eat(Sym.CONST);
+			Point begin = reader.pop(Sym.CONST).getLocation();
 			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
 			reader.eat(Sym.EQUALS);
 			expr = expr();
 
-			res = new ASTInstrDecl(true, identifier, expr);
+			res = new ASTInstrDecl(begin, expr.end(), true, identifier, expr);
 		}
 		else if (reader.check(Sym.VAR))
 		{
 			String  identifier;
 			ASTExpr expr;
 
-			reader.eat(Sym.VAR);
+			Point begin = reader.pop(Sym.VAR).getLocation();
 			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
 			reader.eat(Sym.EQUALS);
 			expr = expr();
 
-			res = new ASTInstrDecl(false, identifier, expr);
+			res = new ASTInstrDecl(begin, expr.end(), false, identifier, expr);
 		}
 		else if (reader.check(Sym.IDENTIFIER))
 		{
-			String  identifier;
+			IdentifierToken  identifier;
 			ASTExpr expr;
 
-			identifier = ((IdentifierToken)reader.pop(Sym.IDENTIFIER)).getValue();
+			identifier = (IdentifierToken)reader.pop(Sym.IDENTIFIER);
 			reader.eat(Sym.EQUALS);
 			expr = expr();
 
-			res = new ASTInstrAssign(identifier, expr);
+			res = new ASTInstrAssign(identifier.getLocation(), expr.end(), identifier.getValue(), expr);
 		}
 
 		//null if no match
@@ -243,18 +240,18 @@ public class Parser
 
 		if (reader.check(Sym.ELIF))
 		{
-			reader.eat(Sym.ELIF);
+			Point begin = reader.pop(Sym.ELIF).getLocation();
 			expr = expr();
 			reader.eat(Sym.THEN);
 			instr  = instruction();
 			follow = if_follow();
-			res    = new ASTInstrIf(expr, instr, follow);
+			res    = new ASTInstrIf(begin, follow.end(), expr, instr, follow);
 		}
 		else if (reader.check(Sym.ELSE))
 		{
-			reader.eat(Sym.ELSE);
+			Point begin = reader.pop(Sym.ELSE).getLocation();
 			instr = instruction();
-			res   = new ASTInstrIf(instr);
+			res   = new ASTInstrIf(begin, instr == null ? begin : instr.end(), instr);
 		}
 		return (res);
 	}

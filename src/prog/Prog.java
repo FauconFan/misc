@@ -55,7 +55,7 @@ public class Prog
 			}
 			return (ad.getValue());
 		}
-		throw new RuntimeException("SNA varible " + identifier + " not exist sould be check before calling in Samantic Analyser");
+		throw new RuntimeException("variable " + identifier + " does not exist");
 	}
 
 	public void setData(String identifier, int value)
@@ -67,10 +67,11 @@ public class Prog
 			{
 				continue;
 			}
-			ad.setValue(value);
+			if (!ad.setValue(value))
+				throw new RuntimeException("cannot change value of the constant " + identifier);
 			return;
 		}
-		throw new RuntimeException("SNA varible " + identifier + " not exist sould be check before calling in Samantic Analyser");
+		throw new RuntimeException("variable " + identifier + " does not exist");
 	}
 
 	// addData doesn't check if the variable already exist
@@ -105,13 +106,11 @@ public class Prog
 			return (this.is_cst == false);
 		}
 
-		public void setValue(int value)
+		public boolean setValue(int value)
 		{
-			if (this.is_cst)
-			{
-				throw new RuntimeException("SNA should check before calling cannot modify constant data");
-			}
-			this.value = value;
+			if (!is_cst)
+				this.value = value;
+			return !is_cst;
 		}
 	}
 }
