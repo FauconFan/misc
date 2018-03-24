@@ -8,7 +8,21 @@ On accepte les fichiers en extension 'gtxt'.
 
 Pour gérer la portée des variables, on utiliser la structure suivante :  
 ```
-HashMap <Integer, HashMap<String, Integer>>
+HashMap <Integer, HashMap<String, AccessData> >
+
+public class AccessData
+{
+	private final boolean is_cst;
+	private int value;
+
+	public AccessData(boolean is_cst, int value)
+	{
+		this.is_cst = is_cst;
+		this.value  = value;
+	}
+
+	...
+}
 ```
 où la première clé est le niveau de profondeur (le niveau de profondeur commence à 0, s'incrémente avec Begin et se décrémente avec End)  
 
@@ -33,13 +47,19 @@ On fait une interprétation en plusieurs étapes :
  - [x] Gestion des variables Analyse sémantique
  - [x] Evaluation
 
-## Idées
+## Bonus
+
+ - [x] Faire une boucle While
+ - [x] Faire des Elif
+
+## Idées - Bonus
 
  - [ ] Faire une évaluation booléenne
  - [ ] Faire une vidéo
  - [ ] Savoir si un fichier est correctement parsé pour de l'intégration continue (Travis CI)
  - [ ] Pouvoir définir des fonctions
  - [ ] Pouvoir définir des structures
+ - [ ] Faire des Exceptions avec le numéro de la ligne et de la colonne, et faire une interprétation dynamique (afficher toutes les erreurs et pas juste la première erreur croisé)
 
 ## Grammaire Lexicale
 
