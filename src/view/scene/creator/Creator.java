@@ -17,6 +17,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
@@ -65,7 +66,8 @@ public class Creator extends ScenePlus
 		final Translate tr = new Translate(10, 10); // Décalage par défaut du dessin
 
 		Group dots  = new Group();
-		Group walls = new Group();
+		Pane  walls = new Pane();
+		walls.setPickOnBounds(false);
 		Group cases = new Group();
 
 		dots.getTransforms().addAll(tr, sc);
@@ -182,15 +184,15 @@ public class Creator extends ScenePlus
 		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 		sp.setPadding(new Insets(10, 10, 10, 10));
 
-		sp.setVmax(height * sc.getY() - screenHeight);
-		sp.setHmax(width * sc.getX() - screenWidth);
+		sp.setVmax(height - screenHeight / sc.getY());
+		sp.setHmax(width - (screenWidth - leftPaneGrSize) / sc.getX() + 7.5);
 
 		sp.vvalueProperty().addListener((ov, old_val, new_val)->{
-			tr.setY(tr.getY() + (old_val.doubleValue() - new_val.doubleValue()));
+			tr.setY(tr.getY() + sc.getY() * (old_val.doubleValue() - new_val.doubleValue()));
 		});
 
 		sp.hvalueProperty().addListener((ov, old_val, new_val)->{
-			tr.setX(tr.getX() + (old_val.doubleValue() - new_val.doubleValue()));
+			tr.setX(tr.getX() + sc.getX() * (old_val.doubleValue() - new_val.doubleValue()));
 		});
 
 		pane.getChildren().addAll(panel, sp);

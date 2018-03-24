@@ -20,13 +20,18 @@ class LinePlus extends Line
 	{
 		super(a, b, c, d);
 		lw = new LineWall(a, b, c, d);
-		setStrokeWidth(0.05);
+		create();
 	}
 
 	public LinePlus(LineWall lw)
 	{
 		super(lw.getX1(), lw.getY1(), lw.getX2(), lw.getY2());
 		this.lw = lw;
+		create();
+	}
+
+	public void create()
+	{
 		setStrokeWidth(0.05);
 	}
 
