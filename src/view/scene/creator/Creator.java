@@ -62,7 +62,7 @@ public class Creator extends ScenePlus
 
 		final double dotWidth = 0.1;
 
-		final Translate tr = new Translate();
+		final Translate tr = new Translate(10, 10); // Décalage par défaut du dessin
 
 		Group dots  = new Group();
 		Group walls = new Group();
@@ -181,6 +181,17 @@ public class Creator extends ScenePlus
 		sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 		sp.setPadding(new Insets(10, 10, 10, 10));
+
+		sp.setVmax(height * sc.getY() - screenHeight);
+		sp.setHmax(width * sc.getX() - screenWidth);
+
+		sp.vvalueProperty().addListener((ov, old_val, new_val)->{
+			tr.setY(tr.getY() + (old_val.doubleValue() - new_val.doubleValue()));
+		});
+
+		sp.hvalueProperty().addListener((ov, old_val, new_val)->{
+			tr.setX(tr.getX() + (old_val.doubleValue() - new_val.doubleValue()));
+		});
 
 		pane.getChildren().addAll(panel, sp);
 	}
