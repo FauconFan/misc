@@ -7,8 +7,17 @@ MAIN_PATH_MANIFEST = "src.Main"
 MANIFEST = "MANIFEST.MF"
 JAR = $(NAME).jar
 
-PATH_FLEX = assets/lex.flex
+PATH_FLEX = flex/lex.flex
 PATH_FLEX_RENDER = src/lexer_parser/LexerFlex.java
+
+_RED=$(shell tput setaf 1)
+_GREEN=$(shell tput setaf 2)
+_YELLOW=$(shell tput setaf 3)
+_BLUE=$(shell tput setaf 4)
+_PURPLE=$(shell tput setaf 5)
+_CYAN=$(shell tput setaf 6)
+_WHITE=$(shell tput setaf 7)
+_END=$(shell tput sgr0)
 
 all : genflex
 	@mkdir -p $(BIN_FOLDER)
@@ -30,3 +39,13 @@ fclean: clean
 	@rm -rf $(JAR)
 
 re: fclean all
+
+basic_test:
+	@sh tests/basic_test.sh
+
+test:
+	@printf "%sBuilding project%s\\n" "$(_BLUE)" "$(_END)"
+	@make -s -C . all 2>&1 > /dev/null
+	@printf "%sProject built successfully%s\\n" "$(_GREEN)" "$(_END)"
+	@make -s -C . basic_test
+	@make -s -C . fclean 2>&1 > /dev/null
