@@ -30,4 +30,9 @@ public class ASTInstrExecDrawRect extends ASTInstrExec
 		height = this.args[3].evalExpr(prog);
 		g2d.drawRect(x, y, width, height);
 	}
+
+	public String getTag()
+	{
+		return ("DrawRect");
+	}
 }

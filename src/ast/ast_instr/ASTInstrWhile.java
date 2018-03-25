@@ -2,6 +2,7 @@ package src.ast.ast_instr;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
+import src.ast_rep.BlockASTLeaf;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
 
@@ -35,9 +36,18 @@ public class ASTInstrWhile implements ASTInstr
 		}
 	}
 
-	public String toString()
+	public String getTag()
 	{
-		return ("ASTInstrWhile");
+		return ("While");
+	}
+
+	public BlockASTLeaf[] getChilds()
+	{
+		BlockASTLeaf[] res = new BlockASTLeaf[2];
+
+		res[0] = new BlockASTLeaf(expr);
+		res[1] = new BlockASTLeaf(content);
+		return (res);
 	}
 
 	public Point begin(){

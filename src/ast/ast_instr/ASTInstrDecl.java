@@ -4,6 +4,7 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
+import src.ast_rep.BlockASTLeaf;
 
 import java.awt.Point;
 
@@ -44,6 +45,23 @@ public class ASTInstrDecl implements ASTInstr
 				s += "between lign " + begin.x + " at position " + begin.y + " and lign " + end.x + " at position " + end.y;
 			throw new RuntimeException(s + " : " + e.getMessage());
 		}
+	}
+
+	public String getTag()
+	{
+		return ("Decl");
+	}
+
+	public BlockASTLeaf[] getChilds()
+	{
+		BlockASTLeaf[] res;
+		String prefix;
+
+		res = new BlockASTLeaf[2];
+		prefix = (this.is_cst) ? "Const " : "Var ";
+		res[0] = new BlockASTLeaf(prefix + identifier);
+		res[1] = new BlockASTLeaf(expr);
+		return (res);
 	}
 
 	public String toString()

@@ -4,6 +4,7 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
+import src.ast_rep.BlockASTLeaf;
 
 import java.awt.Point;
 
@@ -59,9 +60,18 @@ public class ASTInstrAssign implements ASTInstr
 		expr.checkSemantic(sa);
 	}
 
-	public String toString()
+	public String getTag()
 	{
-		return ("ASTInstrAssign");
+		return ("Assign '='");
+	}
+
+	public BlockASTLeaf[] getChilds()
+	{
+		BlockASTLeaf[] res = new BlockASTLeaf[2];
+
+		res[0] = new BlockASTLeaf(identifier);
+		res[1] = new BlockASTLeaf(expr);
+		return (res);
 	}
 
 	public Point begin(){

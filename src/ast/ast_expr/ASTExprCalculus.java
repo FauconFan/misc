@@ -2,6 +2,7 @@ package src.ast.ast_expr;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
+import src.ast_rep.BlockASTLeaf;
 import src.prog.Prog;
 
 import java.awt.Point;
@@ -62,9 +63,18 @@ public class ASTExprCalculus implements ASTExpr
 		this.right.checkSemantic(sa);
 	}
 
-	public String toString()
+	public String getTag()
 	{
-		return ("(" + this.left + " " + op + " " + this.right + ")");
+		return ("" + op);
+	}
+
+	public BlockASTLeaf[] getChilds()
+	{
+		BlockASTLeaf[] res = new BlockASTLeaf[2];
+
+		res[0] = new BlockASTLeaf(left);
+		res[1] = new BlockASTLeaf(right);
+		return (res);
 	}
 
 	public Point begin(){

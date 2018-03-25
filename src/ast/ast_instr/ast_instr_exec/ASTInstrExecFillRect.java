@@ -30,4 +30,9 @@ public class ASTInstrExecFillRect extends ASTInstrExec
 		height = this.args[3].evalExpr(prog);
 		g2d.fillRect(x, y, width, height);
 	}
+
+	public String getTag()
+	{
+		return ("FillRect");
+	}
 }

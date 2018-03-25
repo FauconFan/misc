@@ -2,6 +2,7 @@ package src.ast.ast_expr;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
+import src.ast_rep.BlockASTLeaf;
 import src.prog.Prog;
 
 import java.awt.Point;
@@ -52,9 +53,14 @@ public class ASTExprIdentifier implements ASTExpr
 		}
 	}
 
-	public String toString()
+	public String getTag()
 	{
 		return (this.identifier);
+	}
+
+	public BlockASTLeaf[] getChilds()
+	{
+		return (new BlockASTLeaf[0]);
 	}
 
 	public Point begin(){

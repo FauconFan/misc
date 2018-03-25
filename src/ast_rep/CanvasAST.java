@@ -26,7 +26,7 @@ public class CanvasAST extends JComponent
 	private int dx;
 	private int dy;
 	private float zoom;
-	private ArrayList<BlockAST> list_blocks;
+	private BlockASTHead head;
 
 	private Font getCurrentFont()
 	{
@@ -40,11 +40,23 @@ public class CanvasAST extends JComponent
 		this.dx = 0;
 		this.dy = 0;
 		this.zoom = 1.0f;
-		this.list_blocks = new ArrayList<>();
+		this.head = new BlockASTHead(400, 100, ast);
+		this.head.setParentRecu();
+	}
 
-		this.list_blocks.add(new BlockAST(100, 100, "Name"));
-		this.list_blocks.add(new BlockAST(200, 100, "Content"));
-		this.list_blocks.add(new BlockAST(100, 200, "Test"));
+	public int getDX()
+	{
+		return (this.dx);
+	}
+
+	public int getDY()
+	{
+		return (this.dy);
+	}
+
+	public float getZoom()
+	{
+		return (this.zoom);
 	}
 
 	public void moveRight()
@@ -92,12 +104,8 @@ public class CanvasAST extends JComponent
 
 			g2d = (Graphics2D)g;
 			g2d.setFont(getCurrentFont());
-			for (BlockAST bast : this.list_blocks)
-			{
-				CalculationPoint cp = new CalculationPoint(this, g2d, bast);
-				g2d.drawString(cp.name, cp.x, cp.y);
-				g2d.drawRect(cp.boxX, cp.boxY, cp.boxWidth, cp.boxHeight);
-			}
+			this.head.setCoordsRecu(g2d);
+			this.head.paintBlockRecu(this, g2d, null);
 		}
 	}
 
@@ -123,55 +131,5 @@ public class CanvasAST extends JComponent
 			System.exit(1);
 		}
 		new FrameAST(ast);
-	}
-
-	public static class CalculationPoint
-	{
-		public static final int deltaX = 10;
-		public static final int deltaY = 5;
-
-		public String name;
-		public int x;
-		public int y;
-		public int boxX;
-		public int boxY;
-		public int boxWidth;
-		public int boxHeight;
-
-		public int getAdapted(int actu, double size, float zoom)
-		{
-			double dactu;
-			double ecart;
-
-			dactu = (double)actu;
-			ecart = dactu - size / 2; 
-			ecart *= zoom;
-			ecart += size / 2;
-			return ((int)(ecart));
-		}
-
-		public CalculationPoint(CanvasAST cast, Graphics2D g2d, BlockAST bast)
-		{
-			FontMetrics fmet;
-			Dimension dim;
-			int width;
-			int height;
-
-			fmet = g2d.getFontMetrics();
-			dim = cast.getSize();
-			this.name = bast.getName();
-			this.x = bast.getX() + cast.dx;
-			this.y = bast.getY() + cast.dy;
-			this.x = this.getAdapted(this.x, dim.getWidth(), cast.zoom);
-			this.y = this.getAdapted(this.y, dim.getHeight(), cast.zoom);
-			width = fmet.stringWidth(name);
-			height = fmet.getHeight();
-			this.x -= width / 2;
-			this.y -= height / 2;
-			this.boxX = this.x - (int)(deltaX * cast.zoom);
-			this.boxY = this.y - height;
-			this.boxWidth = width + (int)(2 * deltaX * cast.zoom);
-			this.boxHeight = height + (int)(deltaY * cast.zoom);
-		}
 	}
 }

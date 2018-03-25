@@ -28,4 +28,9 @@ public class ASTInstrExecDrawCircle extends ASTInstrExec
 		r = this.args[2].evalExpr(prog);
 		g2d.drawOval(x, y, r, r);
 	}
+
+	public String getTag()
+	{
+		return ("DrawCircle");
+	}
 }
