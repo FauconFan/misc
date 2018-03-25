@@ -11,6 +11,8 @@ import src.ast.AST;
 
 import src.prog.SemanticAnalyser;
 
+import src.ast_rep.CanvasAST;
+
 public class Main
 {
 	public static void runProg(String filename)
@@ -20,6 +22,17 @@ public class Main
 			public void run()
 			{
 				MyCanvas.initAndShow(filename);
+			}
+		});
+	}
+
+	public static void runAstRepProg(String filename)
+	{
+		javax.swing.SwingUtilities.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				CanvasAST.initAndShow(filename);
 			}
 		});
 	}
@@ -52,6 +65,7 @@ public class Main
 	{
 		boolean quietMode = false;
 		boolean helpMode  = false;
+		boolean astRepMode = false;
 		String  filename  = null;
 
 		for (String str : args)
@@ -64,6 +78,10 @@ public class Main
 			{
 				helpMode = true;
 			}
+			else if (str.equals("--ast"))
+			{
+				astRepMode = true;
+			}
 			else if (str.endsWith(".gtxt"))
 			{
 				filename = str;
@@ -74,31 +92,40 @@ public class Main
 			}
 		}
 
-		if (helpMode || filename == null)
+		if (helpMode == true
+			|| filename == null
+			|| (quietMode == true && astRepMode == true))
 		{
 			displayHelp();
-			System.exit(0);
 		}
 		else if (quietMode)
 		{
 			quietModeActivated(filename);
-			System.exit(0);
 		}
-		runProg(filename);
+		else if (astRepMode)
+		{
+			runAstRepProg(filename);
+		}
+		else
+		{
+			runProg(filename);
+		}
 	}
 
 	public static void displayHelp()
 	{
 		String helpMessage = "";
 
-		helpMessage += "java -jar ./GraphTXT.jar [-h|--help] [-q|--quiet] filename\n";
+		helpMessage += "java -jar ./GraphTXT.jar [-h|--help] [-q|--quiet] [--ast] filename\n";
 		helpMessage += "\n";
 		helpMessage += "--help : display this message\n";
 		helpMessage += "--quiet : do not open a frame, just display it on terminal\n";
+		helpMessage += "--ast : display a graphic representation of the AST\n";
 		helpMessage += "\n";
 		helpMessage += "\n";
-		helpMessage += "filename must end with the extension gtxt...\n";
+		helpMessage += "Every filename musts end with the extension gtxt...\n";
+		helpMessage += "--ast and --quiet can be called at the same time\n";
 
-		System.out.println(helpMessage);
+		System.out.print(helpMessage);
 	}
 }
