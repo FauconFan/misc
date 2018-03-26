@@ -265,4 +265,12 @@ public class Creator extends ScenePlus
 			}
 		}
 	}
+
+	private void drawWall(LineWall l)
+	{
+	}
+
+	private void drawCell(Case c)
+	{
+	}
 }
