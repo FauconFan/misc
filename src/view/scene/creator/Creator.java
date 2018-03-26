@@ -186,8 +186,8 @@ public class Creator extends ScenePlus
 		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 		sp.setPadding(new Insets(10, 10, 10, 10));
 
-		sp.setVmax(height - screenHeight / sc.getY());
-		sp.setHmax(width - (screenWidth - leftPaneGrSize) / sc.getX() + 7.5);
+		sp.setVmax(height);
+		sp.setHmax(width);
 
 		sp.vvalueProperty().addListener((ov, old_val, new_val)->{
 			tr.setY(tr.getY() + sc.getY() * (old_val.doubleValue() - new_val.doubleValue()));
@@ -210,11 +210,11 @@ public class Creator extends ScenePlus
 		this(v, md.x2 - md.x1, md.y2 - md.y1);
 		for (LineWall l: maze.getContentMaze().getLineWalls())
 		{
-			drawWall(l);
+			walls.getChildren().add(new LinePlus(l));
 		}
 		for (Case c:maze.getContentMaze().getSpecialCases())
 		{
-			drawCell(c);
+			cases.getChildren().add(new RectanglePlus(c));
 		}
 	}
 
