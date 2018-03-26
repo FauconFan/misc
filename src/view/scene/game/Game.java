@@ -239,6 +239,8 @@ public class Game extends ScenePlus
 			case UP: cons.accept(Directions.up); break;
 
 			case DOWN: cons.accept(Directions.down); break;
+
+			case SPACE: cons.accept(Directions.jump); break;
 			}
 		};
 

@@ -15,30 +15,38 @@ public class CollisionsXYManager
 	private FloatVector [] splitMove;
 	private FloatVector finalMove;
 
-	public CollisionsXYManager(LineWall [] lws, Player p, FloatVector dep)
+	public CollisionsXYManager(Player p)
 	{
-		this.walls        = lws;
-		this.p            = p;
-		this.splitMove    = new FloatVector[2];
-		this.splitMove[0] = dep;
-		this.splitMove[1] = new FloatVector(0, 0);
-		this.finalMove    = new FloatVector(0, 0);
+		this.p         = p;
+		this.splitMove = new FloatVector[2];
 	}
 
 	private void init()
 	{
-		coefPropMin = 1;
-		closestWall = null;
+		this.coefPropMin = 1;
+		this.closestWall = null;
+	}
+
+	public void updateMove(FloatVector d)
+	{
+		this.finalMove    = new FloatVector(0, 0);
+		this.splitMove[0] = d;
+		this.splitMove[1] = new FloatVector(0, 0);
+		do
+		{
+			this.update();
+			this.finalMove.sum(this.splitMove[0]);
+			this.next();
+		} while (!this.splitMove[0].isNul());
+	}
+
+	public void updateWalls(LineWall [] lw)
+	{
+		walls = lw;
 	}
 
 	public FloatVector getMove()
 	{
-		do
-		{
-			this.updateMove();
-			this.finalMove.sum(this.splitMove[0]);
-			this.next();
-		} while (!this.splitMove[0].isNul());
 		return (this.finalMove);
 	}
 
@@ -93,7 +101,7 @@ public class CollisionsXYManager
 	/**
 	 * Décompose le vecteur AD en deux vecteurs AB et BC avec B le point d'intersection entre AD et le mur le plus proche
 	 */
-	public void updateMove()
+	private void update()
 	{
 		this.init();
 		this.putClosestWall();

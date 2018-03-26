@@ -9,11 +9,9 @@ public class CollisionsZManager
 	private Player p;
 	private float zMove;
 
-	public CollisionsZManager(Player p, float dz)
+	public CollisionsZManager(Player p)
 	{
-		this.p     = p;
-		this.zMove = dz;
-		this.updateMove();
+		this.p = p;
 	}
 
 	public float getMove()
@@ -21,15 +19,12 @@ public class CollisionsZManager
 		return (this.zMove);
 	}
 
-	public void updateMove()
+	public void updateMove(float dz)
 	{
-		if (this.p.getPosZ() < 0)
+		//If la position en z est plus haute que la position du sol le plus proche tel que p.getPosZ() > sol
+		if (this.p.getPosZ() >= 0)
 		{
-			this.zMove = 0;
-		}
-		else
-		{
-			this.zMove = (this.p.getPosZ() + this.zMove < 0) ? -this.p.getPosZ() : this.zMove;
+			this.zMove = (this.p.getPosZ() + dz < 0) ? -(this.p.getPosZ() - 0) : dz;
 		}
 	}
 }
