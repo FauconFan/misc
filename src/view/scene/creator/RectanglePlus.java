@@ -22,10 +22,22 @@ class RectanglePlus extends Rectangle
 	public RectanglePlus(double a, double b, double c, double d)
 	{
 		super(a, b, c, d);
+		setFill(Color.WHITE);
+		init();
+	}
 
+	public RectanglePlus(Case c)
+	{
+		super(c.getX(), c.getY(), 1, 1);//NOT GOOD
+		this.cas = c;
+		setFill(CaseColor.getColor(c.type));
+		init();
+	}
+
+	private void init()
+	{
 		setStrokeWidth(0.001);
 		setStroke(Color.BLACK);
-		setFill(Color.WHITE);
 	}
 
 	public Case getCase()

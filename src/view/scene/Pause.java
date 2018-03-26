@@ -22,6 +22,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import src.view.Menu;
+import src.view.scene.creator.Creator;
 import src.view.scene.game.Game;
 import src.view.View;
 
@@ -78,6 +79,13 @@ public class Pause extends ScenePlus
 				{
 					v.con.saveMaze(f.getAbsolutePath());
 				}
+			});
+
+			Button buttonCreator = addButton("Creator");
+			buttonCreator.setPrefWidth(primaryScreenBounds.getWidth() / 3);
+			buttonCreator.setPrefHeight(primaryScreenBounds.getHeight() / 15);
+			buttonCreator.setOnAction(event->{
+				v.changeScene(new Creator(v, previous.getMaze()));
 			});
 
 			Button buttonReturn = addButton("Return to Menu");
