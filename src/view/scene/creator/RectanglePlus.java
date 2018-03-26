@@ -22,7 +22,17 @@ class RectanglePlus extends Rectangle
 	public RectanglePlus(double a, double b, double c, double d)
 	{
 		super(a, b, c, d);
+		init();
+	}
 
+	public RectanglePlus(Case c)
+	{
+		super(c.getX(), c.getY(), 1, 1);//NOT GOOD
+		init();
+	}
+
+	private void init()
+	{
 		setStrokeWidth(0.001);
 		setStroke(Color.BLACK);
 		setFill(Color.WHITE);
