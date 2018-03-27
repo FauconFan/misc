@@ -65,7 +65,6 @@ color = #{hex}{hex}{hex}{hex}{hex}{hex}
 "End"				{return token(Sym.END);}
 "While"				{return token(Sym.WHILE);}
 "Do"				{return token(Sym.DO);}
-"Done"				{return token(Sym.DONE);}
 "If"	            {return token(Sym.IF);}
 "Elif"      		{return token(Sym.ELIF);}
 "Then"      		{return token(Sym.THEN);}

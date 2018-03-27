@@ -186,9 +186,8 @@ public class Parser
 			expr = expr();
 			reader.eat(Sym.DO);
 			instr = instruction();
-			Point end = reader.pop(Sym.DONE).getLocation();
 
-			res = new ASTInstrWhile(begin, end, expr, instr);
+			res = new ASTInstrWhile(begin, instr.end(), expr, instr);
 		}
 		// Imp Instruction
 		else if (reader.check(Sym.CONST))
