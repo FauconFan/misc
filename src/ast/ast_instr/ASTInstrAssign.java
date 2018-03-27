@@ -16,7 +16,7 @@ public class ASTInstrAssign extends ASTInstr
 
 	public ASTInstrAssign(Point begin, Point end, String identifier, ASTExpr expr)
 	{
-		super(begin,end);
+		super(begin, end);
 		this.identifier = identifier;
 		this.expr       = expr;
 	}
@@ -28,7 +28,7 @@ public class ASTInstrAssign extends ASTInstr
 		new_value = expr.evalExpr(prog);
 		try{
 			prog.setData(this.identifier, new_value);
-		}catch(Exception e){
+		}catch (Exception e) {
 			throw new LocatedException("Invalid assignment ", begin(), end(), " : " + e.getMessage());
 		}
 	}
@@ -37,7 +37,7 @@ public class ASTInstrAssign extends ASTInstr
 	{
 		try{
 			sa.can_modify_var_in_registre(identifier);
-		}catch(Exception e){
+		}catch (Exception e) {
 			throw new LocatedException("Invalid assignment ", begin(), end(), " : " + e.getMessage());
 		}
 		expr.checkSemantic(sa);

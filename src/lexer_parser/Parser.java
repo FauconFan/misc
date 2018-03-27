@@ -56,12 +56,12 @@ public class Parser
 		else if (reader.check(Sym.NUMBER))
 		{
 			NumberToken nt = (NumberToken)reader.pop(Sym.NUMBER);
-			res    = new ASTExprNumber(nt.getLocation(), nt.getLocation(), nt.getValue());
+			res = new ASTExprNumber(nt.getLocation(), nt.getLocation(), nt.getValue());
 		}
 		else if (reader.check(Sym.IDENTIFIER))
 		{
 			IdentifierToken identifier = (IdentifierToken)reader.pop(Sym.IDENTIFIER);
-			res        = new ASTExprIdentifier(identifier.getLocation(), identifier.getLocation(), identifier.getValue());
+			res = new ASTExprIdentifier(identifier.getLocation(), identifier.getLocation(), identifier.getValue());
 		}
 		else
 		{
@@ -217,8 +217,8 @@ public class Parser
 		}
 		else if (reader.check(Sym.IDENTIFIER))
 		{
-			IdentifierToken  identifier;
-			ASTExpr expr;
+			IdentifierToken identifier;
+			ASTExpr         expr;
 
 			identifier = (IdentifierToken)reader.pop(Sym.IDENTIFIER);
 			reader.eat(Sym.EQUALS);

@@ -11,9 +11,9 @@ public abstract class BlockAST
 
 	public BlockAST(int x, int y, String name, BlockASTLeaf[] childs)
 	{
-		this.x = x;
-		this.y = y;
-		this.name = name;
+		this.x      = x;
+		this.y      = y;
+		this.name   = name;
 		this.childs = childs;
 	}
 
@@ -49,8 +49,8 @@ public abstract class BlockAST
 	public void setCoordsRecu(Graphics2D g2d)
 	{
 		int size_tot = 0;
-		int ecart = 20;
-		int actu = 0;
+		int ecart    = 20;
+		int actu     = 0;
 
 		for (BlockASTLeaf bal : this.childs)
 		{
@@ -76,6 +76,7 @@ public abstract class BlockAST
 	public void paintBlockRecu(CanvasAST cast, Graphics2D g2d, CalculationPoint parent)
 	{
 		CalculationPoint cp = new CalculationPoint(cast, g2d, this);
+
 		g2d.drawString(cp.name, cp.x, cp.y);
 		g2d.drawRect(cp.boxX, cp.boxY, cp.boxWidth, cp.boxHeight);
 

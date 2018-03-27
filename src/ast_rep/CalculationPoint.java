@@ -23,14 +23,14 @@ public class CalculationPoint
 	public CalculationPoint(CanvasAST cast, Graphics2D g2d, BlockAST bast)
 	{
 		FontMetrics fmet;
-		Dimension dim;
-		int width;
-		int height;
+		Dimension   dim;
+		int         width;
+		int         height;
 
-		fmet = g2d.getFontMetrics();
-		dim = cast.getSize();
-		this.name = bast.getName();
-		this.width = fmet.stringWidth(name);
+		fmet        = g2d.getFontMetrics();
+		dim         = cast.getSize();
+		this.name   = bast.getName();
+		this.width  = fmet.stringWidth(name);
 		this.height = fmet.getHeight();
 		buildSizeString(cast, dim, fmet, bast);
 		buildSizeBox(cast);
@@ -38,11 +38,11 @@ public class CalculationPoint
 
 	public void buildSizeString(CanvasAST cast, Dimension dim, FontMetrics fmet, BlockAST bast)
 	{
-		this.x = bast.getX() + cast.getDX();
-		this.x = this.getAdapted(this.x, dim.getWidth(), cast.getZoom());
+		this.x  = bast.getX() + cast.getDX();
+		this.x  = this.getAdapted(this.x, dim.getWidth(), cast.getZoom());
 		this.x -= this.width / 2;
-		this.y = bast.getY() + cast.getDY();
-		this.y = this.getAdapted(this.y, dim.getHeight(), cast.getZoom());
+		this.y  = bast.getY() + cast.getDY();
+		this.y  = this.getAdapted(this.y, dim.getHeight(), cast.getZoom());
 		this.y -= this.height / 2;
 	}
 
@@ -50,7 +50,7 @@ public class CalculationPoint
 	{
 		double ecart;
 
-		ecart = (double)actu - size / 2; 
+		ecart  = (double)actu - size / 2;
 		ecart *= zoom;
 		ecart += size / 2;
 		return ((int)(ecart));
@@ -58,9 +58,9 @@ public class CalculationPoint
 
 	public void buildSizeBox(CanvasAST cast)
 	{
-		this.boxX = this.x - (int)(deltaX * cast.getZoom());
-		this.boxY = this.y - height;
-		this.boxWidth = width + (int)(2 * deltaX * cast.getZoom());
+		this.boxX      = this.x - (int)(deltaX * cast.getZoom());
+		this.boxY      = this.y - height;
+		this.boxWidth  = width + (int)(2 * deltaX * cast.getZoom());
 		this.boxHeight = height + (int)(deltaY * cast.getZoom());
 	}
 

@@ -11,16 +11,19 @@ public abstract class ASTInstr implements ASTInterface
 
 	public abstract void exec(Prog prog);
 
-	public ASTInstr(Point begin, Point end){
+	public ASTInstr(Point begin, Point end)
+	{
 		this.begin = begin;
 		this.end   = end;
 	}
 
-	public Point begin(){
-		return begin;
+	public Point begin()
+	{
+		return (begin);
 	}
 
-	public Point end(){
-		return end;
+	public Point end()
+	{
+		return (end);
 	}
 }

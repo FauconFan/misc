@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class CanvasAST extends JComponent
 {
 	private static final int DEFAULT_SIZE_FONT = 15;
-	private static final float ZOOM_RATE = 1.1f;
+	private static final float ZOOM_RATE       = 1.1f;
 
 	private AST ast;
 	private int dx;
@@ -36,9 +36,9 @@ public class CanvasAST extends JComponent
 	public CanvasAST(AST ast)
 	{
 		super();
-		this.ast = ast;
-		this.dx = 0;
-		this.dy = 0;
+		this.ast  = ast;
+		this.dx   = 0;
+		this.dy   = 0;
 		this.zoom = 1.0f;
 		this.head = new BlockASTHead(400, 100, ast);
 		this.head.setParentRecu();

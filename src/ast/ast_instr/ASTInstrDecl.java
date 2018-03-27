@@ -33,7 +33,7 @@ public class ASTInstrDecl extends ASTInstr
 		expr.checkSemantic(sa);
 		try{
 			sa.add_in_registre(identifier, is_cst);
-		}catch(Exception e){
+		}catch (Exception e) {
 			throw new LocatedException("Invalid assignment ", begin(), end(), " : " + e.getMessage());
 		}
 	}
@@ -46,9 +46,9 @@ public class ASTInstrDecl extends ASTInstr
 	public BlockASTLeaf[] getChilds()
 	{
 		BlockASTLeaf[] res;
-		String prefix;
+		String         prefix;
 
-		res = new BlockASTLeaf[2];
+		res    = new BlockASTLeaf[2];
 		prefix = (this.is_cst) ? "Const " : "Var ";
 		res[0] = new BlockASTLeaf(prefix + identifier);
 		res[1] = new BlockASTLeaf(expr);

@@ -54,9 +54,9 @@ public class AST implements ASTInterface
 	public BlockASTLeaf[] getChilds()
 	{
 		BlockASTLeaf[] res;
-		int len;
+		int            len;
 
-		len = 0;
+		len  = 0;
 		len += (this.instr != null) ? 1 : 0;
 		len += (this.next != null) ? 1 : 0;
 
@@ -75,7 +75,7 @@ public class AST implements ASTInterface
 
 	public String toString()
 	{
-		if (instr == null && next == null)
+		if (instr == null&& next == null)
 		{
 			return ("");
 		}

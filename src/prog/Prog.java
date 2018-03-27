@@ -68,7 +68,9 @@ public class Prog
 				continue;
 			}
 			if (!ad.setValue(value))
+			{
 				throw new RuntimeException("cannot change value of the constant " + identifier);
+			}
 			return;
 		}
 		throw new RuntimeException("variable " + identifier + " does not exist");
@@ -109,8 +111,10 @@ public class Prog
 		public boolean setValue(int value)
 		{
 			if (!is_cst)
+			{
 				this.value = value;
-			return !is_cst;
+			}
+			return (!is_cst);
 		}
 	}
 }

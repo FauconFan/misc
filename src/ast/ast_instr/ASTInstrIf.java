@@ -61,9 +61,9 @@ public class ASTInstrIf extends ASTInstr
 	public BlockASTLeaf[] getChilds()
 	{
 		BlockASTLeaf[] res;
-		int len;
+		int            len;
 
-		len = 0;
+		len  = 0;
 		len += (this.expr != null) ? 1 : 0;
 		len += (this.instr != null) ? 1 : 0;
 		len += (this.follow != null) ? 1 : 0;

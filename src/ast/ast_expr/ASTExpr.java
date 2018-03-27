@@ -9,22 +9,23 @@ import java.awt.Point;
 
 public abstract class ASTExpr implements ASTInterface
 {
-
 	private final Point begin, end;
 
-	public ASTExpr(Point begin, Point end){
+	public ASTExpr(Point begin, Point end)
+	{
 		this.begin = begin;
 		this.end   = end;
 	}
 
 	public abstract int evalExpr(Prog prog);
 
-	public Point begin(){
-		return begin;
+	public Point begin()
+	{
+		return (begin);
 	}
 
-	public Point end(){
-		return end;
+	public Point end()
+	{
+		return (end);
 	}
-
 }

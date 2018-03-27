@@ -36,31 +36,30 @@ public class FrameAST extends JFrame implements KeyListener
 	}
 
 	public void keyPressed(KeyEvent e)
-  	{
-    	if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-    	{
-      		cast.moveRight();
-    	}
-    	else if (e.getKeyCode() == KeyEvent.VK_LEFT)
-    	{
-      		cast.moveLeft();
-    	}
-    	else if (e.getKeyCode() == KeyEvent.VK_DOWN)
-    	{
-      		cast.moveDown();
-    	}
-    	else if (e.getKeyCode() == KeyEvent.VK_UP)
-    	{
-      		cast.moveUp();
-    	}
-    	else if (e.getKeyCode() == KeyEvent.VK_P)
-    	{
-    		cast.zoomPlus();
-    	}
-    	else if (e.getKeyCode() == KeyEvent.VK_M)
-    	{
-    		cast.zoomMoins();
-    	}
-
-  }
+	{
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			cast.moveRight();
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			cast.moveLeft();
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_DOWN)
+		{
+			cast.moveDown();
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_UP)
+		{
+			cast.moveUp();
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_P)
+		{
+			cast.zoomPlus();
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_M)
+		{
+			cast.zoomMoins();
+		}
+	}
 }

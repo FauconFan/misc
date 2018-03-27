@@ -22,7 +22,7 @@ public class ASTExprIdentifier extends ASTExpr
 	{
 		try{
 			return (prog.getData(this.identifier));
-		}catch(Exception e){
+		}catch (Exception e) {
 			throw new LocatedException("Invalid variable or constant use ", begin(), end(), " : " + e.getMessage());
 		}
 	}
@@ -31,7 +31,7 @@ public class ASTExprIdentifier extends ASTExpr
 	{
 		try{
 			sa.can_access_var_in_registre(this.identifier);
-		}catch(Exception e){
+		}catch (Exception e) {
 			throw new LocatedException("Invalid variable or constant use ", begin(), end(), " : " + e.getMessage());
 		}
 	}

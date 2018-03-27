@@ -24,15 +24,18 @@ public class Token
 		return ("Symbol : " + this.symbol);
 	}
 
-	public int getLign(){
-		return location.x;
+	public int getLign()
+	{
+		return (location.x);
 	}
 
-	public int getColumn(){
-		return location.y;
+	public int getColumn()
+	{
+		return (location.y);
 	}
 
-	public Point getLocation(){
-		return location.getLocation();
+	public Point getLocation()
+	{
+		return (location.getLocation());
 	}
 }
