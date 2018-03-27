@@ -79,9 +79,9 @@ public class Creator extends ScenePlus
 		root.getChildren().addAll(cases, walls, dots);
 
 		// Draw circles
-		for (int i = 0; i < width; i++)
+		for (int i = 0; i < width + 1; i++)
 		{
-			for (int j = 0; j < height; j++)
+			for (int j = 0; j < height + 1; j++)
 			{
 				final Circle c = new Circle(i, j, dotWidth, Color.BLACK);
 				c.setOnMouseClicked((ev)->{
@@ -126,7 +126,7 @@ public class Creator extends ScenePlus
 						startedDraw = null;
 					}
 				});
-				if (!(j + 1 >= height || i + 1 >= width))// Si on n'est pas sur une ligne du "bord"
+				if (!(j == height || i == width))// Si on n'est pas sur une ligne du "bord"
 				{
 					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1);
 					rect.setOnMouseClicked((ev)->{
