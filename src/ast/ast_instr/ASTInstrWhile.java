@@ -8,16 +8,14 @@ import src.ast.ast_expr.ASTExpr;
 
 import java.awt.Point;
 
-public class ASTInstrWhile implements ASTInstr
+public class ASTInstrWhile extends ASTInstr
 {
 	private ASTExpr expr;
 	private ASTInstr content;
-	private Point begin, end;
 
 	public ASTInstrWhile(Point begin, Point end, ASTExpr expr, ASTInstr content)
 	{
-		this.begin	 = begin;
-		this.end 	 = end;
+		super(begin, end);
 		this.expr    = expr;
 		this.content = content;
 	}
@@ -48,13 +46,5 @@ public class ASTInstrWhile implements ASTInstr
 		res[0] = new BlockASTLeaf(expr);
 		res[1] = new BlockASTLeaf(content);
 		return (res);
-	}
-
-	public Point begin(){
-		return begin;
-	}
-
-	public Point end(){
-		return end;
 	}
 }

@@ -8,10 +8,10 @@ public class Token
 	protected Sym symbol;
 	protected final Point location;
 
-	public Token(Sym s, int lign, int column)
+	public Token(Sym s, int line, int column)
 	{
 		symbol   = s;
-		location = new Point(lign, column);
+		location = new Point(line, column);
 	}
 
 	public Sym symbol()

@@ -65,7 +65,7 @@ public class Parser
 		}
 		else
 		{
-			throw new Exception("Expecting an expression lign " + reader.getLign() + " at position " + reader.getColumn());
+			throw new Exception("Expecting an expression line " + reader.getLign() + " at position " + reader.getColumn());
 		}
 		return (res);
 	}

@@ -6,9 +6,9 @@ public class IdentifierToken extends Token
 {
 	private String value;
 
-	public IdentifierToken(Sym c, String v, int lign, int column)
+	public IdentifierToken(Sym c, String v, int line, int column)
 	{
-		super(c, lign, column);
+		super(c, line, column);
 		this.value = v;
 	}
 

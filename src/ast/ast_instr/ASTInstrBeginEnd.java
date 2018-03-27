@@ -9,15 +9,13 @@ import src.ast_rep.BlockASTLeaf;
 
 import java.awt.Point;
 
-public class ASTInstrBeginEnd implements ASTInstr
+public class ASTInstrBeginEnd extends ASTInstr
 {
 	private AST content;
-	private final Point begin, end;
 
 	public ASTInstrBeginEnd(Point begin, Point end, AST content)
 	{
-		this.begin   = begin;
-		this.end 	 = end;
+		super(begin, end);
 		this.content = content;
 	}
 
@@ -65,13 +63,5 @@ public class ASTInstrBeginEnd implements ASTInstr
 
 		res[0] = new BlockASTLeaf(this.content);
 		return (res);
-	}
-
-	public Point begin(){
-		return begin;
-	}
-
-	public Point end(){
-		return end;
 	}
 }

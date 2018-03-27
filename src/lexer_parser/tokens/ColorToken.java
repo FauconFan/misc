@@ -8,9 +8,9 @@ public class ColorToken extends Token
 {
 	private Color color;
 
-	public ColorToken(Sym c, String v, int lign, int column)
+	public ColorToken(Sym c, String v, int line, int column)
 	{
-		super(c, lign, column);
+		super(c, line, column);
 		int r;
 		int g;
 		int b;
@@ -26,7 +26,7 @@ public class ColorToken extends Token
 			if (r < 0 || g < 0 || b < 0 || r > 255 || g > 255 || b > 255)
 				throw new Exception();
 		}catch(Exception e){
-			throw new RuntimeException("Invalid color declaration lign " + lign + " at position " + column);
+			throw new RuntimeException("Invalid color declaration line " + line + " at position " + column);
 		}
 		this.color = new Color(r, g, b);
 	}

@@ -6,9 +6,9 @@ public class NumberToken extends Token
 {
 	private int value;
 
-	public NumberToken(Sym c, int n, int lign, int column)
+	public NumberToken(Sym c, int n, int line, int column)
 	{
-		super(c, lign, column);
+		super(c, line, column);
 		this.value = n;
 	}
 

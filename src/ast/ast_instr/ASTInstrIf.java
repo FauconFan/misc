@@ -9,17 +9,15 @@ import src.ast_rep.BlockASTLeaf;
 import java.awt.Point;
 
 // We accept that expr and follow can be null
-public class ASTInstrIf implements ASTInstr
+public class ASTInstrIf extends ASTInstr
 {
 	private ASTExpr expr;
 	private ASTInstr instr;
 	private ASTInstrIf follow;
-	private final Point begin, end;
 
 	public ASTInstrIf(Point begin, Point end, ASTExpr expr, ASTInstr instr, ASTInstrIf follow)
 	{
-		this.begin  = begin;
-		this.end    = end;
+		super(begin, end);
 		this.expr   = expr;
 		this.instr  = instr;
 		this.follow = follow;
@@ -111,13 +109,5 @@ public class ASTInstrIf implements ASTInstr
 			res[2] = new BlockASTLeaf(this.follow);
 		}
 		return (res);
-	}
-
-	public Point begin(){
-		return begin;
-	}
-
-	public Point end(){
-		return end;
 	}
 }

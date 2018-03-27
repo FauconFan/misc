@@ -4,23 +4,22 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.ast_rep.BlockASTLeaf;
 import src.prog.Prog;
+import src.lexer_parser.LocatedException;
 
 import java.awt.Point;
 
-public class ASTExprCalculus implements ASTExpr
+public class ASTExprCalculus extends ASTExpr
 {
 	private final ASTExpr left;
 	private final char op;
 	private final ASTExpr right;
-	private final Point begin, end;
 
 	public ASTExprCalculus(Point begin, Point end, ASTExpr left, char op, ASTExpr right)
 	{
+		super(begin, end);
 		this.left  = left;
 		this.op    = op;
 		this.right = right;
-		this.begin = begin;
-		this.end   = end;
 	}
 
 	public int evalExpr(Prog prog)
@@ -46,15 +45,7 @@ public class ASTExprCalculus implements ASTExpr
 		{
 			return (a / b);
 		}
-		String s = "Invalid operation ";
-		if (begin.x == end.x)
-			if (begin.y == end. y)
-				s += "lign " + begin.x + " at position " + begin.y;
-			else
-				s += "lign " + begin.x + " between position " + begin.y + " and position " + end.y;
-		else
-			s += "between lign " + begin.x + " position " + begin.y + " and lign " + end.x + " at position " + end.y;
-		throw new RuntimeException(s);
+		throw new LocatedException("Invalid operation ", begin(), end(), "");
 	}
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
@@ -75,13 +66,5 @@ public class ASTExprCalculus implements ASTExpr
 		res[0] = new BlockASTLeaf(left);
 		res[1] = new BlockASTLeaf(right);
 		return (res);
-	}
-
-	public Point begin(){
-		return begin;
-	}
-
-	public Point end(){
-		return end;
 	}
 }

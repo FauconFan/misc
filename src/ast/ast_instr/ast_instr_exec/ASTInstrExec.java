@@ -12,16 +12,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-public abstract class ASTInstrExec implements ASTInterface, ASTInstr
+public abstract class ASTInstrExec extends ASTInstr
 {
 	protected final ASTExpr[] args;
 	protected final Color[] colors;
-	protected final Point begin, end;
 
 	public ASTInstrExec(Point begin, Point end, ASTExpr[] args, Color[] colors)
 	{
-		this.begin  = begin;
-		this.end    = end;
+		super(begin, end);
 		this.args   = args;
 		this.colors = colors;
 	}
@@ -58,13 +56,4 @@ public abstract class ASTInstrExec implements ASTInterface, ASTInstr
 		}
 		return (res);
 	}
-
-	public Point begin(){
-		return begin;
-	}
-
-	public Point end(){
-		return end;
-	}
-
 }
