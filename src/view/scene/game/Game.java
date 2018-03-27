@@ -289,6 +289,7 @@ public class Game extends ScenePlus
 	{
 		if (maze.getPlayer().getHasWin())
 		{
+			timer.stop();
 			v.changeScene(new Winner(v));
 		}
 	}
