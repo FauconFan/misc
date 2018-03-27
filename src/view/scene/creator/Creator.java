@@ -14,6 +14,7 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -233,6 +234,15 @@ public class Creator extends ScenePlus
 			{
 			case TELEPORT:
 				//TODO
+				HBox      hx = new HBox(new Label("x: "));
+				HBox      hy = new HBox(new Label("y: "));
+				TextField tx = new TextField("0");
+				tx.setPrefColumnCount(4);
+				TextField ty = new TextField("0");
+				ty.setPrefColumnCount(4);
+				hx.getChildren().add(ty);
+				hy.getChildren().add(tx);
+				leftPaneGr.getChildren().addAll(hx, hy);
 				break;
 
 			case TIME:
