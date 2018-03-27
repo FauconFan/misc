@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
@@ -215,7 +216,12 @@ public class Creator extends ScenePlus
 		}
 		for (Case c:maze.getContentMaze().getSpecialCases())
 		{
-			cases.getChildren().add(new RectanglePlus(c));
+			final RectanglePlus rect = new RectanglePlus(c);
+			rect.setOnMouseClicked((ev)->{
+				rect.changeCase();
+				updateLeftPane(rect);
+			});
+			cases.getChildren().add(rect);
 		}
 	}
 
@@ -274,13 +280,5 @@ public class Creator extends ScenePlus
 				break;
 			}
 		}
-	}
-
-	private void drawWall(LineWall l)
-	{
-	}
-
-	private void drawCell(Case c)
-	{
 	}
 }

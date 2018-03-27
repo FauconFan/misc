@@ -30,6 +30,7 @@ class RectanglePlus extends Rectangle
 	{
 		super(c.getX(), c.getY(), 1, 1);//NOT GOOD
 		this.cas = c;
+		circ.setIndex(c.type);
 		setFill(CaseColor.getColor(c.type));
 		init();
 	}
@@ -94,6 +95,17 @@ class RectanglePlus extends Rectangle
 		public boolean hasNext()
 		{
 			return (true);
+		}
+
+		public void setIndex(Case.TypeCase c)
+		{
+			for (int i = 0; i < liste.length; i++)
+			{
+				if (c == liste[i])
+				{
+					ind = i;
+				}
+			}
 		}
 
 		public Case.TypeCase next()
