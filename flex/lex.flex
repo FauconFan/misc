@@ -72,6 +72,7 @@ color = #{hex}{hex}{hex}{hex}{hex}{hex}
 "Const"				{return token(Sym.CONST);}
 "Var"				{return token(Sym.VAR);}
 "="					{return token(Sym.EQUALS);}
+"Exit"              {return token(Sym.EXIT);}
 "DrawCircle"		{return token(Sym.DRAWCIRCLE);}
 "FillCircle"		{return token(Sym.FILLCIRCLE);}
 "DrawRect"			{return token(Sym.DRAWRECT);}

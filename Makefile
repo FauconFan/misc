@@ -10,6 +10,8 @@ JAR = $(NAME).jar
 PATH_FLEX = flex/lex.flex
 PATH_FLEX_RENDER = src/lexer_parser/LexerFlex.java
 
+TESTING_SCRIPT = "tests/testing_script.sh"
+
 _RED=$(shell tput setaf 1)
 _GREEN=$(shell tput setaf 2)
 _YELLOW=$(shell tput setaf 3)
@@ -40,12 +42,11 @@ fclean: clean
 
 re: fclean all
 
-basic_test:
-	@sh tests/basic_test.sh
-
 test:
-	@printf "%sBuilding project%s\\n" "$(_BLUE)" "$(_END)"
-	@make -s -C . all 2>&1 > /dev/null
-	@printf "%sProject built successfully%s\\n" "$(_GREEN)" "$(_END)"
-	@make -s -C . basic_test
-	@make -s -C . fclean 2>&1 > /dev/null
+	@sh ${TESTING_SCRIPT}
+
+basic_test:
+	@sh ${TESTING_SCRIPT} basic
+
+sys_test:
+	@sh ${TESTING_SCRIPT} sys

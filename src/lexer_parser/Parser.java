@@ -26,6 +26,7 @@ import src.ast.ast_instr.ASTInstrWhile;
 import src.ast.ast_instr.ASTInstrDecl;
 import src.ast.ast_instr.ASTInstrAssign;
 import src.ast.ast_instr.ASTInstrBeginEnd;
+import src.ast.ast_instr.ASTInstrSysExit;
 
 public class Parser
 {
@@ -151,6 +152,19 @@ public class Parser
 			Point end = reader.pop(Sym.RPAR).getLocation();
 
 			res = new ASTInstrExecFillRect(begin, end, args, colors);
+		}
+		// System Instruction
+		else if (reader.check(Sym.EXIT))
+		{
+			ASTExpr expr;
+
+			Point begin = reader.pop(Sym.EXIT).getLocation();
+			reader.eat(Sym.LPAR);
+			expr = expr();
+			Point end = reader.pop(Sym.RPAR).getLocation();
+
+			res = new ASTInstrSysExit(begin, end, expr);
+
 		}
 		// Control Instruction
 		else if (reader.check(Sym.BEGIN))
