@@ -51,15 +51,16 @@ On fait une interprétation en plusieurs étapes :
 
  - [x] Faire une boucle While
  - [x] Faire des Elif
+ - [x] Faire des Exceptions avec le numéro de la ligne et de la colonne
 
 ## Idées - Bonus
 
+ - [ ] Créer des variables Booléenne, String, Couleurs
  - [ ] Faire une évaluation booléenne
  - [ ] Faire une vidéo
  - [ ] Savoir si un fichier est correctement parsé pour de l'intégration continue (Travis CI)
  - [ ] Pouvoir définir des fonctions
  - [ ] Pouvoir définir des structures
- - [ ] Faire des Exceptions avec le numéro de la ligne et de la colonne
  - [ ] Faire une interprétation dynamique des erreurs (afficher toutes les erreurs et pas juste la première erreur croisée)
 
 ## Grammaire Lexicale

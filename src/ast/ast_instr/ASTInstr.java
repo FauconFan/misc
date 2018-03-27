@@ -1,29 +1,16 @@
 package src.ast.ast_instr;
 
 import src.prog.Prog;
-import src.ast.ASTInterface;
+import src.ast.ASTSuperClass;
 
 import java.awt.Point;
 
-public abstract class ASTInstr implements ASTInterface
+public abstract class ASTInstr extends ASTSuperClass
 {
-	private final Point begin, end;
-
-	public abstract void exec(Prog prog);
-
 	public ASTInstr(Point begin, Point end)
 	{
-		this.begin = begin;
-		this.end   = end;
+		super(begin, end);
 	}
 
-	public Point begin()
-	{
-		return (begin);
-	}
-
-	public Point end()
-	{
-		return (end);
-	}
+	public abstract void exec(Prog prog);
 }

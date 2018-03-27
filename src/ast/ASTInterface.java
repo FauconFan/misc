@@ -8,6 +8,5 @@ public interface ASTInterface
 {
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException;
 	public String getTag();
-
 	public BlockASTLeaf[] getChilds();
 }

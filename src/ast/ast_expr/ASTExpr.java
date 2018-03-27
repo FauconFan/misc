@@ -2,30 +2,17 @@ package src.ast.ast_expr;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
-import src.ast.ASTInterface;
+import src.ast.ASTSuperClass;
 import src.prog.Prog;
 
 import java.awt.Point;
 
-public abstract class ASTExpr implements ASTInterface
+public abstract class ASTExpr extends ASTSuperClass
 {
-	private final Point begin, end;
-
 	public ASTExpr(Point begin, Point end)
 	{
-		this.begin = begin;
-		this.end   = end;
+		super(begin, end);
 	}
 
 	public abstract int evalExpr(Prog prog);
-
-	public Point begin()
-	{
-		return (begin);
-	}
-
-	public Point end()
-	{
-		return (end);
-	}
 }
