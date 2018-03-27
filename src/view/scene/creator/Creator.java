@@ -239,13 +239,14 @@ public class Creator extends ScenePlus
 			switch (c.type)
 			{
 			case TELEPORT:
-				//TODO
 				HBox      hx = new HBox(new Label("x: "));
 				HBox      hy = new HBox(new Label("y: "));
-				TextField tx = new TextField("0");
+				TextField tx = new TextField(Integer.toString(((TeleportCase)c).getXDest()));
 				tx.setPrefColumnCount(4);
-				TextField ty = new TextField("0");
+				tx.textProperty().addListener((ov, o, n)->{ ((TeleportCase)c).setXDest(Integer.parseInt(n)); });            //TODO Faire attention...
+				TextField ty = new TextField(Integer.toString(((TeleportCase)c).getYDest()));
 				ty.setPrefColumnCount(4);
+				ty.textProperty().addListener((ov, o, n)->{ ((TeleportCase)c).setYDest(Integer.parseInt(n)); });
 				hx.getChildren().add(ty);
 				hy.getChildren().add(tx);
 				leftPaneGr.getChildren().addAll(hx, hy);

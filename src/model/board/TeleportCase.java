@@ -27,6 +27,16 @@ public class TeleportCase extends Case
 		return (new TeleportCase(this.x, this.y, this.xDest, this.yDest));
 	}
 
+	public void setXDest(int x)
+	{
+		this.xDest = x;
+	}
+
+	public void setYDest(int y)
+	{
+		this.yDest = y;
+	}
+
 	public String toString()
 	{
 		return ("TeleportCase\n" + super.toString() + "xDest : " + this.xDest + "\nyDest : " + this.yDest);
