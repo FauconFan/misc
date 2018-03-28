@@ -14,6 +14,7 @@ public class Winner extends ScenePlus
 	{
 		super(new Group(), v);
 		((Group)getRoot()).getChildren().add(new MenuWin());
+		getStylesheets().add("menuStyle.css");
 	}
 
 	public class MenuWin extends Menu
@@ -24,8 +25,9 @@ public class Winner extends ScenePlus
 
 			Label l = new Label("YOU WIN");
 			getChildren().add(l);
+			l.setId("hello");
 
-			Button buttonNew = addButton("New game");
+			Button buttonNew = addButton("Main menu");
 
 			buttonNew.setOnAction(event->{
 				v.changeScene(new Menus(v));

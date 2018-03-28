@@ -153,7 +153,7 @@ public class Player
 
 	public boolean playerInCase(Case c)
 	{
-		float diff = Case.getTailleCase() / 2;
+		float diff = 0.5f;
 
 		return (Math.abs(posX - (c.getX() + diff)) < diff && Math.abs(posY - (c.getY() + diff)) < diff);
 	}
@@ -171,8 +171,8 @@ public class Player
 	{
 		if (c != null)
 		{
-			posX = c.getX() + Case.getTailleCase() / 2;
-			posY = c.getY() + Case.getTailleCase() / 2;
+			posX = c.getX() + 0.5f;
+			posY = c.getY() + 0.5f;
 			return (true);
 		}
 		else
