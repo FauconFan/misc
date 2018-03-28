@@ -31,9 +31,9 @@ public class Player
 	public final float rot = 2f;       // En degré
 
 	//Constantes d'accélération et de vitesse max
-	private static final float ACCELERATIONXY = 0.001f;
+	private static final float ACCELERATIONXY = 0.001f / 16000000.0f;
 	private static final float VMAX           = 0.04f;
-	private static final float PESANTEUR      = -0.015f;
+	private static final float PESANTEUR      = -0.015f / 16000000.0f;
 	private static final float VELOCITYGHOST  = 0.02f;
 
 	//Vitesse selon les axes/plan
@@ -205,12 +205,10 @@ public class Player
 			case west: angle += -90; nbDirPushed++; break;
 
 			case left: horizontalAngle -= rot;
-				this.velocityXY        -= ACCELERATIONXY / 3;
 				lastDepAngle           += rot;
 				break;
 
 			case right: horizontalAngle += rot;
-				this.velocityXY         -= ACCELERATIONXY / 3;
 				lastDepAngle            -= rot;
 				break;
 
@@ -244,16 +242,16 @@ public class Player
 
 		if (!this.zCol.isOnFloor() && !ghostMode)
 		{
-			this.velocityZ += PESANTEUR;
+			this.velocityZ += (PESANTEUR * time);
 		}
 		else if (nbDirPushed != 0)
 		{
-			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY);
+			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY * time);
 			this.lastDepAngle = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushed);
 		}
 		else
 		{
-			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2);
+			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * time);
 		}
 		this.reallyMove();
 	}
