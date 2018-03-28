@@ -85,7 +85,7 @@ public class Pause extends ScenePlus
 			buttonCreator.setPrefWidth(primaryScreenBounds.getWidth() / 3);
 			buttonCreator.setPrefHeight(primaryScreenBounds.getHeight() / 15);
 			buttonCreator.setOnAction(event->{
-				v.changeScene(new Creator(v, previous.getMaze()));
+				v.changeScene(new Creator(v, previous));
 			});
 
 			Button buttonReturn = addButton("Return to Menu");

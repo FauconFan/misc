@@ -17,6 +17,8 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.Group;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -36,6 +38,8 @@ import src.model.*;
 import src.model.board.*;
 import src.model.gen.CreatorHelper;
 import src.view.scene.game.CaseColor;
+import src.view.scene.game.Game;
+import src.view.scene.Menus;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
@@ -58,6 +62,13 @@ public class Creator extends ScenePlus
 	public Creator(View v, int width, int height)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
+
+		//Key controller
+		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{ if (key.getCode() == KeyCode.ESCAPE)
+													   {
+														   v.changeScene(new Menus(v));
+													   }
+						});
 
 		setFill(Color.GRAY);
 
@@ -202,9 +213,14 @@ public class Creator extends ScenePlus
 		pane.getChildren().addAll(panel, sp);
 	}
 
-	public Creator(View v, MainMaze maze)
+	public Creator(View v, Game g)
 	{
-		this(v, maze, maze.getMazeDimension().list_rectmaze.get(0));
+		this(v, g.getMaze(), g.getMaze().getMazeDimension().list_rectmaze.get(0));
+		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{ if (key.getCode() == KeyCode.ESCAPE)
+													   {
+														   v.changeScene(g);
+													   }
+						});
 	}
 
 	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md)

@@ -51,6 +51,7 @@ import src.model.Directions;
 import src.model.MainMaze;
 import src.model.MazeDimension;
 import src.model.Player;
+import src.view.scene.Menus;
 import src.view.scene.Pause;
 import src.view.scene.ScenePlus;
 import src.view.scene.Winner;
