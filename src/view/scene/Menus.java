@@ -62,13 +62,14 @@ public class Menus extends ScenePlus
 			label.setId("hello");
 			getChildren().add(label);
 
-			final Button   buttonCreate = addButton("Create");
-			final Button   buttonLoad   = addButton("Load");
-			final Button[] buttons      = { buttonLoad, buttonCreate };
+			final Button   buttonCreate   = addButton("Create");
+			final Button   buttonLoad     = addButton("Load");
+			final Button   buttonCampaign = addButton("Campaign");
+			final Button[] buttons        = { buttonLoad, buttonCreate, buttonCampaign };
 			for (Button b: buttons)
 			{
 				b.setPrefWidth(primaryScreenBounds.getWidth() / 3);
-				b.setPrefHeight(primaryScreenBounds.getHeight() / 15);
+				b.setPrefHeight(primaryScreenBounds.getHeight() / 13);
 			}
 
 			buttonLoad.setOnAction(event->{
@@ -82,6 +83,10 @@ public class Menus extends ScenePlus
 
 			buttonCreate.setOnAction(event->{
 				changeView((Parent) new MenuCreation());
+			});
+
+			buttonCampaign.setOnAction(event->{
+				changeView((Parent) new MenuCampaign());
 			});
 
 			addButtonQuit();
@@ -144,6 +149,50 @@ public class Menus extends ScenePlus
 			});
 
 			putMsg();
+		}
+	}
+
+	public class MenuCampaign extends Menu
+	{
+		public MenuCampaign()
+		{
+			super();
+
+			final Button level1 = addButton("Level 1");
+			final Button level2 = addButton("Level 2");
+			final Button level3 = addButton("Level 3");
+			final Button level4 = addButton("Level 4");
+			final Button level5 = addButton("Level 5");
+			final Button level6 = addButton("Level 6");
+			final Button level7 = addButton("Level 7");
+
+			final Button buttonPrevious = addButton("Previous");
+
+			final Button[] buttons = { level1, level2, level3, level4, level5, level6, level7 };
+
+			for (int i = 1; i <= 7; i++)
+			{
+				int j = i;
+				buttons[i - 1].setOnAction(event->{
+					Algo al = null;
+					try
+					{
+						al = MapIntroBuilder.getMapIntro(j);
+					}
+					catch (Exception e)
+					{
+						setMsg(e.getMessage());
+						putMsg();
+					}
+					v.con.createMaze(al);
+					v.showGame();
+				});
+
+				buttonPrevious.setOnAction(event->{
+					view = new MenuStart();
+					changeView(view);
+				});
+			}
 		}
 	}
 
