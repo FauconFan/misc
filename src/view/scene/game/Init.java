@@ -96,7 +96,7 @@ public class Init
 		Material mat;
 
 		try{
-			Image img = new Image(new FileInputStream("assets/Wall_Stone_003_COLOR.jpg"), 400, 400, true, false);
+			Image img = new Image(new FileInputStream("assets/Brick_wall_002_COLOR.jpg"), 400, 400, true, false);
 			mat = new PhongMaterial(Color.WHITE, img, null, null, null);
 		}
 		catch (Exception e) {
