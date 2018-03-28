@@ -44,9 +44,6 @@ public class Pause extends ScenePlus
 		{
 			Button buttonUnPause = addButton("Unpause");
 
-			buttonUnPause.setPrefWidth(primaryScreenBounds.getWidth() / 3);
-			buttonUnPause.setPrefHeight(primaryScreenBounds.getHeight() / 15);
-
 			buttonUnPause.setOnAction(event->{
 				v.changeScene(previous);
 				previous.startTimer();
@@ -71,8 +68,6 @@ public class Pause extends ScenePlus
 			});
 
 			Button buttonSave = addButton("Save");
-			buttonSave.setPrefWidth(primaryScreenBounds.getWidth() / 3);
-			buttonSave.setPrefHeight(primaryScreenBounds.getHeight() / 15);
 			buttonSave.setOnAction(event->{
 				File f = new FileChooser().showSaveDialog(v.stage);
 				if (f != null)
@@ -82,15 +77,11 @@ public class Pause extends ScenePlus
 			});
 
 			Button buttonCreator = addButton("Creator");
-			buttonCreator.setPrefWidth(primaryScreenBounds.getWidth() / 3);
-			buttonCreator.setPrefHeight(primaryScreenBounds.getHeight() / 15);
 			buttonCreator.setOnAction(event->{
 				v.changeScene(new Creator(v, previous));
 			});
 
 			Button buttonReturn = addButton("Return to Menu");
-			buttonReturn.setPrefWidth(primaryScreenBounds.getWidth() / 3);
-			buttonReturn.setPrefHeight(primaryScreenBounds.getHeight() / 15);
 			buttonReturn.setOnAction(event->{
 				v.changeScene(new Menus(v));
 			});
@@ -99,7 +90,7 @@ public class Pause extends ScenePlus
 			addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 				switch (key.getCode())
 				{
-				case ESCAPE: v.changeScene(previous); break;
+				case ESCAPE: v.changeScene(previous); previous.startTimer(); break;
 				}
 			});
 

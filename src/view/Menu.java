@@ -53,6 +53,8 @@ public class Menu extends VBox implements Msg
 	{
 		Button b = new Button(name);
 
+		b.setPrefWidth(screenWidth / 3);
+		b.setPrefHeight(screenHeight / 15);
 
 		getChildren().add(b);
 		return (b);
