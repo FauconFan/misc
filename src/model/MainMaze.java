@@ -81,8 +81,8 @@ public class MainMaze
 					break;
 
 				case TELEPORT:
-					this.p.setPosX(((TeleportCase)c).getXDest() + Case.getTailleCase() / 2);
-					this.p.setPosY(((TeleportCase)c).getYDest() + Case.getTailleCase() / 2);
+					this.p.setPosX(((TeleportCase)c).getXDest() + 0.5f);
+					this.p.setPosY(((TeleportCase)c).getYDest() + 0.5f);
 					break;
 
 				case SPEED:
