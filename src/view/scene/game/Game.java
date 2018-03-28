@@ -309,7 +309,7 @@ public class Game extends ScenePlus
 	{
 		public void handle(long l)
 		{
-			maze.updatePlayer();
+			maze.updatePlayer(l);
 			updatePlayer();
 		}
 	}

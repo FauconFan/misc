@@ -183,7 +183,7 @@ public class Player
 	 * Update the player position with the collisions with walls
 	 * @param lw the walls
 	 */
-	public void update(LineWall [] lw)
+	public void update(LineWall [] lw, long time)
 	{
 		int angle       = 0;
 		int nbDirPushed = 0;

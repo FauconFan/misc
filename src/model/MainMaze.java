@@ -63,9 +63,9 @@ public class MainMaze
 	/**
 	 * Déplace le joueur dans le labyrinthe, si le joueur rencontre un mur, il longera ce mur.
 	 */
-	public void updatePlayer()
+	public void updatePlayer(long l)
 	{
-		this.p.update(this.m.getLineWalls());
+		this.p.update(this.m.getLineWalls(), l);
 	}
 
 	public void actionCase()
