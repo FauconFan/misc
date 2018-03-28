@@ -25,17 +25,17 @@ public class AlgoBackTracker extends Algo
 	public AlgoBackTracker(int y, int x) throws GenFactoryException
 	{
 		super();
-		this.cmfactory = new ContentMazeFactory();
+		this.cmfactory    = new ContentMazeFactory[1];
+		this.cmfactory[0] = new ContentMazeFactory();
 
 		RectMaze rm = buildRect(y, x);
 
 		RectMazeShift rms = new RectMazeShift(rm, 0, 0);
 
-		this.cmfactory.addContentMazeShift(rms);
+		this.cmfactory[0].addContentMazeShift(rms);
 
-		this.cmfactory.initiateSpecialCases();
-		this.cmfactory.normalize();
-		this.cm = new ContentMaze(this.cmfactory.getFinalSpecialCases(), this.cmfactory.getFinalLineWall());
+		this.cmfactory[0].initiateSpecialCases();
+		this.cmfactory[0].normalize();
 	}
 
 	public RectMaze buildRect(int size_y, int size_x)
@@ -45,7 +45,7 @@ public class AlgoBackTracker extends Algo
 		LineWall[] listWalls;
 
 		listWalls = this.buildWalls(size_x, size_y);
-		rm        = new RectMaze(new ContentMaze(new Case[0], listWalls), size_x, size_y);
+		rm        = new RectMaze(new ContentMazeEgg(new Case[0], listWalls), size_x, size_y);
 		return (rm);
 	}
 
@@ -123,7 +123,7 @@ public class AlgoBackTracker extends Algo
 
 			if (DEBUG_MODE)
 			{
-				DisplayMazeConsole.displayMaze(new ContentMaze(null, buildFinal(list_X, list_Y)), false);
+				DisplayMazeConsole.displayMaze(new ContentMaze[] { new ContentMaze(null, buildFinal(list_X, list_Y), null) }, false);
 				try
 				{
 					Thread.sleep(50);

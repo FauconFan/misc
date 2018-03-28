@@ -183,7 +183,8 @@ public class Creator extends ScenePlus
 				}
 			}
 
-			CreatorHelper ch = new CreatorHelper(0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
+			CreatorHelper ch = new CreatorHelper(1);
+			ch.append(0, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
 			try{
 				v.con.setMaze(ch.buildMainMaze(""));
 				v.showGame();
@@ -215,7 +216,7 @@ public class Creator extends ScenePlus
 
 	public Creator(View v, Game g)
 	{
-		this(v, g.getMaze(), g.getMaze().getMazeDimension().list_rectmaze.get(0));
+		this(v, g.getMaze(), g.getMaze().getContentMazeCurrentLevel().getMazeDimension().list_rectmaze.get(0));
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{ if (key.getCode() == KeyCode.ESCAPE)
 													   {
 														   v.changeScene(g);
@@ -226,11 +227,11 @@ public class Creator extends ScenePlus
 	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md)
 	{
 		this(v, md.x2 - md.x1, md.y2 - md.y1);
-		for (LineWall l: maze.getContentMaze().getLineWalls())
+		for (LineWall l: maze.getContentMazeCurrentLevel().getLineWalls())
 		{
 			walls.getChildren().add(new LinePlus(l));
 		}
-		for (Case c:maze.getContentMaze().getSpecialCases())
+		for (Case c:maze.getContentMazeCurrentLevel().getSpecialCases())
 		{
 			final RectanglePlus rect = new RectanglePlus(c);
 			rect.setOnMouseClicked((ev)->{

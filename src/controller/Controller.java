@@ -2,7 +2,6 @@ package src.controller;
 
 import src.model.ContentMaze;
 import src.model.gen.Algo;
-import src.model.gen.AlgoSample;
 import src.model.MainMaze;
 import src.model.parser.Parser;
 import src.view.View;
@@ -36,7 +35,16 @@ public class Controller
 	 */
 	public void createMaze(Algo algo)
 	{
-		this.maze = new MainMaze(algo);
+		try
+		{
+			this.maze = new MainMaze(algo);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.err.println("SNH");
+			System.exit(1);
+		}
 	}
 
 	/**

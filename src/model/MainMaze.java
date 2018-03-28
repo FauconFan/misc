@@ -9,6 +9,7 @@ import src.model.board.SpeedCase;
 import src.model.board.TeleportCase;
 import src.model.board.TimeCase;
 import src.model.gen.Algo;
+import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 import src.model.parser.Parser;
@@ -21,33 +22,42 @@ import src.utils.StringManipulation;
  */
 public class MainMaze
 {
-	private ContentMaze m;
-	private MazeDimension mazeDim;
-	private String name;
+	private ContentMaze[] cm;
 	private Player p;
+	private int current_level;
 
-	public MainMaze(ContentMaze m, MazeDimension mz, String name)
+	public MainMaze(ContentMaze[] cm)
 	{
-		this.m       = m;
-		this.mazeDim = mz;
-		this.name    = name;
-		this.p       = new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f);
-		this.p.goTo(m.getCase(Case.TypeCase.START));
+		Case start = null;
+
+		this.cm = cm;
+		this.p  = new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f);
+		for (int i = 0; i < cm.length; i++)
+		{
+			start = cm[i].getCase(Case.TypeCase.START);
+			this.current_level = i;
+			break;
+		}
+		if (start == null)
+		{
+			throw new RuntimeException("SNH should be checked in generation");
+		}
+		this.p.goTo(start);
 	}
 
-	public MainMaze(Algo algo)
+	public MainMaze(Algo algo) throws GenFactoryException
 	{
-		this(algo.getContentMaze(), algo.getMazeDimension(), "");
+		this(algo.getContentMaze());
 	}
 
-	public ContentMaze getContentMaze()
+	public ContentMaze[] getContentMaze()
 	{
-		return (this.m);
+		return (this.cm);
 	}
 
-	public MazeDimension getMazeDimension()
+	public ContentMaze getContentMazeCurrentLevel()
 	{
-		return (this.mazeDim);
+		return (this.cm[this.current_level]);
 	}
 
 	public Player getPlayer()
@@ -55,9 +65,20 @@ public class MainMaze
 		return (this.p);
 	}
 
+	public int getCurrentLevel()
+	{
+		return (this.current_level);
+	}
+
 	public Case getEndCase()
 	{
-		return (m.getCase(Case.TypeCase.END));
+		Case c;
+
+		for (ContentMaze cms : cm)
+		{
+			c = cms.getCase(Case.TypeCase.END);
+		}
+		throw new RuntimeException("SNH should be checked in generation");
 	}
 
 	/**
@@ -65,12 +86,13 @@ public class MainMaze
 	 */
 	public void updatePlayer(long l)
 	{
-		this.p.update(this.m.getLineWalls(), mazeDim, l);
+		this.p.update(this.cm[this.current_level].getLineWalls(), this.cm[this.current_level].getMazeDimension(), l);
 	}
 
 	public void actionCase()
 	{
-		for (Case c : m.getSpecialCases())
+		// TODO to change actually
+		for (Case c : cm[0].getSpecialCases())
 		{
 			if (this.p.playerInCase(c))
 			{
@@ -112,7 +134,7 @@ public class MainMaze
 	 */
 	public void displayMaze(boolean reverse)
 	{
-		DisplayMazeConsole.displayMaze(m, reverse);
+		DisplayMazeConsole.displayMaze(cm, reverse);
 	}
 
 	/**
@@ -124,13 +146,12 @@ public class MainMaze
 	{
 		String str = "Describing Maze\n";
 
-		str += "name = " + this.name + "\n";
 		str += "player = " + this.p + "\n";
 		str += "\n";
 		str += "labyrinthe :\n";
-		if (m != null)
+		if (cm != null)
 		{
-			str += m.toString();
+			str += cm.toString();
 		}
 		return (str);
 	}

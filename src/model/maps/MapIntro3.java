@@ -9,6 +9,7 @@ import src.model.board.StartCase;
 import src.model.board.TimeCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
+import src.model.gen.ContentMazeEgg;
 import src.model.gen.ContentMazeFactory;
 import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
@@ -22,20 +23,20 @@ public class MapIntro3 extends Algo
 	public MapIntro3() throws GenFactoryException
 	{
 		super();
-		this.cmfactory = new ContentMazeFactory();
+		this.cmfactory    = new ContentMazeFactory [1];
+		this.cmfactory[0] = new ContentMazeFactory();
 
 		RectMaze rm1 = buildOneSquareLabyrinthe();
 
 		RectMazeShift rms1 = new RectMazeShift(rm1, 0, 0);
 
-		this.cmfactory.addContentMazeShift(rms1);
+		this.cmfactory[0].addContentMazeShift(rms1);
 
-		this.cmfactory.addSpecialCase(new StartCase(3, 2));
-		this.cmfactory.addSpecialCase(new EndCase(3, 13));
-		this.cmfactory.addSpecialCase(new TimeCase(1, 6, 10000));
-		this.cmfactory.addSpecialCase(new TimeCase(5, 6, -10000));
-		this.cmfactory.normalize();
-		this.cm = new ContentMaze(this.cmfactory.getFinalSpecialCases(), this.cmfactory.getFinalLineWall());
+		this.cmfactory[0].addSpecialCase(new StartCase(3, 2));
+		this.cmfactory[0].addSpecialCase(new EndCase(3, 13));
+		this.cmfactory[0].addSpecialCase(new TimeCase(1, 6, 10000));
+		this.cmfactory[0].addSpecialCase(new TimeCase(5, 6, -10000));
+		this.cmfactory[0].normalize();
 	}
 
 	private RectMaze buildOneSquareLabyrinthe()
@@ -49,7 +50,7 @@ public class MapIntro3 extends Algo
 		listWalls.add(new LineWall(size_x, size_y, size_x, 0));
 		listWalls.add(new LineWall(0, 0, size_x, 0));
 		listWalls.add(new LineWall(0, size_y, size_x, size_y));
-		rl = new RectMaze(new ContentMaze(new Case[0], listWalls.toArray(new LineWall[0])), size_x, size_y);
+		rl = new RectMaze(new ContentMazeEgg(new Case[0], listWalls.toArray(new LineWall[0])), size_x, size_y);
 		return (rl);
 	}
 }

@@ -11,6 +11,7 @@ import src.model.board.TeleportCase;
 import src.model.board.TimeCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
+import src.model.gen.ContentMazeEgg;
 import src.model.gen.ContentMazeFactory;
 import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
@@ -23,22 +24,22 @@ public class MapIntro7 extends Algo
 	public MapIntro7() throws GenFactoryException
 	{
 		super();
-		this.cmfactory = new ContentMazeFactory();
+		this.cmfactory    = new ContentMazeFactory [1];
+		this.cmfactory[0] = new ContentMazeFactory();
 
 		RectMaze rm1 = buildOneSquareLabyrinthe();
 
 		RectMazeShift rms1 = new RectMazeShift(rm1, 0, 0);
 
-		this.cmfactory.addContentMazeShift(rms1);
+		this.cmfactory[0].addContentMazeShift(rms1);
 
-		this.cmfactory.addSpecialCase(new StartCase(1, 5));
-		this.cmfactory.addSpecialCase(new EndCase(size_y - 1, 0));
-		this.cmfactory.addSpecialCase(new TeleportCase(0, 0, 1, 4));
-		this.cmfactory.addSpecialCase(new SpeedCase(2, 4, 0.5f));
-		this.cmfactory.addSpecialCase(new TimeCase(3, 2, 1000));
-		this.cmfactory.addSpecialCase(new SpeedCase(8, 2, 1.5f));
-		this.cmfactory.normalize();
-		this.cm = new ContentMaze(this.cmfactory.getFinalSpecialCases(), this.cmfactory.getFinalLineWall());
+		this.cmfactory[0].addSpecialCase(new StartCase(1, 5));
+		this.cmfactory[0].addSpecialCase(new EndCase(size_y - 1, 0));
+		this.cmfactory[0].addSpecialCase(new TeleportCase(0, 0, 1, 4));
+		this.cmfactory[0].addSpecialCase(new SpeedCase(2, 4, 0.5f));
+		this.cmfactory[0].addSpecialCase(new TimeCase(3, 2, 1000));
+		this.cmfactory[0].addSpecialCase(new SpeedCase(8, 2, 1.5f));
+		this.cmfactory[0].normalize();
 	}
 
 	private RectMaze buildOneSquareLabyrinthe()
@@ -68,7 +69,7 @@ public class MapIntro7 extends Algo
 		listWalls.add(new LineWall(size_y - 1, 2, size_y - 1, 6));
 		listWalls.add(new LineWall(size_y, 1, 2, 1));
 		listWalls.add(new LineWall(size_y - 2, 5, 3, 5));
-		rl = new RectMaze(new ContentMaze(new Case[0], listWalls.toArray(new LineWall[0])), size_y, 7);
+		rl = new RectMaze(new ContentMazeEgg(new Case[0], listWalls.toArray(new LineWall[0])), size_y, 7);
 		return (rl);
 	}
 }

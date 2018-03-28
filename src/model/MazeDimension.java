@@ -1,8 +1,9 @@
 package src.model;
 
+import java.lang.Cloneable;
 import java.util.ArrayList;
 
-public class MazeDimension
+public class MazeDimension implements Cloneable
 {
 	public final ArrayList <RectInMaze> list_rectmaze;
 
@@ -16,9 +17,26 @@ public class MazeDimension
 		return (this.list_rectmaze);
 	}
 
+	public void append(RectInMaze rim)
+	{
+		list_rectmaze.add(rim);
+	}
+
 	public void append(int x1, int y1, int x2, int y2)
 	{
-		list_rectmaze.add(new RectInMaze(x1, y1, x2, y2));
+		this.append(new RectInMaze(x1, y1, x2, y2));
+	}
+
+	public MazeDimension clone()
+	{
+		MazeDimension mz;
+
+		mz = new MazeDimension();
+		for (RectInMaze rim : this.list_rectmaze)
+		{
+			mz.append(rim.clone());
+		}
+		return (mz);
 	}
 
 	public int size()
@@ -55,7 +73,7 @@ public class MazeDimension
 		return (str);
 	}
 
-	public static class RectInMaze
+	public static class RectInMaze implements Cloneable
 	{
 		public final int x1;
 		public final int y1;
@@ -84,6 +102,11 @@ public class MazeDimension
 				this.y2 = y1;
 				this.y1 = y2;
 			}
+		}
+
+		public RectInMaze clone()
+		{
+			return (new RectInMaze(this.x1, this.y1, this.x2, this.y2));
 		}
 
 		public int size()

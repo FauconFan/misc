@@ -4,7 +4,6 @@ import src.model.board.Case;
 import src.model.board.LineWall;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
-import src.model.gen.AlgoSample;
 import src.model.MainMaze;
 import src.view.View;
 

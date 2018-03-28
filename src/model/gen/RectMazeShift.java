@@ -2,7 +2,7 @@ package src.model.gen;
 
 import src.utils.StringManipulation;
 
-import src.model.ContentMaze;
+import src.model.gen.ContentMazeEgg;
 
 /**
  * Sous-labyrinthe rectangulaire qui compose le MainLabyrinthe (en tenant compte du décalage).
@@ -24,9 +24,9 @@ public class RectMazeShift
 		this.dy = dy;
 	}
 
-	public ContentMaze getTranslatedContentMaze()
+	public ContentMazeEgg getTranslatedContentMaze()
 	{
-		ContentMaze cmcpy = this.rl.getContentMaze().clone();
+		ContentMazeEgg cmcpy = this.rl.getContentMazeEgg().clone();
 
 		cmcpy.translate(this.dx, this.dy);
 		return (cmcpy);

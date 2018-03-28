@@ -4,25 +4,25 @@ import src.model.board.Case;
 import src.model.board.LineWall;
 import src.utils.StringManipulation;
 
-import src.model.ContentMaze;
+import src.model.gen.ContentMazeEgg;
 
 /**
  * Sous-labyrinthe rectangulaire qui compose le MainLabyrinthe (sans tenir compte du décalage).
  */
 public class RectMaze
 {
-	private final ContentMaze cm;
+	private final ContentMazeEgg cm;
 	private final int size_x;
 	private final int size_y;
 
-	public RectMaze(ContentMaze cm, int x, int y)
+	public RectMaze(ContentMazeEgg cm, int x, int y)
 	{
 		this.cm     = cm;
 		this.size_x = x;
 		this.size_y = y;
 	}
 
-	public ContentMaze getContentMaze()
+	public ContentMazeEgg getContentMazeEgg()
 	{
 		return (this.cm);
 	}

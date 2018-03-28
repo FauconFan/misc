@@ -99,7 +99,7 @@ public class Game extends ScenePlus
 
 		SubScene scene3D = new SubScene(root3D, screenWidth, screenHeight, true, null);
 		SubScene scene2D = new SubScene(root2D, screenWidth, screenHeight, true, null);
-		sceneMiniMap = new MiniMap(400, 400, new Scale(sc.getX(), sc.getZ()), m.getContentMaze().getLineWalls());
+		sceneMiniMap = new MiniMap(400, 400, new Scale(sc.getX(), sc.getZ()), m.getContentMazeCurrentLevel().getLineWalls());
 		sceneMiniMap.setVisible(false); // On cache la minimap
 		SubScene cross = sceneMiniMap.new Cross();
 		cross.setVisible(false);

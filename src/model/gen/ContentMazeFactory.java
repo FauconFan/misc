@@ -189,7 +189,7 @@ public class ContentMazeFactory
 
 	private void reallyAddRectMazeShift(RectMazeShift cms)
 	{
-		ContentMaze cm;
+		ContentMazeEgg cm;
 
 		cm = cms.getTranslatedContentMaze();
 		LineWall[] lw = cm.getLineWalls();
@@ -413,7 +413,7 @@ public class ContentMazeFactory
 	 * @return LineWall[] and Case[]
 	 */
 
-	public LineWall[] getFinalLineWall()
+	private LineWall[] getFinalLineWall()
 	{
 		ArrayList <LineWall> all = new ArrayList <>();
 
@@ -430,7 +430,7 @@ public class ContentMazeFactory
 		return (all.toArray(new LineWall[0]));
 	}
 
-	public Case[] getFinalSpecialCases() throws GenFactoryException
+	private Case[] getFinalSpecialCases() throws GenFactoryException
 	{
 		boolean hasStartCase;
 		boolean hasEndCase;
@@ -455,9 +455,14 @@ public class ContentMazeFactory
 		return (this.contentSpecialCases.toArray(new Case[0]));
 	}
 
-	public MazeDimension getMazeDimension()
+	private MazeDimension getMazeDimension()
 	{
 		return (this.mazeDim);
+	}
+
+	public ContentMaze getContentMaze() throws GenFactoryException
+	{
+		return (new ContentMaze(this.getFinalSpecialCases(), this.getFinalLineWall(), getMazeDimension()));
 	}
 
 	private static class Point

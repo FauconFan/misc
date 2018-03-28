@@ -41,7 +41,21 @@ public class DisplayMazeConsole
 	 * @param cm Labyrinthe a affiché
 	 * @param reverse Sens d'affichage par rapport aux ordonnées
 	 */
-	public static void displayMaze(ContentMaze cm, boolean reverse)
+	public static void displayMaze(ContentMaze[] cm, boolean reverse)
+	{
+		for (int i = 0; i < cm.length; i++)
+		{
+			System.out.println("LEVEL " + (i + 1));
+			displayMazeSingle(cm[i], reverse);
+		}
+	}
+
+	/**
+	 * Affiche le labyrinthe dans la console
+	 * @param cm Labyrinthe a affiché
+	 * @param reverse Sens d'affichage par rapport aux ordonnées
+	 */
+	private static void displayMazeSingle(ContentMaze cm, boolean reverse)
 	{
 		int xStart = 0;
 		int yStart = 0;

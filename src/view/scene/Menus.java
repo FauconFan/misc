@@ -20,8 +20,6 @@ import java.io.File;
 import src.controller.Controller;
 import src.model.gen.Algo;
 import src.model.gen.AlgoBackTracker;
-import src.model.gen.AlgoSample;
-import src.model.gen.AlgoSample2;
 
 import src.model.maps.MapIntroBuilder;
 
@@ -184,6 +182,7 @@ public class Menus extends ScenePlus
 						setMsg(e.getMessage());
 						putMsg();
 					}
+					System.out.println(al);
 					v.con.createMaze(al);
 					v.showGame();
 				});

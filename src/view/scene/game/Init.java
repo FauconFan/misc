@@ -48,7 +48,7 @@ public class Init
 	{
 		Group spc = new Group();
 
-		for (Case ec: maze.getContentMaze().getSpecialCases())
+		for (Case ec: maze.getContentMazeCurrentLevel().getSpecialCases())
 		{
 			final float tailleCase = 0.5f;
 			final Box   res        = new Box(tailleCase, 0.01f, tailleCase);
@@ -73,7 +73,7 @@ public class Init
 
 		floors.getTransforms().add(sc);
 
-		for (MazeDimension.RectInMaze md: maze.getMazeDimension().list_rectmaze)
+		for (MazeDimension.RectInMaze md: maze.getContentMazeCurrentLevel().getMazeDimension().list_rectmaze)
 		{
 			final int w = md.x2 - md.x1;
 			final int h = md.y2 - md.y1;
@@ -106,7 +106,7 @@ public class Init
 
 		// On scale les murs
 		walls.getTransforms().add(sc);
-		final LineWall[] lineWalls = LineWall.breakWallsIntoSimpleOnes(maze.getContentMaze().getLineWalls());
+		final LineWall[] lineWalls = LineWall.breakWallsIntoSimpleOnes(maze.getContentMazeCurrentLevel().getLineWalls());
 		final float      delta     = 0.01f;
 		for (LineWall l: lineWalls)
 		{

@@ -1,20 +1,18 @@
-package src.model;
+package src.model.gen;
 
 import java.lang.Cloneable;
 import src.model.board.*;
 import src.utils.StringManipulation;
 
-public class ContentMaze
+public class ContentMazeEgg
 {
 	private Case[] specialCases;
 	private LineWall[] linewalls;
-	private MazeDimension mazeDim;
 
-	public ContentMaze(Case[] sc, LineWall[] w, MazeDimension mz)
+	public ContentMazeEgg(Case[] sc, LineWall[] w)
 	{
 		this.specialCases = sc;
 		this.linewalls    = w;
-		this.mazeDim      = mz;
 	}
 
 	public Case[] getSpecialCases()
@@ -27,16 +25,22 @@ public class ContentMaze
 		return (this.linewalls);
 	}
 
-	public MazeDimension getMazeDimension()
+	public void translate(int dx, int dy)
 	{
-		return (this.mazeDim);
+		for (Case c : this.specialCases)
+		{
+			c.translate(dx, dy);
+		}
+		for (LineWall lw : this.linewalls)
+		{
+			lw.translate(dx, dy);
+		}
 	}
 
-	public ContentMaze clone()
+	public ContentMazeEgg clone()
 	{
-		Case[]        sccp;
-		LineWall[]    wcp;
-		MazeDimension mzcp;
+		Case[]     sccp;
+		LineWall[] wcp;
 
 		sccp = new Case[this.specialCases.length];
 		wcp  = new LineWall[this.linewalls.length];
@@ -49,8 +53,7 @@ public class ContentMaze
 		{
 			wcp[i] = this.linewalls[i].clone();
 		}
-		mzcp = this.mazeDim.clone();
-		return (new ContentMaze(sccp, wcp, mzcp));
+		return (new ContentMazeEgg(sccp, wcp));
 	}
 
 	/**
