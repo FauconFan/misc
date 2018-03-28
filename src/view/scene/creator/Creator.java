@@ -56,19 +56,34 @@ public class Creator extends ScenePlus
 	private final Scale sc     = new Scale(100, 100);
 	private final Translate tr = new Translate(10, 10); // Décalage par défaut du dessin
 
-	private final Pane walls;                           //MUST contain LinePlus
-	private final Group cases;                          //MUST contain RectanglePlus
+	private final Pane walls = new Pane();              //MUST contain LinePlus
+	private final Pane cases = new Pane();              //MUST contain RectanglePlus
+	private final Pane dots  = new Pane();
 
 	public Creator(View v, int width, int height)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
 
+		final double change = 5;
 		//Key controller
-		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{ if (key.getCode() == KeyCode.ESCAPE)
-													   {
-														   v.changeScene(new Menus(v));
-													   }
-						});
+		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
+			switch (key.getCode())
+			{
+			case ESCAPE: v.changeScene(new Menus(v)); break;
+
+			case Z: tr.setY((isIn(tr.getY() + change, -screenHeight, 11)) ? tr.getY() + change : tr.getY()); break;
+
+			case Q: tr.setX((isIn(tr.getX() + change, -screenWidth, 11)) ? tr.getX() + change : tr.getX()); break;
+
+			case S: tr.setY((isIn(tr.getY() - change, -screenHeight, 11)) ? tr.getY() - change : tr.getY()); break;
+
+			case D: tr.setX((isIn(tr.getX() - change, -screenWidth, 11)) ? tr.getX() - change : tr.getX()); break;
+
+			case R: sc.setX(sc.getX() + change); sc.setY(sc.getY() + change); break;
+
+			case F: sc.setX(sc.getX() - change); sc.setY(sc.getY() - change); break;
+			}
+		});
 
 		setFill(Color.GRAY);
 
@@ -80,16 +95,11 @@ public class Creator extends ScenePlus
 
 		final double dotWidth = 0.1;
 
-		Group dots = new Group();
-		walls = new Pane();
+		dots.setPickOnBounds(false);
 		walls.setPickOnBounds(false);
-		cases = new Group();
-
-		dots.getTransforms().addAll(tr, sc);
-		walls.getTransforms().addAll(tr, sc);
-		cases.getTransforms().addAll(tr, sc);
 
 		root.getChildren().addAll(cases, walls, dots);
+		root.getTransforms().addAll(tr, sc);
 
 		// Draw circles
 		for (int i = 0; i < width + 1; i++)
@@ -298,5 +308,10 @@ public class Creator extends ScenePlus
 				break;
 			}
 		}
+	}
+
+	private boolean isIn(double totest, double min, double max)
+	{
+		return (totest >= min && totest <= max);
 	}
 }

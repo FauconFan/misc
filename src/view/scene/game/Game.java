@@ -307,10 +307,13 @@ public class Game extends ScenePlus
 
 	private class Timer extends AnimationTimer
 	{
+		private long oldTime = 0;
+
 		public void handle(long l)
 		{
-			maze.updatePlayer(l);
+			maze.updatePlayer(l - oldTime);
 			updatePlayer();
+			oldTime = l;
 		}
 	}
 }
