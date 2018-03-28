@@ -50,11 +50,11 @@ public class Init
 
 		for (Case ec: maze.getContentMaze().getSpecialCases())
 		{
-			final float tc  = Case.getTailleCase();
-			final Box   res = new Box(tc, 0.01f, tc);
+			final float tailleCase = 0.5f;
+			final Box   res        = new Box(tailleCase, 0.01f, tailleCase);
 
-			res.setTranslateX(ec.getX() + tc / 2.0);
-			res.setTranslateZ(ec.getY() + tc / 2.0);
+			res.setTranslateX(ec.getX() + tailleCase / 2.0);
+			res.setTranslateZ(ec.getY() + tailleCase / 2.0);
 			res.setTranslateY(hauteur / 2.0 - 0.5);
 			res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
 			spc.getChildren().add(res);

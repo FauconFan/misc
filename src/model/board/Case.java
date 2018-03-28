@@ -8,15 +8,13 @@ import java.lang.reflect.Type;
 import src.model.board.LineWall;
 
 /**
- * Case du labyrinthe quelconque.
+ * Case du labyrinthe quelconque. Taille de 1
  */
 public abstract class Case implements Cloneable
 {
 	protected int x;
 	protected int y;
 	public final TypeCase type;
-
-	private static float tailleCase = 1;
 
 	public Case(int x, int y, TypeCase t)
 	{
@@ -38,11 +36,6 @@ public abstract class Case implements Cloneable
 	public TypeCase getType()
 	{
 		return (this.type);
-	}
-
-	public static float getTailleCase()
-	{
-		return (tailleCase);
 	}
 
 	public void translate(int dx, int dy)
