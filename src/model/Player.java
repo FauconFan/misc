@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import src.model.board.Case;
 import src.model.board.LineWall;
+import src.model.MazeDimension;
 import src.utils.FloatVector;
 
 /**
@@ -33,6 +34,7 @@ public class Player
 	private static final float ACCELERATIONXY = 0.001f;
 	private static final float VMAX           = 0.04f;
 	private static final float PESANTEUR      = -0.015f;
+	private static final float VELOCITYGHOST  = 0.02f;
 
 	//Vitesse selon les axes/plan
 	private float velocityXY;
@@ -182,8 +184,10 @@ public class Player
 	/**
 	 * Update the player position with the collisions with walls
 	 * @param lw the walls
+	 * @param md MazeDim
+	 * @param time Time
 	 */
-	public void update(LineWall [] lw, long time)
+	public void update(LineWall [] lw, MazeDimension md, long time)
 	{
 		int angle       = 0;
 		int nbDirPushed = 0;
@@ -201,10 +205,12 @@ public class Player
 			case west: angle += -90; nbDirPushed++; break;
 
 			case left: horizontalAngle -= rot;
+				this.velocityXY        -= ACCELERATIONXY / 3;
 				lastDepAngle           += rot;
 				break;
 
 			case right: horizontalAngle += rot;
+				this.velocityXY         -= ACCELERATIONXY / 3;
 				lastDepAngle            -= rot;
 				break;
 
@@ -224,56 +230,61 @@ public class Player
 				}
 				break;
 
-			case jump:  if (Math.abs(this.posZ) < 10e-4)
+			case jump:  if (this.zCol.isOnFloor())
 				{
-					this.velocityZ = Math.max(0.25f, this.velocityXY * 5) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
+					this.velocityZ = Math.max(0.3f, this.velocityXY * 7) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
 				}
 				break;
 			}
 		}
-		if (nbDirPushed != 0 && Math.abs(this.posZ) < 10e-4)
+
+		this.zCol.updateFloor(md);
+		this.xyCol.updateWalls(lw);
+		//Décalage d'une case a chaque fois
+
+		if (!this.zCol.isOnFloor() && !ghostMode)
+		{
+			this.velocityZ += PESANTEUR;
+		}
+		else if (nbDirPushed != 0)
 		{
 			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY);
 			this.lastDepAngle = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushed);
 		}
-		else if (Math.abs(this.posZ) < 10e-4)
+		else
 		{
 			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2);
 		}
-		this.reallyMove(lw, this.lastDepAngle);
+		this.reallyMove();
 	}
 
 	/**
 	 * Really move the player
-	 * @param lw the walls
-	 * @param diff The difference of orientation
 	 */
-	private void reallyMove(LineWall[] lw, int diff)
+	private void reallyMove()
 	{
-		final double r1 = Math.toRadians(horizontalAngle + diff);
+		final double r1 = Math.toRadians(this.horizontalAngle + this.lastDepAngle);
 
 		float speed = (this.isRunning) ? this.speed * 2 : this.speed;
 
-		final float dx = (float)(Math.sin(r1) * velocityXY * speed);
-		final float dy = (float)(Math.cos(r1) * velocityXY * speed);
+		final float dx = (float)(Math.sin(r1) * this.velocityXY * this.speed);
+		final float dy = (float)(Math.cos(r1) * this.velocityXY * this.speed);
 
 		FloatVector d = new FloatVector(dx, dy);
 
 		if (ghostMode)
 		{
-			this.applyMove(d);
+			this.applyMove(d, 0);
 		}
 		else
 		{
-			this.xyCol.updateWalls(lw);
 			this.xyCol.updateMove(d);
-			this.applyMove(this.xyCol.getMove());
 			this.velocityXY = this.xyCol.getNorm();
 
-			this.velocityZ = this.velocityZ + PESANTEUR;
-			this.zCol.updateMove(velocityZ);
-			this.posZ      = this.zCol.getMove() + this.posZ;
-			this.velocityZ = this.zCol.getMove();
+			this.zCol.updateMove(this.velocityZ);
+			this.velocityZ = this.zCol.getNorm();
+
+			this.applyMove(this.xyCol.getMove(), this.zCol.getMove());
 		}
 	}
 
@@ -281,10 +292,11 @@ public class Player
 	 * Déplace le joueur à la position (x + v.getX(), y + v.getY())
 	 * @param v Vecteur de déplacement
 	 */
-	public void applyMove(FloatVector v)
+	public void applyMove(FloatVector v, float dz)
 	{
-		posX += v.getX();
-		posY += v.getY();
+		this.posX += v.getX();
+		this.posY += v.getY();
+		this.posZ += dz;
 	}
 
 	public String toString()

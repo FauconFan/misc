@@ -32,6 +32,18 @@ public class MazeDimension
 		return (res);
 	}
 
+	public boolean isFloor(int x, int y)
+	{
+		for (RectInMaze r : list_rectmaze)
+		{
+			if (r.contains(x, y))
+			{
+				return (true);
+			}
+		}
+		return (false);
+	}
+
 	public String toString()
 	{
 		String str = "";
@@ -77,6 +89,11 @@ public class MazeDimension
 		public int size()
 		{
 			return ((x2 - x1) * (y2 - y1));
+		}
+
+		public boolean contains(int x, int y)
+		{
+			return (x1 <= x && x <= x2 && y1 <= y && y <= y2);
 		}
 
 		public String toString()

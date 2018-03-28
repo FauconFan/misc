@@ -65,7 +65,7 @@ public class MainMaze
 	 */
 	public void updatePlayer(long l)
 	{
-		this.p.update(this.m.getLineWalls(), l);
+		this.p.update(this.m.getLineWalls(), mazeDim, l);
 	}
 
 	public void actionCase()
