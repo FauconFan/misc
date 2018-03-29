@@ -1,7 +1,11 @@
 package src.view.scene.game;
 
 import java.io.FileInputStream;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.AmbientLight;
@@ -27,6 +31,7 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 //Pour remettre le curseur au centre de l'ecran
 import java.awt.AWTException;
@@ -82,6 +87,10 @@ public class Game extends ScenePlus
 
 	public final Timer timer;
 
+	private final Label clock = new Label("");
+
+	private final Font defaultFont = Font.font("Verdana", 30);
+
 	public Game(View v, MainMaze m)
 	{
 		super(new StackPane(), screenWidth, screenHeight, true, v);
@@ -123,7 +132,7 @@ public class Game extends ScenePlus
 
 		//Greetings label
 		Label msg = new Label("Welcome to the maze\n Press ENTER to close the message\nor H to see HELP");
-		msg.setFont(Font.font("Verdana", 30));
+		msg.setFont(defaultFont);
 		msg.setTextAlignment(TextAlignment.CENTER);
 		msg.setLayoutY(screenOffset);
 		root2D.getChildren().add(msg);
@@ -140,6 +149,11 @@ public class Game extends ScenePlus
 		// Initialise le timer
 		timer = new Timer();
 		timer.start();
+
+		// Add the Clock
+		StackPane.setAlignment(clock, Pos.BOTTOM_LEFT);
+		clock.setFont(defaultFont);
+		layout.getChildren().add(clock);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -313,6 +327,7 @@ public class Game extends ScenePlus
 		{
 			maze.updatePlayer(l - oldTime);
 			updatePlayer();
+			clock.setText(Long.toString(maze.getPlayer().getTime()));
 			oldTime = l;
 		}
 	}

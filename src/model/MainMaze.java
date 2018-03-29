@@ -1,7 +1,6 @@
 package src.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import src.model.board.Case;
 import src.model.board.LineWall;
@@ -119,8 +118,7 @@ public class MainMaze
 					if (!((TimeCase)c).isActivated())
 					{
 						((TimeCase)c).activate();
-						Date d = this.p.getDate();
-						d.setTime(d.getTime() + ((TimeCase)c).getTimeMillis());
+						p.updateTime(((TimeCase)c).getTimeMillis());
 					}
 					break;
 				}

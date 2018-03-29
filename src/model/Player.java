@@ -1,6 +1,5 @@
 package src.model;
 
-import java.util.Date;
 import java.util.HashSet;
 
 import src.model.board.Case;
@@ -25,7 +24,7 @@ public class Player
 	private boolean hasWin    = false;
 	private float speed       = 1;
 	private boolean isRunning = false;
-	private Date time;
+	private long time;
 
 	//Constante de déplacement (Angle)
 	public final float rot = 2f;       // En degré
@@ -58,7 +57,6 @@ public class Player
 		this.posZ            = posZ;
 		this.horizontalAngle = horizontalAngle;
 		this.verticalAngle   = verticalAngle;
-		this.time            = new Date(System.currentTimeMillis());
 	}
 
 	public boolean getGhostMode()
@@ -111,9 +109,14 @@ public class Player
 		return (this.speed);
 	}
 
-	public Date getDate()
+	public long getTime()
 	{
 		return (this.time);
+	}
+
+	public void updateTime(long l)
+	{
+		time += l;
 	}
 
 	public void setSpeed(float f)
@@ -191,6 +194,11 @@ public class Player
 	{
 		int angle       = 0;
 		int nbDirPushed = 0;
+
+		if (time <= 100000000)     //if not init
+		{
+			this.time += time;
+		}
 
 		for (Directions d: dirs)
 		{
