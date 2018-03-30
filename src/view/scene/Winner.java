@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 
 public class Winner extends ScenePlus
 {
@@ -23,11 +24,11 @@ public class Winner extends ScenePlus
 		{
 			super();
 
-			Label l = new Label("YOU WIN");
+			Text l = new Text("YOU WIN");
 			getChildren().add(l);
-			l.setId("hello");
+			l.setId("title");
 
-			Button buttonNew = addButton("Main menu");
+			Button buttonNew = addBigButton("Main menu");
 
 			buttonNew.setOnAction(event->{
 				v.changeScene(new Menus(v));

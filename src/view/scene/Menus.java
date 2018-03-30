@@ -60,9 +60,9 @@ public class Menus extends ScenePlus
 			label.setId("hello");
 			getChildren().add(label);
 
-			final Button   buttonCreate   = addButton("Create");
-			final Button   buttonLoad     = addButton("Load");
-			final Button   buttonCampaign = addButton("Campaign");
+			final Button   buttonCreate   = addBigButton("Create");
+			final Button   buttonLoad     = addBigButton("Load");
+			final Button   buttonCampaign = addBigButton("Campaign");
 			final Button[] buttons        = { buttonLoad, buttonCreate, buttonCampaign };
 			for (Button b: buttons)
 			{
@@ -99,7 +99,7 @@ public class Menus extends ScenePlus
 		{
 			super();
 
-			final Button buttonPrevious = addButton("Previous");
+			final Button buttonPrevious = addSmallButton("Previous");
 
 			final Slider slidery = new Slider(0, 100, 20);
 			final Slider sliderx = new Slider(0, 100, 20);
@@ -118,7 +118,7 @@ public class Menus extends ScenePlus
 				sliders[i].setShowTickLabels(true);
 				sliders[i].setMajorTickUnit(10);
 			}
-			final Button buttonCreate = addButton("Create randomly");
+			final Button buttonCreate = addSmallButton("Create randomly");
 
 			buttonPrevious.setOnAction(event->{
 				view = new MenuStart();
@@ -141,7 +141,7 @@ public class Menus extends ScenePlus
 				v.showGame();
 			});
 
-			final Button buttonCreator = addButton("Creator");
+			final Button buttonCreator = addSmallButton("Creator");
 			buttonCreator.setOnAction(event->{
 				v.changeScene(new Creator(v, (int)sliders[0].getValue(), (int)sliders[1].getValue()));
 			});
@@ -156,15 +156,15 @@ public class Menus extends ScenePlus
 		{
 			super();
 
-			final Button level1 = addButton("Level 1");
-			final Button level2 = addButton("Level 2");
-			final Button level3 = addButton("Level 3");
-			final Button level4 = addButton("Level 4");
-			final Button level5 = addButton("Level 5");
-			final Button level6 = addButton("Level 6");
-			final Button level7 = addButton("Level 7");
+			final Button level1 = addSmallButton("Level 1");
+			final Button level2 = addSmallButton("Level 2");
+			final Button level3 = addSmallButton("Level 3");
+			final Button level4 = addSmallButton("Level 4");
+			final Button level5 = addSmallButton("Level 5");
+			final Button level6 = addSmallButton("Level 6");
+			final Button level7 = addSmallButton("Level 7");
 
-			final Button buttonPrevious = addButton("Previous");
+			final Button buttonPrevious = addBigButton("Previous");
 
 			final Button[] buttons = { level1, level2, level3, level4, level5, level6, level7 };
 

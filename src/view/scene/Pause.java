@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -42,7 +43,12 @@ public class Pause extends ScenePlus
 	{
 		public MenuPause()
 		{
-			Button buttonUnPause = addButton("Unpause");
+			Text paused = new Text("PAUSED");
+
+			paused.setId("title");
+			getChildren().add(paused);
+
+			Button buttonUnPause = addBigButton("Unpause");
 
 			buttonUnPause.setOnAction(event->{
 				v.changeScene(previous);
@@ -67,7 +73,7 @@ public class Pause extends ScenePlus
 				}
 			});
 
-			Button buttonSave = addButton("Save");
+			Button buttonSave = addBigButton("Save");
 			buttonSave.setOnAction(event->{
 				File f = new FileChooser().showSaveDialog(v.stage);
 				if (f != null)
@@ -76,12 +82,12 @@ public class Pause extends ScenePlus
 				}
 			});
 
-			Button buttonCreator = addButton("Creator");
+			Button buttonCreator = addBigButton("Creator");
 			buttonCreator.setOnAction(event->{
 				v.changeScene(new Creator(v, previous));
 			});
 
-			Button buttonReturn = addButton("Return to Menu");
+			Button buttonReturn = addSmallButton("Return to Menu");
 			buttonReturn.setOnAction(event->{
 				v.changeScene(new Menus(v));
 			});

@@ -49,12 +49,23 @@ public class Menu extends VBox implements Msg
 		msg.setFont(new Font("Comic Sans", 46));
 	}
 
-	protected Button addButton(String name)
+	protected Button addBigButton(String name)
 	{
 		Button b = new Button(name);
 
 		b.setPrefWidth(screenWidth / 3);
 		b.setPrefHeight(screenHeight / 15);
+
+		getChildren().add(b);
+		return (b);
+	}
+
+	protected Button addSmallButton(String name)
+	{
+		Button b = new Button(name);
+
+		b.setPrefWidth(screenWidth / 10);
+		b.setPrefHeight(screenHeight / 20);
 
 		getChildren().add(b);
 		return (b);
@@ -75,7 +86,7 @@ public class Menu extends VBox implements Msg
 
 	public void addButtonQuit()
 	{
-		Button b = addButton("Quit");
+		Button b = addSmallButton("Quit");
 
 		b.setOnAction(event->{
 			Platform.exit();
