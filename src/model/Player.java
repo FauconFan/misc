@@ -43,8 +43,8 @@ public class Player
 	private int lastDepAngle;
 
 	//Gestionnaires de Collisions
-	private CollisionsXYManager xyCol = new CollisionsXYManager(this);
-	private CollisionsZManager zCol   = new CollisionsZManager(this);
+	private transient CollisionsXYManager xyCol = new CollisionsXYManager(this);
+	private transient CollisionsZManager zCol   = new CollisionsZManager(this);
 
 	//Ensemble de déplacements à faire
 	public final HashSet <Directions> dirs = new HashSet <Directions>();

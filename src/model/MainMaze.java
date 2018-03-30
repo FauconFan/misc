@@ -149,7 +149,11 @@ public class MainMaze
 		str += "labyrinthe :\n";
 		if (cm != null)
 		{
-			str += cm.toString();
+			for (int i = 0; i < cm.length; i++)
+			{
+				str += "LEVEL " + (i + 1) + "\n";
+				str += cm[i].toString();
+			}
 		}
 		return (str);
 	}

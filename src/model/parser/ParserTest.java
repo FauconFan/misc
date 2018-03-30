@@ -10,23 +10,50 @@ public class ParserTest
 {
 	public static void main(String[] args)
 	{
-		MainMaze mm;
-		Algo     al;
+		MainMaze mm       = null;
+		Algo     al       = null;
+		String   notSaved = "";
+		String   Saved    = "";
 
-		al = new AlgoBackTracker(20, 50);
-		mm = new MainMaze(al);
-		System.out.println(mm);
+		try
+		{
+			al = new AlgoBackTracker(20, 50);
+			mm = new MainMaze(al);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.exit(1);
+		}
+		notSaved = mm.toString();
+		System.out.println(notSaved);
 		mm.displayMaze(true);
 		try
 		{
+			File save = new File(".test.gson.maze");
 			Parser.saveMaze(".test", Parser.SavesFormat.gson, mm);
-			mm = Parser.loadMaze(new File(".test.gson.maze"));
+			mm = Parser.loadMaze(save);
+
+			save.delete();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		System.out.println(mm);
+		Saved = mm.toString();
+		System.out.println(Saved);
 		mm.displayMaze(true);
+
+		String res = "";
+		if (notSaved.equals(Saved))
+		{
+			res = "ALL IS GOOD";
+		}
+		else
+		{
+			res = "SOMETHING IS DIFFERENT";
+		}
+
+		System.out.println("\n\n" + res);
 	}
 }
