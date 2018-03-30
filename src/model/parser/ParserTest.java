@@ -55,5 +55,9 @@ public class ParserTest
 		}
 
 		System.out.println("\n\n" + res);
+		if (notSaved.equals(Saved) == false)
+		{
+			System.exit(1);
+		}
 	}
 }
