@@ -25,6 +25,7 @@ make fclean
 doit "NORMALISE" "make norm" ""
 doit "MAKE" "make" ""
 doit "MAKE TESTGEN" "make testgen" ""
+doit "MAKE TESTPARSER" "make testparser" ""
 doit "GENDOC" "make doc" "" 
 
 for i in `git diff --cached --name-only`
