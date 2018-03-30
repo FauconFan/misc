@@ -50,7 +50,7 @@ public class Init
 
 		for (Case ec: maze.getContentMazeCurrentLevel().getSpecialCases())
 		{
-			final float tailleCase = 0.5f;
+			final float tailleCase = 1f;
 			final Box   res        = new Box(tailleCase, 0.01f, tailleCase);
 
 			res.setTranslateX(ec.getX() + tailleCase / 2.0);
