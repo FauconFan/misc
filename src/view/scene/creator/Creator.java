@@ -34,6 +34,8 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Screen;
 
+import java.io.File;
+
 import src.model.*;
 import src.model.board.*;
 import src.model.gen.CreatorHelper;
@@ -63,6 +65,8 @@ public class Creator extends ScenePlus
 	public Creator(View v, int width, int height)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
+
+		getTextures();
 
 		final double change = 5;
 		//Key controller
@@ -313,5 +317,19 @@ public class Creator extends ScenePlus
 	private boolean isIn(double totest, double min, double max)
 	{
 		return (totest >= min && totest <= max);
+	}
+
+	private String[] getTextures()
+	{
+		File assets = new File("assets");
+
+		return (assets.list((file, name)->{
+			int i = name.lastIndexOf('.');
+			if (i > 0)
+			{
+				return name.substring(i + 1).equals("jpg");
+			}
+			return false;
+		}));
 	}
 }
