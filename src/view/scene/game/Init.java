@@ -96,7 +96,12 @@ public class Init
 		Material mat;
 
 		try{
-			Image img = new Image(new FileInputStream("assets/Brick_wall_002_COLOR.jpg"), 400, 400, true, false);
+			String texturePath = maze.getContentMazeCurrentLevel().getTexturePath();
+			if (texturePath == null)
+			{
+				texturePath = "assets/Brick_wall_002_COLOR.jpg";          //Default
+			}
+			Image img = new Image(new FileInputStream(texturePath), 400, 400, true, false);
 			mat = new PhongMaterial(Color.WHITE, img, null, null, null);
 		}
 		catch (Exception e) {
