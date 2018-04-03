@@ -28,6 +28,10 @@ testparser :
 run:
 	@java -jar $(JAR)
 
+runAll:
+	@make all
+	@make run
+
 clean:
 	@rm -rf $(BIN_FOLDER)
 	@rm -rf $(DOC_FOLDER)
