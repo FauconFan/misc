@@ -30,13 +30,16 @@ public class ASTInstrIf extends ASTInstr
 
 	public void exec(Prog prog)
 	{
-		if (this.expr == null || this.expr.evalExpr(prog) == 0)
+		if (this.expr == null || this.expr.evalExpr(prog) != 0)
 		{
 			this.instr.exec(prog);
 		}
-		if (this.follow != null)
-		{
-			this.follow.exec(prog);
+		else
+		{	
+			if (this.follow != null)
+			{
+				this.follow.exec(prog);
+			}
 		}
 	}
 
