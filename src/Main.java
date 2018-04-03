@@ -11,8 +11,6 @@ import src.ast.AST;
 
 import src.prog.SemanticAnalyser;
 
-import src.ast_rep.CanvasAST;
-
 public class Main
 {
 	public static void runProg(String filename)
@@ -28,13 +26,26 @@ public class Main
 
 	public static void runAstRepProg(String filename)
 	{
-		javax.swing.SwingUtilities.invokeLater(new Runnable()
+		try
 		{
-			public void run()
+			File             input  = new File(filename);
+			Reader           reader = new FileReader(input);
+			LexerFlex        lexer  = new LexerFlex(reader);
+			LookAhead1       look   = new LookAhead1(lexer);
+			Parser           parser = new Parser(look);
+			AST              ast    = parser.buildProg();
+			SemanticAnalyser sa     = new SemanticAnalyser();
+			sa.checkAST(ast);
+			if (ast != null)
 			{
-				CanvasAST.initAndShow(filename);
+				ToTikz.printTikz(ast);
 			}
-		});
+		}
+		catch (Exception e)
+		{
+			System.err.println(e.getMessage());
+			System.exit(1);
+		}
 	}
 
 	public static void quietModeActivated(String filename)
@@ -65,7 +76,7 @@ public class Main
 	{
 		boolean quietMode  = false;
 		boolean helpMode   = false;
-		boolean astRepMode = false;
+		boolean astRepTex = false;
 		String  filename   = null;
 
 		for (String str : args)
@@ -78,9 +89,9 @@ public class Main
 			{
 				helpMode = true;
 			}
-			else if (str.equals("--ast"))
+			else if (str.equals("--ast-tex"))
 			{
-				astRepMode = true;
+				astRepTex = true;
 			}
 			else if (str.endsWith(".gtxt"))
 			{
@@ -94,7 +105,7 @@ public class Main
 
 		if (helpMode == true ||
 			filename == null ||
-			(quietMode == true && astRepMode == true))
+			(quietMode == true && astRepTex == true))
 		{
 			displayHelp();
 		}
@@ -102,7 +113,7 @@ public class Main
 		{
 			quietModeActivated(filename);
 		}
-		else if (astRepMode)
+		else if (astRepTex)
 		{
 			runAstRepProg(filename);
 		}
@@ -116,7 +127,7 @@ public class Main
 	{
 		String helpMessage = "";
 
-		helpMessage += "java -jar ./GraphTXT.jar [-h|--help] [-q|--quiet] [--ast] filename\n";
+		helpMessage += "java -jar ./GraphTXT.jar [-h|--help] [-q|--quiet] [--ast-tex] filename\n";
 		helpMessage += "\n";
 		helpMessage += "--help : display this message\n";
 		helpMessage += "--quiet : do not open a frame, just display it on terminal\n";
@@ -124,7 +135,7 @@ public class Main
 		helpMessage += "\n";
 		helpMessage += "\n";
 		helpMessage += "Every filename musts end with the extension gtxt...\n";
-		helpMessage += "--ast and --quiet can be called at the same time\n";
+		helpMessage += "--ast-tex and --quiet can be called at the same time\n";
 
 		System.out.print(helpMessage);
 	}

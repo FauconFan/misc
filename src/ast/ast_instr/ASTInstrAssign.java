@@ -4,7 +4,6 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
-import src.ast_rep.BlockASTLeaf;
 import src.lexer_parser.LocatedException;
 
 import java.awt.Point;
@@ -48,12 +47,14 @@ public class ASTInstrAssign extends ASTInstr
 		return ("Assign '='");
 	}
 
-	public BlockASTLeaf[] getChilds()
+	public String toTikz()
 	{
-		BlockASTLeaf[] res = new BlockASTLeaf[2];
+		String res = "[ Assign '=' ";
 
-		res[0] = new BlockASTLeaf(identifier);
-		res[1] = new BlockASTLeaf(expr);
+		res += "[ " + this.identifier + " ]";
+		res += expr.toTikz();
+
+		res += "]";
 		return (res);
 	}
 }

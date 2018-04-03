@@ -4,7 +4,6 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
-import src.ast_rep.BlockASTLeaf;
 import src.lexer_parser.LocatedException;
 
 import java.awt.Point;
@@ -43,15 +42,15 @@ public class ASTInstrDecl extends ASTInstr
 		return ("Decl");
 	}
 
-	public BlockASTLeaf[] getChilds()
+	public String toTikz()
 	{
-		BlockASTLeaf[] res;
-		String         prefix;
+		String res = "[ ";
 
-		res    = new BlockASTLeaf[2];
-		prefix = (this.is_cst) ? "Const " : "Var ";
-		res[0] = new BlockASTLeaf(prefix + identifier);
-		res[1] = new BlockASTLeaf(expr);
+		res += (this.is_cst) ? "Const" : "Var";
+		res += "[ " + this.identifier + " ]";
+		res += expr.toTikz();
+
+		res += "]";
 		return (res);
 	}
 

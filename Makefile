@@ -36,9 +36,15 @@ cleanflex :
 clean: cleanflex
 	@rm -rf $(BIN_FOLDER)
 	@rm -rf $(MANIFEST)
+	@rm -rf *.aux *.aux *.log *.synctex.gz *.pdf *.tex
 
 fclean: clean
 	@rm -rf $(JAR)
+
+ast-tex: all
+	@java -jar $(NAME).jar --ast-tex $(PARAM) > astRep.tex
+	@pdflatex -synctex=1 -interaction=nonstopmode astRep.tex
+	@evince astRep.pdf
 
 re: fclean all
 

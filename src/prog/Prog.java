@@ -1,6 +1,7 @@
 package src.prog;
 
 import java.util.HashMap;
+import src.ToTikz;
 import java.awt.Graphics2D;
 import src.ast.AST;
 import src.prog.SemanticAnalyser;

@@ -4,7 +4,6 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_instr.ASTInstr;
-import src.ast_rep.BlockASTLeaf;
 
 public class AST implements ASTInterface
 {
@@ -51,26 +50,16 @@ public class AST implements ASTInterface
 		return ("AST");
 	}
 
-	public BlockASTLeaf[] getChilds()
+	public String toTikz()
 	{
-		BlockASTLeaf[] res;
-		int            len;
+		String res = "[ AST ";
 
-		len  = 0;
-		len += (this.instr != null) ? 1 : 0;
-		len += (this.next != null) ? 1 : 0;
-
-		res = new BlockASTLeaf[len];
-		if (len == 1)
-		{
-			res[0] = new BlockASTLeaf((this.instr != null) ? this.instr : this.next);
-		}
-		else if (len == 2)
-		{
-			res[0] = new BlockASTLeaf(this.instr);
-			res[1] = new BlockASTLeaf(this.next);
-		}
-		return (res);
+		if (instr != null)
+			res += this.instr.toTikz();
+		if (next != null)
+			res += this.next.toTikz();
+		res += "]";
+		return res;
 	}
 
 	public String toString()

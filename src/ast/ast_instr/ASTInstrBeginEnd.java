@@ -5,7 +5,6 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.AST;
-import src.ast_rep.BlockASTLeaf;
 
 import java.awt.Point;
 
@@ -57,11 +56,12 @@ public class ASTInstrBeginEnd extends ASTInstr
 		return ("Begin - End");
 	}
 
-	public BlockASTLeaf[] getChilds()
+	public String toTikz()
 	{
-		BlockASTLeaf[] res = new BlockASTLeaf[1];
+		String res = "[ Begin - End";
 
-		res[0] = new BlockASTLeaf(this.content);
-		return (res);
+		res += this.content.toTikz();
+		res += "]";
+		return res;
 	}
 }

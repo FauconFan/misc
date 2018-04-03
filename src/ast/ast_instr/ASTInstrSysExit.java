@@ -4,7 +4,6 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
-import src.ast_rep.BlockASTLeaf;
 import src.lexer_parser.LocatedException;
 
 import java.awt.Point;
@@ -37,8 +36,10 @@ public class ASTInstrSysExit extends ASTInstr
 		return ("Exit");
 	}
 
-	public BlockASTLeaf[] getChilds()
+	public String toTikz()
 	{
-		return (new BlockASTLeaf[0]);
+		String res = "[Exit]";
+
+		return res;
 	}
 }

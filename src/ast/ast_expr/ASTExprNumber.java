@@ -2,7 +2,6 @@ package src.ast.ast_expr;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
-import src.ast_rep.BlockASTLeaf;
 import src.prog.Prog;
 
 import java.awt.Point;
@@ -32,8 +31,10 @@ public class ASTExprNumber extends ASTExpr
 		return (Integer.toString(this.number));
 	}
 
-	public BlockASTLeaf[] getChilds()
+	public String toTikz()
 	{
-		return (new BlockASTLeaf[0]);
+		String res = "[ " + Integer.toString(this.number) + " ]";
+
+		return (res);
 	}
 }

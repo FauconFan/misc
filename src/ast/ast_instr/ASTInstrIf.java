@@ -4,7 +4,6 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
-import src.ast_rep.BlockASTLeaf;
 
 import java.awt.Point;
 
@@ -61,56 +60,32 @@ public class ASTInstrIf extends ASTInstr
 		return ("If");
 	}
 
-	public BlockASTLeaf[] getChilds()
+	private String toTikzImbricated()
 	{
-		BlockASTLeaf[] res;
-		int            len;
+		String res = "[ ";
 
-		len  = 0;
-		len += (this.expr != null) ? 1 : 0;
-		len += (this.instr != null) ? 1 : 0;
-		len += (this.follow != null) ? 1 : 0;
+		res += (expr != null) ? "Elif" : "Else";
 
-		res = new BlockASTLeaf[len];
-		if (len == 1)
-		{
-			if (this.expr != null)
-			{
-				res[0] = new BlockASTLeaf(this.expr);
-			}
-			else if (this.instr != null)
-			{
-				res[0] = new BlockASTLeaf(this.instr);
-			}
-			else
-			{
-				res[0] = new BlockASTLeaf(this.follow);
-			}
-		}
-		else if (len == 2)
-		{
-			if (this.expr == null)
-			{
-				res[0] = new BlockASTLeaf(this.instr);
-				res[1] = new BlockASTLeaf(this.follow);
-			}
-			else if (this.instr == null)
-			{
-				res[0] = new BlockASTLeaf(this.expr);
-				res[1] = new BlockASTLeaf(this.follow);
-			}
-			else
-			{
-				res[0] = new BlockASTLeaf(this.expr);
-				res[1] = new BlockASTLeaf(this.instr);
-			}
-		}
-		else
-		{
-			res[0] = new BlockASTLeaf(this.expr);
-			res[1] = new BlockASTLeaf(this.instr);
-			res[2] = new BlockASTLeaf(this.follow);
-		}
-		return (res);
+		res += instr.toTikz();
+
+		if (follow != null)
+			res += follow.toTikzImbricated();
+
+		res += "]";
+		return res;
+	}
+
+	public String toTikz()
+	{
+		String res = "[ If ";
+
+		res += expr.toTikz();
+		res += instr.toTikz();
+
+		if (follow != null)
+			res += follow.toTikzImbricated();
+
+		res += "]";
+		return res;
 	}
 }

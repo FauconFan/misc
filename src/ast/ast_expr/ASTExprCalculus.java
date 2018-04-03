@@ -2,7 +2,6 @@ package src.ast.ast_expr;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
-import src.ast_rep.BlockASTLeaf;
 import src.prog.Prog;
 import src.lexer_parser.LocatedException;
 
@@ -59,12 +58,13 @@ public class ASTExprCalculus extends ASTExpr
 		return ("" + op);
 	}
 
-	public BlockASTLeaf[] getChilds()
+	public String toTikz()
 	{
-		BlockASTLeaf[] res = new BlockASTLeaf[2];
+		String res = "[ " + this.op;
 
-		res[0] = new BlockASTLeaf(left);
-		res[1] = new BlockASTLeaf(right);
-		return (res);
+		res += this.left.toTikz();
+		res += this.right.toTikz();
+		res += "]";
+		return res;
 	}
 }

@@ -6,7 +6,6 @@ import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
 import src.ast.ast_instr.ASTInstr;
 import src.ast.ASTInterface;
-import src.ast_rep.BlockASTLeaf;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -32,28 +31,30 @@ public abstract class ASTInstrExec extends ASTInstr
 		}
 	}
 
-	public BlockASTLeaf[] getChilds()
+	public abstract String getTag();
+
+	public String toTikz()
 	{
-		BlockASTLeaf[] res;
+		String res = "[ " + this.getTag();
 		String         data = "0123456789ABCDEF";
 
-		res = new BlockASTLeaf[args.length + colors.length];
-		for (int i = 0; i < args.length; i++)
+		for (ASTExpr expr : this.args)
 		{
-			res[i] = new BlockASTLeaf(args[i]);
+			res += expr.toTikz();
 		}
-		for (int i = 0; i < colors.length; i++)
+		for (Color color : this.colors)
 		{
 			String str = "";
 
-			str += data.charAt(colors[i].getRed() / 16);
-			str += data.charAt(colors[i].getRed() % 16);
-			str += data.charAt(colors[i].getGreen() / 16);
-			str += data.charAt(colors[i].getGreen() % 16);
-			str += data.charAt(colors[i].getBlue() / 16);
-			str += data.charAt(colors[i].getBlue() % 16);
-			res[i + args.length] = new BlockASTLeaf(str);
+			str += data.charAt(color.getRed() / 16);
+			str += data.charAt(color.getRed() % 16);
+			str += data.charAt(color.getGreen() / 16);
+			str += data.charAt(color.getGreen() % 16);
+			str += data.charAt(color.getBlue() / 16);
+			str += data.charAt(color.getBlue() % 16);
+			res += "[ " + str + " ] ";
 		}
+		res += "]";
 		return (res);
 	}
 }
