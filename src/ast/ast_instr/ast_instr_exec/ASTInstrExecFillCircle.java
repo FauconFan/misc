@@ -26,7 +26,7 @@ public class ASTInstrExecFillCircle extends ASTInstrExec
 		x = this.args[0].evalExpr(prog);
 		y = this.args[1].evalExpr(prog);
 		r = this.args[2].evalExpr(prog);
-		g2d.fillOval(x, y, r, r);
+		g2d.fillOval(x - r, y - r, 2 * r, 2 * r);
 	}
 
 	public String getTag()
