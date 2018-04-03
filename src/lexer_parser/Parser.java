@@ -71,7 +71,6 @@ public class Parser
 		return (res);
 	}
 
-	// return true if it does something, or false
 	private ASTInstr instruction() throws Exception
 	{
 		ASTInstr res = null;

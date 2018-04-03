@@ -15,14 +15,9 @@ _CYAN=$(tput setaf 6)
 _WHITE=$(tput setaf 7)
 _END=$(tput sgr0)
 
-function print_title_good()
+function print_title()
 {
-	printf "\\n\\t%sGood Files%s\\n\\n" "${_YELLOW}" "${_END}"
-}
-
-function print_title_bad()
-{
-	printf "\\n\\t%sBad Files%s\\n\\n" "${_YELLOW}" "${_END}"
+	printf "\\n\\t%s%s%s\\n\\n" "${_YELLOW}" "${1}" "${_END}"
 }
 
 function print_good()
@@ -61,19 +56,19 @@ function do_all_tests_bad()
 
 function do_basic_test()
 {
-	print_title_good
+	print_title "BASIC_GOOD"
 	do_all_tests_good ${FILES_BASIC_GOOD}
 
-	print_title_bad
+	print_title "BASIC_BAD"
 	do_all_tests_bad ${FILES_BASIC_BAD}
 }
 
 function do_sys_test()
 {
-	print_title_good
+	print_title "SYS_GOOD"
 	do_all_tests_good ${FILES_SYS_GOOD}
 
-	print_title_bad
+	print_title "SYS_BAD"
 	do_all_tests_bad ${FILES_SYS_BAD}
 }
 
