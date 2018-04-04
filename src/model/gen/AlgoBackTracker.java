@@ -42,7 +42,10 @@ public class AlgoBackTracker extends Algo
 
 			cmf = new ContentMazeFactory();
 			cmf.addContentMazeShift(rms);
-			cmf.initiateSpecialCases();
+			if (i == 0)
+			{
+				cmf.initiateSpecialCases();
+			}
 			cmf.normalize();
 			this.mmfactory.setContentMazeFactory(cmf, i);
 		}

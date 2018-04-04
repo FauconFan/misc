@@ -103,7 +103,7 @@ public class Menus extends ScenePlus
 
 			final Slider   slidery = new Slider(0, 100, 20);
 			final Slider   sliderx = new Slider(0, 100, 20);
-			final Slider   sliderZ = new Slider(0, 5, 1);
+			final Slider   sliderZ = new Slider(1, 5, 1);
 			final Slider[] sliders = { slidery, sliderx, sliderZ };
 			final String[] names   = { "Y axis", "X axis", "Stage" };
 			for (int i = 0; i < sliders.length; i++)
