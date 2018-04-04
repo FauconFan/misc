@@ -30,6 +30,18 @@ function print_bad()
 	printf "%sKO <= %s%s\\n" "${_RED}" "${1}" "${_END}"
 }
 
+function do_all_tests_good_ast_tex()
+{
+	for i in ${@}; do
+		${PROG} --ast-tex "${i}" > /dev/null 2>&1
+		if [ $? = 0 ]; then
+			print_good "${i}"
+		else
+			print_bad "${i}"
+		fi
+	done
+}
+
 function do_all_tests_good()
 {
 	for i in ${@}; do
@@ -63,6 +75,15 @@ function do_basic_test()
 	do_all_tests_bad ${FILES_BASIC_BAD}
 }
 
+function do_all_ast_tex()
+{
+	print_title "BASIC_GOOD AST TEX"
+	do_all_tests_good_ast_tex ${FILES_BASIC_GOOD}
+
+	print_title "SYS_GOOD AST TEX"
+	do_all_tests_good_ast_tex ${FILES_SYS_GOOD}
+}
+
 function do_sys_test()
 {
 	print_title "SYS_GOOD"
@@ -85,6 +106,7 @@ function main()
 	if [ $# = 0 ]; then
 		do_basic_test
 		do_sys_test
+		do_all_ast_tex
 	else
 		case ${1} in
 			"sys" ) do_sys_test;;
