@@ -50,7 +50,7 @@ public class MazeDimension implements Cloneable
 		return (res);
 	}
 
-	public boolean isFloor(int x, int y)
+	public boolean isFloor(float x, float y)
 	{
 		for (RectInMaze r : list_rectmaze)
 		{
@@ -114,9 +114,9 @@ public class MazeDimension implements Cloneable
 			return ((x2 - x1) * (y2 - y1));
 		}
 
-		public boolean contains(int x, int y)
+		public boolean contains(float x, float y)
 		{
-			return (x1 <= x && x <= x2 && y1 <= y && y <= y2);
+			return (x1 <= x && x < x2 && y1 <= y && y < y2);
 		}
 
 		public String toString()
