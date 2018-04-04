@@ -22,20 +22,34 @@ public class AlgoBackTracker extends Algo
 {
 	private static final boolean DEBUG_MODE = false;
 
-	public AlgoBackTracker(int y, int x) throws GenFactoryException
+	public AlgoBackTracker(int y, int x, int level_number) throws GenFactoryException
 	{
 		super();
-		this.cmfactory    = new ContentMazeFactory[1];
-		this.cmfactory[0] = new ContentMazeFactory();
+		if (level_number < 1)
+		{
+			System.err.println("level_number not accepted");
+			level_number = 1;
+		}
+		this.cmfactory = new ContentMazeFactory[level_number];
 
-		RectMaze rm = buildRect(y, x);
+		RectMaze      rm;
+		RectMazeShift rms;
 
-		RectMazeShift rms = new RectMazeShift(rm, 0, 0);
+		for (int i = 0; i < level_number; i++)
+		{
+			rm  = buildRect(y, x);
+			rms = new RectMazeShift(rm, 0, 0);
 
-		this.cmfactory[0].addContentMazeShift(rms);
+			this.cmfactory[i] = new ContentMazeFactory();
+			this.cmfactory[i].addContentMazeShift(rms);
+			this.cmfactory[i].initiateSpecialCases();
+			this.cmfactory[i].normalize();
+		}
+	}
 
-		this.cmfactory[0].initiateSpecialCases();
-		this.cmfactory[0].normalize();
+	public AlgoBackTracker(int y, int x) throws GenFactoryException
+	{
+		this(y, x, 1);
 	}
 
 	public RectMaze buildRect(int size_y, int size_x)

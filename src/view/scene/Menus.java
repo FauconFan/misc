@@ -130,12 +130,11 @@ public class Menus extends ScenePlus
 				try
 				{
 					al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue());
-				    //al = MapIntroBuilder.getMapIntro(6);
 				}
 				catch (Exception e)
 				{
-					setMsg(e.getMessage());
-					putMsg();
+					e.printStackTrace();
+					System.exit(1);
 				}
 				v.con.createMaze(al);
 				v.showGame();
