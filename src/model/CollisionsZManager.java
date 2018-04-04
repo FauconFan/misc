@@ -40,9 +40,9 @@ public class CollisionsZManager
 		{
 			this.zMove = highLevel + 1 - this.p.getPosZ();
 		}
-		else if (this.p.getPosZ() >= 0 && this.isFloor(cms[0]))
+		else if (this.p.getPosZ() >= highLevel && this.isFloor(cms[0]))
 		{
-			this.zMove = (this.p.getPosZ() + dz < 0) ? -(this.p.getPosZ() - 0) : dz;
+			this.zMove = (this.p.getPosZ() + dz < highLevel) ? -(this.p.getPosZ() - highLevel) : dz;
 		}
 		else
 		{

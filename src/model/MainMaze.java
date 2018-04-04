@@ -96,7 +96,8 @@ public class MainMaze
 	{
 		this.p.update(this, l);
 		float posZ = this.p.getPosZ();
-		if (posZ >= 0 && posZ < this.cm.length)
+
+		if (posZ >= 0 && posZ <= this.cm.length - 1)
 		{
 			this.current_level = (int)posZ;
 		}
