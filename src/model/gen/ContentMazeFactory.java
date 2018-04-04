@@ -430,28 +430,8 @@ public class ContentMazeFactory
 		return (all.toArray(new LineWall[0]));
 	}
 
-	private Case[] getFinalSpecialCases() throws GenFactoryException
+	private Case[] getFinalSpecialCases()
 	{
-		boolean hasStartCase;
-		boolean hasEndCase;
-
-		hasStartCase = false;
-		hasEndCase   = false;
-		for (Case cs : this.contentSpecialCases)
-		{
-			switch (cs.getType())
-			{
-			case START: hasStartCase = true; break;
-
-			case END: hasEndCase = true; break;
-
-			default: break;
-			}
-		}
-		if (hasStartCase == false || hasEndCase == false)
-		{
-			throw new GenFactoryException("This implementation doesn't have a StartCase or EndCase");
-		}
 		return (this.contentSpecialCases.toArray(new Case[0]));
 	}
 
@@ -460,7 +440,7 @@ public class ContentMazeFactory
 		return (this.mazeDim);
 	}
 
-	public ContentMaze getContentMaze() throws GenFactoryException
+	public ContentMaze getContentMaze()
 	{
 		return (new ContentMaze(this.getFinalSpecialCases(), this.getFinalLineWall(), getMazeDimension()));
 	}
@@ -479,16 +459,6 @@ public class ContentMazeFactory
 		public boolean isEquals(Point pt)
 		{
 			return (this.x == pt.x && this.y == pt.y);
-		}
-	}
-
-	public static class GenFactoryException extends Exception
-	{
-		private static final long serialVersionUID = 0x4615992428470203L;
-
-		public GenFactoryException(String message)
-		{
-			super(message);
 		}
 	}
 }
