@@ -25,6 +25,7 @@ public class LineWall implements Cloneable
 	private int x2;
 	private int y2;
 	private float epaisseur;
+	private boolean isLadder;
 
 	public LineWall(int x1, int y1, int x2, int y2, float epaisseur)
 	{
@@ -110,6 +111,11 @@ public class LineWall implements Cloneable
 			return (Math.abs(this.x1 - this.x2));
 		}
 		return (Math.abs(this.y1 - this.y2));
+	}
+
+	public boolean isWallLadder()
+	{
+		return (this.isLadder);
 	}
 
 	public void translate(int dx, int dy)

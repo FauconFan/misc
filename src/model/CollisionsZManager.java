@@ -9,16 +9,19 @@ public class CollisionsZManager
 {
 	private Player p;
 	private float zMove;
-	private MazeDimension mazeDim;
+	private ContentMaze [] cms;
+	private int highLevel;
+
 
 	public CollisionsZManager(Player p)
 	{
 		this.p = p;
 	}
 
-	public void updateFloor(MazeDimension md)
+	public void updateFloor(ContentMaze [] cms, int lvl)
 	{
-		mazeDim = md;
+		this.cms       = cms;
+		this.highLevel = lvl;
 	}
 
 	public float getMove()
@@ -26,12 +29,20 @@ public class CollisionsZManager
 		return (this.zMove);
 	}
 
+	public float getNorm()
+	{
+		return (this.zMove);
+	}
+
 	public void updateMove(float dz)
 	{
-		//If la position en z est plus haute que la position du sol le plus proche tel que p.getPosZ() > sol
-		if (this.p.getPosZ() >= 0 && this.isFloor())
+		if (this.zMove > 0 && cms[1] != null && this.p.getPosZ() + dz > highLevel + 1 && this.isFloor(cms[1]))
 		{
-			this.zMove = (this.p.getPosZ() + dz < 0) ? -(this.p.getPosZ() - 0) : dz;
+			this.zMove = highLevel + 1 - this.p.getPosZ();
+		}
+		else if (this.p.getPosZ() >= highLevel && this.isFloor(cms[0]))
+		{
+			this.zMove = (this.p.getPosZ() + dz < highLevel) ? -(this.p.getPosZ() - highLevel) : dz;
 		}
 		else
 		{
@@ -39,18 +50,13 @@ public class CollisionsZManager
 		}
 	}
 
-	public float getNorm()
+	public boolean isFloor(ContentMaze cm)
 	{
-		return (this.zMove);
-	}
-
-	public boolean isFloor()
-	{
-		return (mazeDim.isFloor((int)this.p.getPosX(), (int)this.p.getPosY()));
+		return (cm.isFloor(this.p.getPosX(), this.p.getPosY()));
 	}
 
 	public boolean isOnFloor()
 	{
-		return (this.isFloor() && Math.abs(this.p.getPosZ()) < 10e-4);
+		return (this.isFloor(cms[0]) && Math.abs(this.p.getPosZ() - highLevel) < 10e-4);
 	}
 }

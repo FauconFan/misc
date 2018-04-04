@@ -59,6 +59,15 @@ public class MainMaze
 		return (this.cm[this.current_level]);
 	}
 
+	public ContentMaze getContentMaze(int n)
+	{
+		if (n >= cm.length)
+		{
+			return (null);
+		}
+		return (cm[n]);
+	}
+
 	public Player getPlayer()
 	{
 		return (this.p);
@@ -85,7 +94,21 @@ public class MainMaze
 	 */
 	public void updatePlayer(long l)
 	{
-		this.p.update(this.cm[this.current_level].getLineWalls(), this.cm[this.current_level].getMazeDimension(), l);
+		this.p.update(this, l);
+		float posZ = this.p.getPosZ();
+
+		if (posZ >= 0 && posZ <= this.cm.length - 1)
+		{
+			this.current_level = (int)posZ;
+		}
+		else if (posZ < 0)
+		{
+			this.current_level = 0;
+		}
+		else
+		{
+			this.current_level = cm.length - 1;
+		}
 	}
 
 	public void actionCase()

@@ -80,7 +80,7 @@ public class DisplayMazeConsole
 			boolean isHorizontal = lw.isHorizontal();
 			for (int d = 0; d < distanceWall; d++)
 			{
-				if (maze[yRef][xRef] != null&& ((maze[yRef][xRef].equals(charWall.HORIZONTAL) && !isHorizontal) || (maze[yRef][xRef].equals(charWall.VERTICAL) && isHorizontal)))
+				if (maze[yRef][xRef] != null && ((maze[yRef][xRef].equals(charWall.HORIZONTAL) && !isHorizontal) || (maze[yRef][xRef].equals(charWall.VERTICAL) && isHorizontal)))
 				{
 					maze[yRef][xRef] = charWall.INTERSECTION;
 				}
@@ -106,19 +106,19 @@ public class DisplayMazeConsole
 				boolean haut, bas;
 				if (reverse)
 				{
-					bas = (i > 0 && maze[i - 1][j] != null&&
+					bas = (i > 0 && maze[i - 1][j] != null &&
 						   (maze[i - 1][j].equals(charWall.VERTICAL) || maze[i - 1][j].equals(charWall.INTERSECTION)));
-					haut = (maze[i][j] != null&& (maze[i][j].equals(charWall.VERTICAL) || maze[i][j].equals(charWall.INTERSECTION)));
+					haut = (maze[i][j] != null && (maze[i][j].equals(charWall.VERTICAL) || maze[i][j].equals(charWall.INTERSECTION)));
 				}
 				else
 				{
-					haut = (i > 0 && maze[i - 1][j] != null&&
+					haut = (i > 0 && maze[i - 1][j] != null &&
 							(maze[i - 1][j].equals(charWall.VERTICAL) || maze[i - 1][j].equals(charWall.INTERSECTION)));
-					bas = (maze[i][j] != null&& (maze[i][j].equals(charWall.VERTICAL) || maze[i][j].equals(charWall.INTERSECTION)));
+					bas = (maze[i][j] != null && (maze[i][j].equals(charWall.VERTICAL) || maze[i][j].equals(charWall.INTERSECTION)));
 				}
-				boolean gauche = (j > 0 && maze[i][j - 1] != null&&
+				boolean gauche = (j > 0 && maze[i][j - 1] != null &&
 								  (maze[i][j - 1].equals(charWall.HORIZONTAL) || maze[i][j - 1].equals(charWall.INTERSECTION)));
-				boolean droit = (maze[i][j] != null&& (maze[i][j].equals(charWall.HORIZONTAL) || maze[i][j].equals(charWall.INTERSECTION)));
+				boolean droit = (maze[i][j] != null && (maze[i][j].equals(charWall.HORIZONTAL) || maze[i][j].equals(charWall.INTERSECTION)));
 
 				if ((droit && gauche && !haut && !bas))
 				{

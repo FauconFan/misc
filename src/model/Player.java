@@ -186,11 +186,11 @@ public class Player
 
 	/**
 	 * Update the player position with the collisions with walls
-	 * @param lw the walls
-	 * @param md MazeDim
+	 * @param m MainMaze
 	 * @param time Time
 	 */
-	public void update(LineWall [] lw, MazeDimension md, long time)
+	//public void update(LineWall [] lw, MazeDimension md, long time)
+	public void update(MainMaze m, long time)
 	{
 		int angle       = 0;
 		int nbDirPushed = 0;
@@ -244,9 +244,13 @@ public class Player
 			}
 		}
 
-		this.zCol.updateFloor(md);
-		this.xyCol.updateWalls(lw);
-		//Décalage d'une case a chaque fois
+		int            currentLevel = m.getCurrentLevel();
+		ContentMaze [] cms          = { m.getContentMazeCurrentLevel(), m.getContentMaze(currentLevel + 1) };
+
+		this.zCol.updateFloor(cms, currentLevel);
+		this.xyCol.updateWalls(cms[0].getLineWalls());
+
+		this.reallyMove();
 
 		if (!this.zCol.isOnFloor() && !ghostMode)
 		{
@@ -261,7 +265,6 @@ public class Player
 		{
 			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * time);
 		}
-		this.reallyMove();
 	}
 
 	/**
