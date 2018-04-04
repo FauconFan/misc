@@ -13,7 +13,6 @@ import src.model.board.StartCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeFactory;
-import src.model.gen.ContentMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 import src.utils.DisplayMazeConsole;
@@ -22,7 +21,7 @@ public class AlgoBackTracker extends Algo
 {
 	private static final boolean DEBUG_MODE = false;
 
-	public AlgoBackTracker(int y, int x, int level_number) throws GenFactoryException
+	public AlgoBackTracker(int y, int x, int level_number)
 	{
 		super();
 		if (level_number < 1)
@@ -30,24 +29,26 @@ public class AlgoBackTracker extends Algo
 			System.err.println("level_number not accepted");
 			level_number = 1;
 		}
-		this.cmfactory = new ContentMazeFactory[level_number];
+		this.mmfactory = new MainMazeFactory(level_number);
 
-		RectMaze      rm;
-		RectMazeShift rms;
+		RectMaze           rm;
+		RectMazeShift      rms;
+		ContentMazeFactory cmf;
 
 		for (int i = 0; i < level_number; i++)
 		{
 			rm  = buildRect(y, x);
 			rms = new RectMazeShift(rm, 0, 0);
 
-			this.cmfactory[i] = new ContentMazeFactory();
-			this.cmfactory[i].addContentMazeShift(rms);
-			this.cmfactory[i].initiateSpecialCases();
-			this.cmfactory[i].normalize();
+			cmf = new ContentMazeFactory();
+			cmf.addContentMazeShift(rms);
+			cmf.initiateSpecialCases();
+			cmf.normalize();
+			this.mmfactory.setContentMazeFactory(cmf, i);
 		}
 	}
 
-	public AlgoBackTracker(int y, int x) throws GenFactoryException
+	public AlgoBackTracker(int y, int x)
 	{
 		this(y, x, 1);
 	}

@@ -13,7 +13,7 @@ import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeEgg;
 import src.model.gen.ContentMazeFactory;
-import src.model.gen.ContentMazeFactory.GenFactoryException;
+import src.model.gen.MainMazeFactory;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 
@@ -21,25 +21,27 @@ public class MapIntro7 extends Algo
 {
 	public int size_y = 9;
 
-	public MapIntro7() throws GenFactoryException
+	public MapIntro7()
 	{
 		super();
-		this.cmfactory    = new ContentMazeFactory [1];
-		this.cmfactory[0] = new ContentMazeFactory();
+		ContentMazeFactory cmf = new ContentMazeFactory();
+
+		this.mmfactory = new MainMazeFactory(1);
+		this.mmfactory.setContentMazeFactory(cmf, 0);
 
 		RectMaze rm1 = buildOneSquareLabyrinthe();
 
 		RectMazeShift rms1 = new RectMazeShift(rm1, 0, 0);
 
-		this.cmfactory[0].addContentMazeShift(rms1);
+		cmf.addContentMazeShift(rms1);
 
-		this.cmfactory[0].addSpecialCase(new StartCase(1, 5));
-		this.cmfactory[0].addSpecialCase(new EndCase(size_y - 1, 0));
-		this.cmfactory[0].addSpecialCase(new TeleportCase(0, 0, 1, 4));
-		this.cmfactory[0].addSpecialCase(new SpeedCase(2, 4, 0.5f));
-		this.cmfactory[0].addSpecialCase(new TimeCase(3, 2, 1000));
-		this.cmfactory[0].addSpecialCase(new SpeedCase(8, 2, 1.5f));
-		this.cmfactory[0].normalize();
+		cmf.addSpecialCase(new StartCase(1, 5));
+		cmf.addSpecialCase(new EndCase(size_y - 1, 0));
+		cmf.addSpecialCase(new TeleportCase(0, 0, 1, 4));
+		cmf.addSpecialCase(new SpeedCase(2, 4, 0.5f));
+		cmf.addSpecialCase(new TimeCase(3, 2, 1000));
+		cmf.addSpecialCase(new SpeedCase(8, 2, 1.5f));
+		cmf.normalize();
 	}
 
 	private RectMaze buildOneSquareLabyrinthe()

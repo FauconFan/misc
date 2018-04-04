@@ -1,11 +1,10 @@
 package src.model.maps;
 
 import src.model.gen.Algo;
-import src.model.gen.ContentMazeFactory.GenFactoryException;
 
 public class MapIntroBuilder
 {
-	public static Algo getMapIntro(int n) throws GenFactoryException
+	public static Algo getMapIntro(int n)
 	{
 		if (n == 1)
 		{

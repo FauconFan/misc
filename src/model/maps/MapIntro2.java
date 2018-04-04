@@ -10,7 +10,7 @@ import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeEgg;
 import src.model.gen.ContentMazeFactory;
-import src.model.gen.ContentMazeFactory.GenFactoryException;
+import src.model.gen.MainMazeFactory;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 
@@ -19,21 +19,23 @@ public class MapIntro2 extends Algo
 	private static int size_x = 3;
 	private static int size_y = 5;
 
-	public MapIntro2() throws GenFactoryException
+	public MapIntro2()
 	{
 		super();
-		this.cmfactory    = new ContentMazeFactory[1];
-		this.cmfactory[0] = new ContentMazeFactory();
+
+		ContentMazeFactory cmf = new ContentMazeFactory();
+		this.mmfactory = new MainMazeFactory(1);
+		this.mmfactory.setContentMazeFactory(cmf, 0);
 
 		RectMaze rm1 = buildOneSquareLabyrinthe();
 
 		RectMazeShift rms1 = new RectMazeShift(rm1, 0, 0);
 
-		this.cmfactory[0].addContentMazeShift(rms1);
+		cmf.addContentMazeShift(rms1);
 
-		this.cmfactory[0].addSpecialCase(new StartCase(2, 0));
-		this.cmfactory[0].addSpecialCase(new EndCase(1, 3));
-		this.cmfactory[0].normalize();
+		cmf.addSpecialCase(new StartCase(2, 0));
+		cmf.addSpecialCase(new EndCase(1, 3));
+		cmf.normalize();
 	}
 
 	private RectMaze buildOneSquareLabyrinthe()
