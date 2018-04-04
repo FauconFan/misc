@@ -72,17 +72,20 @@ public class Init
 		final Group floors = new Group();
 
 		floors.getTransforms().add(sc);
-
-		for (MazeDimension.RectInMaze md: maze.getContentMazeCurrentLevel().getMazeDimension().list_rectmaze)
+		ContentMaze[] cms = maze.getContentMaze();
+		for (int i = 0; i < cms.length; i++)
 		{
-			final int w = md.x2 - md.x1;
-			final int h = md.y2 - md.y1;
-			Box       f = new Box(w, 0.5, h);
-			f.setTranslateX(md.x1 + w / 2.0);
-			f.setTranslateZ(md.y1 + h / 2.0);
-			f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
-			f.setTranslateY(hauteur / 2.0);
-			floors.getChildren().add(f);
+			for (MazeDimension.RectInMaze md: cms[i].getMazeDimension().list_rectmaze)
+			{
+				final int w = md.x2 - md.x1;
+				final int h = md.y2 - md.y1;
+				Box       f = new Box(w, 0.5, h);
+				f.setTranslateX(md.x1 + w / 2.0);
+				f.setTranslateZ(md.y1 + h / 2.0);
+				f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
+				f.setTranslateY(hauteur / 2.0 - i * hauteur);
+				floors.getChildren().add(f);
+			}
 		}
 		return (floors);
 	}
@@ -111,43 +114,48 @@ public class Init
 
 		// On scale les murs
 		walls.getTransforms().add(sc);
-		final LineWall[] lineWalls = LineWall.breakWallsIntoSimpleOnes(maze.getContentMazeCurrentLevel().getLineWalls());
-		final float      delta     = 0.01f;
-		for (LineWall l: lineWalls)
+		final float   delta = 0.01f;
+		ContentMaze[] cms   = maze.getContentMaze();
+		for (int i = 0; i < cms.length; i++)
 		{
-			Box w = new Box();
-
-			Consumer <Float> setEpais;
-			Consumer <Float> setLarg;
-
-			float  largeur;
-			double trX;
-			double trZ;
-			if (!l.isHorizontal())                                                // Mur "vertical" dans le plan
+			final LineWall[] lineWalls = LineWall.breakWallsIntoSimpleOnes(cms[i].getLineWalls());
+			for (LineWall l: lineWalls)
 			{
-				largeur  = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
-				setLarg  = w::setDepth;
-				setEpais = w::setWidth;
-				trX      = l.getX1() + l.getEpaisseur() / 2.0 - delta;
-				trZ      = l.getY1() + largeur / 2.0;
-			}
-			else     // Mur horizontal
-			{
-				largeur  = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
-				setLarg  = w::setWidth;
-				setEpais = w::setDepth;
-				trX      = l.getX1() + largeur / 2.0;
-				trZ      = l.getY1() + l.getEpaisseur() / 2.0 - delta;
-			}
+				Box w = new Box();
 
-			w.setHeight(hauteur);
-			setEpais.accept(l.getEpaisseur());
-			setLarg.accept(largeur);
-			w.setTranslateX(trX);
-			w.setTranslateZ(trZ);
+				Consumer <Float> setEpais;
+				Consumer <Float> setLarg;
 
-			w.setMaterial(mat);
-			walls.getChildren().add(w);
+				float  largeur;
+				double trX;
+				double trZ;
+				if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
+				{
+					largeur  = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
+					setLarg  = w::setDepth;
+					setEpais = w::setWidth;
+					trX      = l.getX1() + l.getEpaisseur() / 2.0 - delta;
+					trZ      = l.getY1() + largeur / 2.0;
+				}
+				else // Mur horizontal
+				{
+					largeur  = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
+					setLarg  = w::setWidth;
+					setEpais = w::setDepth;
+					trX      = l.getX1() + largeur / 2.0;
+					trZ      = l.getY1() + l.getEpaisseur() / 2.0 - delta;
+				}
+
+				w.setHeight(hauteur);
+				setEpais.accept(l.getEpaisseur());
+				setLarg.accept(largeur);
+				w.setTranslateX(trX);
+				w.setTranslateZ(trZ);
+				w.setTranslateY(-i * hauteur);
+
+				w.setMaterial(mat);
+				walls.getChildren().add(w);
+			}
 		}
 		return (walls);
 	}
