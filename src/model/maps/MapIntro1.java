@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import src.model.board.Case;
 import src.model.board.EndCase;
+import src.model.board.JumpCase;
 import src.model.board.LineWall;
+import src.model.board.MessageCase;
 import src.model.board.StartCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
@@ -33,6 +35,9 @@ public class MapIntro1 extends Algo
 
 		this.cmfactory[0].addSpecialCase(new StartCase(3, 2));
 		this.cmfactory[0].addSpecialCase(new EndCase(3, 13));
+		this.cmfactory[0].addSpecialCase(new MessageCase(3, 5, "Hello"));
+		this.cmfactory[0].addSpecialCase(new JumpCase(2, 3, 5));
+
 		this.cmfactory[0].normalize();
 	}
 

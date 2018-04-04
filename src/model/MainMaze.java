@@ -121,6 +121,9 @@ public class MainMaze
 						p.updateTime(((TimeCase)c).getTimeMillis());
 					}
 					break;
+
+				case JUMP:
+					this.p.setVelocityZ(0.25f);
 				}
 			}
 		}

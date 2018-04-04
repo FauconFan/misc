@@ -133,6 +133,7 @@ public class Game extends ScenePlus
 		//Greetings label
 		Label msg = new Label("Welcome to the maze\n Press ENTER to close the message\nor H to see HELP");
 		msg.setFont(defaultFont);
+		msg.setTextFill(Color.WHITE);
 		msg.setTextAlignment(TextAlignment.CENTER);
 		msg.setLayoutY(screenOffset);
 		root2D.getChildren().add(msg);
