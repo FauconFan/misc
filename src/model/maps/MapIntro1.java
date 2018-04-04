@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 import src.model.board.Case;
 import src.model.board.EndCase;
+import src.model.board.JumpCase;
 import src.model.board.LineWall;
+import src.model.board.MessageCase;
 import src.model.board.StartCase;
 import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeEgg;
 import src.model.gen.ContentMazeFactory;
-import src.model.gen.ContentMazeFactory.GenFactoryException;
+import src.model.gen.MainMazeFactory;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 
@@ -19,21 +21,26 @@ public class MapIntro1 extends Algo
 	private static int size_x = 7;
 	private static int size_y = 15;
 
-	public MapIntro1() throws GenFactoryException
+	public MapIntro1()
 	{
 		super();
-		this.cmfactory    = new ContentMazeFactory[1];
-		this.cmfactory[0] = new ContentMazeFactory();
+		ContentMazeFactory cmf = new ContentMazeFactory();
+
+		this.mmfactory = new MainMazeFactory(1);
+		this.mmfactory.setContentMazeFactory(cmf, 0);
 
 		RectMaze rm1 = buildOneSquareLabyrinthe();
 
 		RectMazeShift rms1 = new RectMazeShift(rm1, 0, 0);
 
-		this.cmfactory[0].addContentMazeShift(rms1);
+		cmf.addContentMazeShift(rms1);
 
-		this.cmfactory[0].addSpecialCase(new StartCase(3, 2));
-		this.cmfactory[0].addSpecialCase(new EndCase(3, 13));
-		this.cmfactory[0].normalize();
+		cmf.addSpecialCase(new StartCase(3, 2));
+		cmf.addSpecialCase(new EndCase(3, 13));
+		cmf.addSpecialCase(new MessageCase(3, 5, "Hello"));
+		cmf.addSpecialCase(new JumpCase(2, 3, 5));
+
+		cmf.normalize();
 	}
 
 	private RectMaze buildOneSquareLabyrinthe()

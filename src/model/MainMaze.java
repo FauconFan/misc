@@ -8,7 +8,7 @@ import src.model.board.SpeedCase;
 import src.model.board.TeleportCase;
 import src.model.board.TimeCase;
 import src.model.gen.Algo;
-import src.model.gen.ContentMazeFactory.GenFactoryException;
+import src.model.gen.MainMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 import src.model.parser.Parser;
@@ -143,6 +143,9 @@ public class MainMaze
 						p.updateTime(((TimeCase)c).getTimeMillis());
 					}
 					break;
+
+				case JUMP:
+					this.p.setVelocityZ(0.25f);
 				}
 			}
 		}

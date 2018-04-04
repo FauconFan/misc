@@ -22,6 +22,8 @@ public final class CaseColor
 		colorCases.put(Case.TypeCase.TELEPORT, new Tuple <>(Color.PURPLE, "PURPLE"));
 		colorCases.put(Case.TypeCase.SPEED, new Tuple <>(Color.RED, "RED"));
 		colorCases.put(Case.TypeCase.TIME, new Tuple <>(Color.YELLOW, "YELLOW"));
+		colorCases.put(Case.TypeCase.MESSAGE, new Tuple <>(Color.TRANSPARENT, "NONE"));
+		colorCases.put(Case.TypeCase.JUMP, new Tuple <>(Color.BLUE, "BLUE"));
 	}
 
 	public static String prettify()

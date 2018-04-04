@@ -101,11 +101,11 @@ public class Menus extends ScenePlus
 
 			final Button buttonPrevious = addSmallButton("Previous");
 
-			final Slider slidery = new Slider(0, 100, 20);
-			final Slider sliderx = new Slider(0, 100, 20);
-
-			final Slider[] sliders = { slidery, sliderx };
-			final String[] names   = { "Y axis", "X axis" };
+			final Slider   slidery = new Slider(0, 100, 20);
+			final Slider   sliderx = new Slider(0, 100, 20);
+			final Slider   sliderZ = new Slider(0, 5, 1);
+			final Slider[] sliders = { slidery, sliderx, sliderZ };
+			final String[] names   = { "Y axis", "X axis", "Stage" };
 			for (int i = 0; i < sliders.length; i++)
 			{
 				Label label = new Label(names[i]);
@@ -129,13 +129,12 @@ public class Menus extends ScenePlus
 				Algo al = null;
 				try
 				{
-					al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue());
-				    //al = MapIntroBuilder.getMapIntro(6);
+					al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue(), (int)sliders[2].getValue());
 				}
 				catch (Exception e)
 				{
-					setMsg(e.getMessage());
-					putMsg();
+					e.printStackTrace();
+					System.exit(1);
 				}
 				v.con.createMaze(al);
 				v.showGame();

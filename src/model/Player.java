@@ -308,6 +308,11 @@ public class Player
 		this.posZ += dz;
 	}
 
+	public void setVelocityZ(float f)
+	{
+		this.velocityZ = f;
+	}
+
 	public String toString()
 	{
 		return ("posX = " + posX + " posY = " + posY + " other things");
