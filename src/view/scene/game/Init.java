@@ -44,7 +44,7 @@ import src.view.View;
 public class Init
 {
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
-	public static Group makeSpecialCases(int hauteur, Scale sc, MainMaze maze)
+	public static Group makeSpecialCases(Scale sc, MainMaze maze)
 	{
 		Group spc = new Group();
 
@@ -55,7 +55,7 @@ public class Init
 
 			res.setTranslateX(ec.getX() + tailleCase / 2.0);
 			res.setTranslateZ(ec.getY() + tailleCase / 2.0);
-			res.setTranslateY(hauteur / 2.0 - 0.5);
+			res.setTranslateY(0.5);
 			res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
 			spc.getChildren().add(res);
 		}
@@ -67,7 +67,7 @@ public class Init
 	 * Dessine le sol
 	 * @return Un groupe contenant le sol
 	 */
-	public static Group makeFloors(int hauteur, Scale sc, MainMaze maze)
+	public static Group makeFloors(Scale sc, MainMaze maze)
 	{
 		final Group floors = new Group();
 
@@ -83,7 +83,7 @@ public class Init
 				f.setTranslateX(md.x1 + w / 2.0);
 				f.setTranslateZ(md.y1 + h / 2.0);
 				f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
-				f.setTranslateY(hauteur / 2.0 - i * hauteur);
+				f.setTranslateY(0.5 - i);
 				floors.getChildren().add(f);
 			}
 		}
@@ -94,7 +94,7 @@ public class Init
 	 * Dessine les murs du Maze
 	 * @return Le groupe contenant les murs
 	 */
-	public static Group makeWalls(int hauteur, Scale sc, MainMaze maze)
+	public static Group makeWalls(Scale sc, MainMaze maze)
 	{
 		Material mat;
 
@@ -146,12 +146,12 @@ public class Init
 					trZ      = l.getY1() + l.getEpaisseur() / 2.0 - delta;
 				}
 
-				w.setHeight(hauteur);
+				w.setHeight(1);
 				setEpais.accept(l.getEpaisseur());
 				setLarg.accept(largeur);
 				w.setTranslateX(trX);
 				w.setTranslateZ(trZ);
-				w.setTranslateY(-i * hauteur);
+				w.setTranslateY(-i);
 
 				w.setMaterial(mat);
 				walls.getChildren().add(w);
