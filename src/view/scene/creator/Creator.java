@@ -16,16 +16,20 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -33,6 +37,10 @@ import javafx.scene.Scene;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Screen;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import src.model.*;
 import src.model.board.*;
@@ -49,9 +57,10 @@ public class Creator extends ScenePlus
 	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
 
 	private Circle startedDraw = null;
+	private Tile currentTile   = null;
 	private final VBox leftPaneGr;
 
-	private final int leftPaneGrSize = 150;
+	private final int leftPaneGrSize = 180;
 
 	private final Scale sc     = new Scale(100, 100);
 	private final Translate tr = new Translate(10, 10); // Décalage par défaut du dessin
@@ -59,6 +68,9 @@ public class Creator extends ScenePlus
 	private final Pane walls = new Pane();              //MUST contain LinePlus
 	private final Pane cases = new Pane();              //MUST contain RectanglePlus
 	private final Pane dots  = new Pane();
+
+	private final GridPane gridPane = new GridPane();     // MUST contain Tile
+
 
 	public Creator(View v, int width, int height)
 	{
@@ -162,19 +174,45 @@ public class Creator extends ScenePlus
 			}
 		}
 
+		//Left Panel
 		VBox panel = new VBox();
 		panel.setMinSize(leftPaneGrSize, 0);
 		panel.setAlignment(Pos.TOP_CENTER);
 		panel.setPadding(new Insets(20, 0, 20, 0));
 
-		Button button = new Button("Finish");
+		//Textures
+		gridPane.setAlignment(Pos.TOP_CENTER);
+		gridPane.setPadding(new Insets(20, 0, 20, 0));
+		final int gap = 5;
+		final int numOfTilesPerLine = 2;
+		final int tileLength        = leftPaneGrSize / numOfTilesPerLine - gap * numOfTilesPerLine;
+		gridPane.setVgap(gap);
+		gridPane.setHgap(gap);
+		File[] textures = getTextures();
+		for (int i = 0; i < textures.length; i++)
+		{
+			try{
+				Tile tile = new Tile(textures[i], tileLength);
+				((ColorAdjust)tile.getEffect()).setBrightness(-0.6);
+				GridPane.setConstraints(tile, i % numOfTilesPerLine, i / numOfTilesPerLine);
+				gridPane.getChildren().add(tile);
+				tile.setOnMouseClicked((ev)->{ setCurrentTile(tile); });
+			}
+			catch (Exception e) {}
+		}
+		if (textures.length != 0)
+		{
+			currentTile = (Tile)gridPane.getChildren().get(0);
+			((ColorAdjust)currentTile.getEffect()).setBrightness(0);
+		}
 
+		//Placeholder for case
 		leftPaneGr = new VBox();
 		leftPaneGr.setAlignment(Pos.TOP_CENTER);
 		leftPaneGr.setPadding(new Insets(20, 0, 20, 0));
 
-		panel.getChildren().addAll(button, leftPaneGr);
-
+		//Finish
+		Button button = new Button("Finish");
 		button.setOnAction((ev)->{
 			ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
 			for (Node l: walls.getChildren())
@@ -196,13 +234,15 @@ public class Creator extends ScenePlus
 			CreatorHelper ch = new CreatorHelper(1);
 			ch.append(0, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
 			try{
-				v.con.setMaze(ch.buildMainMaze(""));
+				v.con.setMaze(ch.buildMainMaze("", currentTile.filename));
 				v.showGame();
 			}
 			catch (Exception e) {
 				System.out.println(e);
 			}
 		});
+
+		panel.getChildren().addAll(button, gridPane, leftPaneGr);
 
 		ScrollPane sp = new ScrollPane(root);
 		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
@@ -249,6 +289,14 @@ public class Creator extends ScenePlus
 				updateLeftPane(rect);
 			});
 			cases.getChildren().add(rect);
+		}
+		for (Node n: gridPane.getChildren())
+		{
+			Tile t = (Tile)n;
+			if (t.filename.equals(maze.getContentMazeCurrentLevel().getTexturePath()))
+			{
+				setCurrentTile(t);
+			}
 		}
 	}
 
@@ -313,5 +361,42 @@ public class Creator extends ScenePlus
 	private boolean isIn(double totest, double min, double max)
 	{
 		return (totest >= min && totest <= max);
+	}
+
+	private File[] getTextures()
+	{
+		File assets = new File("assets");
+
+		return (assets.listFiles((file, name)->{
+			int i = name.lastIndexOf('.');
+			if (i > 0)
+			{
+				return name.substring(i + 1).equals("jpg");
+			}
+			return false;
+		}));
+	}
+
+	//For textures
+	private class Tile extends Rectangle
+	{
+		private final String filename;
+		public Tile(File texture, int tileLength) throws FileNotFoundException
+		{
+			super(tileLength, tileLength);
+			filename = texture.getPath();
+			setEffect(new ColorAdjust());
+			setFill(new ImagePattern(new Image(new FileInputStream(texture), tileLength, tileLength, true, false)));
+		}
+	}
+
+	private void setCurrentTile(Tile tile)
+	{
+		if (currentTile != null)
+		{
+			((ColorAdjust)currentTile.getEffect()).setBrightness(-0.6);
+		}
+		currentTile = tile;
+		((ColorAdjust)currentTile.getEffect()).setBrightness(0);
 	}
 }

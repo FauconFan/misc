@@ -24,7 +24,7 @@ public class CreatorHelper
 		cmf[level_actu].addContentMazeShift(new RectMazeShift(new RectMaze(new ContentMazeEgg(cases, lw), Math.abs(maxX - minX), Math.abs(maxY - minY)), 0, 0));
 	}
 
-	public MainMaze buildMainMaze(String name) throws GenFactoryException
+	public MainMaze buildMainMaze(String name, String texturePath) throws GenFactoryException
 	{
 		ContentMaze[] cm;
 
@@ -36,6 +36,7 @@ public class CreatorHelper
 		for (int i = 0; i < this.cmf.length; i++)
 		{
 			cm[i] = this.cmf[i].getContentMaze();
+			cm[i].setTexturePath(texturePath);
 		}
 		return (new MainMaze(cm));
 	}
