@@ -142,7 +142,7 @@ public class Menus extends ScenePlus
 
 			final Button buttonCreator = addSmallButton("Creator");
 			buttonCreator.setOnAction(event->{
-				v.changeScene(new Creator(v, (int)sliders[0].getValue(), (int)sliders[1].getValue()));
+				v.changeScene(new Creator(v, (int)sliders[0].getValue(), (int)sliders[1].getValue(), (int)sliders[2].getValue()));
 			});
 
 			putMsg();
