@@ -122,43 +122,46 @@ public class Init
 		ContentMaze[] cms   = maze.getContentMaze();
 		for (int i = 0; i < cms.length; i++)
 		{
-			final LineWall[] lineWalls = LineWall.breakWallsIntoSimpleOnes(cms[i].getLineWalls());
-			for (LineWall l: lineWalls)
+			for (LineWall l: cms[i].getLineWalls())
 			{
-				Box w = new Box();
-
-				Consumer <Float> setEpais;
-				Consumer <Float> setLarg;
-
-				float  largeur;
-				double trX;
-				double trZ;
-				if (!l.isHorizontal())                                            // Mur "vertical" dans le plan
+				LineWall[] broken = LineWall.breakWallsIntoSimpleOnes(l);
+				for (int j = 0; j < broken.length; j++)
 				{
-					largeur  = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
-					setLarg  = w::setDepth;
-					setEpais = w::setWidth;
-					trX      = l.getX1() + l.getEpaisseur() / 2.0 - delta;
-					trZ      = l.getY1() + largeur / 2.0;
-				}
-				else // Mur horizontal
-				{
-					largeur  = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
-					setLarg  = w::setWidth;
-					setEpais = w::setDepth;
-					trX      = l.getX1() + largeur / 2.0;
-					trZ      = l.getY1() + l.getEpaisseur() / 2.0 - delta;
-				}
+					Box w = new Box();
 
-				w.setHeight(1);
-				setEpais.accept(l.getEpaisseur());
-				setLarg.accept(largeur);
-				w.setTranslateX(trX);
-				w.setTranslateZ(trZ);
-				w.setTranslateY(-i - 0.5);
+					Consumer <Float> setEpais;
+					Consumer <Float> setLarg;
 
-				w.setMaterial(mat);
-				walls.getChildren().add(w);
+					float  largeur;
+					double trX;
+					double trZ;
+					if (!l.isHorizontal())                                        // Mur "vertical" dans le plan
+					{
+						largeur  = broken[j].getY2() - broken[j].getY1();
+						setLarg  = w::setDepth;
+						setEpais = w::setWidth;
+						trX      = broken[j].getX1();
+						trZ      = broken[j].getY1() + largeur / 2.0;
+					}
+					else // Mur horizontal
+					{
+						largeur  = broken[j].getX2() - broken[j].getX1();
+						setLarg  = w::setWidth;
+						setEpais = w::setDepth;
+						trX      = broken[j].getX1() + largeur / 2.0;
+						trZ      = broken[j].getY1();
+					}
+
+					w.setHeight(1);
+					setEpais.accept(broken[j].getEpaisseur());
+					setLarg.accept(largeur);
+					w.setTranslateX(trX);
+					w.setTranslateZ(trZ);
+					w.setTranslateY(-i - 0.5);
+
+					w.setMaterial(mat);
+					walls.getChildren().add(w);
+				}
 			}
 		}
 		return (walls);
