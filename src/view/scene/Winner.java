@@ -11,22 +11,26 @@ import javafx.scene.text.Text;
 
 public class Winner extends ScenePlus
 {
-	public Winner(View v)
+	public Winner(View v, long sec)
 	{
 		super(new Group(), v);
-		((Group)getRoot()).getChildren().add(new MenuWin());
+		((Group)getRoot()).getChildren().add(new MenuWin(sec));
 		getStylesheets().add("menuStyle.css");
 	}
 
 	public class MenuWin extends Menu
 	{
-		public MenuWin()
+		public MenuWin(long sec)
 		{
 			super();
 
 			Text l = new Text("YOU WIN");
 			getChildren().add(l);
 			l.setId("title");
+
+			Text se = new Text("You solve the maze in " + sec + " secondes");
+			getChildren().add(se);
+			se.setId("title");
 
 			Button buttonNew = addBigButton("Main menu");
 

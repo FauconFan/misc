@@ -151,6 +151,7 @@ public class Game extends ScenePlus
 		// Add the Clock
 		StackPane.setAlignment(clock, Pos.BOTTOM_LEFT);
 		clock.setFont(defaultFont);
+		clock.setTextFill(Color.WHITE);
 		layout.getChildren().add(clock);
 
 		//Key controller
@@ -303,7 +304,7 @@ public class Game extends ScenePlus
 		if (maze.getPlayer().getHasWin())
 		{
 			timer.stop();
-			v.changeScene(new Winner(v));
+			v.changeScene(new Winner(v, maze.getPlayer().getTime() / 1000000000));
 		}
 	}
 
@@ -325,7 +326,7 @@ public class Game extends ScenePlus
 		{
 			maze.updatePlayer(l - oldTime);
 			updatePlayer();
-			clock.setText(Long.toString(maze.getPlayer().getTime()));
+			clock.setText(Long.toString(maze.getPlayer().getTime() / 100000000) + " s.");
 			oldTime = l;
 		}
 	}
