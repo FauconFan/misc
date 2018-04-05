@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
@@ -239,7 +240,8 @@ public class Creator extends ScenePlus
 				v.showGame();
 			}
 			catch (Exception e) {
-				System.out.println(e);
+				Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+				alert.showAndWait();
 			}
 		});
 
