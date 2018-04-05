@@ -116,7 +116,11 @@ public class Menus extends ScenePlus
 				getChildren().add(sliders[i]);
 				sliders[i].setShowTickMarks(true);
 				sliders[i].setShowTickLabels(true);
-				sliders[i].setMajorTickUnit(10);
+				sliders[i].setMajorTickUnit((i != 2) ? 10 : 1);
+				if (i == 2)
+				{
+					sliders[i].setMinorTickCount(0);
+				}
 			}
 			final Button buttonCreate = addSmallButton("Create randomly");
 
