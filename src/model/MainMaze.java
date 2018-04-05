@@ -115,7 +115,7 @@ public class MainMaze
 	public void actionCase()
 	{
 		// TODO to change actually
-		for (Case c : cm[0].getSpecialCases())
+		for (Case c : cm[current_level].getSpecialCases())
 		{
 			if (this.p.playerInCase(c))
 			{
