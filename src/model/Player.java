@@ -226,13 +226,13 @@ public class Player
 
 			case goUp: if (ghostMode)
 				{
-					posZ += 1f;
+					posZ += 0.05f;
 				}
 				break;
 
 			case goDown: if (ghostMode)
 				{
-					posZ -= 1f;
+					posZ -= 0.05f;
 				}
 				break;
 

@@ -36,7 +36,7 @@ public class CollisionsZManager
 
 	public void updateMove(float dz)
 	{
-		if (this.zMove > 0 && cms[1] != null && this.p.getPosZ() + dz > highLevel + 1 && this.isFloor(cms[1]))
+		if (this.zMove > 0 && cms[1] != null&& this.p.getPosZ() + dz > highLevel + 1 && this.isFloor(cms[1]))
 		{
 			this.zMove = highLevel + 1 - this.p.getPosZ();
 		}

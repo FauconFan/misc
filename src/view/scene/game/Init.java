@@ -48,16 +48,20 @@ public class Init
 	{
 		Group spc = new Group();
 
-		for (Case ec: maze.getContentMazeCurrentLevel().getSpecialCases())
+		ContentMaze[] cms = maze.getContentMaze();
+		for (int i = 0; i < cms.length; i++)
 		{
-			final float tailleCase = 1f;
-			final Box   res        = new Box(tailleCase, 0.01f, tailleCase);
+			for (Case ec: cms[i].getSpecialCases())
+			{
+				final float tailleCase = 1f;
+				final Box   res        = new Box(tailleCase, 0.025f, tailleCase);
 
-			res.setTranslateX(ec.getX() + tailleCase / 2.0);
-			res.setTranslateZ(ec.getY() + tailleCase / 2.0);
-			res.setTranslateY(0.5);
-			res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
-			spc.getChildren().add(res);
+				res.setTranslateX(ec.getX() + tailleCase / 2.0);
+				res.setTranslateZ(ec.getY() + tailleCase / 2.0);
+				res.setTranslateY(-i - 0.025);
+				res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
+				spc.getChildren().add(res);
+			}
 		}
 		spc.getTransforms().add(sc);
 		return (spc);
@@ -79,11 +83,11 @@ public class Init
 			{
 				final int w = md.x2 - md.x1;
 				final int h = md.y2 - md.y1;
-				Box       f = new Box(w, 0.5, h);
+				Box       f = new Box(w, 0.05, h);
 				f.setTranslateX(md.x1 + w / 2.0);
 				f.setTranslateZ(md.y1 + h / 2.0);
 				f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
-				f.setTranslateY(0.5 - i);
+				f.setTranslateY(-i);
 				floors.getChildren().add(f);
 			}
 		}
@@ -151,7 +155,7 @@ public class Init
 				setLarg.accept(largeur);
 				w.setTranslateX(trX);
 				w.setTranslateZ(trZ);
-				w.setTranslateY(-i);
+				w.setTranslateY(-i - 0.5);
 
 				w.setMaterial(mat);
 				walls.getChildren().add(w);

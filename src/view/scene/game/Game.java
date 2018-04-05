@@ -76,7 +76,7 @@ public class Game extends ScenePlus
 	private double mousePosY = (double)(screenHeight / 2);
 
 	// Scale pour les murs
-	private final Scale sc = new Scale(30, 20, 30);
+	private final Scale sc = new Scale(30, 25, 30);
 
 	private final StackPane layout;
 	private final GroupCameraPlus groupCameraPlus3D;
