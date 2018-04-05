@@ -118,7 +118,7 @@ public class Init
 
 		// On scale les murs
 		walls.getTransforms().add(sc);
-		final float   delta = 0.01f;
+		final float   delta = 0.001f;
 		ContentMaze[] cms   = maze.getContentMaze();
 		for (int i = 0; i < cms.length; i++)
 		{
@@ -132,10 +132,12 @@ public class Init
 					Consumer <Float> setEpais;
 					Consumer <Float> setLarg;
 
-					float  largeur;
-					double trX;
-					double trZ;
-					if (!l.isHorizontal())                                        // Mur "vertical" dans le plan
+					float       largeur;
+					double      trX;
+					double      trZ;
+					final float isStart = (j == 0) ? broken[j].getEpaisseur() / 2.0f - delta : 0;
+					final float isEnd   = (j == broken.length - 1) ? broken[j].getEpaisseur() / 2.0f - delta : 0;
+					if (!broken[j].isHorizontal())                                        // Mur "vertical" dans le plan
 					{
 						largeur  = broken[j].getY2() - broken[j].getY1();
 						setLarg  = w::setDepth;
@@ -154,7 +156,7 @@ public class Init
 
 					w.setHeight(1);
 					setEpais.accept(broken[j].getEpaisseur());
-					setLarg.accept(largeur);
+					setLarg.accept(largeur + isStart + isEnd);
 					w.setTranslateX(trX);
 					w.setTranslateZ(trZ);
 					w.setTranslateY(-i - 0.5);

@@ -245,7 +245,7 @@ public class Player
 
 			case jump:  if (this.zCol.isOnFloor())
 				{
-					this.velocityZ = Math.max(0.015f, this.velocityXY * 7f / 20.0f) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
+					this.velocityZ = 1.5f * Math.max(0.015f, this.velocityXY * 7f / 20.0f) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
 				}
 				break;
 			}
