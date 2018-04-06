@@ -29,6 +29,13 @@ public class CreatorHelper
 
 	public MainMaze buildMainMaze(String name, String texturePath) throws GenFactoryException
 	{
-		return (new MainMaze(this.mmf.buildContentMaze()));
+		ContentMaze[] content;
+
+		content = this.mmf.buildContentMaze();
+		for (int i = 0; i < content.length; i++)
+		{
+			content[i].setTexturePath(texturePath);
+		}
+		return (new MainMaze(content));
 	}
 }
