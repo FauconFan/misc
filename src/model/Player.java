@@ -259,21 +259,22 @@ public class Player
 			}
 		}
 
-		int            currentLevel = m.getCurrentLevel();
-		ContentMaze [] cms          = { m.getContentMazeCurrentLevel(), m.getContentMaze(currentLevel + 1) };
+		int currentLevel = m.getCurrentLevel();
+
+		ContentMaze [] cms = { m.getContentMazeCurrentLevel(), m.getContentMaze(currentLevel + 1) };
 
 		this.zCol.updateFloor(cms, currentLevel);
 		this.xyCol.updateWalls(cms[0].getLineWalls());
 
 		this.reallyMove();
 
-		if (!this.zCol.isOnFloor() && !ghostMode)
+		if (!this.isOnFloor() && !this.ghostMode)
 		{
 			this.velocityZ += (PESANTEUR * time);
 		}
-		else if (nbDirPushed != 0)
+		if (nbDirPushed != 0)
 		{
-			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY * time);
+			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY * time / ((!this.isOnFloor()) ? 2.0f : 1.0f));
 			this.lastDepAngle = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushed);
 		}
 		else
@@ -296,7 +297,7 @@ public class Player
 
 		FloatVector d = new FloatVector(dx, dy);
 
-		if (ghostMode)
+		if (this.ghostMode)
 		{
 			this.applyMove(d, 0);
 		}
@@ -310,6 +311,11 @@ public class Player
 
 			this.applyMove(this.xyCol.getMove(), this.zCol.getMove());
 		}
+	}
+
+	public boolean isOnFloor()
+	{
+		return (this.zCol.isOnFloor());
 	}
 
 	/**
