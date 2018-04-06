@@ -30,7 +30,7 @@ public class ParserTest
 		mm.displayMaze(true);
 		try
 		{
-			File save = new File(".test.gson.maze");
+			File save = new File(".test.maze");
 			Parser.saveMaze(".test", Parser.SavesFormat.gson, mm);
 			mm = Parser.loadMaze(save);
 
