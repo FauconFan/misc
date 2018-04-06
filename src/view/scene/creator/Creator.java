@@ -206,7 +206,7 @@ public class Creator extends ScenePlus
 				v.showGame();
 			}
 			catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
 				alert.showAndWait();
 			}
