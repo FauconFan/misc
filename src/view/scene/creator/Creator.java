@@ -11,6 +11,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
@@ -211,6 +212,13 @@ public class Creator extends ScenePlus
 			((ColorAdjust)currentTile.getEffect()).setBrightness(0);
 		}
 
+		//Level
+		ChoiceBox choiceBox = new ChoiceBox();
+		for (int i = 0; i < stages.size(); i++)
+		{
+			choiceBox.getItems().add("Level " + i);
+		}
+
 		//Placeholder for case
 		leftPaneGr = new VBox();
 		leftPaneGr.setAlignment(Pos.TOP_CENTER);
@@ -250,7 +258,7 @@ public class Creator extends ScenePlus
 			}
 		});
 
-		panel.getChildren().addAll(button, gridPane, leftPaneGr);
+		panel.getChildren().addAll(button, choiceBox, gridPane, leftPaneGr);
 
 		ScrollPane sp = new ScrollPane(root);
 		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
