@@ -31,10 +31,15 @@ import src.view.View;
 
 import javafx.scene.text.Text;
 
+import javafx.stage.Screen;
+
 public class Menus extends ScenePlus
 {
 	private Parent view;
 	private Parent prec;
+
+	private static int screenWidth  = (int)Screen.getPrimary().getVisualBounds().getMaxX();
+	private static int screenHeight = (int)Screen.getPrimary().getVisualBounds().getMaxY();
 
 	public Menus(View v)
 	{
@@ -195,6 +200,47 @@ public class Menus extends ScenePlus
 					changeView(view);
 				});
 			}
+		}
+	}
+
+	public class MenuCampaign2 extends Menu
+	{
+		public MenuCampaign2()
+		{
+			super();
+			addLevelButtons();
+			final Button buttonPrevious = addBigButton("Previous");
+			buttonPrevious.setOnAction(event->{
+				view = new MenuStart();
+				changeView(view);
+			});
+		}
+
+		public void addLevelButtons()
+		{
+			File[] list = getLevels();
+			for (File f : list)
+			{
+				String nom = f.getPath();
+				Button b   = addSmallButton(nom);
+				b.setOnAction(event->{
+					v.con.loadMaze(f);
+				});
+			}
+		}
+
+		public File[] getLevels()
+		{
+			File dossier = new File("model/maps/");
+
+			return (dossier.listFiles((file, name)->{
+				int i = name.lastIndexOf('.');
+				if (i > 0)
+				{
+					return name.substring(i + 1).equals("maze");
+				}
+				return false;
+			}));
 		}
 	}
 
