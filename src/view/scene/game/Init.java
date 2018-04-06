@@ -41,6 +41,12 @@ import src.view.scene.ScenePlus;
 import src.view.scene.Winner;
 import src.view.View;
 
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
+
+
 public class Init
 {
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
@@ -53,12 +59,27 @@ public class Init
 			final float tailleCase = 1f;
 			final Box   res        = new Box(tailleCase, 0.01f, tailleCase);
 
-			res.setTranslateX(ec.getX() + tailleCase / 2.0);
-			res.setTranslateZ(ec.getY() + tailleCase / 2.0);
-			res.setTranslateY(hauteur / 2.0 - 0.5);
-			res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
-			spc.getChildren().add(res);
+			switch (ec.type)
+			{
+			case MESSAGE:
+				Text message = new Text("Welcome");
+				message.setTranslateX(ec.getX());
+				message.setTranslateZ(ec.getY());
+				//message.setTextFill(Color.web("#0076a3"));
+				message.setFont(new Font("Arial", 8));
+				spc.getChildren().add(message);
+				break;
+
+			default:
+				res.setTranslateZ(ec.getY() + tailleCase / 2.0);
+				res.setTranslateY(hauteur / 2.0 - 0.5);
+				res.setTranslateX(ec.getX() + tailleCase / 2.0);
+				res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
+				spc.getChildren().add(res);
+				break;
+			}
 		}
+
 		spc.getTransforms().add(sc);
 		return (spc);
 	}
