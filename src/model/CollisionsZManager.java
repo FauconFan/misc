@@ -36,11 +36,12 @@ public class CollisionsZManager
 
 	public void updateMove(float dz)
 	{
-		if (dz > 0 && cms[1] != null&& this.p.getPosZ() + this.p.getHitBoxZ() + dz > highLevel + 1 && this.isFloor(cms[1]))
-		{
-			this.zMove = (highLevel + 1) - this.p.getHitBoxZ() - this.p.getPosZ();
-		}
-		else if (dz < 0 && this.p.getPosZ() - this.p.getHitBoxZ() >= highLevel && this.isFloor(cms[0]))
+		/*
+		 * if (dz > 0 && cms[1] != null&& this.p.getPosZ() + this.p.getHitBoxZ() + dz > highLevel + 1 && this.isFloor(cms[1]))
+		 * {
+		 *  this.zMove = (highLevel + 1) - this.p.getHitBoxZ() - this.p.getPosZ();
+		 * }
+		 * else*/if (dz < 0 && this.p.getPosZ() - this.p.getHitBoxZ() >= highLevel && this.isFloor(cms[0]))
 		{
 			this.zMove = (this.p.getPosZ() - this.p.getHitBoxZ() + dz < highLevel) ? highLevel - (this.p.getPosZ() - this.p.getHitBoxZ()) : dz;
 		}

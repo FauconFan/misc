@@ -85,6 +85,7 @@ public class Game extends ScenePlus
 	public final Timer timer;
 
 	private final Label clock = new Label("");
+	private final Label level = new Label("");
 
 	private final Font defaultFont = Font.font("Verdana", 30);
 
@@ -153,6 +154,12 @@ public class Game extends ScenePlus
 		clock.setFont(defaultFont);
 		clock.setTextFill(Color.WHITE);
 		layout.getChildren().add(clock);
+
+		//Add the CurrentLevel
+		StackPane.setAlignment(level, Pos.BOTTOM_CENTER);
+		level.setFont(defaultFont);
+		level.setTextFill(Color.WHITE);
+		layout.getChildren().add(level);
 
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
@@ -326,7 +333,8 @@ public class Game extends ScenePlus
 		{
 			maze.updatePlayer(l - oldTime);
 			updatePlayer();
-			clock.setText(Long.toString(maze.getPlayer().getTime() / 100000000) + " s.");
+			clock.setText(Long.toString(maze.getPlayer().getTime() / 1000000000) + " s.");
+			level.setText("Current level: " + maze.getCurrentLevel());
 			oldTime = l;
 		}
 	}
