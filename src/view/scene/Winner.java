@@ -28,7 +28,7 @@ public class Winner extends ScenePlus
 			getChildren().add(l);
 			l.setId("title");
 
-			Text se = new Text("You solve the maze in " + sec + " secondes");
+			Text se = new Text("You solved the maze in " + sec + " seconds");
 			getChildren().add(se);
 			se.setId("title");
 
