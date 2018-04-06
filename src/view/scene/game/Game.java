@@ -75,11 +75,8 @@ public class Game extends ScenePlus
 	private double mousePosX = (double)(screenWidth / 2);
 	private double mousePosY = (double)(screenHeight / 2);
 
-	//Hauteur des murs
-	private final int hauteur = 20;
-
 	// Scale pour les murs
-	private final Scale sc = new Scale(30, 1, 30);
+	private final Scale sc = new Scale(30, 25, 30);
 
 	private final StackPane layout;
 	private final GroupCameraPlus groupCameraPlus3D;
@@ -115,11 +112,11 @@ public class Game extends ScenePlus
 		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
 
 		// Ajoute le sol
-		root3D.getChildren().add(Init.makeSpecialCases(hauteur, sc, this.maze));
-		root3D.getChildren().add(Init.makeFloors(hauteur, sc, this.maze));
+		root3D.getChildren().add(Init.makeSpecialCases(sc, this.maze));
+		root3D.getChildren().add(Init.makeFloors(sc, this.maze));
 
 		// Ajoute les murs
-		Group walls = Init.makeWalls(hauteur, sc, this.maze);
+		Group walls = Init.makeWalls(sc, this.maze);
 		root3D.getChildren().add(walls);
 		// Ajoute la caméra
 		root3D.getChildren().add(groupCameraPlus3D);
@@ -154,6 +151,7 @@ public class Game extends ScenePlus
 		// Add the Clock
 		StackPane.setAlignment(clock, Pos.BOTTOM_LEFT);
 		clock.setFont(defaultFont);
+		clock.setTextFill(Color.WHITE);
 		layout.getChildren().add(clock);
 
 		//Key controller
@@ -306,7 +304,7 @@ public class Game extends ScenePlus
 		if (maze.getPlayer().getHasWin())
 		{
 			timer.stop();
-			v.changeScene(new Winner(v));
+			v.changeScene(new Winner(v, maze.getPlayer().getTime() / 1000000000));
 		}
 	}
 
@@ -328,7 +326,7 @@ public class Game extends ScenePlus
 		{
 			maze.updatePlayer(l - oldTime);
 			updatePlayer();
-			clock.setText(Long.toString(maze.getPlayer().getTime()));
+			clock.setText(Long.toString(maze.getPlayer().getTime() / 100000000) + " s.");
 			oldTime = l;
 		}
 	}

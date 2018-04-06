@@ -50,33 +50,37 @@ import javafx.scene.transform.Scale;
 public class Init
 {
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
-	public static Group makeSpecialCases(int hauteur, Scale sc, MainMaze maze)
+	public static Group makeSpecialCases(Scale sc, MainMaze maze)
 	{
 		Group spc = new Group();
 
-		for (Case ec: maze.getContentMazeCurrentLevel().getSpecialCases())
+		ContentMaze[] cms = maze.getContentMaze();
+		for (int i = 0; i < cms.length; i++)
 		{
-			final float tailleCase = 1f;
-			final Box   res        = new Box(tailleCase, 0.01f, tailleCase);
-
-			switch (ec.type)
+			for (Case ec: cms[i].getSpecialCases())
 			{
-			case MESSAGE:
-				Text message = new Text("Welcome");
-				message.setTranslateX(ec.getX());
-				message.setTranslateZ(ec.getY());
-				//message.setTextFill(Color.web("#0076a3"));
-				message.setFont(new Font("Arial", 8));
-				spc.getChildren().add(message);
-				break;
+				final float tailleCase = 1f;
+				final Box   res        = new Box(tailleCase, 0.025f, tailleCase);
 
-			default:
-				res.setTranslateZ(ec.getY() + tailleCase / 2.0);
-				res.setTranslateY(hauteur / 2.0 - 0.5);
-				res.setTranslateX(ec.getX() + tailleCase / 2.0);
-				res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
-				spc.getChildren().add(res);
-				break;
+				switch (ec.type)
+				{
+				case MESSAGE:
+					Text message = new Text("Welcome");
+					message.setTranslateX(ec.getX());
+					message.setTranslateZ(ec.getY());
+					//message.setTextFill(Color.web("#0076a3"));
+					message.setFont(new Font("Arial", 8));
+					spc.getChildren().add(message);
+					break;
+
+				default:
+					res.setTranslateZ(ec.getY() + tailleCase / 2.0);
+					res.setTranslateX(ec.getX() + tailleCase / 2.0);
+					res.setTranslateY(-i - 0.025);
+					res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
+					spc.getChildren().add(res);
+					break;
+				}
 			}
 		}
 
@@ -88,22 +92,25 @@ public class Init
 	 * Dessine le sol
 	 * @return Un groupe contenant le sol
 	 */
-	public static Group makeFloors(int hauteur, Scale sc, MainMaze maze)
+	public static Group makeFloors(Scale sc, MainMaze maze)
 	{
 		final Group floors = new Group();
 
 		floors.getTransforms().add(sc);
-
-		for (MazeDimension.RectInMaze md: maze.getContentMazeCurrentLevel().getMazeDimension().list_rectmaze)
+		ContentMaze[] cms = maze.getContentMaze();
+		for (int i = 0; i < cms.length; i++)
 		{
-			final int w = md.x2 - md.x1;
-			final int h = md.y2 - md.y1;
-			Box       f = new Box(w, 0.5, h);
-			f.setTranslateX(md.x1 + w / 2.0);
-			f.setTranslateZ(md.y1 + h / 2.0);
-			f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
-			f.setTranslateY(hauteur / 2.0);
-			floors.getChildren().add(f);
+			for (MazeDimension.RectInMaze md: cms[i].getMazeDimension().list_rectmaze)
+			{
+				final int w = md.x2 - md.x1;
+				final int h = md.y2 - md.y1;
+				Box       f = new Box(w, 0.05, h);
+				f.setTranslateX(md.x1 + w / 2.0);
+				f.setTranslateZ(md.y1 + h / 2.0);
+				f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
+				f.setTranslateY(-i);
+				floors.getChildren().add(f);
+			}
 		}
 		return (floors);
 	}
@@ -112,7 +119,7 @@ public class Init
 	 * Dessine les murs du Maze
 	 * @return Le groupe contenant les murs
 	 */
-	public static Group makeWalls(int hauteur, Scale sc, MainMaze maze)
+	public static Group makeWalls(Scale sc, MainMaze maze)
 	{
 		Material mat;
 
@@ -132,43 +139,53 @@ public class Init
 
 		// On scale les murs
 		walls.getTransforms().add(sc);
-		final LineWall[] lineWalls = LineWall.breakWallsIntoSimpleOnes(maze.getContentMazeCurrentLevel().getLineWalls());
-		final float      delta     = 0.01f;
-		for (LineWall l: lineWalls)
+		final float   delta = 0.001f;
+		ContentMaze[] cms   = maze.getContentMaze();
+		for (int i = 0; i < cms.length; i++)
 		{
-			Box w = new Box();
-
-			Consumer <Float> setEpais;
-			Consumer <Float> setLarg;
-
-			float  largeur;
-			double trX;
-			double trZ;
-			if (!l.isHorizontal())                                                // Mur "vertical" dans le plan
+			for (LineWall l: cms[i].getLineWalls())
 			{
-				largeur  = l.getY2() - l.getY1() + l.getEpaisseur() - 2 * delta;
-				setLarg  = w::setDepth;
-				setEpais = w::setWidth;
-				trX      = l.getX1() + l.getEpaisseur() / 2.0 - delta;
-				trZ      = l.getY1() + largeur / 2.0;
-			}
-			else     // Mur horizontal
-			{
-				largeur  = l.getX2() - l.getX1() + l.getEpaisseur() - 2 * delta;
-				setLarg  = w::setWidth;
-				setEpais = w::setDepth;
-				trX      = l.getX1() + largeur / 2.0;
-				trZ      = l.getY1() + l.getEpaisseur() / 2.0 - delta;
-			}
+				LineWall[] broken = LineWall.breakWallsIntoSimpleOnes(l);
+				for (int j = 0; j < broken.length; j++)
+				{
+					Box w = new Box();
 
-			w.setHeight(hauteur);
-			setEpais.accept(l.getEpaisseur());
-			setLarg.accept(largeur);
-			w.setTranslateX(trX);
-			w.setTranslateZ(trZ);
+					Consumer <Float> setEpais;
+					Consumer <Float> setLarg;
 
-			w.setMaterial(mat);
-			walls.getChildren().add(w);
+					float  largeur;
+					double trX;
+					double trZ;
+					float  isStart = (j == 0) ? broken[j].getEpaisseur() / 2 - delta : 0;
+					float  isEnd   = (j == broken.length - 1) ? broken[j].getEpaisseur() / 2 - delta : 0;
+					if (!broken[j].isHorizontal())                                        // Mur "vertical" dans le plan
+					{
+						largeur  = broken[j].getY2() - broken[j].getY1();
+						setLarg  = w::setDepth;
+						setEpais = w::setWidth;
+						trX      = broken[j].getX1();
+						trZ      = broken[j].getY1() + largeur / 2.0;
+					}
+					else // Mur horizontal
+					{
+						largeur  = broken[j].getX2() - broken[j].getX1();
+						setLarg  = w::setWidth;
+						setEpais = w::setDepth;
+						trX      = broken[j].getX1() + largeur / 2.0;
+						trZ      = broken[j].getY1();
+					}
+
+					w.setHeight(1);
+					setEpais.accept(broken[j].getEpaisseur());
+					setLarg.accept(largeur + isStart + isEnd);
+					w.setTranslateX(trX);
+					w.setTranslateZ(trZ);
+					w.setTranslateY(-i - 0.5);
+
+					w.setMaterial(mat);
+					walls.getChildren().add(w);
+				}
+			}
 		}
 		return (walls);
 	}

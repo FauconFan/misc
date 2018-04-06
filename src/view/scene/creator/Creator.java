@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
@@ -51,6 +52,7 @@ import src.view.scene.Menus;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
+//TODO STAGIFICATION
 public class Creator extends ScenePlus
 {
 	private static int screenWidth  = (int)Screen.getPrimary().getBounds().getWidth();
@@ -72,7 +74,7 @@ public class Creator extends ScenePlus
 	private final GridPane gridPane = new GridPane();     // MUST contain Tile
 
 
-	public Creator(View v, int width, int height)
+	public Creator(View v, int width, int height, int nbStage)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
 
@@ -238,7 +240,8 @@ public class Creator extends ScenePlus
 				v.showGame();
 			}
 			catch (Exception e) {
-				System.out.println(e);
+				Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+				alert.showAndWait();
 			}
 		});
 
@@ -276,7 +279,7 @@ public class Creator extends ScenePlus
 
 	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md)
 	{
-		this(v, md.x2 - md.x1, md.y2 - md.y1);
+		this(v, md.x2 - md.x1, md.y2 - md.y1, maze.getContentMaze().length);
 		for (LineWall l: maze.getContentMazeCurrentLevel().getLineWalls())
 		{
 			walls.getChildren().add(new LinePlus(l));
@@ -398,5 +401,24 @@ public class Creator extends ScenePlus
 		}
 		currentTile = tile;
 		((ColorAdjust)currentTile.getEffect()).setBrightness(0);
+	}
+
+	//For stage
+
+	private static class Stage
+	{
+		public final Pane walls, cases, dots;
+
+		public Stage(Pane w, Pane c, Pane d)
+		{
+			walls = w;
+			cases = c;
+			dots  = d;
+		}
+
+		public Stage()
+		{
+			this(new Pane(), new Pane(), new Pane());
+		}
 	}
 }

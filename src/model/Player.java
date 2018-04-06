@@ -16,6 +16,7 @@ public class Player
 	private boolean ghostMode = false;
 
 	private float hitBoxCircle;
+	private float hitBoxZ;
 	private float posX;
 	private float posY;
 	private float posZ;
@@ -32,7 +33,7 @@ public class Player
 	//Constantes d'accélération et de vitesse max
 	private static final float ACCELERATIONXY = 0.001f / 16000000.0f;
 	private static final float VMAX           = 0.04f;
-	private static final float PESANTEUR      = -0.015f / 16000000.0f;
+	private static final float PESANTEUR      = -0.015f / 320000000.0f;
 	private static final float VELOCITYGHOST  = 0.02f;
 
 	//Vitesse selon les axes/plan
@@ -49,9 +50,10 @@ public class Player
 	//Ensemble de déplacements à faire
 	public final HashSet <Directions> dirs = new HashSet <Directions>();
 
-	public Player(float hitBoxCircle, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
+	public Player(float hitBoxCircle, float hitBoxZ, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
 	{
 		this.hitBoxCircle    = hitBoxCircle;
+		this.hitBoxZ         = hitBoxZ;
 		this.posX            = posX;
 		this.posY            = posY;
 		this.posZ            = posZ;
@@ -72,6 +74,11 @@ public class Player
 	public float getHitBoxCircle()
 	{
 		return (this.hitBoxCircle);
+	}
+
+	public float getHitBoxZ()
+	{
+		return (this.hitBoxZ);
 	}
 
 	public float getPosX()
@@ -186,11 +193,11 @@ public class Player
 
 	/**
 	 * Update the player position with the collisions with walls
-	 * @param lw the walls
-	 * @param md MazeDim
+	 * @param m MainMaze
 	 * @param time Time
 	 */
-	public void update(LineWall [] lw, MazeDimension md, long time)
+	//public void update(LineWall [] lw, MazeDimension md, long time)
+	public void update(MainMaze m, long time)
 	{
 		int angle       = 0;
 		int nbDirPushed = 0;
@@ -226,27 +233,31 @@ public class Player
 
 			case goUp: if (ghostMode)
 				{
-					posZ += 1f;
+					posZ += 0.05f;
 				}
 				break;
 
 			case goDown: if (ghostMode)
 				{
-					posZ -= 1f;
+					posZ -= 0.05f;
 				}
 				break;
 
 			case jump:  if (this.zCol.isOnFloor())
 				{
-					this.velocityZ = Math.max(0.3f, this.velocityXY * 7) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
+					this.velocityZ = 1.5f * Math.max(0.015f, this.velocityXY * 7f / 20.0f) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
 				}
 				break;
 			}
 		}
 
-		this.zCol.updateFloor(md);
-		this.xyCol.updateWalls(lw);
-		//Décalage d'une case a chaque fois
+		int            currentLevel = m.getCurrentLevel();
+		ContentMaze [] cms          = { m.getContentMazeCurrentLevel(), m.getContentMaze(currentLevel + 1) };
+
+		this.zCol.updateFloor(cms, currentLevel);
+		this.xyCol.updateWalls(cms[0].getLineWalls());
+
+		this.reallyMove();
 
 		if (!this.zCol.isOnFloor() && !ghostMode)
 		{
@@ -261,7 +272,6 @@ public class Player
 		{
 			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * time);
 		}
-		this.reallyMove();
 	}
 
 	/**

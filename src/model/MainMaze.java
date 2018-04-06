@@ -3,12 +3,13 @@ package src.model;
 import java.util.ArrayList;
 
 import src.model.board.Case;
+import src.model.board.JumpCase;
 import src.model.board.LineWall;
 import src.model.board.SpeedCase;
 import src.model.board.TeleportCase;
 import src.model.board.TimeCase;
 import src.model.gen.Algo;
-import src.model.gen.ContentMazeFactory.GenFactoryException;
+import src.model.gen.MainMazeFactory.GenFactoryException;
 import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 import src.model.parser.Parser;
@@ -30,7 +31,7 @@ public class MainMaze
 		Case start = null;
 
 		this.cm = cm;
-		this.p  = new Player(0.05f, 0.5f, 0.5f, 0f, 0f, 0f);
+		this.p  = new Player(0.05f, 0.25f, 0.5f, 0.5f, 0.25f, 0f, 0f);
 		for (int i = 0; i < cm.length; i++)
 		{
 			start = cm[i].getCase(Case.TypeCase.START);
@@ -59,6 +60,15 @@ public class MainMaze
 		return (this.cm[this.current_level]);
 	}
 
+	public ContentMaze getContentMaze(int n)
+	{
+		if (n >= cm.length)
+		{
+			return (null);
+		}
+		return (cm[n]);
+	}
+
 	public Player getPlayer()
 	{
 		return (this.p);
@@ -85,13 +95,27 @@ public class MainMaze
 	 */
 	public void updatePlayer(long l)
 	{
-		this.p.update(this.cm[this.current_level].getLineWalls(), this.cm[this.current_level].getMazeDimension(), l);
+		this.p.update(this, l);
+		float posZ = this.p.getPosZ();
+
+		if (posZ >= 0 && posZ <= this.cm.length - 1)
+		{
+			this.current_level = (int)posZ;
+		}
+		else if (posZ < 0)
+		{
+			this.current_level = 0;
+		}
+		else
+		{
+			this.current_level = cm.length - 1;
+		}
 	}
 
 	public void actionCase()
 	{
 		// TODO to change actually
-		for (Case c : cm[0].getSpecialCases())
+		for (Case c : cm[current_level].getSpecialCases())
 		{
 			if (this.p.playerInCase(c))
 			{

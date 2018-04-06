@@ -4,7 +4,7 @@ import src.model.board.LineWall;
 import src.model.board.LineWallUtils;
 import src.model.ContentMaze;
 import src.model.gen.ContentMazeFactory;
-import src.model.gen.ContentMazeFactory.GenFactoryException;
+import src.model.gen.MainMazeFactory.GenFactoryException;
 import src.model.gen.RectMazeShift;
 import src.model.MainMaze;
 import src.model.MazeDimension;
@@ -15,26 +15,22 @@ import src.model.gen.CreatorHelper;
 
 public abstract class Algo
 {
-	protected ContentMazeFactory[] cmfactory;
+	protected MainMazeFactory mmfactory;
 
 	public Algo()
 	{
-		this.cmfactory = null;
+		this.mmfactory = null;
 	}
 
 	public ContentMaze[] getContentMaze() throws GenFactoryException
 	{
 		ContentMaze[] content;
 
-		if (this.cmfactory == null)
+		if (this.mmfactory == null)
 		{
 			throw new RuntimeException("Should never happen. The maze should be generated");
 		}
-		content = new ContentMaze[this.cmfactory.length];
-		for (int i = 0; i < this.cmfactory.length; i++)
-		{
-			content[i] = this.cmfactory[i].getContentMaze();
-		}
+		content = this.mmfactory.buildContentMaze();
 		return (content);
 	}
 

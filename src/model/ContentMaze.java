@@ -33,6 +33,11 @@ public class ContentMaze
 		return (this.mazeDim);
 	}
 
+	public boolean isFloor(float x, float y)
+	{
+		return (mazeDim.isFloor(x, y));
+	}
+
 	public ContentMaze clone()
 	{
 		Case[]        sccp;
