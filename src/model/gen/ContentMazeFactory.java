@@ -9,6 +9,7 @@ import java.util.Set;
 
 import src.model.board.Case;
 import src.model.board.EndCase;
+import src.model.board.JumpCase;
 import src.model.board.LineWall;
 import src.model.board.LineWallUtils;
 import src.model.board.SpeedCase;
@@ -405,6 +406,8 @@ public class ContentMazeFactory
 			tmp  = this.genRandomPoint(ran, li, oldPoints);
 			tmp2 = this.genRandomPoint(ran, li, oldPoints);
 			this.contentSpecialCases.add(new TeleportCase(tmp.x, tmp.y, tmp2.x, tmp2.y));
+			tmp = this.genRandomPoint(ran, li, oldPoints);
+			this.contentSpecialCases.add(new JumpCase(tmp.x, tmp.y, 0.05f));
 		}
 	}
 
