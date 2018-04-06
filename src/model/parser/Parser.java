@@ -101,7 +101,7 @@ public class Parser
 
 		if (checkExtension(path) == null)
 		{
-			path += "." + format.name() + "." + EXTENSION;
+			path += "." + EXTENSION;
 		}
 		switch (format)
 		{
@@ -131,7 +131,7 @@ public class Parser
 	{
 		for (SavesFormat s: SavesFormat.values())
 		{
-			String ext = "." + s.name() + "." + EXTENSION;
+			String ext = "." + EXTENSION;
 			if (str.length() > ext.length() && str.substring(str.length() - ext.length(), str.length()).equals(ext))
 			{
 				return (s);
