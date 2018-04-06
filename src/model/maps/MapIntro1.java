@@ -37,8 +37,6 @@ public class MapIntro1 extends Algo
 
 		cmf.addSpecialCase(new StartCase(3, 2));
 		cmf.addSpecialCase(new EndCase(3, 13));
-		cmf.addSpecialCase(new MessageCase(3, 5, "Hello"));
-		cmf.addSpecialCase(new JumpCase(2, 3, 0.05f));
 
 		cmf.normalize();
 	}

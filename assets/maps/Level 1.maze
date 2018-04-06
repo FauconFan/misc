@@ -1,0 +1,84 @@
+{
+  "cm": [
+    {
+      "specialCases": [
+        {
+          "type": "StartCase",
+          "properties": {
+            "x": 3,
+            "y": 2,
+            "type": "START"
+          }
+        },
+        {
+          "type": "EndCase",
+          "properties": {
+            "x": 3,
+            "y": 13,
+            "type": "END"
+          }
+        }
+      ],
+      "linewalls": [
+        {
+          "x1": 0,
+          "y1": 0,
+          "x2": 0,
+          "y2": 15,
+          "e": 0.1
+        },
+        {
+          "x1": 7,
+          "y1": 0,
+          "x2": 7,
+          "y2": 15,
+          "e": 0.1
+        },
+        {
+          "x1": 0,
+          "y1": 0,
+          "x2": 7,
+          "y2": 0,
+          "e": 0.1
+        },
+        {
+          "x1": 0,
+          "y1": 15,
+          "x2": 7,
+          "y2": 15,
+          "e": 0.1
+        }
+      ],
+      "mazeDim": {
+        "list_rectmaze": [
+          {
+            "x1": 0,
+            "y1": 0,
+            "x2": 7,
+            "y2": 15
+          }
+        ]
+      }
+    }
+  ],
+  "p": {
+    "ghostMode": false,
+    "hitBoxCircle": 0.05,
+    "hitBoxZ": 0.25,
+    "posX": 3.4984872,
+    "posY": 2.1828625,
+    "posZ": 0.25,
+    "horizontalAngle": 0.2000001,
+    "verticalAngle": 0.30000186,
+    "hasWin": false,
+    "speed": 1.0,
+    "isRunning": false,
+    "time": 3450670116,
+    "rot": 2.0,
+    "velocityXY": 0.0,
+    "velocityZ": 0.0,
+    "lastDepAngle": 0,
+    "dirs": []
+  },
+  "current_level": 0
+}

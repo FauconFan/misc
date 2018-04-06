@@ -1,0 +1,156 @@
+{
+  "cm": [
+    {
+      "specialCases": [
+        {
+          "type": "StartCase",
+          "properties": {
+            "x": 0,
+            "y": 0,
+            "type": "START"
+          }
+        },
+        {
+          "type": "EndCase",
+          "properties": {
+            "x": 4,
+            "y": 1,
+            "type": "END"
+          }
+        },
+        {
+          "type": "TimeCase",
+          "properties": {
+            "timeMillis": 10000,
+            "activated": false,
+            "x": 2,
+            "y": 3,
+            "type": "TIME"
+          }
+        },
+        {
+          "type": "TimeCase",
+          "properties": {
+            "timeMillis": 10000,
+            "activated": false,
+            "x": 6,
+            "y": 3,
+            "type": "TIME"
+          }
+        },
+        {
+          "type": "TimeCase",
+          "properties": {
+            "timeMillis": 10000,
+            "activated": false,
+            "x": 6,
+            "y": 1,
+            "type": "TIME"
+          }
+        }
+      ],
+      "linewalls": [
+        {
+          "x1": 0,
+          "y1": 0,
+          "x2": 0,
+          "y2": 4,
+          "e": 0.1
+        },
+        {
+          "x1": 1,
+          "y1": 0,
+          "x2": 1,
+          "y2": 3,
+          "e": 0.1
+        },
+        {
+          "x1": 5,
+          "y1": 1,
+          "x2": 5,
+          "y2": 2,
+          "e": 0.1
+        },
+        {
+          "x1": 6,
+          "y1": 1,
+          "x2": 6,
+          "y2": 3,
+          "e": 0.1
+        },
+        {
+          "x1": 7,
+          "y1": 0,
+          "x2": 7,
+          "y2": 4,
+          "e": 0.1
+        },
+        {
+          "x1": 0,
+          "y1": 0,
+          "x2": 7,
+          "y2": 0,
+          "e": 0.1
+        },
+        {
+          "x1": 2,
+          "y1": 1,
+          "x2": 5,
+          "y2": 1,
+          "e": 0.1
+        },
+        {
+          "x1": 1,
+          "y1": 2,
+          "x2": 5,
+          "y2": 2,
+          "e": 0.1
+        },
+        {
+          "x1": 2,
+          "y1": 3,
+          "x2": 6,
+          "y2": 3,
+          "e": 0.1
+        },
+        {
+          "x1": 0,
+          "y1": 4,
+          "x2": 7,
+          "y2": 4,
+          "e": 0.1
+        }
+      ],
+      "mazeDim": {
+        "list_rectmaze": [
+          {
+            "x1": 0,
+            "y1": 0,
+            "x2": 7,
+            "y2": 4
+          }
+        ]
+      }
+    }
+  ],
+  "p": {
+    "ghostMode": false,
+    "hitBoxCircle": 0.05,
+    "hitBoxZ": 0.25,
+    "posX": 0.5,
+    "posY": 0.5,
+    "posZ": 0.25,
+    "horizontalAngle": 1.7000006,
+    "verticalAngle": -0.5,
+    "hasWin": false,
+    "speed": 1.0,
+    "isRunning": false,
+    "time": 1677096717,
+    "rot": 2.0,
+    "velocityXY": 0.0,
+    "velocityZ": 0.0,
+    "lastDepAngle": 0,
+    "dirs": []
+  },
+  "current_level": 0
+}

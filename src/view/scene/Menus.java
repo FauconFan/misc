@@ -170,51 +170,6 @@ public class Menus extends ScenePlus
 		public MenuCampaign()
 		{
 			super();
-
-			final Button level1 = addSmallButton("Level 1");
-			final Button level2 = addSmallButton("Level 2");
-			final Button level3 = addSmallButton("Level 3");
-			final Button level4 = addSmallButton("Level 4");
-			final Button level5 = addSmallButton("Level 5");
-			final Button level6 = addSmallButton("Level 6");
-			final Button level7 = addSmallButton("Level 7");
-
-			final Button buttonPrevious = addBigButton("Previous");
-
-			final Button[] buttons = { level1, level2, level3, level4, level5, level6, level7 };
-
-			for (int i = 1; i <= 7; i++)
-			{
-				int j = i;
-				buttons[i - 1].setOnAction(event->{
-					Algo al = null;
-					try
-					{
-						al = MapIntroBuilder.getMapIntro(j);
-					}
-					catch (Exception e)
-					{
-						setMsg(e.getMessage());
-						putMsg();
-					}
-					System.out.println(al);
-					v.con.createMaze(al);
-					v.showGame();
-				});
-
-				buttonPrevious.setOnAction(event->{
-					view = new MenuStart();
-					changeView(view);
-				});
-			}
-		}
-	}
-
-	public class MenuCampaign2 extends Menu
-	{
-		public MenuCampaign2()
-		{
-			super();
 			addLevelButtons();
 			final Button buttonPrevious = addBigButton("Previous");
 			buttonPrevious.setOnAction(event->{
@@ -228,17 +183,29 @@ public class Menus extends ScenePlus
 			File[] list = getLevels();
 			for (File f : list)
 			{
-				String nom = f.getPath();
-				Button b   = addSmallButton(nom);
+				String fullName = f.getName();
+				int    i        = fullName.lastIndexOf('.');
+				String name     = fullName.substring(0, i);
+				Button b        = addSmallButton(name);
 				b.setOnAction(event->{
-					v.con.loadMaze(f);
+					if (f != null)
+					{
+						try{
+							v.con.loadMaze(f);
+							v.showGame();
+						}
+						catch (Exception e) {
+							Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+							alert.showAndWait();
+						}
+					}
 				});
 			}
 		}
 
 		public File[] getLevels()
 		{
-			File dossier = new File("model/maps/");
+			File dossier = new File("assets/maps");
 
 			return (dossier.listFiles((file, name)->{
 				int i = name.lastIndexOf('.');
