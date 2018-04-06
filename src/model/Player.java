@@ -202,6 +202,14 @@ public class Player
 		int angle       = 0;
 		int nbDirPushed = 0;
 
+		if (this.xyCol == null)
+		{
+			this.xyCol = new CollisionsXYManager(this);
+		}
+		if (this.zCol == null)
+		{
+			this.zCol = new CollisionsZManager(this);
+		}
 		if (time <= 100000000)     //if not init
 		{
 			this.time += time;

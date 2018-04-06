@@ -3,7 +3,6 @@ package src.model.board;
 public class JumpCase extends Case
 {
 	private float speed;
-	private boolean activated = false;
 
 	public JumpCase(int x, int y, float val)
 	{
@@ -19,16 +18,6 @@ public class JumpCase extends Case
 	public JumpCase clone()
 	{
 		return (new JumpCase(this.x, this.y, this.speed));
-	}
-
-	public boolean isActivated()
-	{
-		return (this.activated);
-	}
-
-	public void activate()
-	{
-		activated = true;
 	}
 
 	public void setSpeed(float f)

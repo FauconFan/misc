@@ -326,7 +326,7 @@ public class Game extends ScenePlus
 		{
 			maze.updatePlayer(l - oldTime);
 			updatePlayer();
-			clock.setText(Long.toString(maze.getPlayer().getTime() / 100000000) + " s.");
+			clock.setText(Long.toString(maze.getPlayer().getTime() / 1000000000) + " s.");
 			oldTime = l;
 		}
 	}
