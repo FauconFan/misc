@@ -51,15 +51,9 @@ public class Controller
 	 * Permet de charger un MainMaze
 	 * @param file Le fichier
 	 */
-	public void loadMaze(File file)
+	public void loadMaze(File file) throws Exception
 	{
-		try{
-			this.maze = Parser.loadMaze(file);
-		}
-		catch (Exception e) {
-			this.view.setMsg(e.toString());
-			System.out.println(e.toString());
-		}
+		this.maze = Parser.loadMaze(file);
 	}
 
 	public void setMaze(MainMaze m)
