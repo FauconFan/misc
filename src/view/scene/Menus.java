@@ -3,6 +3,7 @@ package src.view.scene;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -74,8 +75,14 @@ public class Menus extends ScenePlus
 				File file = new FileChooser().showOpenDialog(v.stage);
 				if (file != null)
 				{
-					v.con.loadMaze(file);
-					v.showGame();
+					try{
+						v.con.loadMaze(file);
+						v.showGame();
+					}
+					catch (Exception e) {
+						Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+						alert.showAndWait();
+					}
 				}
 			});
 
