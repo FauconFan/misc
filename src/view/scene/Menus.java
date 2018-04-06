@@ -181,6 +181,25 @@ public class Menus extends ScenePlus
 		public void addLevelButtons()
 		{
 			File[] list = getLevels();
+
+			for (int i = 0; i < list.length; i++)
+			{
+				String name_actu = list[i].getName();
+				int    rank      = i;
+				while (rank > 0)
+				{
+					String name_old = list[rank - 1].getName();
+					if (name_old.compareTo(name_actu) < 0)
+					{
+						break;
+					}
+					File tmp = list[rank];
+					list[rank]     = list[rank - 1];
+					list[rank - 1] = tmp;
+					rank--;
+				}
+			}
+
 			for (File f : list)
 			{
 				String fullName = f.getName();
