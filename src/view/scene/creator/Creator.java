@@ -32,6 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.Parent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -111,84 +112,21 @@ public class Creator extends ScenePlus
 
 		root.setAlignment(Pos.TOP_LEFT);
 
-		final double dotWidth = 0.1;
-
-		for (Stage s: stages)
-		{
-			root.getChildren().addAll(s.cases, s.walls, s.dots);
-		}
+		updateRightPanel(root);
 		root.getTransforms().addAll(tr, sc);
 
-		// Draw circles
-		for (int i = 0; i < width + 1; i++)
-		{
-			for (int j = 0; j < height + 1; j++)
-			{
-				final Circle c = new Circle(i, j, dotWidth, Color.BLACK);
-				c.setOnMouseClicked((ev)->{
-					if (startedDraw == null)
-					{
-						startedDraw = c;
-						c.setFill(Color.RED);
-					}
-					else if (c == startedDraw)
-					{
-						startedDraw = null;
-						c.setFill(Color.BLACK);
-					}
-					else
-					{
-						if (startedDraw.getCenterX() == c.getCenterX() || startedDraw.getCenterY() == c.getCenterY())
-						{
-							final LinePlus newLineWall = new LinePlus((int)startedDraw.getCenterX(), (int)startedDraw.getCenterY(), (int)c.getCenterX(), (int)c.getCenterY());
-
-							boolean isGood = false;
-							for (Node n: stages.get(currentStage).walls.getChildren())
-							{
-								LinePlus li             = (LinePlus)n;
-								ArrayList <LineWall> lw = LineWallUtils.exceptIfIntersectOrUnion(li.lw, newLineWall.lw);
-								if (lw.size() == 0 || lw.size() == 1 || (lw.size() == 2 && !(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw)))
-								{
-									stages.get(currentStage).walls.getChildren().remove(li);
-									for (LineWall l: lw)
-									{
-										stages.get(currentStage).walls.getChildren().add(new LinePlus(l));
-									}
-									isGood = true;
-									break;
-								}
-							}
-							if (!isGood)// Les murs ne se superposaient pas
-							{
-								stages.get(currentStage).walls.getChildren().add(newLineWall);
-							}
-						}
-						startedDraw.setFill(Color.BLACK);
-						startedDraw = null;
-					}
-				});
-				if (!(j == height || i == width))// Si on n'est pas sur une ligne du "bord"
-				{
-					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1);
-					rect.setOnMouseClicked((ev)->{
-						rect.changeCase();
-						updateLeftPane(rect);
-					});
-					stages.get(currentStage).cases.getChildren().add(rect);
-				}
-				stages.get(currentStage).dots.getChildren().add(c);
-			}
-		}
+		drawCircles(width, height);
 
 		//Left Panel
 		VBox panel = new VBox();
 		panel.setMinSize(leftPaneGrSize, 0);
 		panel.setAlignment(Pos.TOP_CENTER);
-		panel.setPadding(new Insets(20, 0, 20, 0));
+		Insets defaultInsets = new Insets(20, 0, 20, 0);
+		panel.setPadding(defaultInsets);
 
 		//Textures
 		gridPane.setAlignment(Pos.TOP_CENTER);
-		gridPane.setPadding(new Insets(20, 0, 20, 0));
+		gridPane.setPadding(defaultInsets);
 		final int gap = 5;
 		final int numOfTilesPerLine = 2;
 		final int tileLength        = leftPaneGrSize / numOfTilesPerLine - gap * numOfTilesPerLine;
@@ -213,16 +151,31 @@ public class Creator extends ScenePlus
 		}
 
 		//Level
-		ChoiceBox choiceBox = new ChoiceBox();
+		Label chooseYourLevel = new Label("Choose your level: ");
+		chooseYourLevel.setPadding(defaultInsets);
+
+		ChoiceBox <Integer> choiceBox = new ChoiceBox <Integer>();
 		for (int i = 0; i < stages.size(); i++)
 		{
-			choiceBox.getItems().add("Level " + i);
+			choiceBox.getItems().add(i);
 		}
+		choiceBox.setPadding(defaultInsets);
+		choiceBox.setValue(0);
+
+		choiceBox.valueProperty().addListener((ov, old_val, new_val)->{
+			root.getChildren().removeAll(stages.get(currentStage).walls, stages.get(currentStage).dots, stages.get(currentStage).cases);
+			currentStage = new_val;
+			if (stages.get(currentStage).dots.getChildren().size() == 0)      // Init
+			{
+				drawCircles(width, height);
+			}
+			updateRightPanel(root);
+		});
 
 		//Placeholder for case
 		leftPaneGr = new VBox();
 		leftPaneGr.setAlignment(Pos.TOP_CENTER);
-		leftPaneGr.setPadding(new Insets(20, 0, 20, 0));
+		leftPaneGr.setPadding(defaultInsets);
 
 		//Finish
 		Button button = new Button("Finish");
@@ -253,12 +206,13 @@ public class Creator extends ScenePlus
 				v.showGame();
 			}
 			catch (Exception e) {
+				System.out.println(e);
 				Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
 				alert.showAndWait();
 			}
 		});
 
-		panel.getChildren().addAll(button, choiceBox, gridPane, leftPaneGr);
+		panel.getChildren().addAll(button, chooseYourLevel, choiceBox, gridPane, leftPaneGr);
 
 		ScrollPane sp = new ScrollPane(root);
 		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
@@ -319,6 +273,11 @@ public class Creator extends ScenePlus
 		}
 	}
 
+	private void updateRightPanel(Pane root)
+	{
+		root.getChildren().addAll(stages.get(currentStage).cases, stages.get(currentStage).walls, stages.get(currentStage).dots);
+	}
+
 	/**
 	 * Update the left pane according to the new case
 	 */
@@ -373,6 +332,72 @@ public class Creator extends ScenePlus
 				});
 				leftPaneGr.getChildren().add(sliderS);
 				break;
+			}
+		}
+	}
+
+	private void drawCircles(int width, int height)
+	{
+		final double dotWidth = 0.1;
+
+		// Draw circles
+		for (int i = 0; i < width + 1; i++)
+		{
+			for (int j = 0; j < height + 1; j++)
+			{
+				final Circle c = new Circle(i, j, dotWidth, Color.BLACK);
+				c.setOnMouseClicked((ev)->{
+					if (startedDraw == null)
+					{
+						startedDraw = c;
+						c.setFill(Color.RED);
+					}
+					else if (c == startedDraw)
+					{
+						startedDraw = null;
+						c.setFill(Color.BLACK);
+					}
+					else
+					{
+						if (startedDraw.getCenterX() == c.getCenterX() || startedDraw.getCenterY() == c.getCenterY())
+						{
+							final LinePlus newLineWall = new LinePlus((int)startedDraw.getCenterX(), (int)startedDraw.getCenterY(), (int)c.getCenterX(), (int)c.getCenterY());
+
+							boolean isGood = false;
+							for (Node n: stages.get(currentStage).walls.getChildren())
+							{
+								LinePlus li             = (LinePlus)n;
+								ArrayList <LineWall> lw = LineWallUtils.exceptIfIntersectOrUnion(li.lw, newLineWall.lw);
+								if (lw.size() == 0 || lw.size() == 1 || (lw.size() == 2 && !(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw)))
+								{
+									stages.get(currentStage).walls.getChildren().remove(li);
+									for (LineWall l: lw)
+									{
+										stages.get(currentStage).walls.getChildren().add(new LinePlus(l));
+									}
+									isGood = true;
+									break;
+								}
+							}
+							if (!isGood)// Les murs ne se superposaient pas
+							{
+								stages.get(currentStage).walls.getChildren().add(newLineWall);
+							}
+						}
+						startedDraw.setFill(Color.BLACK);
+						startedDraw = null;
+					}
+				});
+				if (!(j == height || i == width))// Si on n'est pas sur une ligne du "bord"
+				{
+					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1);
+					rect.setOnMouseClicked((ev)->{
+						rect.changeCase();
+						updateLeftPane(rect);
+					});
+					stages.get(currentStage).cases.getChildren().add(rect);
+				}
+				stages.get(currentStage).dots.getChildren().add(c);
 			}
 		}
 	}
