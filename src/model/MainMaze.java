@@ -147,7 +147,7 @@ public class MainMaze
 					break;
 
 				case JUMP:
-					this.p.setVelocityZ(0.25f);
+					this.p.setVelocityZ(0.05f);
 				}
 			}
 		}
