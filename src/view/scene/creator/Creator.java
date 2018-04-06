@@ -11,6 +11,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
@@ -52,7 +53,6 @@ import src.view.scene.Menus;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
-//TODO STAGIFICATION
 public class Creator extends ScenePlus
 {
 	private static int screenWidth  = (int)Screen.getPrimary().getBounds().getWidth();
@@ -67,9 +67,8 @@ public class Creator extends ScenePlus
 	private final Scale sc     = new Scale(100, 100);
 	private final Translate tr = new Translate(10, 10); // Décalage par défaut du dessin
 
-	private final Pane walls = new Pane();              //MUST contain LinePlus
-	private final Pane cases = new Pane();              //MUST contain RectanglePlus
-	private final Pane dots  = new Pane();
+	private final ArrayList <Stage> stages = new ArrayList <Stage>();
+	private int currentStage = 0;
 
 	private final GridPane gridPane = new GridPane();     // MUST contain Tile
 
@@ -77,6 +76,11 @@ public class Creator extends ScenePlus
 	public Creator(View v, int width, int height, int nbStage)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
+
+		for (int i = 0; i < nbStage; i++)
+		{
+			stages.add(new Stage());
+		}
 
 		final double change = 5;
 		//Key controller
@@ -109,10 +113,10 @@ public class Creator extends ScenePlus
 
 		final double dotWidth = 0.1;
 
-		dots.setPickOnBounds(false);
-		walls.setPickOnBounds(false);
-
-		root.getChildren().addAll(cases, walls, dots);
+		for (Stage s: stages)
+		{
+			root.getChildren().addAll(s.cases, s.walls, s.dots);
+		}
 		root.getTransforms().addAll(tr, sc);
 
 		// Draw circles
@@ -139,16 +143,16 @@ public class Creator extends ScenePlus
 							final LinePlus newLineWall = new LinePlus((int)startedDraw.getCenterX(), (int)startedDraw.getCenterY(), (int)c.getCenterX(), (int)c.getCenterY());
 
 							boolean isGood = false;
-							for (Node n: walls.getChildren())
+							for (Node n: stages.get(currentStage).walls.getChildren())
 							{
 								LinePlus li             = (LinePlus)n;
 								ArrayList <LineWall> lw = LineWallUtils.exceptIfIntersectOrUnion(li.lw, newLineWall.lw);
 								if (lw.size() == 0 || lw.size() == 1 || (lw.size() == 2 && !(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw)))
 								{
-									walls.getChildren().remove(li);
+									stages.get(currentStage).walls.getChildren().remove(li);
 									for (LineWall l: lw)
 									{
-										walls.getChildren().add(new LinePlus(l));
+										stages.get(currentStage).walls.getChildren().add(new LinePlus(l));
 									}
 									isGood = true;
 									break;
@@ -156,7 +160,7 @@ public class Creator extends ScenePlus
 							}
 							if (!isGood)// Les murs ne se superposaient pas
 							{
-								walls.getChildren().add(newLineWall);
+								stages.get(currentStage).walls.getChildren().add(newLineWall);
 							}
 						}
 						startedDraw.setFill(Color.BLACK);
@@ -170,9 +174,9 @@ public class Creator extends ScenePlus
 						rect.changeCase();
 						updateLeftPane(rect);
 					});
-					cases.getChildren().add(rect);
+					stages.get(currentStage).cases.getChildren().add(rect);
 				}
-				dots.getChildren().add(c);
+				stages.get(currentStage).dots.getChildren().add(c);
 			}
 		}
 
@@ -208,6 +212,13 @@ public class Creator extends ScenePlus
 			((ColorAdjust)currentTile.getEffect()).setBrightness(0);
 		}
 
+		//Level
+		ChoiceBox choiceBox = new ChoiceBox();
+		for (int i = 0; i < stages.size(); i++)
+		{
+			choiceBox.getItems().add("Level " + i);
+		}
+
 		//Placeholder for case
 		leftPaneGr = new VBox();
 		leftPaneGr.setAlignment(Pos.TOP_CENTER);
@@ -216,25 +227,27 @@ public class Creator extends ScenePlus
 		//Finish
 		Button button = new Button("Finish");
 		button.setOnAction((ev)->{
-			ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
-			for (Node l: walls.getChildren())
+			CreatorHelper ch = new CreatorHelper(stages.size());
+			for (Stage s: stages)
 			{
-				LinePlus li = (LinePlus)l;
-				lineWalls.add(li.lw);
-			}
-
-			ArrayList <Case> specialCases = new ArrayList <Case>();
-			for (Node l: cases.getChildren())
-			{
-				Case c = ((RectanglePlus)l).getCase();
-				if (c != null)
+				ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
+				for (Node l: s.walls.getChildren())
 				{
-					specialCases.add(c);
+					LinePlus li = (LinePlus)l;
+					lineWalls.add(li.lw);
 				}
-			}
 
-			CreatorHelper ch = new CreatorHelper(1);
-			ch.append(0, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
+				ArrayList <Case> specialCases = new ArrayList <Case>();
+				for (Node l: s.cases.getChildren())
+				{
+					Case c = ((RectanglePlus)l).getCase();
+					if (c != null)
+					{
+						specialCases.add(c);
+					}
+				}
+				ch.append(0, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
+			}
 			try{
 				v.con.setMaze(ch.buildMainMaze("", currentTile.filename));
 				v.showGame();
@@ -245,7 +258,7 @@ public class Creator extends ScenePlus
 			}
 		});
 
-		panel.getChildren().addAll(button, gridPane, leftPaneGr);
+		panel.getChildren().addAll(button, choiceBox, gridPane, leftPaneGr);
 
 		ScrollPane sp = new ScrollPane(root);
 		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
@@ -280,18 +293,21 @@ public class Creator extends ScenePlus
 	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md)
 	{
 		this(v, md.x2 - md.x1, md.y2 - md.y1, maze.getContentMaze().length);
-		for (LineWall l: maze.getContentMazeCurrentLevel().getLineWalls())
+		for (int i = 0; i < stages.size(); i++)
 		{
-			walls.getChildren().add(new LinePlus(l));
-		}
-		for (Case c:maze.getContentMazeCurrentLevel().getSpecialCases())
-		{
-			final RectanglePlus rect = new RectanglePlus(c);
-			rect.setOnMouseClicked((ev)->{
-				rect.changeCase();
-				updateLeftPane(rect);
-			});
-			cases.getChildren().add(rect);
+			for (LineWall l: maze.getContentMaze(i).getLineWalls())
+			{
+				stages.get(i).walls.getChildren().add(new LinePlus(l));
+			}
+			for (Case c:maze.getContentMaze(i).getSpecialCases())
+			{
+				final RectanglePlus rect = new RectanglePlus(c);
+				rect.setOnMouseClicked((ev)->{
+					rect.changeCase();
+					updateLeftPane(rect);
+				});
+				stages.get(i).cases.getChildren().add(rect);
+			}
 		}
 		for (Node n: gridPane.getChildren())
 		{
@@ -407,6 +423,8 @@ public class Creator extends ScenePlus
 
 	private static class Stage
 	{
+		//walls MUST contain LinePlus
+		//cases MUST contain RectanglePlus
 		public final Pane walls, cases, dots;
 
 		public Stage(Pane w, Pane c, Pane d)
@@ -414,6 +432,9 @@ public class Creator extends ScenePlus
 			walls = w;
 			cases = c;
 			dots  = d;
+
+			dots.setPickOnBounds(false);
+			walls.setPickOnBounds(false);
 		}
 
 		public Stage()
