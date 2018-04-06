@@ -367,7 +367,7 @@ public class ContentMazeFactory
 		return (res);
 	}
 
-	public void initiateSpecialCases()
+	public void initiateSpecialCases(boolean genStart, boolean genEnd)
 	{
 		ArrayList <Point>      oldPoints;
 		ArrayList <RectInMaze> li;
@@ -383,10 +383,16 @@ public class ContentMazeFactory
 		li        = this.mazeDim.getListRectMaze();
 		oldPoints = new ArrayList <>();
 
-		tmp = this.genRandomPoint(ran, li, oldPoints);
-		this.contentSpecialCases.add(new StartCase(tmp.x, tmp.y));
-		tmp = this.genRandomPoint(ran, li, oldPoints);
-		this.contentSpecialCases.add(new EndCase(tmp.x, tmp.y));
+		if (genStart)
+		{
+			tmp = this.genRandomPoint(ran, li, oldPoints);
+			this.contentSpecialCases.add(new StartCase(tmp.x, tmp.y));
+		}
+		if (genEnd)
+		{
+			tmp = this.genRandomPoint(ran, li, oldPoints);
+			this.contentSpecialCases.add(new EndCase(tmp.x, tmp.y));
+		}
 
 		max = 0;
 		if (this.mazeDim.size() >= 200)
