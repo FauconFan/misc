@@ -98,9 +98,17 @@ public class Creator extends ScenePlus
 
 			case D: tr.setX((isIn(tr.getX() - change, -screenWidth, 11)) ? tr.getX() - change : tr.getX()); break;
 
-			case R: sc.setX(sc.getX() + change); sc.setY(sc.getY() + change); break;
+			case R: if (sc.getX() <= 150)
+				{
+					sc.setX(sc.getX() + change); sc.setY(sc.getY() + change);
+				}
+				break;
 
-			case F: sc.setX(sc.getX() - change); sc.setY(sc.getY() - change); break;
+			case F: if (sc.getY() >= 50)
+				{
+					sc.setX(sc.getX() - change); sc.setY(sc.getY() - change);
+				}
+				break;
 			}
 		});
 
