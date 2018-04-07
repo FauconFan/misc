@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -41,6 +42,8 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Screen;
 
+import javafx.beans.value.ChangeListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -60,8 +63,6 @@ public class Creator extends ScenePlus
 	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
 
 	private Circle startedDraw = null;
-	private Tile currentTile   = null;
-	private final VBox leftPaneGr;
 
 	private final int leftPaneGrSize = 180;
 
@@ -71,8 +72,7 @@ public class Creator extends ScenePlus
 	private final ArrayList <Stage> stages = new ArrayList <Stage>();
 	private int currentStage = 0;
 
-	private final GridPane gridPane = new GridPane();     // MUST contain Tile
-
+	private final LeftPanel leftPanel;
 
 	public Creator(View v, int width, int height, int nbStage)
 	{
@@ -126,51 +126,9 @@ public class Creator extends ScenePlus
 		drawCircles(width, height);
 
 		//Left Panel
-		VBox panel = new VBox();
-		panel.setMinSize(leftPaneGrSize, 0);
-		panel.setAlignment(Pos.TOP_CENTER);
-		Insets defaultInsets = new Insets(20, 0, 20, 0);
-		panel.setPadding(defaultInsets);
 
-		//Textures
-		gridPane.setAlignment(Pos.TOP_CENTER);
-		gridPane.setPadding(defaultInsets);
-		final int gap = 5;
-		final int numOfTilesPerLine = 2;
-		final int tileLength        = leftPaneGrSize / numOfTilesPerLine - gap * numOfTilesPerLine;
-		gridPane.setVgap(gap);
-		gridPane.setHgap(gap);
-		File[] textures = getTextures();
-		for (int i = 0; i < textures.length; i++)
-		{
-			try{
-				Tile tile = new Tile(textures[i], tileLength);
-				((ColorAdjust)tile.getEffect()).setBrightness(-0.6);
-				GridPane.setConstraints(tile, i % numOfTilesPerLine, i / numOfTilesPerLine);
-				gridPane.getChildren().add(tile);
-				tile.setOnMouseClicked((ev)->{ setCurrentTile(tile); });
-			}
-			catch (Exception e) {}
-		}
-		if (textures.length != 0)
-		{
-			currentTile = (Tile)gridPane.getChildren().get(0);
-			((ColorAdjust)currentTile.getEffect()).setBrightness(0);
-		}
-
-		//Level
-		Label chooseYourLevel = new Label("Choose your level: ");
-		chooseYourLevel.setPadding(defaultInsets);
-
-		ChoiceBox <Integer> choiceBox = new ChoiceBox <Integer>();
-		for (int i = 0; i < stages.size(); i++)
-		{
-			choiceBox.getItems().add(i);
-		}
-		choiceBox.setPadding(defaultInsets);
-		choiceBox.setValue(0);
-
-		choiceBox.valueProperty().addListener((ov, old_val, new_val)->{
+		//For the choiceBox
+		ChangeListener <Integer> choiceBoxListener = (ov, old_val, new_val)->{
 			root.getChildren().removeAll(stages.get(currentStage).walls, stages.get(currentStage).dots, stages.get(currentStage).cases);
 			currentStage = new_val;
 			if (stages.get(currentStage).dots.getChildren().size() == 0)      // Init
@@ -178,49 +136,9 @@ public class Creator extends ScenePlus
 				drawCircles(width, height);
 			}
 			updateRightPanel(root);
-		});
+		};
 
-		//Placeholder for case
-		leftPaneGr = new VBox();
-		leftPaneGr.setAlignment(Pos.TOP_CENTER);
-		leftPaneGr.setPadding(defaultInsets);
-
-		//Finish
-		Button button = new Button("Finish");
-		button.setOnAction((ev)->{
-			CreatorHelper ch = new CreatorHelper(stages.size());
-			for (Stage s: stages)
-			{
-				ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
-				for (Node l: s.walls.getChildren())
-				{
-					LinePlus li = (LinePlus)l;
-					lineWalls.add(li.lw);
-				}
-
-				ArrayList <Case> specialCases = new ArrayList <Case>();
-				for (Node l: s.cases.getChildren())
-				{
-					Case c = ((RectanglePlus)l).getCase();
-					if (c != null)
-					{
-						specialCases.add(c);
-					}
-				}
-				ch.append(0, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
-			}
-			try{
-				v.con.setMaze(ch.buildMainMaze("", currentTile.filename));
-				v.showGame();
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-				alert.showAndWait();
-			}
-		});
-
-		panel.getChildren().addAll(button, chooseYourLevel, choiceBox, gridPane, leftPaneGr);
+		leftPanel = new LeftPanel(leftPaneGrSize, stages, choiceBoxListener, width, height, v);
 
 		ScrollPane sp = new ScrollPane(root);
 		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
@@ -239,7 +157,7 @@ public class Creator extends ScenePlus
 			tr.setX(tr.getX() + sc.getX() * (old_val.doubleValue() - new_val.doubleValue()));
 		});
 
-		pane.getChildren().addAll(panel, sp);
+		pane.getChildren().addAll(leftPanel, sp);
 	}
 
 	public Creator(View v, Game g)
@@ -266,82 +184,18 @@ public class Creator extends ScenePlus
 				final RectanglePlus rect = new RectanglePlus(c);
 				rect.setOnMouseClicked((ev)->{
 					rect.changeCase();
-					updateLeftPane(rect);
+					leftPanel.updateLeftPane(rect);
 				});
 				stages.get(i).cases.getChildren().add(rect);
 			}
 		}
-		for (Node n: gridPane.getChildren())
-		{
-			Tile t = (Tile)n;
-			if (t.filename.equals(maze.getContentMazeCurrentLevel().getTexturePath()))
-			{
-				setCurrentTile(t);
-			}
-		}
+
+		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getTexturePath());
 	}
 
 	private void updateRightPanel(Pane root)
 	{
 		root.getChildren().addAll(stages.get(currentStage).cases, stages.get(currentStage).walls, stages.get(currentStage).dots);
-	}
-
-	/**
-	 * Update the left pane according to the new case
-	 */
-	private void updateLeftPane(RectanglePlus startedRect)
-	{
-		leftPaneGr.getChildren().clear();
-		Case c = startedRect.getCase();
-
-		if (c != null)
-		{
-			leftPaneGr.getChildren().add(new Label(c.type + " case"));
-			switch (c.type)
-			{
-			case TELEPORT:
-				HBox      hx = new HBox(new Label("x: "));
-				HBox      hy = new HBox(new Label("y: "));
-				TextField tx = new TextField(Integer.toString(((TeleportCase)c).getXDest()));
-				tx.setPrefColumnCount(4);
-				tx.textProperty().addListener((ov, o, n)->{ ((TeleportCase)c).setXDest(Integer.parseInt(n)); });            //TODO Faire attention...
-				TextField ty = new TextField(Integer.toString(((TeleportCase)c).getYDest()));
-				ty.setPrefColumnCount(4);
-				ty.textProperty().addListener((ov, o, n)->{ ((TeleportCase)c).setYDest(Integer.parseInt(n)); });
-				hx.getChildren().add(ty);
-				hy.getChildren().add(tx);
-				leftPaneGr.getChildren().addAll(hx, hy);
-				break;
-
-			case TIME:
-				Slider slider = new Slider();
-				slider.setMin(-5);
-				slider.setValue(((TimeCase)c).getTimeMillis());
-				slider.setMax(5);
-				slider.setShowTickLabels(true);
-				slider.setMajorTickUnit(0.25f);
-				slider.setBlockIncrement(0.25f);
-				slider.valueProperty().addListener((ov, x, z)->{
-					((TimeCase)c).setTimeMilis(z.longValue());
-				});
-				leftPaneGr.getChildren().add(slider);
-				break;
-
-			case SPEED:
-				Slider sliderS = new Slider();
-				sliderS.setMin(0);
-				sliderS.setValue(((SpeedCase)c).getSpeedModif());
-				sliderS.setMax(5);
-				sliderS.setShowTickLabels(true);
-				sliderS.setMajorTickUnit(0.25f);
-				sliderS.setBlockIncrement(0.25f);
-				sliderS.valueProperty().addListener((ov, x, z)->{
-					((SpeedCase)c).setSpeedModif(z.floatValue());
-				});
-				leftPaneGr.getChildren().add(sliderS);
-				break;
-			}
-		}
 	}
 
 	private void drawCircles(int width, int height)
@@ -401,7 +255,7 @@ public class Creator extends ScenePlus
 					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1);
 					rect.setOnMouseClicked((ev)->{
 						rect.changeCase();
-						updateLeftPane(rect);
+						leftPanel.updateLeftPane(rect);
 					});
 					stages.get(currentStage).cases.getChildren().add(rect);
 				}
@@ -413,66 +267,5 @@ public class Creator extends ScenePlus
 	private boolean isIn(double totest, double min, double max)
 	{
 		return (totest >= min && totest <= max);
-	}
-
-	private File[] getTextures()
-	{
-		File assets = new File("assets");
-
-		return (assets.listFiles((file, name)->{
-			int i = name.lastIndexOf('.');
-			if (i > 0)
-			{
-				return name.substring(i + 1).equals("jpg");
-			}
-			return false;
-		}));
-	}
-
-	//For textures
-	private class Tile extends Rectangle
-	{
-		private final String filename;
-		public Tile(File texture, int tileLength) throws FileNotFoundException
-		{
-			super(tileLength, tileLength);
-			filename = texture.getPath();
-			setEffect(new ColorAdjust());
-			setFill(new ImagePattern(new Image(new FileInputStream(texture), tileLength, tileLength, true, false)));
-		}
-	}
-
-	private void setCurrentTile(Tile tile)
-	{
-		if (currentTile != null)
-		{
-			((ColorAdjust)currentTile.getEffect()).setBrightness(-0.6);
-		}
-		currentTile = tile;
-		((ColorAdjust)currentTile.getEffect()).setBrightness(0);
-	}
-
-	//For stage
-
-	private static class Stage
-	{
-		//walls MUST contain LinePlus
-		//cases MUST contain RectanglePlus
-		public final Pane walls, cases, dots;
-
-		public Stage(Pane w, Pane c, Pane d)
-		{
-			walls = w;
-			cases = c;
-			dots  = d;
-
-			dots.setPickOnBounds(false);
-			walls.setPickOnBounds(false);
-		}
-
-		public Stage()
-		{
-			this(new Pane(), new Pane(), new Pane());
-		}
 	}
 }
