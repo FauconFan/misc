@@ -12,8 +12,10 @@ import src.utils.FloatVector;
  */
 public class Player
 {
-	//Est on en mode ghost ?
+	//Est-on en mode ghost ?
 	private boolean ghostMode = false;
+	//Peut-on voler ?
+	private boolean flyMode = false;
 
 	private float hitBoxCircle;
 	private float hitBoxZ;
@@ -69,6 +71,16 @@ public class Player
 	public void setGhostMode(boolean b)
 	{
 		this.ghostMode = b;
+	}
+
+	public boolean getFlyMode()
+	{
+		return (flyMode);
+	}
+
+	public void setFlyMode(boolean b)
+	{
+		this.flyMode = b;
 	}
 
 	public float getHitBoxCircle()
@@ -239,13 +251,13 @@ public class Player
 
 			case down: verticalAngle -= rot; break;
 
-			case goUp: if (ghostMode)
+			case goUp: if (flyMode)//TODO Check the collision
 				{
 					posZ += 0.05f;
 				}
 				break;
 
-			case goDown: if (ghostMode)
+			case goDown: if (flyMode)
 				{
 					posZ -= 0.05f;
 				}

@@ -171,6 +171,8 @@ public class Game extends ScenePlus
 
 			case G: this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode()); break;
 
+			case F: this.maze.getPlayer().setFlyMode(!this.maze.getPlayer().getFlyMode()); break;
+
 			case T: walls.setVisible(!walls.isVisible()); break;
 
 			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\n" + CaseColor.prettify() + "Press ENTER to close"); break;
