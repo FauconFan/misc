@@ -30,15 +30,17 @@ class MiniMap extends SubScene
 	private final Scale sc2d;
 	private final GroupCameraPlus groupCameraPlus2D;
 	private final int w, h;
+	private final Group rootMiniMap;
+	private Group gWalls;
 
 	public MiniMap(int w, int h, Scale sc, LineWall[] walls)
 	{
 		super(new Group(), w, h);
-		this.w = w;
-		this.h = h;
-		Group rootMiniMap = (Group)getRoot();
-		this.fstTr = new Translate(w / 2.0, h / 2.0);
-		this.sc2d  = sc;
+		this.w      = w;
+		this.h      = h;
+		rootMiniMap = (Group)getRoot();
+		this.fstTr  = new Translate(w / 2.0, h / 2.0);
+		this.sc2d   = sc;
 
 		setFill(null);
 
@@ -46,7 +48,7 @@ class MiniMap extends SubScene
 		groupCameraPlus2D.getTransforms().add(fstTr.createInverse());
 		rootMiniMap.getChildren().add(groupCameraPlus2D);
 		setCamera(groupCameraPlus2D.camera);
-		rootMiniMap.getChildren().add(makeLineWalls(walls));
+		makeLineWalls(walls);
 	}
 
 	public void updateCamera(Player p)
@@ -56,7 +58,7 @@ class MiniMap extends SubScene
 		groupCameraPlus2D.tr.setX(p.getPosX() * sc2d.getX());
 	}
 
-	private Group makeLineWalls(LineWall[] lineWalls)
+	public void makeLineWalls(LineWall[] lineWalls)
 	{
 		final Group res = new Group();
 
@@ -70,7 +72,9 @@ class MiniMap extends SubScene
 			li.setStrokeWidth(0.1f);
 			res.getChildren().add(li);
 		}
-		return (res);
+		rootMiniMap.getChildren().remove(gWalls);
+		rootMiniMap.getChildren().add(res);
+		gWalls = res;
 	}
 
 	/**

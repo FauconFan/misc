@@ -89,13 +89,16 @@ public class Game extends ScenePlus
 
 	private final Font defaultFont = Font.font("Verdana", 30);
 
+	private int currentLevel;
+
 	public Game(View v, MainMaze m)
 	{
 		super(new StackPane(), screenWidth, screenHeight, true, v);
 		Group root3D = new Group();
 		Group root2D = new Group();
-		layout = (StackPane)this.getRoot();
-		maze   = m;
+		layout       = (StackPane)this.getRoot();
+		maze         = m;
+		currentLevel = m.getCurrentLevel();
 
 		setFill(Color.GREY);
 		setCursor(Cursor.NONE);
@@ -336,7 +339,12 @@ public class Game extends ScenePlus
 			maze.updatePlayer(l - oldTime);
 			updatePlayer();
 			clock.setText(Long.toString(maze.getPlayer().getTime() / 1000000000) + " s.");
-			level.setText("Current level: " + maze.getCurrentLevel());
+			if (currentLevel != maze.getCurrentLevel())
+			{
+				currentLevel = maze.getCurrentLevel();
+				level.setText("Current level: " + currentLevel);
+				sceneMiniMap.makeLineWalls(maze.getContentMazeCurrentLevel().getLineWalls());
+			}
 			oldTime = l;
 		}
 	}
