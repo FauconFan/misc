@@ -116,8 +116,8 @@ public class Game extends ScenePlus
 		groupCameraPlus3D = new GroupCameraPlus(new PerspectiveCamera(true));
 
 		// Ajoute le sol
-		root3D.getChildren().add(Init.makeSpecialCases(sc, this.maze));
-		root3D.getChildren().add(Init.makeFloors(sc, this.maze));
+		root3D.getChildren().add(Init.makeSpecialCases(sc, this.maze, m.getFlyMode()));
+		root3D.getChildren().add(Init.makeFloors(sc, this.maze, m.getFlyMode()));
 
 		// Ajoute les murs
 		Group walls = Init.makeWalls(sc, this.maze);
@@ -174,7 +174,7 @@ public class Game extends ScenePlus
 
 			case G: this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode()); break;
 
-			case Y: this.maze.getPlayer().setFlyMode(!this.maze.getPlayer().getFlyMode()); break;
+			case Y: this.maze.setFlyMode(!this.maze.getFlyMode()); break;
 
 			case T: walls.setVisible(!walls.isVisible()); break;
 

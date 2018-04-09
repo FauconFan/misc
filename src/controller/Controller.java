@@ -32,12 +32,13 @@ public class Controller
 	/**
 	 * Créer un labyrinthe avec les paramètres passés en arguments
 	 * @param algo L'algorithme de création
+	 * @param flyMode Est-on en flyMode ?
 	 */
-	public void createMaze(Algo algo)
+	public void createMaze(Algo algo, boolean flyMode)
 	{
 		try
 		{
-			this.maze = new MainMaze(algo);
+			this.maze = new MainMaze(algo, flyMode);
 		}
 		catch (Exception e)
 		{

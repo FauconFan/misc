@@ -14,8 +14,6 @@ public class Player
 {
 	//Est-on en mode ghost ?
 	private boolean ghostMode = false;
-	//Peut-on voler ?
-	private boolean flyMode = false;
 
 	private float hitBoxCircle;
 	private float hitBoxZ;
@@ -71,16 +69,6 @@ public class Player
 	public void setGhostMode(boolean b)
 	{
 		this.ghostMode = b;
-	}
-
-	public boolean getFlyMode()
-	{
-		return (flyMode);
-	}
-
-	public void setFlyMode(boolean b)
-	{
-		this.flyMode = b;
 	}
 
 	public float getHitBoxCircle()
@@ -250,13 +238,13 @@ public class Player
 
 			case down: verticalAngle -= rot; break;
 
-			case goUp: if (flyMode)//TODO Check the collision
+			case goUp: if (m.getFlyMode())//TODO Check the collision
 				{
 					posZ += 0.05f;
 				}
 				break;
 
-			case goDown: if (flyMode)
+			case goDown: if (m.getFlyMode())
 				{
 					posZ -= 0.05f;
 				}

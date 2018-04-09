@@ -65,7 +65,7 @@ class LeftPanel extends VBox
 
 	public final VBox leftPaneGr;
 
-	public LeftPanel(int leftPaneGrSize, ArrayList <Stage> stages, ChangeListener <Integer> listener, int width, int height, View v)
+	public LeftPanel(int leftPaneGrSize, ArrayList <Stage> stages, ChangeListener <Integer> listener, int width, int height, View v, boolean flyMode)
 	{
 		setMinSize(leftPaneGrSize, 0);
 		setAlignment(Pos.TOP_CENTER);
@@ -117,7 +117,7 @@ class LeftPanel extends VBox
 				ch.append(0, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
 			}
 			try{
-				v.con.setMaze(ch.buildMainMaze("", textures.currentTile.filename));
+				v.con.setMaze(ch.buildMainMaze("", textures.currentTile.filename, flyMode));
 				v.showGame();
 			}
 			catch (Exception e) {
