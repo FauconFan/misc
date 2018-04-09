@@ -171,7 +171,7 @@ public class Game extends ScenePlus
 
 			case G: this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode()); break;
 
-			case F: this.maze.getPlayer().setFlyMode(!this.maze.getPlayer().getFlyMode()); break;
+			case Y: this.maze.getPlayer().setFlyMode(!this.maze.getPlayer().getFlyMode()); break;
 
 			case T: walls.setVisible(!walls.isVisible()); break;
 
