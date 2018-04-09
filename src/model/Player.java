@@ -35,7 +35,7 @@ public class Player
 	//Constantes d'accélération et de vitesse max
 	private static final float ACCELERATIONXY = 0.001f / 16000000.0f;
 	private static final float VMAX           = 0.04f;
-	private static final float PESANTEUR      = -0.015f / 320000000.0f;
+	private static final float PESANTEUR      = 1.5f / 32.0f;
 	private static final float VELOCITYGHOST  = 0.02f;
 
 	//Vitesse selon les axes/plan
@@ -206,10 +206,9 @@ public class Player
 	/**
 	 * Update the player position with the collisions with walls
 	 * @param m MainMaze
-	 * @param time Time
+	 * @param t Time
 	 */
-	//public void update(LineWall [] lw, MazeDimension md, long time)
-	public void update(MainMaze m, long time)
+	public void update(MainMaze m, long t)
 	{
 		int angle       = 0;
 		int nbDirPushed = 0;
@@ -222,9 +221,9 @@ public class Player
 		{
 			this.zCol = new CollisionsZManager(this);
 		}
-		if (time <= 100000000)     //if not init
+		if (t <= 100000000)     //if not init
 		{
-			this.time += time;
+			this.time += t;
 		}
 
 		for (Directions d: dirs)
@@ -282,16 +281,16 @@ public class Player
 
 		if (!this.isOnFloor() && !this.ghostMode)
 		{
-			this.velocityZ += (PESANTEUR * time);
+			this.velocityZ -= (PESANTEUR * t / 1000000000);
 		}
 		if (nbDirPushed != 0)
 		{
-			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY * time / ((!this.isOnFloor()) ? 2.0f : 1.0f));
+			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY * t / ((!this.isOnFloor()) ? 2.0f : 1.0f));
 			this.lastDepAngle = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushed);
 		}
 		else
 		{
-			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * time);
+			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * t);
 		}
 	}
 
@@ -322,6 +321,14 @@ public class Player
 			this.velocityZ = this.zCol.getNorm();
 
 			this.applyMove(this.xyCol.getMove(), this.zCol.getMove());
+		}
+	}
+
+	public void actionJumpCase(int nbLevel)
+	{
+		if (!this.ghostMode)
+		{
+			this.velocityZ = (float)Math.sqrt((nbLevel + 0.5f - hitBoxZ) * 2 * PESANTEUR) / 5.25f;
 		}
 	}
 

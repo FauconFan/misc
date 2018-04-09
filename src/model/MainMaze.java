@@ -147,7 +147,10 @@ public class MainMaze
 					break;
 
 				case JUMP:
-					this.p.setVelocityZ(0.05f);
+					if (this.p.isOnFloor())
+					{
+						this.p.actionJumpCase(1);
+					}
 				}
 			}
 		}
