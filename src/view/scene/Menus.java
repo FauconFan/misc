@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.Group;
@@ -134,6 +135,10 @@ public class Menus extends ScenePlus
 					sliders[i].setMinorTickCount(0);
 				}
 			}
+
+			final CheckBox cb = new CheckBox("FlyMode ?");
+			getChildren().add(cb);
+
 			final Button buttonCreate = addSmallButton("Create randomly");
 
 			buttonPrevious.setOnAction(event->{
@@ -152,13 +157,13 @@ public class Menus extends ScenePlus
 					e.printStackTrace();
 					System.exit(1);
 				}
-				v.con.createMaze(al);
+				v.con.createMaze(al, cb.isSelected());
 				v.showGame();
 			});
 
 			final Button buttonCreator = addSmallButton("Creator");
 			buttonCreator.setOnAction(event->{
-				v.changeScene(new Creator(v, (int)sliders[0].getValue(), (int)sliders[1].getValue(), (int)sliders[2].getValue()));
+				v.changeScene(new Creator(v, (int)sliders[0].getValue(), (int)sliders[1].getValue(), (int)sliders[2].getValue(), cb.isSelected()));
 			});
 
 			putMsg();

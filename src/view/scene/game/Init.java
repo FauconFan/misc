@@ -13,6 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape3D;
+import javafx.scene.shape.Sphere;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.transform.Rotate;
@@ -27,6 +29,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.function.Consumer;
 
@@ -50,7 +53,7 @@ import javafx.scene.transform.Scale;
 public class Init
 {
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
-	public static Group makeSpecialCases(Scale sc, MainMaze maze)
+	public static Group makeSpecialCases(Scale sc, MainMaze maze, boolean flyMode)
 	{
 		Group spc = new Group();
 
@@ -59,9 +62,6 @@ public class Init
 		{
 			for (Case ec: cms[i].getSpecialCases())
 			{
-				final float tailleCase = 1f;
-				final Box   res        = new Box(tailleCase, 0.025f, tailleCase);
-
 				switch (ec.type)
 				{
 				case MESSAGE:
@@ -74,9 +74,11 @@ public class Init
 					break;
 
 				default:
+					final float   tailleCase = 1f;
+					final Shape3D res        = (flyMode) ? new Sphere(0.1f) : new Box(tailleCase, 0.025f, tailleCase);
 					res.setTranslateZ(ec.getY() + tailleCase / 2.0);
 					res.setTranslateX(ec.getX() + tailleCase / 2.0);
-					res.setTranslateY(-i - 0.025);
+					res.setTranslateY(-i - ((flyMode) ? 0.5 : 0.025));
 					res.setMaterial(new PhongMaterial(CaseColor.getColor(ec.type)));
 					spc.getChildren().add(res);
 					break;
@@ -92,27 +94,43 @@ public class Init
 	 * Dessine le sol
 	 * @return Un groupe contenant le sol
 	 */
-	public static Group makeFloors(Scale sc, MainMaze maze)
+	public static Group makeFloors(Scale sc, MainMaze maze, boolean flyMode)
 	{
 		final Group floors = new Group();
 
 		floors.getTransforms().add(sc);
 		ContentMaze[] cms = maze.getContentMaze();
-		for (int i = 0; i < cms.length; i++)
+		if (!flyMode)
 		{
-			for (MazeDimension.RectInMaze md: cms[i].getMazeDimension().list_rectmaze)
+			for (int i = 0; i < cms.length; i++)
 			{
-				final int w = md.x2 - md.x1;
-				final int h = md.y2 - md.y1;
-				Box       f = new Box(w, 0.05, h);
-				f.setTranslateX(md.x1 + w / 2.0);
-				f.setTranslateZ(md.y1 + h / 2.0);
-				f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
-				f.setTranslateY(-i);
-				floors.getChildren().add(f);
+				floors.getChildren().add(makeOneLevelFloor(cms[i].getMazeDimension().list_rectmaze, i));
 			}
 		}
+		if (flyMode)
+		{
+			floors.getChildren().add(makeOneLevelFloor(cms[0].getMazeDimension().list_rectmaze, 0));
+			floors.getChildren().add(makeOneLevelFloor(cms[cms.length - 1].getMazeDimension().list_rectmaze, cms.length));
+		}
 		return (floors);
+	}
+
+	private static Group makeOneLevelFloor(ArrayList <MazeDimension.RectInMaze> mds, int where)
+	{
+		Group res = new Group();
+
+		res.setTranslateY(-where);
+		for (MazeDimension.RectInMaze md: mds)
+		{
+			final int w = md.x2 - md.x1;
+			final int h = md.y2 - md.y1;
+			Box       f = new Box(w, 0.05, h);
+			f.setTranslateX(md.x1 + w / 2.0);
+			f.setTranslateZ(md.y1 + h / 2.0);
+			f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
+			res.getChildren().add(f);
+		}
+		return (res);
 	}
 
 	/**

@@ -74,7 +74,7 @@ public class Creator extends ScenePlus
 
 	private final LeftPanel leftPanel;
 
-	public Creator(View v, int width, int height, int nbStage)
+	public Creator(View v, int width, int height, int nbStage, boolean flyMode)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
 
@@ -138,7 +138,7 @@ public class Creator extends ScenePlus
 			updateRightPanel(root);
 		};
 
-		leftPanel = new LeftPanel(leftPaneGrSize, stages, choiceBoxListener, width, height, v);
+		leftPanel = new LeftPanel(leftPaneGrSize, stages, choiceBoxListener, width, height, v, flyMode);
 
 		ScrollPane sp = new ScrollPane(root);
 		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
@@ -172,7 +172,7 @@ public class Creator extends ScenePlus
 
 	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md)
 	{
-		this(v, md.x2 - md.x1, md.y2 - md.y1, maze.getContentMaze().length);
+		this(v, md.x2 - md.x1, md.y2 - md.y1, maze.getContentMaze().length, maze.getFlyMode());
 		for (int i = 0; i < stages.size(); i++)
 		{
 			for (LineWall l: maze.getContentMaze(i).getLineWalls())

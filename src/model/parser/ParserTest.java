@@ -18,7 +18,7 @@ public class ParserTest
 		try
 		{
 			al = new AlgoBackTracker(20, 50);
-			mm = new MainMaze(al);
+			mm = new MainMaze(al, false);
 		}
 		catch (Exception e)
 		{

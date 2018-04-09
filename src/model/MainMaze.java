@@ -26,7 +26,10 @@ public class MainMaze
 	private Player p;
 	private int current_level;
 
-	public MainMaze(ContentMaze[] cm)
+	//Peut-on voler ?
+	private boolean flyMode;
+
+	public MainMaze(ContentMaze[] cm, boolean flyMode)
 	{
 		Case start = null;
 
@@ -43,11 +46,12 @@ public class MainMaze
 			throw new RuntimeException("SNH should be checked in generation");
 		}
 		this.p.goTo(start);
+		this.flyMode = flyMode;
 	}
 
-	public MainMaze(Algo algo) throws GenFactoryException
+	public MainMaze(Algo algo, boolean flyMode) throws GenFactoryException
 	{
-		this(algo.getContentMaze());
+		this(algo.getContentMaze(), flyMode);
 	}
 
 	public ContentMaze[] getContentMaze()
@@ -88,6 +92,16 @@ public class MainMaze
 			c = cms.getCase(Case.TypeCase.END);
 		}
 		throw new RuntimeException("SNH should be checked in generation");
+	}
+
+	public boolean getFlyMode()
+	{
+		return (flyMode);
+	}
+
+	public void setFlyMode(boolean b)
+	{
+		this.flyMode = b;
 	}
 
 	/**

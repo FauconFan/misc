@@ -27,7 +27,7 @@ public class CreatorHelper
 		this.mmf.setContentMazeFactory(cmf, level_actu);
 	}
 
-	public MainMaze buildMainMaze(String name, String texturePath) throws GenFactoryException
+	public MainMaze buildMainMaze(String name, String texturePath, boolean flyMode) throws GenFactoryException
 	{
 		ContentMaze[] content;
 
@@ -36,6 +36,6 @@ public class CreatorHelper
 		{
 			content[i].setTexturePath(texturePath);
 		}
-		return (new MainMaze(content));
+		return (new MainMaze(content, flyMode));
 	}
 }
