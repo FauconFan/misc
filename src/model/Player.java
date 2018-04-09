@@ -35,7 +35,7 @@ public class Player
 	//Constantes d'accélération et de vitesse max
 	private static final float ACCELERATIONXY = 0.001f / 16000000.0f;
 	private static final float VMAX           = 0.04f;
-	private static final float PESANTEUR      = 1.5f / 32.0f;
+	private static final float PESANTEUR      = 5f;
 	private static final float VELOCITYGHOST  = 0.02f;
 
 	//Vitesse selon les axes/plan
@@ -264,7 +264,7 @@ public class Player
 
 			case jump:  if (this.zCol.isOnFloor())
 				{
-					this.velocityZ = 1.5f * Math.max(0.015f, this.velocityXY * 7f / 20.0f) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
+					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxZ) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
 				}
 				break;
 			}
@@ -277,11 +277,11 @@ public class Player
 		this.zCol.updateFloor(cms, currentLevel);
 		this.xyCol.updateWalls(cms[0].getLineWalls());
 
-		this.reallyMove();
+		this.reallyMove(t);
 
 		if (!this.isOnFloor() && !this.ghostMode)
 		{
-			this.velocityZ -= (PESANTEUR * t / 1000000000);
+			this.velocityZ -= (PESANTEUR * t / 1e9f);
 		}
 		if (nbDirPushed != 0)
 		{
@@ -297,7 +297,7 @@ public class Player
 	/**
 	 * Really move the player
 	 */
-	private void reallyMove()
+	private void reallyMove(long t)
 	{
 		final double r1 = Math.toRadians(this.horizontalAngle + this.lastDepAngle);
 
@@ -317,8 +317,12 @@ public class Player
 			this.xyCol.updateMove(d);
 			this.velocityXY = this.xyCol.getNorm();
 
-			this.zCol.updateMove(this.velocityZ);
-			this.velocityZ = this.zCol.getNorm();
+			this.zCol.updateMove(this.velocityZ * t / 1e9f);
+
+			/*if (this.zCol.getMove () < 10e-4f)
+			 * {
+			 *  this.velocityZ = - 1;
+			 * }*/
 
 			this.applyMove(this.xyCol.getMove(), this.zCol.getMove());
 		}
@@ -328,7 +332,7 @@ public class Player
 	{
 		if (!this.ghostMode)
 		{
-			this.velocityZ = (float)Math.sqrt((nbLevel + 0.5f - hitBoxZ) * 2 * PESANTEUR) / 5.25f;
+			this.velocityZ = (float)Math.sqrt((nbLevel + 0.5f - hitBoxZ) * 2 * PESANTEUR);
 		}
 	}
 
