@@ -34,7 +34,7 @@ public class MainMaze
 		Case start = null;
 
 		this.cm = cm;
-		this.p  = new Player(0.05f, 0.25f, 0.5f, 0.5f, 0.25f, 0f, 0f);
+		this.p  = new Player(0.05f, 0.1f, 0.4f, 0.5f, 0.5f, 0.4f, 0f, 0f);
 		for (int i = 0; i < cm.length; i++)
 		{
 			start = cm[i].getCase(Case.TypeCase.START);

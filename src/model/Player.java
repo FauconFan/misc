@@ -15,8 +15,10 @@ public class Player
 	//Est-on en mode ghost ?
 	private boolean ghostMode = false;
 
-	private float hitBoxCircle;
-	private float hitBoxZ;
+	public final float hitBoxCircle;
+	public final float hitBoxTop;
+	public final float hitBoxBottom;
+
 	private float posX;
 	private float posY;
 	private float posZ;
@@ -50,10 +52,11 @@ public class Player
 	//Ensemble de déplacements à faire
 	public final HashSet <Directions> dirs = new HashSet <Directions>();
 
-	public Player(float hitBoxCircle, float hitBoxZ, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
+	public Player(float hitBoxCircle, float hitBoxTop, float hitBoxBottom, float posX, float posY, float posZ, float horizontalAngle, float verticalAngle)
 	{
 		this.hitBoxCircle    = hitBoxCircle;
-		this.hitBoxZ         = hitBoxZ;
+		this.hitBoxTop       = hitBoxTop;
+		this.hitBoxBottom    = hitBoxBottom;
 		this.posX            = posX;
 		this.posY            = posY;
 		this.posZ            = posZ;
@@ -69,16 +72,6 @@ public class Player
 	public void setGhostMode(boolean b)
 	{
 		this.ghostMode = b;
-	}
-
-	public float getHitBoxCircle()
-	{
-		return (this.hitBoxCircle);
-	}
-
-	public float getHitBoxZ()
-	{
-		return (this.hitBoxZ);
 	}
 
 	public float getPosX()
@@ -194,9 +187,9 @@ public class Player
 	/**
 	 * Update the player position with the collisions with walls
 	 * @param m MainMaze
-	 * @param t Time
+	 * @param dt Time
 	 */
-	public void update(MainMaze m, long t)
+	public void update(MainMaze m, long dt)
 	{
 		int     angle       = 0;
 		int     nbDirPushed = 0;
@@ -210,9 +203,9 @@ public class Player
 		{
 			this.zCol = new CollisionsZManager(this, flyMode);
 		}
-		if (t <= 100000000)     //if not init
+		if (dt <= 100000000)     //if not init
 		{
-			this.time += t;
+			this.time += dt;
 		}
 
 		for (Directions d: dirs)
@@ -253,7 +246,7 @@ public class Player
 
 			case jump:  if (this.zCol.isOnFloor() && !flyMode)
 				{
-					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxZ) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
+					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxBottom) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
 				}
 				break;
 			}
@@ -266,27 +259,27 @@ public class Player
 		this.zCol.updateFloor(cms, currentLevel);
 		this.xyCol.updateWalls(cms[0].getLineWalls());
 
-		this.reallyMove(t);
+		this.reallyMove(dt);
 
 		if (!this.isOnFloor() && !this.ghostMode && !flyMode)
 		{
-			this.velocityZ -= (PESANTEUR * t / 1e9f);
+			this.velocityZ -= (PESANTEUR * dt / 1e9f);
 		}
 		if (nbDirPushed != 0)
 		{
-			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY * t / ((!this.isOnFloor()) ? 2.0f : 1.0f));
+			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY * dt / ((!this.isOnFloor()) ? 2.0f : 1.0f));
 			this.lastDepAngle = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushed);
 		}
 		else
 		{
-			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * t);
+			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * dt);
 		}
 	}
 
 	/**
 	 * Really move the player
 	 */
-	private void reallyMove(long t)
+	private void reallyMove(long dt)
 	{
 		final double r1 = Math.toRadians(this.horizontalAngle + this.lastDepAngle);
 
@@ -306,7 +299,7 @@ public class Player
 			this.xyCol.updateMove(d);
 			this.velocityXY = this.xyCol.getNorm();
 
-			this.zCol.updateMove(this.velocityZ * t / 1e9f);
+			this.zCol.updateMove(this.velocityZ * dt / 1e9f);
 
 			/*if (this.zCol.getMove () < 10e-4f)
 			 * {
@@ -321,7 +314,7 @@ public class Player
 	{
 		if (!this.ghostMode)
 		{
-			this.velocityZ = (float)Math.sqrt((nbLevel + 0.5f - hitBoxZ) * 2 * PESANTEUR);
+			this.velocityZ = (float)Math.sqrt((2 * nbLevel + 1 - this.hitBoxBottom - this.hitBoxTop) * 2 * PESANTEUR);
 		}
 	}
 
@@ -339,11 +332,6 @@ public class Player
 		this.posX += v.getX();
 		this.posY += v.getY();
 		this.posZ += dz;
-	}
-
-	public void setVelocityZ(float f)
-	{
-		this.velocityZ = f;
 	}
 
 	public String toString()

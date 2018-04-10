@@ -80,12 +80,12 @@ public class CollisionsXYManager
 					if (horizontalWall)
 					{
 						positionEff = (this.p.getPosY() < effectWalls[i][0].getY()) ? -1 : 1;
-						coefProp    = (effectWalls[i][0].getY() + this.p.getHitBoxCircle() * positionEff - this.p.getPosY()) / this.splitMove[0].getY();
+						coefProp    = (effectWalls[i][0].getY() + this.p.hitBoxCircle * positionEff - this.p.getPosY()) / this.splitMove[0].getY();
 					}
 					else
 					{
 						positionEff = (this.p.getPosX() < effectWalls[i][0].getX()) ? -1 : 1;
-						coefProp    = (effectWalls[i][0].getX() + this.p.getHitBoxCircle() * positionEff - this.p.getPosX()) / this.splitMove[0].getX();
+						coefProp    = (effectWalls[i][0].getX() + this.p.hitBoxCircle * positionEff - this.p.getPosX()) / this.splitMove[0].getX();
 					}
 					if ((coefProp < this.coefPropMin && coefProp < 1 && this.isConsideredWall(coefProp, effectWalls[i], horizontalWall)) &&
 						(0 < coefProp || (Math.abs(coefProp) < 10e-4f && ((horizontalWall && this.splitMove[0].getY() * positionEff < 0) || (!horizontalWall && this.splitMove[0].getX() * positionEff < 0)))))
@@ -131,17 +131,17 @@ public class CollisionsXYManager
 	{
 		if (isHorizontal)
 		{
-			return ((wall[0].getX() - this.p.getHitBoxCircle() < this.p.getPosX() + k * this.splitMove[0].getX() &&
-					 this.p.getPosX() + k * this.splitMove[0].getX() < wall[1].getX() + this.p.getHitBoxCircle()) ||
-					(wall[1].getX() - this.p.getHitBoxCircle() < this.p.getPosX() + k * this.splitMove[0].getX() &&
-					 this.p.getPosX() + k * this.splitMove[0].getX() < wall[0].getX() + this.p.getHitBoxCircle()));
+			return ((wall[0].getX() - this.p.hitBoxCircle < this.p.getPosX() + k * this.splitMove[0].getX() &&
+					 this.p.getPosX() + k * this.splitMove[0].getX() < wall[1].getX() + this.p.hitBoxCircle) ||
+					(wall[1].getX() - this.p.hitBoxCircle < this.p.getPosX() + k * this.splitMove[0].getX() &&
+					 this.p.getPosX() + k * this.splitMove[0].getX() < wall[0].getX() + this.p.hitBoxCircle));
 		}
 		else
 		{
-			return ((wall[0].getY() - this.p.getHitBoxCircle() < this.p.getPosY() + k * this.splitMove[0].getY() &&
-					 this.p.getPosY() + k * this.splitMove[0].getY() < wall[1].getY() + this.p.getHitBoxCircle()) ||
-					(wall[1].getY() - this.p.getHitBoxCircle() < this.p.getPosY() + k * this.splitMove[0].getY() &&
-					 this.p.getPosY() + k * this.splitMove[0].getY() < wall[0].getY() + this.p.getHitBoxCircle()));
+			return ((wall[0].getY() - this.p.hitBoxCircle < this.p.getPosY() + k * this.splitMove[0].getY() &&
+					 this.p.getPosY() + k * this.splitMove[0].getY() < wall[1].getY() + this.p.hitBoxCircle) ||
+					(wall[1].getY() - this.p.hitBoxCircle < this.p.getPosY() + k * this.splitMove[0].getY() &&
+					 this.p.getPosY() + k * this.splitMove[0].getY() < wall[0].getY() + this.p.hitBoxCircle));
 		}
 	}
 

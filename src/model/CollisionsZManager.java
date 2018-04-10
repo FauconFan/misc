@@ -44,9 +44,9 @@ public class CollisionsZManager
 		 *  this.zMove = (highLevel + 1) - this.p.getHitBoxZ() - this.p.getPosZ();
 		 * }
 		 *  Faire le test des murs en dessous si il n'y a pas de sol
-		 * else*/if (dz < 0 && this.p.getPosZ() - this.p.getHitBoxZ() >= highLevel && this.isFloor(cms[0]))
+		 * else*/if (dz < 0 && this.p.getPosZ() - this.p.hitBoxBottom >= highLevel && this.isFloor(cms[0]))
 		{
-			this.zMove = (this.p.getPosZ() - this.p.getHitBoxZ() + dz < highLevel) ? highLevel - (this.p.getPosZ() - this.p.getHitBoxZ()) : dz;
+			this.zMove = (this.p.getPosZ() - this.p.hitBoxBottom + dz < highLevel) ? highLevel - (this.p.getPosZ() - this.p.hitBoxBottom) : dz;
 		}
 		else
 		{
@@ -61,6 +61,6 @@ public class CollisionsZManager
 
 	public boolean isOnFloor()
 	{
-		return (this.isFloor(cms[0]) && Math.abs(this.p.getPosZ() - this.p.getHitBoxZ() - highLevel) < 10e-4);
+		return (this.isFloor(cms[0]) && Math.abs(this.p.getPosZ() - this.p.hitBoxBottom - highLevel) < 10e-4);
 	}
 }
