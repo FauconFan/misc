@@ -96,17 +96,17 @@ class LeftPanel extends VBox
 		Button button = new Button("Finish");
 		button.setOnAction((ev)->{
 			CreatorHelper ch = new CreatorHelper(stages.size());
-			for (Stage s: stages)
+			for (int i = 0; i < stages.size(); i++)
 			{
 				ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
-				for (Node l: s.walls.getChildren())
+				for (Node l: stages.get(i).walls.getChildren())
 				{
 					LinePlus li = (LinePlus)l;
 					lineWalls.add(li.lw);
 				}
 
 				ArrayList <Case> specialCases = new ArrayList <Case>();
-				for (Node l: s.cases.getChildren())
+				for (Node l: stages.get(i).cases.getChildren())
 				{
 					Case c = ((RectanglePlus)l).getCase();
 					if (c != null)
@@ -114,7 +114,7 @@ class LeftPanel extends VBox
 						specialCases.add(c);
 					}
 				}
-				ch.append(0, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
+				ch.append(i, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
 			}
 			try{
 				v.con.setMaze(ch.buildMainMaze("", textures.currentTile.filename, flyMode));
