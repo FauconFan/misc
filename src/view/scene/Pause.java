@@ -101,8 +101,6 @@ public class Pause extends ScenePlus
 			});
 
 			addButtonQuit();
-
-			putMsg();
 		}
 	}
 }

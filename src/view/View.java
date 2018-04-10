@@ -67,11 +67,6 @@ public class View
 		stage.setScene(scene);
 	}
 
-	public void setMsg(String s)
-	{
-		((Menus)this.scene).setMsg(s);
-	}
-
 	public void changeScene(Scene s)
 	{
 		stage.setScene(s);

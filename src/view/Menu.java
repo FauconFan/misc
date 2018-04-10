@@ -22,10 +22,9 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Screen;
 import javafx.stage.Window;
 
-public class Menu extends VBox implements Msg
+public class Menu extends VBox
 {
 	protected Rectangle2D primaryScreenBounds;
-	protected Label msg;
 
 	private static int screenWidth  = (int)Screen.getPrimary().getVisualBounds().getMaxX();
 	private static int screenHeight = (int)Screen.getPrimary().getVisualBounds().getMaxY();
@@ -43,10 +42,6 @@ public class Menu extends VBox implements Msg
 
 		primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 		setPrefSize(primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
-
-		msg = new Label();
-		msg.setTextFill(Color.web("#DC143C"));
-		msg.setFont(new Font("Comic Sans", 46));
 	}
 
 	protected Button addBigButton(String name)
@@ -69,19 +64,6 @@ public class Menu extends VBox implements Msg
 
 		getChildren().add(b);
 		return (b);
-	}
-
-	/**
-	 * To be called at the end of a constructor, to add the msg at the end
-	 */
-	protected void putMsg()
-	{
-		getChildren().add(this.msg);
-	}
-
-	public void setMsg(String str)
-	{
-		this.msg.setText(str);
 	}
 
 	public void addButtonQuit()

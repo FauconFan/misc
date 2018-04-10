@@ -101,8 +101,6 @@ public class Menus extends ScenePlus
 			});
 
 			addButtonQuit();
-
-			putMsg();
 		}
 	}
 
@@ -165,8 +163,6 @@ public class Menus extends ScenePlus
 			buttonCreator.setOnAction(event->{
 				v.changeScene(new Creator(v, (int)sliders[0].getValue(), (int)sliders[1].getValue(), (int)sliders[2].getValue(), cb.isSelected()));
 			});
-
-			putMsg();
 		}
 	}
 
@@ -247,17 +243,5 @@ public class Menus extends ScenePlus
 		prec = view;
 		view = m;
 		setRoot(view);
-	}
-
-	/**
-	 * Set the message box text
-	 * @param str The string
-	 */
-	public void setMsg(String str)
-	{
-		if (this.view instanceof Msg)
-		{
-			((Msg)this.view).setMsg(str);
-		}
 	}
 }
