@@ -44,8 +44,8 @@ public class Player
 	private int lastDepAngle;
 
 	//Gestionnaires de Collisions
-	private transient CollisionsXYManager xyCol = new CollisionsXYManager(this);
-	private transient CollisionsZManager zCol   = new CollisionsZManager(this);
+	private transient CollisionsXYManager xyCol;
+	private transient CollisionsZManager zCol;
 
 	//Ensemble de déplacements à faire
 	public final HashSet <Directions> dirs = new HashSet <Directions>();
@@ -198,8 +198,9 @@ public class Player
 	 */
 	public void update(MainMaze m, long t)
 	{
-		int angle       = 0;
-		int nbDirPushed = 0;
+		int     angle       = 0;
+		int     nbDirPushed = 0;
+		boolean flyMode     = m.getFlyMode();
 
 		if (this.xyCol == null)
 		{
@@ -207,7 +208,7 @@ public class Player
 		}
 		if (this.zCol == null)
 		{
-			this.zCol = new CollisionsZManager(this);
+			this.zCol = new CollisionsZManager(this, flyMode);
 		}
 		if (t <= 100000000)     //if not init
 		{
@@ -238,19 +239,19 @@ public class Player
 
 			case down: verticalAngle -= rot; break;
 
-			case goUp: if (m.getFlyMode())//TODO Check the collision
+			case goUp: if (flyMode)//TODO Check the collision
 				{
 					posZ += 0.05f;
 				}
 				break;
 
-			case goDown: if (m.getFlyMode())
+			case goDown: if (flyMode)
 				{
 					posZ -= 0.05f;
 				}
 				break;
 
-			case jump:  if (this.zCol.isOnFloor())
+			case jump:  if (this.zCol.isOnFloor() && !flyMode)
 				{
 					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxZ) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
 				}
@@ -267,7 +268,7 @@ public class Player
 
 		this.reallyMove(t);
 
-		if (!this.isOnFloor() && !this.ghostMode)
+		if (!this.isOnFloor() && !this.ghostMode && !flyMode)
 		{
 			this.velocityZ -= (PESANTEUR * t / 1e9f);
 		}

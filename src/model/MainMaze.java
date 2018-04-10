@@ -163,7 +163,7 @@ public class MainMaze
 				case JUMP:
 					if (this.p.isOnFloor())
 					{
-						this.p.actionJumpCase(1);
+						this.p.actionJumpCase(((JumpCase)c).getNbLevelJump());
 					}
 				}
 			}

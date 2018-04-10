@@ -2,31 +2,31 @@ package src.model.board;
 
 public class JumpCase extends Case
 {
-	private float speed;
+	private int nbLevelJump;
 
-	public JumpCase(int x, int y, float val)
+	public JumpCase(int x, int y, int value)
 	{
 		super(x, y, TypeCase.JUMP);
-		this.speed = val;
+		this.nbLevelJump = value;
 	}
 
-	public float getSpeed()
+	public int getNbLevelJump()
 	{
-		return (this.speed);
+		return (this.nbLevelJump);
 	}
 
 	public JumpCase clone()
 	{
-		return (new JumpCase(this.x, this.y, this.speed));
+		return (new JumpCase(this.x, this.y, this.nbLevelJump));
 	}
 
-	public void setSpeed(float f)
+	public void setNbLevelJump(int f)
 	{
-		this.speed = f;
+		this.nbLevelJump = f;
 	}
 
 	public String toString()
 	{
-		return ("JumpCase\n" + super.toString() + "Speed : " + this.speed);
+		return ("JumpCase\n" + super.toString() + "nbLevelJump : " + this.nbLevelJump);
 	}
 }
