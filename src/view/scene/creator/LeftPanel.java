@@ -84,12 +84,12 @@ class LeftPanel extends VBox
 		choiceBox.setValue(0);
 
 		//Level button
-		Button add = new Button("Add");
+		Button add = new Button("Add a level");
 		add.setOnAction((ev)->{
 			stages.add(new Stage());
 			choiceBox.getItems().add(stages.size() - 1);
 		});
-		Button remove = new Button("Remove");
+		Button remove = new Button("Remove a level");
 		remove.setOnAction((ev)->{
 			stages.remove(stages.size() - 1);
 			choiceBox.getItems().remove(stages.size());
