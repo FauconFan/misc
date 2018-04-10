@@ -83,6 +83,21 @@ class LeftPanel extends VBox
 		choiceBox.setPadding(defaultInsets);
 		choiceBox.setValue(0);
 
+		//Level button
+		Button add = new Button("Add");
+		add.setOnAction((ev)->{
+			stages.add(new Stage());
+			choiceBox.getItems().add(stages.size() - 1);
+		});
+		Button remove = new Button("Remove");
+		remove.setOnAction((ev)->{
+			stages.remove(stages.size() - 1);
+			choiceBox.getItems().remove(stages.size());
+		});
+		HBox buttonsBox = new HBox(add, remove);
+		buttonsBox.setAlignment(Pos.TOP_CENTER);
+		buttonsBox.setPadding(defaultInsets);
+
 		choiceBox.valueProperty().addListener(listener);
 
 //Textures
@@ -128,7 +143,7 @@ class LeftPanel extends VBox
 		});
 
 
-		getChildren().addAll(button, chooseYourLevel, choiceBox, textures, leftPaneGr);
+		getChildren().addAll(button, buttonsBox, chooseYourLevel, choiceBox, textures, leftPaneGr);
 	}
 
 	/**
