@@ -66,7 +66,7 @@ public class MainMaze
 
 	public ContentMaze getContentMaze(int n)
 	{
-		if (n >= cm.length)
+		if (n >= cm.length || n < 0)
 		{
 			return (null);
 		}

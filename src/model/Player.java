@@ -34,7 +34,9 @@ public class Player
 
 	//Constantes d'accélération et de vitesse max
 	private static final float ACCELERATIONXY = 0.001f / 16000000.0f;
-	private static final float VMAX           = 0.04f;
+	private static final float ACCELERATIONZ  = 0.01f / 16000000.0f;
+	private static final float VMAXXY         = 0.04f;
+	private static final float VMAXZ          = 1f;
 	private static final float PESANTEUR      = 5f;
 	private static final float VELOCITYGHOST  = 0.02f;
 
@@ -43,7 +45,9 @@ public class Player
 	private float velocityZ;
 
 	//Angle du dernier déplacement
-	private int lastDepAngle;
+	private int lastDepAngleXY = 0;
+	private int lastDepAngleZ  = 90;
+
 
 	//Gestionnaires de Collisions
 	private transient CollisionsXYManager xyCol;
@@ -191,9 +195,10 @@ public class Player
 	 */
 	public void update(MainMaze m, long dt)
 	{
-		int     angle       = 0;
-		int     nbDirPushed = 0;
-		boolean flyMode     = m.getFlyMode();
+		int     angle         = 0;
+		int     nbDirPushedXY = 0;
+		int     nbDirPushedZ  = 0;
+		boolean flyMode       = m.getFlyMode();
 
 		if (this.xyCol == null)
 		{
@@ -212,41 +217,43 @@ public class Player
 		{
 			switch (d)
 			{
-			case north: angle += 0; nbDirPushed++; break;
+			case north: angle += 0; nbDirPushedXY++; break;
 
-			case east: angle += 90; nbDirPushed++; break;
+			case east: angle += 90; nbDirPushedXY++; break;
 
-			case south: angle += 180; nbDirPushed++; break;
+			case south: angle += 180; nbDirPushedXY++; break;
 
-			case west: angle += -90; nbDirPushed++; break;
+			case west: angle += -90; nbDirPushedXY++; break;
 
 			case left: horizontalAngle -= rot;
-				lastDepAngle           += rot;
+				lastDepAngleXY         += rot;
 				break;
 
 			case right: horizontalAngle += rot;
-				lastDepAngle            -= rot;
+				lastDepAngleXY          -= rot;
 				break;
 
 			case up: verticalAngle += rot; break;
 
 			case down: verticalAngle -= rot; break;
 
-			case goUp: if (flyMode)//TODO Check the collision
+			case goUp: if (ghostMode)//TODO Check the collision
 				{
 					posZ += 0.05f;
 				}
+				nbDirPushedZ++;
 				break;
 
-			case goDown: if (flyMode)
+			case goDown: if (ghostMode)
 				{
 					posZ -= 0.05f;
 				}
+				nbDirPushedZ++;
 				break;
 
 			case jump:  if (this.zCol.isOnFloor() && !flyMode)
 				{
-					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxBottom) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocityXY / VMAX * 45);
+					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxBottom) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocityXY / VMAXXY * 45);
 				}
 				break;
 			}
@@ -254,25 +261,41 @@ public class Player
 
 		int currentLevel = m.getCurrentLevel();
 
-		ContentMaze [] cms = { m.getContentMazeCurrentLevel(), m.getContentMaze(currentLevel + 1) };
+		ContentMaze [] cms = { m.getContentMaze(currentLevel - 1), m.getContentMazeCurrentLevel(), m.getContentMaze(currentLevel + 1) };
 
 		this.zCol.updateFloor(cms, currentLevel);
-		this.xyCol.updateWalls(cms[0].getLineWalls());
+		this.xyCol.updateWalls(cms[1].getLineWalls());
 
-		this.reallyMove(dt);
-
-		if (!this.isOnFloor() && !this.ghostMode && !flyMode)
+		if (nbDirPushedXY != 0)
 		{
-			this.velocityZ -= (PESANTEUR * dt / 1e9f);
-		}
-		if (nbDirPushed != 0)
-		{
-			this.velocityXY   = Math.min(VMAX, this.velocityXY + ACCELERATIONXY * dt / ((!this.isOnFloor()) ? 2.0f : 1.0f));
-			this.lastDepAngle = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushed);
+			this.velocityXY     = Math.min(VMAXXY, this.velocityXY + ACCELERATIONXY * dt / ((!this.isOnFloor()) ? 2.0f : 1.0f));
+			this.lastDepAngleXY = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushedXY);
 		}
 		else
 		{
 			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * dt);
+		}
+
+		this.reallyMove(dt);
+
+		if (flyMode)
+		{
+			if (nbDirPushedZ != 0)
+			{
+				this.velocityZ     = Math.min(VMAXZ, this.velocityZ + ACCELERATIONZ * dt);
+				this.lastDepAngleZ = (this.dirs.contains(Directions.goUp)) ? 90 : -90;
+			}
+			else
+			{
+				this.velocityZ = Math.max(0, this.velocityZ - ACCELERATIONZ * 2 * dt);
+			}
+		}
+		else
+		{
+			if (!this.isOnFloor() && !this.ghostMode)
+			{
+				this.velocityZ -= (PESANTEUR * dt / 1e9f);
+			}
 		}
 	}
 
@@ -281,7 +304,7 @@ public class Player
 	 */
 	private void reallyMove(long dt)
 	{
-		final double r1 = Math.toRadians(this.horizontalAngle + this.lastDepAngle);
+		final double r1 = Math.toRadians(this.horizontalAngle + this.lastDepAngleXY);
 
 		float speed = (this.isRunning) ? this.speed * 2 : this.speed;
 
@@ -299,7 +322,7 @@ public class Player
 			this.xyCol.updateMove(d);
 			this.velocityXY = this.xyCol.getNorm();
 
-			this.zCol.updateMove(this.velocityZ * dt / 1e9f);
+			this.zCol.updateMove(((float)Math.sin(this.lastDepAngleZ)) * this.velocityZ * dt / 1e9f);
 
 			/*if (this.zCol.getMove () < 10e-4f)
 			 * {
