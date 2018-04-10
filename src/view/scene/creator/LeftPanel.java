@@ -164,10 +164,16 @@ class LeftPanel extends VBox
 				HBox      hy = new HBox(new Label("y: "));
 				TextField tx = new TextField(Integer.toString(((TeleportCase)c).getXDest()));
 				tx.setPrefColumnCount(4);
-				tx.textProperty().addListener((ov, o, n)->{ ((TeleportCase)c).setXDest(Integer.parseInt(n)); });            //TODO Faire attention...
+				tx.textProperty().addListener((ov, o, n)->{
+					try{ ((TeleportCase)c).setXDest(Integer.parseInt(n)); }
+					catch (Exception e) {}
+				});                            //TODO Faire attention...
 				TextField ty = new TextField(Integer.toString(((TeleportCase)c).getYDest()));
 				ty.setPrefColumnCount(4);
-				ty.textProperty().addListener((ov, o, n)->{ ((TeleportCase)c).setYDest(Integer.parseInt(n)); });
+				ty.textProperty().addListener((ov, o, n)->{
+					try{ ((TeleportCase)c).setYDest(Integer.parseInt(n)); }
+					catch (Exception e) {}
+				});
 				hx.getChildren().add(ty);
 				hy.getChildren().add(tx);
 				leftPaneGr.getChildren().addAll(hx, hy);
@@ -199,6 +205,16 @@ class LeftPanel extends VBox
 					((SpeedCase)c).setSpeedModif(z.floatValue());
 				});
 				leftPaneGr.getChildren().add(sliderS);
+				break;
+
+			case JUMP:
+				TextField taille = new TextField(Integer.toString(((JumpCase)c).getNbLevelJump()));
+				taille.setPrefColumnCount(4);
+				taille.textProperty().addListener((ov, o, n)->{
+					try{ ((JumpCase)c).setNbLevelJump(Integer.parseInt(n)); }
+					catch (Exception e) {}
+				});
+				leftPaneGr.getChildren().add(new HBox(new Label("Jump level: "), taille));
 				break;
 			}
 		}
