@@ -264,7 +264,7 @@ public class Player
 		ContentMaze [] cms = { m.getContentMaze(currentLevel - 1), m.getContentMazeCurrentLevel(), m.getContentMaze(currentLevel + 1) };
 
 		this.zCol.updateFloor(cms, currentLevel);
-		this.xyCol.updateWalls(cms[1].getLineWalls());
+		this.xyCol.updateWalls(cms, currentLevel);
 
 		if (nbDirPushedXY != 0)
 		{

@@ -8,9 +8,10 @@ import java.lang.Math;
 
 public class CollisionsXYManager
 {
-	private LineWall [] walls;
 	private Player p;
+	private int currentLevel;
 	private float coefPropMin;
+	private ContentMaze [] cms;
 	private FloatVector [] closestWall;
 	private FloatVector [] splitMove;
 	private FloatVector finalMove;
@@ -40,9 +41,10 @@ public class CollisionsXYManager
 		} while (!this.splitMove[0].isNul());
 	}
 
-	public void updateWalls(LineWall [] lw)
+	public void updateWalls(ContentMaze [] cms, int currentLevel)
 	{
-		walls = lw;
+		this.cms          = cms;
+		this.currentLevel = currentLevel;
 	}
 
 	public FloatVector getMove()
@@ -69,29 +71,38 @@ public class CollisionsXYManager
 		float coefProp;
 		float positionEff;
 
-		for (LineWall lw : this.walls)
+		for (int k = 0; k < cms.length; k++)
 		{
-			FloatVector [][] effectWalls = lw.effWalls(this.p.getPosX(), this.p.getPosY());
-			for (int i = 0; i < effectWalls.length; i++)
+			if (cms[k] != null && ((k == 0 && this.p.getPosZ() - this.p.hitBoxBottom < currentLevel) ||
+								   k == 1 ||
+								   (k == 2 && this.p.getPosZ() + this.p.hitBoxTop > currentLevel + 1)))
 			{
-				boolean horizontalWall = CollisionsXYManager.effectWallIsHorizontal(effectWalls[i]);
-				if (!this.splitMove[0].isCollinearTo((effectWalls[i][1].getX() - effectWalls[i][0].getX()), (effectWalls[i][1].getY() - effectWalls[i][0].getY())))
+				for (LineWall lw : cms[k].getLineWalls())
 				{
-					if (horizontalWall)
+					FloatVector [][] effectWalls = lw.effWalls(this.p.getPosX(), this.p.getPosY());
+					for (int i = 0; i < effectWalls.length; i++)
 					{
-						positionEff = (this.p.getPosY() < effectWalls[i][0].getY()) ? -1 : 1;
-						coefProp    = (effectWalls[i][0].getY() + this.p.hitBoxCircle * positionEff - this.p.getPosY()) / this.splitMove[0].getY();
-					}
-					else
-					{
-						positionEff = (this.p.getPosX() < effectWalls[i][0].getX()) ? -1 : 1;
-						coefProp    = (effectWalls[i][0].getX() + this.p.hitBoxCircle * positionEff - this.p.getPosX()) / this.splitMove[0].getX();
-					}
-					if ((coefProp < this.coefPropMin && coefProp < 1 && this.isConsideredWall(coefProp, effectWalls[i], horizontalWall)) &&
-						(0 < coefProp || (Math.abs(coefProp) < 10e-4f && ((horizontalWall && this.splitMove[0].getY() * positionEff < 0) || (!horizontalWall && this.splitMove[0].getX() * positionEff < 0)))))
-					{
-						this.coefPropMin = coefProp;
-						this.closestWall = effectWalls[i];
+						boolean horizontalWall = CollisionsXYManager.effectWallIsHorizontal(effectWalls[i]);
+						if (!this.splitMove[0].isCollinearTo((effectWalls[i][1].getX() - effectWalls[i][0].getX()), (effectWalls[i][1].getY() - effectWalls[i][0].getY())))
+						{
+							if (horizontalWall)
+							{
+								positionEff = (this.p.getPosY() < effectWalls[i][0].getY()) ? -1 : 1;
+								coefProp    = (effectWalls[i][0].getY() + this.p.hitBoxCircle * positionEff - this.p.getPosY()) / this.splitMove[0].getY();
+							}
+							else
+							{
+								positionEff = (this.p.getPosX() < effectWalls[i][0].getX()) ? -1 : 1;
+								coefProp    = (effectWalls[i][0].getX() + this.p.hitBoxCircle * positionEff - this.p.getPosX()) / this.splitMove[0].getX();
+							}
+							if ((coefProp < this.coefPropMin && coefProp < 1 && this.isConsideredWall(coefProp, effectWalls[i], horizontalWall)) &&
+								(0 < coefProp || (Math.abs(coefProp) < 10e-4f && ((horizontalWall && this.splitMove[0].getY() * positionEff < 0) ||
+																				  (!horizontalWall && this.splitMove[0].getX() * positionEff < 0)))))
+							{
+								this.coefPropMin = coefProp;
+								this.closestWall = effectWalls[i];
+							}
+						}
 					}
 				}
 			}
