@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import src.model.board.Case;
 import src.model.board.LineWall;
+import src.model.board.StartCase;
 import src.model.MazeDimension;
 import src.utils.FloatVector;
 
@@ -68,6 +69,18 @@ public class Player
 		this.verticalAngle   = verticalAngle;
 	}
 
+	public Player(boolean flyMode)
+	{
+		this(0.05f,
+			 0.1f,
+			 flyMode ? 0.1f : 0.4f,
+			 0.5f,
+			 0.5f,
+			 flyMode ? 0.5f : 0.4f,
+			 0f,
+			 0f);
+	}
+
 	public boolean getGhostMode()
 	{
 		return (ghostMode);
@@ -120,7 +133,7 @@ public class Player
 
 	public void updateTime(long l)
 	{
-		time += l;
+		time = Math.max(0, time + l);
 	}
 
 	public void setSpeed(float f)
@@ -171,15 +184,16 @@ public class Player
 	}
 
 	/**
-	 * Transport the player to the specified case
+	 * Transport the player to the start case
 	 * @param c The case
 	 */
-	public boolean goTo(Case c)
+	public boolean goToStartCase(StartCase c, int levelTo)
 	{
 		if (c != null)
 		{
 			posX = c.getX() + 0.5f;
 			posY = c.getY() + 0.5f;
+			posZ = (float)levelTo + hitBoxBottom;
 			return (true);
 		}
 		else

@@ -148,7 +148,7 @@ public class Menus extends ScenePlus
 				Algo al = null;
 				try
 				{
-					al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue(), (int)sliders[2].getValue());
+					al = new AlgoBackTracker((int)sliders[0].getValue(), (int)sliders[1].getValue(), (int)sliders[2].getValue(), cb.isSelected());
 				}
 				catch (Exception e)
 				{

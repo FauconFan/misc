@@ -49,6 +49,7 @@ doc:
 re: fclean all
 
 dep:
+	mkdir -p deps
 	@test -e $(DEP) || curl http://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar --output $(DEP)
 
 musics:

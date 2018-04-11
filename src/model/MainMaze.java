@@ -6,6 +6,7 @@ import src.model.board.Case;
 import src.model.board.JumpCase;
 import src.model.board.LineWall;
 import src.model.board.SpeedCase;
+import src.model.board.StartCase;
 import src.model.board.TeleportCase;
 import src.model.board.TimeCase;
 import src.model.gen.Algo;
@@ -31,21 +32,24 @@ public class MainMaze
 
 	public MainMaze(ContentMaze[] cm, boolean flyMode)
 	{
-		Case start = null;
+		StartCase start = null;
 
 		this.cm = cm;
-		this.p  = new Player(0.05f, 0.1f, 0.4f, 0.5f, 0.5f, 0.4f, 0f, 0f);
+		this.p  = new Player(flyMode);
 		for (int i = 0; i < cm.length; i++)
 		{
-			start = cm[i].getCase(Case.TypeCase.START);
-			this.current_level = i;
-			break;
+			start = (StartCase)cm[i].getCase(Case.TypeCase.START);
+			if (start != null)
+			{
+				this.current_level = i;
+				break;
+			}
 		}
 		if (start == null)
 		{
 			throw new RuntimeException("SNH should be checked in generation");
 		}
-		this.p.goTo(start);
+		this.p.goToStartCase(start, this.current_level);
 		this.flyMode = flyMode;
 	}
 
@@ -157,7 +161,7 @@ public class MainMaze
 					if (!((TimeCase)c).isActivated())
 					{
 						((TimeCase)c).activate();
-						p.updateTime(((TimeCase)c).getTimeMillis());
+						p.updateTime(-((TimeCase)c).getTimeNano() * (long)10e9);
 					}
 					break;
 
