@@ -26,6 +26,7 @@ public class Player
 	private float horizontalAngle;
 	private float verticalAngle;
 	private boolean hasWin    = false;
+	private boolean isDead    = false;
 	private float speed       = 1;
 	private boolean isRunning = false;
 	private long time;
@@ -119,6 +120,11 @@ public class Player
 	public boolean getHasWin()
 	{
 		return (this.hasWin);
+	}
+
+	public boolean getIsDead()
+	{
+		return (this.isDead);
 	}
 
 	public float getSpeed()
@@ -310,6 +316,10 @@ public class Player
 			{
 				this.velocityZ -= (PESANTEUR * dt / 1e9f);
 			}
+		}
+		if (this.velocityZ < -10)
+		{
+			this.isDead = true;
 		}
 	}
 
