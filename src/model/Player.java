@@ -120,7 +120,7 @@ public class Player
 
 	public void updateTime(long l)
 	{
-		time += l;
+		time = Math.max(0, time + l);
 	}
 
 	public void setSpeed(float f)

@@ -182,13 +182,13 @@ class LeftPanel extends VBox
 			case TIME:
 				Slider slider = new Slider();
 				slider.setMin(-5);
-				slider.setValue(((TimeCase)c).getTimeMillis());
+				slider.setValue(((TimeCase)c).getTimeNano());
 				slider.setMax(5);
 				slider.setShowTickLabels(true);
 				slider.setMajorTickUnit(0.25f);
 				slider.setBlockIncrement(0.25f);
 				slider.valueProperty().addListener((ov, x, z)->{
-					((TimeCase)c).setTimeMilis(z.longValue());
+					((TimeCase)c).setTimeNano(z.intValue());
 				});
 				leftPaneGr.getChildren().add(slider);
 				break;
