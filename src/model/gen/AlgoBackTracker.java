@@ -21,7 +21,7 @@ public class AlgoBackTracker extends Algo
 {
 	private static final boolean DEBUG_MODE = false;
 
-	public AlgoBackTracker(int y, int x, int level_number)
+	public AlgoBackTracker(int y, int x, int level_number, boolean flyMode)
 	{
 		super();
 		if (level_number < 1)
@@ -34,6 +34,16 @@ public class AlgoBackTracker extends Algo
 		RectMaze           rm;
 		RectMazeShift      rms;
 		ContentMazeFactory cmf;
+		int level_begin = 0;
+		int level_end   = level_number - 1;
+
+		if (flyMode)
+		{
+			Random ran = new Random();
+
+			level_begin = ran.nextInt(level_number);
+			level_end   = ran.nextInt(level_number);
+		}
 
 		for (int i = 0; i < level_number; i++)
 		{
@@ -42,10 +52,15 @@ public class AlgoBackTracker extends Algo
 
 			cmf = new ContentMazeFactory();
 			cmf.addContentMazeShift(rms);
-			cmf.initiateSpecialCases(i == 0, i == level_number - 1);
+			cmf.initiateSpecialCases(i == level_begin, i == level_end);
 			cmf.normalize();
 			this.mmfactory.setContentMazeFactory(cmf, i);
 		}
+	}
+
+	public AlgoBackTracker(int y, int x, int level_number)
+	{
+		this(y, x, level_number, false);
 	}
 
 	public AlgoBackTracker(int y, int x)

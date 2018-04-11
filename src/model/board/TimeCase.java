@@ -2,23 +2,23 @@ package src.model.board;
 
 public class TimeCase extends Case
 {
-	private long timeMillis;
+	private int timeNano;
 	private boolean activated = false;
 
-	public TimeCase(int x, int y, long val)
+	public TimeCase(int x, int y, int val)
 	{
 		super(x, y, TypeCase.TIME);
-		this.timeMillis = val;
+		this.timeNano = val;
 	}
 
-	public long getTimeMillis()
+	public int getTimeNano()
 	{
-		return (this.timeMillis);
+		return (this.timeNano);
 	}
 
 	public TimeCase clone()
 	{
-		return (new TimeCase(this.x, this.y, this.timeMillis));
+		return (new TimeCase(this.x, this.y, this.timeNano));
 	}
 
 	public boolean isActivated()
@@ -31,13 +31,13 @@ public class TimeCase extends Case
 		activated = true;
 	}
 
-	public void setTimeMilis(long l)
+	public void setTimeNano(int l)
 	{
-		timeMillis = l;
+		timeNano = l;
 	}
 
 	public String toString()
 	{
-		return ("TimeCase\n" + super.toString() + "Reduce time : " + this.timeMillis);
+		return ("TimeCase\n" + super.toString() + "Reduce time : " + this.timeNano);
 	}
 }
