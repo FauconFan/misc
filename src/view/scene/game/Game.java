@@ -107,6 +107,9 @@ public class Game extends ScenePlus
 		AmbientLight al = new AmbientLight(Color.WHITE);
 		root3D.getChildren().add(al);
 
+		level.setText("Current level : " + currentLevel);
+
+
 		SubScene scene3D = new SubScene(root3D, screenWidth, screenHeight, true, null);
 		SubScene scene2D = new SubScene(root2D, screenWidth, screenHeight, true, null);
 		sceneMiniMap = new MiniMap(400, 400, new Scale(sc.getX(), sc.getZ()), m.getContentMazeCurrentLevel().getLineWalls());
@@ -340,7 +343,7 @@ public class Game extends ScenePlus
 			if (currentLevel != maze.getCurrentLevel())
 			{
 				currentLevel = maze.getCurrentLevel();
-				level.setText("Current level: " + currentLevel);
+				level.setText("Current level : " + currentLevel);
 				sceneMiniMap.makeLineWalls(maze.getContentMazeCurrentLevel().getLineWalls());
 			}
 			oldTime = l;

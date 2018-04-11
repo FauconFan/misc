@@ -73,9 +73,9 @@ public class CollisionsXYManager
 
 		for (int k = 0; k < cms.length; k++)
 		{
-			if (cms[k] != null && ((k == 0 && this.p.getPosZ() - this.p.hitBoxBottom < currentLevel) ||
-								   k == 1 ||
-								   (k == 2 && this.p.getPosZ() + this.p.hitBoxTop > currentLevel + 1)))
+			if (cms[k] != null&& ((k == 0 && this.p.getPosZ() - this.p.hitBoxBottom < currentLevel) ||
+								  k == 1 ||
+								  (k == 2 && this.p.getPosZ() + this.p.hitBoxTop > currentLevel + 1)))
 			{
 				for (LineWall lw : cms[k].getLineWalls())
 				{
