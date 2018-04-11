@@ -73,7 +73,7 @@ public class Player
 	{
 		this(0.05f,
 			 0.1f,
-			 flyMode ? 0.4f : 0.1f,
+			 flyMode ? 0.1f : 0.4f,
 			 0.5f,
 			 0.5f,
 			 flyMode ? 0.5f : 0.4f,
