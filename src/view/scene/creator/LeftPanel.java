@@ -25,6 +25,12 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -47,6 +53,7 @@ import javafx.beans.value.ChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.function.Consumer;
 
 import src.model.*;
 import src.model.board.*;
@@ -167,18 +174,8 @@ class LeftPanel extends VBox
 			case TELEPORT:
 				HBox      hx = new HBox(new Label("x: "));
 				HBox      hy = new HBox(new Label("y: "));
-				TextField tx = new TextField(Integer.toString(((TeleportCase)c).getXDest()));
-				tx.setPrefColumnCount(4);
-				tx.textProperty().addListener((ov, o, n)->{
-					try{ ((TeleportCase)c).setXDest(Integer.parseInt(n)); }
-					catch (Exception e) {}
-				});                            //TODO Faire attention...
-				TextField ty = new TextField(Integer.toString(((TeleportCase)c).getYDest()));
-				ty.setPrefColumnCount(4);
-				ty.textProperty().addListener((ov, o, n)->{
-					try{ ((TeleportCase)c).setYDest(Integer.parseInt(n)); }
-					catch (Exception e) {}
-				});
+				TextField tx = new IntTextField(((TeleportCase)c).getXDest(), (n)->{ ((TeleportCase)c).setXDest(n); });                            //TODO Faire attention...
+				TextField ty = new IntTextField(((TeleportCase)c).getYDest(), (n)->{ ((TeleportCase)c).setYDest(n); });
 				hx.getChildren().add(ty);
 				hy.getChildren().add(tx);
 				leftPaneGr.getChildren().addAll(hx, hy);
@@ -213,12 +210,7 @@ class LeftPanel extends VBox
 				break;
 
 			case JUMP:
-				TextField taille = new TextField(Integer.toString(((JumpCase)c).getNbLevelJump()));
-				taille.setPrefColumnCount(4);
-				taille.textProperty().addListener((ov, o, n)->{
-					try{ ((JumpCase)c).setNbLevelJump(Integer.parseInt(n)); }
-					catch (Exception e) {}
-				});
+				TextField taille = new IntTextField(((JumpCase)c).getNbLevelJump(), (n)->{ ((JumpCase)c).setNbLevelJump(n); });
 				leftPaneGr.getChildren().add(new HBox(new Label("Jump level: "), taille));
 				break;
 			}
@@ -228,6 +220,24 @@ class LeftPanel extends VBox
 	public void setCurrentTexture(String str)
 	{
 		textures.setCurrentTexture(str);
+	}
+
+	private class IntTextField extends TextField
+	{
+		public IntTextField(int defaultValue, Consumer <Integer> ch)
+		{
+			super(Integer.toString(defaultValue));
+			setPrefColumnCount(4);
+			textProperty().addListener((ov, h, n)->{
+				try{
+					ch.accept(Integer.parseInt(n));
+					setBorder(Border.EMPTY);
+				}
+				catch (Exception e) {
+					setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.DEFAULT_WIDTHS)));
+				}
+			});
+		}
 	}
 
 	private class Textures extends GridPane
