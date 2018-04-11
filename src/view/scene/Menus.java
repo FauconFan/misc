@@ -134,7 +134,7 @@ public class Menus extends ScenePlus
 				}
 			}
 
-			final CheckBox cb = new CheckBox("FlyMode ?");
+			final CheckBox cb = new CheckBox("FlyMode");
 			getChildren().add(cb);
 
 			final Button buttonCreate = addSmallButton("Create randomly");
