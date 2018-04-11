@@ -37,7 +37,7 @@ public class MapIntro7 extends Algo
 
 		cmf.addSpecialCase(new StartCase(1, 5));
 		cmf.addSpecialCase(new EndCase(size_y - 1, 0));
-		cmf.addSpecialCase(new TeleportCase(0, 0, 1, 4));
+		cmf.addSpecialCase(new TeleportCase(0, 0, 1, 4, 0));
 		cmf.addSpecialCase(new SpeedCase(2, 4, 0.5f));
 		cmf.addSpecialCase(new TimeCase(3, 2, 1000));
 		cmf.addSpecialCase(new SpeedCase(8, 2, 1.5f));

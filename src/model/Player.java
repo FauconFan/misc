@@ -138,9 +138,9 @@ public class Player
 		posY = y;
 	}
 
-	public void addPosZ(float z)
+	public void setPosZ(float z)
 	{
-		posZ += z;
+		posZ = z;
 	}
 
 	public void setWin(boolean b)

@@ -411,7 +411,7 @@ public class ContentMazeFactory
 			this.contentSpecialCases.add(new TimeCase(tmp.x, tmp.y, 1000));
 			tmp  = this.genRandomPoint(ran, li, oldPoints);
 			tmp2 = this.genRandomPoint(ran, li, oldPoints);
-			this.contentSpecialCases.add(new TeleportCase(tmp.x, tmp.y, tmp2.x, tmp2.y));
+			this.contentSpecialCases.add(new TeleportCase(tmp.x, tmp.y, tmp2.x, tmp2.y, 0));
 			tmp = this.genRandomPoint(ran, li, oldPoints);
 			this.contentSpecialCases.add(new JumpCase(tmp.x, tmp.y, 1));
 		}

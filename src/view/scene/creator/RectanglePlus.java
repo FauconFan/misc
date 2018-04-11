@@ -76,7 +76,7 @@ class RectanglePlus extends Rectangle
 
 			case SPEED: cas = new SpeedCase(getIntX(), getIntY(), 1); break;
 
-			case TELEPORT: cas = new TeleportCase(getIntX(), getIntY(), 0, 0); break;
+			case TELEPORT: cas = new TeleportCase(getIntX(), getIntY(), 0, 0, 0); break;
 
 			case JUMP: cas = new JumpCase(getIntX(), getIntY(), 1); break;
 

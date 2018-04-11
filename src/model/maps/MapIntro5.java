@@ -33,8 +33,8 @@ public class MapIntro5 extends Algo
 
 		cmf.addSpecialCase(new StartCase(0, 0));
 		cmf.addSpecialCase(new EndCase(9, 0));
-		cmf.addSpecialCase(new TeleportCase(2, 4, 7, 4));
-		cmf.addSpecialCase(new TeleportCase(7, 3, 2, 3));
+		cmf.addSpecialCase(new TeleportCase(2, 4, 7, 4, 0));
+		cmf.addSpecialCase(new TeleportCase(7, 3, 2, 3, 0));
 		cmf.normalize();
 	}
 

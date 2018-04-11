@@ -142,6 +142,7 @@ public class MainMaze
 				case TELEPORT:
 					this.p.setPosX(((TeleportCase)c).getXDest() + 0.5f);
 					this.p.setPosY(((TeleportCase)c).getYDest() + 0.5f);
+					this.p.setPosZ(((TeleportCase)c).getStage() + this.p.hitBoxBottom);
 					break;
 
 				case SPEED:
