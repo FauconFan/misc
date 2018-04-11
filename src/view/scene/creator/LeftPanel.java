@@ -72,6 +72,7 @@ class LeftPanel extends VBox
 		setPadding(defaultInsets);
 
 		//Level
+
 		Label chooseYourLevel = new Label("Choose your level: ");
 		chooseYourLevel.setPadding(defaultInsets);
 
@@ -84,17 +85,21 @@ class LeftPanel extends VBox
 		choiceBox.setValue(0);
 
 		//Level button
-		Button add = new Button("Add a level");
+		Label  leve = new Label("Level");
+		Button add  = new Button("Add");
 		add.setOnAction((ev)->{
 			stages.add(new Stage());
 			choiceBox.getItems().add(stages.size() - 1);
 		});
-		Button remove = new Button("Remove a level");
+		Button remove = new Button("Remove");
 		remove.setOnAction((ev)->{
 			stages.remove(stages.size() - 1);
 			choiceBox.getItems().remove(stages.size());
 		});
-		HBox buttonsBox = new HBox(add, remove);
+		HBox tempButton = new HBox(add, remove);
+		tempButton.setAlignment(Pos.TOP_CENTER);
+
+		VBox buttonsBox = new VBox(leve, tempButton);
 		buttonsBox.setAlignment(Pos.TOP_CENTER);
 		buttonsBox.setPadding(defaultInsets);
 
