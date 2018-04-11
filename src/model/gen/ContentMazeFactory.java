@@ -406,7 +406,7 @@ public class ContentMazeFactory
 		for (int i = 0; i < max; i++)
 		{
 			tmp = this.genRandomPoint(ran, li, oldPoints);
-			this.contentSpecialCases.add(new SpeedCase(tmp.x, tmp.y, 0.5f));
+			this.contentSpecialCases.add(new SpeedCase(tmp.x, tmp.y, 1.00001f));
 			tmp = this.genRandomPoint(ran, li, oldPoints);
 			this.contentSpecialCases.add(new TimeCase(tmp.x, tmp.y, 1000));
 			tmp  = this.genRandomPoint(ran, li, oldPoints);
