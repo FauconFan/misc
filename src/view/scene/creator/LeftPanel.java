@@ -172,27 +172,14 @@ class LeftPanel extends VBox
 			switch (c.type)
 			{
 			case TELEPORT:
-				HBox      hx = new HBox(new Label("x: "));
-				HBox      hy = new HBox(new Label("y: "));
-				TextField tx = new IntTextField(((TeleportCase)c).getXDest(), (n)->{ ((TeleportCase)c).setXDest(n); });                            //TODO Faire attention...
-				TextField ty = new IntTextField(((TeleportCase)c).getYDest(), (n)->{ ((TeleportCase)c).setYDest(n); });
-				hx.getChildren().add(ty);
-				hy.getChildren().add(tx);
-				leftPaneGr.getChildren().addAll(hx, hy);
+				TextField tx = new IntTextField(((TeleportCase)c).getXDest(), ((TeleportCase)c)::setXDest);                            //TODO Faire attention...
+				TextField ty = new IntTextField(((TeleportCase)c).getYDest(), ((TeleportCase)c)::setYDest);
+				leftPaneGr.getChildren().addAll(new HBox(new Label("x : "), tx), new HBox(new Label("y : "), ty));
 				break;
 
 			case TIME:
-				Slider slider = new Slider();
-				slider.setMin(-5);
-				slider.setValue(((TimeCase)c).getTimeNano());
-				slider.setMax(5);
-				slider.setShowTickLabels(true);
-				slider.setMajorTickUnit(0.25f);
-				slider.setBlockIncrement(0.25f);
-				slider.valueProperty().addListener((ov, x, z)->{
-					((TimeCase)c).setTimeNano(z.intValue());
-				});
-				leftPaneGr.getChildren().add(slider);
+				TextField tf = new IntTextField(((TimeCase)c).getTimeNano(), ((TimeCase)c)::setTimeNano);
+				leftPaneGr.getChildren().add(new HBox(new Label("Time: "), tf));
 				break;
 
 			case SPEED:
@@ -210,7 +197,7 @@ class LeftPanel extends VBox
 				break;
 
 			case JUMP:
-				TextField taille = new IntTextField(((JumpCase)c).getNbLevelJump(), (n)->{ ((JumpCase)c).setNbLevelJump(n); });
+				TextField taille = new IntTextField(((JumpCase)c).getNbLevelJump(), ((JumpCase)c)::setNbLevelJump);
 				leftPaneGr.getChildren().add(new HBox(new Label("Jump level: "), taille));
 				break;
 			}
