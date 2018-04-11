@@ -33,6 +33,10 @@
   -fx-control-inner-background: gray;
 }
 
+.slider .axis{
+  -fx-tick-label-fill: white;
+}
+
 
 @font-face {
     font-family: 'confidential';
@@ -95,4 +99,17 @@
   -fx-fill: linear-gradient(from 10% 0% to 100% 200%, repeat, white 0%, silver 35%);
   -fx-stroke: black;
   -fx-stroke-width: 1;
+}
+
+.check-box .box {
+-fx-background-color: gray;
+-fx-border-color:grey;
+-fx-border-radius:3px;
+}
+.check-box .text {
+  -fx-fill: white;
+}
+
+.check-box:selected .mark {
+  -fx-background-color: white;
 }
