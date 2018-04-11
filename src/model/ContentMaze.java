@@ -104,6 +104,18 @@ public class ContentMaze
 		return (null);
 	}
 
+	public boolean isWall(float x, float y, float hitBox)
+	{
+		for (LineWall lw : linewalls)
+		{
+			if (lw.playerInWall(x, y, hitBox))
+			{
+				return (true);
+			}
+		}
+		return (false);
+	}
+
 	public String getTexturePath()
 	{
 		return (this.texturePath);

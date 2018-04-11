@@ -204,6 +204,11 @@ public class LineWall implements Cloneable
 		return (wall);
 	}
 
+	public boolean playerInWall(float x, float y, float hitBox)
+	{
+		return (this.y1 - this.epaisseur <= y && y <= this.y2 + this.epaisseur && this.x1 - this.epaisseur <= x && x <= this.x2 + this.epaisseur);
+	}
+
 	public static LineWall[] breakWallsIntoSimpleOnes(LineWall lw)
 	{
 		ArrayList <LineWall> res;

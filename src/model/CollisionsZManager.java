@@ -38,13 +38,12 @@ public class CollisionsZManager
 
 	public void updateMove(float dz)
 	{
-		//	Il faut mettre a la place le test des murs au dessus
-		if (isFlyMode && dz > 0 && /*((cms[2] != null && murs) ||*/ (cms[2] == null) && this.p.getPosZ() + this.p.hitBoxTop + dz > highLevel + 1 /*&& this.isFloor(cms[2])*/)
+		if (isFlyMode && dz > 0 && this.p.getPosZ() + this.p.hitBoxTop + dz > highLevel + 1 && ((cms[2] != null && cms[2].isWall(this.p.getPosX(), this.p.getPosY(), this.p.hitBoxCircle)) || (cms[2] == null)) /*&& this.isFloor(cms[2])*/)
 		{
 			this.zMove = (highLevel + 1) - this.p.hitBoxTop - this.p.getPosZ();
 		}
 		//Faire le test des murs en dessous si il n'y a pas de sol
-		else if (dz < 0 && this.p.getPosZ() - this.p.hitBoxBottom >= highLevel && this.isFloor(cms[1]))
+		else if (dz < 0 && this.p.getPosZ() - this.p.hitBoxBottom >= highLevel && (this.isFloor(cms[1]) || (cms[0] != null && cms[0].isWall(this.p.getPosX(), this.p.getPosY(), this.p.hitBoxCircle))))
 		{
 			this.zMove = (this.p.getPosZ() - this.p.hitBoxBottom + dz < highLevel) ? highLevel - (this.p.getPosZ() - this.p.hitBoxBottom) : dz;
 		}
