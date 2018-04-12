@@ -140,20 +140,7 @@ public class Init
 	public static Group makeWalls(Scale sc, MainMaze maze)
 	{
 		Material mat;
-
-		try{
-			String texturePath = maze.getContentMazeCurrentLevel().getTexturePath();
-			if (texturePath == null)
-			{
-				texturePath = "assets/Brick_wall_002_COLOR.jpg";          //Default
-			}
-			Image img = new Image(new FileInputStream(texturePath), 400, 400, true, false);
-			mat = new PhongMaterial(Color.WHITE, img, null, null, null);
-		}
-		catch (Exception e) {
-			mat = new PhongMaterial(Color.GREEN);
-		}
-		Group walls = new Group();
+		Group    walls = new Group();
 
 		// On scale les murs
 		walls.getTransforms().add(sc);
@@ -161,6 +148,18 @@ public class Init
 		ContentMaze[] cms   = maze.getContentMaze();
 		for (int i = 0; i < cms.length; i++)
 		{
+			try{
+				String texturePath = cms[i].getTexturePath();
+				if (texturePath == null)
+				{
+					texturePath = "assets/Brick_wall_002_COLOR.jpg";      //Default
+				}
+				Image img = new Image(new FileInputStream(texturePath), 400, 400, true, false);
+				mat = new PhongMaterial(Color.WHITE, img, null, null, null);
+			}
+			catch (Exception e) {
+				mat = new PhongMaterial(Color.GREEN);
+			}
 			for (LineWall l: cms[i].getLineWalls())
 			{
 				LineWall[] broken = LineWall.breakWallsIntoSimpleOnes(l);

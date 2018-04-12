@@ -72,8 +72,8 @@ public class Creator extends ScenePlus
 	private final Scale sc     = new Scale(100, 100);
 	private final Translate tr = new Translate(10, 10); // Décalage par défaut du dessin
 
-	private final ArrayList <Stage> stages = new ArrayList <Stage>();
-	private int currentStage = 0;
+	protected final ArrayList <Stage> stages = new ArrayList <Stage>();
+	protected int currentStage = 0;
 
 	private final LeftPanel leftPanel;
 
@@ -145,10 +145,11 @@ public class Creator extends ScenePlus
 			{
 				drawCircles(width, height);
 			}
+
 			updateRightPanel(root);
 		};
 
-		leftPanel = new LeftPanel(leftPaneGrSize, stages, choiceBoxListener, width, height, v, flyMode);
+		leftPanel = new LeftPanel(leftPaneGrSize, this, choiceBoxListener, width, height, v, flyMode);
 
 		ScrollPane sp = new ScrollPane(root);
 		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
@@ -198,6 +199,7 @@ public class Creator extends ScenePlus
 				});
 				stages.get(i).cases.getChildren().add(rect);
 			}
+			stages.get(i).setTexture(maze.getContentMaze(i).getTexturePath());
 		}
 
 		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getTexturePath());

@@ -11,7 +11,9 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
@@ -54,6 +56,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.function.Consumer;
+import java.util.Optional;
 
 import src.model.*;
 import src.model.board.*;
@@ -70,16 +73,20 @@ class LeftPanel extends VBox
 
 	public final Textures textures;
 
+	public final Creator creator;
+
 	public final VBox leftPaneGr;
 
-	public LeftPanel(int leftPaneGrSize, ArrayList <Stage> stages, ChangeListener <Integer> listener, int width, int height, View v, boolean flyMode)
+	public LeftPanel(int leftPaneGrSize, Creator creator, ChangeListener <Integer> listener, int width, int height, View v, boolean flyMode)
 	{
 		setMinSize(leftPaneGrSize, 0);
 		setAlignment(Pos.TOP_CENTER);
 		setPadding(defaultInsets);
 
-		//Level
+		this.creator = creator;
+		ArrayList <Stage> stages = creator.stages;
 
+		//Level
 		Label chooseYourLevel = new Label("Choose your level: ");
 		chooseYourLevel.setPadding(defaultInsets);
 
@@ -100,8 +107,13 @@ class LeftPanel extends VBox
 		});
 		Button remove = new Button("Remove");
 		remove.setOnAction((ev)->{
-			stages.remove(stages.size() - 1);
-			choiceBox.getItems().remove(stages.size());
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Do you really want to quit the creator ?", ButtonType.YES, ButtonType.NO);
+			Optional <ButtonType> result = alert.showAndWait();
+			if (result.isPresent() && result.get() == ButtonType.YES)
+			{
+				stages.remove(stages.size() - 1);
+				choiceBox.getItems().remove(stages.size());
+			}
 		});
 		HBox tempButton = new HBox(add, remove);
 		tempButton.setAlignment(Pos.TOP_CENTER);
@@ -110,10 +122,14 @@ class LeftPanel extends VBox
 		buttonsBox.setAlignment(Pos.TOP_CENTER);
 		buttonsBox.setPadding(defaultInsets);
 
-		choiceBox.valueProperty().addListener(listener);
-
-//Textures
+		//Textures
 		textures = new Textures(leftPaneGrSize);
+
+		choiceBox.valueProperty().addListener((ov, h, n)->{
+			listener.changed(ov, h, n);
+			setCurrentTexture(stages.get(creator.currentStage).getTexture());
+		});
+
 		//Placeholder for case
 		leftPaneGr = new VBox();
 		leftPaneGr.setAlignment(Pos.TOP_CENTER);
@@ -141,10 +157,10 @@ class LeftPanel extends VBox
 						specialCases.add(c);
 					}
 				}
-				ch.append(i, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]));
+				ch.append(i, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]), stages.get(i).getTexture());
 			}
 			try{
-				v.con.setMaze(ch.buildMainMaze("", textures.currentTile.filename, flyMode));
+				v.con.setMaze(ch.buildMainMaze("", flyMode));
 				v.showGame();
 			}
 			catch (Exception e) {
@@ -156,6 +172,18 @@ class LeftPanel extends VBox
 
 
 		getChildren().addAll(button, buttonsBox, chooseYourLevel, choiceBox, textures, leftPaneGr);
+	}
+
+	public void setCurrentTexture(String str)
+	{
+		if (str != null&& !str.equals(""))
+		{
+			textures.setCurrentTexture(str);
+		}
+		else
+		{
+			textures.reset();
+		}
 	}
 
 	/**
@@ -204,11 +232,6 @@ class LeftPanel extends VBox
 		}
 	}
 
-	public void setCurrentTexture(String str)
-	{
-		textures.setCurrentTexture(str);
-	}
-
 	private class IntTextField extends TextField
 	{
 		public IntTextField(int defaultValue, Consumer <Integer> ch)
@@ -254,11 +277,17 @@ class LeftPanel extends VBox
 				}
 				catch (Exception e) {}
 			}
-			if (textures.length != 0)
+		}
+
+		private void setCurrentTile(Tile tile)
+		{
+			if (currentTile != null)
 			{
-				currentTile = (Tile)getChildren().get(0);
-				((ColorAdjust)currentTile.getEffect()).setBrightness(0);
+				((ColorAdjust)currentTile.getEffect()).setBrightness(-0.6);
 			}
+			currentTile = tile;
+			((ColorAdjust)currentTile.getEffect()).setBrightness(0);
+			creator.stages.get(creator.currentStage).setTexture(tile.filename);
 		}
 
 		private File[] getTextures()
@@ -285,29 +314,13 @@ class LeftPanel extends VBox
 					setCurrentTile(t);
 				}
 			}
+			creator.stages.get(creator.currentStage).setTexture(str);
 		}
 
-		//For textures
-		private class Tile extends Rectangle
+		public void reset()
 		{
-			private final String filename;
-			public Tile(File texture, int tileLength) throws FileNotFoundException
-			{
-				super(tileLength, tileLength);
-				filename = texture.getPath();
-				setEffect(new ColorAdjust());
-				setFill(new ImagePattern(new Image(new FileInputStream(texture), tileLength, tileLength, true, false)));
-			}
-		}
-
-		private void setCurrentTile(Tile tile)
-		{
-			if (currentTile != null)
-			{
-				((ColorAdjust)currentTile.getEffect()).setBrightness(-0.6);
-			}
-			currentTile = tile;
-			((ColorAdjust)currentTile.getEffect()).setBrightness(0);
+			((ColorAdjust)currentTile.getEffect()).setBrightness(-0.6);
+			currentTile = null;
 		}
 	}
 }
