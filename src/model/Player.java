@@ -308,11 +308,11 @@ public class Player
 		{
 			if (nbDirPushedZ != 0)
 			{
-				this.velocityZ = Math.min(VMAXZ, Math.abs(this.velocityZ) + ACCELERATIONZ / 2.0f * dt / 1e9f) * this.sign(this.velocityZ);
+				this.velocityZ = Math.min(VMAXZ, Math.abs(this.velocityZ) + ACCELERATIONZ / 2.0f * dt / 1e9f) * this.sign(this.velocityZ, this.dirs.contains(Directions.goUp));
 			}
 			else
 			{
-				this.velocityZ = Math.max(0, Math.abs(this.velocityZ) - ACCELERATIONZ * 2 * dt / 1e9f) * this.sign(this.velocityZ);
+				this.velocityZ = Math.max(0, Math.abs(this.velocityZ) - ACCELERATIONZ * 2 * dt / 1e9f) * this.sign(this.velocityZ, true);
 			}
 		}
 		else
@@ -398,11 +398,18 @@ public class Player
 		this.posZ += dz;
 	}
 
-	public int sign(float f)
+	public int sign(float f, boolean positiveZero)
 	{
 		if (f == 0)
 		{
-			return (1);
+			if (positiveZero)
+			{
+				return (1);
+			}
+			else
+			{
+				return (-1);
+			}
 		}
 		return ((int)Math.signum(f));
 	}
