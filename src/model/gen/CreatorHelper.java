@@ -20,7 +20,7 @@ public class CreatorHelper
 
 	public void append(int level_actu, int minX, int maxX, int minY, int maxY, LineWall[] lw, Case[] cases)
 	{
-		ContentMazeFactory cmf = new ContentMazeFactory();
+		ContentMazeFactory cmf = new ContentMazeFactory(true);
 
 		cmf.addContentMazeShift(new RectMazeShift(new RectMaze(new ContentMazeEgg(cases, lw), Math.abs(maxX - minX), Math.abs(maxY - minY)), 0, 0));
 

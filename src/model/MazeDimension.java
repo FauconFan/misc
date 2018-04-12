@@ -6,15 +6,22 @@ import java.util.ArrayList;
 public class MazeDimension implements Cloneable
 {
 	public final ArrayList <RectInMaze> list_rectmaze;
+	public final boolean hasPhysicalDimension;
 
-	public MazeDimension()
+	public MazeDimension(boolean hasPhysicalDimension)
 	{
-		this.list_rectmaze = new ArrayList <>();
+		this.list_rectmaze        = new ArrayList <>();
+		this.hasPhysicalDimension = hasPhysicalDimension;
 	}
 
 	public ArrayList <RectInMaze> getListRectMaze()
 	{
 		return (this.list_rectmaze);
+	}
+
+	public boolean hasPhysicalDimension()
+	{
+		return (this.hasPhysicalDimension);
 	}
 
 	public void append(RectInMaze rim)
@@ -31,7 +38,7 @@ public class MazeDimension implements Cloneable
 	{
 		MazeDimension mz;
 
-		mz = new MazeDimension();
+		mz = new MazeDimension(this.hasPhysicalDimension);
 		for (RectInMaze rim : this.list_rectmaze)
 		{
 			mz.append(rim.clone());
@@ -52,6 +59,10 @@ public class MazeDimension implements Cloneable
 
 	public boolean isFloor(float x, float y)
 	{
+		if (hasPhysicalDimension == false)
+		{
+			return (false);
+		}
 		for (RectInMaze r : list_rectmaze)
 		{
 			if (r.contains(x, y))

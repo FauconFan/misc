@@ -31,9 +31,9 @@ public class ContentMazeFactory
 	private HashMap <Integer, ArrayList <LineWall> > listDoorsY;
 	private ArrayList <Case> contentSpecialCases;
 
-	public ContentMazeFactory()
+	public ContentMazeFactory(boolean floorsWithPhysicalDimension)
 	{
-		this.mazeDim             = new MazeDimension();
+		this.mazeDim             = new MazeDimension(floorsWithPhysicalDimension);
 		this.contentX            = new HashMap <>();
 		this.contentY            = new HashMap <>();
 		this.listDoorsX          = new HashMap <>();
@@ -367,7 +367,7 @@ public class ContentMazeFactory
 		return (res);
 	}
 
-	public void initiateSpecialCases(boolean genStart, boolean genEnd)
+	public void initiateSpecialCases(boolean genStart, boolean genEnd, boolean flyMode)
 	{
 		ArrayList <Point>      oldPoints;
 		ArrayList <RectInMaze> li;
@@ -412,8 +412,11 @@ public class ContentMazeFactory
 			tmp  = this.genRandomPoint(ran, li, oldPoints);
 			tmp2 = this.genRandomPoint(ran, li, oldPoints);
 			this.contentSpecialCases.add(new TeleportCase(tmp.x, tmp.y, tmp2.x, tmp2.y, 0));
-			tmp = this.genRandomPoint(ran, li, oldPoints);
-			this.contentSpecialCases.add(new JumpCase(tmp.x, tmp.y, 1));
+			if (flyMode == false)
+			{
+				tmp = this.genRandomPoint(ran, li, oldPoints);
+				this.contentSpecialCases.add(new JumpCase(tmp.x, tmp.y, 1));
+			}
 		}
 	}
 

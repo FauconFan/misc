@@ -24,7 +24,7 @@ public class MapIntro1 extends Algo
 	public MapIntro1()
 	{
 		super();
-		ContentMazeFactory cmf = new ContentMazeFactory();
+		ContentMazeFactory cmf = new ContentMazeFactory(true);
 
 		this.mmfactory = new MainMazeFactory(1);
 		this.mmfactory.setContentMazeFactory(cmf, 0);

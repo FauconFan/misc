@@ -50,9 +50,9 @@ public class AlgoBackTracker extends Algo
 			rm  = buildRect(y, x);
 			rms = new RectMazeShift(rm, 0, 0);
 
-			cmf = new ContentMazeFactory();
+			cmf = new ContentMazeFactory(flyMode == false || i == 0);
 			cmf.addContentMazeShift(rms);
-			cmf.initiateSpecialCases(i == level_begin, i == level_end);
+			cmf.initiateSpecialCases(i == level_begin, i == level_end, flyMode);
 			cmf.normalize();
 			this.mmfactory.setContentMazeFactory(cmf, i);
 		}
