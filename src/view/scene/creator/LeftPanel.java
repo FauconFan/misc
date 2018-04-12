@@ -99,22 +99,50 @@ class LeftPanel extends VBox
 		choiceBox.setValue(0);
 
 		//Level button
-		Label  leve = new Label("Level");
-		Button add  = new Button("Add");
-		add.setOnAction((ev)->{
-			stages.add(new Stage());
-			choiceBox.getItems().add(stages.size() - 1);
-		});
-		Button remove = new Button("Remove");
+		Label  leve   = new Label("Level");
+		Button remove = new Button("Remove");//ASSERT more than one level
 		remove.setOnAction((ev)->{
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Do you really want to quit the creator ?", ButtonType.YES, ButtonType.NO);
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Do you really want to remove the current level ?", ButtonType.YES, ButtonType.NO);
 			Optional <ButtonType> result = alert.showAndWait();
 			if (result.isPresent() && result.get() == ButtonType.YES)
 			{
-				stages.remove(stages.size() - 1);
-				choiceBox.getItems().remove(stages.size());
+				choiceBox.getItems().clear();                 //Reset the choice box
+				for (int i = 0; i < stages.size() - 1; i++)
+				{
+					choiceBox.getItems().add(i);
+				}
+				if ((creator.currentStage == 0))
+				{
+					stages.remove(0);
+					choiceBox.setValue(0);
+				}
+				else
+				{
+					choiceBox.setValue(creator.currentStage - 1);             //Trigger the change in the right panel, will change currentStage
+					stages.remove(creator.currentStage + 1);
+				}
+			}
+			if (stages.size() == 1)
+			{
+				remove.setDisable(true);
 			}
 		});
+		if (stages.size() == 1)
+		{
+			remove.setDisable(true);
+		}
+
+		Button add = new Button("Add");
+		add.setOnAction((ev)->{
+			stages.add(new Stage());
+			choiceBox.getItems().add(stages.size() - 1);
+			if (remove.isDisable())
+			{
+				remove.setDisable(false);
+			}
+		});
+
+
 		HBox tempButton = new HBox(add, remove);
 		tempButton.setAlignment(Pos.TOP_CENTER);
 
@@ -126,8 +154,11 @@ class LeftPanel extends VBox
 		textures = new Textures(leftPaneGrSize);
 
 		choiceBox.valueProperty().addListener((ov, h, n)->{
-			listener.changed(ov, h, n);
-			setCurrentTexture(stages.get(creator.currentStage).getTexture());
+			if (n != null)
+			{
+				listener.changed(ov, h, n);
+				setCurrentTexture(stages.get(n).getTexture());
+			}
 		});
 
 		//Placeholder for case
@@ -319,8 +350,11 @@ class LeftPanel extends VBox
 
 		public void reset()
 		{
-			((ColorAdjust)currentTile.getEffect()).setBrightness(-0.6);
-			currentTile = null;
+			if (currentTile != null)
+			{
+				((ColorAdjust)currentTile.getEffect()).setBrightness(-0.6);
+				currentTile = null;
+			}
 		}
 	}
 }
