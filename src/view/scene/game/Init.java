@@ -39,9 +39,9 @@ import src.model.ContentMaze;
 import src.model.MainMaze;
 import src.model.MazeDimension;
 import src.model.Player;
+import src.view.scene.EndMenu;
 import src.view.scene.Pause;
 import src.view.scene.ScenePlus;
-import src.view.scene.Winner;
 import src.view.View;
 
 import javafx.scene.control.Label;

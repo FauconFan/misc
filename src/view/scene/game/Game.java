@@ -56,11 +56,10 @@ import src.model.Directions;
 import src.model.MainMaze;
 import src.model.MazeDimension;
 import src.model.Player;
-import src.view.scene.MenuGameOver;
+import src.view.scene.EndMenu;
 import src.view.scene.Menus;
 import src.view.scene.Pause;
 import src.view.scene.ScenePlus;
-import src.view.scene.Winner;
 import src.view.View;
 
 public class Game extends ScenePlus
@@ -337,7 +336,7 @@ public class Game extends ScenePlus
 		if (maze.getPlayer().getHasWin())
 		{
 			timer.stop();
-			v.changeScene(new Winner(v, maze.getPlayer().getTime() / 1000000000));
+			v.changeScene(new EndMenu(v, maze.getPlayer().getTime() / 1000000000));
 		}
 	}
 
@@ -346,7 +345,7 @@ public class Game extends ScenePlus
 		if (maze.getPlayer().getIsDead())
 		{
 			timer.stop();
-			v.changeScene(new MenuGameOver(v));
+			v.changeScene(new EndMenu(v));
 		}
 	}
 
