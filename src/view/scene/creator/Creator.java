@@ -40,15 +40,15 @@ public class Creator extends ScenePlus
 	private final Scale sc     = new Scale(100, 100);
 	private final Translate tr = new Translate(10, 10);
 
-	protected final ArrayList <Stage> stages = new ArrayList <Stage>(); //To store the stages
-	protected int currentStage = 0;
+	protected final ArrayList <Level> levels = new ArrayList <Level>(); //To store the levels
+	protected int currentLevel = 0;
 
 	private final LeftPanel leftPanel;
 	private final StackPane root = new StackPane();
 
-	public Creator(View v, int width, int height, int nbStage, boolean flyMode)
+	public Creator(View v, int width, int height, int nbLevel, boolean flyMode)
 	{
-		this(v, width, height, nbStage, flyMode, new Menus(v));
+		this(v, width, height, nbLevel, flyMode, new Menus(v));
 	}
 
 	public Creator(View v, Game g)
@@ -59,11 +59,11 @@ public class Creator extends ScenePlus
 	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md, Scene old)
 	{
 		this(v, md.x2 - md.x1, md.y2 - md.y1, maze.getContentMaze().length, maze.getFlyMode(), old);
-		for (int i = 0; i < stages.size(); i++)
+		for (int i = 0; i < levels.size(); i++)
 		{
 			for (LineWall l: maze.getContentMaze(i).getLineWalls())
 			{
-				stages.get(i).walls.getChildren().add(new LinePlus(l));
+				levels.get(i).walls.getChildren().add(new LinePlus(l));
 			}
 			for (Case c:maze.getContentMaze(i).getSpecialCases())
 			{
@@ -72,21 +72,21 @@ public class Creator extends ScenePlus
 					rect.changeCase();
 					leftPanel.updateLeftPane(rect);
 				});
-				stages.get(i).cases.getChildren().add(rect);
+				levels.get(i).cases.getChildren().add(rect);
 			}
-			stages.get(i).setTexture(maze.getContentMaze(i).getTexturePath());
+			levels.get(i).setTexture(maze.getContentMaze(i).getTexturePath());
 		}
 
 		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getTexturePath());
 	}
 
-	private Creator(View v, int width, int height, int nbStage, boolean flyMode, Scene old)
+	private Creator(View v, int width, int height, int nbLevel, boolean flyMode, Scene old)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
 
-		for (int i = 0; i < nbStage; i++)
+		for (int i = 0; i < nbLevel; i++)
 		{
-			stages.add(new Stage());
+			levels.add(new Level());
 		}
 
 		final double change = 5;
@@ -162,14 +162,14 @@ public class Creator extends ScenePlus
 
 	protected void updateRightPanel(int newCurr)
 	{
-		root.getChildren().removeAll(stages.get(currentStage).walls, stages.get(currentStage).dots, stages.get(currentStage).cases);
-		currentStage = newCurr;
+		root.getChildren().removeAll(levels.get(currentLevel).walls, levels.get(currentLevel).dots, levels.get(currentLevel).cases);
+		currentLevel = newCurr;
 		updateRightPanel();
 	}
 
 	private void updateRightPanel()
 	{
-		root.getChildren().addAll(stages.get(currentStage).cases, stages.get(currentStage).walls, stages.get(currentStage).dots);
+		root.getChildren().addAll(levels.get(currentLevel).cases, levels.get(currentLevel).walls, levels.get(currentLevel).dots);
 	}
 
 	protected void drawCircles(int width, int height)
@@ -200,16 +200,16 @@ public class Creator extends ScenePlus
 							final LinePlus newLineWall = new LinePlus((int)startedDraw.getCenterX(), (int)startedDraw.getCenterY(), (int)c.getCenterX(), (int)c.getCenterY());
 
 							boolean isGood = false;
-							for (Node n: stages.get(currentStage).walls.getChildren())
+							for (Node n: levels.get(currentLevel).walls.getChildren())
 							{
 								LinePlus li             = (LinePlus)n;
 								ArrayList <LineWall> lw = LineWallUtils.exceptIfIntersectOrUnion(li.lw, newLineWall.lw);
 								if (lw.size() == 0 || lw.size() == 1 || (lw.size() == 2 && !(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw)))
 								{
-									stages.get(currentStage).walls.getChildren().remove(li);
+									levels.get(currentLevel).walls.getChildren().remove(li);
 									for (LineWall l: lw)
 									{
-										stages.get(currentStage).walls.getChildren().add(new LinePlus(l));
+										levels.get(currentLevel).walls.getChildren().add(new LinePlus(l));
 									}
 									isGood = true;
 									break;
@@ -217,7 +217,7 @@ public class Creator extends ScenePlus
 							}
 							if (!isGood)// Les murs ne se superposaient pas
 							{
-								stages.get(currentStage).walls.getChildren().add(newLineWall);
+								levels.get(currentLevel).walls.getChildren().add(newLineWall);
 							}
 						}
 						startedDraw.setFill(Color.BLACK);
@@ -231,9 +231,9 @@ public class Creator extends ScenePlus
 						rect.changeCase();
 						leftPanel.updateLeftPane(rect);
 					});
-					stages.get(currentStage).cases.getChildren().add(rect);
+					levels.get(currentLevel).cases.getChildren().add(rect);
 				}
-				stages.get(currentStage).dots.getChildren().add(c);
+				levels.get(currentLevel).dots.getChildren().add(c);
 			}
 		}
 	}

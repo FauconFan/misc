@@ -52,14 +52,14 @@ class LeftPanel extends VBox
 		setPadding(defaultInsets);
 
 		this.creator = creator;
-		ArrayList <Stage> stages = creator.stages;
+		ArrayList <Level> levels = creator.levels;
 
 		//Level
 		Label chooseYourLevel = new Label("Choose your level: ");
 		chooseYourLevel.setPadding(defaultInsets);
 
 		ChoiceBox <Integer> choiceBox = new ChoiceBox <Integer>();
-		for (int i = 0; i < stages.size(); i++)
+		for (int i = 0; i < levels.size(); i++)
 		{
 			choiceBox.getItems().add(i);
 		}
@@ -75,35 +75,35 @@ class LeftPanel extends VBox
 			if (result.isPresent() && result.get() == ButtonType.YES)
 			{
 				choiceBox.getItems().clear();                 //Reset the choice box
-				for (int i = 0; i < stages.size() - 1; i++)
+				for (int i = 0; i < levels.size() - 1; i++)
 				{
 					choiceBox.getItems().add(i);
 				}
-				if ((creator.currentStage == 0))
+				if ((creator.currentLevel == 0))
 				{
-					stages.remove(0);
+					levels.remove(0);
 					choiceBox.setValue(0);
 				}
 				else
 				{
-					choiceBox.setValue(creator.currentStage - 1);             //Trigger the change in the right panel, will change currentStage
-					stages.remove(creator.currentStage + 1);
+					choiceBox.setValue(creator.currentLevel - 1);             //Trigger the change in the right panel, will change currentLevel
+					levels.remove(creator.currentLevel + 1);
 				}
 			}
-			if (stages.size() == 1)
+			if (levels.size() == 1)
 			{
 				remove.setDisable(true);
 			}
 		});
-		if (stages.size() == 1)
+		if (levels.size() == 1)
 		{
 			remove.setDisable(true);
 		}
 
 		Button add = new Button("Add");
 		add.setOnAction((ev)->{
-			stages.add(new Stage());
-			choiceBox.getItems().add(stages.size() - 1);
+			levels.add(new Level());
+			choiceBox.getItems().add(levels.size() - 1);
 			if (remove.isDisable())
 			{
 				remove.setDisable(false);
@@ -125,12 +125,12 @@ class LeftPanel extends VBox
 			if (n != null)
 			{
 				creator.updateRightPanel(n);
-				if (creator.stages.get(creator.currentStage).dots.getChildren().size() == 0)                // Init
+				if (creator.levels.get(creator.currentLevel).dots.getChildren().size() == 0)                // Init
 				{
 					creator.drawCircles(width, height);
 				}
 
-				setCurrentTexture(stages.get(n).getTexture());
+				setCurrentTexture(levels.get(n).getTexture());
 			}
 		});
 
@@ -142,18 +142,18 @@ class LeftPanel extends VBox
 		//Finish
 		Button button = new Button("Finish");
 		button.setOnAction((ev)->{
-			CreatorHelper ch = new CreatorHelper(stages.size());
-			for (int i = 0; i < stages.size(); i++)
+			CreatorHelper ch = new CreatorHelper(levels.size());
+			for (int i = 0; i < levels.size(); i++)
 			{
 				ArrayList <LineWall> lineWalls = new ArrayList <LineWall>();
-				for (Node l: stages.get(i).walls.getChildren())
+				for (Node l: levels.get(i).walls.getChildren())
 				{
 					LinePlus li = (LinePlus)l;
 					lineWalls.add(li.lw);
 				}
 
 				ArrayList <Case> specialCases = new ArrayList <Case>();
-				for (Node l: stages.get(i).cases.getChildren())
+				for (Node l: levels.get(i).cases.getChildren())
 				{
 					Case c = ((RectanglePlus)l).getCase();
 					if (c != null)
@@ -161,7 +161,7 @@ class LeftPanel extends VBox
 						specialCases.add(c);
 					}
 				}
-				ch.append(i, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]), stages.get(i).getTexture());
+				ch.append(i, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]), levels.get(i).getTexture());
 			}
 			try{
 				v.con.setMaze(ch.buildMainMaze("", flyMode));
@@ -291,7 +291,7 @@ class LeftPanel extends VBox
 			}
 			currentTile = tile;
 			((ColorAdjust)currentTile.getEffect()).setBrightness(0);
-			creator.stages.get(creator.currentStage).setTexture(tile.filename);
+			creator.levels.get(creator.currentLevel).setTexture(tile.filename);
 		}
 
 		private File[] getTextures()
@@ -318,7 +318,7 @@ class LeftPanel extends VBox
 					setCurrentTile(t);
 				}
 			}
-			creator.stages.get(creator.currentStage).setTexture(str);
+			creator.levels.get(creator.currentLevel).setTexture(str);
 		}
 
 		public void reset()
