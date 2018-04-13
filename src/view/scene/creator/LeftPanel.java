@@ -71,13 +71,15 @@ class LeftPanel extends VBox
 {
 	private final Insets defaultInsets = new Insets(20, 0, 20, 0);
 
+	public final int leftPaneGrSize = 180;
+
 	public final Textures textures;
 
 	public final Creator creator;
 
 	public final VBox leftPaneGr;
 
-	public LeftPanel(int leftPaneGrSize, Creator creator, ChangeListener <Integer> listener, int width, int height, View v, boolean flyMode)
+	public LeftPanel(Creator creator, int width, int height, View v, boolean flyMode)
 	{
 		setMinSize(leftPaneGrSize, 0);
 		setAlignment(Pos.TOP_CENTER);
@@ -156,7 +158,12 @@ class LeftPanel extends VBox
 		choiceBox.valueProperty().addListener((ov, h, n)->{
 			if (n != null)
 			{
-				listener.changed(ov, h, n);
+				creator.updateRightPanel(n);
+				if (creator.stages.get(creator.currentStage).dots.getChildren().size() == 0)                // Init
+				{
+					creator.drawCircles(width, height);
+				}
+
 				setCurrentTexture(stages.get(n).getTexture());
 			}
 		});
