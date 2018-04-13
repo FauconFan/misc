@@ -1,37 +1,15 @@
 package src.view.scene.game;
 
-import java.io.FileInputStream;
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.AmbientLight;
-import javafx.scene.Camera;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Material;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
-import javafx.scene.PointLight;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.Line;
-import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
-import javafx.scene.transform.Translate;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 //Pour remettre le curseur au centre de l'ecran
 import java.awt.AWTException;
@@ -41,23 +19,17 @@ import javafx.stage.Screen;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import src.model.board.Case;
-import src.model.ContentMaze;
 import src.model.Directions;
 import src.model.MainMaze;
-import src.model.MazeDimension;
 import src.model.Player;
 import src.view.scene.EndMenu;
-import src.view.scene.Menus;
 import src.view.scene.Pause;
 import src.view.scene.ScenePlus;
 import src.view.View;

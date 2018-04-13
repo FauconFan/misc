@@ -3,9 +3,7 @@ package src.model;
 import java.util.HashSet;
 
 import src.model.board.Case;
-import src.model.board.LineWall;
 import src.model.board.StartCase;
-import src.model.MazeDimension;
 import src.utils.FloatVector;
 
 /**

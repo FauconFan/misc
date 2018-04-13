@@ -4,9 +4,7 @@ import src.view.Menu;
 import src.view.View;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.text.Text;
 
 public class EndMenu extends ScenePlus

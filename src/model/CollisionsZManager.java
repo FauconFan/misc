@@ -1,6 +1,5 @@
 package src.model;
 
-import src.model.MazeDimension;
 import src.model.Player;
 
 import java.lang.Math;

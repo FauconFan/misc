@@ -1,36 +1,19 @@
 package src.view.scene.game;
 
-import javafx.geometry.Pos;
-import javafx.scene.Camera;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.Parent;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.Sphere;
-import javafx.scene.Scene;
-import javafx.scene.SubScene;
-import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
-import javafx.scene.transform.Translate;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 
-import javafx.geometry.Pos;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.function.Consumer;
 
 import src.model.board.Case;
@@ -38,13 +21,7 @@ import src.model.board.LineWall;
 import src.model.ContentMaze;
 import src.model.MainMaze;
 import src.model.MazeDimension;
-import src.model.Player;
-import src.view.scene.EndMenu;
-import src.view.scene.Pause;
-import src.view.scene.ScenePlus;
-import src.view.View;
 
-import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;

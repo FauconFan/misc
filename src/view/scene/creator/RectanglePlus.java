@@ -3,14 +3,10 @@ package src.view.scene.creator;
 import java.util.Iterator;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.Scene;
-import javafx.stage.Screen;
 
 import src.model.*;
 import src.model.board.*;
 import src.view.scene.game.CaseColor;
-import src.view.scene.ScenePlus;
-import src.view.View;
 
 /**
  * A RectanglePlus is a JavaFx rectangle with maybe a correspondant Case
