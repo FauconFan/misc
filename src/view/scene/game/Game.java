@@ -330,7 +330,7 @@ public class Game extends ScenePlus
 	}
 
 	/**
-	 *  Teste si on a gagné et agit en conséquence
+	 * Do the player won the game ?
 	 */
 	private void checkWin()
 	{
@@ -341,6 +341,9 @@ public class Game extends ScenePlus
 		}
 	}
 
+	/**
+	 * Is he dead ?
+	 */
 	public void checkLoss()
 	{
 		if (maze.getPlayer().getIsDead())

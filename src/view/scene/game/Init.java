@@ -49,12 +49,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 
-
+/**
+ * Static class for the Game init
+ */
 public class Init
 {
 	private static String DEFAULT_TEXTURE = "assets/Brick_wall_002_COLOR.jpg";
 
-	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
 	public static Group makeSpecialCases(Scale sc, MainMaze maze, boolean flyMode)
 	{
 		Group spc = new Group();
@@ -93,8 +94,8 @@ public class Init
 	}
 
 	/**
-	 * Dessine le sol
-	 * @return Un groupe contenant le sol
+	 * Make the floor
+	 * @return A group with the floor
 	 */
 	public static Group makeFloors(Scale sc, MainMaze maze, boolean flyMode)
 	{
@@ -136,15 +137,14 @@ public class Init
 	}
 
 	/**
-	 * Dessine les murs du Maze
-	 * @return Le groupe contenant les murs
+	 * Create the walls
+	 * @return A group with the walls
 	 */
 	public static Group makeWalls(Scale sc, MainMaze maze)
 	{
 		Material mat;
 		Group    walls = new Group();
 
-		// On scale les murs
 		walls.getTransforms().add(sc);
 		final float   delta = 0.001f;
 		ContentMaze[] cms   = maze.getContentMaze();

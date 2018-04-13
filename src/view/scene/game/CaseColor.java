@@ -8,6 +8,9 @@ import src.model.board.Case;
 
 import src.utils.Tuple;
 
+/**
+ * Static class for storing the correspondance Case/Color
+ */
 public final class CaseColor
 {
 	private static final long serialVersionUID = 354054054055L;

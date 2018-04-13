@@ -12,6 +12,9 @@ import src.view.scene.game.CaseColor;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
+/**
+ * A linePlus is a JavaFX line paired with the correspondant LineWal
+ */
 class LinePlus extends Line
 {
 	public final LineWall lw;

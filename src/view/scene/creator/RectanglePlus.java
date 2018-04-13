@@ -12,8 +12,9 @@ import src.view.scene.game.CaseColor;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
-
-// Hold the x/y center of the rectangle + The possible Case
+/**
+ * A RectanglePlus is a JavaFx rectangle with maybe a correspondant Case
+ */
 class RectanglePlus extends Rectangle
 {
 	private Case cas;
@@ -91,6 +92,9 @@ class RectanglePlus extends Rectangle
 		this.cas = c;
 	}
 
+	/**
+	 * Array for sotring the Cases
+	 */
 	private class CircularArray implements Iterator <Case.TypeCase>
 	{
 		private int ind = -1;

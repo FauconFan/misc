@@ -12,9 +12,11 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
+/**
+ * A camera with its attributes
+ */
 public class GroupCameraPlus extends Group
 {
-	//Transforms pour la camera
 	public Translate tr = new Translate();
 	public Rotate rx    = new Rotate(0, Rotate.Y_AXIS);
 	public Rotate ry    = new Rotate(0, Rotate.X_AXIS);
