@@ -6,7 +6,6 @@ import src.model.board.Case;
 import src.model.board.EndCase;
 import src.model.board.LineWall;
 import src.model.board.StartCase;
-import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeEgg;
 import src.model.gen.ContentMazeFactory;

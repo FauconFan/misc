@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-//For textures
+/**
+ * A Tile is a Rectangle corresponding to a texture
+ */
 public class Tile extends Rectangle
 {
 	public final String filename;

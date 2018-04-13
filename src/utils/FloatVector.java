@@ -1,8 +1,6 @@
 package src.utils;
 
 import java.lang.Math;
-import java.util.Vector;
-import src.model.board.LineWall;
 
 public class FloatVector
 {

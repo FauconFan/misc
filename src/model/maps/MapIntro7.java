@@ -9,7 +9,6 @@ import src.model.board.SpeedCase;
 import src.model.board.StartCase;
 import src.model.board.TeleportCase;
 import src.model.board.TimeCase;
-import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.gen.ContentMazeEgg;
 import src.model.gen.ContentMazeFactory;

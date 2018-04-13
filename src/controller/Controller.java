@@ -1,23 +1,13 @@
 package src.controller;
 
-import src.model.ContentMaze;
 import src.model.gen.Algo;
 import src.model.MainMaze;
 import src.model.parser.Parser;
 import src.view.View;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
-import com.google.gson.Gson;
 
-import java.io.PrintWriter;
 
 public class Controller
 {

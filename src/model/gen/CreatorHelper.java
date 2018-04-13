@@ -7,7 +7,6 @@ import src.model.gen.ContentMazeEgg;
 import src.model.gen.MainMazeFactory.GenFactoryException;
 import src.model.gen.RectMazeShift;
 import src.model.MainMaze;
-import src.model.MazeDimension;
 
 import java.util.ArrayList;
 

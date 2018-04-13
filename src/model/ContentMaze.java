@@ -1,6 +1,5 @@
 package src.model;
 
-import java.lang.Cloneable;
 import src.model.board.*;
 import src.utils.StringManipulation;
 

@@ -1,7 +1,5 @@
 package src.model.gen;
 
-import src.model.board.Case;
-import src.model.board.LineWall;
 import src.utils.StringManipulation;
 
 import src.model.gen.ContentMazeEgg;

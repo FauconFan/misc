@@ -1,36 +1,19 @@
 package src.view.scene.game;
 
-import javafx.geometry.Pos;
-import javafx.scene.Camera;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.Parent;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.shape.Sphere;
-import javafx.scene.Scene;
-import javafx.scene.SubScene;
-import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
-import javafx.scene.transform.Translate;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 
-import javafx.geometry.Pos;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.function.Consumer;
 
 import src.model.board.Case;
@@ -38,21 +21,18 @@ import src.model.board.LineWall;
 import src.model.ContentMaze;
 import src.model.MainMaze;
 import src.model.MazeDimension;
-import src.model.Player;
-import src.view.scene.Pause;
-import src.view.scene.ScenePlus;
-import src.view.scene.Winner;
-import src.view.View;
 
-import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 
-
+/**
+ * Static class for the Game init
+ */
 public class Init
 {
-	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
+	private static String DEFAULT_TEXTURE = "assets/Brick_wall_002_COLOR.jpg";
+
 	public static Group makeSpecialCases(Scale sc, MainMaze maze, boolean flyMode)
 	{
 		Group spc = new Group();
@@ -91,8 +71,8 @@ public class Init
 	}
 
 	/**
-	 * Dessine le sol
-	 * @return Un groupe contenant le sol
+	 * Make the floor
+	 * @return A group with the floor
 	 */
 	public static Group makeFloors(Scale sc, MainMaze maze, boolean flyMode)
 	{
@@ -134,15 +114,14 @@ public class Init
 	}
 
 	/**
-	 * Dessine les murs du Maze
-	 * @return Le groupe contenant les murs
+	 * Create the walls
+	 * @return A group with the walls
 	 */
 	public static Group makeWalls(Scale sc, MainMaze maze)
 	{
 		Material mat;
 		Group    walls = new Group();
 
-		// On scale les murs
 		walls.getTransforms().add(sc);
 		final float   delta = 0.001f;
 		ContentMaze[] cms   = maze.getContentMaze();
@@ -152,7 +131,7 @@ public class Init
 				String texturePath = cms[i].getTexturePath();
 				if (texturePath == null)
 				{
-					texturePath = "assets/Brick_wall_002_COLOR.jpg";      //Default
+					texturePath = DEFAULT_TEXTURE;      //Default
 				}
 				Image img = new Image(new FileInputStream(texturePath), 400, 400, true, false);
 				mat = new PhongMaterial(Color.WHITE, img, null, null, null);

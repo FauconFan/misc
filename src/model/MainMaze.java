@@ -1,22 +1,15 @@
 package src.model;
 
-import java.util.ArrayList;
 
 import src.model.board.Case;
 import src.model.board.JumpCase;
-import src.model.board.LineWall;
 import src.model.board.SpeedCase;
 import src.model.board.StartCase;
 import src.model.board.TeleportCase;
 import src.model.board.TimeCase;
 import src.model.gen.Algo;
 import src.model.gen.MainMazeFactory.GenFactoryException;
-import src.model.gen.RectMaze;
-import src.model.gen.RectMazeShift;
-import src.model.parser.Parser;
 import src.utils.DisplayMazeConsole;
-import src.utils.FloatVector;
-import src.utils.StringManipulation;
 
 /**
  * Structure de données du labyrinthe.

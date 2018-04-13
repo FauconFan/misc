@@ -1,27 +1,14 @@
 package src.view;
 
-import javafx.application.Platform;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
 
 import src.controller.Controller;
-import src.model.gen.Algo;
 
 import src.view.scene.game.Game;
 import src.view.scene.Menus;

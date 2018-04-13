@@ -2,59 +2,29 @@ package src.view.scene.creator;
 
 import java.util.ArrayList;
 
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.Parent;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.Scene;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Screen;
 
-import javafx.beans.value.ChangeListener;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Optional;
 
 import src.model.*;
 import src.model.board.*;
-import src.model.gen.CreatorHelper;
-import src.view.scene.game.CaseColor;
 import src.view.scene.game.Game;
 import src.view.scene.Menus;
 import src.view.scene.ScenePlus;
@@ -67,23 +37,56 @@ public class Creator extends ScenePlus
 
 	private Circle startedDraw = null;
 
-	private final int leftPaneGrSize = 180;
-
 	private final Scale sc     = new Scale(100, 100);
-	private final Translate tr = new Translate(10, 10); // Décalage par défaut du dessin
+	private final Translate tr = new Translate(10, 10);
 
-	protected final ArrayList <Stage> stages = new ArrayList <Stage>();
-	protected int currentStage = 0;
+	protected final ArrayList <Level> levels = new ArrayList <Level>(); //To store the levels
+	protected int currentLevel = 0;
 
 	private final LeftPanel leftPanel;
+	private final StackPane root = new StackPane();
 
-	public Creator(View v, int width, int height, int nbStage, boolean flyMode)
+	public Creator(View v, int width, int height, int nbLevel, boolean flyMode)
+	{
+		this(v, width, height, nbLevel, flyMode, new Menus(v));
+	}
+
+	public Creator(View v, Game g)
+	{
+		this(v, g.getMaze(), g.getMaze().getContentMazeCurrentLevel().getMazeDimension().list_rectmaze.get(0), g);
+	}
+
+	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md, Scene old)
+	{
+		this(v, md.x2 - md.x1, md.y2 - md.y1, maze.getContentMaze().length, maze.getFlyMode(), old);
+		for (int i = 0; i < levels.size(); i++)
+		{
+			for (LineWall l: maze.getContentMaze(i).getLineWalls())
+			{
+				levels.get(i).walls.getChildren().add(new LinePlus(l));
+			}
+			for (Case c:maze.getContentMaze(i).getSpecialCases())
+			{
+				final RectanglePlus rect = new RectanglePlus(c);
+				rect.setOnMouseClicked((ev)->{
+					rect.changeCase();
+					leftPanel.updateLeftPane(rect);
+				});
+				levels.get(i).cases.getChildren().add(rect);
+			}
+			levels.get(i).setTexture(maze.getContentMaze(i).getTexturePath());
+		}
+
+		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getTexturePath());
+	}
+
+	private Creator(View v, int width, int height, int nbLevel, boolean flyMode, Scene old)
 	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
 
-		for (int i = 0; i < nbStage; i++)
+		for (int i = 0; i < nbLevel; i++)
 		{
-			stages.add(new Stage());
+			levels.add(new Level());
 		}
 
 		final double change = 5;
@@ -96,7 +99,7 @@ public class Creator extends ScenePlus
 				Optional <ButtonType> result = alert.showAndWait();
 				if (result.isPresent() && result.get() == ButtonType.YES)
 				{
-					v.changeScene(new Menus(v));
+					v.changeScene(old);
 				}
 				break;
 
@@ -124,35 +127,19 @@ public class Creator extends ScenePlus
 
 		setFill(Color.GRAY);
 
-		HBox pane = (HBox)getRoot();
-		pane.setAlignment(Pos.CENTER_LEFT);
-		StackPane root = new StackPane();
-
 		root.setAlignment(Pos.TOP_LEFT);
-
-		updateRightPanel(root);
 		root.getTransforms().addAll(tr, sc);
+
+		updateRightPanel();
 
 		drawCircles(width, height);
 
 		//Left Panel
 
-		//For the choiceBox
-		ChangeListener <Integer> choiceBoxListener = (ov, old_val, new_val)->{
-			root.getChildren().removeAll(stages.get(currentStage).walls, stages.get(currentStage).dots, stages.get(currentStage).cases);
-			currentStage = new_val;
-			if (stages.get(currentStage).dots.getChildren().size() == 0)      // Init
-			{
-				drawCircles(width, height);
-			}
-
-			updateRightPanel(root);
-		};
-
-		leftPanel = new LeftPanel(leftPaneGrSize, this, choiceBoxListener, width, height, v, flyMode);
+		leftPanel = new LeftPanel(this, width, height, v, flyMode);
 
 		ScrollPane sp = new ScrollPane(root);
-		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
+		sp.setPrefSize(screenWidth - leftPanel.leftPaneGrSize, screenHeight - 100);
 		sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 		sp.setPadding(new Insets(10, 10, 10, 10));
@@ -168,49 +155,24 @@ public class Creator extends ScenePlus
 			tr.setX(tr.getX() + sc.getX() * (old_val.doubleValue() - new_val.doubleValue()));
 		});
 
+		HBox pane = (HBox)getRoot();
+		pane.setAlignment(Pos.CENTER_LEFT);
 		pane.getChildren().addAll(leftPanel, sp);
 	}
 
-	public Creator(View v, Game g)
+	protected void updateRightPanel(int newCurr)
 	{
-		this(v, g.getMaze(), g.getMaze().getContentMazeCurrentLevel().getMazeDimension().list_rectmaze.get(0));
-		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{ if (key.getCode() == KeyCode.ESCAPE)
-													   {
-														   v.changeScene(g);
-													   }
-						});
+		root.getChildren().removeAll(levels.get(currentLevel).walls, levels.get(currentLevel).dots, levels.get(currentLevel).cases);
+		currentLevel = newCurr;
+		updateRightPanel();
 	}
 
-	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md)
+	private void updateRightPanel()
 	{
-		this(v, md.x2 - md.x1, md.y2 - md.y1, maze.getContentMaze().length, maze.getFlyMode());
-		for (int i = 0; i < stages.size(); i++)
-		{
-			for (LineWall l: maze.getContentMaze(i).getLineWalls())
-			{
-				stages.get(i).walls.getChildren().add(new LinePlus(l));
-			}
-			for (Case c:maze.getContentMaze(i).getSpecialCases())
-			{
-				final RectanglePlus rect = new RectanglePlus(c);
-				rect.setOnMouseClicked((ev)->{
-					rect.changeCase();
-					leftPanel.updateLeftPane(rect);
-				});
-				stages.get(i).cases.getChildren().add(rect);
-			}
-			stages.get(i).setTexture(maze.getContentMaze(i).getTexturePath());
-		}
-
-		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getTexturePath());
+		root.getChildren().addAll(levels.get(currentLevel).cases, levels.get(currentLevel).walls, levels.get(currentLevel).dots);
 	}
 
-	private void updateRightPanel(Pane root)
-	{
-		root.getChildren().addAll(stages.get(currentStage).cases, stages.get(currentStage).walls, stages.get(currentStage).dots);
-	}
-
-	private void drawCircles(int width, int height)
+	protected void drawCircles(int width, int height)
 	{
 		final double dotWidth = 0.1;
 
@@ -238,16 +200,16 @@ public class Creator extends ScenePlus
 							final LinePlus newLineWall = new LinePlus((int)startedDraw.getCenterX(), (int)startedDraw.getCenterY(), (int)c.getCenterX(), (int)c.getCenterY());
 
 							boolean isGood = false;
-							for (Node n: stages.get(currentStage).walls.getChildren())
+							for (Node n: levels.get(currentLevel).walls.getChildren())
 							{
 								LinePlus li             = (LinePlus)n;
 								ArrayList <LineWall> lw = LineWallUtils.exceptIfIntersectOrUnion(li.lw, newLineWall.lw);
 								if (lw.size() == 0 || lw.size() == 1 || (lw.size() == 2 && !(lw.get(0) == li.lw && lw.get(1) == newLineWall.lw)))
 								{
-									stages.get(currentStage).walls.getChildren().remove(li);
+									levels.get(currentLevel).walls.getChildren().remove(li);
 									for (LineWall l: lw)
 									{
-										stages.get(currentStage).walls.getChildren().add(new LinePlus(l));
+										levels.get(currentLevel).walls.getChildren().add(new LinePlus(l));
 									}
 									isGood = true;
 									break;
@@ -255,7 +217,7 @@ public class Creator extends ScenePlus
 							}
 							if (!isGood)// Les murs ne se superposaient pas
 							{
-								stages.get(currentStage).walls.getChildren().add(newLineWall);
+								levels.get(currentLevel).walls.getChildren().add(newLineWall);
 							}
 						}
 						startedDraw.setFill(Color.BLACK);
@@ -269,9 +231,9 @@ public class Creator extends ScenePlus
 						rect.changeCase();
 						leftPanel.updateLeftPane(rect);
 					});
-					stages.get(currentStage).cases.getChildren().add(rect);
+					levels.get(currentLevel).cases.getChildren().add(rect);
 				}
-				stages.get(currentStage).dots.getChildren().add(c);
+				levels.get(currentLevel).dots.getChildren().add(c);
 			}
 		}
 	}

@@ -5,7 +5,6 @@ import com.google.gson.*;
 import java.lang.Cloneable;
 import java.lang.reflect.Type;
 
-import src.model.board.LineWall;
 
 /**
  * Case du labyrinthe quelconque. Taille de 1
