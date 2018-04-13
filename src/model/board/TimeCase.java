@@ -38,6 +38,6 @@ public class TimeCase extends Case
 
 	public String toString()
 	{
-		return ("TimeCase\n" + super.toString() + "Reduce time : " + this.timeNano);
+		return ("TimeCase\n" + super.toString() + "Reduce time : " + this.timeNano + "\n");
 	}
 }

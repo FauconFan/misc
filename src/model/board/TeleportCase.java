@@ -51,6 +51,6 @@ public class TeleportCase extends Case
 
 	public String toString()
 	{
-		return ("TeleportCase\n" + super.toString() + "xDest : " + this.xDest + "\nyDest : " + this.yDest + "\nStage : " + this.stage);
+		return ("TeleportCase\n" + super.toString() + "xDest : " + this.xDest + "\nyDest : " + this.yDest + "\nStage : " + this.stage + "\n");
 	}
 }

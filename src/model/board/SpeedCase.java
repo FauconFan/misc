@@ -38,6 +38,6 @@ public class SpeedCase extends Case
 
 	public String toString()
 	{
-		return ("SpeedCase\n" + super.toString() + "Speed modification : " + this.speedModif);
+		return ("SpeedCase\n" + super.toString() + "Speed modification : " + this.speedModif + "\n");
 	}
 }

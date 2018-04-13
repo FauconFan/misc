@@ -35,10 +35,10 @@ public class Player
 	public final float rot = 2f;       // En degré
 
 	//Constantes d'accélération et de vitesse max
-	private static final float ACCELERATIONXY = 0.001f / 16000000.0f;
-	private static final float ACCELERATIONZ  = 0.01f / 16000000.0f;
-	private static final float VMAXXY         = 0.04f;
-	private static final float VMAXZ          = 1f;
+	private static final float ACCELERATIONXY = 2f;
+	private static final float ACCELERATIONZ  = 2f;
+	private static final float VMAXXY         = 5f;
+	private static final float VMAXZ          = 5f;
 	private static final float PESANTEUR      = 5f;
 	private static final float VELOCITYGHOST  = 0.02f;
 
@@ -47,9 +47,7 @@ public class Player
 	private float velocityZ;
 
 	//Angle du dernier déplacement
-	private int lastDepAngleXY = 0;
-	private int lastDepAngleZ  = 90;
-
+	private int lastDepAngle;
 
 	//Gestionnaires de Collisions
 	private transient CollisionsXYManager xyCol;
@@ -245,21 +243,24 @@ public class Player
 
 			case west: angle += -90; nbDirPushedXY++; break;
 
-			case left: horizontalAngle -= rot;
-				lastDepAngleXY         += rot;
-				break;
+			case left: horizontalAngle -= rot; lastDepAngle += rot; break;
 
-			case right: horizontalAngle += rot;
-				lastDepAngleXY          -= rot;
-				break;
+			case right: horizontalAngle += rot; lastDepAngle -= rot; break;
 
 			case up: verticalAngle += rot; break;
 
 			case down: verticalAngle -= rot; break;
 
-			case goUp: if (ghostMode)//TODO Check the collision
+			case goUp: if (ghostMode)
 				{
 					posZ += 0.05f;
+				}
+				if (flyMode)
+				{
+					if (this.velocityZ < 0)
+					{
+						this.velocityZ = -this.velocityZ;
+					}
 				}
 				nbDirPushedZ++;
 				break;
@@ -268,12 +269,19 @@ public class Player
 				{
 					posZ -= 0.05f;
 				}
+				if (flyMode)
+				{
+					if (this.velocityZ > 0)
+					{
+						this.velocityZ = -this.velocityZ;
+					}
+				}
 				nbDirPushedZ++;
 				break;
 
 			case jump:  if (this.zCol.isOnFloor() && !flyMode)
 				{
-					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxBottom) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocityXY / VMAXXY * 45);
+					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxBottom) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocityXY / VMAXXY * 30);
 				}
 				break;
 			}
@@ -288,26 +296,23 @@ public class Player
 
 		if (nbDirPushedXY != 0)
 		{
-			this.velocityXY     = Math.min(VMAXXY, this.velocityXY + ACCELERATIONXY * dt / ((!this.isOnFloor()) ? 2.0f : 1.0f));
-			this.lastDepAngleXY = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushedXY);
+			this.velocityXY   = Math.min(VMAXXY, this.velocityXY + ACCELERATIONXY * dt / 1e9f / ((!this.isOnFloor()) ? 2.0f : 1.0f));
+			this.lastDepAngle = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushedXY);
 		}
 		else
 		{
-			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * dt);
+			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * dt / 1e9f);
 		}
-
-		this.reallyMove(dt);
 
 		if (flyMode)
 		{
 			if (nbDirPushedZ != 0)
 			{
-				this.velocityZ     = Math.min(VMAXZ, this.velocityZ + ACCELERATIONZ * dt);
-				this.lastDepAngleZ = (this.dirs.contains(Directions.goUp)) ? 90 : -90;
+				this.velocityZ = Math.min(VMAXZ, Math.abs(this.velocityZ) + ACCELERATIONZ / 2.0f * dt / 1e9f) * this.sign(this.velocityZ, this.dirs.contains(Directions.goUp));
 			}
 			else
 			{
-				this.velocityZ = Math.max(0, this.velocityZ - ACCELERATIONZ * 2 * dt);
+				this.velocityZ = Math.max(0, Math.abs(this.velocityZ) - ACCELERATIONZ * 2 * dt / 1e9f) * this.sign(this.velocityZ, true);
 			}
 		}
 		else
@@ -317,23 +322,39 @@ public class Player
 				this.velocityZ -= (PESANTEUR * dt / 1e9f);
 			}
 		}
+
 		if (this.velocityZ < -10)
 		{
 			this.isDead = true;
 		}
+
+		this.reallyMove(dt /*, flyMode*/);
 	}
 
 	/**
 	 * Really move the player
 	 */
-	private void reallyMove(long dt)
+	private void reallyMove(long dt /*, boolean flyMode*/)
 	{
-		final double r1 = Math.toRadians(this.horizontalAngle + this.lastDepAngleXY);
+		final double r1 = Math.toRadians(this.horizontalAngle + this.lastDepAngle);
 
 		float speed = (this.isRunning) ? this.speed * 2 : this.speed;
 
-		final float dx = (float)(Math.sin(r1) * this.velocityXY * this.speed);
-		final float dy = (float)(Math.cos(r1) * this.velocityXY * this.speed);
+		float dx, dy, dz;
+
+		/*if (flyMode && (this.lastDepAngle == 0 || this.lastDepAngle == 180)) //Si on appuye sur avancer et reculer)
+		 * {
+		 *  final double r2 = Math.toRadians(this.verticalAngle);
+		 *  dx = (float)(Math.sin(r1) * (float)Math.cos(r2) * this.velocityXY * dt / 1e9f * this.speed);
+		 *  dy = (float)(Math.cos(r1) * (float)Math.cos(r2) * this.velocityXY * dt / 1e9f * this.speed);
+		 *  dz = ((this.velocityZ + this.velocityXY * (float)Math.sin(r2) / 2.0f) * dt / 1e9f); // Dépend de avancer ou reculer
+		 * }
+		 * else
+		 * {*/
+		dx = (float)(Math.sin(r1) * this.velocityXY * dt / 1e9f * this.speed);
+		dy = (float)(Math.cos(r1) * this.velocityXY * dt / 1e9f * this.speed);
+		dz = (this.velocityZ * dt / 1e9f);
+		//}
 
 		FloatVector d = new FloatVector(dx, dy);
 
@@ -344,14 +365,10 @@ public class Player
 		else
 		{
 			this.xyCol.updateMove(d);
-			this.velocityXY = this.xyCol.getNorm();
+			this.velocityXY = this.xyCol.getNorm() * 1e9f / dt;
 
-			this.zCol.updateMove(((float)Math.sin(this.lastDepAngleZ)) * this.velocityZ * dt / 1e9f);
-
-			/*if (this.zCol.getMove () < 10e-4f)
-			 * {
-			 *  this.velocityZ = - 1;
-			 * }*/
+			this.zCol.updateMove(dz);
+			this.velocityZ = this.zCol.getMove() * 1e9f / dt;
 
 			this.applyMove(this.xyCol.getMove(), this.zCol.getMove());
 		}
@@ -379,6 +396,22 @@ public class Player
 		this.posX += v.getX();
 		this.posY += v.getY();
 		this.posZ += dz;
+	}
+
+	public int sign(float f, boolean positiveZero)
+	{
+		if (f == 0)
+		{
+			if (positiveZero)
+			{
+				return (1);
+			}
+			else
+			{
+				return (-1);
+			}
+		}
+		return ((int)Math.signum(f));
 	}
 
 	public String toString()

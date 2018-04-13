@@ -11,7 +11,9 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
@@ -47,6 +49,7 @@ import javafx.beans.value.ChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 
 import src.model.*;
 import src.model.board.*;
@@ -69,8 +72,8 @@ public class Creator extends ScenePlus
 	private final Scale sc     = new Scale(100, 100);
 	private final Translate tr = new Translate(10, 10); // Décalage par défaut du dessin
 
-	private final ArrayList <Stage> stages = new ArrayList <Stage>();
-	private int currentStage = 0;
+	protected final ArrayList <Stage> stages = new ArrayList <Stage>();
+	protected int currentStage = 0;
 
 	private final LeftPanel leftPanel;
 
@@ -88,7 +91,14 @@ public class Creator extends ScenePlus
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			switch (key.getCode())
 			{
-			case ESCAPE: v.changeScene(new Menus(v)); break;
+			case ESCAPE:
+				Alert alert = new Alert(AlertType.CONFIRMATION, "Do you really want to quit the creator ?", ButtonType.YES, ButtonType.NO);
+				Optional <ButtonType> result = alert.showAndWait();
+				if (result.isPresent() && result.get() == ButtonType.YES)
+				{
+					v.changeScene(new Menus(v));
+				}
+				break;
 
 			case Z: tr.setY((isIn(tr.getY() + change, -screenHeight, 11)) ? tr.getY() + change : tr.getY()); break;
 
@@ -135,10 +145,11 @@ public class Creator extends ScenePlus
 			{
 				drawCircles(width, height);
 			}
+
 			updateRightPanel(root);
 		};
 
-		leftPanel = new LeftPanel(leftPaneGrSize, stages, choiceBoxListener, width, height, v, flyMode);
+		leftPanel = new LeftPanel(leftPaneGrSize, this, choiceBoxListener, width, height, v, flyMode);
 
 		ScrollPane sp = new ScrollPane(root);
 		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
@@ -188,6 +199,7 @@ public class Creator extends ScenePlus
 				});
 				stages.get(i).cases.getChildren().add(rect);
 			}
+			stages.get(i).setTexture(maze.getContentMaze(i).getTexturePath());
 		}
 
 		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getTexturePath());

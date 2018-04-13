@@ -256,9 +256,27 @@ public class Game extends ScenePlus
 				}
 				break;
 
-			case F: cons.accept(Directions.goDown); break;
+			case F: if (bool && p.dirs.contains(Directions.goUp))
+				{
+					p.dirs.remove(Directions.goUp);
+				}
 
-			case R: cons.accept(Directions.goUp); break;
+				else
+				{
+					cons.accept(Directions.goDown);
+				}
+				break;
+
+			case R: if (bool && p.dirs.contains(Directions.goDown))
+				{
+					p.dirs.remove(Directions.goDown);
+				}
+
+				else
+				{
+					cons.accept(Directions.goUp);
+				}
+				break;
 
 			case LEFT: cons.accept(Directions.left); break;
 

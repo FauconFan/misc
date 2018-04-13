@@ -27,6 +27,6 @@ public class JumpCase extends Case
 
 	public String toString()
 	{
-		return ("JumpCase\n" + super.toString() + "nbLevelJump : " + this.nbLevelJump);
+		return ("JumpCase\n" + super.toString() + "nbLevelJump : " + this.nbLevelJump + "\n");
 	}
 }
