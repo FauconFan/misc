@@ -78,6 +78,40 @@ public class Creator extends ScenePlus
 
 	public Creator(View v, int width, int height, int nbStage, boolean flyMode)
 	{
+		this(v, width, height, nbStage, flyMode, new Menus(v));
+	}
+
+	public Creator(View v, Game g)
+	{
+		this(v, g.getMaze(), g.getMaze().getContentMazeCurrentLevel().getMazeDimension().list_rectmaze.get(0), g);
+	}
+
+	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md, Scene old)
+	{
+		this(v, md.x2 - md.x1, md.y2 - md.y1, maze.getContentMaze().length, maze.getFlyMode(), old);
+		for (int i = 0; i < stages.size(); i++)
+		{
+			for (LineWall l: maze.getContentMaze(i).getLineWalls())
+			{
+				stages.get(i).walls.getChildren().add(new LinePlus(l));
+			}
+			for (Case c:maze.getContentMaze(i).getSpecialCases())
+			{
+				final RectanglePlus rect = new RectanglePlus(c);
+				rect.setOnMouseClicked((ev)->{
+					rect.changeCase();
+					leftPanel.updateLeftPane(rect);
+				});
+				stages.get(i).cases.getChildren().add(rect);
+			}
+			stages.get(i).setTexture(maze.getContentMaze(i).getTexturePath());
+		}
+
+		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getTexturePath());
+	}
+
+	private Creator(View v, int width, int height, int nbStage, boolean flyMode, Scene old)
+	{
 		super(new HBox(), screenWidth, screenWidth, false, v);
 
 		for (int i = 0; i < nbStage; i++)
@@ -95,7 +129,7 @@ public class Creator extends ScenePlus
 				Optional <ButtonType> result = alert.showAndWait();
 				if (result.isPresent() && result.get() == ButtonType.YES)
 				{
-					v.changeScene(new Menus(v));
+					v.changeScene(old);
 				}
 				break;
 
@@ -154,40 +188,6 @@ public class Creator extends ScenePlus
 		HBox pane = (HBox)getRoot();
 		pane.setAlignment(Pos.CENTER_LEFT);
 		pane.getChildren().addAll(leftPanel, sp);
-	}
-
-	public Creator(View v, Game g)
-	{
-		this(v, g.getMaze(), g.getMaze().getContentMazeCurrentLevel().getMazeDimension().list_rectmaze.get(0));
-		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{ if (key.getCode() == KeyCode.ESCAPE)
-													   {
-														   v.changeScene(g);
-													   }
-						});
-	}
-
-	private Creator(View v, MainMaze maze, MazeDimension.RectInMaze md)
-	{
-		this(v, md.x2 - md.x1, md.y2 - md.y1, maze.getContentMaze().length, maze.getFlyMode());
-		for (int i = 0; i < stages.size(); i++)
-		{
-			for (LineWall l: maze.getContentMaze(i).getLineWalls())
-			{
-				stages.get(i).walls.getChildren().add(new LinePlus(l));
-			}
-			for (Case c:maze.getContentMaze(i).getSpecialCases())
-			{
-				final RectanglePlus rect = new RectanglePlus(c);
-				rect.setOnMouseClicked((ev)->{
-					rect.changeCase();
-					leftPanel.updateLeftPane(rect);
-				});
-				stages.get(i).cases.getChildren().add(rect);
-			}
-			stages.get(i).setTexture(maze.getContentMaze(i).getTexturePath());
-		}
-
-		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getTexturePath());
 	}
 
 	protected void updateRightPanel(int newCurr)
