@@ -7,7 +7,7 @@ class Stage
 	//walls MUST contain LinePlus
 	//cases MUST contain RectanglePlus
 	public final Pane walls, cases, dots;
-	private String texture = "";
+	private String texture;
 
 	public Stage(Pane w, Pane c, Pane d)
 	{

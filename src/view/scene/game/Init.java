@@ -52,6 +52,8 @@ import javafx.scene.transform.Scale;
 
 public class Init
 {
+	private static String DEFAULT_TEXTURE = "assets/Brick_wall_002_COLOR.jpg";
+
 	// Une camera avec les bons attributs pour la déplacer, et une lumière associée
 	public static Group makeSpecialCases(Scale sc, MainMaze maze, boolean flyMode)
 	{
@@ -152,7 +154,7 @@ public class Init
 				String texturePath = cms[i].getTexturePath();
 				if (texturePath == null)
 				{
-					texturePath = "assets/Brick_wall_002_COLOR.jpg";      //Default
+					texturePath = DEFAULT_TEXTURE;      //Default
 				}
 				Image img = new Image(new FileInputStream(texturePath), 400, 400, true, false);
 				mat = new PhongMaterial(Color.WHITE, img, null, null, null);

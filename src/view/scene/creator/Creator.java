@@ -67,15 +67,14 @@ public class Creator extends ScenePlus
 
 	private Circle startedDraw = null;
 
-	private final int leftPaneGrSize = 180;
-
 	private final Scale sc     = new Scale(100, 100);
-	private final Translate tr = new Translate(10, 10); // Décalage par défaut du dessin
+	private final Translate tr = new Translate(10, 10);
 
-	protected final ArrayList <Stage> stages = new ArrayList <Stage>();
+	protected final ArrayList <Stage> stages = new ArrayList <Stage>(); //To store the stages
 	protected int currentStage = 0;
 
 	private final LeftPanel leftPanel;
+	private final StackPane root = new StackPane();
 
 	public Creator(View v, int width, int height, int nbStage, boolean flyMode)
 	{
@@ -124,35 +123,19 @@ public class Creator extends ScenePlus
 
 		setFill(Color.GRAY);
 
-		HBox pane = (HBox)getRoot();
-		pane.setAlignment(Pos.CENTER_LEFT);
-		StackPane root = new StackPane();
-
 		root.setAlignment(Pos.TOP_LEFT);
-
-		updateRightPanel(root);
 		root.getTransforms().addAll(tr, sc);
+
+		updateRightPanel();
 
 		drawCircles(width, height);
 
 		//Left Panel
 
-		//For the choiceBox
-		ChangeListener <Integer> choiceBoxListener = (ov, old_val, new_val)->{
-			root.getChildren().removeAll(stages.get(currentStage).walls, stages.get(currentStage).dots, stages.get(currentStage).cases);
-			currentStage = new_val;
-			if (stages.get(currentStage).dots.getChildren().size() == 0)      // Init
-			{
-				drawCircles(width, height);
-			}
-
-			updateRightPanel(root);
-		};
-
-		leftPanel = new LeftPanel(leftPaneGrSize, this, choiceBoxListener, width, height, v, flyMode);
+		leftPanel = new LeftPanel(this, width, height, v, flyMode);
 
 		ScrollPane sp = new ScrollPane(root);
-		sp.setPrefSize(screenWidth - leftPaneGrSize, screenHeight - 100);
+		sp.setPrefSize(screenWidth - leftPanel.leftPaneGrSize, screenHeight - 100);
 		sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 		sp.setPadding(new Insets(10, 10, 10, 10));
@@ -168,6 +151,8 @@ public class Creator extends ScenePlus
 			tr.setX(tr.getX() + sc.getX() * (old_val.doubleValue() - new_val.doubleValue()));
 		});
 
+		HBox pane = (HBox)getRoot();
+		pane.setAlignment(Pos.CENTER_LEFT);
 		pane.getChildren().addAll(leftPanel, sp);
 	}
 
@@ -205,12 +190,19 @@ public class Creator extends ScenePlus
 		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getTexturePath());
 	}
 
-	private void updateRightPanel(Pane root)
+	protected void updateRightPanel(int newCurr)
+	{
+		root.getChildren().removeAll(stages.get(currentStage).walls, stages.get(currentStage).dots, stages.get(currentStage).cases);
+		currentStage = newCurr;
+		updateRightPanel();
+	}
+
+	private void updateRightPanel()
 	{
 		root.getChildren().addAll(stages.get(currentStage).cases, stages.get(currentStage).walls, stages.get(currentStage).dots);
 	}
 
-	private void drawCircles(int width, int height)
+	protected void drawCircles(int width, int height)
 	{
 		final double dotWidth = 0.1;
 
