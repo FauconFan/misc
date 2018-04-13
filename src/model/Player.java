@@ -36,14 +36,13 @@ public class Player
 
 	//Constantes d'accélération et de vitesse max
 	private static final float ACCELERATIONXY = 2f;
-	private static final float ACCELERATIONZ  = 2f;
-	private static final float VMAXXY         = 5f;
-	private static final float VMAXZ          = 5f;
+	private static final float ACCELERATIONZ  = 1f;
+	private static final float VMAXXY         = 2f;
+	private static final float VMAXZ          = 1f;
 	private static final float PESANTEUR      = 5f;
-	private static final float VELOCITYGHOST  = 0.02f;
 
 	//Vitesse selon les axes/plan
-	private float velocityXY;
+	private float velocity;
 	private float velocityZ;
 
 	//Angle du dernier déplacement
@@ -251,37 +250,32 @@ public class Player
 
 			case down: verticalAngle -= rot; break;
 
-			case goUp: if (ghostMode)
-				{
-					posZ += 0.05f;
-				}
-				if (flyMode)
+			case goUp:
+				if (flyMode || ghostMode)
 				{
 					if (this.velocityZ < 0)
 					{
 						this.velocityZ = -this.velocityZ;
 					}
+					nbDirPushedZ++;
 				}
-				nbDirPushedZ++;
 				break;
 
-			case goDown: if (ghostMode)
-				{
-					posZ -= 0.05f;
-				}
-				if (flyMode)
+			case goDown:
+				if (flyMode || ghostMode)
 				{
 					if (this.velocityZ > 0)
 					{
 						this.velocityZ = -this.velocityZ;
 					}
+					nbDirPushedZ++;
 				}
-				nbDirPushedZ++;
 				break;
 
-			case jump:  if (this.zCol.isOnFloor() && !flyMode)
+			case jump:
+				if (this.zCol.isOnFloor() && !flyMode && !ghostMode)
 				{
-					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxBottom) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocityXY / VMAXXY * 30);
+					this.velocityZ = (float)Math.sqrt((0.6f - this.hitBoxBottom) * 2 * PESANTEUR) * (float)Math.sin(90 - this.velocity / VMAXXY * 30);
 				}
 				break;
 			}
@@ -296,19 +290,19 @@ public class Player
 
 		if (nbDirPushedXY != 0)
 		{
-			this.velocityXY   = Math.min(VMAXXY, this.velocityXY + ACCELERATIONXY * dt / 1e9f / ((!this.isOnFloor()) ? 2.0f : 1.0f));
+			this.velocity     = Math.min(VMAXXY, this.velocity + ACCELERATIONXY * dt / 1e9f / ((!this.isOnFloor()) ? 2.0f : 1.0f));
 			this.lastDepAngle = (this.dirs.contains(Directions.south) && this.dirs.contains(Directions.west)) ? -135 : (angle / nbDirPushedXY);
 		}
 		else
 		{
-			this.velocityXY = Math.max(0, this.velocityXY - ACCELERATIONXY * 2 * dt / 1e9f);
+			this.velocity = Math.max(0, this.velocity - ACCELERATIONXY * 2 * dt / 1e9f);
 		}
 
-		if (flyMode)
+		if (flyMode || ghostMode)
 		{
 			if (nbDirPushedZ != 0)
 			{
-				this.velocityZ = Math.min(VMAXZ, Math.abs(this.velocityZ) + ACCELERATIONZ / 2.0f * dt / 1e9f) * this.sign(this.velocityZ, this.dirs.contains(Directions.goUp));
+				this.velocityZ = Math.min(VMAXZ, Math.abs(this.velocityZ) + ACCELERATIONZ * dt / 1e9f) * this.sign(this.velocityZ, this.dirs.contains(Directions.goUp));
 			}
 			else
 			{
@@ -323,18 +317,18 @@ public class Player
 			}
 		}
 
-		if (this.velocityZ < -10)
+		if (this.velocityZ < -20)
 		{
 			this.isDead = true;
 		}
 
-		this.reallyMove(dt /*, flyMode*/);
+		this.reallyMove(dt, flyMode);
 	}
 
 	/**
 	 * Really move the player
 	 */
-	private void reallyMove(long dt /*, boolean flyMode*/)
+	private void reallyMove(long dt, boolean flyMode)
 	{
 		final double r1 = Math.toRadians(this.horizontalAngle + this.lastDepAngle);
 
@@ -342,35 +336,63 @@ public class Player
 
 		float dx, dy, dz;
 
-		/*if (flyMode && (this.lastDepAngle == 0 || this.lastDepAngle == 180)) //Si on appuye sur avancer et reculer)
-		 * {
-		 *  final double r2 = Math.toRadians(this.verticalAngle);
-		 *  dx = (float)(Math.sin(r1) * (float)Math.cos(r2) * this.velocityXY * dt / 1e9f * this.speed);
-		 *  dy = (float)(Math.cos(r1) * (float)Math.cos(r2) * this.velocityXY * dt / 1e9f * this.speed);
-		 *  dz = ((this.velocityZ + this.velocityXY * (float)Math.sin(r2) / 2.0f) * dt / 1e9f); // Dépend de avancer ou reculer
-		 * }
-		 * else
-		 * {*/
-		dx = (float)(Math.sin(r1) * this.velocityXY * dt / 1e9f * this.speed);
-		dy = (float)(Math.cos(r1) * this.velocityXY * dt / 1e9f * this.speed);
-		dz = (this.velocityZ * dt / 1e9f);
-		//}
-
-		FloatVector d = new FloatVector(dx, dy);
-
-		if (this.ghostMode)
+		if (flyMode && this.lastDepAngle != 90 && this.lastDepAngle != -90)
 		{
-			this.applyMove(d, 0);
+			final double r2 = Math.toRadians(this.verticalAngle);
+
+			dx = (float)(Math.sin(r1) * (float)Math.cos(r2) * this.velocity * dt / 1e9f * this.speed);
+			dy = (float)(Math.cos(r1) * (float)Math.cos(r2) * this.velocity * dt / 1e9f * this.speed);
+
+			if (-90 < this.lastDepAngle && this.lastDepAngle < 90)
+			{
+				dz = (this.velocity * (float)Math.sin(r2) * dt / 1e9f);
+			}
+			else
+			{
+				dz = (this.velocity * (float)Math.sin(-r2) * dt / 1e9f);
+			}
+
+
+			this.xyCol.updateMove(new FloatVector(dx, dy));
+			this.zCol.updateMove(dz);
+
+			this.velocity = (float)Math.sqrt(Math.pow(this.xyCol.getMove().getX(), 2) + Math.pow(this.xyCol.getMove().getY(), 2) + Math.pow(this.zCol.getMove(), 2)) * 1e9f / dt;
+			this.applyMove(this.xyCol.getMove(), this.zCol.getMove());
 		}
 		else
 		{
-			this.xyCol.updateMove(d);
-			this.velocityXY = this.xyCol.getNorm() * 1e9f / dt;
+			dx = (float)(Math.sin(r1) * this.velocity * dt / 1e9f * this.speed);
+			dy = (float)(Math.cos(r1) * this.velocity * dt / 1e9f * this.speed);
 
+			FloatVector d = new FloatVector(dx, dy);
+
+			if (!ghostMode)
+			{
+				this.xyCol.updateMove(d);
+				this.velocity = this.xyCol.getNorm() * 1e9f / dt;
+
+				this.applyMove(this.xyCol.getMove(), 0);
+			}
+			else
+			{
+				this.applyMove(d, 0);
+			}
+		}
+
+		dz = (this.velocityZ * dt / 1e9f);
+
+		FloatVector zero = new FloatVector(0, 0);
+
+		if (ghostMode)
+		{
+			this.applyMove(zero, dz);
+		}
+		else
+		{
 			this.zCol.updateMove(dz);
-			this.velocityZ = this.zCol.getMove() * 1e9f / dt;
 
-			this.applyMove(this.xyCol.getMove(), this.zCol.getMove());
+			this.velocityZ = this.zCol.getMove() * 1e9f / dt;
+			this.applyMove(zero, this.zCol.getMove());
 		}
 	}
 
