@@ -326,6 +326,7 @@ public class Game extends ScenePlus
 		sceneMiniMap.updateCamera(p);
 		maze.actionCase();
 		checkWin();
+		checkLoss();
 	}
 
 	/**
