@@ -56,11 +56,20 @@ public class MainMaze
 		return (this.cm);
 	}
 
+	/**
+	 * Renvoit l'étage courant
+	 * @return ContentMaze courant
+	 */
 	public ContentMaze getContentMazeCurrentLevel()
 	{
 		return (this.cm[this.current_level]);
 	}
 
+	/**
+	 * Renvoit l'étage demandé
+	 * @param n Numero de l'étage
+	 * @return ContentMaze numéro n s'il existe, null sinon
+	 */
 	public ContentMaze getContentMaze(int n)
 	{
 		if (n >= cm.length || n < 0)
@@ -102,13 +111,14 @@ public class MainMaze
 	}
 
 	/**
-	 * Déplace le joueur dans le labyrinthe, si le joueur rencontre un mur, il longera ce mur.
+	 * Met à jour les coordonnées du joueur dans le labyrinthe
+	 * @param l Intervalle de temps entre deux frames
 	 */
 	public void updatePlayer(long l)
 	{
 		this.p.update(this, l);
-		float posZ = this.p.getPosZ();
 
+		float posZ = this.p.getPosZ();
 		if (posZ >= 0 && posZ <= this.cm.length - 1)
 		{
 			this.current_level = (int)posZ;
@@ -123,6 +133,9 @@ public class MainMaze
 		}
 	}
 
+	/**
+	 * Vérifie si le joueur est sur une case spéciale et active son effet
+	 */
 	public void actionCase()
 	{
 		// TODO to change actually

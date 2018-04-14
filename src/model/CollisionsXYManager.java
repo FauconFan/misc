@@ -22,17 +22,25 @@ public class CollisionsXYManager
 		this.splitMove = new FloatVector[2];
 	}
 
+	/**
+	 * Réinitialise le collisionManager pour la méthode update
+	 */
 	private void init()
 	{
 		this.coefPropMin = 1;
 		this.closestWall = null;
 	}
 
+	/**
+	 * Met à jour le vecteur de déplacement final en tenant compte des collisions avec les murs
+	 * @param d Vecteur de déplacement souhaité
+	 */
 	public void updateMove(FloatVector d)
 	{
 		this.finalMove    = new FloatVector(0, 0);
 		this.splitMove[0] = d;
 		this.splitMove[1] = new FloatVector(0, 0);
+
 		do
 		{
 			this.update();
@@ -41,22 +49,38 @@ public class CollisionsXYManager
 		} while (!this.splitMove[0].isNul());
 	}
 
+	/**
+	 * Met à jour le tableau d'étage et le numéro de l'étage courant
+	 * @param cms Tableau contenant les étages dans l'ordre suivant : inférieur, courant et supérieur
+	 * @param currentLevel Numéro de l'étage courant
+	 */
 	public void updateWalls(ContentMaze [] cms, int currentLevel)
 	{
 		this.cms          = cms;
 		this.currentLevel = currentLevel;
 	}
 
+	/**
+	 * Renvoit le vecteur de déplacement
+	 * @return FloatVector finalMove
+	 */
 	public FloatVector getMove()
 	{
 		return (this.finalMove);
 	}
 
+	/**
+	 * Renvoit la norme du vecteur déplacement
+	 * @return Norme de finalMove
+	 */
 	public float getNorm()
 	{
 		return (this.finalMove.norm());
 	}
 
+	/**
+	 * Décale le tableau splitMove d'un indice
+	 */
 	public void next()
 	{
 		this.splitMove[0] = this.splitMove[1];
@@ -73,9 +97,9 @@ public class CollisionsXYManager
 
 		for (int k = 0; k < cms.length; k++)
 		{
-			if (cms[k] != null&& ((k == 0 && this.p.getPosZ() - this.p.hitBoxBottom < currentLevel) ||
-								  k == 1 ||
-								  (k == 2 && this.p.getPosZ() + this.p.hitBoxTop > currentLevel + 1)))
+			if (cms[k] != null && ((k == 0 && this.p.getPosZ() - this.p.hitBoxBottom < currentLevel) ||
+								   k == 1 ||
+								   (k == 2 && this.p.getPosZ() + this.p.hitBoxTop > currentLevel + 1)))
 			{
 				for (LineWall lw : cms[k].getLineWalls())
 				{
@@ -136,7 +160,7 @@ public class CollisionsXYManager
 	 * @param k Coefficient de proportionnalité
 	 * @param wall Vecteurs représentant un mur
 	 * @param isHorizontal Test de l'horizontalité du mur
-	 * @return true si le mur peut gener le déplacement
+	 * @return True si le mur peut gener le déplacement
 	 */
 	private boolean isConsideredWall(float k, FloatVector [] wall, boolean isHorizontal)
 	{
@@ -159,7 +183,7 @@ public class CollisionsXYManager
 	/**
 	 * Teste l'horizontalité du mur à 10e-4 près
 	 * @param w Mur
-	 * @return true si le mur est horzontal
+	 * @return True si le mur est horzontal
 	 */
 	private static boolean effectWallIsHorizontal(FloatVector [] w)
 	{

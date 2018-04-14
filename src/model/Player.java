@@ -39,7 +39,7 @@ public class Player
 	private static final float VMAXZ          = 1f;
 	private static final float PESANTEUR      = 5f;
 
-	//Vitesse selon les axes/plan
+	//Vitesse selon les axes et plans
 	private float velocity;
 	private float velocityZ;
 
@@ -172,6 +172,11 @@ public class Player
 		this.verticalAngle += y;
 	}
 
+	/**
+	 * Teste si le joueur est dans la case donnée en paramètre.
+	 * @param c Case
+	 * @return True si le joueur est dans la case
+	 */
 	public boolean playerInCase(Case c)
 	{
 		float diff = 0.5f;
@@ -187,6 +192,8 @@ public class Player
 	/**
 	 * Transport the player to the start case
 	 * @param c The case
+	 * @param levelTo Numero d'étage où se trouve la case
+	 * @return True si le joueur a été déplacé sur la
 	 */
 	public boolean goToStartCase(StartCase c, int levelTo)
 	{
@@ -204,9 +211,9 @@ public class Player
 	}
 
 	/**
-	 * Update the player position with the collisions with walls
+	 * Update the player position with the collisions with walls, roof and floor
 	 * @param m MainMaze
-	 * @param dt Time
+	 * @param dt Intervalle de temps entre deux frames
 	 */
 	public void update(MainMaze m, long dt)
 	{
@@ -325,6 +332,8 @@ public class Player
 
 	/**
 	 * Really move the player
+	 * @param dt Intervalle de temps entre deux frames
+	 * @param flyMode flyMode
 	 */
 	private void reallyMove(long dt, boolean flyMode)
 	{
@@ -394,6 +403,10 @@ public class Player
 		}
 	}
 
+	/**
+	 * Modifie la vitesse pour faire sauter le joueur
+	 * @param nbLevel Nombre d'étage a sauter.
+	 */
 	public void actionJumpCase(int nbLevel)
 	{
 		if (!this.ghostMode)
@@ -402,14 +415,19 @@ public class Player
 		}
 	}
 
+	/**
+	 * Teste si le joueur est sur un sol
+	 * @return True si le joueur est sur un sol
+	 */
 	public boolean isOnFloor()
 	{
 		return (this.zCol.isOnFloor());
 	}
 
 	/**
-	 * Déplace le joueur à la position (x + v.getX(), y + v.getY())
-	 * @param v Vecteur de déplacement
+	 * Déplace le joueur à la position (x + v.getX(), y + v.getY(), z + dz)
+	 * @param v Vecteur de déplacement dans le plan XY
+	 * @param dz Vecteur de déplacement dans l'axe z
 	 */
 	public void applyMove(FloatVector v, float dz)
 	{
@@ -418,22 +436,26 @@ public class Player
 		this.posZ += dz;
 	}
 
+	/**
+	 * Renvoit le signe de f
+	 * @param f Nombre
+	 * @param positiveZero Signe à renvoyer si f = 0
+	 * @return 1 si f supérieur à 0, positiveZero si f = 0 et -1 sinon
+	 */
 	public int sign(float f, boolean positiveZero)
 	{
 		if (f == 0)
 		{
-			if (positiveZero)
-			{
-				return (1);
-			}
-			else
-			{
-				return (-1);
-			}
+			return ((positiveZero) ? 1 : -1);
 		}
 		return ((int)Math.signum(f));
 	}
 
+	/**
+	 * The obvious overwrited toString function
+	 * @return representation String
+	 */
+	@Override
 	public String toString()
 	{
 		return ("posX = " + posX + " posY = " + posY + " other things");
