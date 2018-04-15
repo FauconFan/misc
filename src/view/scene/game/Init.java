@@ -31,7 +31,8 @@ import javafx.scene.transform.Scale;
  */
 public class Init
 {
-	private static String DEFAULT_TEXTURE = "assets/Brick_wall_002_COLOR.jpg";
+	private static String DEFAULT_TEXTURE_WALL  = "assets/Brick_wall_002_COLOR.jpg";
+	private static String DEFAULT_TEXTURE_FLOOR = "assets/Wood_plancks_004_COLOR.jpg";
 
 	public static Group makeSpecialCases(Scale sc, MainMaze maze, boolean flyMode)
 	{
@@ -48,7 +49,6 @@ public class Init
 					Text message = new Text("Welcome");
 					message.setTranslateX(ec.getX());
 					message.setTranslateZ(ec.getY());
-					//message.setTextFill(Color.web("#0076a3"));
 					message.setFont(new Font("Arial", 8));
 					spc.getChildren().add(message);
 					break;
@@ -102,13 +102,31 @@ public class Init
 		res.setTranslateY(-where);
 		for (MazeDimension.RectInMaze md: mds)
 		{
+			Material mat;
+			try{
+				String texturePath = DEFAULT_TEXTURE_FLOOR;          //Default
+
+				Image img = new Image(new FileInputStream(texturePath), 400, 400, true, false);
+				mat = new PhongMaterial(Color.WHITE, img, null, null, null);
+			}
+			catch (Exception e) {
+				mat = new PhongMaterial(Color.GREEN);
+			}
+
+
 			final int w = md.x2 - md.x1;
 			final int h = md.y2 - md.y1;
-			Box       f = new Box(w, 0.05, h);
-			f.setTranslateX(md.x1 + w / 2.0);
-			f.setTranslateZ(md.y1 + h / 2.0);
-			f.setMaterial(new PhongMaterial(Color.color(0.15, 0.15, 0.15)));
-			res.getChildren().add(f);
+			for (int i = 0; i < w; i++)
+			{
+				for (int j = 0; j < h; j++)
+				{
+					Box f = new Box(1, 0.05, 1);
+					f.setTranslateX((md.x1 + i + 0.5));
+					f.setTranslateZ((md.y1 + j + 0.5));
+					f.setMaterial(mat);
+					res.getChildren().add(f);
+				}
+			}
 		}
 		return (res);
 	}
@@ -131,7 +149,7 @@ public class Init
 				String texturePath = cms[i].getTexturePath();
 				if (texturePath == null)
 				{
-					texturePath = DEFAULT_TEXTURE;      //Default
+					texturePath = DEFAULT_TEXTURE_WALL;      //Default
 				}
 				Image img = new Image(new FileInputStream(texturePath), 400, 400, true, false);
 				mat = new PhongMaterial(Color.WHITE, img, null, null, null);
