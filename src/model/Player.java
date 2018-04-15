@@ -359,12 +359,20 @@ public class Player
 				dz = (this.velocity * (float)Math.sin(-r2) * dt / 1e9f);
 			}
 
+			FloatVector d = new FloatVector(dx, dy);
 
-			this.xyCol.updateMove(new FloatVector(dx, dy));
-			this.zCol.updateMove(dz);
+			if (!ghostMode)
+			{
+				this.xyCol.updateMove(d);
+				this.zCol.updateMove(dz);
 
-			this.velocity = (float)Math.sqrt(Math.pow(this.xyCol.getMove().getX(), 2) + Math.pow(this.xyCol.getMove().getY(), 2) + Math.pow(this.zCol.getMove(), 2)) * 1e9f / dt;
-			this.applyMove(this.xyCol.getMove(), this.zCol.getMove());
+				this.velocity = (float)Math.sqrt(Math.pow(this.xyCol.getMove().getX(), 2) + Math.pow(this.xyCol.getMove().getY(), 2) + Math.pow(this.zCol.getMove(), 2)) * 1e9f / dt;
+				this.applyMove(this.xyCol.getMove(), this.zCol.getMove());
+			}
+			else
+			{
+				this.applyMove(d, dz);
+			}
 		}
 		else
 		{

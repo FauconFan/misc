@@ -4,6 +4,9 @@ import src.model.Player;
 
 import java.lang.Math;
 
+/**
+ * Gestionnaire de collisions dans l'axe z
+ */
 public class CollisionsZManager
 {
 	private Player p;

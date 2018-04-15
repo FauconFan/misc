@@ -6,6 +6,9 @@ import src.utils.FloatVector;
 
 import java.lang.Math;
 
+/**
+ * Gestionnaire de collisions dans le plan xy
+ */
 public class CollisionsXYManager
 {
 	private Player p;
