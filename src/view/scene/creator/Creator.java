@@ -74,10 +74,12 @@ public class Creator extends ScenePlus
 				});
 				levels.get(i).cases.getChildren().add(rect);
 			}
-			levels.get(i).setTexture(maze.getContentMaze(i).getWallTexturePath());
+			levels.get(i).setWallTexture(maze.getContentMaze(i).getWallTexturePath());
+			levels.get(i).setFloorTexture(maze.getContentMaze(i).getFloorTexturePath());
 		}
 
-		leftPanel.setCurrentTexture(maze.getContentMazeCurrentLevel().getWallTexturePath());
+		leftPanel.setCurrentWallTexture(maze.getContentMazeCurrentLevel().getWallTexturePath());
+		leftPanel.setCurrentFloorTexture(maze.getContentMazeCurrentLevel().getFloorTexturePath());
 	}
 
 	private Creator(View v, int width, int height, int nbLevel, boolean flyMode, Scene old)

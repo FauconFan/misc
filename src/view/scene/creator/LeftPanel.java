@@ -23,8 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
-
 import java.io.File;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.Optional;
 
@@ -33,13 +33,17 @@ import src.model.board.*;
 import src.model.gen.CreatorHelper;
 import src.view.View;
 
+/**
+ * TODO:
+ * Gérer le dépassement à cause du grand nombre de texture...
+ */
 class LeftPanel extends VBox
 {
 	private final Insets defaultInsets = new Insets(20, 0, 20, 0);
 
 	public final int leftPaneGrSize = 180;
 
-	public final Textures textures;
+	public final Textures wallTextures, floorTextures;
 
 	public final Creator creator;
 
@@ -119,7 +123,8 @@ class LeftPanel extends VBox
 		buttonsBox.setPadding(defaultInsets);
 
 		//Textures
-		textures = new Textures(leftPaneGrSize);
+		wallTextures  = new Textures(leftPaneGrSize, (n, str)->{ creator.levels.get(n).setWallTexture(str); });
+		floorTextures = new Textures(leftPaneGrSize, (n, str)->{ creator.levels.get(n).setFloorTexture(str); });
 
 		choiceBox.valueProperty().addListener((ov, h, n)->{
 			if (n != null)
@@ -130,7 +135,8 @@ class LeftPanel extends VBox
 					creator.drawCircles(width, height);
 				}
 
-				setCurrentTexture(levels.get(n).getTexture());
+				setCurrentWallTexture(levels.get(n).getWallTexture());
+				setCurrentFloorTexture(levels.get(n).getFloorTexture());
 			}
 		});
 
@@ -161,7 +167,7 @@ class LeftPanel extends VBox
 						specialCases.add(c);
 					}
 				}
-				ch.append(i, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]), levels.get(i).getTexture(), null);
+				ch.append(i, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]), levels.get(i).getWallTexture(), levels.get(i).getFloorTexture());
 			}
 			try{
 				v.con.setMaze(ch.buildMainMaze("", flyMode));
@@ -175,18 +181,28 @@ class LeftPanel extends VBox
 		});
 
 
-		getChildren().addAll(button, buttonsBox, chooseYourLevel, choiceBox, textures, leftPaneGr);
+		getChildren().addAll(button, buttonsBox, chooseYourLevel, choiceBox, new Label("Wall texture"), wallTextures, new Label("Floor texture"), floorTextures, leftPaneGr);
 	}
 
-	public void setCurrentTexture(String str)
+	public void setCurrentWallTexture(String str)
+	{
+		setCurrentTexture(str, wallTextures);
+	}
+
+	public void setCurrentFloorTexture(String str)
+	{
+		setCurrentTexture(str, floorTextures);
+	}
+
+	private void setCurrentTexture(String str, Textures t)
 	{
 		if (str != null&& !str.equals(""))
 		{
-			textures.setCurrentTexture(str);
+			t.setCurrentTexture(str);
 		}
 		else
 		{
-			textures.reset();
+			t.reset();
 		}
 	}
 
@@ -258,11 +274,14 @@ class LeftPanel extends VBox
 	{
 		public Tile currentTile = null;
 
+		private final BiConsumer <Integer, String> updateTile;
+
 		private final int gap = 5;
 		private final int numOfTilesPerLine = 2;
 
-		Textures(int leftPaneGrSize)
+		Textures(int leftPaneGrSize, BiConsumer <Integer, String> updateTile)
 		{
+			this.updateTile = updateTile;
 			setAlignment(Pos.TOP_CENTER);
 			setPadding(defaultInsets);
 			setVgap(gap);
@@ -291,7 +310,8 @@ class LeftPanel extends VBox
 			}
 			currentTile = tile;
 			((ColorAdjust)currentTile.getEffect()).setBrightness(0);
-			creator.levels.get(creator.currentLevel).setTexture(tile.filename);
+			updateTile.accept(creator.currentLevel, tile.filename);
+			//creator.levels.get(creator.currentLevel).setTexture(tile.filename);
 		}
 
 		private File[] getTextures()
@@ -318,7 +338,7 @@ class LeftPanel extends VBox
 					setCurrentTile(t);
 				}
 			}
-			creator.levels.get(creator.currentLevel).setTexture(str);
+			updateTile.accept(creator.currentLevel, str);
 		}
 
 		public void reset()

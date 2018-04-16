@@ -7,7 +7,7 @@ class Level
 	//walls MUST contain LinePlus
 	//cases MUST contain RectanglePlus
 	public final Pane walls, cases, dots;
-	private String texture;
+	private String wallTexture, floorTexture;
 
 	public Level(Pane w, Pane c, Pane d)
 	{
@@ -24,18 +24,23 @@ class Level
 		this(new Pane(), new Pane(), new Pane());
 	}
 
-	public void setTexture(String s)
+	public void setWallTexture(String s)
 	{
-		texture = s;
+		wallTexture = s;
 	}
 
-	public String getTexture()
+	public void setFloorTexture(String s)
 	{
-		return (texture);
+		floorTexture = s;
 	}
 
-	public String toString()
+	public String getWallTexture()
 	{
-		return ("Level with : " + texture);
+		return (wallTexture);
+	}
+
+	public String getFloorTexture()
+	{
+		return (floorTexture);
 	}
 }

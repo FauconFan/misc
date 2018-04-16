@@ -52,11 +52,11 @@ public class CollisionsZManager
 	 */
 	public void updateMove(float dz)
 	{
-		if (isFlyMode && dz > 0 && this.p.getPosZ() + this.p.hitBoxTop + dz > highLevel + 1 && ((cms[2] != null && cms[2].isWall(this.p.getPosX(), this.p.getPosY(), this.p.hitBoxCircle)) || (cms[2] == null)))
+		if (isFlyMode && dz > 0 && this.p.getPosZ() + this.p.hitBoxTop + dz > highLevel + 1 && ((cms[2] != null&& cms[2].isWall(this.p.getPosX(), this.p.getPosY(), this.p.hitBoxCircle)) || (cms[2] == null)))
 		{
 			this.finalMove = (highLevel + 1) - this.p.hitBoxTop - this.p.getPosZ();
 		}
-		else if (dz < 0 && this.p.getPosZ() - this.p.hitBoxBottom + dz <= highLevel && (this.isFloor(cms[1]) || (cms[0] != null && cms[0].isWall(this.p.getPosX(), this.p.getPosY(), this.p.hitBoxCircle))))
+		else if (dz < 0 && this.p.getPosZ() - this.p.hitBoxBottom + dz <= highLevel && (this.isFloor(cms[1]) || (cms[0] != null&& cms[0].isWall(this.p.getPosX(), this.p.getPosY(), this.p.hitBoxCircle))))
 		{
 			this.finalMove = (this.p.getPosZ() - this.p.hitBoxBottom + dz < highLevel) ? highLevel - (this.p.getPosZ() - this.p.hitBoxBottom) : dz;
 		}
