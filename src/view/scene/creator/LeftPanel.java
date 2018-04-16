@@ -47,7 +47,7 @@ class LeftPanel extends VBox
 
 	public final Creator creator;
 
-	public final VBox leftPaneGr;
+	public VBox leftPaneGr;
 
 	public LeftPanel(Creator creator, int width, int height, View v, boolean flyMode)
 	{
@@ -133,6 +133,8 @@ class LeftPanel extends VBox
 
 				setCurrentWallTexture(levels.get(n).getWallTexture());
 				setCurrentFloorTexture(levels.get(n).getFloorTexture());
+
+				leftPaneGr.getChildren().clear();
 			}
 		});
 
