@@ -146,7 +146,7 @@ public class Init
 		for (int i = 0; i < cms.length; i++)
 		{
 			try{
-				String texturePath = cms[i].getTexturePath();
+				String texturePath = cms[i].getWallTexturePath();
 				if (texturePath == null)
 				{
 					texturePath = DEFAULT_TEXTURE_WALL;      //Default

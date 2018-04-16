@@ -8,7 +8,7 @@ public class ContentMaze
 	private Case[] specialCases;
 	private LineWall[] linewalls;
 	private MazeDimension mazeDim;
-	private String texturePath;
+	private String wallTexturePath, floorTexturePath;
 
 	public ContentMaze(Case[] sc, LineWall[] w, MazeDimension mz)
 	{
@@ -115,13 +115,23 @@ public class ContentMaze
 		return (false);
 	}
 
-	public String getTexturePath()
+	public String getWallTexturePath()
 	{
-		return (this.texturePath);
+		return (this.wallTexturePath);
 	}
 
-	public void setTexturePath(String s)
+	public void setWallTexturePath(String s)
 	{
-		this.texturePath = s;
+		this.wallTexturePath = s;
+	}
+
+	public String getFloorTexturePath()
+	{
+		return (this.floorTexturePath);
+	}
+
+	public void setFloorTexturePath(String s)
+	{
+		this.floorTexturePath = s;
 	}
 }

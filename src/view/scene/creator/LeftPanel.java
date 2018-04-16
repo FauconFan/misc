@@ -161,7 +161,7 @@ class LeftPanel extends VBox
 						specialCases.add(c);
 					}
 				}
-				ch.append(i, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]), levels.get(i).getTexture());
+				ch.append(i, 0, width, 0, height, lineWalls.toArray(new LineWall[0]), specialCases.toArray(new Case[0]), levels.get(i).getTexture(), null);
 			}
 			try{
 				v.con.setMaze(ch.buildMainMaze("", flyMode));
@@ -180,7 +180,7 @@ class LeftPanel extends VBox
 
 	public void setCurrentTexture(String str)
 	{
-		if (str != null && !str.equals(""))
+		if (str != null&& !str.equals(""))
 		{
 			textures.setCurrentTexture(str);
 		}
