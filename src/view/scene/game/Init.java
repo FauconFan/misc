@@ -84,18 +84,19 @@ public class Init
 		{
 			for (int i = 0; i < cms.length; i++)
 			{
-				floors.getChildren().add(makeOneLevelFloor(cms[i].getMazeDimension().list_rectmaze, i));
+				String texturePath = cms[i].getFloorTexturePath();
+				floors.getChildren().add(makeOneLevelFloor(cms[i].getMazeDimension().list_rectmaze, i, texturePath));
 			}
 		}
 		if (flyMode)
 		{
-			floors.getChildren().add(makeOneLevelFloor(cms[0].getMazeDimension().list_rectmaze, 0));
-			floors.getChildren().add(makeOneLevelFloor(cms[cms.length - 1].getMazeDimension().list_rectmaze, cms.length));
+			floors.getChildren().add(makeOneLevelFloor(cms[0].getMazeDimension().list_rectmaze, 0, cms[0].getFloorTexturePath()));
+			floors.getChildren().add(makeOneLevelFloor(cms[cms.length - 1].getMazeDimension().list_rectmaze, cms.length, cms[cms.length - 1].getFloorTexturePath()));
 		}
 		return (floors);
 	}
 
-	private static Group makeOneLevelFloor(ArrayList <MazeDimension.RectInMaze> mds, int where)
+	private static Group makeOneLevelFloor(ArrayList <MazeDimension.RectInMaze> mds, int where, String texturePath)
 	{
 		Group res = new Group();
 
@@ -104,7 +105,10 @@ public class Init
 		{
 			Material mat;
 			try{
-				String texturePath = DEFAULT_TEXTURE_FLOOR;          //Default
+				if (texturePath == null)
+				{
+					texturePath = DEFAULT_TEXTURE_WALL;      //Default
+				}
 
 				Image img = new Image(new FileInputStream(texturePath), 400, 400, true, false);
 				mat = new PhongMaterial(Color.WHITE, img, null, null, null);
