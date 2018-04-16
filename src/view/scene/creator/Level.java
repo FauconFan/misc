@@ -1,27 +1,29 @@
 package src.view.scene.creator;
 
+import java.util.ArrayList;
 import javafx.scene.layout.Pane;
 
+/**
+ * TODO
+ * transform the pane Walls in ArrayList
+ */
 class Level
 {
 	//walls MUST contain LinePlus
-	//cases MUST contain RectanglePlus
-	public final Pane walls, cases, dots;
+	public final Pane walls;
+	public final ArrayList <RectanglePlus> cases;
 	private String wallTexture, floorTexture;
 
-	public Level(Pane w, Pane c, Pane d)
+	public Level(Pane w, ArrayList <RectanglePlus> c)
 	{
 		walls = w;
 		cases = c;
-		dots  = d;
-
-		dots.setPickOnBounds(false);
 		walls.setPickOnBounds(false);
 	}
 
 	public Level()
 	{
-		this(new Pane(), new Pane(), new Pane());
+		this(new Pane(), new ArrayList <RectanglePlus>());
 	}
 
 	public void setWallTexture(String s)

@@ -11,6 +11,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -20,8 +21,9 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Screen;
 
-
 import java.util.Optional;
+
+import java.util.function.Consumer;
 
 import src.model.*;
 import src.model.board.*;
@@ -43,8 +45,10 @@ public class Creator extends ScenePlus
 	protected final ArrayList <Level> levels = new ArrayList <Level>(); //To store the levels
 	protected int currentLevel = 0;
 
-	private final LeftPanel leftPanel;
+	private LeftPanel leftPanel;
 	private final StackPane root = new StackPane();
+
+	private final int rightWidth, rightHeight;
 
 	public Creator(View v, int width, int height, int nbLevel, boolean flyMode)
 	{
@@ -65,14 +69,9 @@ public class Creator extends ScenePlus
 			{
 				levels.get(i).walls.getChildren().add(new LinePlus(l));
 			}
-			for (Case c:maze.getContentMaze(i).getSpecialCases())
+			for (Case c:maze.getContentMaze(i).getSpecialCases()) // TODO: Print the rect
 			{
-				final RectanglePlus rect = new RectanglePlus(c);
-				rect.setOnMouseClicked((ev)->{
-					rect.changeCase();
-					leftPanel.updateLeftPane(rect);
-				});
-				levels.get(i).cases.getChildren().add(rect);
+				levels.get(i).cases.add(new RectanglePlus(c));
 			}
 			levels.get(i).setWallTexture(maze.getContentMaze(i).getWallTexturePath());
 			levels.get(i).setFloorTexture(maze.getContentMaze(i).getFloorTexturePath());
@@ -80,6 +79,7 @@ public class Creator extends ScenePlus
 
 		leftPanel.setCurrentWallTexture(maze.getContentMazeCurrentLevel().getWallTexturePath());
 		leftPanel.setCurrentFloorTexture(maze.getContentMazeCurrentLevel().getFloorTexturePath());
+		updateRightPanel();
 	}
 
 	private Creator(View v, int width, int height, int nbLevel, boolean flyMode, Scene old)
@@ -92,6 +92,10 @@ public class Creator extends ScenePlus
 		}
 
 		final double change = 5;
+
+		this.rightWidth  = width;
+		this.rightHeight = height;
+
 		//Key controller
 		addEventHandler(KeyEvent.KEY_PRESSED, (key)->{
 			switch (key.getCode())
@@ -134,8 +138,6 @@ public class Creator extends ScenePlus
 
 		updateRightPanel();
 
-		drawCircles(width, height);
-
 		//Left Panel
 
 		leftPanel = new LeftPanel(this, width, height, v, flyMode);
@@ -164,18 +166,22 @@ public class Creator extends ScenePlus
 
 	protected void updateRightPanel(int newCurr)
 	{
-		root.getChildren().removeAll(levels.get(currentLevel).walls, levels.get(currentLevel).dots, levels.get(currentLevel).cases);
 		currentLevel = newCurr;
 		updateRightPanel();
 	}
 
 	private void updateRightPanel()
 	{
-		root.getChildren().addAll(levels.get(currentLevel).cases, levels.get(currentLevel).walls, levels.get(currentLevel).dots);
+		root.getChildren().clear();
+		Pane dots = drawCircles(rightWidth, rightHeight);
+
+		dots.setPickOnBounds(false);
+		root.getChildren().addAll(drawRectangle(rightWidth, rightHeight), levels.get(currentLevel).walls, dots);
 	}
 
-	protected void drawCircles(int width, int height)
+	private Pane drawCircles(int width, int height)
 	{
+		final Pane   res      = new Pane();
 		final double dotWidth = 0.1;
 
 		// Draw circles
@@ -226,19 +232,56 @@ public class Creator extends ScenePlus
 						startedDraw = null;
 					}
 				});
-				if (!(j == height || i == width))// Si on n'est pas sur une ligne du "bord"
-				{
-					final RectanglePlus rect = new RectanglePlus(i, j, 1, 1);
-					rect.setOnMouseClicked((ev)->{
-						rect.changeCase();
-						leftPanel.updateLeftPane(rect);
-					});
-					levels.get(currentLevel).cases.getChildren().add(rect);
-				}
-				levels.get(currentLevel).dots.getChildren().add(c);
+				res.getChildren().add(c);
 			}
 		}
+		return (res);
 	}
+
+	private Pane drawRectangle(int width, int height)
+	{
+		final Pane res = new Pane();
+
+		for (int i = 0; i < width; i++)
+		{
+			for (int j = 0; j < height; j++)
+			{
+				RectanglePlus rect = null;
+				for (RectanglePlus n: levels.get(currentLevel).cases)           // If it is already a cases known
+				{
+					if (n.getX() == i && n.getY() == j)
+					{
+						rect = n;
+					}
+				}
+				if (rect == null)
+				{
+					rect = new RectanglePlus(i, j, 1, 1);
+				}
+				final RectanglePlus rectemp = rect;
+				rect.setOnMouseClicked((ev)->{ actionRect.accept(rectemp); });
+				res.getChildren().add(rect);
+			}
+		}
+
+		return (res);
+	}
+
+	private Consumer <RectanglePlus> actionRect = (rect)->{
+		rect.changeCase();
+		if (rect.getCase() == null)
+		{
+			levels.get(currentLevel).cases.remove(rect);
+		}
+		else
+		{
+			if (!levels.get(currentLevel).cases.contains(rect))
+			{
+				levels.get(currentLevel).cases.add(rect);
+			}
+		}
+		leftPanel.updateLeftPane(rect);
+	};
 
 	private boolean isIn(double totest, double min, double max)
 	{

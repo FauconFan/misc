@@ -130,10 +130,6 @@ class LeftPanel extends VBox
 			if (n != null)
 			{
 				creator.updateRightPanel(n);
-				if (creator.levels.get(creator.currentLevel).dots.getChildren().size() == 0)                // Init
-				{
-					creator.drawCircles(width, height);
-				}
 
 				setCurrentWallTexture(levels.get(n).getWallTexture());
 				setCurrentFloorTexture(levels.get(n).getFloorTexture());
@@ -159,9 +155,9 @@ class LeftPanel extends VBox
 				}
 
 				ArrayList <Case> specialCases = new ArrayList <Case>();
-				for (Node l: levels.get(i).cases.getChildren())
+				for (RectanglePlus l: levels.get(i).cases)
 				{
-					Case c = ((RectanglePlus)l).getCase();
+					Case c = l.getCase();
 					if (c != null)
 					{
 						specialCases.add(c);
