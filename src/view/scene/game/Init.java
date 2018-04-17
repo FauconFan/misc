@@ -107,7 +107,7 @@ public class Init
 			try{
 				if (texturePath == null)
 				{
-					texturePath = DEFAULT_TEXTURE_WALL;      //Default
+					texturePath = DEFAULT_TEXTURE_FLOOR;      //Default
 				}
 
 				Image img = new Image(new FileInputStream(texturePath), 400, 400, true, false);
