@@ -69,7 +69,7 @@ public class Creator extends ScenePlus
 			{
 				levels.get(i).walls.getChildren().add(new LinePlus(l));
 			}
-			for (Case c:maze.getContentMaze(i).getSpecialCases()) // TODO: Print the rect
+			for (Case c:maze.getContentMaze(i).getSpecialCases())
 			{
 				levels.get(i).cases.add(new RectanglePlus(c));
 			}
@@ -141,6 +141,9 @@ public class Creator extends ScenePlus
 		//Left Panel
 
 		leftPanel = new LeftPanel(this, width, height, v, flyMode);
+		ScrollPane leftPanelScr = new ScrollPane(leftPanel);
+		leftPanelScr.setCenterShape(true);
+		leftPanelScr.setMinSize(leftPanel.leftPaneGrSize + 10, 0);
 
 		ScrollPane sp = new ScrollPane(root);
 		sp.setPrefSize(screenWidth - leftPanel.leftPaneGrSize, screenHeight - 100);
@@ -161,7 +164,7 @@ public class Creator extends ScenePlus
 
 		HBox pane = (HBox)getRoot();
 		pane.setAlignment(Pos.CENTER_LEFT);
-		pane.getChildren().addAll(leftPanel, sp);
+		pane.getChildren().addAll(leftPanelScr, sp);
 	}
 
 	protected void updateRightPanel(int newCurr)

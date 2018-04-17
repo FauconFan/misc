@@ -33,10 +33,6 @@ import src.model.board.*;
 import src.model.gen.CreatorHelper;
 import src.view.View;
 
-/**
- * TODO:
- * Gérer le dépassement à cause du grand nombre de texture...
- */
 class LeftPanel extends VBox
 {
 	private final Insets defaultInsets = new Insets(20, 0, 20, 0);
@@ -72,7 +68,7 @@ class LeftPanel extends VBox
 
 		//Level button
 		Label  leve   = new Label("Level");
-		Button remove = new Button("Remove");//ASSERT more than one level
+		Button remove = new Button("Remove");
 		remove.setOnAction((ev)->{
 			Alert alert = new Alert(AlertType.CONFIRMATION, "Do you really want to remove the current level ?", ButtonType.YES, ButtonType.NO);
 			Optional <ButtonType> result = alert.showAndWait();
@@ -250,6 +246,9 @@ class LeftPanel extends VBox
 		}
 	}
 
+	/**
+	 * There is no default field for int value
+	 */
 	private class IntTextField extends TextField
 	{
 		public IntTextField(int defaultValue, Consumer <Integer> ch)

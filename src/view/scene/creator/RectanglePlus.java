@@ -25,7 +25,7 @@ class RectanglePlus extends Rectangle
 
 	public RectanglePlus(Case c)
 	{
-		super(c.getX(), c.getY(), 1, 1);//NOT GOOD
+		super(c.getX(), c.getY(), 1, 1);
 		this.cas = c;
 		circ.setIndex(c.type);
 		setFill(CaseColor.getColor(c.type));
@@ -89,7 +89,7 @@ class RectanglePlus extends Rectangle
 	}
 
 	/**
-	 * Array for sotring the Cases
+	 * Circular array for the Cases
 	 */
 	private class CircularArray implements Iterator <Case.TypeCase>
 	{

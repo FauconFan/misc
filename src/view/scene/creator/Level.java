@@ -3,10 +3,6 @@ package src.view.scene.creator;
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
 
-/**
- * TODO
- * transform the pane Walls in ArrayList
- */
 class Level
 {
 	//walls MUST contain LinePlus
