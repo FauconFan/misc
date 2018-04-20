@@ -1,4 +1,5 @@
-# ADS4_Project - GraphTXT
+# ADS4_Project - GraphTXT [![Build Status](https://travis-ci.com/FauconFan/ADS4_Project.svg?token=2sRmqJj9p4TAy8ScMWxd&branch=master)](https://travis-ci.com/FauconFan/ADS4_Project)
+
 Le but de ce projet est de créer un parser/lexer d'un langage donnée.  
 La grammaire est spécifié dans ce fichier.  
 Le projet est codé en Java.  
@@ -50,20 +51,21 @@ On fait une interprétation en plusieurs étapes :
 ## Bonus
 
  - [x] Faire une boucle While
+ - [x] Faire une boucle For (peut être améliorée)
  - [x] Faire des Elif
  - [x] Faire des Exceptions avec le numéro de la ligne et de la colonne
+ - [x] Intégration Continue - Travis
  - [x] Création de fonctions systèmes:
  	- Exit
 
 ## Idées - Bonus
 
- - [ ] Créer des variables Booléenne, String, Couleurs
- - [ ] Faire une évaluation booléenne
- - [ ] Faire une vidéo
- - [ ] Savoir si un fichier est correctement parsé pour de l'intégration continue (Travis CI)
- - [ ] Pouvoir définir des fonctions
- - [ ] Pouvoir définir des structures
- - [ ] Faire une interprétation dynamique des erreurs (afficher toutes les erreurs et pas juste la première erreur croisée)
+ - Créer des variables Booléenne, String, Couleurs
+ - Faire une évaluation booléenne
+ - Faire une vidéo
+ - Pouvoir définir des fonctions
+ - Pouvoir définir des structures
+ - Faire une interprétation dynamique des erreurs (afficher toutes les erreurs et pas juste la première erreur croisée)
 
 ## Grammaire Lexicale
 
