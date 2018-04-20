@@ -8,7 +8,7 @@ jdk:
 install:
   - curl http://jflex.de/release/jflex-1.6.1.tar.gz --output jflex-1.6.1.tar.gz
   - sudo tar -C /usr/share -xvzf jflex-1.6.1.tar.gz
-  - ln -s /usr/share/jflex-1.6.1/bin/jflex /usr/bin/jflex
+  - sudo ln -s /usr/share/jflex-1.6.1/bin/jflex /usr/bin/jflex
 
 before_script : make
 after_script : make fclean
