@@ -1,4 +1,4 @@
-sudo : disabled
+sudo : enabled
 language : java
 
 before_script : apt-get install jflex && make
