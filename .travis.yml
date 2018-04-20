@@ -1,4 +1,4 @@
-sudo : enabled
+sudo : true
 language : java
 jdk:
   - oraclejdk8
