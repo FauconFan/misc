@@ -40,6 +40,11 @@ On fait une interprétation en plusieurs étapes :
  3. Analyse sémantique (gestion de la portée de variables)
  4. Evaluation de l'AST (éxécution)
 
+## Travis CI
+
+Le projet est maintenu suivi par Travis CI :
+[Lien Travis](https://travis-ci.com/FauconFan/ADS4_Project)
+
 ## To Do List
 
  - [x] Créer le flex
