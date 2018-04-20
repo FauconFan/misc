@@ -55,11 +55,15 @@ public class AST implements ASTInterface
 		String res = "[ AST ";
 
 		if (instr != null)
+		{
 			res += this.instr.toTikz();
+		}
 		if (next != null)
+		{
 			res += this.next.toTikz();
+		}
 		res += "]";
-		return res;
+		return (res);
 	}
 
 	public String toString()

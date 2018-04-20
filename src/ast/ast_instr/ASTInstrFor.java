@@ -17,10 +17,10 @@ public class ASTInstrFor extends ASTInstr
 	public ASTInstrFor(Point begin, Point end, ASTInstr first, ASTExpr condition, ASTInstr eachLoop, ASTInstr content)
 	{
 		super(begin, end);
-		this.first = first;
+		this.first     = first;
 		this.condition = condition;
-		this.eachLoop = eachLoop;
-		this.content = content;
+		this.eachLoop  = eachLoop;
+		this.content   = content;
 	}
 
 	public void checkSemantic(SemanticAnalyser sa) throws SemanticAnalyserException
@@ -59,6 +59,6 @@ public class ASTInstrFor extends ASTInstr
 		res += eachLoop.toTikz();
 		res += content.toTikz();
 		res += "]";
-		return res;
+		return (res);
 	}
 }

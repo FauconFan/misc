@@ -40,6 +40,6 @@ public class ASTInstrSysExit extends ASTInstr
 	{
 		String res = "[Exit]";
 
-		return res;
+		return (res);
 	}
 }

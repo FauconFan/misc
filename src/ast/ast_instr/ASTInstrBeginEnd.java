@@ -62,6 +62,6 @@ public class ASTInstrBeginEnd extends ASTInstr
 
 		res += this.content.toTikz();
 		res += "]";
-		return res;
+		return (res);
 	}
 }

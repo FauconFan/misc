@@ -164,7 +164,6 @@ public class Parser
 			Point end = reader.pop(Sym.RPAR).getLocation();
 
 			res = new ASTInstrSysExit(begin, end, expr);
-
 		}
 		// Control Instruction
 		else if (reader.check(Sym.BEGIN))
@@ -206,7 +205,7 @@ public class Parser
 		else if (reader.check(Sym.FOR))
 		{
 			ASTInstr first;
-			ASTExpr condition;
+			ASTExpr  condition;
 			ASTInstr eachLoop;
 			ASTInstr content;
 
@@ -315,7 +314,7 @@ public class Parser
 		builtProg = instruction_next();
 		if (reader.isEmpty() == false)
 		{
-			throw new Exception ("Token not expected, not handled everywhere...");
+			throw new Exception("Token not expected, not handled everywhere...");
 		}
 		return (builtProg);
 	}

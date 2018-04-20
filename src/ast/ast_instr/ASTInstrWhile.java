@@ -45,6 +45,6 @@ public class ASTInstrWhile extends ASTInstr
 		res += expr.toTikz();
 		res += content.toTikz();
 		res += "]";
-		return res;
+		return (res);
 	}
 }

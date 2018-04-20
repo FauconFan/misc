@@ -13,7 +13,7 @@ public abstract class ASTSuperClass implements ASTInterface
 	public ASTSuperClass(Point begin, Point end)
 	{
 		this.begin = begin;
-		this.end = end;
+		this.end   = end;
 	}
 
 	public Point begin()

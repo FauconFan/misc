@@ -65,6 +65,6 @@ public class ASTExprCalculus extends ASTExpr
 		res += this.left.toTikz();
 		res += this.right.toTikz();
 		res += "]";
-		return res;
+		return (res);
 	}
 }

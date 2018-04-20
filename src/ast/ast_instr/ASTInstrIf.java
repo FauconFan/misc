@@ -34,7 +34,7 @@ public class ASTInstrIf extends ASTInstr
 			this.instr.exec(prog);
 		}
 		else
-		{	
+		{
 			if (this.follow != null)
 			{
 				this.follow.exec(prog);
@@ -69,10 +69,12 @@ public class ASTInstrIf extends ASTInstr
 		res += instr.toTikz();
 
 		if (follow != null)
+		{
 			res += follow.toTikzImbricated();
+		}
 
 		res += "]";
-		return res;
+		return (res);
 	}
 
 	public String toTikz()
@@ -83,9 +85,11 @@ public class ASTInstrIf extends ASTInstr
 		res += instr.toTikz();
 
 		if (follow != null)
+		{
 			res += follow.toTikzImbricated();
+		}
 
 		res += "]";
-		return res;
+		return (res);
 	}
 }

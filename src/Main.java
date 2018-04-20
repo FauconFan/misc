@@ -74,10 +74,10 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		boolean quietMode  = false;
-		boolean helpMode   = false;
+		boolean quietMode = false;
+		boolean helpMode  = false;
 		boolean astRepTex = false;
-		String  filename   = null;
+		String  filename  = null;
 
 		for (String str : args)
 		{

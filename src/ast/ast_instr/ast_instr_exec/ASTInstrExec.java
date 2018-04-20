@@ -35,8 +35,8 @@ public abstract class ASTInstrExec extends ASTInstr
 
 	public String toTikz()
 	{
-		String res = "[ " + this.getTag();
-		String         data = "0123456789ABCDEF";
+		String res  = "[ " + this.getTag();
+		String data = "0123456789ABCDEF";
 
 		for (ASTExpr expr : this.args)
 		{

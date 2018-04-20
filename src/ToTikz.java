@@ -6,12 +6,12 @@ public class ToTikz
 {
 	private static String getHeader()
 	{
-		return "\\documentclass{standalone}\n\\usepackage{forest}\n\\begin{document}\n\\begin{forest}for tree={draw=black}";
+		return ("\\documentclass{standalone}\n\\usepackage{forest}\n\\begin{document}\n\\begin{forest}for tree={draw=black}");
 	}
 
 	private static String getFooter()
 	{
-		return "\\end{forest}\n\\end{document}";
+		return ("\\end{forest}\n\\end{document}");
 	}
 
 	public static void printTikz(AST ast)
