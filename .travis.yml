@@ -11,6 +11,7 @@ install:
   - sudo ln -s /usr/share/jflex-1.6.1/bin/jflex /usr/bin/jflex
 
 before_script : make
+script : echo "nothing tested in script"
 after_script : make fclean
 
 matrix:
