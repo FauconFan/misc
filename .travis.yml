@@ -1,0 +1,15 @@
+sudo : disabled
+language : java
+
+before_script : make
+after_script : make fclean
+
+matrix:
+  include:
+    - os: linux
+      env:
+         - NAME="Single Compile test"
+    - os: linux
+      script : make test
+      env :
+         - NAME="Full Build All"
