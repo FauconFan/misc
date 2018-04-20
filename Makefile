@@ -49,13 +49,13 @@ ast-tex: all
 re: fclean all
 
 test:
-	@sh ${TESTING_SCRIPT}
+	@bash ${TESTING_SCRIPT}
 
 basic_test:
-	@sh ${TESTING_SCRIPT} basic
+	@bash ${TESTING_SCRIPT} basic
 
 sys_test:
-	@sh ${TESTING_SCRIPT} sys
+	@bash ${TESTING_SCRIPT} sys
 
 bonus_test:
-	@sh ${TESTING_SCRIPT} bonus
+	@bash ${TESTING_SCRIPT} bonus

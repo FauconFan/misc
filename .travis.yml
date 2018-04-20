@@ -21,15 +21,15 @@ matrix:
     - os: linux
       script : make basic_test
       env :
-         - NAME="Full Build All"
+         - NAME="Basic test"
     - os: linux
       script : make sys_test
       env :
-         - NAME="Full Build All"
+         - NAME="Sys test"
     - os: linux
       script : make bonus_test
       env :
-         - NAME="Full Build All"
+         - NAME="Bonus test"
     - os: linux
       script : make test
       env :
