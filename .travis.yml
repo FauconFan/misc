@@ -1,7 +1,7 @@
 sudo : disabled
 language : java
 
-before_script : make
+before_script : apt-get install jflex && make
 after_script : make fclean
 
 matrix:
