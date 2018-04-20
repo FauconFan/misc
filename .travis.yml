@@ -10,8 +10,7 @@ install:
   - sudo tar -C /usr/share -xvzf jflex-1.6.1.tar.gz
   - sudo ln -s /usr/share/jflex-1.6.1/bin/jflex /usr/bin/jflex
 
-before_script : make
-script : echo "nothing tested in script"
+script : make
 after_script : make fclean
 
 matrix:
@@ -19,6 +18,18 @@ matrix:
     - os: linux
       env:
          - NAME="Single Compile test"
+    - os: linux
+      script : make basic_test
+      env :
+         - NAME="Full Build All"
+    - os: linux
+      script : make sys_test
+      env :
+         - NAME="Full Build All"
+    - os: linux
+      script : make bonus_test
+      env :
+         - NAME="Full Build All"
     - os: linux
       script : make test
       env :
