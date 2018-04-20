@@ -56,3 +56,6 @@ basic_test:
 
 sys_test:
 	@sh ${TESTING_SCRIPT} sys
+
+bonus_test:
+	@sh ${TESTING_SCRIPT} bonus

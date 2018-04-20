@@ -5,6 +5,7 @@ FILES_BASIC_GOOD=$(find resources/basic_good -name "*.gtxt")
 FILES_BASIC_BAD=$(find resources/basic_bad -name "*.gtxt")
 FILES_SYS_GOOD=$(find resources/sys_good -name "*.gtxt")
 FILES_SYS_BAD=$(find resources/sys_bad -name "*.gtxt")
+FILES_BONUS_GOOD=$(find resources/bonus_good -name "*.gtxt")
 
 _RED=$(tput setaf 1)
 _GREEN=$(tput setaf 2)
@@ -75,15 +76,6 @@ function do_basic_test()
 	do_all_tests_bad ${FILES_BASIC_BAD}
 }
 
-function do_all_ast_tex()
-{
-	print_title "BASIC_GOOD AST TEX"
-	do_all_tests_good_ast_tex ${FILES_BASIC_GOOD}
-
-	print_title "SYS_GOOD AST TEX"
-	do_all_tests_good_ast_tex ${FILES_SYS_GOOD}
-}
-
 function do_sys_test()
 {
 	print_title "SYS_GOOD"
@@ -91,6 +83,24 @@ function do_sys_test()
 
 	print_title "SYS_BAD"
 	do_all_tests_bad ${FILES_SYS_BAD}
+}
+
+function do_bonus_test()
+{
+	print_title "BONUS_GOOD"
+	do_all_tests_good ${FILES_BONUS_GOOD}
+}
+
+function do_all_ast_tex()
+{
+	print_title "BASIC_GOOD AST TEX"
+	do_all_tests_good_ast_tex ${FILES_BASIC_GOOD}
+
+	print_title "SYS_GOOD AST TEX"
+	do_all_tests_good_ast_tex ${FILES_SYS_GOOD}
+
+	print_title "BONUS_GOOD AST TEX"
+	do_all_tests_good_ast_tex ${FILES_BONUS_GOOD}
 }
 
 function main()
@@ -106,11 +116,13 @@ function main()
 	if [ $# = 0 ]; then
 		do_basic_test
 		do_sys_test
+		do_bonus_test
 		do_all_ast_tex
 	else
 		case ${1} in
 			"sys" ) do_sys_test;;
 			"basic" ) do_basic_test;;
+			"bonus" ) do_bonus_test;;
 		esac
 	fi
 	make -s -C . fclean 2>&1 > /dev/null

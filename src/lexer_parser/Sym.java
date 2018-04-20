@@ -14,6 +14,7 @@ public enum Sym
 	END,
 	WHILE,
 	DO,
+	FOR,
 	EXIT,
 	IF,
 	ELIF,

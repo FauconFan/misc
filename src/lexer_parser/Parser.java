@@ -23,6 +23,7 @@ import src.ast.ast_instr.ast_instr_exec.ASTInstrExecFillRect;
 import src.ast.ast_instr.ASTInstr;
 import src.ast.ast_instr.ASTInstrIf;
 import src.ast.ast_instr.ASTInstrWhile;
+import src.ast.ast_instr.ASTInstrFor;
 import src.ast.ast_instr.ASTInstrDecl;
 import src.ast.ast_instr.ASTInstrAssign;
 import src.ast.ast_instr.ASTInstrBeginEnd;
@@ -202,6 +203,26 @@ public class Parser
 
 			res = new ASTInstrWhile(begin, instr.end(), expr, instr);
 		}
+		else if (reader.check(Sym.FOR))
+		{
+			ASTInstr first;
+			ASTExpr condition;
+			ASTInstr eachLoop;
+			ASTInstr content;
+
+			Point begin = reader.pop(Sym.FOR).getLocation();
+			reader.eat(Sym.LPAR);
+			first = instruction();
+			reader.eat(Sym.SEMICOLON);
+			condition = expr();
+			reader.eat(Sym.SEMICOLON);
+			eachLoop = instruction();
+			reader.eat(Sym.RPAR);
+			reader.eat(Sym.THEN);
+			content = instruction();
+
+			res = new ASTInstrFor(begin, content.end(), first, condition, eachLoop, content);
+		}
 		// Imp Instruction
 		else if (reader.check(Sym.CONST))
 		{
@@ -289,7 +310,14 @@ public class Parser
 
 	public AST buildProg() throws Exception
 	{
-		return (instruction_next());
+		AST builtProg;
+
+		builtProg = instruction_next();
+		if (reader.isEmpty() == false)
+		{
+			throw new Exception ("Token not expected, not handled everywhere...");
+		}
+		return (builtProg);
 	}
 
 	public void walkThrough() throws Exception
