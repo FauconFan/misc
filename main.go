@@ -7,5 +7,7 @@ import (
 
 func main () {
 	pathToFile := "assets/lorem1.txt"
-	fmt.Println(pathToFile)
+	
+	data, _ := ioutil.ReadFile(pathToFile)
+	fmt.Println(string(data))
 }
