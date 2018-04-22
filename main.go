@@ -15,7 +15,7 @@ func translate(data string, table map[rune]string) string {
 }
 
 func main () {
-	pathToFile := "assets/simple.txt"
+	pathToFile := "assets/lorem1.txt"
 	
 	data, err := ioutil.ReadFile(pathToFile)
 	if err != nil {
