@@ -6,10 +6,19 @@ import (
 
 var (
 	listFiles = []string{
-		"assets/simple.txt",
+		"assets/easy1.txt",
+		"assets/easy2.txt",
+		"assets/easy3.txt",
 		"assets/lorem1.txt",
+		"assets/lorem2.txt",
+		"assets/lorem3.txt",
+		"assets/lorem4.txt",
 		"assets/mandarin1.txt",
-		"assets/easy.txt",
+		"assets/mandarin2.txt",
+		"assets/mandarin3.txt",
+		"assets/simple1.txt",
+		"assets/simple2.txt",
+		"assets/simple3.txt",
 	}
 )
 
