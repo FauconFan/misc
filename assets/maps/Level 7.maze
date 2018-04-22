@@ -23,6 +23,7 @@
           "properties": {
             "xDest": 1,
             "yDest": 4,
+            "stage": 0,
             "x": 0,
             "y": 0,
             "type": "TELEPORT"
@@ -41,7 +42,7 @@
         {
           "type": "TimeCase",
           "properties": {
-            "timeMillis": 1000,
+            "timeNano": 1000,
             "activated": false,
             "x": 3,
             "y": 2,
@@ -209,28 +210,32 @@
             "x2": 9,
             "y2": 7
           }
-        ]
+        ],
+        "hasPhysicalDimension": true
       }
     }
   ],
   "p": {
     "ghostMode": false,
     "hitBoxCircle": 0.05,
-    "hitBoxZ": 0.25,
+    "hitBoxTop": 0.1,
+    "hitBoxBottom": 0.4,
     "posX": 1.5,
     "posY": 5.5,
-    "posZ": 0.25,
-    "horizontalAngle": 172.29988,
-    "verticalAngle": 3.0999994,
+    "posZ": 0.4,
+    "horizontalAngle": 0.0,
+    "verticalAngle": 0.0,
     "hasWin": false,
+    "isDead": false,
     "speed": 1.0,
     "isRunning": false,
-    "time": 2968191568,
+    "time": 0,
     "rot": 2.0,
-    "velocityXY": 0.0,
+    "velocity": 0.0,
     "velocityZ": 0.0,
     "lastDepAngle": 0,
     "dirs": []
   },
-  "current_level": 0
+  "current_level": 0,
+  "flyMode": false
 }

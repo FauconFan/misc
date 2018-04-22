@@ -21,7 +21,7 @@
         {
           "type": "TimeCase",
           "properties": {
-            "timeMillis": 10000,
+            "timeNano": 10000,
             "activated": false,
             "x": 1,
             "y": 6,
@@ -31,7 +31,7 @@
         {
           "type": "TimeCase",
           "properties": {
-            "timeMillis": -10000,
+            "timeNano": -10000,
             "activated": false,
             "x": 5,
             "y": 6,
@@ -77,28 +77,32 @@
             "x2": 7,
             "y2": 15
           }
-        ]
+        ],
+        "hasPhysicalDimension": true
       }
     }
   ],
   "p": {
     "ghostMode": false,
     "hitBoxCircle": 0.05,
-    "hitBoxZ": 0.25,
+    "hitBoxTop": 0.1,
+    "hitBoxBottom": 0.4,
     "posX": 3.5,
     "posY": 2.5,
-    "posZ": 0.25,
+    "posZ": 0.4,
     "horizontalAngle": 0.0,
     "verticalAngle": 0.0,
     "hasWin": false,
+    "isDead": false,
     "speed": 1.0,
     "isRunning": false,
-    "time": 1392170442,
+    "time": 0,
     "rot": 2.0,
-    "velocityXY": 0.0,
+    "velocity": 0.0,
     "velocityZ": 0.0,
     "lastDepAngle": 0,
     "dirs": []
   },
-  "current_level": 0
+  "current_level": 0,
+  "flyMode": false
 }

@@ -57,28 +57,32 @@
             "x2": 7,
             "y2": 15
           }
-        ]
+        ],
+        "hasPhysicalDimension": true
       }
     }
   ],
   "p": {
     "ghostMode": false,
     "hitBoxCircle": 0.05,
-    "hitBoxZ": 0.25,
-    "posX": 3.4984872,
-    "posY": 2.1828625,
-    "posZ": 0.25,
-    "horizontalAngle": 0.2000001,
-    "verticalAngle": 0.30000186,
+    "hitBoxTop": 0.1,
+    "hitBoxBottom": 0.4,
+    "posX": 3.5,
+    "posY": 2.5,
+    "posZ": 0.4,
+    "horizontalAngle": 0.0,
+    "verticalAngle": 0.0,
     "hasWin": false,
+    "isDead": false,
     "speed": 1.0,
     "isRunning": false,
-    "time": 3450670116,
+    "time": 0,
     "rot": 2.0,
-    "velocityXY": 0.0,
+    "velocity": 0.0,
     "velocityZ": 0.0,
     "lastDepAngle": 0,
     "dirs": []
   },
-  "current_level": 0
+  "current_level": 0,
+  "flyMode": false
 }
