@@ -33,6 +33,16 @@ func CreateHuffmanFile (pathToFile string) *HuffmanFile {
 	return &res
 }
 
+func CreateHuffmanEncryptedFile (table map[rune]string, encrypt string) *HuffmanFile {
+	var res HuffmanFile
+
+	res.PathToFile = "Undefined"
+	res.ContentFile = ""
+	res.Table = table
+	res.EncryptedVersion = encrypt
+	return &res
+}
+
 func (hf *HuffmanFile) translate() {
 	if hf.EncryptedVersion != "" {
 		fmt.Errorf("%s\n", encryptedFileAlreadyGenerated)
@@ -51,7 +61,7 @@ func (hf *HuffmanFile) EncryptFile () {
 		fmt.Errorf("%s\n", tableAlreadyGenerated)
 		return
 	}
-	hf.Table = GetAssociatedTab(hf.ContentFile)
+	hf.Table = GetAssociatedTable(hf.ContentFile)
 	hf.translate()
 }
 
