@@ -32,11 +32,11 @@ import src.view.scene.Menus;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
+/**
+ * Classe principale du creator
+ */
 public class Creator extends ScenePlus
 {
-	private static int screenWidth  = (int)Screen.getPrimary().getBounds().getWidth();
-	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
-
 	private Circle startedDraw = null;
 
 	private final Scale sc     = new Scale(100, 100);
@@ -84,7 +84,7 @@ public class Creator extends ScenePlus
 
 	private Creator(View v, int width, int height, int nbLevel, boolean flyMode, Scene old)
 	{
-		super(new HBox(), screenWidth, screenWidth, false, v);
+		super(new HBox(), false, v);
 
 		for (int i = 0; i < nbLevel; i++)
 		{
@@ -182,6 +182,12 @@ public class Creator extends ScenePlus
 		root.getChildren().addAll(drawRectangle(rightWidth, rightHeight), levels.get(currentLevel).walls, dots);
 	}
 
+	/**
+	 * Créer les cercles avec les bons listener
+	 * @param width La largeur
+	 * @param height La hauteur
+	 * @return Un pane contenant les cercles
+	 */
 	private Pane drawCircles(int width, int height)
 	{
 		final Pane   res      = new Pane();
@@ -240,6 +246,13 @@ public class Creator extends ScenePlus
 		}
 		return (res);
 	}
+
+	/**
+	 * Créer les rectangles avec les bons listener
+	 * @param width La largeur
+	 * @param height La hauteur
+	 * @return Un pane contenant les rectangles
+	 */
 
 	private Pane drawRectangle(int width, int height)
 	{

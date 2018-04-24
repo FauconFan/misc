@@ -7,6 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 
+/**
+ * Menu de fin
+ */
 public class EndMenu extends ScenePlus.ScenePlusMenu
 {
 	public EndMenu(View v, long sec)

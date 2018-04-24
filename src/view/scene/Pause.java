@@ -14,6 +14,9 @@ import src.view.scene.creator.Creator;
 import src.view.scene.game.Game;
 import src.view.View;
 
+/**
+ * Menu de pause
+ */
 public class Pause extends ScenePlus.ScenePlusMenu
 {
 	private Game previous;

@@ -34,13 +34,14 @@ import src.view.scene.Pause;
 import src.view.scene.ScenePlus;
 import src.view.View;
 
+/**
+ * Classe principale d'affichage pour le jeu
+ */
 public class Game extends ScenePlus
 {
 	private final MainMaze maze;
 
 	//Dimensions de l'ecran
-	private static int screenWidth  = (int)Screen.getPrimary().getBounds().getWidth();
-	private static int screenHeight = (int)Screen.getPrimary().getBounds().getHeight();
 	private static int screenOffset = 0;
 
 	// Anciennes positions de la souris
@@ -65,12 +66,11 @@ public class Game extends ScenePlus
 
 	public Game(View v, MainMaze m)
 	{
-		super(new StackPane(), screenWidth, screenHeight, true, v);
+		super(new StackPane(), true, v);
 		Group root3D = new Group();
 		Group root2D = new Group();
-		layout       = (StackPane)this.getRoot();
-		maze         = m;
-		currentLevel = m.getCurrentLevel();
+		layout = (StackPane)this.getRoot();
+		maze   = m;
 
 		setFill(Color.GREY);
 		setCursor(Cursor.NONE);
@@ -79,6 +79,8 @@ public class Game extends ScenePlus
 		AmbientLight al = new AmbientLight(Color.WHITE);
 		root3D.getChildren().add(al);
 
+		// Current level
+		currentLevel = m.getCurrentLevel();
 		level.setText("Current level : " + currentLevel);
 
 
@@ -282,7 +284,7 @@ public class Game extends ScenePlus
 	}
 
 	/**
-	 * Update the camera position according to the player
+	 * Met à jour la position de la caméra en fonction du joueur
 	 */
 	private void updatePlayer()
 	{
@@ -301,7 +303,7 @@ public class Game extends ScenePlus
 	}
 
 	/**
-	 * Do the player won the game ?
+	 * Est-ce que le joueur a gagné ?
 	 */
 	private void checkWin()
 	{
@@ -313,7 +315,7 @@ public class Game extends ScenePlus
 	}
 
 	/**
-	 * Is he dead ?
+	 * Est-il mort ?
 	 */
 	public void checkLoss()
 	{
@@ -334,6 +336,9 @@ public class Game extends ScenePlus
 		timer.start();
 	}
 
+	/**
+	 * Timer, appelé à chauqe frame par javafx
+	 */
 	private class Timer extends AnimationTimer
 	{
 		private long oldTime = 0;

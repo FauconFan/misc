@@ -9,7 +9,7 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
 /**
- * A camera with its attributes
+ * Une caméra et ses attributs
  */
 public class GroupCameraPlus extends Group
 {

@@ -9,7 +9,7 @@ import src.model.board.Case;
 import src.utils.Tuple;
 
 /**
- * Static class for storing the correspondance Case/Color
+ * Classe statique pour stocker la correspondance case/couleur
  */
 public final class CaseColor
 {
@@ -29,6 +29,10 @@ public final class CaseColor
 		colorCases.put(Case.TypeCase.JUMP, new Tuple <>(Color.BLUE, "BLUE"));
 	}
 
+	/**
+	 * Permet de générer l'aide
+	 * @return Le message d'aide sur les cases
+	 */
 	public static String prettify()
 	{
 		String res = "";

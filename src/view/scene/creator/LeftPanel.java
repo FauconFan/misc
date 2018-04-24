@@ -33,6 +33,9 @@ import src.model.board.*;
 import src.model.gen.CreatorHelper;
 import src.view.View;
 
+/**
+ * Le panneau de gauche du creator
+ */
 class LeftPanel extends VBox
 {
 	private final Insets defaultInsets = new Insets(20, 0, 20, 0);
@@ -267,6 +270,9 @@ class LeftPanel extends VBox
 		}
 	}
 
+	/**
+	 * Un gridPane qui est fait pour nos textures
+	 */
 	private class Textures extends GridPane
 	{
 		public Tile currentTile = null;

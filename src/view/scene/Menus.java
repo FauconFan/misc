@@ -25,13 +25,13 @@ import javafx.scene.text.Text;
 
 import javafx.stage.Screen;
 
+/**
+ * Classe stockant les différent menus de début de jeu
+ */
 public class Menus extends ScenePlus.ScenePlusMenu
 {
 	private Parent view;
 	private Parent prec;
-
-	private static int screenWidth  = (int)Screen.getPrimary().getVisualBounds().getMaxX();
-	private static int screenHeight = (int)Screen.getPrimary().getVisualBounds().getMaxY();
 
 	public Menus(View v)
 	{
@@ -59,11 +59,6 @@ public class Menus extends ScenePlus.ScenePlusMenu
 			final Button   buttonLoad     = addBigButton("Load");
 			final Button   buttonCampaign = addBigButton("Campaign");
 			final Button[] buttons        = { buttonLoad, buttonCreate, buttonCampaign };
-			for (Button b: buttons)
-			{
-				b.setPrefWidth(primaryScreenBounds.getWidth() / 3);
-				b.setPrefHeight(primaryScreenBounds.getHeight() / 13);
-			}
 
 			buttonLoad.setOnAction(event->{
 				File file = new FileChooser().showOpenDialog(v.stage);

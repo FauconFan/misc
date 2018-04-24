@@ -27,7 +27,7 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 
 /**
- * Static class for the Game init
+ * CLasse statique pour l'initialisation
  */
 public class Init
 {

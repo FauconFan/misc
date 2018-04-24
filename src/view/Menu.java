@@ -11,7 +11,7 @@ import javafx.stage.Screen;
 import javafx.stage.Screen;
 
 /**
- * Custom VBox with pre-built Menu style
+ * Une VBox avec des caractéristiques de menu
  */
 public class Menu extends VBox
 {
@@ -25,38 +25,48 @@ public class Menu extends VBox
 		super();
 		setId("pane");
 
-
 		setPadding(new Insets(10));
 		setSpacing(15);
 		setAlignment(Pos.CENTER);
-
 
 		primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 		setPrefSize(primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
 	}
 
+	/**
+	 * Ajoute un grand bouton
+	 * @param name Le nom affiché
+	 * @return le nom
+	 */
 	protected Button addBigButton(String name)
 	{
-		Button b = new Button(name);
-
-		b.setPrefWidth(screenWidth / 3);
-		b.setPrefHeight(screenHeight / 15);
-
-		getChildren().add(b);
-		return (b);
+		return (addButton(name, 3, 15));
 	}
 
+	/**
+	 * Ajoute un petit bouton
+	 * @param name Le nom affiché
+	 * @return le nom
+	 */
 	protected Button addSmallButton(String name)
 	{
-		Button b = new Button(name);
+		return (addButton(name, 10, 20));
+	}
 
-		b.setPrefWidth(screenWidth / 10);
-		b.setPrefHeight(screenHeight / 20);
+	private Button addButton(String str, int w, int h)
+	{
+		Button b = new Button(str);
 
 		getChildren().add(b);
+		b.setPrefWidth(screenWidth / w);
+		b.setPrefHeight(screenHeight / h);
+
 		return (b);
 	}
 
+	/**
+	 * Ajoute un bouton "Quit" qui quitte l'application
+	 */
 	public void addButtonQuit()
 	{
 		Button b = addSmallButton("Quit");

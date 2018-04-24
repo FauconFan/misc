@@ -3,6 +3,9 @@ package src.view.scene.creator;
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
 
+/**
+ * Classe pour stocker un niveau du labyrinthe pour le creator
+ */
 class Level
 {
 	//walls MUST contain LinePlus

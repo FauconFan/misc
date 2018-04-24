@@ -13,6 +13,9 @@ import javafx.scene.transform.Translate;
 import src.model.board.LineWall;
 import src.model.Player;
 
+/**
+ * Classe pour la minimap
+ */
 class MiniMap extends SubScene
 {
 	private final Translate fstTr;

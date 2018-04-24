@@ -13,6 +13,9 @@ import src.controller.Controller;
 import src.view.scene.game.Game;
 import src.view.scene.Menus;
 
+/**
+ * La vue
+ */
 public class View
 {
 	public final Controller con;
@@ -27,17 +30,17 @@ public class View
 
 		stage.setTitle("Laby");
 
-		/*Media       sound       = new Media(new File("assets/music/Bg1_BXDN_Return.mp3").toURI().toString());
-		 * MediaPlayer mediaPlayer = new MediaPlayer(sound);
-		 * mediaPlayer.setOnEndOfMedia(new Runnable()
-		 * {
-		 *  public void run()
-		 *  {
-		 *      mediaPlayer.seek(Duration.ZERO);
-		 *  }
-		 * });
-		 * mediaPlayer.setVolume(0.6);
-		 * mediaPlayer.play();*/
+		Media       sound       = new Media(new File("assets/music/Bg1_BXDN_Return.mp3").toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(sound);
+		mediaPlayer.setOnEndOfMedia(new Runnable()
+		{
+			public void run()
+			{
+				mediaPlayer.seek(Duration.ZERO);
+			}
+		});
+		mediaPlayer.setVolume(0.6);
+		mediaPlayer.play();
 
 		stage.setScene(scene);
 		stage.show();
