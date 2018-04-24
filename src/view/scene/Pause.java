@@ -14,7 +14,7 @@ import src.view.scene.creator.Creator;
 import src.view.scene.game.Game;
 import src.view.View;
 
-public class Pause extends ScenePlus
+public class Pause extends ScenePlus.ScenePlusMenu
 {
 	private Game previous;
 
@@ -23,7 +23,6 @@ public class Pause extends ScenePlus
 		super(new Group(), v);
 		this.previous = p;
 		((Group)getRoot()).getChildren().add(new MenuPause());
-		getStylesheets().add("menuStyle.css");
 	}
 
 	public class MenuPause extends Menu

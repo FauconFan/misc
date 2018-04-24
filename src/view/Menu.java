@@ -10,6 +10,9 @@ import javafx.stage.Screen;
 
 import javafx.stage.Screen;
 
+/**
+ * Custom VBox with pre-built Menu style
+ */
 public class Menu extends VBox
 {
 	protected Rectangle2D primaryScreenBounds;

@@ -7,20 +7,18 @@ import javafx.scene.control.Button;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 
-public class EndMenu extends ScenePlus
+public class EndMenu extends ScenePlus.ScenePlusMenu
 {
 	public EndMenu(View v, long sec)
 	{
 		super(new Group(), v);
 		((Group)getRoot()).getChildren().add(new MenuWin(sec));
-		getStylesheets().add("menuStyle.css");
 	}
 
 	public EndMenu(View v)
 	{
 		super(new Group(), v);
 		((Group)getRoot()).getChildren().add(new MenuLost());
-		getStylesheets().add("menuStyle.css");
 	}
 
 	public class MenuWin extends Menu

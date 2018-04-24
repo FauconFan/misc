@@ -25,7 +25,7 @@ import javafx.scene.text.Text;
 
 import javafx.stage.Screen;
 
-public class Menus extends ScenePlus
+public class Menus extends ScenePlus.ScenePlusMenu
 {
 	private Parent view;
 	private Parent prec;
@@ -37,14 +37,12 @@ public class Menus extends ScenePlus
 	{
 		super(new Group(), v);
 		((Group)getRoot()).getChildren().add(new MenuStart());
-		getStylesheets().add("menuStyle.css");
 	}
 
 	public Menus(View v, Menu m)
 	{
 		super(m, v);
 		this.view = m;
-		getStylesheets().add("menuStyle.css");
 	}
 
 	public class MenuStart extends Menu
