@@ -64,6 +64,8 @@ public class Game extends ScenePlus
 
 	private int currentLevel;
 
+	private boolean isCtrlPushed = false;
+
 	public Game(View v, MainMaze m)
 	{
 		super(new StackPane(), true, v);
@@ -150,10 +152,18 @@ public class Game extends ScenePlus
 			case ENTER: msg.setText(""); break;
 
 			case G:
-				this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode());
-				sceneMiniMap.setVisible(!sceneMiniMap.isVisible()); cross.setVisible(!cross.isVisible()); break;
+				if (isCtrlPushed)
+				{
+					this.maze.getPlayer().setGhostMode(!this.maze.getPlayer().getGhostMode());
+					sceneMiniMap.setVisible(!sceneMiniMap.isVisible()); cross.setVisible(!cross.isVisible());
+				}
+				break;
 
-			case T: walls.setVisible(!walls.isVisible()); break;
+			case T: if (isCtrlPushed)
+				{
+					walls.setVisible(!walls.isVisible());
+				}
+				break;
 
 			case H: msg.setText("Here is a HELP page. You have to find green cell to escape the maze.\nSpecial cells :\n" + CaseColor.prettify() + "Press ENTER to close"); break;
 
@@ -260,6 +270,8 @@ public class Game extends ScenePlus
 			case DOWN: cons.accept(Directions.down); break;
 
 			case SPACE: cons.accept(Directions.jump); break;
+
+			case CONTROL: isCtrlPushed = bool; break;
 			}
 		};
 

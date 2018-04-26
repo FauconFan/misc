@@ -22,8 +22,9 @@ En jeu, vous pouvez appuyer sur les touches suivantes:
 * S pour reculer
 * D pour aller à droite
 * ← ↑ → ↓ pour orienter la caméra
-* G pour passer en "GhostMode", qui affiche une carte de l'étage courant et désactive les collisions
-* T pour faire disparaitre les murs
+* CTRL +
+  * G pour passer en "GhostMode", qui affiche une carte de l'étage courant et désactive les collisions
+  * T pour faire disparaitre les murs
 
 ### En mode normal
 
