@@ -6,7 +6,7 @@ public class FloatVector
 {
 	private float x;
 	private float y;
-	private final static float ERREUR = 10e-5f;
+	private final static float ERREUR = 10e-8f;
 
 	public FloatVector(float x, float y)
 	{

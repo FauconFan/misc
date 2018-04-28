@@ -100,9 +100,9 @@ public class CollisionsXYManager
 
 		for (int k = 0; k < cms.length; k++)
 		{
-			if (cms[k] != null&& ((k == 0 && this.p.getPosZ() - this.p.hitBoxBottom < currentLevel) ||
-								  k == 1 ||
-								  (k == 2 && this.p.getPosZ() + this.p.hitBoxTop > currentLevel + 1)))
+			if (cms[k] != null && ((k == 0 && this.p.getPosZ() - this.p.hitBoxBottom < currentLevel) ||
+								   k == 1 ||
+								   (k == 2 && this.p.getPosZ() + this.p.hitBoxTop > currentLevel + 1)))
 			{
 				for (LineWall lw : cms[k].getLineWalls())
 				{
@@ -123,8 +123,8 @@ public class CollisionsXYManager
 								coefProp    = (effectWalls[i][0].getX() + this.p.hitBoxCircle * positionEff - this.p.getPosX()) / this.splitMove[0].getX();
 							}
 							if ((coefProp < this.coefPropMin && coefProp < 1 && this.isConsideredWall(coefProp, effectWalls[i], horizontalWall)) &&
-								(0 < coefProp || (Math.abs(coefProp) < 10e-4f && ((horizontalWall && this.splitMove[0].getY() * positionEff < 0) ||
-																				  (!horizontalWall && this.splitMove[0].getX() * positionEff < 0)))))
+								0 <= coefProp && ((horizontalWall && this.splitMove[0].getY() * positionEff < 0) ||
+												  (!horizontalWall && this.splitMove[0].getX() * positionEff < 0)))
 							{
 								this.coefPropMin = coefProp;
 								this.closestWall = effectWalls[i];
@@ -190,6 +190,6 @@ public class CollisionsXYManager
 	 */
 	private static boolean effectWallIsHorizontal(FloatVector [] w)
 	{
-		return (Math.abs(w[0].getY() - w[1].getY()) < 10e-4f);
+		return (Math.abs(w[0].getY() - w[1].getY()) < 10e-8f);
 	}
 }

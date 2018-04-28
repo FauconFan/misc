@@ -22,34 +22,65 @@ public abstract class Case implements Cloneable
 		this.type = t;
 	}
 
+	/**
+	 * Renvoit la position en x de la case
+	 * @return Position en x
+	 */
 	public int getX()
 	{
 		return (this.x);
 	}
 
+	/**
+	 * Renvoit la position en y de la case
+	 * @return Position en y
+	 */
 	public int getY()
 	{
 		return (this.y);
 	}
 
+	/**
+	 * Renvoit le type de la case
+	 * @return TypeCase type
+	 */
 	public TypeCase getType()
 	{
 		return (this.type);
 	}
 
+	/**
+	 * Translate la case de (dx, dy)
+	 * @param dx Deplacement en x
+	 * @param dy Deplacement en y
+	 */
 	public void translate(int dx, int dy)
 	{
 		this.x = this.x + dx;
 		this.y = this.y + dy;
 	}
 
+	/**
+	 * Renvoit une case clone de la case courante
+	 * @return Case clonée
+	 */
 	public abstract Case clone();
 
+	/**
+	 * Teste si les coordonnées de la case c sont similaires à la case courante
+	 * @param c Case que l'on compare à la case courante
+	 * @return True si les coordonnées sont les mêmes
+	 */
 	public boolean coordsEquals(Case c)
 	{
 		return (this.x == c.getX() && this.y == c.getY());
 	}
 
+	/**
+	 * Teste si la case c est la même que la case courante
+	 * @param c Case que l'on compare à la case courante
+	 * @return True si leurs coordonnées et leurs types sont les mêmes
+	 */
 	public boolean equals(Case c)
 	{
 		return (this.type == c.type && this.coordsEquals(c));
@@ -64,6 +95,9 @@ public abstract class Case implements Cloneable
 		return (repX + repY);
 	}
 
+	/**
+	 * Enumération des différents types de cases
+	 */
 	public enum TypeCase
 	{
 		START,

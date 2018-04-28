@@ -193,7 +193,7 @@ class LeftPanel extends VBox
 
 	private void setCurrentTexture(String str, Textures t)
 	{
-		if (str != null&& !str.equals(""))
+		if (str != null && !str.equals(""))
 		{
 			t.setCurrentTexture(str);
 		}
@@ -223,7 +223,7 @@ class LeftPanel extends VBox
 				break;
 
 			case TIME:
-				TextField tf = new IntTextField(((TimeCase)c).getTimeNano(), ((TimeCase)c)::setTimeNano);
+				TextField tf = new IntTextField(((TimeCase)c).getTimeSec(), ((TimeCase)c)::setTimeSec);
 				leftPaneGr.getChildren().add(new HBox(new Label("Time: "), tf));
 				break;
 

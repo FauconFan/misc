@@ -167,7 +167,7 @@ public class MainMaze
 					if (!((TimeCase)c).isActivated())
 					{
 						((TimeCase)c).activate();
-						p.updateTime(-((TimeCase)c).getTimeNano() * (long)10e9);
+						p.updateTime(-((TimeCase)c).getTimeSec() * (long)10e9);
 					}
 					break;
 
