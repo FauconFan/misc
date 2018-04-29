@@ -1,5 +1,8 @@
 package src.utils;
 
+/**
+ * Generic Class to represent a Tuple
+ */
 public class Tuple <T, Q>
 {
 	public final T first;

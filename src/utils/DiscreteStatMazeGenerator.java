@@ -3,6 +3,11 @@ package src.utils;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Stat Class
+ *
+ * Usefull to have some random values to generate a maze
+ */
 public class DiscreteStatMazeGenerator
 {
 	public static int[] getKParmiN(int k, int n)

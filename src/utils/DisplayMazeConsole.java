@@ -3,6 +3,11 @@ package src.utils;
 import src.model.board.LineWall;
 import src.model.ContentMaze;
 
+/**
+ * Utilitaire pour afficher un labyrinthe correctement dans un terminal
+ *
+ * On utilise quelques charatères de la table unicode pour la lisibilité
+ */
 public class DisplayMazeConsole
 {
 	public enum charWall

@@ -2,6 +2,9 @@ package src.utils;
 
 import java.lang.Math;
 
+/**
+ * Class for FloatVector (in Physics)
+ */
 public class FloatVector
 {
 	private float x;

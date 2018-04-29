@@ -1,5 +1,8 @@
 package src.utils;
 
+/**
+ * String utils to display well some information in the Terminal
+ */
 public class StringManipulation
 {
 	public static String makeTabsProperly(String text)
