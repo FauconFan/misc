@@ -2,8 +2,18 @@ package src.model.board;
 
 import java.util.ArrayList;
 
+/**
+ * Classe utilitaires d'opérations élémentaires sur les murs (LineWall)
+ */
 public class LineWallUtils
 {
+	/**
+	 * Permet d'avoir l'intersection entre 2 Linewalls
+	 * Renvoie null, si il n'y a pas d'intersectop,
+	 * @param  lw1 le 1er mur
+	 * @param  lw2 le 2ème mur
+	 * @return     une nouvelle instance de LineWall si intersection ou null
+	 */
 	public static LineWall intersection(LineWall lw1, LineWall lw2)
 	{
 		LineWall    lw;
@@ -27,6 +37,13 @@ public class LineWallUtils
 		return (null);
 	}
 
+	/**
+	 * Permet d'obtenir une ArrayList contenant l'union de deux murs
+	 * Ne renvoie qu'un seul mur si on peut représenter les deux murs avec qu'un seul mur
+	 * @param  lw1 le 1er mur
+	 * @param  lw2 le 2ème mur
+	 * @return     une ArrayList de murs (de taille 1 ou 2)
+	 */
 	public static ArrayList <LineWall> union(LineWall lw1, LineWall lw2)
 	{
 		ArrayList <LineWall> res;
@@ -61,6 +78,14 @@ public class LineWallUtils
 		return (res);
 	}
 
+	/**
+	 * Permet d'obtenir une ArrayList de murs, désignant le premier mur privé du deuxième mur
+	 * Si le deuxième mur n'a aucun mur en commun avec le premier mur, la fonction renvoie seulement le premier mur
+	 * Renvoie une liste vide si lw1 = lw2.
+	 * @param  lw1 le 1er mur
+	 * @param  lw2 le 2ème mur
+	 * @return     une ArrayList de murs (de taille 0, 1 ou 2)
+	 */
 	public static ArrayList <LineWall> except(LineWall lw1, LineWall lw2)
 	{
 		ArrayList <LineWall> res;
@@ -98,6 +123,14 @@ public class LineWallUtils
 		return (res);
 	}
 
+	/**
+	 * Permet d'obtenir une ArrayList de murs, désignant le premier mur privé du deuxième mur si et seulement si le deuxième mur est compris dans le premier mur.
+	 * Si le deuxième mur n'a aucun mur en commun avec le premier mur, la fonction renvoie seulement les deux murs
+	 * Renvoie une liste vide si lw1 = lw2.
+	 * @param  lw1 le 1er mur
+	 * @param  lw2 le 2ème mur
+	 * @return     une ArrayList de murs (de taille 0, 1 ou 2)
+	 */
 	public static ArrayList <LineWall> exceptIfIntersectOrUnion(LineWall lw1, LineWall lw2)
 	{
 		ArrayList <LineWall> res;
@@ -132,6 +165,9 @@ public class LineWallUtils
 		return (res);
 	}
 
+	/**
+	 * Sous class statique utilitaires pour les calculs d'intersection.
+	 */
 	private static class CoordsUtils
 	{
 		public boolean mode;
@@ -140,6 +176,11 @@ public class LineWallUtils
 		public int n1;
 		public int n2;
 
+		/**
+		 * Constructeur
+		 * @param  lw1 1er mur
+		 * @param  lw2 2ème mur
+		 */
 		public CoordsUtils(LineWall lw1, LineWall lw2)
 		{
 			this.mode = lw1.isHorizontal();
@@ -159,6 +200,10 @@ public class LineWallUtils
 			}
 		}
 
+		/**
+		 * Si les deux murs données en paramètres au constructeur d'intersectent.
+		 * @return true si intersection.
+		 */
 		public boolean is_intersect()
 		{
 			return ((m1 >= n1 && m1 < n2) ||

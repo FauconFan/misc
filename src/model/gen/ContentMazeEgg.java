@@ -3,6 +3,9 @@ package src.model.gen;
 import src.model.board.*;
 import src.utils.StringManipulation;
 
+/**
+ * Wirkbench class fot ContentMaze Class
+ */
 public class ContentMazeEgg
 {
 	private Case[] specialCases;

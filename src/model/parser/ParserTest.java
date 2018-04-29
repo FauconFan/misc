@@ -6,6 +6,9 @@ import src.model.gen.Algo;
 import src.model.gen.AlgoBackTracker;
 import src.model.MainMaze;
 
+/**
+ * Main Class for testing Parser class
+ */
 public class ParserTest
 {
 	public static void main(String[] args)

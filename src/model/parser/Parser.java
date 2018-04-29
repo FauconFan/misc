@@ -16,6 +16,9 @@ import com.google.gson.*;
 
 import java.io.PrintWriter;
 
+/**
+ * Parser for saving and loading mazes from the OS
+ */
 public class Parser
 {
 	final static String EXTENSION = "maze";

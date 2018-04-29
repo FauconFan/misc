@@ -21,6 +21,9 @@ import src.model.MazeDimension;
 import src.model.MazeDimension.RectInMaze;
 import src.utils.DiscreteStatMazeGenerator;
 
+/**
+ * Class for simplify, manage and handle queries for building a Level of a Maze
+ */
 public class ContentMazeFactory
 {
 	private MazeDimension mazeDim;

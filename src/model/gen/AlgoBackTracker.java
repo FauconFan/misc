@@ -15,10 +15,31 @@ import src.model.gen.RectMaze;
 import src.model.gen.RectMazeShift;
 import src.utils.DisplayMazeConsole;
 
+/**
+ * <p>Algorithme principal de génération aléatoire de Labyrinthe3d</p>
+ *
+ * Références
+ * <ul>
+ *  <li><a href="http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking" target="_blank">Weblog.jamisbuck.org</a></li>
+ *  <li><a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm" target="_blank">Wiki: Maze Generation Algotithm</a></li>
+ * </ul>
+ *
+ * <p> L'idée est la même excepté qu'on ne parcourt pas le chemin en sens inverse si on ne trouve pas la case d'après, on téléporte l'agent à ĉôté d'une case qu'il ne connaît pas.
+ *
+ * @see <a href="http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking" target="_blank">Weblog.jamisbuck.org</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm" target="_blank">Wiki: Maze Generation Algotithm</a>
+ */
 public class AlgoBackTracker extends Algo
 {
 	private static final boolean DEBUG_MODE = false;
 
+	/**
+	 * Constructor
+	 * @param  y            size y
+	 * @param  x            size x
+	 * @param  level_number numbers of levels
+	 * @param  flyMode      is a FlyMode party
+	 */
 	public AlgoBackTracker(int y, int x, int level_number, boolean flyMode)
 	{
 		super();

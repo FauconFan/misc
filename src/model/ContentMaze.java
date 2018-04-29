@@ -3,6 +3,9 @@ package src.model;
 import src.model.board.*;
 import src.utils.StringManipulation;
 
+/**
+ * Structure de données pour un nouveau du labyrinthe
+ */
 public class ContentMaze
 {
 	private Case[] specialCases;

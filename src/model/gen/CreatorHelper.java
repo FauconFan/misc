@@ -10,6 +10,9 @@ import src.model.MainMaze;
 
 import java.util.ArrayList;
 
+/**
+ * Class API to communicate with Graphic part to create Maze (Creator Mode)
+ */
 public class CreatorHelper
 {
 	private MainMazeFactory mmf;

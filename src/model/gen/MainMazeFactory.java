@@ -3,6 +3,9 @@ package src.model.gen;
 import src.model.board.Case;
 import src.model.ContentMaze;
 
+/**
+ * Class for simplify, manage and handle queries for building a Level of a Maze (Working with ContentMazeFactory)
+ */
 public class MainMazeFactory
 {
 	public ContentMazeFactory[] list_contenmaze_factory;

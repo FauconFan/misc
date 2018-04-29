@@ -3,6 +3,9 @@ package src.model;
 import java.lang.Cloneable;
 import java.util.ArrayList;
 
+/**
+ * Structure de données pour stocker les informations relatifs au sol de l'étage courant
+ */
 public class MazeDimension implements Cloneable
 {
 	public final ArrayList <RectInMaze> list_rectmaze;
