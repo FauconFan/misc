@@ -7,8 +7,9 @@ import src.view.View;
 
 import java.io.File;
 
-
-
+/**
+ * Le controleur
+ */
 public class Controller
 {
 	private MainMaze maze;
