@@ -10,6 +10,13 @@ make dep && make && make run
 
 ## Menus
 
+Vous pouvez soit créer votre propre labyrinthe, soit en charger un que je vous avez déjà sauvegarder, soit en lancer un fait par nos soins.
+
+### Menu de création
+
+Vous pouvez définir la taille de votre labyrinthe, rectangulaire, ainsi que le nombre d'étage qu'il contiendra. Le joueur commence dans l'étage le plus bas, et la case d'arrivée se trouve dans l'étage le plus haut. On passe d'étage en étage grâce aux cases de saut (en bleu).
+Le flyMode propose une autre expérience de jeu: il n'y a pas de sol ni de gravité et le joueur doit trouver la sortie dans ce véritable labyrinthe en 3 dimensions.
+
 ## Jeu
 
 En jeu, vous pouvez appuyer sur les touches suivantes:
@@ -17,6 +24,7 @@ En jeu, vous pouvez appuyer sur les touches suivantes:
 ### Dans tous les modes
 
 * Échap pour mettre le jeu en pause
+* H pour avoir de l'aide
 * Z pour avancer
 * Q pour aller à gauche
 * S pour reculer
@@ -40,7 +48,7 @@ En jeu, vous pouvez appuyer sur les touches suivantes:
 ### Panneau droit
 
 Vous pouvez ajouter des murs en cliquant sur les cercles noirs. Un premier clic "active" un croisement. Faites un autre clic sur un embranchement sur la même ligne et la même colonne, un mur apparait.
-Vous pouvez ajouter des cases spéciales en cliquant sur les rectangles. Re-cliquer pour en changer. *Notez que chaque labyrinthe doit avoir au moins une case de départ et une case d'arrivée*
+Vous pouvez ajouter des cases spéciales en cliquant sur les rectangles. Re-cliquer pour en changer. *Notez que chaque labyrinthe doit avoir au moins une case de départ et une case d'arrivée*.
 
 #### Contrôles au clavier
 
