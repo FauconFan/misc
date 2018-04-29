@@ -47,7 +47,7 @@ En jeu, vous pouvez appuyer sur les touches suivantes:
 
 ### Panneau droit
 
-Vous pouvez ajouter des murs en cliquant sur les cercles noirs. Un premier clic "active" un croisement. Faites un autre clic sur un embranchement sur la même ligne et la même colonne, un mur apparait.
+Vous pouvez ajouter des murs en cliquant sur les cercles noirs. Un premier clic "active" un croisement. Faites un autre clic sur un embranchement sur la même ligne ou la même colonne, un mur apparait.
 Vous pouvez ajouter des cases spéciales en cliquant sur les rectangles. Re-cliquer pour en changer. *Notez que chaque labyrinthe doit avoir au moins une case de départ et une case d'arrivée*.
 
 #### Contrôles au clavier
@@ -64,7 +64,9 @@ Vous pouvez ajouter des cases spéciales en cliquant sur les rectangles. Re-cliq
 
 * Appuyez sur "finish" pour lancer le jeu avec le labyrinthe que vous venez de créer.
 
-* Add/Remove pour supprimer le niveau courrant.
+* Add pour ajouter un niveau.
+
+* Remove pour supprimer le niveau courrant.
 
 * Par étage, cliquez sur une texture pour la définir pour l'étage. Si une texture n'est pas définie, celle par défaut sera utilisée.
 
