@@ -131,7 +131,7 @@ public class Main
 		helpMessage += "\n";
 		helpMessage += "--help : display this message\n";
 		helpMessage += "--quiet : do not open a frame, just display it on terminal\n";
-		helpMessage += "--ast : display a graphic representation of the AST\n";
+		helpMessage += "--ast-tex : display a graphic representation of the AST\n";
 		helpMessage += "\n";
 		helpMessage += "\n";
 		helpMessage += "Every filename musts end with the extension gtxt...\n";

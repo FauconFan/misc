@@ -1,0 +1,8 @@
+
+Var i = 0;
+While [i < 300]
+Do
+	Begin
+		DrawRect((550 - i), (450 - i), ((100 + i) / 2), ((75 + i) / 2), #FF0000);
+		i = (i + 20);
+	End;

@@ -3,18 +3,18 @@ package src.ast.ast_instr;
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
-import src.ast.ast_expr.ASTExpr;
+import src.ast.ast_bool.ASTBool;
 
 import java.awt.Point;
 
 public class ASTInstrFor extends ASTInstr
 {
 	ASTInstr first;
-	ASTExpr condition;
+	ASTBool condition;
 	ASTInstr eachLoop;
 	ASTInstr content;
 
-	public ASTInstrFor(Point begin, Point end, ASTInstr first, ASTExpr condition, ASTInstr eachLoop, ASTInstr content)
+	public ASTInstrFor(Point begin, Point end, ASTInstr first, ASTBool condition, ASTInstr eachLoop, ASTInstr content)
 	{
 		super(begin, end);
 		this.first     = first;
@@ -37,7 +37,7 @@ public class ASTInstrFor extends ASTInstr
 	{
 		prog.incremente();
 		this.first.exec(prog);
-		while (condition.evalExpr(prog) != 0)
+		while (condition.evalExpr(prog))
 		{
 			this.content.exec(prog);
 			this.eachLoop.exec(prog);

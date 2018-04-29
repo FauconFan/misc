@@ -181,11 +181,11 @@ public class Parser
 		}
 		else if (reader.check(Sym.WHILE))
 		{
-			ASTExpr  expr;
+			ASTBool  expr;
 			ASTInstr instr;
 
 			Point begin = reader.pop(Sym.WHILE).getLocation();
-			expr = expr();
+			expr = bool();
 			reader.eat(Sym.DO);
 			instr = instruction();
 
@@ -194,7 +194,7 @@ public class Parser
 		else if (reader.check(Sym.FOR))
 		{
 			ASTInstr first;
-			ASTExpr  condition;
+			ASTBool  condition;
 			ASTInstr eachLoop;
 			ASTInstr content;
 
@@ -202,7 +202,7 @@ public class Parser
 			reader.eat(Sym.LPAR);
 			first = instruction();
 			reader.eat(Sym.SEMICOLON);
-			condition = expr();
+			condition = bool();
 			reader.eat(Sym.SEMICOLON);
 			eachLoop = instruction();
 			reader.eat(Sym.RPAR);

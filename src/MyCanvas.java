@@ -48,12 +48,10 @@ class MyCanvas extends JComponent
 				sa.checkAST(ast);
 				Prog prog = new Prog(ast, g2d);
 				prog.exec();
-				// AST ast = parser.progNonTerm();
-				// ast.exec(g2d);
 			}
 			catch (Exception e)
 			{
-				System.err.println(e.getMessage());
+				e.printStackTrace();
 				System.exit(1);
 			}
 		}

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 PROG="java -jar GraphTXT.jar -q"
-FILES_BASIC_GOOD=$(find resources/basic_good -name "*.gtxt")
-FILES_BASIC_BAD=$(find resources/basic_bad -name "*.gtxt")
-FILES_SYS_GOOD=$(find resources/sys_good -name "*.gtxt")
-FILES_SYS_BAD=$(find resources/sys_bad -name "*.gtxt")
-FILES_BONUS_GOOD=$(find resources/bonus_good -name "*.gtxt")
+FILES_BASIC_GOOD=$(find resources/basic_good -name "*.[g|G][t|T][x|X][t|T]")
+FILES_BASIC_BAD=$(find resources/basic_bad -name "*.[g|G][t|T][x|X][t|T]")
+FILES_SYS_GOOD=$(find resources/sys_good -name "*.[g|G][t|T][x|X][t|T]")
+FILES_SYS_BAD=$(find resources/sys_bad -name "*.[g|G][t|T][x|X][t|T]")
+FILES_BONUS_GOOD=$(find resources/bonus_good -name "*.[g|G][t|T][x|X][t|T]")
 
 _RED=$(tput setaf 1)
 _GREEN=$(tput setaf 2)
