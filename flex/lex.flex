@@ -5,6 +5,9 @@ import src.lexer_parser.tokens.IdentifierToken;
 import src.lexer_parser.tokens.NumberToken;
 import src.lexer_parser.tokens.OperatorToken;
 import src.lexer_parser.tokens.Token;
+import src.lexer_parser.tokens.EqOpToken;
+import src.lexer_parser.tokens.BoolOpToken;
+import src.lexer_parser.tokens.CompareOpToken;
 
 %%
 %public
@@ -36,6 +39,18 @@ import src.lexer_parser.tokens.Token;
         {
             return new ColorToken(type,value, yyline + 1, yycolumn + 1);
         }
+        else if (type == Sym.EQOP)
+        {
+            return new EqOpToken(type, value, yyline + 1, yycolumn + 1);
+        }
+        else if (type == Sym.BOOLOP)
+        {
+            return new BoolOpToken(type, value, yyline + 1, yycolumn + 1);
+        }
+        else if (type == Sym.COMPAREOP)
+        {
+            return new CompareOpToken(type, value, yyline + 1, yycolumn + 1);
+        }
         System.err.println("SNA parsing in flex");
         return (null);
     }
@@ -49,6 +64,9 @@ number = [0-9]+
 string = [a-z][a-zA-Z_]*
 blank = "\n" | "\r" | " " | "\t" | "\v" | "\f" 
 operator = "+" | "-" | "*" | "/"
+compNum = "<=" | ">=" | "<" | ">"
+opBool = "&&" | "||"
+eqOp = "==" | "!="
 hex = [0-9A-F]
 color = #{hex}{hex}{hex}{hex}{hex}{hex}
 
@@ -56,11 +74,18 @@ color = #{hex}{hex}{hex}{hex}{hex}{hex}
 {number}    		{return token(Integer.parseInt(yytext()));}
 {color}				{return token(Sym.COLOR,yytext());}
 {operator}			{return token(Sym.OPERATOR,yytext());}
-{string}			{return token(Sym.IDENTIFIER, yytext());}
+{string}            {return token(Sym.IDENTIFIER, yytext());}
+{eqOp}              {return token(Sym.EQOP, yytext());}
+{opBool}            {return token(Sym.BOOLOP, yytext());}
+{compNum}           {return token(Sym.COMPAREOP, yytext());}
 ","					{return token(Sym.COMMA);}
 ";"					{return token(Sym.SEMICOLON);}
 "("             	{return token(Sym.LPAR);}
 ")"                 {return token(Sym.RPAR);}
+"["                 {return token(Sym.LBRA);}
+"]"                 {return token(Sym.RBRA);}
+"True"              {return token(Sym.TRUE);}
+"False"             {return token(Sym.FALSE);}
 "Begin"				{return token(Sym.BEGIN);}
 "End"				{return token(Sym.END);}
 "While"				{return token(Sym.WHILE);}

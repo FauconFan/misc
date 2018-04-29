@@ -4,17 +4,18 @@ import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
+import src.ast.ast_bool.ASTBool;
 
 import java.awt.Point;
 
 // We accept that expr and follow can be null
 public class ASTInstrIf extends ASTInstr
 {
-	private ASTExpr expr;
+	private ASTBool expr;
 	private ASTInstr instr;
 	private ASTInstrIf follow;
 
-	public ASTInstrIf(Point begin, Point end, ASTExpr expr, ASTInstr instr, ASTInstrIf follow)
+	public ASTInstrIf(Point begin, Point end, ASTBool expr, ASTInstr instr, ASTInstrIf follow)
 	{
 		super(begin, end);
 		this.expr   = expr;
@@ -29,7 +30,7 @@ public class ASTInstrIf extends ASTInstr
 
 	public void exec(Prog prog)
 	{
-		if (this.expr == null || this.expr.evalExpr(prog) != 0)
+		if (this.expr == null || this.expr.evalExpr(prog))
 		{
 			this.instr.exec(prog);
 		}

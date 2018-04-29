@@ -93,7 +93,7 @@ public class Main
 			{
 				astRepTex = true;
 			}
-			else if (str.endsWith(".gtxt"))
+			else if (str.endsWith(".gtxt") || str.endsWith(".GTXT"))
 			{
 				filename = str;
 			}

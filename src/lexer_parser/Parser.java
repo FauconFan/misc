@@ -9,25 +9,15 @@ import src.lexer_parser.tokens.IdentifierToken;
 import src.lexer_parser.tokens.NumberToken;
 import src.lexer_parser.tokens.ColorToken;
 import src.lexer_parser.tokens.OperatorToken;
+import src.lexer_parser.tokens.EqOpToken;
+import src.lexer_parser.tokens.BoolOpToken;
+import src.lexer_parser.tokens.CompareOpToken;
 
 import src.ast.AST;
-import src.ast.ast_expr.ASTExpr;
-import src.ast.ast_expr.ASTExprCalculus;
-import src.ast.ast_expr.ASTExprIdentifier;
-import src.ast.ast_expr.ASTExprNumber;
-import src.ast.ast_instr.ast_instr_exec.ASTInstrExec;
-import src.ast.ast_instr.ast_instr_exec.ASTInstrExecDrawCircle;
-import src.ast.ast_instr.ast_instr_exec.ASTInstrExecFillCircle;
-import src.ast.ast_instr.ast_instr_exec.ASTInstrExecDrawRect;
-import src.ast.ast_instr.ast_instr_exec.ASTInstrExecFillRect;
-import src.ast.ast_instr.ASTInstr;
-import src.ast.ast_instr.ASTInstrIf;
-import src.ast.ast_instr.ASTInstrWhile;
-import src.ast.ast_instr.ASTInstrFor;
-import src.ast.ast_instr.ASTInstrDecl;
-import src.ast.ast_instr.ASTInstrAssign;
-import src.ast.ast_instr.ASTInstrBeginEnd;
-import src.ast.ast_instr.ASTInstrSysExit;
+import src.ast.ast_expr.*;
+import src.ast.ast_instr.ast_instr_exec.*;
+import src.ast.ast_instr.*;
+import src.ast.ast_bool.*;
 
 public class Parser
 {
@@ -178,12 +168,12 @@ public class Parser
 		}
 		else if (reader.check(Sym.IF))
 		{
-			ASTExpr    expr;
+			ASTBool    expr;
 			ASTInstr   instr;
 			ASTInstrIf follow;
 
 			Point begin = reader.pop(Sym.IF).getLocation();
-			expr = expr();
+			expr = bool();
 			reader.eat(Sym.THEN);
 			instr  = instruction();
 			follow = if_follow();
@@ -266,14 +256,14 @@ public class Parser
 	private ASTInstrIf if_follow() throws Exception
 	{
 		ASTInstrIf res = null;
-		ASTExpr    expr;
+		ASTBool    expr;
 		ASTInstr   instr;
 		ASTInstrIf follow;
 
 		if (reader.check(Sym.ELIF))
 		{
 			Point begin = reader.pop(Sym.ELIF).getLocation();
-			expr = expr();
+			expr = bool();
 			reader.eat(Sym.THEN);
 			instr  = instruction();
 			follow = if_follow();
@@ -305,6 +295,47 @@ public class Parser
 		reader.eat(Sym.SEMICOLON);
 		next = instruction_next();
 		return (new AST(instr, next));
+	}
+
+	private ASTBool bool () throws Exception{
+		if (reader.check(Sym.TRUE)){
+			Token t = reader.pop(Sym.TRUE);
+			return new ASTBoolValue(t.getLocation(), t.getLocation(), true);
+		}else if (reader.check(Sym.FALSE)) {
+			Token t = reader.pop(Sym.FALSE);
+			return new ASTBoolValue(t.getLocation(), t.getLocation(), false);
+		}else if (reader.check(Sym.LBRA)){
+			Point begin 	= reader.pop(Sym.LBRA).getLocation();
+			if (reader.check(Sym.TRUE) || reader.check(Sym.FALSE) || reader.check(Sym.LBRA)){
+				ASTBool left    = bool();
+				String op;
+				if (reader.check(Sym.EQOP))
+					op = ((EqOpToken)reader.pop(Sym.EQOP)).getOp();
+				else if (reader.check(Sym.BOOLOP))
+					op = ((BoolOpToken)reader.pop(Sym.BOOLOP)).getOp();
+				else
+					throw new Exception("Expecting a boolean operation line " + reader.getLign() + " at position " + reader.getColumn());
+				ASTBool right   = bool();
+				Point end   	= reader.pop(Sym.RBRA).getLocation();
+				return new ASTBoolOp(begin, end, left, op, right);
+			}else{
+				ASTExpr left    = expr();
+				String op;
+				if (reader.check(Sym.EQOP))
+					op = ((EqOpToken)reader.pop(Sym.EQOP)).getOp();
+				else if (reader.check(Sym.COMPAREOP))
+					op = ((CompareOpToken)reader.pop(Sym.COMPAREOP)).getOp();
+				else
+					throw new Exception("Expecting a comparison operator line " + reader.getLign() + " at position " + reader.getColumn());
+				ASTExpr right   = expr();
+				Point end   	= reader.pop(Sym.RBRA).getLocation();
+				return new ASTBoolNumberIneq(begin, end, left, op, right);
+			}
+		}else if (reader.check(Sym.LPAR) || reader.check(Sym.NUMBER) || reader.check(Sym.IDENTIFIER)) {
+			ASTExpr expr = expr();
+			return new ASTBoolNumber(expr.begin(), expr.end(), expr);
+		}else
+			throw new Exception("Expecting a boolean expression line " + reader.getLign() + " at position " + reader.getColumn());
 	}
 
 	public AST buildProg() throws Exception
