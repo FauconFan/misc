@@ -5,7 +5,6 @@ import src.lexer_parser.tokens.IdentifierToken;
 import src.lexer_parser.tokens.NumberToken;
 import src.lexer_parser.tokens.OperatorToken;
 import src.lexer_parser.tokens.Token;
-import src.lexer_parser.tokens.EqOpToken;
 import src.lexer_parser.tokens.BoolOpToken;
 import src.lexer_parser.tokens.CompareOpToken;
 
@@ -39,10 +38,6 @@ import src.lexer_parser.tokens.CompareOpToken;
         {
             return new ColorToken(type,value, yyline + 1, yycolumn + 1);
         }
-        else if (type == Sym.EQOP)
-        {
-            return new EqOpToken(type, value, yyline + 1, yycolumn + 1);
-        }
         else if (type == Sym.BOOLOP)
         {
             return new BoolOpToken(type, value, yyline + 1, yycolumn + 1);
@@ -64,9 +59,8 @@ number = [0-9]+
 string = [a-z][a-zA-Z_]*
 blank = "\n" | "\r" | " " | "\t" | "\v" | "\f" 
 operator = "+" | "-" | "*" | "/"
-compNum = "<=" | ">=" | "<" | ">"
+compNum = "<=" | ">=" | "<" | ">" | "==" | "!="
 opBool = "&&" | "||"
-eqOp = "==" | "!="
 hex = [0-9A-F]
 color = #{hex}{hex}{hex}{hex}{hex}{hex}
 
@@ -75,7 +69,6 @@ color = #{hex}{hex}{hex}{hex}{hex}{hex}
 {color}				{return token(Sym.COLOR,yytext());}
 {operator}			{return token(Sym.OPERATOR,yytext());}
 {string}            {return token(Sym.IDENTIFIER, yytext());}
-{eqOp}              {return token(Sym.EQOP, yytext());}
 {opBool}            {return token(Sym.BOOLOP, yytext());}
 {compNum}           {return token(Sym.COMPAREOP, yytext());}
 ","					{return token(Sym.COMMA);}

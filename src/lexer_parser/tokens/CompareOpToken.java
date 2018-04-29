@@ -10,7 +10,7 @@ public class CompareOpToken extends Token
     {
         super(s, line, column);
 
-        if (compareOp.equals("<=") || compareOp.equals(">=") || compareOp.equals("<") || compareOp.equals(">"))
+        if (compareOp.equals("<=") || compareOp.equals(">=") || compareOp.equals("<") || compareOp.equals(">") || compareOp.equals("==") || compareOp.equals("!="))
             op = compareOp;
         else
             throw new RuntimeException("Invalid comparison operator line " + line + " at position " + column);

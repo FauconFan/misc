@@ -7,7 +7,6 @@ public enum Sym
 	OPERATOR,
 	COMPAREOP,
 	BOOLOP,
-	EQOP,
 	TRUE,
 	FALSE,
 	IDENTIFIER,

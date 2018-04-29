@@ -9,7 +9,6 @@ import src.lexer_parser.tokens.IdentifierToken;
 import src.lexer_parser.tokens.NumberToken;
 import src.lexer_parser.tokens.ColorToken;
 import src.lexer_parser.tokens.OperatorToken;
-import src.lexer_parser.tokens.EqOpToken;
 import src.lexer_parser.tokens.BoolOpToken;
 import src.lexer_parser.tokens.CompareOpToken;
 
@@ -306,30 +305,27 @@ public class Parser
 			return new ASTBoolValue(t.getLocation(), t.getLocation(), false);
 		}else if (reader.check(Sym.LBRA)){
 			Point begin 	= reader.pop(Sym.LBRA).getLocation();
-			if (reader.check(Sym.TRUE) || reader.check(Sym.FALSE) || reader.check(Sym.LBRA)){
-				ASTBool left    = bool();
-				String op;
-				if (reader.check(Sym.EQOP))
-					op = ((EqOpToken)reader.pop(Sym.EQOP)).getOp();
-				else if (reader.check(Sym.BOOLOP))
-					op = ((BoolOpToken)reader.pop(Sym.BOOLOP)).getOp();
-				else
-					throw new Exception("Expecting a boolean operation line " + reader.getLign() + " at position " + reader.getColumn());
+
+			ASTExpr leftNum = null;
+			ASTBool leftBoo = null;
+			if (reader.check(Sym.NUMBER) || reader.check(Sym.LPAR) || reader.check(Sym.IDENTIFIER))
+				leftNum = expr();
+			else
+				leftBoo = bool();
+
+			if (reader.check(Sym.BOOLOP)){
+				String op = ((BoolOpToken)reader.pop(Sym.BOOLOP)).getOp();
+				ASTBool left    = leftNum == null ? leftBoo : new ASTBoolNumber(leftNum.begin(), leftNum.end(), leftNum);
 				ASTBool right   = bool();
 				Point end   	= reader.pop(Sym.RBRA).getLocation();
 				return new ASTBoolOp(begin, end, left, op, right);
 			}else{
-				ASTExpr left    = expr();
-				String op;
-				if (reader.check(Sym.EQOP))
-					op = ((EqOpToken)reader.pop(Sym.EQOP)).getOp();
-				else if (reader.check(Sym.COMPAREOP))
-					op = ((CompareOpToken)reader.pop(Sym.COMPAREOP)).getOp();
-				else
-					throw new Exception("Expecting a comparison operator line " + reader.getLign() + " at position " + reader.getColumn());
+				if (leftNum == null)
+					throw new Exception("Expecting a boolean expression line " + reader.getLign() + " at position " + reader.getColumn());
+				String op       = ((CompareOpToken)reader.pop(Sym.COMPAREOP)).getOp();
 				ASTExpr right   = expr();
 				Point end   	= reader.pop(Sym.RBRA).getLocation();
-				return new ASTBoolNumberIneq(begin, end, left, op, right);
+				return new ASTBoolNumberIneq(begin, end, leftNum, op, right);
 			}
 		}else if (reader.check(Sym.LPAR) || reader.check(Sym.NUMBER) || reader.check(Sym.IDENTIFIER)) {
 			ASTExpr expr = expr();
