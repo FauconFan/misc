@@ -193,7 +193,7 @@ class LeftPanel extends VBox
 
 	private void setCurrentTexture(String str, Textures t)
 	{
-		if (str != null && !str.equals(""))
+		if (str != null&& !str.equals(""))
 		{
 			t.setCurrentTexture(str);
 		}

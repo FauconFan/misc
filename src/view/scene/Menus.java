@@ -83,6 +83,7 @@ public class Menus extends ScenePlus.ScenePlusMenu
 				changeView((Parent) new MenuCampaign());
 			});
 
+			addButtonMusic(v);
 			addButtonQuit();
 		}
 	}

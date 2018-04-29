@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 
-import javafx.stage.Screen;
+import src.view.View;
 
 /**
  * Une VBox avec des caractéristiques de menu
@@ -73,6 +73,28 @@ public class Menu extends VBox
 
 		b.setOnAction(event->{
 			Platform.exit();
+		});
+	}
+
+	/**
+	 * Ajoute un bouton pour la musique
+	 */
+	public void addButtonMusic(View v)
+	{
+		Button b = addSmallButton("Stop music");
+
+		b.setPrefWidth(screenWidth / 10);
+		b.setPrefHeight(screenHeight / 20);
+		b.setOnAction(event->{
+			if (b.getText().equals("Stop music"))
+			{
+				b.setText("Start music");
+			}
+			else
+			{
+				b.setText("Stop music");
+			}
+			v.startStopMusic();
 		});
 	}
 }

@@ -2,6 +2,7 @@ package src.view;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -21,6 +22,7 @@ public class View
 	public final Controller con;
 	private Scene scene;
 	public final Stage stage;
+	private final MediaPlayer mediaPlayer;
 
 	public View(Stage stage, Controller con)
 	{
@@ -31,15 +33,9 @@ public class View
 		stage.setTitle("Laby");
 
 
-		Media       sound       = new Media(new File("assets/music/Bg1_BXDN_Return.mp3").toURI().toString());
-		MediaPlayer mediaPlayer = new MediaPlayer(sound);
-		mediaPlayer.setOnEndOfMedia(new Runnable()
-		{
-			public void run()
-			{
-				mediaPlayer.seek(Duration.ZERO);
-			}
-		});
+		Media sound = new Media(new File("assets/music/Bg1_BXDN_Return.mp3").toURI().toString());
+		mediaPlayer = new MediaPlayer(sound);
+		mediaPlayer.setOnEndOfMedia(()->{ mediaPlayer.seek(Duration.ZERO); });
 		mediaPlayer.setVolume(0.6);
 		mediaPlayer.play();
 
@@ -62,5 +58,17 @@ public class View
 	{
 		stage.setScene(s);
 		this.scene = s;
+	}
+
+	public void startStopMusic()
+	{
+		if (mediaPlayer.getStatus() == Status.PAUSED)
+		{
+			mediaPlayer.play();
+		}
+		else
+		{
+			mediaPlayer.pause();
+		}
 	}
 }

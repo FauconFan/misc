@@ -89,6 +89,7 @@ public class Pause extends ScenePlus.ScenePlusMenu
 				}
 			});
 
+			addButtonMusic(v);
 			addButtonQuit();
 		}
 	}
