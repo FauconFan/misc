@@ -1,6 +1,7 @@
 # Labyrinthe 3d
 
-Voici le Readme
+Projet de programmation en 2ème année universitaire.  
+Le projet consiste à coder un jeu de Labyrinthe en 3 dimensions. On doit pouvoir générer des labyrinthes de toute taille sur demande, ainsi que de pouvoir sauvegarder un labyrinthe dans un fichier et charger un labyrinthe depuis un fichier.
 
 ## Compilation
 Pour tous les systèmes unix,
@@ -10,7 +11,7 @@ make dep && make && make run
 
 ## Menus
 
-Vous pouvez soit créer votre propre labyrinthe, soit en charger un que je vous avez déjà sauvegarder, soit en lancer un fait par nos soins.
+Vous pouvez générer, créer, charger un labyrinthe ou en lancer un fait par nos soins.
 
 ### Menu de création
 
