@@ -61,8 +61,8 @@ Le projet est maintenu suivi par Travis CI :
  - [x] Faire des Exceptions avec le numéro de la ligne et de la colonne
  - [x] Intégration Continue - Travis
  - [x] Création de fonctions systèmes:
- - [x] Faire une évaluation booléenne (+ opérateur de comparaison, opérateurs booléens)
      - Exit
+ - [x] Faire une évaluation booléenne (+ opérateur de comparaison, opérateurs booléens)
 
 ## Idées - Bonus
 
