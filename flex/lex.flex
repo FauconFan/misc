@@ -40,12 +40,53 @@ import src.lexer_parser.tokens.*;
         {
             return new CompareOpToken(type, value, yyline + 1, yycolumn + 1);
         }
-        else if (type == Sym.STRING)
-        {
-            return new StringToken(type, value.substring(1, value.length() - 1), yyline + 1, yycolumn + 1);
-        }
         System.err.println("SNA parsing in flex");
         return (null);
+    }
+
+    public StringToken stringToken(String value, char toEscape) {
+        String finalStr = "";
+
+        for (int i = 1; i < value.length() - 1; i++)
+        {
+            if (value.charAt(i) == '\\' && i < value.length() - 2)
+            {
+                if (value.charAt(i + 1) == 'b')
+                {
+                    finalStr += '\b';
+                }
+                else if (value.charAt(i + 1) == 't')
+                {
+                    finalStr += '\t';
+                }
+                else if (value.charAt(i + 1) == 'n')
+                {
+                    finalStr += '\n';
+                }
+                else if (value.charAt(i + 1) == 'f')
+                {
+                    finalStr += '\f';
+                }
+                else if (value.charAt(i + 1) == 'r')
+                {
+                    finalStr += '\r';
+                }
+                else if (value.charAt(i + 1) == toEscape)
+                {
+                    finalStr += toEscape;
+                }
+                else
+                {
+                    finalStr += value.charAt(i + 1);
+                }
+                i++;
+            }
+            else
+            {
+                finalStr += value.charAt(i);
+            }
+        }
+        return new StringToken(Sym.STRING, finalStr, yyline + 1, yycolumn + 1);
     }
 %}
 
@@ -61,7 +102,8 @@ compNum = "<=" | ">=" | "<" | ">" | "==" | "!="
 opBool = "&&" | "||"
 hex = [0-9A-F]
 color = #{hex}{hex}{hex}{hex}{hex}{hex}
-string = \"(\\.|[^\"\\])*\"
+string_simple = \'(\\.|[^\'\\])*\'
+string_double = \"(\\.|[^\"\\])*\"
 
 %%
 {number}                      {return token(Integer.parseInt(yytext()));}
@@ -70,7 +112,8 @@ string = \"(\\.|[^\"\\])*\"
 {identifier}                  {return token(Sym.IDENTIFIER, yytext());}
 {opBool}                      {return token(Sym.BOOLOP, yytext());}
 {compNum}                     {return token(Sym.COMPAREOP, yytext());}
-{string}                      {return token(Sym.STRING, yytext());}
+{string_simple}               {return stringToken(yytext(), '\'');}
+{string_double}               {return stringToken(yytext(), '\"');}
 ","                           {return token(Sym.COMMA);}
 ";"                           {return token(Sym.SEMICOLON);}
 "("                           {return token(Sym.LPAR);}

@@ -79,7 +79,8 @@ Le projet est maintenu suivi par Travis CI :
 | nombre | [0-9]+ |
 | hex | [0-9A-F] |
 | couleur | #{hex}{hex}{hex}{hex}{hex}{hex} |
-| string | "(\\.\|[^"\\])*" |
+| string_simple | '(\\.\|[^'\\])*' |
+| string_double | "(\\.\|[^"\\])*" |
 | operator | "+" <br> "-" <br> "/" <br> "*" |
 | compNum | "<=" <br> ">=" <br> "<" <br> ">" |
 | opBool | "&&" <br> "\|\|" |
@@ -93,7 +94,7 @@ Le projet est maintenu suivi par Travis CI :
 | <i><b>if_follow </i></b>| Elif <i><b>{expr}</i></b> Then <i><b>{instruction}</i></b> <i><b>{if_follow}</i></b> <br> Else <i><b>{instruction}</i></b> <br> &#x3b5; |
 | <i><b>expr</i></b> | {nombre} <br> ( <i><b>{expr}</i></b> {operator} <i><b>{expr}</i></b> ) <br> {identificateur} |
 | <i><b>exprBool</i></b> | True <br> False <br> {expr} <br> [{expr} {compNumOp} {expr}] <br> [{exprBool} {opBool} {exprBool}] |
-| <i><b>exprInPrintLn</i></b> | <i><b>{expr}</b></i> <br> <i><b>{string}</b></i>|
+| <i><b>exprInPrintLn</i></b> | <i><b>{expr}</b></i> <br> <i><b>{string_simple}</b></i> <br> <i><b>{string_double}</b></i>|
 
 ## Auteurs / Contributeurs
 - Pierre Gimalac
