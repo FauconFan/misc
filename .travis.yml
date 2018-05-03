@@ -32,35 +32,84 @@ jobs:
       env:
          - NAME="Linux"
     - os: osx
-      jdk: oraclejdk8
       stage: Base Compilation
       env:
          - NAME="Mac OS"
-    - os: osx
-      jdk: oraclejdk9
-      stage: Base Compilation
-      env:
-         - NAME="Mac OS"
-    - os: osx
-      jdk: openjdk8
-      stage: Base Compilation
-      env:
-         - NAME="Mac OS"
+
+jobs:
+  include:
     - os: linux
+      jdk: oraclejdk8
       stage: Unit Test
       script : make basic_test
       env :
          - NAME="Basic test"
     - os: linux
+      jdk: oraclejdk9
+      stage: Unit Test
+      script : make basic_test
+      env :
+         - NAME="Basic test"
+    - os: linux
+      jdk: openjdk8
+      stage: Unit Test
+      script : make basic_test
+      env :
+         - NAME="Basic test"
+    - os: osx
+      stage: Unit Test
+      script : make basic_test
+      env :
+         - NAME="Basic test"
+    - os: linux
+      jdk: oraclejdk8
       stage: Unit Test
       script : make sys_test
       env :
          - NAME="Sys test"
     - os: linux
+      jdk: oraclejdk9
+      stage: Unit Test
+      script : make sys_test
+      env :
+         - NAME="Sys test"
+    - os: linux
+      jdk: openjdk8
+      stage: Unit Test
+      script : make sys_test
+      env :
+         - NAME="Sys test"
+    - os: osx
+      stage: Unit Test
+      script : make sys_test
+      env :
+         - NAME="Sys test"
+    - os: linux
+      jdk: oraclejdk8
       stage: Unit Test
       script : make bonus_test
       env :
          - NAME="Bonus test"
+    - os: linux
+      jdk: oraclejdk9
+      stage: Unit Test
+      script : make bonus_test
+      env :
+         - NAME="Bonus test"
+    - os: linux
+      jdk: openjdk8
+      stage: Unit Test
+      script : make bonus_test
+      env :
+         - NAME="Bonus test"
+    - os: osx
+      stage: Unit Test
+      script : make bonus_test
+      env :
+         - NAME="Bonus test"
+
+jobs:
+  include:
     - os: linux
       stage: Final
       script : make test
