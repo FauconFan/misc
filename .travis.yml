@@ -17,14 +17,32 @@ stages:
 jobs:
   include:
     - os: linux
-      jdk:
-       - oraclejdk8
-       - oraclejdk9
-       - openjdk8
+      jdk: oraclejdk8
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: oraclejdk9
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: openjdk8
       stage: Base Compilation
       env:
          - NAME="Linux"
     - os: osx
+      jdk: oraclejdk8
+      stage: Base Compilation
+      env:
+         - NAME="Mac OS"
+    - os: osx
+      jdk: oraclejdk9
+      stage: Base Compilation
+      env:
+         - NAME="Mac OS"
+    - os: osx
+      jdk: openjdk8
       stage: Base Compilation
       env:
          - NAME="Mac OS"
