@@ -4,17 +4,12 @@ import java.io.*;
 import java.awt.Color;
 import java.awt.Point;
 
-import src.lexer_parser.tokens.Token;
-import src.lexer_parser.tokens.IdentifierToken;
-import src.lexer_parser.tokens.NumberToken;
-import src.lexer_parser.tokens.ColorToken;
-import src.lexer_parser.tokens.OperatorToken;
-import src.lexer_parser.tokens.BoolOpToken;
-import src.lexer_parser.tokens.CompareOpToken;
+import src.lexer_parser.tokens.*;
 
 import src.ast.AST;
 import src.ast.ast_expr.*;
 import src.ast.ast_instr.ast_instr_exec.*;
+import src.ast.ast_instr.ast_instr_sys.*;
 import src.ast.ast_instr.*;
 import src.ast.ast_bool.*;
 
@@ -153,6 +148,32 @@ public class Parser
 			Point end = reader.pop(Sym.RPAR).getLocation();
 
 			res = new ASTInstrSysExit(begin, end, expr);
+		}
+		else if (reader.check(Sym.PRINTLN))
+		{
+			String content = null;
+			ASTExpr expr = null;
+
+			Point begin = reader.pop(Sym.PRINTLN).getLocation();
+			reader.eat(Sym.LPAR);
+			if (reader.check(Sym.STRING))
+			{
+				content = ((StringToken)reader.pop(Sym.STRING)).getValue();
+			}
+			else
+			{
+				expr = expr();
+			}
+			Point end = reader.pop(Sym.RPAR).getLocation();
+
+			if (content != null)
+			{
+				res = new ASTInstrSysPrintln(begin, end, content);
+			}
+			else
+			{
+				res = new ASTInstrSysPrintln(begin, end, expr);
+			}
 		}
 		// Control Instruction
 		else if (reader.check(Sym.BEGIN))

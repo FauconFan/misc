@@ -1,10 +1,11 @@
-package src.ast.ast_instr;
+package src.ast.ast_instr.ast_instr_sys;
 
 import src.prog.SemanticAnalyserException;
 import src.prog.SemanticAnalyser;
 import src.prog.Prog;
 import src.ast.ast_expr.ASTExpr;
 import src.lexer_parser.LocatedException;
+import src.ast.ast_instr.ASTInstr;
 
 import java.awt.Point;
 

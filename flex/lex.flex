@@ -1,12 +1,6 @@
 package src.lexer_parser;
 
-import src.lexer_parser.tokens.ColorToken;
-import src.lexer_parser.tokens.IdentifierToken;
-import src.lexer_parser.tokens.NumberToken;
-import src.lexer_parser.tokens.OperatorToken;
-import src.lexer_parser.tokens.Token;
-import src.lexer_parser.tokens.BoolOpToken;
-import src.lexer_parser.tokens.CompareOpToken;
+import src.lexer_parser.tokens.*;
 
 %%
 %public
@@ -46,55 +40,62 @@ import src.lexer_parser.tokens.CompareOpToken;
         {
             return new CompareOpToken(type, value, yyline + 1, yycolumn + 1);
         }
+        else if (type == Sym.STRING)
+        {
+            return new StringToken(type, value.substring(1, value.length() - 1), yyline + 1, yycolumn + 1);
+        }
         System.err.println("SNA parsing in flex");
         return (null);
     }
 %}
 
 %yylexthrow{
-	Exception, LexerException
+    Exception, LexerException
 %yylexthrow}
 
 number = [0-9]+
-string = [a-z][a-zA-Z_]*
+identifier = [a-z][a-zA-Z_]*
 blank = "\n" | "\r" | " " | "\t" | "\v" | "\f" 
 operator = "+" | "-" | "*" | "/"
 compNum = "<=" | ">=" | "<" | ">" | "==" | "!="
 opBool = "&&" | "||"
 hex = [0-9A-F]
 color = #{hex}{hex}{hex}{hex}{hex}{hex}
+string = \"(\\.|[^\"\\])*\"
 
 %%
-{number}    		{return token(Integer.parseInt(yytext()));}
-{color}				{return token(Sym.COLOR,yytext());}
-{operator}			{return token(Sym.OPERATOR,yytext());}
-{string}            {return token(Sym.IDENTIFIER, yytext());}
-{opBool}            {return token(Sym.BOOLOP, yytext());}
-{compNum}           {return token(Sym.COMPAREOP, yytext());}
-","					{return token(Sym.COMMA);}
-";"					{return token(Sym.SEMICOLON);}
-"("             	{return token(Sym.LPAR);}
-")"                 {return token(Sym.RPAR);}
-"["                 {return token(Sym.LBRA);}
-"]"                 {return token(Sym.RBRA);}
-"True"              {return token(Sym.TRUE);}
-"False"             {return token(Sym.FALSE);}
-"Begin"				{return token(Sym.BEGIN);}
-"End"				{return token(Sym.END);}
-"While"				{return token(Sym.WHILE);}
-"Do"				{return token(Sym.DO);}
-"For"               {return token(Sym.FOR);}
-"If"	            {return token(Sym.IF);}
-"Elif"      		{return token(Sym.ELIF);}
-"Then"      		{return token(Sym.THEN);}
-"Else"      		{return token(Sym.ELSE);}
-"Const"				{return token(Sym.CONST);}
-"Var"				{return token(Sym.VAR);}
-"="					{return token(Sym.EQUALS);}
-"Exit"              {return token(Sym.EXIT);}
-"DrawCircle"		{return token(Sym.DRAWCIRCLE);}
-"FillCircle"		{return token(Sym.FILLCIRCLE);}
-"DrawRect"			{return token(Sym.DRAWRECT);}
-"FillRect"			{return token(Sym.FILLRECT);}
-{blank}     		{}
-[^]		            {throw new LexerException(yytext(), yyline + 1, yycolumn + 1);}
+{number}                      {return token(Integer.parseInt(yytext()));}
+{color}                       {return token(Sym.COLOR,yytext());}
+{operator}                    {return token(Sym.OPERATOR,yytext());}
+{identifier}                  {return token(Sym.IDENTIFIER, yytext());}
+{opBool}                      {return token(Sym.BOOLOP, yytext());}
+{compNum}                     {return token(Sym.COMPAREOP, yytext());}
+{string}                      {return token(Sym.STRING, yytext());}
+","                           {return token(Sym.COMMA);}
+";"                           {return token(Sym.SEMICOLON);}
+"("                           {return token(Sym.LPAR);}
+")"                           {return token(Sym.RPAR);}
+"["                           {return token(Sym.LBRA);}
+"]"                           {return token(Sym.RBRA);}
+"True"                        {return token(Sym.TRUE);}
+"False"                       {return token(Sym.FALSE);}
+"Begin"                       {return token(Sym.BEGIN);}
+"End"                         {return token(Sym.END);}
+"While"                       {return token(Sym.WHILE);}
+"Do"                          {return token(Sym.DO);}
+"For"                         {return token(Sym.FOR);}
+"If"                          {return token(Sym.IF);}
+"Elif"                        {return token(Sym.ELIF);}
+"Then"                        {return token(Sym.THEN);}
+"Else"                        {return token(Sym.ELSE);}
+"Const"                       {return token(Sym.CONST);}
+"Var"                         {return token(Sym.VAR);}
+"="                           {return token(Sym.EQUALS);}
+"Exit"                        {return token(Sym.EXIT);}
+"Println"                     {return token(Sym.PRINTLN);}
+"DrawCircle"                  {return token(Sym.DRAWCIRCLE);}
+"FillCircle"                  {return token(Sym.FILLCIRCLE);}
+"DrawRect"                    {return token(Sym.DRAWRECT);}
+"FillRect"                    {return token(Sym.FILLRECT);}
+{blank}                       {}
+[^]                           {throw new LexerException(yytext(), yyline + 1, yycolumn + 1);}
