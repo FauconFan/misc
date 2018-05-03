@@ -16,6 +16,10 @@ stages:
 
 jobs:
   include:
+    - os: osx
+      install: brew install jflex
+      stage: Base Compilation
+      env: NAME="Mac OS"
     - os: linux
       jdk: oraclejdk8
       stage: Base Compilation
