@@ -21,6 +21,7 @@ stages:
 jobs:
   include:
     - os: linux
+      jdk: openjdk8
       stage: Base Compilation
       env:
          - NAME="Linux"
