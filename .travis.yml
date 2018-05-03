@@ -1,5 +1,9 @@
 sudo : true
 language : java
+jdk:
+ - oraclejdk8
+ - oraclejdk9
+ - openjdk8
 
 install:
   - curl http://jflex.de/release/jflex-1.6.1.tar.gz --output jflex-1.6.1.tar.gz
