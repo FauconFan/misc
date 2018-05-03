@@ -16,27 +16,27 @@ stages:
 
 jobs:
   include:
+    - os: linux
+      jdk: oraclejdk8
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: oraclejdk9
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: openjdk8
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
     - os: osx
       install: brew install jflex
       stage: Base Compilation
       env: NAME="Mac OS"
     - os: linux
       jdk: oraclejdk8
-      stage: Base Compilation
-      env:
-         - NAME="Linux"
-    - os: linux
-      jdk: oraclejdk9
-      stage: Base Compilation
-      env:
-         - NAME="Linux"
-    - os: linux
-      jdk: openjdk8
-      stage: Base Compilation
-      env:
-         - NAME="Linux"
-    - os: linux
-      jdk: oraclejdk8
       stage: Unit Test
       script : make basic_test
       env :
@@ -49,6 +49,12 @@ jobs:
          - NAME="Basic test"
     - os: linux
       jdk: openjdk8
+      stage: Unit Test
+      script : make basic_test
+      env :
+         - NAME="Basic test"
+    - os: osx
+      install: brew install jflex
       stage: Unit Test
       script : make basic_test
       env :
@@ -67,6 +73,12 @@ jobs:
          - NAME="Sys test"
     - os: linux
       jdk: openjdk8
+      stage: Unit Test
+      script : make sys_test
+      env :
+         - NAME="Sys test"
+    - os: osx
+      install: brew install jflex
       stage: Unit Test
       script : make sys_test
       env :
@@ -85,6 +97,12 @@ jobs:
          - NAME="Bonus test"
     - os: linux
       jdk: openjdk8
+      stage: Unit Test
+      script : make bonus_test
+      env :
+         - NAME="Bonus test"
+    - os: osx
+      install: brew install jflex
       stage: Unit Test
       script : make bonus_test
       env :
@@ -103,6 +121,12 @@ jobs:
          - NAME="Full Build All"
     - os: linux
       jdk: oraclejdk8
+      stage: Final
+      script : make test
+      env :
+         - NAME="Full Build All"
+    - os: osx
+      install: brew install jflex
       stage: Final
       script : make test
       env :
