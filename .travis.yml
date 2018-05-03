@@ -31,10 +31,6 @@ jobs:
       stage: Base Compilation
       env:
          - NAME="Linux"
-    - os: osx
-      stage: Base Compilation
-      env:
-         - NAME="Mac OS"
     - os: linux
       jdk: oraclejdk8
       stage: Unit Test
@@ -49,11 +45,6 @@ jobs:
          - NAME="Basic test"
     - os: linux
       jdk: openjdk8
-      stage: Unit Test
-      script : make basic_test
-      env :
-         - NAME="Basic test"
-    - os: osx
       stage: Unit Test
       script : make basic_test
       env :
@@ -76,11 +67,6 @@ jobs:
       script : make sys_test
       env :
          - NAME="Sys test"
-    - os: osx
-      stage: Unit Test
-      script : make sys_test
-      env :
-         - NAME="Sys test"
     - os: linux
       jdk: oraclejdk8
       stage: Unit Test
@@ -99,12 +85,20 @@ jobs:
       script : make bonus_test
       env :
          - NAME="Bonus test"
-    - os: osx
-      stage: Unit Test
-      script : make bonus_test
-      env :
-         - NAME="Bonus test"
     - os: linux
+      jdk: oraclejdk8
+      stage: Final
+      script : make test
+      env :
+         - NAME="Full Build All"
+    - os: linux
+      jdk: oraclejdk9
+      stage: Final
+      script : make test
+      env :
+         - NAME="Full Build All"
+    - os: linux
+      jdk: oraclejdk8
       stage: Final
       script : make test
       env :
