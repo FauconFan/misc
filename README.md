@@ -62,6 +62,7 @@ Le projet est maintenu suivi par Travis CI :
  - [x] Intégration Continue - Travis
  - [x] Création de fonctions systèmes:
      - Exit
+     - Println
  - [x] Faire une évaluation booléenne (+ opérateur de comparaison, opérateurs booléens)
 
 ## Idées - Bonus
