@@ -35,9 +35,6 @@ jobs:
       stage: Base Compilation
       env:
          - NAME="Mac OS"
-
-jobs:
-  include:
     - os: linux
       jdk: oraclejdk8
       stage: Unit Test
@@ -107,9 +104,6 @@ jobs:
       script : make bonus_test
       env :
          - NAME="Bonus test"
-
-jobs:
-  include:
     - os: linux
       stage: Final
       script : make test
