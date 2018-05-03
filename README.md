@@ -79,7 +79,7 @@ Le projet est maintenu suivi par Travis CI :
 | nombre | [0-9]+ |
 | hex | [0-9A-F] |
 | couleur | #{hex}{hex}{hex}{hex}{hex}{hex} |
-| string | "(\.|[^"\])*" |
+| string | "(\\.\|[^"\\])*" |
 | operator | "+" <br> "-" <br> "/" <br> "*" |
 | compNum | "<=" <br> ">=" <br> "<" <br> ">" |
 | opBool | "&&" <br> "\|\|" |
