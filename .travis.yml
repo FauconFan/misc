@@ -1,9 +1,5 @@
 sudo : true
 language : java
-jdk:
-  - oraclejdk8
-  - oraclejdk9
-  - openjdk8
 
 install:
   - curl http://jflex.de/release/jflex-1.6.1.tar.gz --output jflex-1.6.1.tar.gz
@@ -13,24 +9,38 @@ install:
 script : make
 after_script : make fclean
 
-matrix:
+stages:
+  - Base Compilation
+  - Unit Test
+  - Final
+
+jobs:
   include:
     - os: linux
+      stage: Base Compilation
       env:
-         - NAME="Single Compile test"
+         - NAME="Linux"
+    - os: osx
+      stage: Base Compilation
+      env:
+         - NAME="Mac OS"
     - os: linux
+      stage: Unit Test
       script : make basic_test
       env :
          - NAME="Basic test"
     - os: linux
+      stage: Unit Test
       script : make sys_test
       env :
          - NAME="Sys test"
     - os: linux
+      stage: Unit Test
       script : make bonus_test
       env :
          - NAME="Bonus test"
     - os: linux
+      stage: Final
       script : make test
       env :
          - NAME="Full Build All"
