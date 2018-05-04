@@ -1,6 +1,22 @@
 # ADS4_Project - GraphTXT [![Build Status](https://travis-ci.com/FauconFan/ADS4_Project.svg?token=2sRmqJj9p4TAy8ScMWxd&branch=master)](https://travis-ci.com/FauconFan/ADS4_Project)
 
 Le but de ce projet est de créer un parser/lexer d'un langage donnée.  
+Il s'agit de créer un mini-langage de programmation, afin de pouvoir dessiner des formes simples dans une fenêtre de taille fixe.  
+
+## Compilation
+
+```
+make
+```
+
+## Lancement
+
+```
+java -jar GraphTXT.jar [filename] [options]
+```
+
+## Développement
+
 La grammaire est spécifié dans ce fichier.  
 Le projet est codé en Java.  
 On utiliser jflex en tant que dépendance.  
