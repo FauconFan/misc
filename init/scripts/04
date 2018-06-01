@@ -1,0 +1,27 @@
+#!/bin/bash
+
+NAME=${HOME}/.check_crontab.sh
+CRON_MD5=${HOME}/.cron_md5_save.txt
+CRON_TMP=/tmp/cron.tmp.txt
+CRONTAB=/etc/crontab
+
+## CREATE THE SCRIPT TO HANDLE CHECKING
+cat << EOF > ${NAME}
+#!/bin/bash
+md5sum ${CRONTAB} > ${CRON_TMP}
+ret="0"
+if [ -f ${CRON_MD5} ]; then
+	ret=\`diff ${CRON_MD5} ${CRON_TMP}\`
+fi
+if [ \$? -ne "0" ]; then
+	echo "The cron tasks were modified !" | mail -s "Cron has been modified" root
+fi
+md5sum ${CRONTAB} > ${CRON_MD5}
+EOF
+
+crontab -l > ${CRON_TMP}
+chmod 755 ${NAME} 
+echo "0 0 * * * ${NAME}" >> ${CRON_TMP}
+
+crontab ${CRON_TMP}
+rm -f ${CRON_TMP}
