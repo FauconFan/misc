@@ -5,3 +5,5 @@ rm -rf /var/lib/apt/lists/*
 # Pour tester ces commandes:
 # docker-machine scp 09 Char:/home/docker/09
 # docker run --rm -it -v /home/docker:/42 debian
+# cd /42
+# ./09
