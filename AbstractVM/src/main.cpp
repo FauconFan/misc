@@ -6,44 +6,83 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 16:51:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/08 22:54:48 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/09 17:34:01 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include "ProgEnv.class.hpp"
-#include "SuperException.class.hpp"
-#include "DefaultOperand.template.hpp"
-#include "OperandFactory.class.hpp"
+#include <fstream>
+#include "Lexer.class.hpp"
+#include "Parser.class.hpp"
 
-int main(void) {
-    OperandFactory of;
-    IOperand const * I8_1  = of.createOperand(INT8, "-128");
-    IOperand const * I8_2  = of.createOperand(INT8, "127");
-    IOperand const * I16_1 = of.createOperand(INT16, "-32768");
-    IOperand const * I16_2 = of.createOperand(INT16, "32767");
-    IOperand const * I32_1 = of.createOperand(INT32, "2147483647");
-    IOperand const * I32_2 = of.createOperand(INT32, "-2147483648");
-    IOperand const * F     = of.createOperand(FLOAT, "4.42");
-    IOperand const * D     = of.createOperand(DOUBLE, "5.52");
+static void usage() {
+    std::cout << "Use this program properly..." << '\n';
+    std::cout << "./abstractVM [file]" << '\n';
+    std::cout << "./abstractVM" << '\n';
+}
 
-    IOperand const * oui = of.createOperand(INT32, "-1024");
-    IOperand const * oui2 = of.createOperand(INT32, "-1024");
+static std::string load_cin() {
+    std::string content;
+    std::string line;
 
-    std::cout << I8_1->toString() << '\n';
-    std::cout << I8_2->toString() << '\n';
-    std::cout << I16_1->toString() << '\n';
-    std::cout << I16_2->toString() << '\n';
-    std::cout << I32_1->toString() << '\n';
-    std::cout << I32_2->toString() << '\n';
-    std::cout << F->toString() << '\n';
-    std::cout << D->toString() << '\n';
+    while (true) {
+        std::cin >> line;
+        if (line == ";;") {
+            break;
+        }
+        content += line + "\n";
+    }
+    return content;
+}
 
-    IOperand const * add1 = (*I8_2 + *I16_1);
-    IOperand const * mult1 = (*oui * *oui2);
+static std::string load_file(char * path) {
+    std::string content;
+    std::ifstream input_file(path, std::ios::in);
 
-    std::cout << add1->toString() << '\n';
-    std::cout << mult1->toString() << '\n';
+    if (input_file.is_open()) {
+        std::string line;
+        while (std::getline(input_file, line)) {
+            content += line + "\n";
+        }
+        input_file.close();
+    }
+    else {
+        std::cerr << "Unable to open file\n";
+    }
+    return content;
+}
 
-    return 0;
+int main(int argc, char * argv []) {
+    int ret = 0;
+    std::string content;
+
+    if (argc == 0 || argc >= 3) {
+        usage();
+        ret = 1;
+    }
+    else {
+        if (argc == 1) {
+            content = load_cin();
+        }
+        else if (argc == 2) {
+            content = load_file(argv[1]);
+        }
+        Lexer lex(content);
+        if (lex.run() == false) {
+            std::vector<Lexer::LexerError> errors = lex.getErrors();
+
+            ret = 1;
+            for (Lexer::LexerError le : errors) {
+                std::cout << le;
+            }
+        }
+        else {
+            std::vector<IToken *> tokens = lex.getTokens();
+            Parser par(tokens);
+
+            par.run();
+        }
+    }
+
+    return ret;
 }

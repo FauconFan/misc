@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/04 16:52:43 by jpriou            #+#    #+#              #
-#    Updated: 2018/07/08 23:13:22 by jpriou           ###   ########.fr        #
+#    Updated: 2018/07/09 17:35:12 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,11 @@ FLAGS = -g -Wall -Wextra -Werror \
 INCLUDES_DIR = -I src/ \
 				-I src/exceptions \
 				-I src/prog/ \
+				-I src/prog/instructions/ \
 				-I src/prog/operands/ \
-				-I src/prog/operands/default_op/
+				-I src/prog/operands/default_op/ \
+				-I src/lexer_parser \
+				-I src/lexer_parser/tokens
 
 CXX = clang++ $(FLAGS) $(INCLUDES_DIR)
 
@@ -31,7 +34,12 @@ SRC = src/main.cpp \
 		src/exceptions/OverUnderFlowException.class.cpp \
 		src/exceptions/ZeroException.class.cpp \
 		src/prog/ProgEnv.class.cpp \
+		src/prog/instructions/Instruction.class.cpp \
 		src/prog/operands/OperandFactory.class.cpp \
+		src/lexer_parser/Lexer.class.cpp \
+		src/lexer_parser/Parser.class.cpp \
+		src/lexer_parser/tokens/InstructionToken.class.cpp \
+		src/lexer_parser/tokens/ValueToken.class.cpp
 
 # _RED=$(shell tput setaf 1)
 _GREEN=$(shell tput setaf 2)

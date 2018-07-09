@@ -16,8 +16,12 @@ ZeroException::ZeroException(ZeroExceptionType zet) {
     std::string msg = "Zero Exception : ";
 
     switch (zet) {
-        case DIV: msg += DIV_MSG; break;
-        case MOD: msg += MOD_MSG; break;
+        case DIV:
+            msg += DIV_MSG;
+            break;
+        case MOD:
+            msg += MOD_MSG;
+            break;
     }
     this->setMsg(msg);
 }

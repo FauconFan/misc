@@ -33,4 +33,4 @@ class ZeroException : public SuperException {
 };
 
 
-#endif
+#endif // ifndef ZEROEXCEPTION_CLASS_HPP

@@ -22,7 +22,7 @@
 
 template <typename T>
 DefaultOperand<T>::DefaultOperand(T value, eOperandType type)
-        : _value(value), _type(type) {
+    : _value(value), _type(type) {
     this->_stringvalue = std::to_string(value);
 }
 
@@ -62,8 +62,8 @@ IOperand const * DefaultOperand<T>::operator+(IOperand const & rhs) const {
     if (this->getPrecision() < rhs.getPrecision()) {
         return rhs + *this;
     }
-    T a = this->_value;
-    T b = static_cast<T>(std::stod(rhs.toString()));
+    T a   = this->_value;
+    T b   = static_cast<T>(std::stod(rhs.toString()));
     T res = a + b;
 
     if ((a > 0) && (b > 0)) {
@@ -85,7 +85,7 @@ IOperand const * DefaultOperand<T>::operator+(IOperand const & rhs) const {
 
 template <typename T>
 IOperand const * DefaultOperand<T>::operator-(IOperand const & rhs) const {
-    (void)rhs;
+    (void) rhs;
     return NULL;
 }
 
@@ -101,10 +101,10 @@ IOperand const * DefaultOperand<T>::operator*(IOperand const & rhs) const {
         if ((a < 0) && (b < 0)) {
             throw OverUnderFlowException(MULT, OVERFLOW);
         }
-		else if ((a > 0) && (b > 0)) {
+        else if ((a > 0) && (b > 0)) {
             throw OverUnderFlowException(MULT, OVERFLOW);
         }
-		else {
+        else {
             throw OverUnderFlowException(MULT, UNDERFLOW);
         }
     }
@@ -116,12 +116,12 @@ template <typename T>
 IOperand const * DefaultOperand<T>::operator/(IOperand const & rhs) const {
     double value_rhs = std::stold(rhs.toString());
 
-    if (value_rhs > - PREC_DIV_ZERO && value_rhs < PREC_DIV_ZERO) {
+    if (value_rhs > -PREC_DIV_ZERO && value_rhs < PREC_DIV_ZERO) {
         throw ZeroException(DIV);
     }
     return OperandFactory().createOperand(
-        (this->getType() > rhs.getType()) ? this->getType() : rhs.getType(),
-        std::to_string(this->_value / value_rhs));
+            (this->getType() > rhs.getType()) ? this->getType() : rhs.getType(),
+            std::to_string(this->_value / value_rhs));
 }
 
 template <typename T>
@@ -146,8 +146,8 @@ IOperand const * DefaultOperand<T>::operator%(IOperand const & rhs) const {
         }
     }
     return OperandFactory().createOperand(
-        (this->getType() > rhs.getType()) ? this->getType() : rhs.getType(),
-        std::to_string(res));
+            (this->getType() > rhs.getType()) ? this->getType() : rhs.getType(),
+            std::to_string(res));
 }
 
 #endif // ifdef DEFAULTOPERAND_TEMPLATE_HPP

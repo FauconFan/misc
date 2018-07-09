@@ -1,0 +1,13 @@
+push pu pu
+mult
+push double((42))
+assert int64(64)
+float((
+float))
+float)(
+()float
+float(oui)
+float(1235.)
+float(.1234)
+double(-.123412)
+double(-)
