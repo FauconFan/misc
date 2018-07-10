@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:48:23 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/09 16:45:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/10 17:22:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <vector>
 #include "IToken.class.hpp"
 
+#define UNRECOGNISED_OPTION "This word is not recognised..."
 #define PAR_COUPLE_MISSING "You need a couple of parenthesis..."
 #define PAR_WRONG_ORDER "The ')' needs to be after '('..."
 #define RPAR_LAST_CHARA "The ')' must be the last character..."

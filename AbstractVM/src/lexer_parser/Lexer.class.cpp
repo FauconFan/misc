@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:52:17 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/09 16:48:42 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/10 17:23:08 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,12 @@ bool Lexer::run() {
                 size_t nb_par = std::count_if(word.begin(), word.end(),
                                     [](char c) {return c == '(' || c == ')';});
 
-                if (nb_par != 2 || poslpar == std::string::npos ||
+                if (poslpar == std::string::npos ||
                         posrpar == std::string::npos) {
+                    is_error = true;
+                    reason = UNRECOGNISED_OPTION;
+                }
+                else if (nb_par != 2) {
                     is_error = true;
                     reason = PAR_COUPLE_MISSING;
                 }
