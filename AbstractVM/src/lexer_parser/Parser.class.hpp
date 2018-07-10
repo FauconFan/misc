@@ -34,4 +34,4 @@ class Parser {
         std::vector<Instruction> _instructions;
 };
 
-#endif
+#endif // ifndef PARSER_CLASS_HPP

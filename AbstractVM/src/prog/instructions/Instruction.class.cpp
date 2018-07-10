@@ -19,7 +19,7 @@ Instruction::Instruction() : _type(IT), _str(NULL) {
 
 template <InstructionType IT>
 Instruction::Instruction(std::string const & st)
-        : _type(IT), _str(new std::string(st)) {
+    : _type(IT), _str(new std::string(st)) {
     static_assert(IT == PUSH || IT == ASSERT, "");
 }
 
@@ -33,7 +33,7 @@ Instruction::~Instruction() {
 
 Instruction &Instruction::operator=(Instruction const & is) {
     this->_type = is.getType();
-    this->_str = NULL;
+    this->_str  = NULL;
     if (is.getStr() != NULL) {
         this->_str = new std::string(*(is.getStr()));
     }
@@ -44,6 +44,6 @@ InstructionType Instruction::getType() const {
     return this->_type;
 }
 
-std::string *Instruction::getStr() const {
+std::string * Instruction::getStr() const {
     return this->_str;
 }

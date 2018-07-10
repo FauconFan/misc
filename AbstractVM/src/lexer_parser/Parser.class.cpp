@@ -21,7 +21,7 @@ Parser::Parser(Parser const & pa) {
 Parser::~Parser() {}
 
 Parser &Parser::operator=(Parser const & pa) {
-    this->_tokens = pa.getTokens();
+    this->_tokens       = pa.getTokens();
     this->_instructions = pa.getInstructions();
     return *this;
 }

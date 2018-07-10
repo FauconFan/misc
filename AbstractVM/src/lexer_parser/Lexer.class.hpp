@@ -19,22 +19,22 @@
 #include "IToken.class.hpp"
 
 #define UNRECOGNISED_OPTION "This word is not recognised..."
-#define PAR_COUPLE_MISSING "You need a couple of parenthesis..."
-#define PAR_WRONG_ORDER "The ')' needs to be after '('..."
-#define RPAR_LAST_CHARA "The ')' must be the last character..."
-#define TYPE_NO_MATCH "The type isn't recognised..."
-#define NO_INTEGER "The number given doesn't like to be a integer..."
-#define NO_FLOTTANT "The number giver doesn't like to be a flottant..."
+#define PAR_COUPLE_MISSING  "You need a couple of parenthesis..."
+#define PAR_WRONG_ORDER     "The ')' needs to be after '('..."
+#define RPAR_LAST_CHARA     "The ')' must be the last character..."
+#define TYPE_NO_MATCH       "The type isn't recognised..."
+#define NO_INTEGER          "The number given doesn't like to be a integer..."
+#define NO_FLOTTANT         "The number giver doesn't like to be a flottant..."
 
 class Lexer {
     public:
         class LexerError {
             public:
                 LexerError (
-                        std::string word,
-                        std::string reason,
-                        size_t line,
-                        size_t column);
+                    std::string word,
+                    std::string reason,
+                    size_t      line,
+                    size_t      column);
                 LexerError (LexerError const &);
                 virtual ~LexerError ();
 

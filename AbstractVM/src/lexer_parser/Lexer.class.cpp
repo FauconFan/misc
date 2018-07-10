@@ -18,8 +18,8 @@
 #include "InstructionToken.class.hpp"
 
 Lexer::LexerError::LexerError(std::string word, std::string reason,
-            size_t line, size_t column) :
-        _line(line), _column(column), _reason(reason), _word(word) {}
+  size_t line, size_t column) :
+    _line(line), _column(column), _reason(reason), _word(word) {}
 
 Lexer::LexerError::LexerError(LexerError const & le) {
     *this = le;
@@ -28,10 +28,10 @@ Lexer::LexerError::LexerError(LexerError const & le) {
 Lexer::LexerError::~LexerError() {}
 
 Lexer::LexerError &Lexer::LexerError::operator=(LexerError const & le) {
-    this->_line = le._line;
+    this->_line   = le._line;
     this->_column = le._column;
     this->_reason = le._reason;
-    this->_word = le._word;
+    this->_word   = le._word;
     return *this;
 }
 
@@ -53,9 +53,9 @@ std::string Lexer::LexerError::getWord() const {
 
 std::ostream &operator<<(std::ostream & os, Lexer::LexerError const & le) {
     os << "Error occured in (" << le.getLine() << ", " << le.getColumn() << ")"
-        << " in word '" << le.getWord() << "'\n"
-        << "\t-> " << le.getReason()
-        << '\n';
+       << " in word '" << le.getWord() << "'\n"
+       << "\t-> " << le.getReason()
+       << '\n';
     return os;
 }
 
@@ -104,8 +104,8 @@ bool Lexer::run() {
             ++it;
         }
         else {
-            std::string word = "";
-            bool is_error = false;
+            std::string word   = "";
+            bool is_error      = false;
             std::string reason = "";
 
             while (is_blank(*it) == false && is_nl(*it) == false && it != et) {
@@ -114,7 +114,8 @@ bool Lexer::run() {
                 this->_column++;
             }
             if (InstructionToken::list_assoc.find(word) !=
-                    InstructionToken::list_assoc.end()) {
+              InstructionToken::list_assoc.end())
+            {
                 InstructionType iType = InstructionToken::list_assoc.at(word);
                 IToken * n = static_cast<IToken *>(new InstructionToken(iType));
                 this->_tokens.push_back(n);
@@ -122,30 +123,34 @@ bool Lexer::run() {
             else {
                 size_t poslpar = word.find('(');
                 size_t posrpar = word.find(')');
-                size_t nb_par = std::count_if(word.begin(), word.end(),
-                                    [](char c) {return c == '(' || c == ')';});
+                size_t nb_par  = std::count_if(word.begin(), word.end(),
+                        [](char c) {
+                    return c == '(' || c == ')';
+                });
 
                 if (poslpar == std::string::npos ||
-                        posrpar == std::string::npos) {
+                  posrpar == std::string::npos)
+                {
                     is_error = true;
-                    reason = UNRECOGNISED_OPTION;
+                    reason   = UNRECOGNISED_OPTION;
                 }
                 else if (nb_par != 2) {
                     is_error = true;
-                    reason = PAR_COUPLE_MISSING;
+                    reason   = PAR_COUPLE_MISSING;
                 }
                 else if (poslpar > posrpar) {
                     is_error = true;
-                    reason = PAR_WRONG_ORDER;
+                    reason   = PAR_WRONG_ORDER;
                 }
                 else if (posrpar != word.size() - 1) {
                     is_error = true;
-                    reason = RPAR_LAST_CHARA;
+                    reason   = RPAR_LAST_CHARA;
                 }
                 else if (ValueToken::list_assoc.find(word.substr(0, poslpar))
-                        == ValueToken::list_assoc.end()) {
+                  == ValueToken::list_assoc.end())
+                {
                     is_error = true;
-                    reason = TYPE_NO_MATCH;
+                    reason   = TYPE_NO_MATCH;
                 }
                 else {
                     eOperandType eot = ValueToken::list_assoc.at(word.substr(0, poslpar));
@@ -153,11 +158,11 @@ bool Lexer::run() {
                     std::string numeric_str = word.substr(poslpar + 1, posrpar - poslpar - 1);
                     if (eot <= INT32 && this->validateN(numeric_str) == false) {
                         is_error = true;
-                        reason = NO_INTEGER;
+                        reason   = NO_INTEGER;
                     }
                     else if (eot > INT32 && this->validateZ(numeric_str) == false) {
                         is_error = true;
-                        reason = NO_FLOTTANT;
+                        reason   = NO_FLOTTANT;
                     }
 
                     if (is_error == false) {
@@ -169,7 +174,7 @@ bool Lexer::run() {
 
             if (is_error) {
                 this->_list_errors.push_back(LexerError(word, reason,
-                    this->_line, this->_column - word.size()));
+                        this->_line, this->_column - word.size()));
             }
         }
     }
@@ -212,8 +217,10 @@ bool Lexer::validateZ(std::string nu) const {
     }
     if (it == et)
         return true;
+
     if (*it != '.')
         return false;
+
     ++it;
     number = 0;
     while (it != et) {
@@ -224,7 +231,7 @@ bool Lexer::validateZ(std::string nu) const {
         ++it;
     }
     return (number >= 2);
-}
+} // Lexer::validateZ
 
 bool Lexer::is_blank(char c) const noexcept {
     return (c == ' ' || c == '\t' || c == '\v' || c == '\f');

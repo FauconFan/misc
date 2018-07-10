@@ -31,22 +31,20 @@ enum InstructionType {
 
 class Instruction {
     public:
-        template <InstructionType T>
-        Instruction ();
+        template <InstructionType T> Instruction ();
 
-        template <InstructionType T>
-        Instruction (std::string const &);
-        
+        template <InstructionType T> Instruction (std::string const &);
+
         Instruction (Instruction const &);
         virtual ~Instruction ();
 
         Instruction &operator=(Instruction const &);
 
         InstructionType getType() const;
-        std::string *getStr() const;
+        std::string * getStr() const;
     private:
         InstructionType _type;
-        std::string *_str;
+        std::string * _str;
 };
 
-#endif
+#endif // ifndef INSTRUCTION_TEMPLATE_HPP
