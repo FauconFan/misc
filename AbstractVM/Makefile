@@ -6,13 +6,13 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/04 16:52:43 by jpriou            #+#    #+#              #
-#    Updated: 2018/07/09 17:35:12 by jpriou           ###   ########.fr        #
+#    Updated: 2018/07/14 09:53:24 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re
 
-NAME = abstractVM
+NAME = avm
 
 FLAGS = -g -Wall -Wextra -Werror \
 			-Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align \
@@ -33,6 +33,7 @@ SRC = src/main.cpp \
 		src/exceptions/SuperException.class.cpp \
 		src/exceptions/OverUnderFlowException.class.cpp \
 		src/exceptions/ZeroException.class.cpp \
+		src/exceptions/UnknownTypeException.class.cpp \
 		src/prog/ProgEnv.class.cpp \
 		src/prog/instructions/Instruction.class.cpp \
 		src/prog/operands/OperandFactory.class.cpp \

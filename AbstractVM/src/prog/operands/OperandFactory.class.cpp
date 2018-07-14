@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/05 16:35:01 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/08 23:23:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 09:54:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "OperandFactory.class.hpp"
 #include "DefaultOperand.template.hpp"
 #include "OverUnderFlowException.class.hpp"
+#include "UnknownTypeException.class.hpp"
 
 OperandFactory::OperandFactory() {
     this->_fillLinker();
@@ -47,7 +48,7 @@ IOperand const * OperandFactory::createOperand(eOperandType eo, std::string cons
 
     method = this->_linker.at(eo);
     if (method == NULL) {
-        return NULL;
+        throw UnknownTypeException();
     }
     return (this->*method)(s);
 }
@@ -88,16 +89,12 @@ IOperand const * OperandFactory::createInt16(std::string const & s) const {
     int16_t value = this->stoT<int16_t>(s);
 
     return new DefaultOperand<int16_t>(value, INT16);
-
-    ;
 }
 
 IOperand const * OperandFactory::createInt32(std::string const & s) const {
     int32_t value = this->stoT<int32_t>(s);
 
     return new DefaultOperand<int32_t>(value, INT32);
-
-    ;
 }
 
 IOperand const * OperandFactory::createFloat(std::string const & s) const {
@@ -110,8 +107,6 @@ IOperand const * OperandFactory::createFloat(std::string const & s) const {
         throw OverUnderFlowException(OOR);
     }
     return new DefaultOperand<float>(value, FLOAT);
-
-    ;
 }
 
 IOperand const * OperandFactory::createDouble(std::string const & s) const {
@@ -124,6 +119,4 @@ IOperand const * OperandFactory::createDouble(std::string const & s) const {
         throw OverUnderFlowException(OOR);
     }
     return new DefaultOperand<double>(value, DOUBLE);
-
-    ;
 }

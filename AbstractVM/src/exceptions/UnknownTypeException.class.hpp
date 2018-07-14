@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ProgEnv.class.hpp                                  :+:      :+:    :+:   */
+/*   UnkownTypeException.class.hpp                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/04 17:07:56 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 09:43:11 by jpriou           ###   ########.fr       */
+/*   Created: 2018/07/14 09:45:48 by jpriou            #+#    #+#             */
+/*   Updated: 2018/07/14 09:53:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROGENV_CLASS_HPP
-#define PROGENV_CLASS_HPP
+#ifndef UNKNOWNTYPEEXCEPTION_CLASS_HPP
+#define UNKNOWNTYPEEXCEPTION_CLASS_HPP
 
-class ProgEnv {
+#include "SuperException.class.hpp"
+
+class UnknownTypeException : public SuperException {
     public:
-        ProgEnv ();
-        ProgEnv (ProgEnv const &);
-        virtual ~ProgEnv ();
+        UnknownTypeException ();
+        UnknownTypeException (UnknownTypeException const &);
+        virtual ~UnknownTypeException ();
 
-        ProgEnv &operator=(ProgEnv const &);
-
-        
+        UnknownTypeException &operator=(UnknownTypeException const &);
 };
 
-#endif // ifndef PROGENV_CLASS_HPP
+#endif
