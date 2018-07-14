@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 16:59:58 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/13 15:58:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 09:33:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # define UNEXPECTED_VALUE "Unexpected value, expected instruction here..."
 # define EXPECTED_VALUE_EOF "Expected value, found EOF..."
 # define EXPECTED_VALUE "Expected value, found an instruction..."
-
+# define POP_EMPTY_STACK "Trying to pop on a empty stack..."
+# define TOO_FEW_ELEM "Too few elements, can't apply operations..."
 
 class Parser {
     public:

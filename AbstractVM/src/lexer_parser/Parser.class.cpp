@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:24:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/13 16:01:52 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 09:29:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ bool Parser::run() {
                                 Instruction in = Instruction(i_tok.getType(), v_tok->getStr());
                                 this->_instructions.push_back(in);
                                 ++it;
+                                if (i_tok.getType() == PUSH) {
+                                    stack_size++;
+                                }
                                 break;
                             }
                             case INSTRUCTION: {
@@ -113,6 +116,19 @@ bool Parser::run() {
                 }
                 else {
                     this->_instructions.push_back(Instruction(i_tok.getType()));
+                    if (i_tok.getType() == POP && stack_size == 0) {
+                        this->_errors.push_back(ParserError(POP_EMPTY_STACK, nb_instruction));
+                    }
+                    else if (i_tok.getType() == ADD || i_tok.getType() == SUB ||
+                            i_tok.getType() == MUL || i_tok.getType() == DIV ||
+                            i_tok.getType() == MOD) {
+                        if (stack_size < 2) {
+                            this->_errors.push_back(ParserError(TOO_FEW_ELEM, nb_instruction));
+                        }
+                        else {
+                            stack_size--;
+                        }
+                    }
                     ++it;
                 }
                 ++nb_instruction;

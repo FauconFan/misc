@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:52:17 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/13 12:56:10 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 09:33:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ bool Lexer::validateN(std::string nu) const {
         number++;
         ++it;
     }
-    return (number >= 2);
+    return (number >= 1);
 }
 
 bool Lexer::validateZ(std::string nu) const {
@@ -212,7 +212,7 @@ bool Lexer::validateZ(std::string nu) const {
         number++;
         ++it;
     }
-    if (number < 2) {
+    if (number < 1) {
         return false;
     }
     if (it == et)
@@ -230,7 +230,7 @@ bool Lexer::validateZ(std::string nu) const {
         number++;
         ++it;
     }
-    return (number >= 2);
+    return (number >= 1);
 } // Lexer::validateZ
 
 bool Lexer::is_blank(char c) const noexcept {
