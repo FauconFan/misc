@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 17:08:23 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 13:38:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 13:53:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void ProgEnv::run() {
                 if (diff < 0.000001) {
                     same = true;
                 }
-
                 if (!same) {
                     throw AssertException(head->toString(), op->toString());
                 }
@@ -139,7 +138,8 @@ void ProgEnv::run() {
                 case PRINT: {
                     IOperand const * last = this->_stack_prog.back();
                     if (last->getType() == INT8) {
-                        std::cout << last->toString() << '\n';
+                        int8_t v = static_cast<int8_t>(std::stoi(last->toString()));
+                        std::cout << v << '\n';
                     }
                     else {
                         std::cout << "Non-ascii character" << '\n';

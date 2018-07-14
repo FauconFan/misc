@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:24:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 13:20:57 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 14:15:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,14 @@ bool Parser::run() {
         }
     }
 
-    for (size_t i = 0; i < this->_instructions.size() - 1; i++) {
-        if (this->_instructions[i]->getType() == EXIT) {
-            throw EndStackException(NO_END_STACK);
+    if (this->_instructions.size() != 0) {
+        for (size_t i = 0; i < this->_instructions.size() - 1; i++) {
+            if (this->_instructions[i]->getType() == EXIT) {
+                throw EndStackException(NO_END_STACK);
+            }
         }
     }
-    if (this->_instructions.size() != 0 &&
+    if (this->_instructions.size() == 0 ||
         this->_instructions.back()->getType() != EXIT) {
         throw EndStackException(END_NO_STACK);
     }

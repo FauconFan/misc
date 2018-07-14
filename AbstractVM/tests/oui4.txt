@@ -1,0 +1,5 @@
+push int32(4)
+push int32(3)
+mul
+assert int16(12)
+exit
