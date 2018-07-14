@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:04:55 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/09 17:37:42 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/13 15:49:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ enum InstructionType {
 
 class Instruction {
     public:
-        template <InstructionType T> Instruction ();
+        Instruction (InstructionType type);
 
-        template <InstructionType T> Instruction (std::string const &);
+        Instruction (InstructionType type, std::string const &);
 
         Instruction (Instruction const &);
         virtual ~Instruction ();

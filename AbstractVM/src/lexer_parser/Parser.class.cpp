@@ -6,11 +6,43 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:24:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/09 17:40:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/13 16:01:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.class.hpp"
+#include "InstructionToken.class.hpp"
+#include "ValueToken.class.hpp"
+
+Parser::ParserError::ParserError(std::string reason, size_t index_instruction)
+    : _reason(reason), _index_instruction(index_instruction) {}
+
+Parser::ParserError::ParserError(ParserError const & pe) {
+    *this = pe;
+}
+
+Parser::ParserError::~ParserError() {}
+
+Parser::ParserError &Parser::ParserError::operator=(ParserError const & pe) {
+    this->_reason = pe.getReason();
+    this->_index_instruction = pe.getIndexInstruction();
+    return *this;
+}
+
+std::string Parser::ParserError::getReason() const {
+    return this->_reason;
+}
+
+size_t Parser::ParserError::getIndexInstruction() const {
+    return this->_index_instruction;
+}
+
+std::ostream &operator<<(std::ostream &os, Parser::ParserError const & pe) {
+    os << "\t.Index Instruction : " << pe.getIndexInstruction() << "'\n"
+       << "\t\t-> " << pe.getReason()
+       << '\n';
+    return os;
+}
 
 Parser::Parser(std::vector<IToken *> tokens) : _tokens(tokens) {}
 
@@ -34,6 +66,59 @@ std::vector<Instruction> Parser::getInstructions() const {
     return this->_instructions;
 }
 
+std::vector<Parser::ParserError> Parser::getErrors() const  {
+    return this->_errors;
+}
+
 bool Parser::run() {
-    return false;
+    std::vector<IToken *>::iterator it = this->_tokens.begin();
+    std::vector<IToken *>::iterator et = this->_tokens.end();
+    size_t nb_instruction = 0;
+    size_t stack_size = 0;
+
+    while (it != et) {
+        IToken * actu = *it;
+        switch (actu->getTokenType()) {
+            case VALUE: {
+                this->_errors.push_back(ParserError(UNEXPECTED_VALUE, nb_instruction));
+                ++it;
+                ++nb_instruction;
+                break;
+            }
+            case INSTRUCTION: {
+                InstructionToken i_tok = *(dynamic_cast<InstructionToken *>(*it));
+
+                if (i_tok.getType() == PUSH || i_tok.getType() == ASSERT) {
+                    ++it;
+                    if (it == et) {
+                        this->_errors.push_back(ParserError(EXPECTED_VALUE_EOF, nb_instruction));
+                    }
+                    else {
+                        IToken * value = *it;
+
+                        switch (value->getTokenType()) {
+                            case VALUE: {
+                                ValueToken * v_tok = dynamic_cast<ValueToken *>(value);
+                                Instruction in = Instruction(i_tok.getType(), v_tok->getStr());
+                                this->_instructions.push_back(in);
+                                ++it;
+                                break;
+                            }
+                            case INSTRUCTION: {
+                                this->_errors.push_back(ParserError(EXPECTED_VALUE, nb_instruction));
+                                break;
+                            }
+                        }
+                    }
+                }
+                else {
+                    this->_instructions.push_back(Instruction(i_tok.getType()));
+                    ++it;
+                }
+                ++nb_instruction;
+            }
+        }
+    }
+
+    return this->_errors.size() == 0;
 }

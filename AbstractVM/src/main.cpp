@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 16:51:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/09 17:34:01 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 09:18:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int main(int argc, char * argv []) {
             std::vector<Lexer::LexerError> errors = lex.getErrors();
 
             ret = 1;
+            std::cout << "Error(s) occured, when lexing :" << '\n';
             for (Lexer::LexerError le : errors) {
                 std::cout << le;
             }
@@ -80,7 +81,18 @@ int main(int argc, char * argv []) {
             std::vector<IToken *> tokens = lex.getTokens();
             Parser par(tokens);
 
-            par.run();
+            if (par.run() == false) {
+                std::vector<Parser::ParserError> errors = par.getErrors();
+
+                ret = 1;
+                std::cout << "Error(s) occured, when parsing :" << '\n';
+                for (Parser::ParserError pe : errors) {
+                    std::cout << pe;
+                }
+            }
+            else {
+                std::cout << "Wouhou" << '\n';
+            }
         }
     }
 

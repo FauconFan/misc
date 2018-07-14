@@ -6,21 +6,23 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:06:32 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/09 17:23:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/13 15:53:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Instruction.class.hpp"
 
-template <InstructionType IT>
-Instruction::Instruction() : _type(IT), _str(NULL) {
-    static_assert(IT != PUSH && IT != ASSERT, "");
+Instruction::Instruction(InstructionType type) : _type(type), _str(NULL) {
+    if (type == PUSH || type == ASSERT) {
+        throw std::exception();
+    }
 }
 
-template <InstructionType IT>
-Instruction::Instruction(std::string const & st)
-    : _type(IT), _str(new std::string(st)) {
-    static_assert(IT == PUSH || IT == ASSERT, "");
+Instruction::Instruction(InstructionType type, std::string const & st)
+    : _type(type), _str(new std::string(st)) {
+    if (type != PUSH && type != ASSERT) {
+        throw std::exception();
+    }
 }
 
 Instruction::Instruction(Instruction const & is) {

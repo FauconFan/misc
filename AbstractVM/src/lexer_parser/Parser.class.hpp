@@ -6,19 +6,40 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 16:59:58 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/09 17:35:22 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/13 15:58:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_CLASS_HPP
 #define PARSER_CLASS_HPP
 
+#include <iostream>
 #include <vector>
 #include "IToken.class.hpp"
 #include "Instruction.class.hpp"
 
+# define UNEXPECTED_VALUE "Unexpected value, expected instruction here..."
+# define EXPECTED_VALUE_EOF "Expected value, found EOF..."
+# define EXPECTED_VALUE "Expected value, found an instruction..."
+
+
 class Parser {
     public:
+        class ParserError {
+            public:
+                ParserError (std::string reason,
+                            size_t index_instruction);
+                ParserError (ParserError const &);
+                virtual ~ParserError ();
+
+                ParserError &operator=(ParserError const &);
+
+                std::string getReason() const;
+                size_t getIndexInstruction() const;
+            private:
+                std::string _reason;
+                size_t _index_instruction;
+        };
         Parser (std::vector<IToken *> tokens);
         Parser (Parser const &);
         virtual ~Parser ();
@@ -29,9 +50,13 @@ class Parser {
 
         std::vector<IToken *> getTokens() const;
         std::vector<Instruction> getInstructions() const;
+        std::vector<ParserError> getErrors() const;
     private:
         std::vector<IToken *> _tokens;
         std::vector<Instruction> _instructions;
+        std::vector<ParserError>_errors;
 };
+
+std::ostream &operator<<(std::ostream &, Parser::ParserError const & );
 
 #endif // ifndef PARSER_CLASS_HPP

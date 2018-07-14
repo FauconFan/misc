@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:52:17 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/10 17:23:08 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/13 12:56:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ std::string Lexer::LexerError::getWord() const {
 }
 
 std::ostream &operator<<(std::ostream & os, Lexer::LexerError const & le) {
-    os << "Error occured in (" << le.getLine() << ", " << le.getColumn() << ")"
+    os << "\t.(" << le.getLine() << ", " << le.getColumn() << ")"
        << " in word '" << le.getWord() << "'\n"
-       << "\t-> " << le.getReason()
+       << "\t\t-> " << le.getReason()
        << '\n';
     return os;
 }
