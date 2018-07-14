@@ -5,3 +5,4 @@ mul
 push int8(1)
 div
 pop
+exit

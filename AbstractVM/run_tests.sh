@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FILE_TESTS=$(find tests -type f | sort -r)
+FILE_TESTS=$(find tests -type f | sort)
 
 make
 
@@ -8,7 +8,7 @@ for FP in ${FILE_TESTS}; do
     echo ${FP}
     echo ${FP} | grep non > /dev/null
     ISOUI="$?"
-    ./avm "${FP}" > /dev/null 2>&1
+    ./avm "${FP}"
     RET="$?"
     if [ ${ISOUI} = "0" ]; then
         if [ ${RET} = "0" ]; then

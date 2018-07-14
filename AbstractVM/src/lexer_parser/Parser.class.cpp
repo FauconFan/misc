@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:24:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 14:15:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 14:25:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,13 @@ bool Parser::run() {
                 }
                 else {
                     this->_instructions.push_back(new Instruction(i_tok.getType()));
-                    if (i_tok.getType() == POP && stack_size == 0) {
-                        this->_errors.push_back(ParserError(POP_EMPTY_STACK, nb_instruction));
+                    if (i_tok.getType() == POP) {
+                        if (stack_size == 0) {
+                            this->_errors.push_back(ParserError(POP_EMPTY_STACK, nb_instruction));
+                        }
+                        else {
+                            stack_size--;
+                        }
                     }
                     else if (i_tok.getType() == ADD || i_tok.getType() == SUB ||
                       i_tok.getType() == MUL || i_tok.getType() == DIV ||
