@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   UnkownTypeException.class.hpp                      :+:      :+:    :+:   */
+/*   AssertException.class.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/14 09:45:48 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 09:53:04 by jpriou           ###   ########.fr       */
+/*   Created: 2018/07/14 10:37:10 by jpriou            #+#    #+#             */
+/*   Updated: 2018/07/14 10:56:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UNKNOWNTYPEEXCEPTION_CLASS_HPP
-#define UNKNOWNTYPEEXCEPTION_CLASS_HPP
+#ifndef ASSERTEXCEPTION_CLASS_HPP
+#define ASSERTEXCEPTION_CLASS_HPP
 
 #include "SuperException.class.hpp"
 
-class UnknownTypeException : public SuperException {
+class AssertException : public SuperException {
     public:
-        UnknownTypeException ();
-        UnknownTypeException (UnknownTypeException const &);
-        virtual ~UnknownTypeException ();
+        AssertException (std::string const & head,
+            std::string const              & cand);
+        AssertException (AssertException const &);
+        virtual ~AssertException ();
 
-        UnknownTypeException &operator=(UnknownTypeException const &);
+        AssertException &operator=(AssertException const &);
 };
 
-#endif // ifndef UNKNOWNTYPEEXCEPTION_CLASS_HPP
+#endif // ifndef ASSERTEXCEPTION_CLASS_HPP

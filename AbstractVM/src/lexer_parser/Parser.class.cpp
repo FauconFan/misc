@@ -6,13 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:24:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 09:29:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 13:20:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.class.hpp"
 #include "InstructionToken.class.hpp"
 #include "ValueToken.class.hpp"
+#include "EndStackException.class.hpp"
 
 Parser::ParserError::ParserError(std::string reason, size_t index_instruction)
     : _reason(reason), _index_instruction(index_instruction) {}
@@ -50,7 +51,11 @@ Parser::Parser(Parser const & pa) {
     *this = pa;
 }
 
-Parser::~Parser() {}
+Parser::~Parser() {
+    for (Instruction * in : this->_instructions) {
+        delete in;
+    }
+}
 
 Parser &Parser::operator=(Parser const & pa) {
     this->_tokens       = pa.getTokens();
@@ -62,11 +67,11 @@ std::vector<IToken *> Parser::getTokens() const {
     return this->_tokens;
 }
 
-std::vector<Instruction> Parser::getInstructions() const {
+std::vector<Instruction *> Parser::getInstructions() const {
     return this->_instructions;
 }
 
-std::vector<Parser::ParserError> Parser::getErrors() const  {
+std::vector<Parser::ParserError> Parser::getErrors() const {
     return this->_errors;
 }
 
@@ -74,7 +79,7 @@ bool Parser::run() {
     std::vector<IToken *>::iterator it = this->_tokens.begin();
     std::vector<IToken *>::iterator et = this->_tokens.end();
     size_t nb_instruction = 0;
-    size_t stack_size = 0;
+    size_t stack_size     = 0;
 
     while (it != et) {
         IToken * actu = *it;
@@ -99,29 +104,36 @@ bool Parser::run() {
                         switch (value->getTokenType()) {
                             case VALUE: {
                                 ValueToken * v_tok = dynamic_cast<ValueToken *>(value);
-                                Instruction in = Instruction(i_tok.getType(), v_tok->getStr());
+                                UnaryInstruction * in     = new UnaryInstruction(
+                                        i_tok.getType(), v_tok->getType(), v_tok->getStr());
                                 this->_instructions.push_back(in);
                                 ++it;
                                 if (i_tok.getType() == PUSH) {
                                     stack_size++;
                                 }
+                                else if (i_tok.getType() == ASSERT && stack_size == 0) {
+                                    this->_errors.push_back(ParserError(ASSERT_EMPTY_STACK,
+                                            nb_instruction));
+                                }
                                 break;
                             }
                             case INSTRUCTION: {
-                                this->_errors.push_back(ParserError(EXPECTED_VALUE, nb_instruction));
+                                this->_errors.push_back(ParserError(EXPECTED_VALUE,
+                                        nb_instruction));
                                 break;
                             }
                         }
                     }
                 }
                 else {
-                    this->_instructions.push_back(Instruction(i_tok.getType()));
+                    this->_instructions.push_back(new Instruction(i_tok.getType()));
                     if (i_tok.getType() == POP && stack_size == 0) {
                         this->_errors.push_back(ParserError(POP_EMPTY_STACK, nb_instruction));
                     }
                     else if (i_tok.getType() == ADD || i_tok.getType() == SUB ||
-                            i_tok.getType() == MUL || i_tok.getType() == DIV ||
-                            i_tok.getType() == MOD) {
+                      i_tok.getType() == MUL || i_tok.getType() == DIV ||
+                      i_tok.getType() == MOD)
+                    {
                         if (stack_size < 2) {
                             this->_errors.push_back(ParserError(TOO_FEW_ELEM, nb_instruction));
                         }
@@ -136,5 +148,15 @@ bool Parser::run() {
         }
     }
 
+    for (size_t i = 0; i < this->_instructions.size() - 1; i++) {
+        if (this->_instructions[i]->getType() == EXIT) {
+            throw EndStackException(NO_END_STACK);
+        }
+    }
+    if (this->_instructions.size() != 0 &&
+        this->_instructions.back()->getType() != EXIT) {
+        throw EndStackException(END_NO_STACK);
+    }
+
     return this->_errors.size() == 0;
-}
+} // Parser::run

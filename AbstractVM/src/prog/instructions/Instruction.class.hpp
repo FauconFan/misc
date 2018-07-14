@@ -6,13 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:04:55 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/13 15:49:37 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 13:10:08 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INSTRUCTION_TEMPLATE_HPP
 #define INSTRUCTION_TEMPLATE_HPP
 
+#include <iostream>
 #include <string>
 
 enum InstructionType {
@@ -30,21 +31,24 @@ enum InstructionType {
 };
 
 class Instruction {
+    protected:
+        Instruction (InstructionType type, bool isUnary);
+
     public:
         Instruction (InstructionType type);
-
-        Instruction (InstructionType type, std::string const &);
-
         Instruction (Instruction const &);
         virtual ~Instruction ();
 
         Instruction &operator=(Instruction const &);
 
         InstructionType getType() const;
-        std::string * getStr() const;
+
+        virtual bool isUnary() const;
     private:
         InstructionType _type;
-        std::string * _str;
+        bool _isUnary;
 };
+
+std::ostream &operator<<(std::ostream &, Instruction const &);
 
 #endif // ifndef INSTRUCTION_TEMPLATE_HPP

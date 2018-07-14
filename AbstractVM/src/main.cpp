@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 16:51:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 09:18:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 13:34:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <fstream>
 #include "Lexer.class.hpp"
 #include "Parser.class.hpp"
+#include "ProgEnv.class.hpp"
+#include "Instruction.class.hpp"
 
 static void usage() {
     std::cout << "Use this program properly..." << '\n';
@@ -91,7 +93,8 @@ int main(int argc, char * argv []) {
                 }
             }
             else {
-                std::cout << "Wouhou" << '\n';
+                ProgEnv progEnv(par.getInstructions());
+                progEnv.run();
             }
         }
     }

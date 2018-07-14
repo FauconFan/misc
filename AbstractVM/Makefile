@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/04 16:52:43 by jpriou            #+#    #+#              #
-#    Updated: 2018/07/14 09:53:24 by jpriou           ###   ########.fr        #
+#    Updated: 2018/07/14 12:59:25 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,11 @@ SRC = src/main.cpp \
 		src/exceptions/OverUnderFlowException.class.cpp \
 		src/exceptions/ZeroException.class.cpp \
 		src/exceptions/UnknownTypeException.class.cpp \
+		src/exceptions/AssertException.class.cpp \
+		src/exceptions/EndStackException.class.cpp \
 		src/prog/ProgEnv.class.cpp \
 		src/prog/instructions/Instruction.class.cpp \
+		src/prog/instructions/UnaryInstruction.class.cpp \
 		src/prog/operands/OperandFactory.class.cpp \
 		src/lexer_parser/Lexer.class.cpp \
 		src/lexer_parser/Parser.class.cpp \

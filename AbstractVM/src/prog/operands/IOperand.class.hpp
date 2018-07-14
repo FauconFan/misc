@@ -6,12 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 17:17:40 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/07 23:58:06 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 10:12:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IOPERAND_CLASS_HPP
 #define IOPERAND_CLASS_HPP
+
+#include <string>
 
 enum eOperandType {
     // Default Namespace

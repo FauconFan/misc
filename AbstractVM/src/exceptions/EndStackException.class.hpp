@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ZeroException.class.hpp                            :+:      :+:    :+:   */
+/*   EndStackException.class.hpp                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:10:04 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 11:29:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/07/14 11:35:19 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 
 #include "SuperException.class.hpp"
 
-#define DIV_MSG "Cannot divide by zero..."
-#define MOD_MSG "Cannot modulo by zero..."
+#define END_NO_STACK_MSG "The last instruction must be a exit instruction"
+#define NO_END_STACK_MSG "Found an exit instruction, before the last one"
 
-enum ZeroExceptionType {
-    DIV,
-    MOD,
+enum EndStackType {
+    END_NO_STACK,
+    NO_END_STACK,
 };
 
-class ZeroException : public SuperException {
+class EndStackException : public SuperException {
     public:
-        ZeroException (ZeroExceptionType);
-        ZeroException (ZeroException const &);
-        virtual ~ZeroException ();
+        EndStackException (EndStackType);
+        EndStackException (EndStackException const &);
+        virtual ~EndStackException ();
 
-        ZeroException &operator=(ZeroException const &);
+        EndStackException &operator=(EndStackException const &);
 };
 
 
