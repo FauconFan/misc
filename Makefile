@@ -7,14 +7,17 @@ CHALLENGES = $(shell ls -1 $(DIR_CHALLENGE))
 
 all: $(NAME)
 
-$(NAME):
-	cp $(DIR_CHALLENGE)/* .
+$(NAME): $(CHALLENGES)
 	dune build main.exe
 	cp _build/default/main.exe $(NAME)
 
+%.ml: $(DIR_CHALLENGE)/%.ml
+	cp $? $@
+	@echo "val test : unit -> unit" > $(@:.ml=.mli)
+
 clean:
 	dune clean
-	rm -f $(CHALLENGES)
+	rm -f $(CHALLENGES) $(CHALLENGES:.ml=.mli)
 
 fclean: clean
 	rm -f $(NAME)
