@@ -16,3 +16,5 @@ clean:
 	dune clean
 	rm -f $(CHALLENGES)
 	rm -f $(NAME)
+
+re: clean all
