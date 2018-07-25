@@ -15,6 +15,8 @@ $(NAME):
 clean:
 	dune clean
 	rm -f $(CHALLENGES)
+
+fclean: clean
 	rm -f $(NAME)
 
-re: clean all
+re: fclean all
