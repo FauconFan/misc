@@ -9,7 +9,8 @@ let test () =
 	let l2 = [2] in
 	let l3 = [1; 2; 3; 4; 5] in
 
-	TestManager.changeTitle "01 - last";
+	TestManager.startChallenge "01 - last";
 	TestManager.doTest "Empty List" (last l1 = None);
 	TestManager.doTest "Singleton" (last l2 = Some 2);
-	TestManager.doTest "Incr List" (last l3 = Some 5)
+	TestManager.doTest "Incr List" (last l3 = Some 5);
+	TestManager.endChallenge ()

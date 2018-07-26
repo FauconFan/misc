@@ -2,7 +2,7 @@
 let rec last_two li = match li with
 	| []				-> None
 	| [_]				-> None
-	| fs :: [snd]		-> Some (fs, snd)
+	| fs :: [snd]		-> Some (fs, snd);
 	| _ :: tail			-> last_two tail
 
 let test () =
@@ -13,10 +13,11 @@ let test () =
 	let l5 = [26; 46; 34; 28] in
 	let l6 = [26; 46; 34; 28; 27] in
 
-	TestManager.changeTitle "02 - last_two";
+	TestManager.startChallenge "02 - last_two";
 	TestManager.doTest "Empty List" (last_two l1 = None);
 	TestManager.doTest "Singleton" (last_two l2 = None);
 	TestManager.doTest "Incr List" (last_two l3 = Some (4, 5));
 	TestManager.doTest "Pair" (last_two l4 = Some (42, 38));
 	TestManager.doTest "Even List" (last_two l5 = Some (34, 28));
-	TestManager.doTest "Odd List" (last_two l6 = Some (28, 27))
+	TestManager.doTest "Odd List" (last_two l6 = Some (28, 27));
+	TestManager.endChallenge ()

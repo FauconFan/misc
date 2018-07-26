@@ -31,5 +31,6 @@ let test () =
 		| (b, n, exp, l) -> TestManager.doTest n ((decode l = exp) = b)
 	in
 
-	TestManager.changeTitle "12 - decode";
-	List.iter apply l
+	TestManager.startChallenge "12 - decode";
+	List.iter apply l;
+	TestManager.endChallenge ()

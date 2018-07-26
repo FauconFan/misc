@@ -14,5 +14,6 @@ let test () =
 		| (b, n, l, exp) -> TestManager.doTest n ((duplicate l = exp) = b)
 	in
 
-	TestManager.changeTitle "14 - duplicate";
-	List.iter apply l
+	TestManager.startChallenge "14 - duplicate";
+	List.iter apply l;
+	TestManager.endChallenge ()

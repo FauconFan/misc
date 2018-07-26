@@ -25,5 +25,6 @@ let test () =
 		| (b, n, arg, l, exp) -> TestManager.doTest n ((split l arg = exp) = b)
 	in
 
-	TestManager.changeTitle "17 - split";
-	List.iter apply l
+	TestManager.startChallenge "17 - split";
+	List.iter apply l;
+	TestManager.endChallenge ()

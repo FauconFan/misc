@@ -36,5 +36,6 @@ let test () =
 		| (b, n, l, exp) -> TestManager.doTest n ((encode l = exp) = b)
 	in
 
-	TestManager.changeTitle "11 - encode (modified)";
-	List.iter apply l
+	TestManager.startChallenge "11 - encode (modified)";
+	List.iter apply l;
+	TestManager.endChallenge ()

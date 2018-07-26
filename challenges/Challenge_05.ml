@@ -17,5 +17,6 @@ let test () =
 		TestManager.doTest n (rev l = List.rev l)
 	in
 
-	TestManager.changeTitle "05 - rev";
-	List.iter apply l
+	TestManager.startChallenge "05 - rev";
+	List.iter apply l;
+	TestManager.endChallenge ()

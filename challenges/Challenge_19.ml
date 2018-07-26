@@ -40,5 +40,6 @@ let test () =
 		| (b, n, arg1, l, exp) -> TestManager.doTest n ((rotate l arg1 = exp) = b)
 	in
 
-	TestManager.changeTitle "19 - rotate";
-	List.iter apply l
+	TestManager.startChallenge "19 - rotate";
+	List.iter apply l;
+	TestManager.endChallenge ()

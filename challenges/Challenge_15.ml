@@ -21,5 +21,6 @@ let test () =
 		| (b, n, arg, l, exp) -> TestManager.doTest n ((replicate l arg = exp) = b)
 	in
 
-	TestManager.changeTitle "15 - replicate";
-	List.iter apply l
+	TestManager.startChallenge "15 - replicate";
+	List.iter apply l;
+	TestManager.endChallenge ()

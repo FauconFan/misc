@@ -27,5 +27,6 @@ let test () =
 		| (b, n, l, exp) -> TestManager.doTest n ((flatten l = exp) = b)
 	in
 
-	TestManager.changeTitle "07 - flatten";
-	List.iter apply l
+	TestManager.startChallenge "07 - flatten";
+	List.iter apply l;
+	TestManager.endChallenge ()

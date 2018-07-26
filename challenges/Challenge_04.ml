@@ -15,5 +15,6 @@ let test () =
 		TestManager.doTest n (length l = List.length l)
 	in
 
-	TestManager.changeTitle "04 - length";
-	List.iter apply l
+	TestManager.startChallenge "04 - length";
+	List.iter apply l;
+	TestManager.endChallenge ()

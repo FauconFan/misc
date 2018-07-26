@@ -12,7 +12,7 @@ let test () =
 	let singleton = ["oui"] in
 	let five = ["zero"; "un"; "deux"; "trois"; "quatre"] in
 
-	TestManager.changeTitle "03 - at";
+	TestManager.startChallenge "03 - at";
 	TestManager.doTest "Empty List 0" (at 0 empty = None);
 	TestManager.doTest "Empty List 1" (at 1 empty = None);
 	TestManager.doTest "Empty List 2" (at 2 empty = None);
@@ -27,3 +27,4 @@ let test () =
 	TestManager.doTest "Five List 4" (at 4 five = Some "quatre");
 	TestManager.doTest "Five List 6" (at 6 five = None);
 	TestManager.doTest "Five List -2" (at (-2) five = None);
+	TestManager.endChallenge ()

@@ -37,5 +37,6 @@ let test () =
 		| (b, n, l) -> TestManager.doTest n (is_palindrome l = b)
 	in
 
-	TestManager.changeTitle "06 - is_palindrome";
-	List.iter apply l
+	TestManager.startChallenge "06 - is_palindrome";
+	List.iter apply l;
+	TestManager.endChallenge ()

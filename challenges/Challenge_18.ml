@@ -27,5 +27,6 @@ let test () =
 		| (b, n, arg1, arg2, l, exp) -> TestManager.doTest n ((slice l arg1 arg2 = exp) = b)
 	in
 
-	TestManager.changeTitle "18 - slice";
-	List.iter apply l
+	TestManager.startChallenge "18 - slice";
+	List.iter apply l;
+	TestManager.endChallenge ()

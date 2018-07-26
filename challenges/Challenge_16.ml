@@ -21,5 +21,6 @@ let test () =
 		| (b, n, arg, l, exp) -> TestManager.doTest n ((drop l arg = exp) = b)
 	in
 
-	TestManager.changeTitle "16 - drop";
-	List.iter apply l
+	TestManager.startChallenge "16 - drop";
+	List.iter apply l;
+	TestManager.endChallenge ()

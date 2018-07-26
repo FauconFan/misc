@@ -32,5 +32,6 @@ let test () =
 		| (b, n, l, exp) -> TestManager.doTest n ((compress l = exp) = b)
 	in
 
-	TestManager.changeTitle "08 - compress";
-	List.iter apply l
+	TestManager.startChallenge "08 - compress";
+	List.iter apply l;
+	TestManager.endChallenge ()

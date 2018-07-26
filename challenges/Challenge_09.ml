@@ -28,5 +28,6 @@ let test () =
 		| (b, n, l, exp) -> TestManager.doTest n ((pack l = exp) = b)
 	in
 
-	TestManager.changeTitle "09 - pack";
-	List.iter apply l
+	TestManager.startChallenge "09 - pack";
+	List.iter apply l;
+	TestManager.endChallenge ()
