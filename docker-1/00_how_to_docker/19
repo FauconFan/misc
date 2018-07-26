@@ -1,4 +1,3 @@
-mkdir -p ~/Abathur
 cat > app.py << EOF
 from flask import Flask
 import os
@@ -14,16 +13,17 @@ if __name__ == "__main__":
     app.run(host='0.0.0.0', port=3000)
 EOF
 
-docker-machine ssh Char "mkdir -p Abathur"
+docker-machine ssh Char "mkdir -p /home/docker/Abathur"
 docker-machine scp app.py Char:/home/docker/Abathur/app.py
+
+rm -f app.py
 
 docker run -d -t \
     --name Abathur \
-    --volume ~/Abathur:/root \
-    -p 3000:3000 \
+	-p 3000:3000 \
+    --volume /home/docker/Abathur:/root \
     python:2-slim
 
 docker exec Abathur pip install flask
 
-docker exec Abathur \
-        python2 /root/app.py
+docker exec -d Abathur python2 /root/app.py
