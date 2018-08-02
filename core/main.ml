@@ -22,3 +22,5 @@ let () =
 	Challenge_20.test ();
 	Challenge_21.test ();
 	Challenge_22.test ();
+	Challenge_23.test ();
+	Challenge_24.test ();
