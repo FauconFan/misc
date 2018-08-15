@@ -6,36 +6,46 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 15:29:11 by jpriou            #+#    #+#             */
-/*   Updated: 2018/08/12 15:38:30 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/08/15 11:38:03 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-static t_cli_builder_parser		*build_msg_digest_cli(char *helper)
+static t_cmd_builder_parser_n	*build_msg_digest_cmd(char *title, char *cmd)
 {
-	t_cli_builder_parser	*res;
+	t_cli_builder_parser	*cli;
+	t_cmd_builder_parser_n	*res;
+	char					*helper;
 
-	res = ft_create_cli_builder(helper);
-	ft_cli_add_u(res,
+	ft_sprintf(&helper, HELP_DGT, title);
+	cli = ft_create_cli_builder(helper);
+	ft_strdel(&helper);
+	ft_cli_add_u(cli,
 				ft_create_s_opt('p', HELP_OPT_P),
-				ft_create_bool_arg("stdin", FALSE));
-	ft_cli_add_u(res,
+				ft_create_bool_arg(HELP_STDIN_TAG, FALSE));
+	ft_cli_add_u(cli,
 				ft_create_s_opt('q', HELP_OPT_Q),
-				ft_create_bool_arg("quiet", FALSE));
-	ft_cli_add_u(res,
+				ft_create_bool_arg(HELP_QUIET_TAG, FALSE));
+	ft_cli_add_u(cli,
 				ft_create_s_opt('r', HELP_OPT_R),
-				ft_create_bool_arg("reverse", FALSE));
-	ft_cli_add_u(res,
+				ft_create_bool_arg(HELP_REV_TAG, FALSE));
+	ft_cli_add_u(cli,
 				ft_create_s_opt('s', HELP_OPT_S),
-				ft_create_array_arg("samples"));
+				ft_create_array_arg(HELP_SAM_TAG));
+	res = ft_create_cmd_builder_parser_node_cli(cmd, &cli);
 	return res;
 }
 
-t_cmd_builder_parser_n			*build_md5_cmd()
+void							ft_ssl_add_cmds(t_cmd_builder_parser *bd_parser)
 {
-	t_cli_builder_parser		*cli;
+	size_t		i;
 
-	cli = build_msg_digest_cli(HELP_MD5);
-	return ft_create_cmd_builder_parser_node_cli("md5", &cli);
+	i = 0;
+	while (i < g_cmds_dgst_size)
+	{
+		ft_add_cmd_u(bd_parser,
+			build_msg_digest_cmd(g_cmds_dgst[i].help_title, g_cmds_dgst[i].cmd));
+		i++;
+	}
 }

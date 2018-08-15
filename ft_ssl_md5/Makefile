@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2018/08/12 15:29:02 by jpriou           ###   ########.fr        #
+#    Updated: 2018/08/15 10:57:02 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LIBS = -L $(LIBFT_FOLDER) -l ft
 SRC_PROJECT = \
 				main.c \
 				cmds.c \
+				t_dgst_cmd.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC_PROJECT))
 
