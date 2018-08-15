@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2018/08/15 10:57:02 by jpriou           ###   ########.fr        #
+#    Updated: 2018/08/15 16:42:34 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_PROJECT = \
 				main.c \
 				cmds.c \
 				t_dgst_cmd.c \
+				do_dgst.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC_PROJECT))
 

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2018/08/15 12:43:54 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/08/15 16:41:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,11 @@ extern t_dgst_config	g_cmds_dgst[];
 
 void					ft_ssl_add_cmds(t_cmd_builder_parser *bd_parser);
 
+t_bool					is_dgst_cmd(char *cmd);
+
 t_dgst_cmd				*ft_ssl_dgst_init(t_cmd_parser *parser);
 void					ft_ssl_dgst_free(t_dgst_cmd **cmd);
+
+void					do_dgst(t_cmd_parser *parser);
 
 #endif

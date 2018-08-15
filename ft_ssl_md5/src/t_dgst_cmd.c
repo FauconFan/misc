@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 17:58:02 by jpriou            #+#    #+#             */
-/*   Updated: 2018/08/15 12:01:06 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/08/15 16:40:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ static t_dgst_config *get_dgst_config(t_cmd_parser *parser)
 		i++;
 	}
 	return NULL;
+}
+
+t_bool				is_dgst_cmd(char *cmd)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < g_cmds_dgst_size)
+	{
+		if (ft_strequ(cmd, g_cmds_dgst[i].cmd))
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
 }
 
 t_dgst_cmd			*ft_ssl_dgst_init(t_cmd_parser *parser)
