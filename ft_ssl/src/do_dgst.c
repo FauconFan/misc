@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 16:38:31 by jpriou            #+#    #+#             */
-/*   Updated: 2018/08/15 16:42:54 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/08/16 09:09:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,13 @@ static void			print_result(
 
 static void			do_file(t_dgst_cmd *cmd, char *file_path)
 {
-	int				fd;
-	struct stat		stat_actu;
-	int				ret;
+	char			*errno_str;
 	char			*content_file;
 	char			*hashed;
 
-	ret = stat(file_path, &stat_actu);
-	if (ret == 0)
+	content_file = ft_get_all_content(file_path, &errno_str);
+	if (errno_str == NULL)
 	{
-		fd = open(file_path, O_RDONLY);
-		content_file = ft_strnew(stat_actu.st_size);
-		read(fd, content_file, stat_actu.st_size);
 		hashed = cmd->hash(content_file);
 		print_result(cmd, file_path, hashed, TRUE);
 		ft_strdel(&content_file);
@@ -57,7 +52,7 @@ static void			do_file(t_dgst_cmd *cmd, char *file_path)
 	}
 	else
 	{
-		ft_printf("%s: %s\n", file_path, strerror(errno));
+		ft_printf("%s: %s\n", file_path, errno_str);
 	}
 }
 
@@ -72,29 +67,24 @@ static void			do_sample(t_dgst_cmd *cmd, char *sample)
 
 static void			do_stdin(t_dgst_cmd *cmd)
 {
-	t_slist		*lst;
-	char		buf[2];
-	char		**tab;
-	char		*hashed;
+	char		*errno_str;
 	char		*content;
+	char		*hashed;
 
-	lst = ft_slist_new(free);
-	ft_slist_add_cpy(lst, MAKE_COPY_PTR(ft_strdup));
-	buf[1] = 0;
-	while (read(0, buf, 1))
+	content = ft_get_all_content_fd_nostat(0, &errno_str);
+	if (errno_str == NULL)
 	{
-		ft_slist_push_cp(lst, buf);
+		hashed = cmd->hash(content);
+		if (cmd->stdin)
+			ft_putstr(content);
+		ft_putendl(hashed);
+		ft_strdel(&content);
+		ft_strdel(&hashed);
 	}
-	ft_slist_rev(lst);
-	tab = (char **)ft_slist_tovtab(&lst);
-	content = ft_stab_join(tab, "");
-	ft_stab_free(&tab);
-	hashed = cmd->hash(content);
-	if (cmd->stdin)
-		ft_putstr(content);
-	ft_putendl(hashed);
-	ft_strdel(&content);
-	ft_strdel(&hashed);
+	else
+	{
+		ft_printf("(stdin): %s\n", errno_str);
+	}
 }
 
 void				do_dgst(t_cmd_parser *parser)
