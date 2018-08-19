@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 16:38:31 by jpriou            #+#    #+#             */
-/*   Updated: 2018/08/16 09:09:13 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/08/19 16:04:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void			do_file(t_dgst_cmd *cmd, char *file_path)
 	char			*content_file;
 	char			*hashed;
 
-	content_file = ft_get_all_content(file_path, &errno_str);
+	content_file = ft_get_content_file(file_path, &errno_str);
 	if (errno_str == NULL)
 	{
 		hashed = cmd->hash(content_file);
@@ -71,7 +71,7 @@ static void			do_stdin(t_dgst_cmd *cmd)
 	char		*content;
 	char		*hashed;
 
-	content = ft_get_all_content_fd_nostat(0, &errno_str);
+	content = ft_get_content_file_fd_nostat(0, &errno_str);
 	if (errno_str == NULL)
 	{
 		hashed = cmd->hash(content);

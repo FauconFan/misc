@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2018/08/15 16:41:48 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/08/19 17:41:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,28 @@
 #define HELP_OPT_R		"reverse the format of the output"
 #define HELP_OPT_S		"print the sum of the given string"
 
+#define HELP_OPT_DEC	"Decode mode"
+#define HELP_OPT_ENC	"Encode mode (default)"
+#define HELP_OPT_IN		"Input file (default:stdin)"
+#define HELP_OPT_OUT	"Output file (default:stdout)"
+
 #define HELP_STDIN_TAG	"stdin_tag"
 #define HELP_QUIET_TAG	"quiet_tag"
 #define HELP_REV_TAG	"reverse_tag"
 #define HELP_SAM_TAG	"samples_tag"
 
+#define HELP_ENC_TAG	"encode_tag"
+#define HELP_DEC_TAG	"decode_tag"
+#define HELP_IN_TAG		"input_file_tag"
+#define HELP_OUT_TAG	"output_file_tag"
+
 #define HELP_DGT		"Digest messages with %s algorithm."
+#define HELP_BASE64		"Base64 encode or decode."
 
 #define HELP_PROG		"Program tool to crypt, hash or decrypt contents"
 
+#define CMD_BASE64		"base64"
+#define CMD_BASE64_URL	"base64_url"
 #define CMD_MD5			"md5"
 #define CMD_MD4			"md4"
 #define CMD_SHA1		"sha1"
@@ -75,5 +88,9 @@ t_dgst_cmd				*ft_ssl_dgst_init(t_cmd_parser *parser);
 void					ft_ssl_dgst_free(t_dgst_cmd **cmd);
 
 void					do_dgst(t_cmd_parser *parser);
+void					do_base(
+								t_cmd_parser *parser,
+								char *(*f)(uint8_t *, size_t),
+								uint8_t *(*unf)(char *, size_t *));
 
 #endif
