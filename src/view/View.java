@@ -19,6 +19,7 @@ import src.view.scene.Menus;
  */
 public class View
 {
+	public static final boolean enableMusible = false;
 	public final Controller con;
 	private Scene scene;
 	public final Stage stage;
@@ -26,18 +27,21 @@ public class View
 
 	public View(Stage stage, Controller con)
 	{
-		this.con   = con;
-		this.scene = new Menus(this);
-		this.stage = stage;
+		this.con         = con;
+		this.scene       = new Menus(this);
+		this.stage       = stage;
+		this.mediaPlayer = null;
 
 		stage.setTitle("Laby");
 
-
-		Media sound = new Media(new File("assets/music/Bg1_BXDN_Return.mp3").toURI().toString());
-		mediaPlayer = new MediaPlayer(sound);
-		mediaPlayer.setOnEndOfMedia(()->{ mediaPlayer.seek(Duration.ZERO); });
-		mediaPlayer.setVolume(0.6);
-		mediaPlayer.play();
+		if (enableMusible)
+		{
+			Media sound = new Media(new File("assets/music/Bg1_BXDN_Return.mp3").toURI().toString());
+			mediaPlayer = new MediaPlayer(sound);
+			mediaPlayer.setOnEndOfMedia(()->{ mediaPlayer.seek(Duration.ZERO); });
+			mediaPlayer.setVolume(0.6);
+			mediaPlayer.play();
+		}
 
 		stage.setScene(scene);
 		stage.show();
@@ -62,13 +66,16 @@ public class View
 
 	public void startStopMusic()
 	{
-		if (mediaPlayer.getStatus() == Status.PAUSED)
+		if (enableMusible)
 		{
-			mediaPlayer.play();
-		}
-		else
-		{
-			mediaPlayer.pause();
+			if (mediaPlayer.getStatus() == Status.PAUSED)
+			{
+				mediaPlayer.play();
+			}
+			else
+			{
+				mediaPlayer.pause();
+			}
 		}
 	}
 }
