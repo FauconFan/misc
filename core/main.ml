@@ -43,3 +43,8 @@ let () =
 	Challenge_48.test ();
 	Challenge_49.test ();
 	Challenge_50.test ();
+	Challenge_55.test ();
+	Challenge_56.test ();
+	Challenge_57.test ();
+	Challenge_58.test ();
+	Challenge_59.test ();
