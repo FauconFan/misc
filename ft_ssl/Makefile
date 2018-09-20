@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2018/08/19 16:41:50 by jpriou           ###   ########.fr        #
+#    Updated: 2018/09/20 12:14:08 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,10 @@ GWW = gcc -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
 LIBS = -L $(LIBFT_FOLDER) -l ft
 
 SRC_PROJECT = \
+				parser/base_cmd.c \
+				parser/dgst_cmd.c \
+				parser/cmds.c \
 				main.c \
-				cmds.c \
 				t_dgst_cmd.c \
 				do_dgst.c \
 				do_base.c \

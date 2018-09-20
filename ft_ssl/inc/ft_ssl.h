@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2018/08/19 17:41:12 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/09/20 22:59:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct			s_dgst_config
 {
 	char				*help_title;
 	char				*cmd;
-	char				*(*hash)(char *);
+	char				*(*hash)(uint8_t *, size_t);
 	char				*name;
 }						t_dgst_config;
 
@@ -71,7 +71,7 @@ typedef struct			s_dgst_cmd
 	t_bool				quiet;
 	t_bool				reverse;
 	char				**samples;
-	char				*(*hash)(char *);
+	char				*(*hash)(uint8_t *, size_t);
 	int					nb_files;
 	char				**file_names;
 	char				*name;
@@ -80,17 +80,23 @@ typedef struct			s_dgst_cmd
 extern size_t			g_cmds_dgst_size;
 extern t_dgst_config	g_cmds_dgst[];
 
+/*
+**	add cmds to parser
+*/
+
+void					ft_ssl_add_base_cmd(t_cmd_builder_parser *bd_parser);
+void					ft_ssl_add_dgst_cmd(t_cmd_builder_parser *bd_parser);
+void					ft_ssl_add_cmds(t_cmd_builder_parser *bd_parser);
+
 void					ft_ssl_add_cmds(t_cmd_builder_parser *bd_parser);
 
 t_bool					is_dgst_cmd(char *cmd);
+t_bool					is_base_cmd(char *cmd);
 
 t_dgst_cmd				*ft_ssl_dgst_init(t_cmd_parser *parser);
 void					ft_ssl_dgst_free(t_dgst_cmd **cmd);
 
 void					do_dgst(t_cmd_parser *parser);
-void					do_base(
-								t_cmd_parser *parser,
-								char *(*f)(uint8_t *, size_t),
-								uint8_t *(*unf)(char *, size_t *));
+void					do_base(t_cmd_parser *parser, char *cmd);
 
 #endif

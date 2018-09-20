@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:24:31 by jpriou            #+#    #+#             */
-/*   Updated: 2018/08/19 17:42:18 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/09/20 22:58:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ int					main(int argc, char **argv) {
 	{
 		if (is_dgst_cmd(parser->list_commands[0]))
 			do_dgst(parser);
-		else if (ft_strequ(parser->list_commands[0], CMD_BASE64))
-			do_base(parser, ft_base64, ft_unbase64);
-		else if (ft_strequ(parser->list_commands[0], CMD_BASE64_URL))
-			do_base(parser, ft_base64_url, ft_unbase64_url);
+		else if (is_base_cmd(parser->list_commands[0]))
+			do_base(parser, parser->list_commands[0]);
 	}
 	ft_free_cmd_parser(&parser);
     return 0;

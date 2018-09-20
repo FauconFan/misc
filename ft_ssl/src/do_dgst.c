@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 16:38:31 by jpriou            #+#    #+#             */
-/*   Updated: 2018/08/19 16:04:22 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/09/20 09:14:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ static void			do_file(t_dgst_cmd *cmd, char *file_path)
 	char			*errno_str;
 	char			*content_file;
 	char			*hashed;
+	size_t			len_file;
 
-	content_file = ft_get_content_file(file_path, &errno_str);
+	content_file = ft_get_content_file(file_path, &len_file, &errno_str);
 	if (errno_str == NULL)
 	{
-		hashed = cmd->hash(content_file);
+		hashed = cmd->hash((uint8_t *)content_file, len_file);
 		print_result(cmd, file_path, hashed, TRUE);
 		ft_strdel(&content_file);
 		ft_strdel(&hashed);
@@ -60,7 +61,7 @@ static void			do_sample(t_dgst_cmd *cmd, char *sample)
 {
 	char	*hashed;
 
-	hashed = cmd->hash(sample);
+	hashed = cmd->hash((uint8_t *)sample, ft_strlen(sample));
 	print_result(cmd, sample, hashed, FALSE);
 	ft_strdel(&hashed);
 }
@@ -70,11 +71,12 @@ static void			do_stdin(t_dgst_cmd *cmd)
 	char		*errno_str;
 	char		*content;
 	char		*hashed;
+	size_t		len_file;
 
-	content = ft_get_content_file_fd_nostat(0, &errno_str);
+	content = ft_get_content_file_fd_nostat(0, &len_file, &errno_str);
 	if (errno_str == NULL)
 	{
-		hashed = cmd->hash(content);
+		hashed = cmd->hash((uint8_t *)content, len_file);
 		if (cmd->stdin)
 			ft_putstr(content);
 		ft_putendl(hashed);
