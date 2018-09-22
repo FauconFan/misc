@@ -34,7 +34,6 @@ jobs:
       env:
          - NAME="Linux"
     - os: osx
-      install: brew install jflex
       stage: Base Compilation
       env: NAME="Mac OS"
     - os: linux
@@ -56,7 +55,6 @@ jobs:
       env :
          - NAME="Basic test"
     - os: osx
-      install: brew install jflex
       stage: Unit Test
       script : make basic_test
       env :
@@ -80,7 +78,6 @@ jobs:
       env :
          - NAME="Sys test"
     - os: osx
-      install: brew install jflex
       stage: Unit Test
       script : make sys_test
       env :
@@ -104,7 +101,6 @@ jobs:
       env :
          - NAME="Bonus test"
     - os: osx
-      install: brew install jflex
       stage: Unit Test
       script : make bonus_test
       env :
@@ -128,7 +124,6 @@ jobs:
       env :
          - NAME="Full Build All"
     - os: osx
-      install: brew install jflex
       stage: Final
       script : make test
       env :
