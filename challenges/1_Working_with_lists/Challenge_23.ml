@@ -18,9 +18,14 @@ let rec rand_select l n =
 
 
 let test () =
-	let l1 = ("3 on 30", 3, List.init 30 (fun i -> i - 3)) in
-	let l2 = ("3 on 60", 3, List.init 60 (fun i -> i * 3)) in
-	let l3 = ("3 on 10", 3, List.init 10 (fun i -> i + 3)) in
+  let list_init len f =
+    let rec core i ma f =
+      if i >= ma then []
+      else (f i) :: (core (i + 1) ma f) in
+    core 0 len f in
+	let l1 = ("3 on 30", 3, list_init 30 (fun i -> i - 3)) in
+	let l2 = ("3 on 60", 3, list_init 60 (fun i -> i * 3)) in
+	let l3 = ("3 on 10", 3, list_init 10 (fun i -> i + 3)) in
 	let l = [l1; l2; l3] in
 	let apply a = match a with
 		| (n, arg1, l) ->

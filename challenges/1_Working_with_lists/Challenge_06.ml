@@ -24,13 +24,18 @@ let is_palindrome li =
 	(fst final) = (snd final)
 
 let test () =
+  let list_init len f =
+    let rec core i ma f =
+      if i >= ma then []
+      else (f i) :: (core (i + 1) ma f) in
+    core 0 len f in
 	let f n = (fun i -> if i < n / 2 then i else n - 1 - i) in
 	let l1 = (true, "Empty", []) in
 	let l2 = (true, "Singleton", [2]) in
 	let l3 = (true, "Pair", [3; 3]) in
 	let l4 = (false, "FailPair", [4; 5]) in
-	let l5 = (true, "42", (List.init 42 (f 42))) in
-	let l6 = (true, "42000", (List.init 42000 (f 42000))) in
+	let l5 = (true, "42", (list_init 42 (f 42))) in
+	let l6 = (true, "42000", (list_init 42000 (f 42000))) in
 	let l7 = (false, "CustomFail", [1; 2; 5; 6; 6; 7; 2; 1]) in
 	let l = [l1; l2; l3; l4; l5; l6; l7] in
 	let apply a = match a with

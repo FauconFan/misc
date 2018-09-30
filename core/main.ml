@@ -54,3 +54,5 @@ let () =
   Challenge_62.test ();
   Challenge_62A.test ();
   Challenge_63.test ();
+  Challenge_64.test ();
+  Challenge_65.test ();
