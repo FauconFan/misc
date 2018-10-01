@@ -3,9 +3,9 @@
 # Organisation
 
 * Quelle langage de programmation ?
-  ** Ocaml
-  ** Python
-  ** C++
+  - Ocaml
+  - Python
+  - C++
 * Comment on se répartit les tâches ?
 
 # Differentes tâches
