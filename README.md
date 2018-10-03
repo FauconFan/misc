@@ -2,21 +2,36 @@
 
 # Organisation
 
-* Quelle langage de programmation ?
-  - Ocaml
-  - Python
-  - C++
-* Comment on se répartit les tâches ?
+* Quelle langage de programmation : Python
+
+4 fichiers:
+main.py
+parser.py
+is_soluble.py
+solve.py
 
 # Differentes tâches
 
+ - [ ] Initialisation projet
+ - [ ] Parser / Lexer
+ - [ ] Est soluble ?
+ - [ ] Core
+
 ## Représentation d'un taquin
 
-* taille + liste de listes d'entiers ?
-* opérations usuelles sur les taquins.
+2 Dictionnaires:
 
-## Core
+### Le taquin
 
-* Lexer / Parser : Taquin input
-* Est-ce qu'un taquin est solvable ?
-* Algorithme A\* sur un graphe valué.
+ 'taille' : N
+ 'contenu' : liste de liste d'entiers
+
+0 c'est le vide
+1 à (N * N - 1) les differentes cases.
+
+### L'état (state)
+
+ 'taquin' : UP
+ 'score' : int
+ 'taille_history' : int
+ 'liste_history' : liste de mouvements
