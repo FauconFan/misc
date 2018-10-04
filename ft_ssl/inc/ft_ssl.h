@@ -6,15 +6,17 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2018/09/20 22:59:05 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/03 18:37:01 by pepe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SSL_COMMAND_H
 #define FT_SSL_COMMAND_H
 
+#include <linux/random.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/ioctl.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
@@ -98,5 +100,8 @@ void					ft_ssl_dgst_free(t_dgst_cmd **cmd);
 
 void					do_dgst(t_cmd_parser *parser);
 void					do_base(t_cmd_parser *parser, char *cmd);
+
+char					*custom_pbkdf2(char *pwd);
+int						getrandom(char *buffer, size_t len);
 
 #endif
