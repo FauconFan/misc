@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import sys
 
 def error_taquin_not_valid():
 	print("Taquin non valide")
