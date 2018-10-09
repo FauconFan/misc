@@ -23,12 +23,13 @@ def get_taquin(lines, taquin):
 		hauteur += 1
 	if hauteur != taquin['size']:
 		error_taquin_not_valid()
+	return taquin
 
 
 
 def get_size(lines, taquin):
 	#Recuperation de la taille du taquin
-	
+
 	for i in lines:
 		if i.isdigit():
 			tmp = int(i)
@@ -60,5 +61,4 @@ def parse(filename):
 		sys.exit(1)
 	lines = clean_lines(lines)
 	taquin['size'] = get_size(lines, taquin)
-	get_taquin(lines, taquin)
-
+	return get_taquin(lines, taquin)
