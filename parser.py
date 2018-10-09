@@ -16,7 +16,7 @@ def get_taquin(lines, taquin):
 		for k,v in enumerate(i.split()):
 			if not v.isdigit() or int(v) >= taquin['size'] * taquin['size'] or int(v) < 0:
 				error_taquin_not_valid()
-			taquin[(k, hauteur)] = v
+			taquin[(hauteur, k)] = int(v)
 			if v in list_number:
 				error_taquin_not_valid()
 			list_number.append(v)
