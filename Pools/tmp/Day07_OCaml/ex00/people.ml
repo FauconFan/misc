@@ -6,7 +6,7 @@
 (*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2018/07/23 14:21:04 by jpriou            #+#    #+#             *)
-(*   Updated: 2018/07/23 15:07:10 by jpriou           ###   ########.fr       *)
+(*   Updated: 2018/10/10 09:24:38 by pepe             ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
@@ -15,7 +15,7 @@ class people (name:string) =
 		val name = name
 		val mutable hp = 100
 
-		initializer print_endline ("A people named " ^ name ^ " is just created")
+		initializer print_endline ("A people named " ^ name ^ " has born")
 
 		method to_string = ("name: " ^ name ^ ", hp: " ^ (string_of_int hp))
 		method talk = print_endline ("I’m " ^ name ^ "! Do you know the Doctor?")
