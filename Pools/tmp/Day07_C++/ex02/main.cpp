@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 10:43:35 by jpriou            #+#    #+#             */
-/*   Updated: 2018/06/12 11:33:50 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/10 09:14:19 by pepe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 
 #include "Array.template.hpp"
 
-int main() {
-    std::function<void (std::string)> displayString =
-      [](std::string s) {
-          std::cout << s;
-      };
+void displayString(std::string str)
+{
+	std::cout << str;
+}
 
-    std::function<std::string(std::string, bool)> addCommaWN =
-      [](std::string s, bool isntLast) {
-          if (isntLast) {
-              return s + ",";
-          }
-          return s;
-      };
+std::string addCommaNL(std::string str, bool not_last)
+{
+	if (not_last)
+		return str + ",";
+	return str;
+}
+
+int main() {
 
     Array<std::string> i1 = Array<std::string>(2);
 
@@ -37,9 +37,12 @@ int main() {
     i1.iter(displayString);
     std::cout << '\n';
 
-    i1.applyNotLast(addCommaWN);
+    i1.applyNotLast(addCommaNL);
 
     i1.iter(displayString);
     std::cout << '\n';
+
+	int *a = new int();
+	std::cout << *a << '\n';
     return 0;
 }

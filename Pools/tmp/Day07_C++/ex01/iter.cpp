@@ -6,13 +6,12 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 10:21:50 by jpriou            #+#    #+#             */
-/*   Updated: 2018/06/12 10:40:00 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/10 09:08:11 by pepe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
-#include <functional>
 
 template <typename T>
 void iter(T array[], size_t len, void (* f)(T)) {
@@ -22,7 +21,7 @@ void iter(T array[], size_t len, void (* f)(T)) {
 }
 
 template <typename T>
-void apply(T array[], size_t len, std::function<T(T)> f) {
+void apply(T array[], size_t len, T (* f)(T)) {
     for (size_t i = 0; i < len; i++) {
         array[i] = f(array[i]);
     }
@@ -33,17 +32,12 @@ void display(T elem) {
     std::cout << elem << '\n';
 }
 
+int addTwo(int i) {return i + 2;}
+std::string addPoint(std::string str) {return str + ".";}
+
 int main() {
     std::string li[] = {"Hello", "World", "!"};
     int digits[]     = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-
-    std::function<int (int)> addTwo = [](int i) {
-          return i + 2;
-      };
-
-    std::function<std::string(std::string)> addPoint = [](std::string s) {
-          return s + ".";
-      };
 
     // String manipulation
 

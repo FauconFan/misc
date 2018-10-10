@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 10:47:09 by jpriou            #+#    #+#             */
-/*   Updated: 2018/06/16 11:21:46 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/10 09:16:23 by pepe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define ARRAY_TEMPLATE_HPP
 
 #include <stdexcept>
-#include <functional>
 
 template <typename T>
 class Array {
@@ -27,6 +26,9 @@ class Array {
         Array (size_t size) {
             this->_data = new T[size];
             this->_len  = size;
+			for (size_t i = 0; i < size; i++) {
+				this->_data[i] = T();
+			}
         }
 
         Array (Array const & copy) {
@@ -64,13 +66,13 @@ class Array {
             return this->_data[idx];
         }
 
-        void iter(std::function<void (T)> f) const {
+        void iter(void (* f)(T)) const {
             for (size_t i = 0; i < this->_len; i++) {
                 f(this->_data[i]);
             }
         }
 
-        void applyNotLast(std::function<T(T, bool)> f) const {
+        void applyNotLast(T (* f)(T, bool)) const {
             for (size_t i = 0; i < this->_len - 1; i++) {
                 this->_data[i] = f(this->_data[i], true);
             }
