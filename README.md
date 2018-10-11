@@ -12,9 +12,9 @@ solve.py
 
 # Differentes tâches
 
- - [ ] Initialisation projet
- - [ ] Parser / Lexer
- - [ ] Est soluble ?
+ - [x] Initialisation projet
+ - [x] Parser / Lexer
+ - [x] Est soluble ?
  - [ ] Core
 
 ## Représentation d'un taquin
@@ -24,10 +24,9 @@ solve.py
 ### Le taquin
 
  'taille' : N
- 'contenu' : liste de liste d'entiers
+ '(x, y)' : les coordonnées de notre taquin, 0 <= x < N, 0 <= y < N, avec une valeur compris entre 0 et N * N - 1
 
-0 c'est le vide
-1 à (N * N - 1) les differentes cases.
+0 désigne la case vide
 
 ### L'état (state)
 
