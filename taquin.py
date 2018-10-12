@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import math
+import hashlib
 from enum import Enum
 
 class Movement(Enum):
@@ -18,6 +19,7 @@ class Taquin(object):
 		# (x, y) -> value between 1 and size * size - 1
 		self.dico = dico
 
+
 	def __str__(self):
 		s = ""
 		for i in range(self.size):
@@ -25,6 +27,14 @@ class Taquin(object):
 				s += str(self.dico[(i, j)]) + " "
 			s += "\n"
 		return s
+
+	def hash(self):
+		s = ""
+
+		for i in range(self.size):
+			for j in range(self.size):
+				s += str(self.dico[(i, j)])
+		return hashlib.sha256(s.encode()).hexdigest()
 
 	def clone(self):
 		ret = Taquin(self.size, self.dico.copy())
