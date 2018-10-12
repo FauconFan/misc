@@ -91,5 +91,22 @@ class Taquin(object):
 		score = math.sqrt(score)
 		return score
 
+	def score_manhattan(self):
+		score = 0
+		for i in range(self.size):
+			for j in range(self.size):
+				real_x, real_y = self.get_right_positions(self.dico[(i, j)])
+				score += abs(real_x - i) + abs(real_y - j)
+		return score
+
+	def my_score(self):
+		score = 0
+		for i in range(self.size):
+			for j in range(self.size):
+				real_x, real_y = self.get_right_positions(self.dico[(i, j)])
+				coeff = min(i + 1, j + 1)
+				score += coeff * (abs(real_x - i) + abs(real_y - j))
+		return score
+
 	def score(self):
-		return self.score_euclidian()
+		return self.my_score()

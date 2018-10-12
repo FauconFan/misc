@@ -22,10 +22,10 @@ def solver(taquin):
 	iterator = 0;
 
 	while is_running:
-		print("size states : " + str(len(list_states)))
+		# print("size states : " + str(len(list_states)))
 		state_actu = list_states.pop(0)
-		print(state_actu)
-		print(state_actu.taquin.hash())
+		# print(state_actu)
+		# print(state_actu.taquin.hash())
 		# print(hash_states)
 		taq_actu = state_actu.taquin
 		if state_actu.score == 0:
@@ -35,12 +35,14 @@ def solver(taquin):
 			moves = taq_actu.get_possible_moves()
 			smart_insert(list_states, moves, hash_states, state_actu)
 
-		print("turn " + str(iterator))
+		if (iterator % 1000 == 0):
+			print("turn " + str(iterator))
 		# for s in list_states:
 		# 	print(s)
 		# if iterator >= 2:
 		# 	is_running = False
 		iterator += 1
-		input()
+		# input()
 
+	print(iterator)
 	print(result)
