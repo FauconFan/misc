@@ -1,5 +1,15 @@
 #!/usr/bin/python3
 
+import math
+from enum import Enum, auto
+
+class Movement(Enum):
+	UP = auto()
+	RIGHT = auto()
+	DOWN = auto()
+	LEFT = auto()
+		
+
 class Taquin(object):
 	"""docstring for Taquin"""
 	def __init__(self, size, dico):
@@ -39,3 +49,37 @@ class Taquin(object):
 		tmp = self.dico[(x1, y1)]
 		self.dico[(x1, y1)] = self.dico[(x2, y2)]
 		self.dico[(x2, y2)] = tmp
+
+	def get_possible_moves(self):
+		x0, y0 = self.find_case(0)
+		ret = []
+		if x0 > 0:
+			cl = self.clone()
+			cl.swap_values(x0, y0, x0 - 1, y0)
+			ret.append((cl, Movement.UP))
+		if y0 > 0:
+			cl = self.clone()
+			cl.swap_values(x0, y0, x0, y0 - 1)
+			ret.append((cl, Movement.LEFT))
+		if x0 < self.size - 1:
+			cl = self.clone()
+			cl.swap_values(x0, y0, x0 + 1, y0)
+			ret.append((cl, Movement.DOWN))
+		if y0 < self.size - 1:
+			cl = self.clone()
+			cl.swap_values(x0, y0, x0, y0 + 1)
+			ret.append((cl, Movement.RIGHT))
+		return ret
+
+	""" Score avec la distance euclidienne """
+	def score_euclidian(self):
+		score = 0
+		for i in range(self.size):
+			for j in range(self.size):
+				real_x, real_y = self.get_right_positions(self.dico[(i, j)])
+				score += (real_x - i) ** 2 + (real_y - j) ** 2
+		score = math.sqrt(score)
+		return score
+
+	def score(self):
+		return self.score_euclidian()
