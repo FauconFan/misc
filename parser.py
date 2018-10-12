@@ -1,34 +1,36 @@
 #!/usr/bin/python3
 import sys
-
+import taquin
+		
 def error_taquin_not_valid():
-	print("Taquin non valide")
+	print("tmp non valide")
 	sys.exit(1)
 
-def get_taquin(lines, taquin):
-	#Recuperation du taquin
+def get_taquin(lines, tmp):
+	#Recuperation du tmp
 
 	hauteur = 0
 	list_number = []
+	dico = {}
 	for i in lines:
-		if len(i.split()) != taquin['size']:
+		if len(i.split()) != tmp['size']:
 			error_taquin_not_valid()
 		for k,v in enumerate(i.split()):
-			if not v.isdigit() or int(v) >= taquin['size'] * taquin['size'] or int(v) < 0:
+			if not v.isdigit() or int(v) >= tmp['size'] * tmp['size'] or int(v) < 0:
 				error_taquin_not_valid()
-			taquin[(hauteur, k)] = int(v)
+			dico[(hauteur, k)] = int(v)
 			if v in list_number:
 				error_taquin_not_valid()
 			list_number.append(v)
 		hauteur += 1
-	if hauteur != taquin['size']:
+	if hauteur != tmp['size']:
 		error_taquin_not_valid()
-	return taquin
+	return taquin.Taquin(tmp['size'], dico)
 
 
 
-def get_size(lines, taquin):
-	#Recuperation de la taille du taquin
+def get_size(lines, tmp):
+	#Recuperation de la taille du tmp
 
 	for i in lines:
 		if i.isdigit():
@@ -52,7 +54,7 @@ def clean_lines(lines):
 	return new_lines
 
 def parse(filename):
-	taquin = {}
+	tmp = {}
 	try:
 		with open(filename) as file:
 			lines = file.read().splitlines()
@@ -60,5 +62,5 @@ def parse(filename):
 		print('File not found')
 		sys.exit(1)
 	lines = clean_lines(lines)
-	taquin['size'] = get_size(lines, taquin)
-	return get_taquin(lines, taquin)
+	tmp['size'] = get_size(lines, tmp)
+	return get_taquin(lines, tmp)

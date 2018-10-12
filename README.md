@@ -34,3 +34,6 @@
  - 'score' : int
  - 'taille_history' : int
  - 'liste_history' : liste de mouvements
+
+
+### Taquin dans parser a changer to taille
