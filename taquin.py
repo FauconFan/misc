@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
 import math
-from enum import Enum, auto
+from enum import Enum
 
 class Movement(Enum):
-	UP = auto()
-	RIGHT = auto()
-	DOWN = auto()
-	LEFT = auto()
-		
+	UP = 1
+	RIGHT = 2
+	DOWN = 3
+	LEFT = 4
+
 
 class Taquin(object):
 	"""docstring for Taquin"""

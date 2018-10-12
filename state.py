@@ -10,3 +10,13 @@ class State(object):
 
 	# def clone(self):
 	# 	return State(self.taquin.clone(), self.taille_history, self.liste_history.copy())
+
+	def __lt__(self, other):
+		return self.score < other.score
+
+	def __str__(self):
+		s = ""
+		s += str(self.taquin)
+		s += "size history : " + str(self.taille_history) + "\n"
+		s += "score : " + str(self.score) + "\n"
+		return s

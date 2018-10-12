@@ -6,11 +6,11 @@ from is_soluble import is_soluble
 from solver import solver
 
 if __name__ == '__main__':
-	try:
+	# try:
 		taquin = parse(sys.argv[1])
 		print(taquin)
 		soluble = is_soluble(taquin)
 		print("Est-il soluble :", soluble)
 		solver(taquin)
-	except IndexError:
-		print("Larg 1 doit etre le fichier du taquin")
+	# except IndexError:
+	# 	print("Larg 1 doit etre le fichier du taquin")
