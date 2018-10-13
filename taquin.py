@@ -91,6 +91,7 @@ class Taquin(object):
 		score = math.sqrt(score)
 		return score
 
+	""" Score avec la distance manhattan """
 	def score_manhattan(self):
 		score = 0
 		for i in range(self.size):
@@ -99,6 +100,7 @@ class Taquin(object):
 				score += abs(real_x - i) + abs(real_y - j)
 		return score
 
+	""" Score modifié de la distance manhattan qui favorise le placement des cases du haut et des cases à gauche """
 	def my_score(self):
 		score = 0
 		for i in range(self.size):
