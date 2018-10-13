@@ -5,7 +5,7 @@ import sys
 
 def insert_in_list(list_states, n_state):
 	# Insertion par recherche dichotomique
-	
+
 	index_left = 0
 	index_right = len(list_states) - 1
 	if (len(list_states) == 0):
@@ -39,11 +39,7 @@ def solver(taquin):
 	iterator = 0;
 
 	while is_running:
-		# print("size states : " + str(len(list_states)))
 		state_actu = list_states.pop(0)
-		# print(state_actu)
-		# print(state_actu.taquin.hash())
-		# print(hash_states)
 		taq_actu = state_actu.taquin
 		if state_actu.score == 0:
 			is_running = False
@@ -54,12 +50,7 @@ def solver(taquin):
 
 		if (iterator % 1000 == 0):
 			print("turn " + str(iterator))
-		# for s in list_states:
-		# 	print(s)
-		# if iterator >= 2:
-		# 	is_running = False
 		iterator += 1
-		# input()
 
 	print(iterator)
 	print(result)
