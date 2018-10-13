@@ -3,7 +3,7 @@ import sys
 import taquin
 		
 def error_taquin_not_valid():
-	print("tmp non valide")
+	print("taquin non valide")
 	sys.exit(1)
 
 def get_taquin(lines, tmp):

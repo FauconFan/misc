@@ -1,15 +1,32 @@
 #!/usr/bin/python3
 
 from state import State
+import sys
+
+def insert_in_list(list_states, n_state):
+	# Insertion par recherche dichotomique
+	
+	index_left = 0
+	index_right = len(list_states) - 1
+	if (len(list_states) == 0):
+		list_states.append(n_state)
+	else:
+		while index_left < index_right:
+			cand = (index_right + index_left) // 2
+			if n_state.score > list_states[cand].score:
+				index_left = cand + 1
+			else:
+				index_right = cand
+		cand = max(index_right, index_left)
+		list_states.insert(cand, n_state)
 
 def smart_insert(list_states, list_newtaquins, hash_states, state_actu):
 	for t, m in list_newtaquins:
 		if t.hash() not in hash_states:
 			state_actu.liste_history.append(m)
 			n_state = State(t, state_actu.taille_history + 1, state_actu.liste_history)
-			list_states.append(n_state)
+			insert_in_list(list_states, n_state)
 			hash_states[t.hash()] = True
-	list_states.sort()
 
 def solver(taquin):
 	is_running = True
