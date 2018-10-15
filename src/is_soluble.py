@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 
-def d_eucli(x1, y1, x2, y2):
+def d_manhattan(x1, y1, x2, y2):
     return abs(x2 - x1) + abs(y2 - y1)
 
 def calculate_modif_succ_vide(taquin):
     size = taquin.size
     i0, j0 = taquin.find_case(0);
     tx0, ty0 = taquin.get_right_positions(0);
-    return d_eucli(i0, j0, tx0, ty0)
+    return d_manhattan(i0, j0, tx0, ty0)
 
 def switch_normals(taquin):
     ret = 0
