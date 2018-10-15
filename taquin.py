@@ -10,15 +10,17 @@ class Movement(Enum):
 	DOWN = 3
 	LEFT = 4
 
-
 class Taquin(object):
 	"""docstring for Taquin"""
-	def __init__(self, size, dico):
+	def __init__(self, size, dico, objective = None):
 		# size of the taquin
 		self.size = size
 		# (x, y) -> value between 1 and size * size - 1
 		self.dico = dico
-
+		# objective to calculate the score
+		self.objective = objective
+		# the calculated score
+		# self.score = score
 
 	def __str__(self):
 		s = ""
@@ -37,7 +39,7 @@ class Taquin(object):
 		return hashlib.sha256(s.encode()).hexdigest()
 
 	def clone(self):
-		ret = Taquin(self.size, self.dico.copy())
+		ret = Taquin(self.size, self.dico.copy(), objective = self.objective)
 		return ret
 
 	def find_case(self, value):
@@ -49,11 +51,7 @@ class Taquin(object):
 		return (-1, -1)
 
 	def get_right_positions(self, value):
-		if value is 0:
-			return (self.size - 1, self.size - 1)
-		x = (value - 1) // self.size
-		y = (value - 1) % self.size
-		return x, y
+		return self.objective[value]
 
 	def swap_values(self, x1, y1, x2, y2):
 		tmp = self.dico[(x1, y1)]
@@ -111,4 +109,4 @@ class Taquin(object):
 		return score
 
 	def score(self):
-		return self.my_score()
+		return self.score_manhattan()

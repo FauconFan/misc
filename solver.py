@@ -16,8 +16,10 @@ def insert_in_list(list_states, n_state):
 			if n_state.score > list_states[cand].score:
 				index_left = cand + 1
 			else:
-				index_right = cand
+				index_right = cand - 1
 		cand = max(index_right, index_left)
+		if n_state.score > list_states[cand].score:
+			cand += 1
 		list_states.insert(cand, n_state)
 
 def smart_insert(list_states, list_newtaquins, hash_states, state_actu):

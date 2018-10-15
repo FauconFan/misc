@@ -6,7 +6,8 @@ def d_eucli(x1, y1, x2, y2):
 def calculate_modif_succ_vide(taquin):
     size = taquin.size
     i0, j0 = taquin.find_case(0);
-    return d_eucli(i0, j0, size - 1, size - 1)
+    tx0, ty0 = taquin.get_right_positions(0);
+    return d_eucli(i0, j0, tx0, ty0)
 
 def switch_normals(taquin):
     ret = 0
@@ -15,14 +16,11 @@ def switch_normals(taquin):
     i = 0
     while i < size:
         j = 0
-        max_size = size
-        if i is size - 1:
-            max_size = max_size - 1
-        while j < max_size:
+        while j < size:
             value = taquin_copy.dico[(i, j)]
-            if value != (i * size) + j + 1:
-                real_x, real_y = taquin_copy.get_right_positions(value)
-                taquin_copy.swap_values(i, j, real_x, real_y)
+            tx0, ty0 = taquin.get_right_positions(value)
+            if i != tx0 or j != ty0:
+                taquin_copy.swap_values(i, j, tx0, ty0)
                 ret = ret + 1
             else:
                 j = j + 1
