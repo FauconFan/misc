@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
-from state import State
 import sys
+
+from src.state import State
 
 def insert_in_list(list_states, n_state):
 	# Insertion par recherche dichotomique

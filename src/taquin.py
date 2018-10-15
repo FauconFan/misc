@@ -2,6 +2,7 @@
 
 import math
 import hashlib
+
 from enum import Enum
 
 class Movement(Enum):

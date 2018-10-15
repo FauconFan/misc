@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
 import sys
-import taquin
-from build_objective import build_objective
+
+from src.taquin import Taquin
+from src.build_objective import build_objective
 
 def error_taquin_not_valid():
 	print("taquin non valide")
@@ -27,7 +28,7 @@ def get_taquin(lines, tmp):
 		hauteur += 1
 	if hauteur != tmp['size']:
 		error_taquin_not_valid()
-	return taquin.Taquin(tmp['size'], dico, objective = build_objective(tmp['size']))
+	return Taquin(tmp['size'], dico, objective = build_objective(tmp['size']))
 
 
 
