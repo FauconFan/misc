@@ -20,8 +20,10 @@ class Taquin(object):
 		self.dico = dico
 		# objective to calculate the score
 		self.objective = objective
-		# the calculated score
-		# self.score = score
+		# ptr function for scoring
+		self.function_score = self.score_manhattan
+		# Set score to None
+		self.score_int = None
 
 	def __str__(self):
 		s = ""
@@ -60,54 +62,42 @@ class Taquin(object):
 		self.dico[(x2, y2)] = tmp
 
 	def get_possible_moves(self):
+		def build_new_taquin(x1, y1, x2, y2):
+			cl = self.clone()
+			next_score = self.score()
+			next_score -= cl.function_score(x1, y1)
+			next_score -= cl.function_score(x2, y2)
+			cl.swap_values(x1, y1, x2, y2)
+			next_score += cl.function_score(x1, y1)
+			next_score += cl.function_score(x2, y2)
+			cl.score_int = next_score
+			return cl
+
 		x0, y0 = self.find_case(0)
 		ret = []
 		if x0 > 0:
-			cl = self.clone()
-			cl.swap_values(x0, y0, x0 - 1, y0)
+			cl = build_new_taquin(x0, y0, x0 - 1, y0)
 			ret.append((cl, Movement.UP))
 		if y0 > 0:
-			cl = self.clone()
-			cl.swap_values(x0, y0, x0, y0 - 1)
+			cl = build_new_taquin(x0, y0, x0, y0 - 1)
 			ret.append((cl, Movement.LEFT))
 		if x0 < self.size - 1:
-			cl = self.clone()
-			cl.swap_values(x0, y0, x0 + 1, y0)
+			cl = build_new_taquin(x0, y0, x0 + 1, y0)
 			ret.append((cl, Movement.DOWN))
 		if y0 < self.size - 1:
-			cl = self.clone()
-			cl.swap_values(x0, y0, x0, y0 + 1)
+			cl = build_new_taquin(x0, y0, x0, y0 + 1)
 			ret.append((cl, Movement.RIGHT))
 		return ret
 
-	""" Score avec la distance euclidienne """
-	def score_euclidian(self):
-		score = 0
-		for i in range(self.size):
-			for j in range(self.size):
-				real_x, real_y = self.get_right_positions(self.dico[(i, j)])
-				score += (real_x - i) ** 2 + (real_y - j) ** 2
-		score = math.sqrt(score)
-		return score
-
 	""" Score avec la distance manhattan """
-	def score_manhattan(self):
-		score = 0
-		for i in range(self.size):
-			for j in range(self.size):
-				real_x, real_y = self.get_right_positions(self.dico[(i, j)])
-				score += abs(real_x - i) + abs(real_y - j)
-		return score
-
-	""" Score modifié de la distance manhattan qui favorise le placement des cases du haut et des cases à gauche """
-	def my_score(self):
-		score = 0
-		for i in range(self.size):
-			for j in range(self.size):
-				real_x, real_y = self.get_right_positions(self.dico[(i, j)])
-				coeff = min(i + 1, j + 1)
-				score += coeff * (abs(real_x - i) + abs(real_y - j))
-		return score
+	def score_manhattan(self, i, j):
+		real_x, real_y = self.get_right_positions(self.dico[(i, j)])
+		return (abs(real_x - i) + abs(real_y - j))
 
 	def score(self):
-		return self.score_manhattan()
+		if (self.score_int == None):
+			self.score_int = 0
+			for i in range(self.size):
+				for j in range(self.size):
+					self.score_int += self.function_score(i, j)
+		return self.score_int
