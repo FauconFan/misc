@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 CMD="python3 ./main.py"
 
 SOLUBLE_FOLDER="tests/soluble/"

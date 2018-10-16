@@ -1,33 +1,39 @@
 #!/usr/bin/python3
 
-def d_manhattan(x1, y1, x2, y2):
-    return abs(x2 - x1) + abs(y2 - y1)
+def build_tiles(taquin):
+	ret = []
+	for i in range(taquin.size):
+		for j in range(taquin.size):
+			ret.append(taquin.dico[(i, j)])
+	return ret
 
-def calculate_modif_succ_vide(taquin):
-    size = taquin.size
-    i0, j0 = taquin.find_case(0);
-    tx0, ty0 = taquin.get_right_positions(0);
-    return d_manhattan(i0, j0, tx0, ty0)
+def build_tiles_objective(li_objective, size_row):
+	ret = [None] * (size_row * size_row)
+	index = 0
+	for k in (li_objective):
+		x0, y0 = k
+		ret[x0 * size_row + y0] = index
+		index += 1
+	return ret
 
-def switch_normals(taquin):
-    ret = 0
-    size = taquin.size
-    taquin_copy = taquin.clone()
-    i = 0
-    while i < size:
-        j = 0
-        while j < size:
-            value = taquin_copy.dico[(i, j)]
-            tx0, ty0 = taquin.get_right_positions(value)
-            if i != tx0 or j != ty0:
-                taquin_copy.swap_values(i, j, tx0, ty0)
-                ret = ret + 1
-            else:
-                j = j + 1
-        i = i + 1
-    return ret
+def inversions(li):
+	ret = 0
+	for i in range(len(li)):
+		if li[i] == 0:
+			continue
+		for j in range(i + 1, len(li)):
+			if li[j] != 0 and li[j] < li[i]:
+				ret += 1
+	return ret
 
 def is_soluble(taquin):
-    permu0 = calculate_modif_succ_vide(taquin)
-    permun = switch_normals(taquin)
-    return (permu0 % 2 == permun % 2)
+	start = build_tiles(taquin)
+	goal = build_tiles_objective(taquin.objective, taquin.size)
+	inversion_start = inversions(start)
+	inversion_goal = inversions(goal)
+
+	if (taquin.size % 2 == 0):
+		inversion_start += start.index(0) // taquin.size
+		inversion_goal += goal.index(0) // taquin.size
+
+	return (inversion_start % 2 == inversion_goal % 2)
