@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/09 16:03:24 by jpriou            #+#    #+#              #
-#    Updated: 2018/10/15 18:53:54 by jpriou           ###   ########.fr        #
+#    Updated: 2018/10/16 21:44:40 by pepe             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,9 @@ test_soluble:
 
 test_non_soluble:
 	@bash $(TESTS_PATH) non_soluble
+
+profile:
+	python3 -m cProfile -s cumtime ./main.py tests/soluble/size5_00.txt | tee profile.out
 
 clean:
 	rm -rf __pycache__
