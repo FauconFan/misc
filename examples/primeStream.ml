@@ -2,6 +2,7 @@
 module InPrimeStream =
 struct
   type t = int array
+  type out = int
 
   let init () = [|2|]
 
@@ -14,7 +15,7 @@ struct
       else search_prime ~i:(i + 1) cand
     in
     let next_prime = search_prime (ma + 1) in
-    Array.append li [| next_prime |]
+    ((Array.append li [| next_prime |]), next_prime)
 end
 
 module PrimeStream = Streams.MakeStream(InPrimeStream)

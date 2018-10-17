@@ -8,6 +8,8 @@ SOURCES = \
 			examples/fibonacciStream.ml \
 			examples/primeStream.ml \
 			examples/oddStream.ml \
+			examples/rotcharStream.ml \
+			examples/stringStream.ml \
 
 all: clean_links
 	make -C . nc

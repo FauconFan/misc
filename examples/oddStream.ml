@@ -1,28 +1,20 @@
 
 module InOddStream =
 struct
-  type t = int list
+  type t = int
+  type out = int
 
-  let init () = [1]
+  let init () = 1
 
-  let update (li: int list) =
-    ((List.hd li) + 2) :: li
+  let update (i: int) =
+    (i + 2, i + 2)
 end
 
 module OddStream = Streams.MakeStream(InOddStream)
 
 let () =
   print_endline "OddStream";
-  let rec print_list li = match li with
-    | []      -> ()
-    | x :: xs ->
-      begin
-        print_list xs;
-        print_int x;
-        print_char ' ';
-      end
-  in
   let ppint i = print_int i; print_char ' ' in
-  for i = 1 to 24 do ignore(OddStream.next ()) done;
-  print_list (OddStream.get ());
+  ppint @@ OddStream.get ();
+  for i = 1 to 24 do ppint (OddStream.next ()) done;
   print_char '\n'

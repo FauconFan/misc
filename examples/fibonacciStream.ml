@@ -2,11 +2,12 @@
 module InFibonacciStream =
 struct
   type t = int list
+  type out = int
 
   let init () = [1; 1]
 
   let update li = match li with
-    | x :: y :: _ -> (x + y) :: li
+    | x :: y :: _ -> ((x + y) :: li, (x + y))
     | _           -> failwith "SNH"
 end
 
@@ -25,7 +26,7 @@ let () =
   in
   print_list (FibonacciStream.get ());
   for i = 2 to 20 do
-    print_int @@ List.hd @@ FibonacciStream.next ();
+    print_int @@ FibonacciStream.next ();
     print_char ' '
   done;
   print_char '\n'

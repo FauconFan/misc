@@ -27,3 +27,5 @@ end
 module type MAKESTREAM = functor (In : InStream) -> (Stream with type t = In.t)
 module MakeStream : MAKESTREAM
 ```
+
+The get and next function in Stream module returns an instance of abstract type t. And not a list of something. See the StringStream for an exemple of data flows without using a list.
