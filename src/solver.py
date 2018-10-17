@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-import sys
-
 from src.state import State
 
 def insert_in_list(list_states, n_state):
@@ -25,7 +23,7 @@ def insert_in_list(list_states, n_state):
 
 def smart_insert(list_states, list_newtaquins, hash_states, state_actu):
 	for t, m in list_newtaquins:
-		hashed = t.hash()
+		hashed = hash(t)
 		if hashed not in hash_states:
 			state_actu.liste_history.append(m)
 			n_state = State(t, state_actu.taille_history + 1, state_actu.liste_history)
@@ -37,7 +35,7 @@ def solver(taquin):
 	list_states = []
 	hash_states = {}
 	list_states.append(State(taquin, 0, []))
-	hash_states[taquin.hash()] = True
+	hash_states[hash(taquin)] = True
 	result = None
 
 	iterator = 0;

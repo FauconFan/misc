@@ -1,8 +1,5 @@
 #!/usr/bin/python3
 
-import math
-import hashlib
-
 from enum import Enum
 
 class Movement(Enum):
@@ -33,13 +30,13 @@ class Taquin(object):
 			s += "\n"
 		return s
 
-	def hash(self):
-		s = ""
-
+	def __hash__(self):
+		hashed = 0
+		m = self.size * self.size
 		for i in range(self.size):
 			for j in range(self.size):
-				s += str(self.dico[(i, j)])
-		return hashlib.sha256(s.encode()).hexdigest()
+				hashed = hashed * m + self.dico[(i, j)]
+		return hashed
 
 	def clone(self):
 		ret = Taquin(self.size, self.dico.copy(), objective = self.objective)
