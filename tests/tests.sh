@@ -3,7 +3,7 @@
 set -e
 
 CMD="python3 ./main.py"
-CMD_GEN="python2 tests/npuzzle-gen.py"
+CMD_GEN="python tests/npuzzle-gen.py"
 
 SOLUBLE_FOLDER="tests/soluble/"
 NON_SOLUBLE_FOLDER="tests/non_soluble/"
