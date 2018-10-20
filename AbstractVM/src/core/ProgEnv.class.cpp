@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 17:08:23 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 16:39:13 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:45:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,14 @@ void ProgEnv::run() {
             }
             else if (ui->getType() == ASSERT) {
                 IOperand const * head = this->_stack_prog.back();
-                bool same = false;
                 double diff;
+                
                 diff = (std::stod(op->toString()) - std::stod(head->toString()));
                 diff = (diff > 0) ? diff : -diff;
-                if (diff < 0.000001) {
-                    same = true;
-                }
-                if (!same) {
+                delete op;
+                if (diff >= 0.000001) {
                     throw AssertException(head->toString(), op->toString());
                 }
-                delete op;
             }
             else {
                 throw UnknownTypeException();
