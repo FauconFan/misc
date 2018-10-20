@@ -1,5 +1,6 @@
 push int32(4)
 push int8(-2)
+;push int8(2)
 push int8(2)
 add
 div

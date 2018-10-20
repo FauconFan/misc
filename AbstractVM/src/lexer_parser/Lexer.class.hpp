@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:48:23 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 14:37:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 15:58:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <vector>
 #include "IToken.class.hpp"
 #include "LexerError.class.hpp"
+
+#define COMMENT_CHAR ';'
 
 class Lexer {
     public:

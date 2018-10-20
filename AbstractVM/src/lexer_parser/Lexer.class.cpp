@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:52:17 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 15:26:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 15:58:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,16 @@ bool Lexer::run() {
                 ++it;
                 this->_column++;
             }
-            // std::cout << word << '\n';
             if (InstructionToken::list_assoc.find(word) !=
               InstructionToken::list_assoc.end())
             {
                 InstructionType iType = InstructionToken::list_assoc.at(word);
                 IToken * n = static_cast<IToken *>(new InstructionToken(iType));
                 this->_tokens.push_back(n);
+            }
+            else if (word[0] == COMMENT_CHAR) {
+                while (is_nl(*it) == false && it != et)
+                    it++;
             }
             else {
                 size_t poslpar = word.find('(');
