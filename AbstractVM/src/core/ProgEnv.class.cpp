@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 17:08:23 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 13:53:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:39:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void ProgEnv::run() {
     for (Instruction * it : this->_instructions) {
         if (it->isUnary()) {
             UnaryInstruction *ui = dynamic_cast<UnaryInstruction *>(it);
-            IOperand const * op = this->_operandFactory.createOperand(ui->getOperandType(),
-                    ui->getStr());
+            IOperand const * op = OperandFactory::get().createOperand(ui->getOperandType(), ui->getStr());
 
             if (ui->getType() == PUSH) {
                 this->_stack_prog.push_back(op);

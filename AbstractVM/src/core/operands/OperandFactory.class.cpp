@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/05 16:35:01 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 16:24:11 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:37:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,17 @@
 #include "OverUnderFlowException.class.hpp"
 #include "UnknownTypeException.class.hpp"
 
+OperandFactory OperandFactory::factory = OperandFactory();
+
+OperandFactory & OperandFactory::get() {
+    return OperandFactory::factory;
+}
+
 OperandFactory::OperandFactory() {
     this->_fillLinker();
 }
 
-OperandFactory::OperandFactory(OperandFactory const & of) {
-    *this = of;
-}
-
 OperandFactory::~OperandFactory() {}
-
-OperandFactory &OperandFactory::operator=(OperandFactory const & of) {
-    this->_linker = of._linker;
-    return *this;
-}
 
 void OperandFactory::_fillLinker() noexcept {
     this->_linker = std::map<eOperandType,

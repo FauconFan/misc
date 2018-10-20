@@ -79,7 +79,7 @@ IOperand const * DefaultOperand<T>::operator+(IOperand const & rhs) const {
             throw OverUnderFlowException(ADDSUS, UNDERFLOW);
         }
     }
-    return OperandFactory().createOperand(this->getType(),
+    return OperandFactory::get().createOperand(this->getType(),
             std::to_string(res));
 }
 
@@ -89,7 +89,7 @@ IOperand const * DefaultOperand<T>::operator-(IOperand const & rhs) const {
     IOperand const *res;
 
     nbr *= -1;
-    IOperand const * neg_rhs = OperandFactory().createOperand(rhs.getType(), std::to_string(nbr));
+    IOperand const * neg_rhs = OperandFactory::get().createOperand(rhs.getType(), std::to_string(nbr));
     res = this->operator+(*neg_rhs);
     delete neg_rhs;
     return res;
@@ -114,7 +114,7 @@ IOperand const * DefaultOperand<T>::operator*(IOperand const & rhs) const {
             throw OverUnderFlowException(MULT, UNDERFLOW);
         }
     }
-    return OperandFactory().createOperand(this->getType(),
+    return OperandFactory::get().createOperand(this->getType(),
             std::to_string(a * b));
 }
 
@@ -125,7 +125,7 @@ IOperand const * DefaultOperand<T>::operator/(IOperand const & rhs) const {
     if (value_rhs > -PREC_DIV_ZERO && value_rhs < PREC_DIV_ZERO) {
         throw ZeroException(DIV);
     }
-    return OperandFactory().createOperand(
+    return OperandFactory::get().createOperand(
             (this->getType() > rhs.getType()) ? this->getType() : rhs.getType(),
             std::to_string(this->_value / value_rhs));
 }
@@ -151,7 +151,7 @@ IOperand const * DefaultOperand<T>::operator%(IOperand const & rhs) const {
             res += value_rhs;
         }
     }
-    return OperandFactory().createOperand(
+    return OperandFactory::get().createOperand(
             (this->getType() > rhs.getType()) ? this->getType() : rhs.getType(),
             std::to_string(res));
 }

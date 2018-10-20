@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 17:07:56 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 13:51:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:39:18 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ class ProgEnv {
     private:
         std::vector<Instruction *> _instructions;
         std::vector<IOperand const *> _stack_prog;
-        OperandFactory _operandFactory;
-
         ProgEnv ();
 
         ProgEnv (ProgEnv const &);
