@@ -85,8 +85,14 @@ IOperand const * DefaultOperand<T>::operator+(IOperand const & rhs) const {
 
 template <typename T>
 IOperand const * DefaultOperand<T>::operator-(IOperand const & rhs) const {
-    (void) rhs;
-    return NULL;
+    double nbr = std::stod(rhs.toString());
+    IOperand const *res;
+
+    nbr *= -1;
+    IOperand const * neg_rhs = OperandFactory().createOperand(rhs.getType(), std::to_string(nbr));
+    res = this->operator+(*neg_rhs);
+    delete neg_rhs;
+    return res;
 }
 
 template <typename T>

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 16:51:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 15:39:21 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:27:49 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 class Main {
     public:
-        Main (int argc, char ** argv);
+        Main (int ac, char ** ag);
         virtual ~Main ();
 
         int run();

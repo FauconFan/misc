@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 16:51:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 15:48:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:27:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #include "InvalidEntryException.class.hpp"
 #include "SuperException.class.hpp"
 
-Main::Main(int argc, char ** argv)
-    : argc(argc), argv(argv), doPrintUsage(false), is_running(true),
+Main::Main(int ac, char ** av)
+    : argc(ac), argv(av), doPrintUsage(false), is_running(true),
     content(std::string()), lexer(NULL), parser(NULL)
 {
     this->list_function = std::vector<void (Main::*)()>();

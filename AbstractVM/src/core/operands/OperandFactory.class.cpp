@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/05 16:35:01 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 09:54:13 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:24:11 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ T OperandFactory::stoT(std::string s) const {
         s    = s.substr(1);
     }
     for (char c : s) {
+        if (c < '0' || c > '9')
+            break;
         tmp = res * 10 + (c - '0') * sign;
         if (res != 0 && (
               (sign > 0 && tmp < res) ||
