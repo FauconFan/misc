@@ -6,14 +6,16 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 16:51:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 13:42:00 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 14:36:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <fstream>
 #include "Lexer.class.hpp"
+#include "LexerError.class.hpp"
 #include "Parser.class.hpp"
+#include "ParserError.class.hpp"
 #include "ProgEnv.class.hpp"
 #include "SuperException.class.hpp"
 
@@ -80,21 +82,21 @@ int main(int argc, char * argv []) {
                     progEnv.run();
                 }
                 else {
-                    std::vector<Parser::ParserError> errors = par.getErrors();
+                    std::vector<ParserError> errors = par.getErrors();
 
                     ret = 1;
                     std::cout << "Error(s) occured, when parsing :" << '\n';
-                    for (Parser::ParserError pe : errors) {
+                    for (const ParserError & pe : errors) {
                         std::cout << pe;
                     }
                 }
             }
             else {
-                std::vector<Lexer::LexerError> errors = lex.getErrors();
+                std::vector<LexerError> errors = lex.getErrors();
 
                 ret = 1;
                 std::cout << "Error(s) occured, when lexing :" << '\n';
-                for (const Lexer::LexerError & le : errors) {
+                for (const LexerError & le : errors) {
                     std::cout << le;
                 }
             }

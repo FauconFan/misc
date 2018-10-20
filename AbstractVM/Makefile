@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/04 16:52:43 by jpriou            #+#    #+#              #
-#    Updated: 2018/10/20 13:24:51 by jpriou           ###   ########.fr        #
+#    Updated: 2018/10/20 14:36:45 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,11 @@ SRC = \
 		$(INS_FOLDER)UnaryInstruction.class.cpp \
 		$(OPP_FOLDER)OperandFactory.class.cpp \
 		$(LEX_FOLDER)Lexer.class.cpp \
+		$(LEX_FOLDER)LexerError.class.cpp \
 		$(LEX_FOLDER)Parser.class.cpp \
+		$(LEX_FOLDER)ParserError.class.cpp \
 		$(TOK_FOLDER)InstructionToken.class.cpp \
-		$(TOK_FOLDER)ValueToken.class.cpp
+		$(TOK_FOLDER)ValueToken.class.cpp \
 
 _RED=$(shell tput setaf 1)
 _GREEN=$(shell tput setaf 2)
