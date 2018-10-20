@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 13:06:47 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/08 23:19:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 14:02:46 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ template <typename T>
 class DefaultOperand : public IOperand {
     public:
         DefaultOperand (T value, eOperandType type);
-        DefaultOperand (DefaultOperand const &);
         virtual ~DefaultOperand ();
 
-        DefaultOperand &operator=(DefaultOperand const &);
 
         size_t getPrecision() const;
         eOperandType getType() const;
@@ -38,6 +36,10 @@ class DefaultOperand : public IOperand {
         T _value;
         std::string _stringvalue;
         eOperandType _type;
+
+        DefaultOperand ();
+        DefaultOperand (DefaultOperand const &);
+        DefaultOperand &operator=(DefaultOperand const &);
 };
 
 #include "DefaultOperand.template.tpp"

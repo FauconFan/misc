@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 16:51:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 14:17:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:42:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,15 @@ int main(int argc, char * argv []) {
         }
         try {
             Lexer lex(content);
-            if (lex.run() == false) {
-                std::vector<Lexer::LexerError> errors = lex.getErrors();
-
-                ret = 1;
-                std::cout << "Error(s) occured, when lexing :" << '\n';
-                for (Lexer::LexerError le : errors) {
-                    std::cout << le;
-                }
-            }
-            else {
+            if (lex.run()) {
                 std::vector<IToken *> tokens = lex.getTokens();
                 Parser par(tokens);
 
-                if (par.run() == false) {
+                if (par.run()) {
+                    ProgEnv progEnv(par.getInstructions());
+                    progEnv.run();
+                }
+                else {
                     std::vector<Parser::ParserError> errors = par.getErrors();
 
                     ret = 1;
@@ -93,9 +88,14 @@ int main(int argc, char * argv []) {
                         std::cout << pe;
                     }
                 }
-                else {
-                    ProgEnv progEnv(par.getInstructions());
-                    progEnv.run();
+            }
+            else {
+                std::vector<Lexer::LexerError> errors = lex.getErrors();
+
+                ret = 1;
+                std::cout << "Error(s) occured, when lexing :" << '\n';
+                for (const Lexer::LexerError & le : errors) {
+                    std::cout << le;
                 }
             }
         }

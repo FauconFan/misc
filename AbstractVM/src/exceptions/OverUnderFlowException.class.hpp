@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/06 11:26:48 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/08 22:51:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:50:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ class OverUnderFlowException : public SuperException {
         OverUnderFlowException (FlowExceptionType, FlowExceptionNature = NONE);
         OverUnderFlowException (OverUnderFlowException const &);
         virtual ~OverUnderFlowException ();
+
+    private:
+        OverUnderFlowException();
 
         OverUnderFlowException &operator=(OverUnderFlowException const &);
 };

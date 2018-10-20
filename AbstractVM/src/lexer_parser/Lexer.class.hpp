@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:48:23 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/10 17:22:29 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:42:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ class Lexer {
                     std::string reason,
                     size_t      line,
                     size_t      column);
-                LexerError (LexerError const &);
                 virtual ~LexerError ();
-
-                LexerError &operator=(LexerError const &);
+                LexerError (LexerError const &);
 
                 size_t getLine() const;
                 size_t getColumn() const;
@@ -49,6 +47,10 @@ class Lexer {
                 size_t _column;
                 std::string _reason;
                 std::string _word;
+
+                LexerError ();
+
+                LexerError &operator=(LexerError const &);
         };
 
         Lexer (std::string const & content);
@@ -70,6 +72,8 @@ class Lexer {
         std::string _content;
         size_t _line;
         size_t _column;
+
+        Lexer();
 
         bool is_blank(char c) const noexcept;
         bool is_nl(char c) const noexcept;

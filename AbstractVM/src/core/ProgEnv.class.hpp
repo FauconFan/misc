@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 17:07:56 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 13:19:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:51:44 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@
 class ProgEnv {
     public:
         ProgEnv (std::vector<Instruction *>);
-        ProgEnv (ProgEnv const &);
         virtual ~ProgEnv ();
-
-        ProgEnv &operator=(ProgEnv const &);
 
         std::vector<Instruction *> getInstructions() const;
 
@@ -33,6 +30,11 @@ class ProgEnv {
         std::vector<Instruction *> _instructions;
         std::vector<IOperand const *> _stack_prog;
         OperandFactory _operandFactory;
+
+        ProgEnv ();
+
+        ProgEnv (ProgEnv const &);
+        ProgEnv &operator=(ProgEnv const &);
 };
 
 #endif // ifndef PROGENV_CLASS_HPP

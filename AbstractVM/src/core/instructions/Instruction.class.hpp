@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:04:55 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 13:10:08 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 14:05:31 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ enum InstructionType {
 class Instruction {
     protected:
         Instruction (InstructionType type, bool isUnary);
+        Instruction &operator=(Instruction const &);
 
     public:
         Instruction (InstructionType type);
         Instruction (Instruction const &);
         virtual ~Instruction ();
-
-        Instruction &operator=(Instruction const &);
 
         InstructionType getType() const;
 
@@ -47,6 +46,8 @@ class Instruction {
     private:
         InstructionType _type;
         bool _isUnary;
+
+        Instruction ();
 };
 
 std::ostream &operator<<(std::ostream &, Instruction const &);

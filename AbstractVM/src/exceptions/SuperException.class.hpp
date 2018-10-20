@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/03 10:15:08 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/06 11:24:39 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:49:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ class SuperException {
     protected:
         SuperException ();
         SuperException (std::string msg);
-        SuperException (SuperException const &);
         virtual ~SuperException ();
 
         SuperException &operator=(SuperException const &);
@@ -30,6 +29,7 @@ class SuperException {
     private:
         std::string _msg;
 
+        SuperException (SuperException const &);
     public:
         std::string what() const noexcept;
 };

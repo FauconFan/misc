@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 16:59:58 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 13:13:58 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:45:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ class Parser {
                 ParserError (ParserError const &);
                 virtual ~ParserError ();
 
-                ParserError &operator=(ParserError const &);
-
                 std::string getReason() const;
                 size_t getIndexInstruction() const;
             private:
                 std::string _reason;
                 size_t _index_instruction;
+
+                ParserError();
+
+                ParserError &operator=(ParserError const &);
         };
         Parser (std::vector<IToken *> tokens);
         Parser (Parser const &);
@@ -58,6 +60,8 @@ class Parser {
         std::vector<IToken *> _tokens;
         std::vector<Instruction *> _instructions;
         std::vector<ParserError> _errors;
+
+        Parser();
 };
 
 std::ostream &operator<<(std::ostream &, Parser::ParserError const &);

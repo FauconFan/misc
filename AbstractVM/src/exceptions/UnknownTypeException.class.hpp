@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   UnkownTypeException.class.hpp                      :+:      :+:    :+:   */
+/*   UnknownTypeException.class.hpp                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 09:45:48 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 09:53:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:48:11 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ class UnknownTypeException : public SuperException {
         UnknownTypeException (UnknownTypeException const &);
         virtual ~UnknownTypeException ();
 
+    private:
         UnknownTypeException &operator=(UnknownTypeException const &);
 };
 
