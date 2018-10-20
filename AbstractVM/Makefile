@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/04 16:52:43 by jpriou            #+#    #+#              #
-#    Updated: 2018/10/20 14:36:45 by jpriou           ###   ########.fr        #
+#    Updated: 2018/10/20 15:28:25 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ TOK_FOLDER = src/lexer_parser/tokens/
 
 ALL_FOLDER = $(SRC_FOLDER) $(EXC_FOLDER) $(CORE_FOLDER) $(INS_FOLDER) $(OPP_FOLDER) $(DOP_FOLDER) $(LEX_FOLDER) $(TOK_FOLDER)
 
-FLAGS = -Wall -Wextra -Werror \
+FLAGS = -g -Wall -Wextra -Werror \
 			-Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align \
 			-Wunused -Woverloaded-virtual -pedantic
 
@@ -41,6 +41,7 @@ SRC = \
 		$(EXC_FOLDER)UnknownTypeException.class.cpp \
 		$(EXC_FOLDER)AssertException.class.cpp \
 		$(EXC_FOLDER)EndStackException.class.cpp \
+		$(EXC_FOLDER)InvalidEntryException.class.cpp \
 		$(CORE_FOLDER)ProgEnv.class.cpp \
 		$(INS_FOLDER)Instruction.class.cpp \
 		$(INS_FOLDER)UnaryInstruction.class.cpp \

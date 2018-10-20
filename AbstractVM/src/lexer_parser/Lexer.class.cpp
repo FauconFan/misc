@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:52:17 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 14:36:32 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 15:26:44 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ bool Lexer::run() {
                 ++it;
                 this->_column++;
             }
+            // std::cout << word << '\n';
             if (InstructionToken::list_assoc.find(word) !=
               InstructionToken::list_assoc.end())
             {
