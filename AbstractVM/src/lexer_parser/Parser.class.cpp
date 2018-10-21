@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 17:24:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 14:25:29 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 14:31:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,6 @@
 #include "InstructionToken.class.hpp"
 #include "ValueToken.class.hpp"
 #include "EndStackException.class.hpp"
-
-Parser::ParserError::ParserError(std::string reason, size_t index_instruction)
-    : _reason(reason), _index_instruction(index_instruction) {}
-
-Parser::ParserError::ParserError(ParserError const & pe) {
-    *this = pe;
-}
-
-Parser::ParserError::~ParserError() {}
-
-Parser::ParserError &Parser::ParserError::operator=(ParserError const & pe) {
-    this->_reason = pe.getReason();
-    this->_index_instruction = pe.getIndexInstruction();
-    return *this;
-}
-
-std::string Parser::ParserError::getReason() const {
-    return this->_reason;
-}
-
-size_t Parser::ParserError::getIndexInstruction() const {
-    return this->_index_instruction;
-}
-
-std::ostream &operator<<(std::ostream &os, Parser::ParserError const & pe) {
-    os << "\t.Index Instruction : " << pe.getIndexInstruction() << "'\n"
-       << "\t\t-> " << pe.getReason()
-       << '\n';
-    return os;
-}
 
 Parser::Parser(std::vector<IToken *> tokens) : _tokens(tokens) {}
 
@@ -71,7 +41,7 @@ std::vector<Instruction *> Parser::getInstructions() const {
     return this->_instructions;
 }
 
-std::vector<Parser::ParserError> Parser::getErrors() const {
+std::vector<ParserError> Parser::getErrors() const {
     return this->_errors;
 }
 

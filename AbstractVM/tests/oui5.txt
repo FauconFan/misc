@@ -1,0 +1,13 @@
+; Ceci est le meilleur commentaire, normal il est seul, il est donc le pire aussi
+
+
+push int8(77)
+push int8(86)
+push int8(65)
+print
+pop
+print
+pop
+print
+pop
+exit

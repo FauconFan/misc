@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:10:04 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 11:29:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:47:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ class ZeroException : public SuperException {
         ZeroException (ZeroException const &);
         virtual ~ZeroException ();
 
+    private:
+        ZeroException();
         ZeroException &operator=(ZeroException const &);
 };
 

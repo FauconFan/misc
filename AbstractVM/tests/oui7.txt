@@ -1,0 +1,13 @@
+push int32(42)
+push int32(33)
+sub
+dump
+pop
+
+push float(2.20)
+push double(3.50)
+sub
+dump
+pop
+
+exit

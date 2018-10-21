@@ -6,51 +6,22 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:48:23 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/10 17:22:29 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 15:58:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_CLASS_HPP
 #define LEXER_CLASS_HPP
 
-#include <iostream>
 #include <string>
 #include <vector>
 #include "IToken.class.hpp"
+#include "LexerError.class.hpp"
 
-#define UNRECOGNISED_OPTION "This word is not recognised..."
-#define PAR_COUPLE_MISSING  "You need a couple of parenthesis..."
-#define PAR_WRONG_ORDER     "The ')' needs to be after '('..."
-#define RPAR_LAST_CHARA     "The ')' must be the last character..."
-#define TYPE_NO_MATCH       "The type isn't recognised..."
-#define NO_INTEGER          "The number given doesn't like to be a integer..."
-#define NO_FLOTTANT         "The number giver doesn't like to be a flottant..."
+#define COMMENT_CHAR ';'
 
 class Lexer {
     public:
-        class LexerError {
-            public:
-                LexerError (
-                    std::string word,
-                    std::string reason,
-                    size_t      line,
-                    size_t      column);
-                LexerError (LexerError const &);
-                virtual ~LexerError ();
-
-                LexerError &operator=(LexerError const &);
-
-                size_t getLine() const;
-                size_t getColumn() const;
-                std::string getReason() const;
-                std::string getWord() const;
-            private:
-                size_t _line;
-                size_t _column;
-                std::string _reason;
-                std::string _word;
-        };
-
         Lexer (std::string const & content);
         Lexer (Lexer const &);
         virtual ~Lexer ();
@@ -71,10 +42,10 @@ class Lexer {
         size_t _line;
         size_t _column;
 
+        Lexer();
+
         bool is_blank(char c) const noexcept;
         bool is_nl(char c) const noexcept;
 };
-
-std::ostream &operator<<(std::ostream &, Lexer::LexerError const &);
 
 #endif // ifndef LEXER_CLASS_HPP

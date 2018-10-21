@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 00:02:44 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/09 13:47:50 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:46:03 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ class ValueToken : public IToken {
         ValueToken (ValueToken const &);
         virtual ~ValueToken ();
 
-        ValueToken &operator=(ValueToken const &);
-
         TokenType getTokenType() const noexcept;
         eOperandType getType() const;
         std::string getStr() const;
@@ -34,6 +32,10 @@ class ValueToken : public IToken {
     private:
         eOperandType _type;
         std::string _str;
+
+        ValueToken();
+
+        ValueToken &operator=(ValueToken const &);
 };
 
 #endif // ifndef VALUE_CLASS_HPP

@@ -10,17 +10,12 @@ for FP in ${FILE_TESTS}; do
     ISOUI="$?"
     ./avm "${FP}"
     RET="$?"
-    if [ ${ISOUI} = "0" ]; then
-        if [ ${RET} = "0" ]; then
-            echo "failed"
-            exit 1
-        fi
-    else
-        if [ ! ${RET} = "0" ]; then
-            echo "failed"
-            exit 1
-        fi
-
+    if [ ${ISOUI} = "0" ] && [ ${RET} = "0" ]; then
+        printf "failed on %s\\n" "${FP}"
+        exit 1
+    elif [ ! ${ISOUI} = "0" ] && [ ! ${RET} = "0" ]; then
+        printf "failed on %s\\n" "${FP}"
+        exit 1
     fi
 done
 

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:52:17 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 09:33:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 15:58:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,48 +16,6 @@
 #include "Lexer.class.hpp"
 #include "ValueToken.class.hpp"
 #include "InstructionToken.class.hpp"
-
-Lexer::LexerError::LexerError(std::string word, std::string reason,
-  size_t line, size_t column) :
-    _line(line), _column(column), _reason(reason), _word(word) {}
-
-Lexer::LexerError::LexerError(LexerError const & le) {
-    *this = le;
-}
-
-Lexer::LexerError::~LexerError() {}
-
-Lexer::LexerError &Lexer::LexerError::operator=(LexerError const & le) {
-    this->_line   = le._line;
-    this->_column = le._column;
-    this->_reason = le._reason;
-    this->_word   = le._word;
-    return *this;
-}
-
-size_t Lexer::LexerError::getLine() const {
-    return this->_line;
-}
-
-size_t Lexer::LexerError::getColumn() const {
-    return this->_column;
-}
-
-std::string Lexer::LexerError::getReason() const {
-    return this->_reason;
-}
-
-std::string Lexer::LexerError::getWord() const {
-    return this->_word;
-}
-
-std::ostream &operator<<(std::ostream & os, Lexer::LexerError const & le) {
-    os << "\t.(" << le.getLine() << ", " << le.getColumn() << ")"
-       << " in word '" << le.getWord() << "'\n"
-       << "\t\t-> " << le.getReason()
-       << '\n';
-    return os;
-}
 
 Lexer::Lexer(std::string const & content) : _content(content) {}
 
@@ -80,7 +38,7 @@ std::vector<IToken *> Lexer::getTokens() const {
     return this->_tokens;
 }
 
-std::vector<Lexer::LexerError> Lexer::getErrors() const {
+std::vector<LexerError> Lexer::getErrors() const {
     return this->_list_errors;
 }
 
@@ -119,6 +77,10 @@ bool Lexer::run() {
                 InstructionType iType = InstructionToken::list_assoc.at(word);
                 IToken * n = static_cast<IToken *>(new InstructionToken(iType));
                 this->_tokens.push_back(n);
+            }
+            else if (word[0] == COMMENT_CHAR) {
+                while (is_nl(*it) == false && it != et)
+                    it++;
             }
             else {
                 size_t poslpar = word.find('(');

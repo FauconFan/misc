@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 23:55:35 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/09 17:23:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 13:47:08 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ class InstructionToken : public IToken {
         InstructionToken (InstructionToken const &);
         virtual ~InstructionToken ();
 
-        InstructionToken &operator=(InstructionToken const &);
-
         TokenType getTokenType() const noexcept;
         InstructionType getType() const;
 
         static const std::map<std::string, InstructionType> list_assoc;
     private:
         InstructionType _type;
+
+        InstructionToken();
+        InstructionToken &operator=(InstructionToken const &);
 };
 
 #endif // ifndef INSTRUCTION_CLASS_HPP

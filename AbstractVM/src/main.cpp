@@ -6,104 +6,166 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 16:51:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/14 14:17:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:27:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <fstream>
-#include "Lexer.class.hpp"
-#include "Parser.class.hpp"
-#include "ProgEnv.class.hpp"
+#include <vector>
+#include "main.hpp"
+#include "LexerError.class.hpp"
+#include "ParserError.class.hpp"
+#include "InvalidEntryException.class.hpp"
 #include "SuperException.class.hpp"
 
-static void usage() {
+Main::Main(int ac, char ** av)
+    : argc(ac), argv(av), doPrintUsage(false), is_running(true),
+    content(std::string()), lexer(NULL), parser(NULL)
+{
+    this->list_function = std::vector<void (Main::*)()>();
+    this->list_function.push_back(&Main::loadEntry);
+    this->list_function.push_back(&Main::lex);
+    this->list_function.push_back(&Main::parse);
+    this->list_function.push_back(&Main::progRun);
+}
+
+Main::~Main() {
+    if (this->lexer)
+        delete this->lexer;
+    if (this->parser)
+        delete this->parser;
+}
+
+int Main::run() {
+    std::vector<void (Main::*)()>::iterator it;
+    for (it = this->list_function.begin(); it != this->list_function.end(); it++) {
+        if (this->is_running == false)
+            break;
+        (this->**it)();
+    }
+
+    if (this->doPrintUsage)
+        this->usage();
+    return (this->is_running ? 0 : 1);
+}
+
+void Main::loadEntry() {
+    if (this->argc == 0 || this->argc >= 3) {
+        this->doPrintUsage = true;
+        this->is_running = false;
+    }
+    else {
+        try {
+            if (this->argc == 1) {
+                this->loadCin();
+            }
+            else if (this->argc == 2) {
+                this->loadFile(this->argv[1]);
+            }
+        }
+        catch (InvalidEntryException const & iee)
+        {
+            std::cout << iee.what() << '\n';
+            this->is_running = false;
+        }
+    }
+}
+
+void Main::usage() {
     std::cout << "Use this program properly..." << '\n';
     std::cout << "./abstractVM [file]" << '\n';
     std::cout << "./abstractVM" << '\n';
 }
 
-static std::string load_cin() {
-    std::string content;
+void Main::loadCin() {
     std::string line;
 
-    while (true) {
+    while (std::cin.good()) {
         std::cin >> line;
         if (line == ";;") {
             break;
         }
-        content += line + "\n";
+        this->content += line + "\n";
     }
-    return content;
+    if (std::cin.bad()) {
+        throw InvalidEntryException(STDIN_BAD);
+    }
 }
 
-static std::string load_file(char * path) {
-    std::string content;
+void Main::loadFile(char * path) {
     std::ifstream input_file(path, std::ios::in);
 
     if (input_file.is_open()) {
         std::string line;
         while (std::getline(input_file, line)) {
-            content += line + "\n";
+            this->content += line + "\n";
         }
         input_file.close();
     }
     else {
-        std::cerr << "Unable to open file\n";
+        throw InvalidEntryException(FILE_BAD);
     }
-    return content;
+}
+
+void Main::lex() {
+    this->lexer = new Lexer(content);
+    bool lexing;
+
+    try {
+        lexing = this->lexer->run();
+    }
+    catch (SuperException const & se) {
+        std::cout << se.what() << '\n';
+        this->is_running = false;
+    }
+    if (this->is_running && lexing == false) {
+        this->is_running = false;
+        std::vector<LexerError> errors = this->lexer->getErrors();
+
+        std::cout << "Error(s) occured, when lexing :" << '\n';
+        for (const LexerError & le : errors) {
+            std::cout << le;
+        }
+    }
+}
+
+void Main::parse() {
+    this->parser = new Parser(this->lexer->getTokens());
+    bool parsing;
+
+    try {
+        parsing = this->parser->run();
+    }
+    catch (SuperException const & se) {
+        std::cout << se.what() << '\n';
+        this->is_running = false;
+    }
+    if (this->is_running && parsing == false) {
+        this->is_running = false;
+        std::vector<ParserError> errors = this->parser->getErrors();
+
+        std::cout << "Error(s) occured, when parsing :" << '\n';
+        for (const ParserError & pe : errors) {
+            std::cout << pe;
+        }
+    }
+}
+
+void Main::progRun() {
+    try {
+        ProgEnv progEnv(this->parser->getInstructions());
+        progEnv.run();
+    }
+    catch (SuperException const & se)
+    {
+        this->is_running = false;
+        std::cout << se.what() << '\n';
+    }
 }
 
 int main(int argc, char * argv []) {
-    int ret = 0;
-    std::string content;
+    Main main(argc, argv);
 
-    if (argc == 0 || argc >= 3) {
-        usage();
-        ret = 1;
-    }
-    else {
-        if (argc == 1) {
-            content = load_cin();
-        }
-        else if (argc == 2) {
-            content = load_file(argv[1]);
-        }
-        try {
-            Lexer lex(content);
-            if (lex.run() == false) {
-                std::vector<Lexer::LexerError> errors = lex.getErrors();
-
-                ret = 1;
-                std::cout << "Error(s) occured, when lexing :" << '\n';
-                for (Lexer::LexerError le : errors) {
-                    std::cout << le;
-                }
-            }
-            else {
-                std::vector<IToken *> tokens = lex.getTokens();
-                Parser par(tokens);
-
-                if (par.run() == false) {
-                    std::vector<Parser::ParserError> errors = par.getErrors();
-
-                    ret = 1;
-                    std::cout << "Error(s) occured, when parsing :" << '\n';
-                    for (Parser::ParserError pe : errors) {
-                        std::cout << pe;
-                    }
-                }
-                else {
-                    ProgEnv progEnv(par.getInstructions());
-                    progEnv.run();
-                }
-            }
-        }
-        catch (SuperException const & se) {
-            std::cout << se.what() << '\n';
-            ret = 1;
-        }
-    }
-
-    return ret;
-} // main
+    return (main.run());
+}
