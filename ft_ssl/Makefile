@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2018/10/03 18:37:21 by pepe             ###   ########.fr        #
+#    Updated: 2018/10/18 11:26:12 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,16 @@ LIBS = -L $(LIBFT_FOLDER) -l ft
 SRC_PROJECT = \
 				parser/base_cmd.c \
 				parser/dgst_cmd.c \
+				parser/des_cmd.c \
 				parser/cmds.c \
 				custom_pbkdf2/custom_pbkdf2.c \
 				custom_pbkdf2/ft_getrandom.c \
+				structures/t_dgst_cmd.c \
+				structures/t_des_cmd.c \
+				core/do_dgst.c \
+				core/do_base.c \
+				core/do_des.c \
 				main.c \
-				t_dgst_cmd.c \
-				do_dgst.c \
-				do_base.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC_PROJECT))
 

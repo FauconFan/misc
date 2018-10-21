@@ -6,13 +6,13 @@
 /*   By: pepe <pepe@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 15:41:24 by pepe              #+#    #+#             */
-/*   Updated: 2018/10/04 08:49:35 by pepe             ###   ########.fr       */
+/*   Updated: 2018/10/18 09:03:54 by pepe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-static void		compute_core(char *pwd, size_t len_pwd, char **salt, char *res)
+static void		compute_core(char *password, size_t len_pwd, char **salt, char *res)
 {
 	t_hmac		*hmac;
 	size_t		i;
@@ -20,7 +20,7 @@ static void		compute_core(char *pwd, size_t len_pwd, char **salt, char *res)
 	i = 0;
 	hmac = ft_hmac_init((uint8_t *)(*salt), ft_strlen(*salt), ft_sha1, 64);
 	ft_strdel(salt);
-	*salt = ft_hmac_process(hmac, (uint8_t *)pwd, len_pwd);
+	*salt = ft_hmac_process(hmac, (uint8_t *)password, len_pwd);
 	while (i < 40)
 	{
 		res[i] ^= (*salt)[i];
@@ -29,7 +29,7 @@ static void		compute_core(char *pwd, size_t len_pwd, char **salt, char *res)
 	ft_hmac_free(&hmac);
 }
 
-static char		*compute_pbkdf2(char *pwd, size_t len_pwd)
+static char		*compute_pbkdf2(char *password, size_t len_pwd)
 {
     char		*res;
 	char		*salt;
@@ -46,11 +46,7 @@ static char		*compute_pbkdf2(char *pwd, size_t len_pwd)
 	}
 	while (++i < 20)
 	{
-		compute_core(pwd, len_pwd, &salt, res);
-		for (size_t i = 0; i < 40; i++) {
-			ft_printf("%02x ", res[i]);
-		}
-		ft_putchar('\n');
+		compute_core(password, len_pwd, &salt, res);
 	}
 	ft_strdel(&salt);
 	return (res);
@@ -59,10 +55,19 @@ static char		*compute_pbkdf2(char *pwd, size_t len_pwd)
 /*
 ** We will use pbkdf2 with hmac_sha1
 */
-char			*custom_pbkdf2(char *pwd)
+uint64_t		custom_pbkdf2(char *password)
 {
-	char	*res;
+	char		*str;
+	uint64_t	ret;
+	size_t		i;
 
-	res = compute_pbkdf2(pwd, ft_strlen(pwd));
-	return (res);
+	str = compute_pbkdf2(password, ft_strlen(password));
+	ret = 0;
+	i = 0;
+	while (i < 8)
+	{
+		ret = (ret << 8) + ((unsigned char)(str[i + 8]));
+		i++;
+	}
+	return (ret);
 }
