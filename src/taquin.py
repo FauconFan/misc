@@ -21,7 +21,7 @@ class Taquin(object):
 		# objective to calculate the score
 		self.objective = objective
 		# ptr function for scoring
-		self.function_score = self.score_manhattan
+		self.function_score = self.score_right_position
 		# Set score to None
 		self.score_int = None
 
@@ -93,6 +93,13 @@ class Taquin(object):
 	def score_manhattan(self, i, j):
 		real_x, real_y = self.get_right_positions(self.dico[(i, j)])
 		return (abs(real_x - i) + abs(real_y - j))
+
+	def score_right_position(self, i, j):
+		if self.objective[self.dico[i,j]] == (i, j):
+			return 0
+		return 1
+
+	# def score
 
 	def score(self):
 		if (self.score_int == None):
