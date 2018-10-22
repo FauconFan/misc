@@ -8,9 +8,6 @@ class State(object):
 		self.liste_history = liste_history
 		self.score = taquin.score()
 
-	# def clone(self):
-	# 	return State(self.taquin.clone(), self.taille_history, self.liste_history.copy())
-
 	def __lt__(self, other):
 		return self.score < other.score
 

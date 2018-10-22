@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from src.state import State
+from src.result import Result
 
 def insert_in_list(list_states, n_state):
 	# Insertion par recherche dichotomique
@@ -37,6 +38,8 @@ def solver(taquin):
 	list_states.append(State(taquin, 0, []))
 	hash_states[hash(taquin)] = True
 	result = None
+	time_complexity = 1
+	space_complexity = 1
 
 	iterator = 0;
 
@@ -45,14 +48,15 @@ def solver(taquin):
 		taq_actu = state_actu.taquin
 		if state_actu.score == 0:
 			is_running = False
-			result = taq_actu
+			result = state_actu
 		else:
 			moves = taq_actu.get_possible_moves()
+			time_complexity += len(moves)
 			smart_insert(list_states, moves, hash_states, state_actu)
+			space_complexity = max(space_complexity, len(list_states))
 
 		if (iterator % 1000 == 0):
 			print("turn " + str(iterator))
 		iterator += 1
 
-	print(iterator)
-	print(result)
+	return Result(result, time_complexity, space_complexity, iterator)

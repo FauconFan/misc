@@ -8,6 +8,9 @@ class Movement(Enum):
 	DOWN = 3
 	LEFT = 4
 
+	def __str__(self):
+		return self.name
+
 class Taquin(object):
 	"""docstring for Taquin"""
 	def __init__(self, size, dico, objective = None):

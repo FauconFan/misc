@@ -64,6 +64,12 @@ def parse(filename):
 	except FileNotFoundError:
 		print('File not found')
 		sys.exit(1)
+	except IsADirectoryError:
+		print('The argument is a directory')
+		sys.exit(1)
+	except:
+		print('Unexpected error')
+		sys.exit(1)
 	lines = clean_lines(lines)
 	tmp['size'] = get_size(lines, tmp)
 	return get_taquin(lines, tmp)
