@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 11:58:06 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/18 12:42:55 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/22 08:42:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void						add_advanced_opt(t_cli_builder_parser *cli)
 				ft_create_sl_opt('s', "salt", HELP_SALT_HEX),
 				ft_create_string_arg(HELP_SALT_TAG, NULL));
 	ft_cli_add_u(cli,
-				ft_create_sl_opt('v', "--iv", HELP_VEC_HEX),
+				ft_create_sl_opt('v', "iv", HELP_VEC_HEX),
 				ft_create_string_arg(HELP_VEC_TAG, NULL));
 }
 

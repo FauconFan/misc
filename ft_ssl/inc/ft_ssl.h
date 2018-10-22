@@ -6,14 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/18 11:59:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/22 08:41:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SSL_COMMAND_H
 #define FT_SSL_COMMAND_H
 
-#include <linux/random.h>
+// #include <linux/random.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
@@ -43,7 +43,7 @@
 
 void					ft_ssl_add_cmds(t_cmd_builder_parser *bd_parser);
 
-uint64_t				custom_pbkdf2(char *pwd);
-int						getrandom(char *buffer, size_t len);
+// uint64_t				custom_pbkdf2(char *pwd);
+// int						getrandom(char *buffer, size_t len);
 
 #endif

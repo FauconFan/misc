@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/19 16:28:46 by jpriou            #+#    #+#             */
-/*   Updated: 2018/09/20 22:58:12 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/22 16:26:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		set_out(char *output_file, char *o, size_t len_out)
 
 	if (output_file == NULL)
 	{
-		write(0, o, len_out);
+		write(1, o, len_out);
 	}
 	else
 	{
