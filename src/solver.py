@@ -26,8 +26,9 @@ def smart_insert(list_states, list_newtaquins, hash_states, state_actu):
 	for t, m in list_newtaquins:
 		hashed = hash(t)
 		if hashed not in hash_states:
-			state_actu.liste_history.append(m)
-			n_state = State(t, state_actu.taille_history + 1, state_actu.liste_history)
+			new_history = state_actu.liste_history.copy()
+			new_history.append(m)
+			n_state = State(t, state_actu.taille_history + 1, new_history)
 			insert_in_list(list_states, n_state)
 			hash_states[hashed] = True
 
