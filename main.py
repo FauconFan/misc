@@ -23,7 +23,7 @@ if __name__ == '__main__':
 		print("Choose wisely your heuristic function")
 		sys.exit(1)
 	soluble = is_soluble(taquin)
-	print('Est-il soluble :', soluble) # !! Ne pas enlever cette ligne. Elle est utilisée dans les tests
+	print('Is it soluble ?', soluble) # !! Ne pas enlever cette ligne. Elle est utilisée dans les tests
 	if soluble:
 		result = solver(taquin)
 		print(result)

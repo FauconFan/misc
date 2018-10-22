@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/09 16:03:24 by jpriou            #+#    #+#              #
-#    Updated: 2018/10/18 11:14:40 by jpriou           ###   ########.fr        #
+#    Updated: 2018/10/22 16:04:29 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ test_non_soluble:
 	@bash $(TESTS_PATH) non_soluble
 
 test_random:
-	@printf "This command is infinit, make sure to Ctrl-C if you are satisfied\\n"
+	@printf "This command is a infinite loop, make sure to Ctrl-C if you are satisfied\\n"
 	@printf "Starting in 5 seconds\\n"
 	@sleep 5
 	@bash $(TESTS_PATH) random
