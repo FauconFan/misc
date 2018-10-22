@@ -56,8 +56,8 @@ def solver(taquin):
 			smart_insert(list_states, moves, hash_states, state_actu)
 			space_complexity = max(space_complexity, len(list_states))
 
+		iterator += 1
 		if (iterator % 1000 == 0):
 			print("turn " + str(iterator))
-		iterator += 1
 
 	return Result(result, time_complexity, space_complexity, iterator)

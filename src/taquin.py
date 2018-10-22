@@ -11,9 +11,23 @@ class Movement(Enum):
 	def __str__(self):
 		return self.name
 
+
+def score_manhattan(taquin, i, j):
+	real_x, real_y = taquin.get_right_positions(taquin.dico[(i, j)])
+	return (abs(real_x - i) + abs(real_y - j))
+
+def score_euclidian(taquin, i, j):
+	real_x, real_y = taquin.get_right_positions(taquin.dico[(i, j)])
+	return ((real_x - i) ** 2 + (real_y - j) ** 2)
+
+def score_right_position(taquin, i, j):
+	if taquin.objective[taquin.dico[i,j]] == (i, j):
+		return 0
+	return 1
+
 class Taquin(object):
 	"""docstring for Taquin"""
-	def __init__(self, size, dico, objective = None):
+	def __init__(self, size, dico, objective = None, score_f = score_manhattan):
 		# size of the taquin
 		self.size = size
 		# (x, y) -> value between 1 and size * size - 1
@@ -21,7 +35,7 @@ class Taquin(object):
 		# objective to calculate the score
 		self.objective = objective
 		# ptr function for scoring
-		self.function_score = self.score_right_position
+		self.function_score = score_f
 		# Set score to None
 		self.score_int = None
 
@@ -41,8 +55,18 @@ class Taquin(object):
 				hashed = hashed * m + self.dico[(i, j)]
 		return hashed
 
+	def choose_heuristic(self, s):
+		if s == "manhattan":
+			self.function_score = score_manhattan
+		elif s == "euclidian":
+			self.function_score = score_euclidian
+		elif s == "right_position":
+			self.function_score = score_right_position
+		else:
+			raise
+
 	def clone(self):
-		ret = Taquin(self.size, self.dico.copy(), objective = self.objective)
+		ret = Taquin(self.size, self.dico.copy(), objective = self.objective, score_f = self.function_score)
 		return ret
 
 	def find_case(self, value):
@@ -65,11 +89,11 @@ class Taquin(object):
 		def build_new_taquin(x1, y1, x2, y2):
 			cl = self.clone()
 			next_score = self.score()
-			next_score -= cl.function_score(x1, y1)
-			next_score -= cl.function_score(x2, y2)
+			next_score -= self.function_score(cl, x1, y1)
+			next_score -= self.function_score(cl, x2, y2)
 			cl.swap_values(x1, y1, x2, y2)
-			next_score += cl.function_score(x1, y1)
-			next_score += cl.function_score(x2, y2)
+			next_score += self.function_score(cl, x1, y1)
+			next_score += self.function_score(cl, x2, y2)
 			cl.score_int = next_score
 			return cl
 
@@ -89,16 +113,6 @@ class Taquin(object):
 			ret.append((cl, Movement.RIGHT))
 		return ret
 
-	""" Score avec la distance manhattan """
-	def score_manhattan(self, i, j):
-		real_x, real_y = self.get_right_positions(self.dico[(i, j)])
-		return (abs(real_x - i) + abs(real_y - j))
-
-	def score_right_position(self, i, j):
-		if self.objective[self.dico[i,j]] == (i, j):
-			return 0
-		return 1
-
 	# def score
 
 	def score(self):
@@ -106,5 +120,5 @@ class Taquin(object):
 			self.score_int = 0
 			for i in range(self.size):
 				for j in range(self.size):
-					self.score_int += self.function_score(i, j)
+					self.score_int += self.function_score(self, i, j)
 		return self.score_int

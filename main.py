@@ -9,16 +9,23 @@ from src.taquin import Taquin
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
-	parser.add_argument("-s", "--show", action="store_true", default=False, help="show moves at the end")
+	parser.add_argument("-q", "--quiet", action="store_true", default=False, help="show moves at the end")
+	parser.add_argument("--heuristic", default="manhattan", help="choose the heuristic function in ['manhattan', 'euclidian', 'right_position']")
 	parser.add_argument("taquin")
 	args = parser.parse_args()
 
 	taquin = parse(args.taquin)
-	print(taquin)
+	if not args.quiet:
+		print(taquin)
+	try:
+		taquin.choose_heuristic(args.heuristic)
+	except:
+		print("Choose wisely your heuristic function")
+		sys.exit(1)
 	soluble = is_soluble(taquin)
 	print('Est-il soluble :', soluble) # !! Ne pas enlever cette ligne. Elle est utilisée dans les tests
 	if soluble:
 		result = solver(taquin)
 		print(result)
-		if args.show:
+		if not args.quiet:
 			print(result.build_moves())
