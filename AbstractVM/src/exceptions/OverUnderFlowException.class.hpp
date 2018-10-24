@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/06 11:26:48 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 17:14:27 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/24 18:55:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 #define MULT_MSG    "Multiplication operation"
 
 enum FlowExceptionNature {
-    OVERFLOW,
-    UNDERFLOW,
+    OVERFLOW_NATURE,
+    UNDERFLOW_NATURE,
     NONE
 };
 

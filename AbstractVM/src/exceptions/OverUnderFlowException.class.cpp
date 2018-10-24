@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/06 11:31:11 by jpriou            #+#    #+#             */
-/*   Updated: 2018/07/08 23:11:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/24 19:04:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ OverUnderFlowException::OverUnderFlowException (
     std::string msg = "";
 
     switch (fen) {
-        case OVERFLOW:
+        case OVERFLOW_NATURE:
             msg += "OverflowException : ";
             break;
-        case UNDERFLOW:
+        case UNDERFLOW_NATURE:
             msg += "UnderflowException : ";
             break;
         default:

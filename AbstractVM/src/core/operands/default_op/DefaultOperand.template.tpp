@@ -68,15 +68,15 @@ IOperand const * DefaultOperand<T>::operator+(IOperand const & rhs) const {
 
     if ((a > 0) && (b > 0)) {
         if (res < b) {
-            throw OverUnderFlowException(ADDSUS, OVERFLOW);
+            throw OverUnderFlowException(ADDSUS, OVERFLOW_NATURE);
         }
     }
     else if ((a < 0) && (b < 0)) {
         if (a < 0 && res > b) {
-            throw OverUnderFlowException(ADDSUS, OVERFLOW);
+            throw OverUnderFlowException(ADDSUS, OVERFLOW_NATURE);
         }
         else if (res < b) {
-            throw OverUnderFlowException(ADDSUS, UNDERFLOW);
+            throw OverUnderFlowException(ADDSUS, UNDERFLOW_NATURE);
         }
     }
     return OperandFactory::get().createOperand(this->getType(),
@@ -105,13 +105,13 @@ IOperand const * DefaultOperand<T>::operator*(IOperand const & rhs) const {
 
     if (ABS(a) > std::numeric_limits<T>::max() / ABS(b)) {
         if ((a < 0) && (b < 0)) {
-            throw OverUnderFlowException(MULT, OVERFLOW);
+            throw OverUnderFlowException(MULT, OVERFLOW_NATURE);
         }
         else if ((a > 0) && (b > 0)) {
-            throw OverUnderFlowException(MULT, OVERFLOW);
+            throw OverUnderFlowException(MULT, OVERFLOW_NATURE);
         }
         else {
-            throw OverUnderFlowException(MULT, UNDERFLOW);
+            throw OverUnderFlowException(MULT, UNDERFLOW_NATURE);
         }
     }
     return OperandFactory::get().createOperand(this->getType(),

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 16:51:57 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 16:27:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/24 18:57:38 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void Main::loadCin() {
     std::string line;
 
     while (std::cin.good()) {
-        std::cin >> line;
+		std::getline(std::cin, line);
         if (line == ";;") {
             break;
         }
