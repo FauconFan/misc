@@ -6,43 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/19 16:28:46 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/22 16:26:27 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/26 11:21:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-
-static char		*get_in(char *input_file, size_t *len_in)
-{
-	char	*res;
-	char	*errno_str;
-
-	if (input_file == NULL)
-		res = ft_get_content_file_fd_nostat(0, len_in, &errno_str);
-	else
-		res = ft_get_content_file(input_file, len_in, &errno_str);
-	if (errno_str != NULL)
-		ft_dprintf(2, "Input error: %s\n", errno_str);
-	return (res);
-}
-
-static void		set_out(char *output_file, char *o, size_t len_out)
-{
-	char	*errno_str;
-
-	if (output_file == NULL)
-	{
-		write(1, o, len_out);
-	}
-	else
-	{
-		ft_put_content_file(output_file, o, len_out, &errno_str);
-		if (errno_str != NULL)
-		{
-			ft_dprintf(2, "Output error: %s\n", errno_str);
-		}
-	}
-}
 
 static void		do_do_base(
 						t_cmd_parser *parser,
@@ -68,7 +36,7 @@ static void		do_do_base(
 			}
 			else
 				content_out = (char *)unf(content_in, &len);
-			set_out(ft_cli_gets(parser->parser, HELP_OUT_TAG), content_out, len);
+			set_out(ft_cli_gets(parser->parser, HELP_OUT_TAG), content_out, len, TRUE);
 			ft_strdel(&content_in);
 			ft_strdel(&content_out);
 		}

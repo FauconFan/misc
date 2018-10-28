@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2018/10/22 08:40:46 by jpriou           ###   ########.fr        #
+#    Updated: 2018/10/25 09:56:03 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC_FOLDER = src/
 INCLUDES_FOLDER = inc/
 LIBFT_FOLDER = ../../my_awesome_libft/libft/
 
-GWW = gcc -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
+GWW = gcc -g -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
 LIBS = -L $(LIBFT_FOLDER) -l ft
 
 SRC_PROJECT = \
@@ -29,6 +29,8 @@ SRC_PROJECT = \
 				core/do_dgst.c \
 				core/do_base.c \
 				core/do_des.c \
+				utils/get_in.c \
+				utils/set_out.c \
 				main.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC_PROJECT))

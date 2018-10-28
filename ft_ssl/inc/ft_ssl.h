@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/22 08:41:16 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/10/26 11:19:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,24 @@
 #define HELP_PROG		"Program tool to crypt, hash or decrypt contents"
 
 void					ft_ssl_add_cmds(t_cmd_builder_parser *bd_parser);
+
+
+char					*get_in(char *input_file, size_t *len_in);
+char					*get_in_ascii(
+							char *input_file,
+							size_t *len_in,
+							t_bool ascii_mode);
+
+void					set_out(
+							char *output_file,
+							char *o,
+							size_t len_out,
+							t_bool nl);
+
+void					prepare_out_ascii(
+							uint8_t **out,
+							size_t *len,
+							t_bool ascii_mode);
 
 // uint64_t				custom_pbkdf2(char *pwd);
 // int						getrandom(char *buffer, size_t len);
