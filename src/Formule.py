@@ -8,7 +8,6 @@ class Operator(Enum):
     NOT = 4
     NONE = 5
 
-
 class Formule(object):
     def __init__(self, operateur, operand1 = None, operand2 = None):
         self.operateur = operateur
