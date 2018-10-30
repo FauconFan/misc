@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/28 20:29:52 by jpriou            #+#    #+#              #
-#    Updated: 2018/10/28 20:33:03 by jpriou           ###   ########.fr        #
+#    Updated: 2018/10/29 08:46:28 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,15 @@ OCAMLMAKEFILE = OCamlMakefile
 
 RESULT = linear_regression
 
+MAIN_PREDICT = MainPredict.ml
+
 ML_FILES = \
 			src/ParsingCSV.ml \
 			src/LinearRegression.ml \
 
 MLI_FILES = $(foreach f, $(ML_FILES), $fi)
 
-SOURCES = $(MLI_FILES) $(ML_FILES)
+SOURCES = $(MLI_FILES) $(ML_FILES) $(MAIN_PREDICT)
 
 .PHONY: all
 all: delete_links

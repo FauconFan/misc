@@ -6,8 +6,9 @@
 (*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2018/10/28 20:26:50 by jpriou            #+#    #+#             *)
-(*   Updated: 2018/10/28 20:35:15 by jpriou           ###   ########.fr       *)
+(*   Updated: 2018/10/29 08:55:17 by jpriou           ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
 val run : string -> LinearRegression.data
+val display : LinearRegression.data -> unit
