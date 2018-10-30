@@ -23,6 +23,9 @@ class Environment(object):
             s += str(k) + " : " + vs + "\n"
         return s
 
+    def __eq__(self, other):
+        self.table_of_truth == other.table_of_truth
+
     def stillHaveUndefined(self):
         for _, v in self.table_of_truth.items():
             if v == May_boolean.UNDEFINED:
@@ -31,12 +34,9 @@ class Environment(object):
 
     def applyRules(self):
         for rule in self.list_rules:
-            print(str(rule))
             if rule.formule_left.eval(self) == True:
-                print("True")
                 rule.formule_right.deduce(self)
             print(str(self))
-            input()
 
     def getEnv(self, s):
         return self.table_of_truth[s]

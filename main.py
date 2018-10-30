@@ -7,11 +7,12 @@ from src.Environment import create_table_of_truth, Environment
 
 def algo(env):
     print(str(env))
-    # while env.stillHaveUndefined():
-    #
-    copy = deepcopy(env)
-    env.applyRules()
-    print(str(env))
+    while env.stillHaveUndefined():
+        copy = deepcopy(env)
+        env.applyRules()
+        # Disjonction de cas
+        if copy == env:
+            break
 
 def main():
     if len(sys.argv) != 2:
