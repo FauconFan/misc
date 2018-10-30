@@ -35,14 +35,6 @@ class Operator(Enum):
             return Operator.NOT
         if op == None:
             return Operator.NONE
-    ## not used
-    @staticmethod
-    def arity(op):
-        if op == Operator.NONE:
-            return 0
-        elif op == Operator.NOT:
-            return 1
-        return 2
 
 class Formule(object):
     def __init__(self, operateur, operand1 = None, operand2 = None):
@@ -68,3 +60,49 @@ class Formule(object):
         if self.elem:
             return Operator.repr_op(self.operateur) + str(self.elem)
         return "(" + str(self.left) + Operator.repr_op(self.operateur) + str(self.right) + ")"
+
+    def eval(self, env):
+        if self.operateur == Operator.NONE:
+            return env.getEnv(self.elem)
+        elif self.operateur == Operator.NOT:
+            return not(env.getEnv(self.elem))
+        elif self.operateur == Operator.AND:
+            return env.getEnv(self.left) and env.getEnv(self.right)
+        elif self.operateur == Operator.OR:
+            return env.getEnv(self.left) or env.getEnv(self.right)
+        elif self.operateur == Operator.XOR:
+            return env.getEnv(self.left) ^ env.getEnv(self.right)
+
+    def decuce(self, env):
+        if self.operateur == Operator.NONE:
+            env.setEnv(self.elem, May_boolean.TRUE)
+        elif self.operateur == Operator.NOT:
+            env.setEnv(self.elem, May_boolean.FALSE)
+        elif self.operateur == operateur.AND:
+            b0 = self.left.eval(env)
+            b1 = self.right.eval(env)
+            if b0 != May_boolean.UNDEFINED and b1 != May_boolean.UNDEFINED:
+                if not(b0 == May_boolean.TRUE and b1 == May_boolean.TRUE):
+                    raise "Exception"
+            self.left.deduce(env)
+            self.right.decuce(env)
+        elif self.operateur == Operator.OR:
+            b0 = self.left.eval(env)
+            b1 = self.right.eval(env)
+            if b0 != May_boolean.UNDEFINED and b1 != May_boolean.UNDEFINED:
+                if not(b0 == May_boolean.FALSE and b1 == May_boolean.FALSE):
+                    raise "Exception"
+            if b0 == May_boolean.FALSE:
+                self.right.decuce(env)
+            elif b1 == May_boolean.FALSE:
+                self.left.deduce(env)
+        elif self.operateur == Operator.XOR:
+            b0 = self.left.eval(env)
+            b1 = self.right.eval(env)
+            if b0 != May_boolean.UNDEFINED and b1 != May_boolean.UNDEFINED:
+                if b0 == b1:
+                    raise "Exception"
+            if b0 == May_boolean.FALSE:
+                self.right.decuce(env)
+            elif b1 == May_boolean.FALSE:
+                self.left.deduce(env)

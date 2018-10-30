@@ -15,7 +15,7 @@ def main():
     #     print(str(i))
     table = create_table_of_truth(list_rules, axioms)
     env = Environment(list_rules, table)
-  
+    print(str(env))
 
 if __name__ == "__main__":
     main()
