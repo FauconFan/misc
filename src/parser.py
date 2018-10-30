@@ -24,6 +24,8 @@ def resolve_op(stack, op_stack, parenthesis):
 		op = op_stack.pop(0)
 		if op == "(":
 			parenthesis = 0
+			if len(op_stack) is 0:
+				return
 			op = op_stack.pop(0)
 		if op == '!':
 			right = None
