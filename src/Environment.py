@@ -32,11 +32,21 @@ class Environment(object):
                 return True
         return False
 
+    def getFirstUndefined(self):
+        for k, v in self.table_of_truth.items():
+            if v == None:
+                return k
+        raise Exception("SNH")
+
     def applyRules(self):
         for rule in self.list_rules:
-            if rule.formule_left.eval(self) == True:
+            b0 = rule.formule_left.eval(self)
+            b1 = rule.formule_right.eval(self)
+            if b0 == True and b1 == False:
+                raise Exception("Incohérence")
+            if b0 == True:
                 rule.formule_right.deduce(self)
-            if rule.formule_right.eval(self) == False:
+            if b1 == False:
                 rule.formule_left.deduceReverse(self)
 
     def getEnv(self, s):

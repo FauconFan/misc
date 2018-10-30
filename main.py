@@ -5,12 +5,34 @@ from copy import deepcopy
 from src.parser import parse
 from src.Environment import create_table_of_truth, Environment
 
+def disjonction(env):
+    k = env.getFirstUndefined()
+    envTrue = deepcopy(env)
+    envFalse = deepcopy(env)
+    envTrue.setEnv(k, True)
+    envFalse.setEnv(k, False)
+    is_ok_true = True
+    is_ok_false = True
+    try:
+        algo(envTrue)
+    except:
+        is_ok_true = False
+    try:
+        algo(envFalse)
+    except:
+        is_ok_false = False
+    if is_ok_true == True and is_ok_false == True:
+        return
+    elif is_ok_true == True:
+        env.
+
 def algo(env):
     while env.stillHaveUndefined():
         print(str(env))
         copy = deepcopy(env)
         env.applyRules()
-        # Disjonction de cas
+        # if copy == env:
+        #     disjonction(env)
         if copy == env:
             break
     print(str(env))
@@ -26,7 +48,10 @@ def main():
     #     print(str(i))
     table = create_table_of_truth(list_rules, axioms)
     env = Environment(list_rules, table)
-    algo(env)
+    try:
+        algo(env)
+    except Exception as e:
+        print(e)
 
 if __name__ == "__main__":
     main()
