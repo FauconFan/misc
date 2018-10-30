@@ -45,16 +45,16 @@ class Formule(object):
         # print(operand1, operateur, operand2)
         if self.operateur == Operator.AND or self.operateur == Operator.OR or self.operateur == Operator.XOR:
             if operand1 == None or operand2 == None:
-                raise "Invalid utilisation"
+                raise Exception("Invalid utilisation")
             self.left = operand1
             self.right = operand2
         elif self.operateur == Operator.NOT or self.operateur == Operator.NONE:
             if operand1 == None:
-                raise "Invalid utilisation"
+                raise Exception("Invalid utilisation")
             self.elem = operand1
         else:
             print("Mauvaise expression : ", operateur, operand1, operand2)
-            raise "Invalid utilisation"
+            raise Exception("Invalid utilisation")
 
     def __str__(self):
         if self.elem:

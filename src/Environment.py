@@ -51,5 +51,5 @@ def create_table_of_truth(list_rules, axioms):
         if c in table_of_truth:
             table_of_truth[c] = May_boolean.TRUE
         else:
-            raise "No rule for this axiom"
+            raise Exception("No rule for this axiom")
     return table_of_truth
