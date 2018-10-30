@@ -83,15 +83,15 @@ class Formule(object):
             b1 = self.right.eval(env)
             if b0 != May_boolean.UNDEFINED and b1 != May_boolean.UNDEFINED:
                 if not(b0 == May_boolean.TRUE and b1 == May_boolean.TRUE):
-                    raise "Exception"
+                    raise Exception("Exception")
             self.left.deduce(env)
             self.right.decuce(env)
         elif self.operateur == Operator.OR:
             b0 = self.left.eval(env)
             b1 = self.right.eval(env)
             if b0 != May_boolean.UNDEFINED and b1 != May_boolean.UNDEFINED:
-                if not(b0 == May_boolean.FALSE and b1 == May_boolean.FALSE):
-                    raise "Exception"
+                if b0 == May_boolean.FALSE and b1 == May_boolean.FALSE:
+                    raise Exception("Exception")
             if b0 == May_boolean.FALSE:
                 self.right.decuce(env)
             elif b1 == May_boolean.FALSE:
@@ -101,7 +101,7 @@ class Formule(object):
             b1 = self.right.eval(env)
             if b0 != May_boolean.UNDEFINED and b1 != May_boolean.UNDEFINED:
                 if b0 == b1:
-                    raise "Exception"
+                    raise Exception("Exception")
             if b0 == May_boolean.FALSE:
                 self.right.decuce(env)
             elif b1 == May_boolean.FALSE:

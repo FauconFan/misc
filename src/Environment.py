@@ -33,6 +33,17 @@ class Environment(object):
             s += str(k) + " : " + May_boolean.getStr(v) + "\n"
         return s
 
+    def stillHaveUndefined(self):
+        for _, v in self.table_of_truth.items():
+            if v == May_boolean.UNDEFINED:
+                return True
+        return False
+
+    def applyRules(self):
+        for rule in self.list_rules:
+            if rule.formule_left.eval(self):
+                rule.formule_right.deduce(self)
+
     def getEnv(self, str):
         return self.table_of_truth[str]
 

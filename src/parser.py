@@ -41,7 +41,7 @@ def resolve_op(stack, op_stack, parenthesis):
 def resolve_stack(stack, op_stack):
 	while len(op_stack) is not 0:
 		resolve_op(stack, op_stack, 0)
-	return stack.pop(0)
+	return Formule(Operator.NONE, stack.pop(0))
 
 
 def create_formula(exp):
