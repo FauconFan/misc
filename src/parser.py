@@ -1,7 +1,9 @@
 import sys
 
 from Formule import Formule, Operator
-from Lineparser import LineParser
+from Rule import Rule
+
+ALLOWED_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def clean_lines(lines):
 	#Mise Au propre de la recuperation sur l'entree standard
@@ -15,49 +17,74 @@ def clean_lines(lines):
 			new_lines.append(val.strip())
 	return new_lines
 
-# def is_operator(char):
-# 	if char == '+':
-# 		return 1
-# 	elif char == '|':
-# 		return 2
-# 	return -1
+def resolve_op(stack, op_stack, parenthesis):
+	if len(op_stack) is not 0:
+		op = op_stack.pop(0)
+		if op == "(":
+			parenthesis = 0
+			op = op_stack.pop(0)
+		if op == '!':
+			right = None
+		else:
+			right = stack.pop(0)
+		left = stack.pop(0)
+		formule = Formule(op, left, right)
+		stack.insert(0, formule)
+		if parenthesis:
+			resolve_op(stack, op_stack, parenthesis)
 
-# def create_formula(exp):
-# 	# print(exp)
-# 	for c in exp:
-# 		if is_operator(c) > 0:
+
+def resolve_stack(stack, op_stack):
+	while len(op_stack) is not 0:
+		resolve_op(stack, op_stack, 0)
+	return stack.pop(0)
+
+def create_formula(exp):
+	op_stack = []
+	stack = []
+	for i in range(len(exp)):
+		if exp[i] in Operator.op_list() or exp[i] in ["(", ")"]:
+			if exp[i] == ")":
+				resolve_op(stack, op_stack, 1)
+			else:
+				op_stack.insert(0, exp[i])
+		elif ALLOWED_CHAR.find(exp[i]) != -1:
+			stack.insert(0, exp[i])
+			if "(" not in op_stack:
+				resolve_op(stack, op_stack, 0)
+	return resolve_stack(stack, op_stack)
+
 
 def create_rule(line):
 	expressions = line.split("=>")
 	expressions = [exp.strip() for exp in expressions]
-	## creer recursivement une formule par priorite
-	## pour l'instant: expression simple
-	# create_formula(expressions[0])
-	line_parser = LineParser(expressions[0])
-	line_parser.parse()
+	left_formule = create_formula(expressions[0].replace(" ", ""))
+	right_formule = create_formula(expressions[1].replace(" ", ""))
+	return Rule(left_formule, right_formule, None)
 
-def parse_line(line):
-	# print(line)
-	## need to check errors here
-	if line.find("<=>") >= 0:
-		## convert this to two create rule implications
-		pass
-	elif line.find("=>") >= 0:
-		create_rule(line)
-	elif line[0] == '=':
-		## get axioms
-		pass
-	elif line[0] == '?':
-		## get queries
-		pass
+def parse_lines(lines):
+	list_rules = []
+	for line in lines:
+		print(line)
+		## need to check errors here
+		if line.find("<=>") >= 0:
+			## convert this to two create rule implications
+			pass
+		elif line.find("=>") >= 0:
+			list_rules.append(create_rule(line))
+		elif line[0] == '=':
+			axioms = list(line[1:])
+		elif line[0] == '?':
+			queries = list(line[1:])
+	return axioms, queries, list_rules
 
 
 def parse(filename):
 	try:
 		with open(filename) as file:
 			lines = file.read().splitlines()
-	# except FileNotFoundError: ## depends python version
-	except IOError:
+	except FileNotFoundError: ## depends python version
+	# except IOError:
 		print('File not found')
 		sys.exit(1)
 	except IsADirectoryError:
@@ -67,5 +94,4 @@ def parse(filename):
 		print('Unexpected error')
 		sys.exit(1)
 	lines = clean_lines(lines)
-	for line in lines:
-		parse_line(line)
+	axioms, queries, list_rules = parse_lines(lines)
