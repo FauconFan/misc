@@ -43,6 +43,7 @@ def resolve_stack(stack, op_stack):
 		resolve_op(stack, op_stack, 0)
 	return stack.pop(0)
 
+
 def create_formula(exp):
 	op_stack = []
 	stack = []
@@ -98,5 +99,5 @@ def parse(filename):
 		print('Unexpected error')
 		sys.exit(1)
 	lines = clean_lines(lines)
-	print(lines)
+	# print(lines)
 	return (parse_lines(lines))
