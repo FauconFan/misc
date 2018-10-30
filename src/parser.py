@@ -32,7 +32,13 @@ def resolve_op(stack, op_stack, parenthesis):
 		else:
 			right = stack.pop(0)
 		left = stack.pop(0)
-		formule = Formule(op, left, right)
+		f_left = left
+		f_right = right
+		if isinstance(left, str):
+			f_left = Formule(None, left)
+		if isinstance(right, str):
+			f_right = Formule(None, right)
+		formule = Formule(op, f_left, f_right)
 		stack.insert(0, formule)
 		if parenthesis:
 			resolve_op(stack, op_stack, parenthesis)
@@ -41,7 +47,10 @@ def resolve_op(stack, op_stack, parenthesis):
 def resolve_stack(stack, op_stack):
 	while len(op_stack) is not 0:
 		resolve_op(stack, op_stack, 0)
-	return Formule(Operator.NONE, stack.pop(0))
+	last = stack.pop(0)
+	if isinstance(last, str):
+		return Formule(None, last)
+	return last
 
 
 def create_formula(exp):
