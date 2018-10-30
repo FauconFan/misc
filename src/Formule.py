@@ -14,7 +14,7 @@ class Operator(Enum):
         if op == Operator.XOR:
             return " ^ "
         if op == Operator.NOT:
-            return " !"
+            return "!"
         if op == Operator.OR:
             return " | "
         return " "
@@ -35,7 +35,6 @@ class Operator(Enum):
             return Operator.NOT
         if op == None:
             return Operator.NONE
-
     ## not used
     @staticmethod
     def arity(op):
@@ -65,7 +64,7 @@ class Formule(object):
             print("Mauvaise expression : ", operateur, operand1, operand2)
             raise "Invalid utilisation"
 
-    def __repr__(self):
+    def __str__(self):
         if self.elem:
-            return Operator.repr_op(self.operateur) + str(self.elem) + " (Formule)"
-        return str(self.left) + Operator.repr_op(self.operateur) + str(self.right) + " (Formule)"
+            return Operator.repr_op(self.operateur) + str(self.elem)
+        return "(" + str(self.left) + Operator.repr_op(self.operateur) + str(self.right) + ")"

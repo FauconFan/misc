@@ -11,3 +11,6 @@ class Rule(object):
         self.formule_left = formule_left
         self.formule_right = formule_right
         self.state = state
+
+    def __str__(self):
+        return (str(self.formule_left)) + " => " + str(self.formule_right)

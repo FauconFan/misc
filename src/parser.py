@@ -1,7 +1,7 @@
 import sys
 
-from Formule import Formule, Operator
-from Rule import Rule
+from src.Formule import Formule, Operator
+from src.Rule import Rule
 
 ALLOWED_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -13,7 +13,9 @@ def clean_lines(lines):
 		val = i
 		if '#' in i.strip():
 			val = i[:i.index("#")]
-		if len(val.strip()) > 0:
+		val = val.replace(" ", "")
+		val = val.replace("\t", "")
+		if len(val) > 0:
 			new_lines.append(val.strip())
 	return new_lines
 
@@ -55,21 +57,21 @@ def create_formula(exp):
 	return resolve_stack(stack, op_stack)
 
 
-def create_rule(line):
-	expressions = line.split("=>")
+def create_rule(line, splitted_on = "=>"):
+	expressions = line.split(splitted_on)
 	expressions = [exp.strip() for exp in expressions]
-	left_formule = create_formula(expressions[0].replace(" ", ""))
-	right_formule = create_formula(expressions[1].replace(" ", ""))
+	left_formule = create_formula(expressions[0])
+	right_formule = create_formula(expressions[1])
 	return Rule(left_formule, right_formule, None)
 
 def parse_lines(lines):
 	list_rules = []
 	for line in lines:
-		print(line)
-		## need to check errors here
 		if line.find("<=>") >= 0:
-			## convert this to two create rule implications
-			pass
+			r = create_rule(line, splitted_on = "<=>")
+			list_rules.append(r)
+			s = Rule(r.formule_right, r.formule_left, None)
+			list_rules.append(s)
 		elif line.find("=>") >= 0:
 			list_rules.append(create_rule(line))
 		elif line[0] == '=':
@@ -94,4 +96,5 @@ def parse(filename):
 		print('Unexpected error')
 		sys.exit(1)
 	lines = clean_lines(lines)
-	axioms, queries, list_rules = parse_lines(lines)
+	print(lines)
+	return (parse_lines(lines))
