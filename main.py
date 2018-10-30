@@ -6,13 +6,14 @@ from src.parser import parse
 from src.Environment import create_table_of_truth, Environment
 
 def algo(env):
-    print(str(env))
     while env.stillHaveUndefined():
+        print(str(env))
         copy = deepcopy(env)
         env.applyRules()
         # Disjonction de cas
         if copy == env:
             break
+    print(str(env))
 
 def main():
     if len(sys.argv) != 2:

@@ -94,13 +94,16 @@ class Formule(object):
         if self.operateur == Operator.NONE:
             env.setEnv(self.elem, True)
         elif self.operateur == Operator.NOT: # Bug here
-            env.setEnv(self.elem.elem, False)
+            if isinstance(self.elem, str):
+                env.setEnv(self.elem, False)
+            else:
+                self.elem.deduceReverse(env)
         elif self.operateur == Operator.AND:
             b0 = self.left.eval(env)
             b1 = self.right.eval(env)
             if b0 != None and b1 != None:
                 if not(b0 == True and b1 == True):
-                    raise Exception("Exception")
+                    raise Exception("Incohérence")
             self.left.deduce(env)
             self.right.deduce(env)
         elif self.operateur == Operator.OR:
@@ -108,7 +111,7 @@ class Formule(object):
             b1 = self.right.eval(env)
             if b0 != None and b1 != None:
                 if b0 == False and b1 == False:
-                    raise Exception("Exception")
+                    raise Exception("Incohérence")
             if b0 == False:
                 self.right.deduce(env)
             elif b1 == False:
@@ -118,8 +121,47 @@ class Formule(object):
             b1 = self.right.eval(env)
             if b0 != None and b1 != None:
                 if b0 == b1:
-                    raise Exception("Exception")
+                    raise Exception("Incohérence")
             if b0 == False:
                 self.right.deduce(env)
             elif b1 == False:
                 self.left.deduce(env)
+
+    def deduceReverse(self, env):
+        if self.operateur == Operator.NONE:
+            env.setEnv(self.elem, False)
+        elif self.operateur == Operator.NOT: # Bug here
+            if isinstance(self.elem, str):
+                env.setEnv(self.elem, True)
+            else:
+                self.elem.deduce(env)
+        elif self.operateur == Operator.AND:
+            b0 = self.left.eval(env)
+            b1 = self.right.eval(env)
+            if b0 == True and b1 == True:
+                raise Exception("Incohérence")
+            if b0 == True:
+                self.right.deduceReverse(env)
+            elif b1 == True:
+                self.left.deduceReverse(env)
+        elif self.operateur == Operator.OR:
+            b0 = self.left.eval(env)
+            b1 = self.right.eval(env)
+            if b0 == True or b1 == True:
+                raise Exception("Incohérence")
+            self.left.deduceReverse(env)
+            self.right.deduceReverse(env)
+        elif self.operateur == Operator.XOR:
+            b0 = self.left.eval(env)
+            b1 = self.right.eval(env)
+            if b0 != None and b1 != None:
+                if b0 ^ b1 == True:
+                    raise Exception("Incohérence")
+            if b0 == True:
+                self.right.deduce(env)
+            elif b0 == False:
+                self.right.deduceReverse(env)
+            elif b1 == True:
+                self.left.deduce(env)
+            elif b1 == False:
+                self.left.deduceReverse(env)
