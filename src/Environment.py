@@ -36,7 +36,7 @@ class Environment(object):
         for k, v in self.table_of_truth.items():
             if v == None:
                 return k
-        raise Exception("SNH")
+        return None
 
     def applyRules(self):
         for rule in self.list_rules:

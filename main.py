@@ -7,6 +7,8 @@ from src.Environment import create_table_of_truth, Environment
 
 def disjonction(env):
     k = env.getFirstUndefined()
+    if k == None:
+        return
     envTrue = deepcopy(env)
     envFalse = deepcopy(env)
     envTrue.setEnv(k, True)
@@ -32,7 +34,7 @@ def disjonction(env):
 
 
 def algo(env):
-    while env.stillHaveUndefined():
+    while True:
         copy = deepcopy(env)
         env.applyRules()
         if copy == env:
