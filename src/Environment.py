@@ -57,6 +57,12 @@ class Environment(object):
             raise Exception("Incohérence")
         self.table_of_truth[str] = mb
 
+    def fusionUnionForDisjonction(self, envTrue, envFalse):
+        for k, v in self.table_of_truth.items():
+            if v == None:
+                if envTrue.getEnv(k) == envFalse.getEnv(k):
+                    self.setEnv(k, envTrue.getEnv(k))
+
 def create_table_of_truth(list_rules, axioms):
     table_of_truth = {}
     for i in list_rules:

@@ -22,20 +22,23 @@ def disjonction(env):
     except:
         is_ok_false = False
     if is_ok_true == True and is_ok_false == True:
-        return
+        env.fusionUnionForDisjonction(envTrue, envFalse)
     elif is_ok_true == True:
-        env.
+        env.setEnv(k, True)
+    elif is_ok_false == True:
+        env.setEnv(k, False)
+    else:
+        raise Exception("Exception")
+
 
 def algo(env):
     while env.stillHaveUndefined():
-        print(str(env))
         copy = deepcopy(env)
         env.applyRules()
-        # if copy == env:
-        #     disjonction(env)
+        if copy == env:
+            disjonction(env)
         if copy == env:
             break
-    print(str(env))
 
 def main():
     if len(sys.argv) != 2:
@@ -52,6 +55,7 @@ def main():
         algo(env)
     except Exception as e:
         print(e)
+    print(env)
 
 if __name__ == "__main__":
     main()
