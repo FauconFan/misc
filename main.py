@@ -40,6 +40,18 @@ def algo(env):
         if copy == env:
             break
 
+def answer(queries, env):
+    for q in queries:
+        try:
+            answer = env.table_of_truth[q]
+            if answer == None:
+                answer = "Undefined"
+            print("{} : {}".format(q, answer))
+        except KeyError:
+            print("This query is related to no rule")
+        except Exception as e:
+            print(e)
+
 def main():
     if len(sys.argv) != 2:
         sys.exit(1)
@@ -56,6 +68,7 @@ def main():
     except Exception as e:
         print(e)
     print(env)
+    answer(queries, env)
 
 if __name__ == "__main__":
     main()
