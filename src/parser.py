@@ -1,7 +1,6 @@
 import sys
 
 from src.Formule import Formule, Operator
-from src.Rule import Rule
 
 VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 ALLOWED_CHAR = VAR_CHAR + "=>!()?+^|"
@@ -79,20 +78,17 @@ def create_rule(line, splitted_on = "=>"):
 	expressions = [exp.strip() for exp in expressions]
 	left_formule = create_formula(expressions[0])
 	right_formule = create_formula(expressions[1])
-	return Rule(left_formule, right_formule, None)
+	return Formule(splitted_on, left_formule, right_formule)
 
 def parse_lines(lines):
-	list_rules = []
+	list_formulas = []
 	axioms = []
 	queries = []
 	for line in lines:
 		if line.find("<=>") >= 0:
-			r = create_rule(line, splitted_on = "<=>")
-			list_rules.append(r)
-			s = Rule(r.formule_right, r.formule_left, None)
-			list_rules.append(s)
+			list_formulas.append(create_rule(line, splitted_on = "<=>"))
 		elif line.find("=>") >= 0:
-			list_rules.append(create_rule(line))
+			list_formulas.append(create_rule(line))
 		elif line[0] == '=':
 			axioms = list(line[1:])
 		elif line[0] == '?':
@@ -100,7 +96,7 @@ def parse_lines(lines):
 	if not queries:
 		print("No queries")
 		sys.exit(1)
-	return axioms, queries, list_rules
+	return axioms, queries, list_formulas
 
 
 def parse(filename):

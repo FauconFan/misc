@@ -6,14 +6,14 @@ VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 class Environment(object):
-    def __init__(self, list_rules, table_of_truth):
-        self.list_rules = list_rules
+    def __init__(self, list_formulas, table_of_truth):
+        self.list_formulas = list_formulas
         self.table_of_truth = table_of_truth
 
     def __str__(self):
         s = "Env:\n"
         s += "Rules\n"
-        for i in self.list_rules:
+        for i in self.list_formulas:
             s += str(i) + "\n"
         s += "Table of truth\n"
         for k, v in self.table_of_truth.items():
@@ -39,15 +39,8 @@ class Environment(object):
         return None
 
     def applyRules(self):
-        for rule in self.list_rules:
-            b0 = rule.formule_left.eval(self)
-            b1 = rule.formule_right.eval(self)
-            if b0 == True and b1 == False:
-                raise Exception("Incohérence")
-            if b0 == True:
-                rule.formule_right.deduce(self)
-            if b1 == False:
-                rule.formule_left.deduceReverse(self)
+        for formula in self.list_formulas:
+            formula.deduce(self)
 
     def getEnv(self, s):
         return self.table_of_truth[s]
@@ -63,9 +56,9 @@ class Environment(object):
                 if envTrue.getEnv(k) == envFalse.getEnv(k):
                     self.setEnv(k, envTrue.getEnv(k))
 
-def create_table_of_truth(list_rules, axioms):
+def create_table_of_truth(list_formulas, axioms):
     table_of_truth = {}
-    for i in list_rules:
+    for i in list_formulas:
         rule = str(i)
         for c in list(rule):
             if VAR_CHAR.find(c) != -1:
