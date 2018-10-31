@@ -23,10 +23,7 @@ def resolve_op(stack, op_stack, parenthesis):
 	if len(op_stack) is not 0:
 		op = op_stack.pop(0)
 		if op == "(":
-			parenthesis = 0
-			if len(op_stack) is 0:
-				return
-			op = op_stack.pop(0)
+			return
 		if op == '!':
 			right = None
 		else:
