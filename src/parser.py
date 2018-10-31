@@ -51,6 +51,9 @@ def resolve_stack(stack, op_stack):
 	while len(op_stack) is not 0:
 		resolve_op(stack, op_stack, 0)
 	last = stack.pop(0)
+	if len(stack) is not 0:
+		print("Error in parsing")
+		sys.exit(1)
 	if isinstance(last, str):
 		return Formule(None, last)
 	return last
@@ -80,6 +83,8 @@ def create_rule(line, splitted_on = "=>"):
 
 def parse_lines(lines):
 	list_rules = []
+	axioms = []
+	queries = []
 	for line in lines:
 		if line.find("<=>") >= 0:
 			r = create_rule(line, splitted_on = "<=>")
@@ -92,6 +97,9 @@ def parse_lines(lines):
 			axioms = list(line[1:])
 		elif line[0] == '?':
 			queries = list(line[1:])
+	if not queries:
+		print("No queries")
+		sys.exit(1)
 	return axioms, queries, list_rules
 
 

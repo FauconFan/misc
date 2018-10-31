@@ -1,7 +1,7 @@
-# HELLO
+# C False? On sort Undefined
 
 A => B
-((A) ^ (B)) => C
+A ^ B => C
 
 =A
 
