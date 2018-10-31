@@ -2,7 +2,7 @@
 from enum import Enum
 
 ## MOCHE TA RACE
-ALLOWED_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 class Environment(object):
@@ -68,7 +68,7 @@ def create_table_of_truth(list_rules, axioms):
     for i in list_rules:
         rule = str(i)
         for c in list(rule):
-            if ALLOWED_CHAR.find(c) != -1:
+            if VAR_CHAR.find(c) != -1:
                 if c not in table_of_truth:
                     table_of_truth[c] = None
     for c in axioms:

@@ -3,7 +3,8 @@ import sys
 from src.Formule import Formule, Operator
 from src.Rule import Rule
 
-ALLOWED_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ALLOWED_CHAR = VAR_CHAR + "=>!()?+^|"
 
 def clean_lines(lines):
 	#Mise Au propre de la recuperation sur l'entree standard
@@ -17,6 +18,11 @@ def clean_lines(lines):
 		val = val.replace("\t", "")
 		if len(val) > 0:
 			new_lines.append(val.strip())
+	for line in new_lines:
+		for c in line:
+			if ALLOWED_CHAR.find(c) == -1:
+				print("'{}' is not allowed".format(c))
+				sys.exit(1)
 	return new_lines
 
 def resolve_op(stack, op_stack, parenthesis):
@@ -59,12 +65,11 @@ def create_formula(exp):
 				resolve_op(stack, op_stack, 1)
 			else:
 				op_stack.insert(0, exp[i])
-		elif ALLOWED_CHAR.find(exp[i]) != -1:
+		elif VAR_CHAR.find(exp[i]) != -1:
 			stack.insert(0, exp[i])
 			if "(" not in op_stack:
 				resolve_op(stack, op_stack, 0)
 	return resolve_stack(stack, op_stack)
-
 
 def create_rule(line, splitted_on = "=>"):
 	expressions = line.split(splitted_on)
