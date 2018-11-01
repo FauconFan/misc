@@ -48,6 +48,9 @@ class Lexer(object):
 			val = i
 			if '#' in i.strip():
 				val = i[:i.index("#")]
+			for word in val.split():
+				if word[0].isalpha() and word[0].islower():
+					raise Exception("A variable can't start with a lowercase character")
 			val = val.replace(" ", "")
 			val = val.replace("\t", "")
 			if len(val) > 0:
