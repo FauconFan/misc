@@ -64,6 +64,9 @@ class Lexer(object):
 				if cpy.startswith("=>"):
 					tokens.append(TokenSym("=>"))
 					cpy = cpy[2:]
+				elif cpy.startswith("<=>"):
+					tokens.append(TokenSym("<=>"))
+					cpy = cpy[3:]
 				elif cpy[0] in "!+|^()":
 					tokens.append(TokenSym(cpy[0]))
 					cpy = cpy[1:]
