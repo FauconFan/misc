@@ -43,32 +43,27 @@ def algo(env):
             break
 
 def answer(queries, env):
+    print("==== FINAL ====")
     for q in queries:
+        answer = None
         try:
             answer = env.table_of_truth[q]
             if answer == None:
                 answer = "Undefined"
-            print("{} : {}".format(q, answer))
         except KeyError:
-            print("This query is related to no rule")
+            answer = "Undefined"
         except Exception as e:
             print(e)
+        if answer != None:
+            print("{} : {}".format(q, answer))
+
 
 def main():
     if len(sys.argv) != 2:
         sys.exit(1)
     axioms, queries, list_rules = parse(sys.argv[1])
-    # print("axioms:", axioms)
-    # print("queries:", queries)
-    # print("list_rules")
-    # for i in list_rules:
-    #     print(str(i))
 
-    try:
-        table = create_table_of_truth(list_rules, axioms)
-    except Exception as e:
-        print(e)
-        sys.exit(1)
+    table = create_table_of_truth(list_rules, axioms)
     env = Environment(list_rules, table)
     try:
         algo(env)

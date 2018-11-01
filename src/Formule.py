@@ -31,7 +31,7 @@ class Operator(Enum):
     #     return ['+', '|', '^', '!']
 
     @staticmethod
-    def fromChar(op):   
+    def fromChar(op):
         if op == '+':
             return Operator.AND
         elif op == '|':
@@ -78,13 +78,15 @@ class Formule(object):
             return Operator.repr_op(self.operateur) + str(self.elem)
         return "(" + str(self.left) + Operator.repr_op(self.operateur) + str(self.right) + ")"
 
-	def getAllVaribalesInFormula(self):
+    def getAllVaribalesInFormula(self):
         if self.operateur == Operator.NONE:
-			return set().add(self.elem)
+            s = set()
+            s.add(self.elem)
+            return s
         elif self.operateur == Operator.NOT:
-			return self.elem.getAllVaribalesInFormula()
+            return self.elem.getAllVaribalesInFormula()
         else:
-			return self.left.getAllVaribalesInFormula() + self.right.getAllVaribalesInFormula()
+            return self.left.getAllVaribalesInFormula() | self.right.getAllVaribalesInFormula()
 
     def eval(self, env):
         if self.operateur == Operator.NONE:

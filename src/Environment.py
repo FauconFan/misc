@@ -56,10 +56,10 @@ class Environment(object):
 def create_table_of_truth(list_formulas, axioms):
     table_of_truth = {}
     for formula in list_formulas:
-		variables = formula.getAllVaribalesInFormula()
-		for var in variables:
-			if var not in table_of_truth:
-				table_of_truth[var] = None
+        variables = formula.getAllVaribalesInFormula()
+        for var in variables:
+            if var not in table_of_truth:
+                table_of_truth[var] = None
     for c in axioms:
         if c in table_of_truth:
             table_of_truth[c] = True
