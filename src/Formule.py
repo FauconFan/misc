@@ -78,6 +78,14 @@ class Formule(object):
             return Operator.repr_op(self.operateur) + str(self.elem)
         return "(" + str(self.left) + Operator.repr_op(self.operateur) + str(self.right) + ")"
 
+	def getAllVaribalesInFormula(self):
+        if self.operateur == Operator.NONE:
+			return set().add(self.elem)
+        elif self.operateur == Operator.NOT:
+			return self.elem.getAllVaribalesInFormula()
+        else:
+			return self.left.getAllVaribalesInFormula() + self.right.getAllVaribalesInFormula()
+
     def eval(self, env):
         if self.operateur == Operator.NONE:
             return env.getEnv(self.elem)
