@@ -1,9 +1,6 @@
 
 from enum import Enum
 
-## MOCHE TA RACE
-VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
 
 class Environment(object):
     def __init__(self, list_formulas, table_of_truth):
@@ -58,12 +55,11 @@ class Environment(object):
 
 def create_table_of_truth(list_formulas, axioms):
     table_of_truth = {}
-    for i in list_formulas:
-        rule = str(i)
-        for c in list(rule):
-            if VAR_CHAR.find(c) != -1:
-                if c not in table_of_truth:
-                    table_of_truth[c] = None
+    for formula in list_formulas:
+		variables = formula.getAllVaribalesInFormula()
+		for var in variables:
+			if var not in table_of_truth:
+				table_of_truth[var] = None
     for c in axioms:
         if c in table_of_truth:
             table_of_truth[c] = True
