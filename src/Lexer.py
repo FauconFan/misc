@@ -58,7 +58,7 @@ class Lexer(object):
 		self.clean_lines()
 		for line in self.content:
 			tokens = []
-			print(line)
+			# print(line)
 			cpy = line
 			while (len(cpy)) > 0:
 				if cpy.startswith("=>"):

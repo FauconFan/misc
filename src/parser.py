@@ -1,31 +1,35 @@
 import sys
 
 from src.Formule import Formule, Operator
-from src.Lexer import Lexer
+from src.Lexer import *
 
 VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+def get_left_right(op, stack, op_stack):
+	if op == '!':
+		right = None
+	else:
+		right = stack.pop(0)
+	left = stack.pop(0)
+	f_left = left
+	f_right = right
+	if isinstance(left, str):
+		f_left = Formule(None, left)
+	if isinstance(right, str):
+		f_right = Formule(None, right)
+	return f_left, f_right
+
 def resolve_op(stack, op_stack, parenthesis):
+	# print(stack, op_stack, parenthesis)
 	if len(op_stack) is not 0:
 		op = op_stack.pop(0)
 		if op == "(":
 			return
-		if op == '!':
-			right = None
-		else:
-			right = stack.pop(0)
-		left = stack.pop(0)
-		f_left = left
-		f_right = right
-		if isinstance(left, str):
-			f_left = Formule(None, left)
-		if isinstance(right, str):
-			f_right = Formule(None, right)
+		f_left, f_right = get_left_right(op, stack, op_stack)
 		formule = Formule(op, f_left, f_right)
 		stack.insert(0, formule)
 		if parenthesis:
 			resolve_op(stack, op_stack, parenthesis)
-
 
 def resolve_stack(stack, op_stack):
 	while len(op_stack) is not 0:
@@ -42,38 +46,36 @@ def resolve_stack(stack, op_stack):
 def create_formula(exp):
 	op_stack = []
 	stack = []
-	for i in range(len(exp)):
-		if exp[i] in Operator.op_list() or exp[i] in ["(", ")"]:
-			if exp[i] == ")":
+	for token in exp:
+		# print(token)
+		if isinstance(token, TokenSym):
+			if token.repr == ")":
 				resolve_op(stack, op_stack, 1)
 			else:
-				op_stack.insert(0, exp[i])
-		elif VAR_CHAR.find(exp[i]) != -1:
-			stack.insert(0, exp[i])
+				op_stack.insert(0, token.repr)
+		elif isinstance(token, TokenVar):
+			stack.insert(0, token.repr)
 			if "(" not in op_stack:
 				resolve_op(stack, op_stack, 0)
 	return resolve_stack(stack, op_stack)
 
-def create_rule(line, splitted_on = "=>"):
-	expressions = line.split(splitted_on)
-	expressions = [exp.strip() for exp in expressions]
-	left_formule = create_formula(expressions[0])
-	right_formule = create_formula(expressions[1])
-	return Formule(splitted_on, left_formule, right_formule)
-
-def parse_lines(lines):
+def parse_tokens(lines):
 	list_formulas = []
 	axioms = []
 	queries = []
 	for line in lines:
-		if line.find("<=>") >= 0:
-			list_formulas.append(create_rule(line, splitted_on = "<=>"))
-		elif line.find("=>") >= 0:
-			list_formulas.append(create_rule(line))
-		elif line[0] == '=':
-			axioms = list(line[1:])
-		elif line[0] == '?':
-			queries = list(line[1:])
+		for token in line:
+			if isinstance(token, TokenSym):
+				list_formulas.append(create_formula(line))
+				break
+			if isinstance(token, TokenSpecial):
+				if token.repr == '=':
+					axioms = line[1:]
+					axioms = [a.repr for a in axioms]
+				elif token.repr == '?':
+					queries = line[1:]
+					queries = [q.repr for q in queries]
+				break
 	if not queries:
 		print("No queries")
 		sys.exit(1)
@@ -97,10 +99,10 @@ def parse(filename):
 	lexer = Lexer(lines)
 	lexer.run()
 	tokens_lines = lexer.get()
-	for k, tokens in enumerate(tokens_lines):
-		print("line number", k)
-		for tok in tokens:
-			print(tok)
+	return(parse_tokens(tokens_lines))
+	# for k, tokens in enumerate(tokens_lines):
+		# print("line number", k)
+		# for tok in tokens:
+			# print(tok)
 	# print(lines)
-	sys.exit(0) # Remove this line after connection between Lexer and Parser
-	return (parse_lines(lines))
+	# sys.exit(0) # Remove this line after connection between Lexer and Parser
