@@ -4,6 +4,7 @@ from enum import Enum
 class TokenType(Enum):
 	VAR = 1
 	SYM = 2
+	SPECIAL = 3
 
 class Token(object):
 	def __init__(self, type):
@@ -20,6 +21,14 @@ class TokenVar(Token):
 class TokenSym(Token):
 	def __init__(self, repr):
 		Token.__init__(self, TokenType.SYM)
+		self.repr = repr
+
+	def __str__(self):
+		return self.repr
+
+class TokenSpecial(Token):
+	def __init__(self, repr):
+		Token.__init__(self, TokenType.SPECIAL)
 		self.repr = repr
 
 	def __str__(self):
@@ -55,8 +64,11 @@ class Lexer(object):
 				if cpy.startswith("=>"):
 					tokens.append(TokenSym("=>"))
 					cpy = cpy[2:]
-				elif cpy[0] in "!=?+|^":
+				elif cpy[0] in "!+|^":
 					tokens.append(TokenSym(cpy[0]))
+					cpy = cpy[1:]
+				elif cpy[0] in "=?":
+					tokens.append(TokenSpecial(cpy[0]))
 					cpy = cpy[1:]
 				elif cpy[0].isupper():
 					l = 1
