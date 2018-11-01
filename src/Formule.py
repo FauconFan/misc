@@ -25,12 +25,13 @@ class Operator(Enum):
             return " <=> "
         return ""
 
-    @staticmethod
-    def op_list(): # FIXME after refactoring for parsing
-        return ['+', '|', '^', '!']
+    ## not used anymore
+    # @staticmethod
+    # def op_list(): # FIXME after refactoring for parsing
+    #     return ['+', '|', '^', '!']
 
     @staticmethod
-    def fromChar(op): # FIXME after refactoring for parsing
+    def fromChar(op):
         if op == '+':
             return Operator.AND
         elif op == '|':

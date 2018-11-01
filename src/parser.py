@@ -70,12 +70,12 @@ def parse_tokens(lines):
 				break
 			if isinstance(token, TokenSpecial):
 				if token.repr == '=':
-					axioms = line[1:]
-					axioms = [a.repr for a in axioms]
+					axioms = [a.repr for a in line[1:]]
 				elif token.repr == '?':
 					queries = line[1:]
-					queries = [q.repr for q in queries]
+					queries = [q.repr for q in line[1:]]
 				break
+
 	if not queries:
 		print("No queries")
 		sys.exit(1)
@@ -100,9 +100,3 @@ def parse(filename):
 	lexer.run()
 	tokens_lines = lexer.get()
 	return(parse_tokens(tokens_lines))
-	# for k, tokens in enumerate(tokens_lines):
-		# print("line number", k)
-		# for tok in tokens:
-			# print(tok)
-	# print(lines)
-	# sys.exit(0) # Remove this line after connection between Lexer and Parser

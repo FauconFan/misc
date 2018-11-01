@@ -64,7 +64,6 @@ def main():
     # for i in list_rules:
     #     print(str(i))
 
-
     try:
         table = create_table_of_truth(list_rules, axioms)
     except Exception as e:
@@ -75,6 +74,7 @@ def main():
         algo(env)
     except Exception as e:
         print(e)
+        sys.exit(1)
     print(env)
     answer(queries, env)
 
