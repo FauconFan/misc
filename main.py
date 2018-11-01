@@ -74,6 +74,7 @@ def main():
         algo(env)
     except Exception as e:
         print(e)
+        sys.exit(1)
     print(env)
     answer(queries, env)
 
