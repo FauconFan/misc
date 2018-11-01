@@ -31,7 +31,7 @@ class Operator(Enum):
     #     return ['+', '|', '^', '!']
 
     @staticmethod
-    def fromChar(op):
+    def fromChar(op):   
         if op == '+':
             return Operator.AND
         elif op == '|':
