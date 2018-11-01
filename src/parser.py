@@ -1,28 +1,9 @@
 import sys
 
 from src.Formule import Formule, Operator
+from src.Lexer import Lexer
 
 VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-ALLOWED_CHAR = VAR_CHAR + "=>!()?+^|"
-
-def clean_lines(lines):
-	#Mise Au propre de la recuperation sur l'entree standard
-
-	new_lines = []
-	for i in lines:
-		val = i
-		if '#' in i.strip():
-			val = i[:i.index("#")]
-		val = val.replace(" ", "")
-		val = val.replace("\t", "")
-		if len(val) > 0:
-			new_lines.append(val.strip())
-	for line in new_lines:
-		for c in line:
-			if ALLOWED_CHAR.find(c) == -1:
-				print("'{}' is not allowed".format(c))
-				sys.exit(1)
-	return new_lines
 
 def resolve_op(stack, op_stack, parenthesis):
 	if len(op_stack) is not 0:
@@ -113,6 +94,13 @@ def parse(filename):
 	except:
 		print('Unexpected error')
 		sys.exit(1)
-	lines = clean_lines(lines)
+	lexer = Lexer(lines)
+	lexer.run()
+	tokens_lines = lexer.get()
+	for k, tokens in enumerate(tokens_lines):
+		print("line number", k)
+		for tok in tokens:
+			print(tok)
 	# print(lines)
+	sys.exit(0) # Remove this line after connection between Lexer and Parser
 	return (parse_lines(lines))
