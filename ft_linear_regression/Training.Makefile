@@ -5,35 +5,43 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/11/01 16:57:39 by jpriou            #+#    #+#              #
-#    Updated: 2018/11/01 18:06:25 by jpriou           ###   ########.fr        #
+#    Created: 2018/10/28 20:29:52 by jpriou            #+#    #+#              #
+#    Updated: 2018/10/29 08:46:28 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+OCAMLMAKEFILE = OCamlMakefile
+
+RESULT = linear_regression_training
+
+MAIN_PREDICT = MainTraining.ml
+
+ML_FILES = \
+			src/ParsingCSV.ml \
+			src/LinearRegression.ml \
+			src/IO.ml \
+
+MLI_FILES = $(foreach f, $(ML_FILES), $fi)
+
+SOURCES = $(MLI_FILES) $(ML_FILES) $(MAIN_PREDICT)
+
 .PHONY: all
-all: predict training
+all: delete_links
+	make -f Training.Makefile nc
+	mv $(RESULT) $(RESULT).opt
+	make -f Training.Makefile bc
+	mv $(RESULT) $(RESULT).byt
+	ln -s $(RESULT).opt $(RESULT)
 
-.PHONY: predict
-predict:
-	make -f Predict.Makefile
-
-.PHONY: training
-training:
-	make -f Training.Makefile
-
-.PHONY: clean
-clean:
-	make -f Predict.Makefile clean
-	make -f Training.Makefile clean
+.PHONY: delete_links
+delete_links:
+	rm -f $(RESULT).opt $(RESULT).byt
+	rm -f $(RESULT)
 
 .PHONY: fclean
-fclean: reset
-	make -f Predict.Makefile fclean
-	make -f Training.Makefile fclean
+fclean: cleanup delete_links
 
 .PHONY: re
 re: fclean all
 
-.PHONY: re
-reset:
-	rm data.csv
+include $(OCAMLMAKEFILE)

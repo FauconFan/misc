@@ -1,17 +1,16 @@
 (* ************************************************************************** *)
 (*                                                                            *)
 (*                                                        :::      ::::::::   *)
-(*   LinearRegression.mli                               :+:      :+:    :+:   *)
+(*   IO.mli                                             :+:      :+:    :+:   *)
 (*                                                    +:+ +:+         +:+     *)
 (*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
-(*   Created: 2018/10/28 20:34:11 by jpriou            #+#    #+#             *)
-(*   Updated: 2018/11/01 17:18:41 by jpriou           ###   ########.fr       *)
+(*   Created: 2018/11/01 16:39:38 by jpriou            #+#    #+#             *)
+(*   Updated: 2018/11/01 16:55:45 by jpriou           ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
-type entry = float * float
-type data = string * string * entry list
+val askNumber : unit -> float
 
-val predict : float -> float -> float -> float
-val train : float -> float -> data -> (float * float)
+val getSavedData : unit -> (float * float)
+val setSavedData : float -> float -> unit

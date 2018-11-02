@@ -6,41 +6,23 @@
 (*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        *)
 (*                                                +#+#+#+#+#+   +#+           *)
 (*   Created: 2018/10/29 08:36:34 by jpriou            #+#    #+#             *)
-(*   Updated: 2018/10/30 08:24:09 by jpriou           ###   ########.fr       *)
+(*   Updated: 2018/11/01 17:04:36 by jpriou           ###   ########.fr       *)
 (*                                                                            *)
 (* ************************************************************************** *)
 
-let filepath = ref ""
-let show = ref false
+let args = ref []
 
-let speclist = [
-  ("-f", Arg.Set_string filepath, "CSV Data");
-  ("-s", Arg.Set show, "Show the data")
-]
+let savepath str = args := str :: (!args)
 
 let usage = "\nLinearRegression Predict Program\n"
 
 let () =
-  Arg.parse speclist print_endline usage;
-  Printf.printf "Parsing file : \"%s\"\n" !filepath;
-  let data =
+  Arg.parse [] savepath usage;
+  if List.length !args > 1 then print_endline "Wrong number of argument"
+  else
     begin
-      try
-        ParsingCSV.run !filepath
-      with
-      | Failure str -> print_endline (str); exit 1
-      | _ -> print_endline "Unknown error"; exit 1
+      let (t0, t1) = IO.getSavedData () in
+      let i = IO.askNumber () in
+      let out = LinearRegression.predict t0 t1 i in
+      Printf.printf "%f\n" out
     end
-  in
-  if !show then ParsingCSV.display data;
-  let (t0, t1) = (0.0, 0.0) in
-  let in = askNumber () in
-
-
-
-
-let rec askNumber () : float =
-  print_endline "Please enter your number :";
-  match float_of_string_opt (input_line stdin) with
-  | None -> print_endline "Please enter a valid number..."; askNumber ()
-  | Some b -> b
