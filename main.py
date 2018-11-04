@@ -44,6 +44,7 @@ def algo(env):
 
 def answer(queries, env):
     print("==== FINAL ====")
+    nb_true = 0
     for q in queries:
         answer = None
         try:
@@ -55,8 +56,13 @@ def answer(queries, env):
         except Exception as e:
             print(e)
         if answer != None:
+            if answer == True:
+                nb_true += 1
             print("{} : {}".format(q, answer))
-
+    if nb_true == len(queries):
+        sys.exit(0)
+    else:
+        sys.exit(1)
 
 def main():
     if len(sys.argv) != 2:
