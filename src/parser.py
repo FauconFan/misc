@@ -25,9 +25,9 @@ def resolve_op(stack, op_stack, parenthesis, resolve):
 	if len(op_stack) is not 0:
 		if not resolve and (op_stack[0] == "=>" or op_stack[0] == "<=>"):
 			return
-		if op_stack[0] == "(":
-			return
 		op = op_stack.pop(0)
+		if op == "(":
+			return
 		f_left, f_right = get_left_right(op, stack, op_stack)
 		try:
 			formule = Formule(op, f_left, f_right)
@@ -35,6 +35,8 @@ def resolve_op(stack, op_stack, parenthesis, resolve):
 			print("Try to create an invalid formule: Error: {}".format(e))
 			sys.exit(1)
 		stack.insert(0, formule)
+		if op == "!":
+			resolve_op(stack, op_stack, parenthesis, resolve)
 		if parenthesis:
 			resolve_op(stack, op_stack, parenthesis, resolve)
 
