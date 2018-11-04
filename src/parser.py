@@ -6,11 +6,12 @@ from src.Lexer import *
 VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def get_left_right(op, stack, op_stack):
-	if op == '!':
-		right = None
-	else:
+	right = None
+	left = None
+	if op != '!' and len(stack) is not 0:
 		right = stack.pop(0)
-	left = stack.pop(0)
+	if len(stack) is not 0:
+		left = stack.pop(0)
 	f_left = left
 	f_right = right
 	if isinstance(left, str):
@@ -19,21 +20,27 @@ def get_left_right(op, stack, op_stack):
 		f_right = Formule(None, right)
 	return f_left, f_right
 
-def resolve_op(stack, op_stack, parenthesis):
-	# print(stack, op_stack, parenthesis)
+def resolve_op(stack, op_stack, parenthesis, resolve):
+	# print(stack, op_stack)
 	if len(op_stack) is not 0:
-		op = op_stack.pop(0)
-		if op == "(":
+		if not resolve and (op_stack[0] == "=>" or op_stack[0] == "<=>"):
 			return
+		if op_stack[0] == "(":
+			return
+		op = op_stack.pop(0)
 		f_left, f_right = get_left_right(op, stack, op_stack)
-		formule = Formule(op, f_left, f_right)
+		try:
+			formule = Formule(op, f_left, f_right)
+		except Exception as e:
+			print("Try to create an invalid formule: Error: {}".format(e))
+			sys.exit(1)
 		stack.insert(0, formule)
 		if parenthesis:
-			resolve_op(stack, op_stack, parenthesis)
+			resolve_op(stack, op_stack, parenthesis, resolve)
 
 def resolve_stack(stack, op_stack):
 	while len(op_stack) is not 0:
-		resolve_op(stack, op_stack, 0)
+		resolve_op(stack, op_stack, False, True)
 	last = stack.pop(0)
 	if len(stack) is not 0:
 		print("Error in parsing")
@@ -47,16 +54,14 @@ def create_formula(exp):
 	op_stack = []
 	stack = []
 	for token in exp:
-		# print(token)
 		if isinstance(token, TokenSym):
 			if token.repr == ")":
-				resolve_op(stack, op_stack, 1)
+				resolve_op(stack, op_stack, True, False)
 			else:
 				op_stack.insert(0, token.repr)
 		elif isinstance(token, TokenVar):
 			stack.insert(0, token.repr)
-			if "(" not in op_stack:
-				resolve_op(stack, op_stack, 0)
+			resolve_op(stack, op_stack, False, False)
 	return resolve_stack(stack, op_stack)
 
 def parse_tokens(lines):

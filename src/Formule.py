@@ -62,16 +62,15 @@ class Formule(object):
         arity = Operator.arity(self.operateur)
         if arity == 2:
             if operand1 == None or operand2 == None:
-                raise Exception("Invalid utilisation")
+                raise Exception("Invalid utilisation: {} {} {}".format(operand1, operateur, operand2))
             self.left = operand1
             self.right = operand2
         elif arity == 1:
             if operand1 == None:
-                raise Exception("Invalid utilisation")
+                raise Exception("Invalid utilisation: {} {} {}".format(operand1, operateur, operand2))
             self.elem = operand1
         else:
-            print("Mauvaise expression : ", operateur, operand1, operand2)
-            raise Exception("Invalid utilisation")
+            raise Exception("Invalid utilisation: {} {} {}".format(operand1, operateur, operand2))
 
     def __str__(self):
         if self.elem:
