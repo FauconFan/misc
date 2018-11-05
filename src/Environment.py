@@ -1,6 +1,7 @@
 
 from enum import Enum
 
+from src.logger import log
 
 class Environment(object):
     def __init__(self, list_formulas, table_of_truth):
@@ -12,6 +13,11 @@ class Environment(object):
         s += "Rules\n"
         for i in self.list_formulas:
             s += str(i) + "\n"
+        s += self.StrTableOfTruth()
+        return s
+
+    def StrTableOfTruth(self):
+        s = ""
         s += "Table of truth\n"
         for k, v in self.table_of_truth.items():
             vs = "Undefined"
@@ -37,15 +43,22 @@ class Environment(object):
 
     def applyRules(self):
         for formula in self.list_formulas:
-            formula.deduce(self)
+            s = formula.deduce(self)
+            log(self, s, formula)
 
     def getEnv(self, s):
         return self.table_of_truth[s]
 
+    # We return the fact that we already know the fact or not
+    # False if we already know
+    # True if we just discovered
     def setEnv(self, str, mb):
         if self.table_of_truth[str] != None and self.table_of_truth[str] != mb:
             raise Exception("Incohérence")
+        if self.table_of_truth[str] == mb:
+            return False
         self.table_of_truth[str] = mb
+        return True
 
     def fusionUnionForDisjonction(self, envTrue, envFalse):
         for k, v in self.table_of_truth.items():

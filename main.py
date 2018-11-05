@@ -1,46 +1,11 @@
 
 import sys
-from copy import deepcopy
+import argparse
 
+from src.logger import log_set_interactive, log_set_verbose
 from src.parser import parse
 from src.Environment import create_table_of_truth, Environment
-
-def disjonction(env):
-    k = env.getFirstUndefined()
-    if k == None:
-        return
-    envTrue = deepcopy(env)
-    envFalse = deepcopy(env)
-    envTrue.setEnv(k, True)
-    envFalse.setEnv(k, False)
-    is_ok_true = True
-    is_ok_false = True
-    try:
-        algo(envTrue)
-    except:
-        is_ok_true = False
-    try:
-        algo(envFalse)
-    except:
-        is_ok_false = False
-    if is_ok_true == True and is_ok_false == True:
-        env.fusionUnionForDisjonction(envTrue, envFalse)
-    elif is_ok_true == True:
-        env.setEnv(k, True)
-    elif is_ok_false == True:
-        env.setEnv(k, False)
-    else:
-        raise Exception("Exception")
-
-
-def algo(env):
-    while True:
-        copy = deepcopy(env)
-        env.applyRules()
-        if copy == env:
-            disjonction(env)
-        if copy == env:
-            break
+from src.algo import algo
 
 def answer(queries, env):
     print("==== FINAL ====")
@@ -65,18 +30,27 @@ def answer(queries, env):
         sys.exit(1)
 
 def main():
-    if len(sys.argv) != 2:
-        sys.exit(1)
-    axioms, queries, list_rules = parse(sys.argv[1])
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--interactive", action="store_true", default=False, help="make the deduction interactively")
+    parser.add_argument("-v", "--verbose", action="store_true", default=False, help="print table of truth at every step")
+    parser.add_argument("file")
+    args = parser.parse_args()
+
+    if args.interactive:
+        log_set_interactive()
+    if args.verbose:
+        log_set_verbose()
+    axioms, queries, list_rules = parse(args.file)
 
     table = create_table_of_truth(list_rules, axioms)
     env = Environment(list_rules, table)
+    if args.verbose:
+        print(env)
     try:
         algo(env)
     except Exception as e:
         print(e)
         sys.exit(1)
-    print(env)
     answer(queries, env)
 
 if __name__ == "__main__":
