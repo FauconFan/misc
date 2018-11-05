@@ -2,7 +2,7 @@
 import sys
 import argparse
 
-from src.logger import log_set_interactive, log_set_verbose
+from src.logger import log_set_interactive, log_set_verbose, log_helper
 from src.parser import parse
 from src.Environment import create_table_of_truth, Environment
 from src.algo import algo
@@ -30,16 +30,18 @@ def answer(queries, env):
         sys.exit(1)
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description="Command line tool to solve booleans formulas, based on axioms, rules and queries.",
+        usage="python3 %(prog)s [options] file",
+        formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("-i", "--interactive", action="store_true", default=False, help="make the deduction interactively")
-    parser.add_argument("-v", "--verbose", action="store_true", default=False, help="print table of truth at every step")
+    parser.add_argument("-v", "--verbose", action="count", default=0, help=log_helper())
     parser.add_argument("file")
     args = parser.parse_args()
 
     if args.interactive:
         log_set_interactive()
-    if args.verbose:
-        log_set_verbose()
+    log_set_verbose(args.verbose)
     axioms, queries, list_rules = parse(args.file)
 
     table = create_table_of_truth(list_rules, axioms)
