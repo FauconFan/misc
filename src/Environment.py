@@ -74,6 +74,5 @@ def create_table_of_truth(list_formulas, axioms):
             if var not in table_of_truth:
                 table_of_truth[var] = None
     for c in axioms:
-        if c in table_of_truth:
-            table_of_truth[c] = True
+        table_of_truth[c] = True
     return table_of_truth
