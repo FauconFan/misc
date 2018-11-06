@@ -1,5 +1,10 @@
 from enum import Enum
 
+def operatorBuffer():
+    pass
+
+operatorBuffer.buffer = {}
+
 class Operator(Enum):
     NONE = 0
     NOT = 1
@@ -66,17 +71,30 @@ class Operator(Enum):
             return {(True, True): True, (True, False): False, (False, True): False, (False, False): True}
 
     @staticmethod
-    def getDeduction(op, known, elem1 = None, elem2 = None):
-		arity = Operator.arity(op)
-		if arity == 1 and elem1 == None:
-			raise Exception("Wrong usage")
-		elif arity == 2 and (elem1 == None or elem2 == None):
-			raise Exception("Wrong usage")
-		tables = Operator.getTables(op)
-		li2 = []
-		for k, v in tables.items():
-			if v == known:
-				li2.append(k)
-		li = []
-		if arity == 1:
-			for i in li2:
+    def getDeduction(op):
+        def builder(op):
+            def builderBase1():
+                return {True: [], False: [], None: []}
+            def builderBase2():
+                return {True: builderBase1(), False: builderBase1(), None: builderBase1()}
+            arity = Operator.arity(op)
+            tables = Operator.getTables(op)
+            res = {}
+            if arity == 1:
+                res = {True: builderBase1(), False: builderBase1()}
+                for k, v in tables.items():
+                    res[v][k].append(k)
+                    res[v][None].append(k)
+            else:
+                res = {True: builderBase2(), False: builderBase2()}
+                for k, v in tables.items():
+                    (lhs, rhs) = k
+                    res[v][lhs][rhs].append(k)
+                    res[v][None][None].append(k)
+                    res[v][lhs][None].append(k)
+                    res[v][None][rhs].append(k)
+            return res
+        rep = Operator.repr_op(op)
+        if operatorBuffer.buffer.get(rep) == None:
+            operatorBuffer.buffer[rep] = builder(op)
+        return operatorBuffer.buffer[rep]

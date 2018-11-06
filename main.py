@@ -7,6 +7,8 @@ from src.parser import parse
 from src.Environment import create_table_of_truth, Environment
 from src.algo import algo
 
+from src.Operator import Operator
+
 def answer(queries, env):
     print("==== FINAL ====")
     nb_true = 0
@@ -51,7 +53,9 @@ def main():
     try:
         algo(env)
     except Exception as e:
+        import traceback
         print(e)
+        print(traceback.format_exc())
         sys.exit(1)
     answer(queries, env)
 
