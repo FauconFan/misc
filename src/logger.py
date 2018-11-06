@@ -2,11 +2,11 @@
 import sys
 
 def log_helper():
-	s = "set Verbosity level.\n"
-	s += "(0) -> Just print the result. (default)\n"
-	s += "(1) -> Print choices of the algorithm at every step.\n"
-	s += "(2) -> Print table of truth at every step.\n"
-	return s
+    s = "set Verbosity level.\n"
+    s += "(0) -> Just print the result. (default)\n"
+    s += "(1) -> Print choices of the algorithm at every step.\n"
+    s += "(2) -> Print table of truth at every step.\n"
+    return s
 
 def log_set_interactive():
     logconfig.interactive = True
