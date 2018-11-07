@@ -4,9 +4,9 @@
 
 ## Master
  - [x] git project
- - [ ] init_project (main, Makefile)
+ - [ ] init_project (main, Makefile) <- pretty helper for Makefile
  - [ ] documentation init (ocamldoc)
- 
+
 ## Dev mode
  - [ ] Base.ml(i) <- types, utils
  - [ ] DUGraphics.ml(i)
