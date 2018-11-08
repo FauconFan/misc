@@ -5,7 +5,16 @@ RESULT = mondrian
 
 MAIN = src/Main.ml
 
-SOURCES = $(MAIN)
+ML_FILES = \
+		src/model/Base.ml \
+		src/model/Check.ml \
+		src/model/Generation.ml \
+		src/view/DUGraphics.ml \
+		src/controller/Translate.ml \
+
+MLI_FILES = $(ML_FILES:%.ml=%.mli)
+
+SOURCES = $(MLI_FILES) $(ML_FILES) $(MAIN)
 
 $(RESULT): all
 
