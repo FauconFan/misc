@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 16:54:11 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/13 09:57:30 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/11/08 11:43:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,13 @@ char			**build_all_strings_long_format(
 	char		**res;
 	time_t		handle_flag_for_date_output;
 
-	handle_flag_for_date_output = my_stat.st_mtimespec.tv_sec;
+	handle_flag_for_date_output = my_stat.st_mtime;
 	if (flags & FLAG_U_MAJ)
-		handle_flag_for_date_output = my_stat.st_birthtimespec.tv_sec;
+		handle_flag_for_date_output = my_stat.st_btime;
 	else if (flags & FLAG_U_MIN)
-		handle_flag_for_date_output = my_stat.st_atimespec.tv_sec;
+		handle_flag_for_date_output = my_stat.st_atime;
 	else if (flags & FLAG_C_MIN)
-		handle_flag_for_date_output = my_stat.st_ctimespec.tv_sec;
+		handle_flag_for_date_output = my_stat.st_ctime;
 	ft_memcheck((res = (char **)malloc(sizeof(char *) * 7)));
 	res[0] = build_access_right(my_stat.st_mode);
 	res[1] = build_date(handle_flag_for_date_output);

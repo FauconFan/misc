@@ -6,12 +6,31 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 12:10:55 by jpriou            #+#    #+#             */
-/*   Updated: 2017/12/13 10:16:05 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/11/08 11:43:26 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
+
+# ifdef __APPLE__
+
+# include <uuid/uuid.h>
+
+# define st_mtime					st_mtimespec.tv_sec
+# define st_atime					st_atimespec.tv_sec
+# define st_btime					st_birthtimespec.tv_sec
+# define st_ctime					st_ctimespec.tv_sec
+
+# else
+
+# define S_ISWHT(x)					0
+# define st_mtime					st_mtime
+# define st_atime					st_atime
+# define st_btime					st_ctime
+# define st_ctime					st_ctime
+
+# endif
 
 # include <stdlib.h>
 # include <dirent.h>
@@ -19,7 +38,6 @@
 # include <string.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-# include <uuid/uuid.h>
 # include <grp.h>
 # include <pwd.h>
 # include <unistd.h>
