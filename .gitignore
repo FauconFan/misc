@@ -9,7 +9,9 @@
 *.cmxa
 
 # ocamlmakefile working directory
-bin/
+._d/
+._bcdi/
+._ncdi/
 doc/
 
 # ocamlbuild working directory
