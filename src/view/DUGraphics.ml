@@ -4,7 +4,8 @@ open Base
 
 let init (dim:dim) : unit =
   let (w, h) = dim in
-  open_graph (" " ^ (string_of_int w) ^ "x" ^ (string_of_int h))
+  open_graph (" " ^ (string_of_int w) ^ "x" ^ (string_of_int h));
+  set_window_title "PF5_mondrian"
 
 let close () : unit =
   close_graph ()
