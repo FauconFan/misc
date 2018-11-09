@@ -67,7 +67,7 @@ A snail solution depends on the size:
 usage: ./main.py [-h] [-q] [--heuristic HEURISTIC] taquin
 ```
 
-### To test program
+### Test program
 
 ```
 make test_soluble
@@ -75,7 +75,7 @@ make test_non_soluble
 make test_random # this command is a infinite loop. Care !
 ```
 
-### To profile the program
+### Profile the program
 
 ```
 make profile
