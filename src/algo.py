@@ -48,11 +48,11 @@ def disjonction(env):
     logdijunctionend()
 
 
-def algo(env):
+def algo(env, is_poor):
     while True:
         copy = deepcopy(env)
         env.applyRules()
         if copy == env:
             disjonction(env)
-        if copy == env or env.stillHaveUndefined() == False:
+        if copy == env or (env.stillHaveUndefined() == False && is_poor == False):
             break
