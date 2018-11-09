@@ -13,7 +13,18 @@ let close () : unit =
 
 let draw_rect (_:bsp) : bsp = failwith "TODO"
 
-let interact () : coords * color option = failwith "TODO"
+let interact () : coords * color option =
+  let table = [('r', red); ('b', blue)] in
+  let findtable ch =
+    begin
+      let f = List.find_opt (fun (c, _) -> c == ch) table in
+      match f with
+      | None -> None
+      | Some tuple -> Some (snd tuple)
+    end
+  in
+  let ch = read_key () in
+  ((mouse_pos ()), findtable ch)
 
 let draw_current_bsp config _ _ : unit =
   let (wm, hm) = config.dims in
