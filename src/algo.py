@@ -49,10 +49,11 @@ def disjonction(env):
 
 
 def algo(env, is_poor):
+	is_rich = is_poor == False
     while True:
         copy = deepcopy(env)
         env.applyRules()
-        if copy == env:
+        if copy == env and is_rich:
             disjonction(env)
-        if copy == env or (env.stillHaveUndefined() == False && is_poor == False):
+        if copy == env or (env.stillHaveUndefined() == False and is_rich):
             break
