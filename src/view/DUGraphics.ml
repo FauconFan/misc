@@ -5,7 +5,8 @@ open Base
 let init (dim:dim) : unit =
   let (w, h) = dim in
   open_graph (" " ^ (string_of_int w) ^ "x" ^ (string_of_int h));
-  set_window_title "PF5_mondrian"
+  set_window_title "PF5_mondrian";
+  auto_synchronize false
 
 let close () : unit =
   close_graph ()
@@ -24,6 +25,7 @@ let draw_current_bsp config _ _ : unit =
   moveto 0 (hm / 2);
   lineto wm (hm / 2);
 
+  synchronize ();
   ignore (wait_next_event [Button_down]);
 
   close ();
