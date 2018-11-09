@@ -16,16 +16,27 @@ MLI_FILES = $(ML_FILES:%.ml=%.mli)
 
 SOURCES = $(MLI_FILES) $(ML_FILES) $(MAIN)
 
-$(RESULT): all
+help:
+	@printf "Useful commands for this Makefile:\\n"
+	@printf " - help : prints this message\\n"
+	@printf " - mondrian : same as nc\\n"
+	@printf " - exec : compiles and runs\\n"
+	@printf " - bytecode (bc) : compiles in bytecode\\n"
+	@printf " - nativecode (nc) : compiles in nativecode\\n"
+	@printf " - cleanup : removes compiled files, keeps executables\\n"
+	@printf " - clean : removes all compiled files\\n"
+	@printf " - clean-all : removes all generated files (doc includes)\\n"
+	@printf " - clean-doc : removes all docs files\\n"
+	@printf " - fclean : same as clean-all\\n"
+	@printf " - re : cleans all and recompiles\\n"
 
-all: nc
+$(RESULT): nc
 
 exec: $(RESULT)
 	./$(RESULT)
 
 fclean: clean-all
-	rm -rf doc/
 
-re: fclean all
+re: fclean $(RESULT)
 
 include $(OCAMLMAKEFILE)

@@ -4,11 +4,11 @@
 
 ## Master
  - [x] git project
- - [ ] init_project (main, Makefile) <- pretty helper for Makefile
+ - [x] init_project (main, Makefile) <- pretty helper for Makefile
  - [ ] documentation init (ocamldoc)
 
 ## Dev mode
- - [ ] Base.ml(i) <- types, utils
+ - [x] Base.ml(i) <- types, utils
  - [ ] DUGraphics.ml(i)
         <- draw_current_bsp
         <- init dim
