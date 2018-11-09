@@ -35,3 +35,5 @@ type bsp =
 (* Utils function *)
 
 val bounds : dim -> dim -> bool
+val maybe : ('a -> 'b) -> 'a option -> 'b -> 'b
+  
