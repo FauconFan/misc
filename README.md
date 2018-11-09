@@ -10,7 +10,7 @@ The algorithm is pretty stupid, and for a exponential problem, we don't use any 
 The following symbols are defined, in order of decreasing priority:
  - ( and ) which are fairly obvious. Example : A + (B | C) => D
  - ! which means NOT. Example : !B
- - + which means AND. Example : A + B
+ - \+ which means AND. Example : A + B
  - | which means OR. Example : A | B
  - ˆ which means XOR. Example : A ˆ B
  - => which means "implies". Example : A + B => C
