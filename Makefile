@@ -12,6 +12,8 @@ ML_FILES = \
 		src/view/DUGraphics.ml \
 		src/controller/Translate.ml \
 
+LIBS = graphics
+
 MLI_FILES = $(ML_FILES:%.ml=%.mli)
 
 SOURCES = $(MLI_FILES) $(ML_FILES) $(MAIN)

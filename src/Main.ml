@@ -20,4 +20,7 @@ let usage_msg = "PF5 project in honor of Mondrian"
 let () =
   Arg.parse spec_list ignore usage_msg;
   let config = {dims = (!weight, !height); depth = !depth} in
-  ignore(config)
+
+  let bsp_null = R (Some Graphics.red) in
+
+  DUGraphics.draw_current_bsp config bsp_null bsp_null
