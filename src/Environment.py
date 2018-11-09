@@ -43,7 +43,7 @@ class Environment(object):
 
     def applyRules(self):
         for formula in self.list_formulas:
-            s = formula.deduce(self)
+            s = formula.deduce(self, True)
             log(self, s, formula)
 
     def getEnv(self, s):
