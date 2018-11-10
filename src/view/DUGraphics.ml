@@ -1,7 +1,6 @@
 
 open Exemple_bsp
 open Graphics
-open Translate
 open Base
 
 (**
@@ -52,8 +51,8 @@ let rec draw_all_line (lines : (line * color option) list) : unit =
 *)
 let draw_current_bsp config bsp_fc bsp_cu =
   clear_graph();
-  fill_all_rect (rectangles_from_bsp config bsp_cu);
-  draw_all_line (lines_from_bsp config bsp_fc);
+  fill_all_rect (Translate.rectangles_from_bsp config bsp_cu);
+  draw_all_line (Translate.lines_from_bsp config bsp_fc);
   synchronize ()
 
 (**
@@ -64,6 +63,6 @@ let launch (config : config) : unit =
   and bsp_cu = ref exemple_cours in
   while true do
     draw_current_bsp config bsp_fc (!bsp_cu);
-    try bsp_cu := change_rectangle_color (interact ()) (!bsp_cu)
+    try bsp_cu := change_rectangle_color (Interact.interact ()) (!bsp_cu)
     with Exit -> close (); exit 0
   done

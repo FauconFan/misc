@@ -10,8 +10,9 @@ ML_FILES = \
 		src/model/Check.ml \
 		src/model/Generation.ml \
 		src/model/solveur/sat_solver.ml \
-		src/view/Exemple_bsp.ml \
 		src/controller/Translate.ml \
+		src/controller/Interact.ml \
+		src/view/Exemple_bsp.ml \
 		src/view/DUGraphics.ml \
 
 LIBS = graphics
