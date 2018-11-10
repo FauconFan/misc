@@ -26,69 +26,60 @@ let get_max_color i j =
 (**
   Renvoie la couleur d'une ligne en fonction de :
   - ses bsp fils
-  - ligne verticale (line = false) ou horizontale (line = true)
+  - ligne verticale (even = false) ou horizontale (even = true)
 *)
-let color_of_line bsp_g bsp_d ligne =
+let color_of_line bsp_g bsp_d even =
   let rec aux color bsp l =
-    match bsp with 
+    match bsp with
     | R c -> maybe (fun c -> if c = blue then color.(0) <- color.(0) + 1 else color.(1) <- color.(1) + 1) c ()
     | L (_, bsp_g, bsp_d) ->
-      if(ligne && l) then aux color bsp_g (not l)
-      else if ligne = (not l) then (aux color bsp_g (not l); aux color bsp_d (not l))
+      if (even && l) then aux color bsp_g (not l)
+      else if even = (not l) then (aux color bsp_g (not l); aux color bsp_d (not l))
       else aux color bsp_d (not l)
-  in let tab = [|0;0|]
-  in aux tab bsp_g (not ligne); aux tab bsp_d (not ligne);
+  in
+  let tab = [|0;0|] in
+  aux tab bsp_g (not even);
+  aux tab bsp_d (not even);
   Some (get_max_color (tab.(0)) (tab.(1)))
 
 (**
   Fonction prenant une config et un bsp en entrée, et renvoie la liste des lignes avec leurs couleurs
 *)
 let lines_from_bsp (config : config) (bsp:bsp) : (line * color option) list =
-  let rec aux l ligne bsp max_dim min_dim =
+  let rec aux l even bsp max_dim min_dim =
     match bsp with
     | R _ -> l
     | L (label, bsp_g, bsp_d) ->
-      (
-        (if ligne then ((fst min_dim, label.coord), (fst max_dim, label.coord)) else ((label.coord, snd min_dim), (label.coord, snd max_dim))),
-        (if label.colored then color_of_line bsp_g bsp_d ligne else None)
-      ) 
-      :: 
-      (aux
-        (aux 
-          l 
-          (not ligne) 
-          bsp_g 
-          (if ligne then (fst max_dim, label.coord) else (label.coord, snd max_dim))
-          min_dim
-        )
-        (not ligne)
-        bsp_d
-        max_dim
-        (if ligne then (fst min_dim, label.coord) else (label.coord, snd min_dim))
-      )
+      begin
+        let line_dim =
+          if even then ((fst min_dim, label.coord), (fst max_dim, label.coord))
+          else ((label.coord, snd min_dim), (label.coord, snd max_dim))
+        and line_color =
+          if label.colored then color_of_line bsp_g bsp_d even
+          else None
+        in
+        let line = (line_dim, line_color) in
+        let dim_max_left = if even then (fst max_dim, label.coord) else (label.coord, snd max_dim) in
+        let dim_min_right = if even then (fst min_dim, label.coord) else (label.coord, snd min_dim) in
+        let l_left = aux (line :: l) (not even) bsp_g dim_max_left min_dim in
+        aux l_left (not even) bsp_d max_dim dim_min_right
+      end
   in aux [] false bsp config.dims (0,0)
 
 (**
   Fonction prenant une config et un bsp en entrée, et renvoie la liste des rectangles avec leurs couleurs
 *)
 let rectangles_from_bsp (config : config) (bsp : bsp) : (rect * color option) list =
-  let rec aux l ligne bsp max_dim min_dim =
+  let rec aux res even bsp max_dim min_dim =
     match bsp with
-    | R c -> ((min_dim, diff_dim min_dim max_dim), c) :: l
+    | R c -> ((min_dim, diff_dim min_dim max_dim), c) :: res
     | L (label, bsp_g, bsp_d) ->
-        aux
-          (aux 
-            l 
-            (not ligne) 
-            bsp_g 
-            (if ligne then (fst max_dim, label.coord) else (label.coord, snd max_dim))
-            min_dim
-          )
-          (not ligne)
-          bsp_d
-          max_dim
-          (if ligne then (fst min_dim, label.coord) else (label.coord, snd min_dim)
-        )
+      begin
+        let dim_max_left = if even then (fst max_dim, label.coord) else (label.coord, snd max_dim) in
+        let dim_min_right = if even then (fst min_dim, label.coord) else (label.coord, snd min_dim) in
+        let l_left = aux res (not even) bsp_g dim_max_left min_dim in
+        aux l_left (not even) bsp_d max_dim dim_min_right
+      end
   in aux [] false bsp config.dims (0,0)
 
 (**
@@ -105,15 +96,16 @@ let changeColor c =
   - 'n' pour enlever la couleur
 *)
 let rec interact () : coords * color option =
-    let even = wait_next_event([Key_pressed; Button_down]) 
+    let even = wait_next_event([Key_pressed; Button_down])
     in
-    if even.keypressed then 
+    if even.keypressed then
       (match even.key with
       | 'q' -> raise Exit
       | k -> changeColor k);
-    if even.button then 
-      let mouse = (even.mouse_x, even.mouse_y) and screen = (size_x (), size_y ()) in
-      if bounds mouse screen 
+    if even.button then
+      let mouse = (even.mouse_x, even.mouse_y)
+      and screen = (size_x (), size_y ()) in
+      if bounds mouse screen
         then (mouse, ! actual_color)
       else interact ()
     else interact ()
