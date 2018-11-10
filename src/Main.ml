@@ -1,8 +1,8 @@
 
 open Base
 
-let default_weight = 600
-let default_height = 600
+let default_weight = 1000
+let default_height = 1000
 let default_depth = 5
 
 let weight = ref default_weight
@@ -21,6 +21,6 @@ let () =
   Arg.parse spec_list ignore usage_msg;
   let config = {dims = (!weight, !height); depth = !depth} in
 
-  let bsp_null = R (Some Graphics.red) in
-
-  DUGraphics.draw_current_bsp config bsp_null bsp_null
+  (* let bsp_null = R (Some Graphics.red) in *)
+  DUGraphics.init config
+  (* DUGraphics.draw_current_bsp_dev config bsp_null bsp_null *)

@@ -45,3 +45,39 @@ let maybe f x default =
   match x with 
   | None -> default
   | Some y -> f y
+
+(**
+  Fonction applicant la fonction f à x ssi x est différent de None, sinon applique g sur default
+*)
+let maybe2 f x g default =
+  match x with 
+  | None -> g default
+  | Some y -> f y
+
+(**
+  Fonction renvoyant un tuple contenant la distance entre les x et les y des deux (int * int) donnés en arguments
+ *)
+let diff_dim (x1, y1) (x2, y2) = (abs (x1 - x2), abs (y1 - y2))
+
+(**
+  Change la couleur du rectangle contenant le point coords
+*)
+let change_rectangle_color (coords, color) bsp =
+  let construct_apply_condition bol f label bsp_g bsp_d =
+    L (
+      label,
+      (if bol then f bsp_g else bsp_g),
+      (if not bol then f bsp_d else bsp_d)
+    )
+  in
+  let rec parcours line (x,y) bsp =
+    match bsp with
+    | R _ -> R color
+    | L (label, bsp_g, bsp_d) -> 
+      construct_apply_condition
+      ((if line then y else x) < label.coord)
+      (parcours (not line) (x,y))
+      label
+      bsp_g 
+      bsp_d
+    in parcours false coords bsp

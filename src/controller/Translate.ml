@@ -3,6 +3,16 @@ open Graphics
 open Base
 
 (**
+  Table rassemblant l'ensemble des couleur / caractère correspondant
+*)
+let table_of_color = [('r', Some(red)); ('b', Some(blue)); ('n', None)]
+
+(**
+  Current drawing color
+*)
+let actual_color = ref None
+
+(**
   On renvoie la couleur correspondant à la différence entre i et j :
   - i > j : blue
   - i < j : red
@@ -40,7 +50,7 @@ let lines_from_bsp (config : config) (bsp:bsp) : (line * color option) list =
     | L (label, bsp_g, bsp_d) ->
       (
         (if ligne then ((fst min_dim, label.coord), (fst max_dim, label.coord)) else ((label.coord, snd min_dim), (label.coord, snd max_dim))),
-        (color_of_line bsp_g bsp_d ligne)
+        (if label.colored then color_of_line bsp_g bsp_d ligne else None)
       ) 
       :: 
       (aux
@@ -64,7 +74,7 @@ let lines_from_bsp (config : config) (bsp:bsp) : (line * color option) list =
 let rectangles_from_bsp (config : config) (bsp : bsp) : (rect * color option) list =
   let rec aux l ligne bsp max_dim min_dim =
     match bsp with
-    | R c -> ((min_dim, max_dim), c) :: l
+    | R c -> ((min_dim, diff_dim min_dim max_dim), c) :: l
     | L (label, bsp_g, bsp_d) ->
         aux
           (aux 
@@ -80,3 +90,30 @@ let rectangles_from_bsp (config : config) (bsp : bsp) : (rect * color option) li
           (if ligne then (fst min_dim, label.coord) else (label.coord, snd min_dim)
         )
   in aux [] false bsp config.dims (0,0)
+
+(**
+  Change la couleur en cours et la renvoie
+*)
+let changeColor c =
+      let col = maybe (snd) (List.find_opt (fun (ch, _) -> c = ch) table_of_color) None in
+      maybe2 (set_color) col (set_color) white; actual_color := col
+
+(**
+  Fonction d'interaction avec l'utilisateur :
+  - 'q' pour quitter le jeu
+  - 'r'/ 'b' pour mettre en couleur
+  - 'n' pour enlever la couleur
+*)
+let rec interact () : coords * color option =
+    let even = wait_next_event([Key_pressed; Button_down]) 
+    in
+    if even.keypressed then 
+      (match even.key with
+      | 'q' -> raise Exit
+      | k -> changeColor k);
+    if even.button then 
+      let mouse = (even.mouse_x, even.mouse_y) and screen = (size_x (), size_y ()) in
+      if bounds mouse screen 
+        then (mouse, ! actual_color)
+      else interact ()
+    else interact ()

@@ -36,4 +36,7 @@ type bsp =
 
 val bounds : dim -> dim -> bool
 val maybe : ('a -> 'b) -> 'a option -> 'b -> 'b
+val maybe2 : ('a -> 'b) -> 'a option -> ('c -> 'b) -> 'c -> 'b
+val diff_dim : int * int -> int * int -> int * int
+val change_rectangle_color : coords * color option -> bsp -> bsp
   
