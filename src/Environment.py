@@ -88,6 +88,7 @@ def create_table_of_truth(list_formulas, axioms, is_poor):
         for var in variables:
             if var not in table_of_truth:
                 table_of_truth[var] = default
-    for c in axioms:
-        table_of_truth[c] = True
+    for c_tuple in axioms:
+        (b, c) = c_tuple
+        table_of_truth[c] = b
     return table_of_truth

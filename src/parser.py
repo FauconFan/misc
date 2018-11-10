@@ -64,24 +64,62 @@ def create_formula(exp):
 		elif isinstance(token, TokenVar):
 			stack.insert(0, token.repr)
 			resolve_op(stack, op_stack, False, False)
-	return resolve_stack(stack, op_stack)
+	res = resolve_stack(stack, op_stack)
+	print(res)
+	return res
+
+def eat_facts(li):
+	fact_true = True
+	res = []
+	index = 0
+	last_fact = True
+	while index < len(li):
+		token = li[index]
+		if isinstance(token, TokenVar):
+			res.append((fact_true, token.repr))
+			last_fact = True
+			fact_true = True
+		elif isinstance(token, TokenSym):
+			if token.repr != '!':
+				print("Cannot have this symbol here :", token.repr)
+				sys.exit(1)
+			fact_true = (fact_true == False)
+			last_fact = False
+		elif isinstance(token, TokenSpecial):
+			print("Cannot have this symbol here :", token.repr)
+			sys.exit(1)
+		else:
+			print("Should never happened")
+			sys.exit(1)
+		index = index + 1
+	if not last_fact:
+		print("Cannot finished with a ! symbol")
+		sys.exit(1)
+	return res
 
 def parse_tokens(lines):
 	list_formulas = []
-	axioms = []
-	queries = []
+	axioms = None
+	queries = None
 	for line in lines:
-		for token in line:
-			if isinstance(token, TokenSym):
-				list_formulas.append(create_formula(line))
-				break
-			if isinstance(token, TokenSpecial):
-				if token.repr == '=':
-					axioms = [a.repr for a in line[1:]]
-				elif token.repr == '?':
-					queries = line[1:]
-					queries = [q.repr for q in line[1:]]
-				break
+		if (len(line) == 0):
+			continue
+		token = line[0]
+		if isinstance(token, TokenSym) or isinstance(token, TokenVar):
+			list_formulas.append(create_formula(line))
+		if isinstance(token, TokenSpecial):
+			if token.repr == '=':
+				tmp = eat_facts(line[1:])
+				if (axioms == None):
+					axioms = tmp
+				else:
+					axioms = axioms + tmp
+			elif token.repr == '?':
+				tmp = eat_facts(line[1:])
+				if (queries == None):
+					queries = tmp
+				else:
+					queries = queries + tmp
 
 	if not queries:
 		print("No queries")

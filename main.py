@@ -12,7 +12,8 @@ from src.Operator import Operator
 def answer(queries, env):
     print("==== FINAL ====")
     nb_true = 0
-    for q in queries:
+    for q_tuple in queries:
+        (asked, q) = q_tuple
         answer = None
         try:
             answer = env.table_of_truth[q]
@@ -23,7 +24,7 @@ def answer(queries, env):
         except Exception as e:
             print(e)
         if answer != None:
-            if answer == True:
+            if answer == asked:
                 nb_true += 1
             print("{} : {}".format(q, answer))
     if nb_true == len(queries):
