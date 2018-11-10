@@ -6,15 +6,15 @@ RESULT = mondrian
 MAIN = src/Main.ml
 
 ML_FILES = \
+		src/CLIParser.ml \
 		src/model/Base.ml \
+		src/controller/Translate.ml \
+		src/controller/Interact.ml \
 		src/model/Check.ml \
 		src/model/Generation.ml \
 		src/model/solveur/sat_solver.ml \
-		src/controller/Translate.ml \
-		src/controller/Interact.ml \
 		src/view/Exemple_bsp.ml \
 		src/view/DUGraphics.ml \
-		src/CLIParser.ml \
 
 LIBS = graphics
 
