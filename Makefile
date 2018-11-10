@@ -14,6 +14,7 @@ ML_FILES = \
 		src/controller/Interact.ml \
 		src/view/Exemple_bsp.ml \
 		src/view/DUGraphics.ml \
+		src/CLIParser.ml \
 
 LIBS = graphics
 
