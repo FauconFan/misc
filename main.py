@@ -54,9 +54,7 @@ def main():
     try:
         algo(env, args.poor)
     except Exception as e:
-        import traceback
         print(e)
-        print(traceback.format_exc())
         sys.exit(1)
     answer(queries, env)
 

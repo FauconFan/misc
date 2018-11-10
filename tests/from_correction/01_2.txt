@@ -7,6 +7,5 @@ L + M => K
 O + P => L + N
 N => M
 
-=DEIJP #AFP TRUE K FALSE
-#=DEIJOP #AFPK TRUE
-?AFPK 
+=DEIJPO
+?AFPK

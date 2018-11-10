@@ -3,7 +3,7 @@ from copy import deepcopy
 
 from src.logger import logdijunction, logdijunctionValue, logdijunctionend, logdijunctionMessage
 
-def disjonction(env):
+def disjonction(env, is_poor):
     k = env.getFirstUndefined()
     if k == None:
         return
@@ -16,13 +16,13 @@ def disjonction(env):
     is_ok_false = True
     try:
         logdijunctionValue(envTrue, k, True)
-        algo(envTrue)
+        algo(envTrue, is_poor)
     except:
         logdijunctionMessage("We found an inconsistency when %s is True" % k)
         is_ok_true = False
     try:
         logdijunctionValue(envFalse, k, False)
-        algo(envFalse)
+        algo(envFalse, is_poor)
     except:
         logdijunctionMessage("We found an inconsistency when %s is False" % k)
         is_ok_false = False
@@ -49,11 +49,11 @@ def disjonction(env):
 
 
 def algo(env, is_poor):
-	is_rich = is_poor == False
+    is_rich = is_poor == False
     while True:
         copy = deepcopy(env)
         env.applyRules()
         if copy == env and is_rich:
-            disjonction(env)
+            disjonction(env, is_poor)
         if copy == env or (env.stillHaveUndefined() == False and is_rich):
             break

@@ -45,6 +45,8 @@ class Formule(object):
         elif self.operateur == Operator.AND:
             b0 = self.left.eval(env)
             b1 = self.right.eval(env)
+            if b0 == False or b1 == False:
+                return False
             if b0 == None or b1 == None:
                 return None
             return b0 and b1
@@ -97,15 +99,15 @@ class Formule(object):
                     b1 = None
             li = tab[fact_bool][b0][b1]
             if (len(li) == 0 and not(is_poor)):
-                raise Exception("Incohérence")
+                raise Exception("Incohérence1")
             elif (len(li) == 1):
                 (ded0, ded1) = li[0]
                 if b0 == None:
                     s = s | self.left.deduce(env, ded0, is_poor)
                 elif b0 != ded0:
-                    raise Exception("Incohérence")
+                    raise Exception("Incohérence2")
                 if b1 == None:
                     s = s | self.right.deduce(env, ded1, is_poor)
                 elif b1 != ded1:
-                    raise Exception("Incohérence")
+                    raise Exception("Incohérence3")
             return s
