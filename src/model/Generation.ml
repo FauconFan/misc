@@ -81,7 +81,7 @@ let random_bsp_colored (bsp:bsp) : bsp =
     | L (lab, l, r) ->
       begin
         let new_color =
-          if Random.bool () then Some (Translate.color_of_line l r even)
+          if Random.bool () then Some (color_of_line l r even)
           else None
         in
         let new_lab = {lab with color = new_color} in
@@ -94,7 +94,7 @@ let random_bsp_colored (bsp:bsp) : bsp =
   bsp
 
 (**
-   Génére un bsp naïvement, où il peut y avoir plusieurs solutions. 
+   Génére un bsp naïvement, où il peut y avoir plusieurs solutions.
    *)
 let random_bsp_naive config : bsp =
   let (weight, height) = config.dims in
