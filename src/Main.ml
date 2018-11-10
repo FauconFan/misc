@@ -21,6 +21,6 @@ let () =
   Arg.parse spec_list ignore usage_msg;
   let config = {dims = (!weight, !height); depth = !depth} in
 
-  (* let bsp_null = R (Some Graphics.red) in *)
-  DUGraphics.init config
-  (* DUGraphics.draw_current_bsp_dev config bsp_null bsp_null *)
+  DUGraphics.init config;
+  DUGraphics.launch config;
+  DUGraphics.close ()

@@ -5,6 +5,15 @@ open Translate
 open Base
 
 (**
+  Initialisation de la fenêtre graphique et lancement du puzzle
+*)
+let init (config:config) : unit =
+  let (w, h) = config.dims in
+    open_graph (" " ^ (string_of_int w) ^ "x" ^ (string_of_int h));
+    set_window_title "PF5_mondrian";
+    auto_synchronize false
+
+(**
   Fonction de cloture de l'interface graphic
 *)
 let close () : unit =
@@ -13,10 +22,10 @@ let close () : unit =
 (**
   Fonction de dessin de tous les rectangles du bsp
 *)
-let rec fill_all_rect (rects : (rect * color option) list) : unit = 
+let rec fill_all_rect (rects : (rect * color option) list) : unit =
   match rects with
   | [] -> ()
-  | (((x,y),(w,h)), c) :: rest -> 
+  | (((x,y),(w,h)), c) :: rest ->
     set_color white;
     maybe (set_color) c ();
     fill_rect x y w h;
@@ -51,20 +60,9 @@ let draw_current_bsp config bsp_fc bsp_cu =
   Lancement du puzzle et attente des interactions avec le joueur (cf manuel du module Translate pour la fonction interact)
 *)
 let launch (config : config) : unit =
-  let bsp_fc = (* genereted bsp*) exemple_cours and bsp_cu = ref exemple_cours in
+  let bsp_fc = exemple_cours and bsp_cu = ref exemple_cours in
   while true do
     draw_current_bsp config bsp_fc (!bsp_cu);
     try bsp_cu := change_rectangle_color (interact ()) (!bsp_cu)
     with Exit -> close (); exit 0
-  done;
-  close ()
-
-(**
-    Initialisation de la fenêtre graphique et lancement du puzzle
-*)
-let init (config:config) : unit =
-  let (w, h) = config.dims in
-  open_graph (" " ^ (string_of_int w) ^ "x" ^ (string_of_int h));
-  set_window_title "PF5_mondrian";
-  auto_synchronize false;
-  launch config
+  done
