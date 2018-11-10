@@ -9,9 +9,9 @@ ML_FILES = \
 		src/model/Base.ml \
 		src/model/Check.ml \
 		src/model/Generation.ml \
-		src/view/DUGraphics.ml \
-		src/view/exemple_bsp.ml \
+		src/view/Exemple_bsp.ml \
 		src/controller/Translate.ml \
+		src/view/DUGraphics.ml \
 
 LIBS = graphics
 
