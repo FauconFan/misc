@@ -2,6 +2,11 @@
 open Base
 open Graphics
 
+(**
+   Génére un bsp random de profondeur depth où seuls les coordonnées sont définis.7
+   Les couleurs sont à None pour les rectangles et pour les lignes.
+   *)
+
 let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) even : bsp =
   if depth == 0 then R None
   else if even then
@@ -57,6 +62,9 @@ let color_of_line bsp_g bsp_d even =
   aux tab bsp_d (not even);
   get_max_color (tab.(0)) (tab.(1))
 
+(**
+   Prend un bsp et renvoie le même bsp avec les couleurs des lignes, quand il y en a.
+   *)
 let random_bsp_colored (bsp:bsp) : bsp =
   let colors = Interact.getAllColors () in
   let len_colors = List.length colors in
@@ -85,6 +93,9 @@ let random_bsp_colored (bsp:bsp) : bsp =
   let bsp = hide_color bsp in
   bsp
 
+(**
+   Génére un bsp naïvement, où il peut y avoir plusieurs solutions. 
+   *)
 let random_bsp_naive config : bsp =
   let (weight, height) = config.dims in
   let (width_d, height_d) = (0, weight), (0, height) in
