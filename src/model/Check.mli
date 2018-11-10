@@ -1,4 +1,4 @@
 
 open Base
 
-val check_current : bsp -> bsp -> bool
+val check_current : bsp -> bool

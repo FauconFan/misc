@@ -26,7 +26,7 @@ let changeColor c =
     | None -> None
     | Some (_, c) -> Some c
   in
-  maybe2 set_color col set_color white;
+  maybe set_color col (white |> set_color);
   actual_color := col
 
 (**

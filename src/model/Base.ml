@@ -47,14 +47,6 @@ let maybe f x default =
   | Some y -> f y
 
 (**
-  Fonction applicant la fonction f à x ssi x est différent de None, sinon applique g sur default
-*)
-let maybe2 f x g default =
-  match x with
-  | None -> g default
-  | Some y -> f y
-
-(**
   Fonction renvoyant un tuple contenant la distance entre les x et les y des deux (int * int) donnés en arguments
  *)
 let diff_dim (x1, y1) (x2, y2) = (abs (x1 - x2), abs (y1 - y2))
@@ -81,3 +73,33 @@ let change_rectangle_color (coords, color) bsp =
       bsp_g
       bsp_d
     in parcours false coords bsp
+
+(**
+  On renvoie la couleur correspondant à la différence entre i et j :
+  - i > j : blue
+  - i < j : red
+  - i = j : magenta
+*)
+let get_max_color i j =
+  if i > j then Some (blue)
+  else if i < j then Some(red)
+  else Some(magenta)
+
+(**
+   Renvoie la couleur d'une ligne en fonction de :
+   - ses bsp fils
+   - ligne verticale (even = false) ou horizontale (even = true)
+*)
+let color_of_line bsp_g bsp_d even =
+  let rec aux color bsp l =
+    match bsp with
+    | R c -> maybe (fun c -> if c = blue then color.(0) <- color.(0) + 1 else color.(1) <- color.(1) + 1) c ()
+    | L (_, bsp_g, bsp_d) ->
+      if (even && l) then aux color bsp_g (not l)
+      else if even = (not l) then (aux color bsp_g (not l); aux color bsp_d (not l))
+      else aux color bsp_d (not l)
+  in
+  let tab = [|0;0|] in
+  aux tab bsp_g (not even);
+  aux tab bsp_d (not even);
+  get_max_color (tab.(0)) (tab.(1))

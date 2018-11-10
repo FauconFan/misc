@@ -37,12 +37,14 @@ let rec draw_all_line (lines : (line * color option) list) : unit =
   match lines with
   | [] -> ()
   | (((x,y),(a,b)), c) :: rest ->
-    set_line_width 3;
-    if c == None then set_color black;
-    maybe (set_color) c ();
-    moveto x y;
-    lineto a b;
-    maybe (set_color) (Some(white)) ();
+    let aux col line =
+      col;
+      set_line_width line;
+      moveto x y;  
+      lineto a b 
+    in
+    aux (white |> set_color) 5;
+    aux ((black |> set_color) |> maybe (set_color) c) 3;  
     draw_all_line rest
 
 (**
