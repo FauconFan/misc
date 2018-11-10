@@ -48,20 +48,19 @@ let rec draw_all_line (lines : (line * color option) list) : unit =
 (**
   Fonction de dessin du bsp courant et des lignes
 *)
-let draw_current_bsp config bsp_fc bsp_cu =
+let draw_current_bsp config bsp =
   clear_graph();
-  fill_all_rect (Translate.rectangles_from_bsp config bsp_cu);
-  draw_all_line (Translate.lines_from_bsp config bsp_fc);
+  fill_all_rect (Translate.rectangles_from_bsp config bsp);
+  draw_all_line (Translate.lines_from_bsp config bsp);
   synchronize ()
 
 (**
   Lancement du puzzle et attente des interactions avec le joueur (cf manuel du module Translate pour la fonction interact)
 *)
-let launch (config : config) (bsp_fc:bsp) (bsp_cu:bsp) : unit =
-  let bsp_fc = bsp_fc
-  and bsp_cu = ref bsp_cu in
+let launch (config : config) (bsp:bsp) : unit =
+  let bsp = ref bsp in
   while true do
-    draw_current_bsp config bsp_fc (!bsp_cu);
-    try bsp_cu := change_rectangle_color (Interact.interact ()) (!bsp_cu)
+    draw_current_bsp config (!bsp);
+    try bsp := change_rectangle_color (Interact.interact ()) (!bsp)
     with Exit -> close (); exit 0
   done

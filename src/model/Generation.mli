@@ -1,4 +1,4 @@
 
 open Base
 
-val random_bsp_naive : config -> (bsp * bsp)
+val random_bsp_naive : config -> bsp

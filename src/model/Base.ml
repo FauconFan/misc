@@ -21,7 +21,7 @@ type config =
 type label =
   {
     coord : int; (** taille de la ligne. L'interprétation dépend de la position dans le bsp *)
-    colored : bool; (** boolean exprimant si la ligne est coloriée ou si elle est en noir *)
+    color : color option; (** couleur de la ligen si elle existe, noir sinon *)
   }
 
 type bsp =
@@ -42,7 +42,7 @@ let bounds ((x,y) : dim) ((width, height) : dim) : bool =
   Fonction applicant la fonction f à x ssi x est différent de None, sinon renvoit default
 *)
 let maybe f x default =
-  match x with 
+  match x with
   | None -> default
   | Some y -> f y
 
@@ -50,7 +50,7 @@ let maybe f x default =
   Fonction applicant la fonction f à x ssi x est différent de None, sinon applique g sur default
 *)
 let maybe2 f x g default =
-  match x with 
+  match x with
   | None -> g default
   | Some y -> f y
 
@@ -73,11 +73,11 @@ let change_rectangle_color (coords, color) bsp =
   let rec parcours line (x,y) bsp =
     match bsp with
     | R _ -> R color
-    | L (label, bsp_g, bsp_d) -> 
+    | L (label, bsp_g, bsp_d) ->
       construct_apply_condition
       ((if line then y else x) < label.coord)
       (parcours (not line) (x,y))
       label
-      bsp_g 
+      bsp_g
       bsp_d
     in parcours false coords bsp
