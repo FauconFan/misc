@@ -14,6 +14,6 @@
         <- init dim
         <- draw_rect
         <- interact
- - [ ] Génération bsp (5.1)
+ - [x] Génération bsp (5.1)
  - [ ] Graphics rendu basic (5.2, 5.3, 6)
  - [ ] Check (5.4)
