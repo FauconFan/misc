@@ -1,9 +1,3 @@
-S src
-S src/controller
-S src/model
-S src/view
+S src/**
 
-B src
-B src/controller
-B src/model
-B src/view
+B src/**
