@@ -1,5 +1,4 @@
 
-open Exemple_bsp
 open Graphics
 open Base
 
@@ -58,9 +57,9 @@ let draw_current_bsp config bsp_fc bsp_cu =
 (**
   Lancement du puzzle et attente des interactions avec le joueur (cf manuel du module Translate pour la fonction interact)
 *)
-let launch (config : config) : unit =
-  let bsp_fc = exemple_cours
-  and bsp_cu = ref exemple_cours in
+let launch (config : config) bsp : unit =
+  let bsp_fc = bsp
+  and bsp_cu = ref bsp in
   while true do
     draw_current_bsp config bsp_fc (!bsp_cu);
     try bsp_cu := change_rectangle_color (Interact.interact ()) (!bsp_cu)
