@@ -6,3 +6,4 @@ open Base
 
 val exemple_cours : bsp
 val exemple1 : bsp
+val simple : bsp

@@ -1,4 +1,5 @@
 open Base
+open Graphics
 
 let exemple_cours = 
   L (
@@ -8,11 +9,11 @@ let exemple_cours =
         L(
           {coord = 200; colored = false},
           R None,
-          R None
+          R (Some(blue))
           ),
           L(
             {coord = 125; colored = false},
-            R None,
+            R (Some(blue)),
             R None
           )
         ),
@@ -42,21 +43,21 @@ let exemple1 =
       {coord = 200; colored = false},
         L(
           {coord = 150; colored = false},
-          R None,
-          R None
+          R (Some(red)),
+          R (Some(blue))
           ),
           L(
             {coord = 100; colored = false},
-            R None,
-            R None
+            R (Some(red)),
+            R (Some(red))
           )
         ),
         L(
           {coord = 600; colored = false},
           L(
             {coord = 750; colored = false},
-            R None,
-            R None
+            R (Some(blue)),
+            R (Some(blue))
           ),
           L(
             {coord = 500; colored = false},
@@ -69,3 +70,10 @@ let exemple1 =
           )
         )
       )
+
+let simple = 
+  L (
+    {coord = 500; colored = true},
+    R None,
+    R None
+  )
