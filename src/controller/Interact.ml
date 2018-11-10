@@ -5,7 +5,11 @@ open Graphics
 (**
   Table rassemblant l'ensemble des couleur / caractère correspondant
 *)
-let table_of_color = [('r', Some(red)); ('b', Some(blue)); ('n', None)]
+let table_of_color = [('r', red); ('b', blue)]
+
+let getAllColors () =
+  table_of_color
+  |> List.map (fun (_, c) -> c)
 
 (**
   Current drawing color
@@ -17,8 +21,13 @@ let actual_color = ref None
    Change la couleur en cours et la renvoie
 *)
 let changeColor c =
-  let col = maybe (snd) (List.find_opt (fun (ch, _) -> c = ch) table_of_color) None in
-  maybe2 (set_color) col (set_color) white; actual_color := col
+  let col_tmp = List.find_opt (fun (ch, _) -> c = ch) table_of_color in
+  let col = match col_tmp with
+    | None -> None
+    | Some (_, c) -> Some c
+  in
+  maybe2 set_color col set_color white;
+  actual_color := col
 
 (**
    Fonction d'interaction avec l'utilisateur :

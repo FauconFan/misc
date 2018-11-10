@@ -26,9 +26,31 @@ let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) e
       L (label, left, right)
     end
 
-let random_bsp_colored (_:bsp) : bsp = failwith "TODO"
+let random_bsp_colored (bsp:bsp) : bsp =
+  (* let colors = Interact.getAllColors () in
+  let len_colors = List.length colors in
+  let rec fill_color bsp = match bsp with
+    | R _ -> R (Some (List.nth colors len_colors))
+    | L (la, l, r) -> L (la, (fill_color l), (fill_color r))
+  in
+  let rec hide_color bsp = match bsp with
+    | R _ -> R None
+    | L (la, l, r) -> L (la, (hide_color l), (hide_color r))
+  in *)
+  let rec fill_lines_color bsp even = match bsp with
+    | R _ -> bsp
+    | L (lab, l, r) ->
+      begin
+        let new_lab = {lab with colored = Random.bool ()} in
+        L (new_lab, (fill_lines_color l (not even)), (fill_lines_color r (not even)))
+      end
+  in
+  fill_lines_color bsp false
+
 
 let random_bsp_naive config =
   let (weight, height) = config.dims in
   let (width_d, height_d) = (0, weight), (0, height) in
-  random_bsp_empty config.depth width_d height_d false
+  let res = random_bsp_empty config.depth width_d height_d false in
+  let res = random_bsp_colored res in
+  res
