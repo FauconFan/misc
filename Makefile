@@ -9,6 +9,7 @@ ML_FILES = \
 		src/model/Base.ml \
 		src/model/Check.ml \
 		src/model/Generation.ml \
+		src/model/solveur/sat_solver.ml \
 		src/view/Exemple_bsp.ml \
 		src/controller/Translate.ml \
 		src/view/DUGraphics.ml \
