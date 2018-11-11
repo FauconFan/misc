@@ -24,15 +24,15 @@ class Formule(object):
 			return Operator.repr_op(self.operateur) + str(self.elem)
 		return "(" + str(self.left) + Operator.repr_op(self.operateur) + str(self.right) + ")"
 
-	def getAllVaribalesInFormula(self):
+	def getAllVariablesInFormula(self):
 		if self.operateur == Operator.NONE:
 			s = set()
 			s.add(self.elem)
 			return s
 		elif self.operateur == Operator.NOT:
-			return self.elem.getAllVaribalesInFormula()
+			return self.elem.getAllVariablesInFormula()
 		else:
-			return self.left.getAllVaribalesInFormula() | self.right.getAllVaribalesInFormula()
+			return self.left.getAllVariablesInFormula() | self.right.getAllVariablesInFormula()
 
 	def eval(self, env, is_poor):
 		if self.operateur == Operator.NONE:

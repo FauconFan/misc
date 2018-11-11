@@ -84,7 +84,7 @@ def create_table_of_truth(list_formulas, axioms, is_poor):
 	if is_poor:
 		default = False
 	for formula in list_formulas:
-		variables = formula.getAllVaribalesInFormula()
+		variables = formula.getAllVariablesInFormula()
 		for var in variables:
 			if var not in table_of_truth:
 				table_of_truth[var] = default
