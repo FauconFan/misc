@@ -3,7 +3,8 @@ from enum import Enum
 def operatorBuffer():
 	pass
 
-operatorBuffer.buffer = {}
+operatorBuffer.deduction_buffer = {}
+operatorBuffer.eval_buffer = {}
 
 class Operator(Enum):
 	NONE = 0
@@ -71,6 +72,36 @@ class Operator(Enum):
 			return {(True, True): True, (True, False): False, (False, True): False, (False, False): True}
 
 	@staticmethod
+	def getEval(op):
+		def builder(op):
+			def builderBase1():
+				return {True: None, False: None, None: None}
+			def builderBase2():
+				return {True: builderBase1(), False: builderBase1(), None: builderBase1()}
+			arity = Operator.arity(op)
+			tables = Operator.getTables(op)
+			res = {}
+			if arity == 1:
+				res = builderBase1()
+				for k, v in tables.items():
+					res[k] = v
+			else:
+				res = builderBase2()
+				for k, v in tables.items():
+					(lhs, rhs) = k
+					res[lhs][rhs] = v
+				for k in [True, False]:
+					if (res[k][True] == res[k][False]):
+						res[k][None] = res[k][True]
+					if (res[True][k] == res[False][k]):
+						res[None][k] = res[True][k]
+			return res
+		rep = Operator.repr_op(op)
+		if operatorBuffer.eval_buffer.get(rep) == None:
+			operatorBuffer.eval_buffer[rep] = builder(op)
+		return operatorBuffer.eval_buffer[rep]
+
+	@staticmethod
 	def getDeduction(op):
 		def builder(op):
 			def builderBase1():
@@ -95,6 +126,6 @@ class Operator(Enum):
 					res[v][None][rhs].append(k)
 			return res
 		rep = Operator.repr_op(op)
-		if operatorBuffer.buffer.get(rep) == None:
-			operatorBuffer.buffer[rep] = builder(op)
-		return operatorBuffer.buffer[rep]
+		if operatorBuffer.deduction_buffer.get(rep) == None:
+			operatorBuffer.deduction_buffer[rep] = builder(op)
+		return operatorBuffer.deduction_buffer[rep]
