@@ -12,6 +12,7 @@ from src.Operator import Operator
 def answer(queries, env):
     print("==== FINAL ====")
     nb_true = 0
+
     for q_tuple in queries:
         (asked, q) = q_tuple
         answer = None
@@ -26,6 +27,8 @@ def answer(queries, env):
         if answer != None:
             if answer == asked:
                 nb_true += 1
+            if asked == False:
+                answer = not answer
             print("{} : {}".format(q, answer))
     if nb_true == len(queries):
         sys.exit(0)
