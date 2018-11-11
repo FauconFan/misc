@@ -4,7 +4,7 @@ from copy import deepcopy
 from src.logger import logdijunction, logdijunctionValue, logdijunctionend, logdijunctionMessage
 
 def disjonction(env, is_poor):
-	k = env.getFirstUndefined()
+	k = env.getNextUndefined()
 	if k == None:
 		return
 	logdijunction(env, k)

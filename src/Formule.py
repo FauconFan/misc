@@ -82,3 +82,31 @@ class Formule(object):
 				elif b1 != ded1:
 					raise Exception("Incohérence")
 			return s
+
+	def countUndefinedNoCheck(self, tabUndefined):
+		if Operator.arity(self.operateur) == 1:
+			if self.operateur == Operator.NOT:
+				self.elem.countUndefinedNoCheck(tabUndefined)
+			else:
+				tabUndefined[self.elem] = tabUndefined[self.elem] + 1
+		else:
+			self.left.countUndefinedNoCheck(tabUndefined)
+			self.right.countUndefinedNoCheck(tabUndefined)
+
+	def countUndefined(self, env, tabUndefined):
+		if Operator.arity(self.operateur) == 1:
+			if self.operateur == Operator.NOT:
+				self.elem.countUndefined(env, tabUndefined)
+			else:
+				tabUndefined[self.elem] = tabUndefined[self.elem] + 1
+		else:
+			b0 = self.left.eval(env, False)
+			b1 = self.right.eval(env, False)
+			if b0 != None:
+				self.left.countUndefined(env, tabUndefined)
+			else:
+				self.left.countUndefinedNoCheck(tabUndefined)
+			if b1 != None:
+				self.right.countUndefined(env, tabUndefined)
+			else:
+				self.right.countUndefinedNoCheck(tabUndefined)

@@ -39,11 +39,27 @@ class Environment(object):
 				return True
 		return False
 
-	def getFirstUndefined(self):
+	def getNextUndefined(self):
+		tabUndefined_tmp = {}
+		for k, v in self.table_of_truth.items():
+			tabUndefined_tmp[k] = 0
+		for formula in self.list_formulas:
+			formula.countUndefined(self, tabUndefined_tmp)
+		tabUndefined = {}
 		for k, v in self.table_of_truth.items():
 			if v == None:
-				return k
-		return None
+				tabUndefined[k] = tabUndefined_tmp[k]
+		cand = None
+		candValue = 0
+		for k, v in tabUndefined.items():
+			if cand == None:
+				cand = k
+				candValue = v
+			elif candValue < v:
+				cand = k
+				candValue = v
+		return cand
+
 
 	def applyRules(self):
 		for formula in self.list_formulas:

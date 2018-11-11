@@ -1,6 +1,7 @@
 
 import sys
 import argparse
+import traceback
 
 from src.logger import log_set_interactive, log_set_verbose, log_helper
 from src.parser import parse
@@ -58,6 +59,7 @@ def main():
 	try:
 		algo(env, args.poor)
 	except Exception as e:
+		print(traceback.format_tb())
 		print(e)
 		sys.exit(1)
 	answer(queries, env)
