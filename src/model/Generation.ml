@@ -67,7 +67,7 @@ let random_bsp_colored (bsp:bsp) : bsp =
    Génére un bsp naïvement, où il peut y avoir plusieurs solutions.
    *)
 let random_bsp_naive config : bsp =
-  let (weight, height) = config.dims in
-  let (width_d, height_d) = (0, weight), (0, height) in
+  let (width, height) = config.dims in
+  let (width_d, height_d) = (0, width), (0, height) in
   let res = random_bsp_empty config.depth width_d height_d false in
   random_bsp_colored res

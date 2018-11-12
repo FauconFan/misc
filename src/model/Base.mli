@@ -5,7 +5,7 @@ open Graphics
   * This a documentation part
   *)
 
-type dim = int * int (* weight, height *)
+type dim = int * int (* width, height *)
 type coords = int * int (* x, y *)
 type rect = coords * dim (* left corner coords, and the dimension *)
 type line = coords * coords (* coords of the two points of the segments *)
