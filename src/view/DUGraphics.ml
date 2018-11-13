@@ -25,7 +25,7 @@ let rec fill_all_rect (rects : (rect * color option) list) : unit =
   | [] -> ()
   | (((x,y),(w,h)), c) :: rest ->
     set_color white;
-    maybe (set_color) c ();
+    Option.may (set_color) c;
     fill_rect x y w h;
     set_color white;
     fill_all_rect rest
@@ -44,7 +44,7 @@ let rec draw_all_line (lines : (line * color option) list) : unit =
       lineto a b 
     in
     aux (white |> set_color) 5;
-    aux ((black |> set_color) |> maybe (set_color) c) 3;  
+    aux (Option.map_default (set_color) (black |> set_color) c) 3;  
     draw_all_line rest
 
 (**

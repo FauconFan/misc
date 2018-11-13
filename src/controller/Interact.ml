@@ -26,7 +26,7 @@ let changeColor c =
     | None -> None
     | Some (_, c) -> Some c
   in
-  maybe set_color col (white |> set_color);
+  Option.map_default set_color (white |> set_color) col;
   actual_color := col
 
 (**

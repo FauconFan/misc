@@ -8,5 +8,5 @@ let check_current (bsp : bsp) =
     | L (lab, bsp_g, bsp_d) ->
       if((aux bsp_g (not even)) = false || aux bsp_d (not even))
         then false
-      else maybe (fun c -> (color_of_line bsp_g bsp_d even) = Some(c)) lab.color true
+      else Option.map_default (fun c -> (color_of_line bsp_g bsp_d even) = Some(c)) true lab.color
   in aux bsp false

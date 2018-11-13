@@ -39,14 +39,6 @@ let bounds ((x,y) : dim) ((width, height) : dim) : bool =
   && y < height
 
 (**
-  Fonction applicant la fonction f à x ssi x est différent de None, sinon renvoit default
-*)
-let maybe f x default =
-  match x with
-  | None -> default
-  | Some y -> f y
-
-(**
   Fonction renvoyant un tuple contenant la distance entre les x et les y des deux (int * int) donnés en arguments
  *)
 let diff_dim (x1, y1) (x2, y2) = (abs (x1 - x2), abs (y1 - y2))
@@ -93,7 +85,7 @@ let get_max_color i j =
 let color_of_line bsp_g bsp_d even =
   let rec aux color bsp l =
     match bsp with
-    | R c -> maybe (fun c -> if c = blue then color.(0) <- color.(0) + 1 else color.(1) <- color.(1) + 1) c ()
+    | R c -> Option.may (fun c -> if c = blue then color.(0) <- color.(0) + 1 else color.(1) <- color.(1) + 1) c
     | L (_, bsp_g, bsp_d) ->
       if (even && l) then aux color bsp_g (not l)
       else if even = (not l) then (aux color bsp_g (not l); aux color bsp_d (not l))
