@@ -16,4 +16,4 @@
         <- interact
  - [x] Génération bsp (5.1)
  - [ ] Graphics rendu basic (5.2, 5.3, 6)
- - [ ] Check (5.4)
+ - [x] Check (5.4)
