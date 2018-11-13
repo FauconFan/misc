@@ -7,6 +7,7 @@ MAIN = src/Main.ml
 
 ML_FILES = \
 		src/CLIParser.ml \
+		src/utils/Option.ml \
 		src/model/Base.ml \
 		src/controller/Translate.ml \
 		src/controller/Interact.ml \
