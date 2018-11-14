@@ -37,7 +37,7 @@ def resolve_op(stack, op_stack, parenthesis, resolve):
 		try:
 			formule = Formule(op, f_left, f_right)
 		except Exception as e:
-			print("Try to create an invalid formule: Error: {}".format(e))
+			print("Try to create an invalid formule:\nError: {}".format(e))
 			sys.exit(1)
 		stack.insert(0, formule)
 		if op == "!":
