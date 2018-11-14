@@ -2,10 +2,11 @@ import sys
 
 from src.Formule import Formule, Operator
 from src.Lexer import *
+from src.parserPoor import create_poor_formula
 
 VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-def get_left_right(op, stack, op_stack):
+def get_left_right(op, stack):
 	right = None
 	left = None
 	if op != '!' and len(stack) is not 0:
@@ -28,7 +29,7 @@ def resolve_op(stack, op_stack, parenthesis, resolve):
 		op = op_stack.pop(0)
 		if op == "(":
 			return
-		f_left, f_right = get_left_right(op, stack, op_stack)
+		f_left, f_right = get_left_right(op, stack)
 		try:
 			formule = Formule(op, f_left, f_right)
 		except Exception as e:
@@ -97,7 +98,7 @@ def eat_facts(li):
 		sys.exit(1)
 	return res
 
-def parse_tokens(lines):
+def parse_tokens(lines, is_poor):
 	list_formulas = []
 	axioms = None
 	queries = None
@@ -106,7 +107,10 @@ def parse_tokens(lines):
 			continue
 		token = line[0]
 		if isinstance(token, TokenSym) or isinstance(token, TokenVar):
-			list_formulas.append(create_formula(line))
+			if is_poor:
+				list_formulas.append(create_poor_formula(line))
+			else:
+				list_formulas.append(create_formula(line))
 		if isinstance(token, TokenSpecial):
 			if token.repr == '=':
 				tmp = eat_facts(line[1:])
@@ -127,7 +131,7 @@ def parse_tokens(lines):
 	return axioms, queries, list_formulas
 
 
-def parse(filename):
+def parse(filename, is_poor):
 	try:
 		with open(filename) as file:
 			lines = file.read().splitlines()
@@ -144,4 +148,4 @@ def parse(filename):
 	lexer = Lexer(lines)
 	lexer.run()
 	tokens_lines = lexer.get()
-	return(parse_tokens(tokens_lines))
+	return(parse_tokens(tokens_lines, is_poor))

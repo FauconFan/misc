@@ -50,7 +50,7 @@ def main():
 	if args.interactive:
 		log_set_interactive()
 	log_set_verbose(args.verbose)
-	axioms, queries, list_rules = parse(args.file)
+	axioms, queries, list_rules = parse(args.file, args.poor)
 
 	table = create_table_of_truth(list_rules, axioms, args.poor)
 	env = Environment(list_rules, table, args.poor)
