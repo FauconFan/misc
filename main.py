@@ -1,14 +1,12 @@
-
 import sys
 import argparse
-import traceback
 
+from src.Environment import create_table_of_truth, Environment
+from src.Operator import Operator
 from src.logger import log_set_interactive, log_set_verbose, log_helper
 from src.parser import parse
-from src.Environment import create_table_of_truth, Environment
 from src.algo import algo
 
-from src.Operator import Operator
 
 def answer(queries, env):
 	print("==== FINAL ====")
@@ -19,22 +17,23 @@ def answer(queries, env):
 		answer = None
 		try:
 			answer = env.table_of_truth[q]
-			if answer == None:
+			if answer is None:
 				answer = "Undefined"
 		except KeyError:
 			answer = "Undefined"
 		except Exception as e:
 			print(e)
-		if answer != None:
+		if answer is not None:
 			if answer == asked:
 				nb_true += 1
-			if asked == False:
+			if not asked:
 				answer = not answer
 			print("{} : {}".format(q, answer))
 	if nb_true == len(queries):
 		sys.exit(0)
 	else:
 		sys.exit(1)
+
 
 def main():
 	parser = argparse.ArgumentParser(
@@ -50,7 +49,11 @@ def main():
 	if args.interactive:
 		log_set_interactive()
 	log_set_verbose(args.verbose)
-	axioms, queries, list_rules = parse(args.file, args.poor)
+	try:
+		axioms, queries, list_rules = parse(args.file, args.poor)
+	except Exception as e:
+		print(e)
+		sys.exit(1)
 
 	table = create_table_of_truth(list_rules, axioms, args.poor)
 	env = Environment(list_rules, table, args.poor)
@@ -59,10 +62,12 @@ def main():
 	try:
 		algo(env, args.poor)
 	except Exception as e:
-		print(traceback.format_tb())
+		import traceback
+		traceback.print_exc()
 		print(e)
 		sys.exit(1)
 	answer(queries, env)
+
 
 if __name__ == "__main__":
 	main()

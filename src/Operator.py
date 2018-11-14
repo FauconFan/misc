@@ -1,10 +1,13 @@
 from enum import Enum
 
+
 def operatorBuffer():
 	pass
 
+
 operatorBuffer.deduction_buffer = {}
 operatorBuffer.eval_buffer = {}
+
 
 class Operator(Enum):
 	NONE = 0
@@ -45,7 +48,7 @@ class Operator(Enum):
 			return Operator.IMP
 		elif op == "<=>":
 			return Operator.EQU
-		elif op == None:
+		elif op is None:
 			return Operator.NONE
 
 	@staticmethod
@@ -76,8 +79,10 @@ class Operator(Enum):
 		def builder(op):
 			def builderBase1():
 				return {True: None, False: None, None: None}
+
 			def builderBase2():
 				return {True: builderBase1(), False: builderBase1(), None: builderBase1()}
+
 			arity = Operator.arity(op)
 			tables = Operator.getTables(op)
 			res = {}
@@ -97,7 +102,7 @@ class Operator(Enum):
 						res[None][k] = res[True][k]
 			return res
 		rep = Operator.repr_op(op)
-		if operatorBuffer.eval_buffer.get(rep) == None:
+		if operatorBuffer.eval_buffer.get(rep) is None:
 			operatorBuffer.eval_buffer[rep] = builder(op)
 		return operatorBuffer.eval_buffer[rep]
 
@@ -106,8 +111,10 @@ class Operator(Enum):
 		def builder(op):
 			def builderBase1():
 				return {True: [], False: [], None: []}
+
 			def builderBase2():
 				return {True: builderBase1(), False: builderBase1(), None: builderBase1()}
+
 			arity = Operator.arity(op)
 			tables = Operator.getTables(op)
 			res = {}
@@ -126,6 +133,6 @@ class Operator(Enum):
 					res[v][None][rhs].append(k)
 			return res
 		rep = Operator.repr_op(op)
-		if operatorBuffer.deduction_buffer.get(rep) == None:
+		if operatorBuffer.deduction_buffer.get(rep) is None:
 			operatorBuffer.deduction_buffer[rep] = builder(op)
 		return operatorBuffer.deduction_buffer[rep]

@@ -1,6 +1,7 @@
 
 import sys
 
+
 def log_helper():
 	s = "set Verbosity level.\n"
 	s += "(0) -> Just print the result. (default)\n"
@@ -8,11 +9,14 @@ def log_helper():
 	s += "(2) -> Print table of truth at every step.\n"
 	return s
 
+
 def log_set_interactive():
 	logconfig.interactive = True
 
+
 def log_set_verbose(v):
 	logconfig.verbose = v
+
 
 def logconfig():
 	logconfig.c = logconfig.c + 1
@@ -20,10 +24,12 @@ def logconfig():
 		print("Step %d:" % logconfig.c)
 		print("Depth %d:" % logconfig.depthdij)
 
+
 logconfig.c = 0
 logconfig.interactive = False
 logconfig.verbose = 0
 logconfig.depthdij = 0
+
 
 def loginteractive():
 	if logconfig.interactive:
@@ -32,8 +38,8 @@ def loginteractive():
 			try:
 				input()
 				break
-			except:
-				print()
+			except EOFError:
+				sys.exit(2)
 
 
 def print_with_depth(li):
@@ -50,6 +56,7 @@ def print_with_depth(li):
 			for i in real_li:
 				print("%s %s" % ("+" * logconfig.depthdij, i))
 
+
 def log(env, s, formula):
 	if len(s) > 0:
 		logconfig()
@@ -64,6 +71,7 @@ def log(env, s, formula):
 		print_with_depth(li)
 		loginteractive()
 
+
 def logdijunction(env, str):
 	logconfig()
 	li = []
@@ -75,6 +83,7 @@ def logdijunction(env, str):
 	logconfig.depthdij = logconfig.depthdij + 1
 	loginteractive()
 
+
 def logdijunctionValue(env, s, value):
 	logconfig()
 	li = []
@@ -84,14 +93,16 @@ def logdijunctionValue(env, s, value):
 	print_with_depth(li)
 	loginteractive()
 
-def logdijunctionMessage(msg, msgVerbose = None):
+
+def logdijunctionMessage(msg, msgVerbose=None):
 	logconfig()
 	li = []
 	li.append(msg)
-	if logconfig.verbose >= 2 and msgVerbose != None:
+	if logconfig.verbose >= 2 and msgVerbose is not None:
 		li.append(msgVerbose)
 	print_with_depth(li)
 	loginteractive()
+
 
 def logdijunctionend():
 	logconfig.depthdij = logconfig.depthdij - 1

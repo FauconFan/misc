@@ -1,14 +1,19 @@
 
 from enum import Enum
 
+from src.Exceptions import LexerException
+
+
 class TokenType(Enum):
 	VAR = 1
 	SYM = 2
 	SPECIAL = 3
 
+
 class Token(object):
 	def __init__(self, type):
 		self.type = type
+
 
 class TokenVar(Token):
 	def __init__(self, repr):
@@ -18,6 +23,7 @@ class TokenVar(Token):
 	def __str__(self):
 		return self.repr
 
+
 class TokenSym(Token):
 	def __init__(self, repr):
 		Token.__init__(self, TokenType.SYM)
@@ -25,6 +31,7 @@ class TokenSym(Token):
 
 	def __str__(self):
 		return self.repr
+
 
 class TokenSpecial(Token):
 	def __init__(self, repr):
@@ -34,6 +41,7 @@ class TokenSpecial(Token):
 	def __str__(self):
 		return self.repr
 
+
 class Lexer(object):
 	"""docstring for Lexer."""
 	def __init__(self, content):
@@ -41,8 +49,6 @@ class Lexer(object):
 		self.tokens = []
 
 	def clean_lines(self):
-		#Mise Au propre de la recuperation sur l'entree standard
-
 		new_lines = []
 		for i in self.content:
 			val = i
@@ -50,7 +56,7 @@ class Lexer(object):
 				val = i[:i.index("#")]
 			for word in val.split():
 				if word[0].isalpha() and word[0].islower():
-					raise Exception("A variable can't start with a lowercase character")
+					raise LexerException("A variable can't start with a lowercase character")
 			val = val.replace(" ", "")
 			val = val.replace("\t", "")
 			if len(val) > 0:
@@ -77,15 +83,15 @@ class Lexer(object):
 					tokens.append(TokenSpecial(cpy[0]))
 					cpy = cpy[1:]
 				elif cpy[0].isupper():
-					l = 1
-					while l < len(cpy):
-						if not cpy[l].islower():
+					len_entry = 1
+					while len_entry < len(cpy):
+						if not cpy[len_entry].islower():
 							break
-						l = l + 1
-					tokens.append(TokenVar(cpy[:l]))
-					cpy = cpy[l:]
+						len_entry = len_entry + 1
+					tokens.append(TokenVar(cpy[:len_entry]))
+					cpy = cpy[len_entry:]
 				else:
-					raise Exception("This character never matchs : " + cpy[0] + " in this line " + cpy)
+					raise LexerException("This character never matchs : " + cpy[0] + " in this line " + cpy)
 			self.tokens.append(tokens)
 
 	def get(self):

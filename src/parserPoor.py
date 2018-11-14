@@ -5,15 +5,16 @@ from src.Lexer import *
 
 VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 PRIORITY = {
-	"<=>" : 1,
-	"=>" : 2,
-	"^" : 3,
-	"|" : 4,
-	"+" : 5,
-	"!" : 6,
-	"(" : 7,
-	")" : 8
+	"<=>": 1,
+	"=>": 2,
+	"^": 3,
+	"|": 4,
+	"+": 5,
+	"!": 6,
+	"(": 7,
+	")": 8
 }
+
 
 def get_poor_l_r(op, stack):
 	right = None
@@ -30,6 +31,7 @@ def get_poor_l_r(op, stack):
 		f_right = Formule(None, right)
 	return f_left, f_right
 
+
 def resolve_poor_op(var_stack, op_stack):
 	if len(op_stack) <= 0 or len(var_stack) <= 0:
 		print("Error: nothing in stack")
@@ -41,7 +43,8 @@ def resolve_poor_op(var_stack, op_stack):
 	except Exception as e:
 		print("Try to create an invalid formule: Error: {}".format(e))
 	var_stack.insert(len(var_stack), formule)
-	
+
+
 def check_poor_resolve(op_stack):
 	lenght = len(op_stack)
 	if lenght <= 1:
@@ -52,9 +55,10 @@ def check_poor_resolve(op_stack):
 		return False
 	elif op1 == ")":
 		return True
-	if PRIORITY[op2] < PRIORITY[op1] :
+	if PRIORITY[op2] < PRIORITY[op1]:
 		return False
 	return True
+
 
 def finish(var_stack, op_stack):
 	while len(op_stack) != 0:
@@ -71,6 +75,7 @@ def finish(var_stack, op_stack):
 		sys.exit(1)
 	return var_stack[0]
 
+
 def create_poor_formula(exp):
 	op_stack = []
 	var_stack = []
@@ -81,10 +86,9 @@ def create_poor_formula(exp):
 				resolve_poor_op(var_stack, op_stack)
 		elif isinstance(token, TokenVar):
 			var_stack.insert(len(var_stack), token.repr)
-		## delete parenthesis
+		# delete parenthesis
 		if len(op_stack) >= 2 and op_stack[len(op_stack) - 2] == "(" and op_stack[len(op_stack) - 1] == ")":
 			op_stack.pop(len(op_stack) - 1)
 			op_stack.pop(len(op_stack) - 1)
 
 	return (finish(var_stack, op_stack))
-

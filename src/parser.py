@@ -1,10 +1,13 @@
 import sys
 
+
 from src.Formule import Formule, Operator
 from src.Lexer import *
 from src.parserPoor import create_poor_formula
 
+
 VAR_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 
 def get_left_right(op, stack):
 	right = None
@@ -20,6 +23,7 @@ def get_left_right(op, stack):
 	if isinstance(right, str):
 		f_right = Formule(None, right)
 	return f_left, f_right
+
 
 def resolve_op(stack, op_stack, parenthesis, resolve):
 	# print(stack, op_stack)
@@ -40,6 +44,7 @@ def resolve_op(stack, op_stack, parenthesis, resolve):
 			resolve_op(stack, op_stack, parenthesis, resolve)
 		if parenthesis:
 			resolve_op(stack, op_stack, parenthesis, resolve)
+
 
 def resolve_stack(stack, op_stack):
 	while len(op_stack) is not 0:
@@ -69,6 +74,7 @@ def create_formula(exp):
 	print(res)
 	return res
 
+
 def eat_facts(li):
 	fact_true = True
 	res = []
@@ -84,7 +90,7 @@ def eat_facts(li):
 			if token.repr != '!':
 				print("Cannot have this symbol here :", token.repr)
 				sys.exit(1)
-			fact_true = (fact_true == False)
+			fact_true = (not fact_true)
 			last_fact = False
 		elif isinstance(token, TokenSpecial):
 			print("Cannot have this symbol here :", token.repr)
@@ -97,6 +103,7 @@ def eat_facts(li):
 		print("Cannot finished with a ! symbol")
 		sys.exit(1)
 	return res
+
 
 def parse_tokens(lines, is_poor):
 	list_formulas = []
@@ -114,13 +121,13 @@ def parse_tokens(lines, is_poor):
 		if isinstance(token, TokenSpecial):
 			if token.repr == '=':
 				tmp = eat_facts(line[1:])
-				if (axioms == None):
+				if axioms is None:
 					axioms = tmp
 				else:
 					axioms = axioms + tmp
 			elif token.repr == '?':
 				tmp = eat_facts(line[1:])
-				if (queries == None):
+				if (queries is None):
 					queries = tmp
 				else:
 					queries = queries + tmp
@@ -135,14 +142,13 @@ def parse(filename, is_poor):
 	try:
 		with open(filename) as file:
 			lines = file.read().splitlines()
-	except FileNotFoundError: ## depends python version
-	# except IOError:
+	except FileNotFoundError:
 		print('File not found')
 		sys.exit(1)
 	except IsADirectoryError:
 		print('The argument is a directory')
 		sys.exit(1)
-	except:
+	except Exception:
 		print('Unexpected error')
 		sys.exit(1)
 	lexer = Lexer(lines)
