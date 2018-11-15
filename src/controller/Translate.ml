@@ -2,9 +2,6 @@
 open Graphics
 open Base
 
-(**
-  Fonction prenant une config et un bsp en entrée, et renvoie la liste des lignes avec leurs couleurs
-*)
 let lines_from_bsp (config : config) (bsp:bsp) : (line * color option) list =
   let rec aux l even bsp max_dim min_dim =
     match bsp with
@@ -24,9 +21,6 @@ let lines_from_bsp (config : config) (bsp:bsp) : (line * color option) list =
       end
   in aux [] false bsp config.dims (0,0)
 
-(**
-  Fonction prenant une config et un bsp en entrée, et renvoie la liste des rectangles avec leurs couleurs
-*)
 let rectangles_from_bsp (config : config) (bsp : bsp) : (rect * color option) list =
   let rec aux res even bsp max_dim min_dim =
     match bsp with

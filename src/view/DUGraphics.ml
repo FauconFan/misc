@@ -2,7 +2,7 @@
 open Graphics
 open Base
 
-(**
+(*
   Initialisation de la fenêtre graphique et lancement du puzzle
 *)
 let init (config:config) : unit =
@@ -11,13 +11,13 @@ let init (config:config) : unit =
     set_window_title "PF5_mondrian";
     auto_synchronize false
 
-(**
+(*
   Fonction de cloture de l'interface graphic
 *)
 let close () : unit =
   close_graph ()
 
-(**
+(*
   Fonction de dessin de tous les rectangles du bsp
 *)
 let rec fill_all_rect (rects : (rect * color option) list) : unit =
@@ -30,7 +30,7 @@ let rec fill_all_rect (rects : (rect * color option) list) : unit =
     set_color white;
     fill_all_rect rest
 
-(**
+(*
   Fonction de dessin des lignes en fonction de leurs couleurs
 *)
 let rec draw_all_line (lines : (line * color option) list) : unit =
@@ -40,14 +40,14 @@ let rec draw_all_line (lines : (line * color option) list) : unit =
     let aux col line =
       col;
       set_line_width line;
-      moveto x y;  
-      lineto a b 
+      moveto x y;
+      lineto a b
     in
     aux (white |> set_color) 5;
-    aux (Option.map_default (set_color) (black |> set_color) c) 3;  
+    aux (Option.map_default (set_color) (black |> set_color) c) 3;
     draw_all_line rest
 
-(**
+(*
   Fonction de dessin du bsp courant et des lignes
 *)
 let draw_current_bsp config bsp =
@@ -56,7 +56,7 @@ let draw_current_bsp config bsp =
   draw_all_line (Translate.lines_from_bsp config bsp);
   synchronize ()
 
-(**
+(*
   Lancement du puzzle et attente des interactions avec le joueur (cf manuel du module Translate pour la fonction interact)
 *)
 let launch (config : config) (bsp:bsp) : unit =

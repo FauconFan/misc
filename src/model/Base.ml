@@ -1,34 +1,34 @@
-(** Fichier ml contenant les types et fonctions de base utilisés dans tout le projet *)
+(* Fichier ml contenant les types et fonctions de base utilisés dans tout le projet *)
 
 open Graphics
 
-type dim = int * int (** width, height *)
-type coords = int * int (** x, y *)
-type rect = coords * dim (** left corner coords, and the dimension *)
-type line = coords * coords (** coords of the two points of the segments *)
+type dim = int * int (* width, height *)
+type coords = int * int (* x, y *)
+type rect = coords * dim (* left corner coords, and the dimension *)
+type line = coords * coords (* coords of the two points of the segments *)
 
-(**
+(*
   * Config report used to get user information
   *)
 type config =
   {
-    dims : dim; (** dimension de la fenêtre graphique. Permet de construire l'arbre en fonction *)
-    depth : int; (** profondeur de l'arbre *)
+    dims : dim; (* dimension de la fenêtre graphique. Permet de construire l'arbre en fonction *)
+    depth : int; (* profondeur de l'arbre *)
   }
 
 (* Types given by the subject *)
 
 type label =
   {
-    coord : int; (** taille de la ligne. L'interprétation dépend de la position dans le bsp *)
-    color : color option; (** couleur de la ligen si elle existe, noir sinon *)
+    coord : int; (* taille de la ligne. L'interprétation dépend de la position dans le bsp *)
+    color : color option; (* couleur de la ligen si elle existe, noir sinon *)
   }
 
 type bsp =
-  | R of color option (** Couleur d'un rectangle *)
-  | L of label * bsp * bsp (** composé d'un label correspondant à la ligne et de 2 arbres bsp en fils *)
+  | R of color option (* Couleur d'un rectangle *)
+  | L of label * bsp * bsp (* composé d'un label correspondant à la ligne et de 2 arbres bsp en fils *)
 
-(**
+(*
    Fonction prenant deux dimensions en arguments (x,y) et (width, height) et renvoyant si la dimension
    coordonnée se situe entre (0,0) et (width, height).
 *)
@@ -38,12 +38,12 @@ let bounds ((x,y) : dim) ((width, height) : dim) : bool =
   && x < width
   && y < height
 
-(**
+(*
   Fonction renvoyant un tuple contenant la distance entre les x et les y des deux (int * int) donnés en arguments
  *)
 let diff_dim (x1, y1) (x2, y2) = (abs (x1 - x2), abs (y1 - y2))
 
-(**
+(*
   Change la couleur du rectangle contenant le point coords
 *)
 let change_rectangle_color (coords, color) bsp =
@@ -66,18 +66,18 @@ let change_rectangle_color (coords, color) bsp =
       bsp_d
     in parcours false coords bsp
 
-(**
+(*
   On renvoie la couleur correspondant à la différence entre i et j :
   - i > j : blue
   - i < j : red
   - i = j : magenta
 *)
 let get_max_color i j =
-  if i > j then Some (blue)
-  else if i < j then Some(red)
-  else Some(magenta)
+  if i > j then Some blue
+  else if i < j then Some red
+  else Some magenta
 
-(**
+(*
    Renvoie la couleur d'une ligne en fonction de :
    - ses bsp fils
    - ligne verticale (even = false) ou horizontale (even = true)

@@ -2,7 +2,7 @@
 open Base
 open Graphics
 
-(**
+(*
    Génére un bsp random de profondeur depth où seuls les coordonnées sont définis.7
    Les couleurs sont à None pour les rectangles et pour les lignes.
    *)
@@ -32,7 +32,7 @@ let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) e
       L (label, left, right)
     end
 
-(**
+(*
    Prend un bsp et renvoie le même bsp avec les couleurs des lignes, quand il y en a.
    *)
 let random_bsp_colored (bsp:bsp) : bsp =
@@ -63,7 +63,7 @@ let random_bsp_colored (bsp:bsp) : bsp =
   let bsp = hide_color bsp in
   bsp
 
-(**
+(*
    Génére un bsp naïvement, où il peut y avoir plusieurs solutions.
    *)
 let random_bsp_naive config : bsp =
