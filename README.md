@@ -5,7 +5,7 @@ The goal of this project is to an expert system for proposition calculus.
 You have a list of axioms (a list of facts that is true), a list of rules (of kind: A => B + C), and a list of queries (a list of facts that you want to know).
 The program detects if there is any inconsistency, during the solving task.
 
-The algorithm is pretty stupid, and for a exponential problem, we don't use any heuristic, and we test everything.
+When we cannot deduce anything from the system, we choose a variable and make a disjunction on it. We choose the variable with a simple heuristic : we choose the variable with the max the number of occurences...
 
 The following symbols are defined, in order of decreasing priority:
  - ( and ) which are fairly obvious. Example : A + (B | C) => D
