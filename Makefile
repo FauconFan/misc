@@ -16,8 +16,13 @@ ML_FILES = \
 		src/model/solveur/sat_solver.ml \
 		src/view/Exemple_bsp.ml \
 		src/view/DUGraphics.ml \
+		src/view/graphics/component/AComponent.ml \
+		src/view/graphics/component/Frame.ml \
+		src/view/graphics/Layer.ml \
+		src/view/graphics/Scene.ml \
+		src/view/graphics/GraphicsManager.ml \
 
-LIBS = graphics
+LIBS = graphics unix
 
 MLI_FILES = $(ML_FILES:%.ml=%.mli)
 
