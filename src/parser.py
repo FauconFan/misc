@@ -71,7 +71,6 @@ def create_formula(exp):
 			stack.insert(0, token.repr)
 			resolve_op(stack, op_stack, False, False)
 	res = resolve_stack(stack, op_stack)
-	print(res)
 	return res
 
 
@@ -107,8 +106,8 @@ def eat_facts(li):
 
 def parse_tokens(lines, is_poor):
 	list_formulas = []
-	axioms = None
-	queries = None
+	axioms = []
+	queries = []
 	for line in lines:
 		if (len(line) == 0):
 			continue
@@ -132,7 +131,7 @@ def parse_tokens(lines, is_poor):
 				else:
 					queries = queries + tmp
 
-	if not queries:
+	if len(queries) == 0:
 		print("No queries")
 		sys.exit(1)
 	return axioms, queries, list_formulas
@@ -154,4 +153,4 @@ def parse(filename, is_poor):
 	lexer = Lexer(lines)
 	lexer.run()
 	tokens_lines = lexer.get()
-	return(parse_tokens(tokens_lines, is_poor))
+	return (parse_tokens(tokens_lines, is_poor))

@@ -8,7 +8,28 @@ from src.parser import parse
 from src.algo import algo
 
 
-def answer(queries, env):
+def print_initial(axioms, queries, rules):
+	def print_facts(list, name_sing, name_plus):
+		if len(list) == 0:
+			print("= NO {} =".format(name_plus))
+		else:
+			name_toprint = name_sing
+			if len(queries) != 1:
+				name_toprint = name_plus
+			print("= {} =".format(name_toprint))
+			li_li = []
+			for (b, var) in list:
+				li_li.append("{}({})".format(var, b))
+			print(", ".join(li_li))
+	print("==== INITIAL ====")
+	print_facts(axioms, "AXIOM", "AXIOMS")
+	print_facts(queries, "QUERY", "QUERIES")
+	print("= RULES =")
+	for k, v in enumerate(rules):
+		print("{} -> {}".format(k, v))
+
+
+def print_final(queries, env):
 	print("==== FINAL ====")
 	nb_true = 0
 
@@ -26,8 +47,6 @@ def answer(queries, env):
 		if answer is not None:
 			if answer == asked:
 				nb_true += 1
-			if not asked:
-				answer = not answer
 			print("{} : {}".format(q, answer))
 	if nb_true == len(queries):
 		sys.exit(0)
@@ -55,6 +74,7 @@ def main():
 		print(e)
 		sys.exit(1)
 
+	print_initial(axioms, queries, list_rules)
 	table = create_table_of_truth(list_rules, axioms, args.poor)
 	env = Environment(list_rules, table, args.poor)
 	if args.verbose:
@@ -64,7 +84,7 @@ def main():
 	except Exception as e:
 		print(e)
 		sys.exit(1)
-	answer(queries, env)
+	print_final(queries, env)
 
 
 if __name__ == "__main__":
