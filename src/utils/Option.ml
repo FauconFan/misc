@@ -11,6 +11,18 @@ let may f x = match x with
   | Some v -> f v
 
 (*
+  On applique f à x et y  si x et y sont différents de None, sinon on ne fait rien
+*)
+let may2 f x y = match x with
+  | None -> ()
+  | Some vx ->
+    begin
+      match y with
+      | None -> ()
+      | Some vy -> f vx vy
+    end
+
+(*
   Si x est None, on retourne None, sinon on retourne Some (f x)
 *)
 let map f x = match x with

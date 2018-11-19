@@ -10,7 +10,9 @@
 *)
 
 val may : ('a -> unit) -> 'a option -> unit
-    (** may f (Some x) calls f x and may f None does nothing. *)
+(** may f (Some x) calls f x and may f None does nothing. *)
+val may2 : ('a -> 'b -> unit) -> 'a option -> 'b option -> unit
+(** may f (Some x) (Some y) calls f x y and does nothing otherwise. *)
 val map : ('a -> 'b) -> 'a option -> 'b option
     (** map f (Some x) returns Some (f x) and map None returns None. *)
 val default : 'a -> 'a option -> 'a

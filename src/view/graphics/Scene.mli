@@ -1,7 +1,10 @@
 
+open Base
+open Graphics
+
 class scene :
   Layer.layer array ->
   object
-    method private get_layers : Layer.layer array
-    method draw : unit
+    method draw : unit -> unit
+    method click : (coords * color option) -> unit
   end

@@ -4,8 +4,8 @@ open Base
 
 let fps_objective = 60.
 
-let defaultScene =
-  let frame = new Frame.frame in
+let defaultScene config =
+  let frame = new FrameBSP.frameBSP config 0 0 in
   let layer = new Layer.layer [frame] in
   new Scene.scene [| layer |]
 
@@ -13,24 +13,29 @@ let scene = ref None
 
 let init (config : config) : unit =
   let (w, h) = config.dims in
-  open_graph (" " ^ (string_of_int w) ^ "x" ^ (string_of_int h));
+  let (wr, hr) = (w + (w / 50), h + (h / 50)) in
+  open_graph (" " ^ (string_of_int wr) ^ "x" ^ (string_of_int hr));
   set_window_title "PF5_mondrian";
   auto_synchronize false;
-  scene := Some defaultScene
+  scene := Some (defaultScene config)
 
 let close () : unit =
   close_graph ();
   scene := None
 
 let run () : unit =
+  let core () =
+    let event = Interact.interact () in
+    Option.may2 (fun s e -> s#click e) !scene event;
+    Option.may (fun s -> s#draw ()) !scene;
+  in
   let running = ref true in
   let fps = ref 0 in
   let second = ref @@ Unix.gettimeofday () in
   while !running do
     let begin_turn = Unix.gettimeofday () in
     clear_graph ();
-    !scene
-    |> Option.may (fun a -> a#draw);
+    core ();
     synchronize ();
     let end_turn = Unix.gettimeofday () in
     let ecart = end_turn -. begin_turn in

@@ -4,7 +4,7 @@ open Base
 let () =
   let config = CLIParser.cliparse () in
 
-  (* Random.self_init (); *)
+  Random.self_init ();
   GraphicsManager.init config;
   GraphicsManager.run ();
   GraphicsManager.close ()

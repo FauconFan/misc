@@ -1,7 +1,10 @@
 
+open Base
+open Graphics
+
 class layer :
   AComponent.acomponent list ->
   object
-    method private get_components : AComponent.acomponent list
-    method draw : unit
+    method draw : unit -> unit
+    method click : (coords * color option) -> unit
   end

@@ -62,7 +62,12 @@ let draw_current_bsp config bsp =
 let launch (config : config) (bsp:bsp) : unit =
   let bsp = ref bsp in
   while true do
+    let rec get_next () =
+      match Interact.interact () with
+      | None -> get_next ()
+      | Some v -> v
+    in
     draw_current_bsp config (!bsp);
-    try bsp := change_rectangle_color (Interact.interact ()) (!bsp)
+    try bsp := change_rectangle_color (get_next ()) (!bsp)
     with Exit -> close (); exit 0
   done

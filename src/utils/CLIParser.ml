@@ -1,8 +1,8 @@
 
 open Base
 
-let default_width = 1000
-let default_height = 1000
+let default_width = 600
+let default_height = 600
 let default_depth = 5
 
 let width = ref default_width
