@@ -1,28 +1,51 @@
-
 open Base
 open Graphics
 
+(**
+  Minimum size of square
+*)
+let min_size = 20
+
+(**
+  Accurate of the random fonction
+*)
+let random_pad = 2
+
+(**
+  Random fonction which return a value around half of var. It's depended of random_pad
+*)
+let random var =
+  let rec aux tmp i =
+    if i < random_pad then aux (tmp + (Random.int var)) (i+1)
+    else tmp
+  in
+  let t = (aux 0 0) / random_pad in
+  print_string "affiche "; print_int (var); print_string " "; print_int t; print_string "\n"; t
+
 (*
-   Génére un bsp random de profondeur depth où seuls les coordonnées sont définis.7
+   Génére un bsp random de profondeur depth où seuls les coordonnées sont définis.
    Les couleurs sont à None pour les rectangles et pour les lignes.
    *)
-
 let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) even : bsp =
   if depth == 0 then R None
   else if even then
     begin
-      let coord = Random.int (max_width - min_width) + min_width in
-      let label = {coord = coord; color = None} in
-      let d_left = (min_width, coord)
-      and d_right = (coord, max_width)
-      and d_height = (min_height, max_height) in
-      let left = random_bsp_empty (depth - 1) d_left d_height (not even)
-      and right = random_bsp_empty (depth - 1) d_right d_height (not even) in
-      L (label, left, right)
+      if max_width - (min_size * 2) - min_width <= 0 then R None 
+      else
+        let coord = random (max_width - (min_size * 2) - min_width) + min_width + min_size in
+        let label = {coord = coord; color = None} in
+        let d_left = (min_width, coord)
+        and d_right = (coord, max_width)
+        and d_height = (min_height, max_height) in
+        let left = random_bsp_empty (depth - 1) d_left d_height (not even)
+        and right = random_bsp_empty (depth - 1) d_right d_height (not even) in
+        L (label, left, right)
     end
   else
     begin
-      let coord = Random.int (max_height - min_height) + min_height in
+      if max_height - (min_size * 2) - min_height <= 0 then R None 
+      else
+      let coord = random (max_height - (min_size * 2) - min_height) + min_height + min_size in
       let label = {coord = coord; color = None} in
       let d_left = (min_height, coord)
       and d_right = (coord, max_height)
