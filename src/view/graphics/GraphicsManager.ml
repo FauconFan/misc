@@ -13,7 +13,7 @@ let scene = ref None
 
 let init (config : config) : unit =
   let (w, h) = config.dims in
-  let (wr, hr) = (w + (w / 50), h + (h / 50)) in
+  let (wr, hr) = (w + (w / 2), h + (h / 2)) in
   open_graph (" " ^ (string_of_int wr) ^ "x" ^ (string_of_int hr));
   set_window_title "PF5_mondrian";
   auto_synchronize false;
@@ -24,14 +24,18 @@ let close () : unit =
   scene := None
 
 let run () : unit =
-  let core () =
-    let event = Interact.interact () in
-    Option.may2 (fun s e -> s#click e) !scene event;
-    Option.may (fun s -> s#draw ()) !scene;
-  in
   let running = ref true in
   let fps = ref 0 in
   let second = ref @@ Unix.gettimeofday () in
+  let core () =
+    try
+      begin
+        let event = Interact.interact () in
+        Option.may2 (fun s e -> s#click e) !scene event;
+        Option.may (fun s -> s#draw ()) !scene;
+      end
+    with Exit -> running := false
+  in
   while !running do
     let begin_turn = Unix.gettimeofday () in
     clear_graph ();

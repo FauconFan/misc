@@ -27,26 +27,4 @@ class frameBSP config posx posy =
 
     method subClick c =
       bsp <- change_rectangle_color c bsp
-
-      (* method draw =
-         let d_rect (((x, y), (w, h)), c) =
-          set_color white;
-          Option.may set_color c;
-          fill_rect x y w h;
-          set_color white;
-         in
-         let d_line (((x1, y1), (x2, y2)), c) =
-          let aux w col =
-            col;
-            set_line_width w;
-            moveto x1 y1;
-            lineto x2 y2;
-          in
-          aux 5 (white |> set_color);
-          aux 3 (Option.map_default set_color (black |> set_color) c);
-         in
-         let rects = Translate.rectangles_from_bsp config bsp in
-         let lines = Translate.lines_from_bsp config bsp in
-         List.iter d_rect rects;
-         List.iter d_line lines; *)
   end
