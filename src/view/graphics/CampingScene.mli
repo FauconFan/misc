@@ -1,4 +1,4 @@
 
 open Base
 
-val defaultScene : config -> Scene.scene
+val defaultScene : config -> SLAC.scene

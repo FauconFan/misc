@@ -16,10 +16,8 @@ ML_FILES = \
 		src/model/solveur/sat_solver.ml \
 		src/view/Exemple_bsp.ml \
 		src/view/DUGraphics.ml \
-		src/view/graphics/component/AComponent.ml \
+		src/view/graphics/SLAC.ml \
 		src/view/graphics/component/FrameBSP.ml \
-		src/view/graphics/Layer.ml \
-		src/view/graphics/Scene.ml \
 		src/view/graphics/GMessage.ml \
 		src/view/graphics/CampingScene.ml \
 		src/view/graphics/GraphicsManager.ml \

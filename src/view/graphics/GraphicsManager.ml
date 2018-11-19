@@ -1,5 +1,6 @@
 
 open Graphics
+open GMessage
 open Base
 
 let fps_objective = 60.
@@ -25,8 +26,14 @@ let run () : unit =
   let core () =
     try
       begin
+        let use_gmsg gmsg = match gmsg with
+          | Nothing -> ()
+          | Apply f -> f (Option.get !scene)
+          | Update f -> scene := Some (f ())
+        in
         let event = Interact.interact () in
-        Option.may2 (fun s e -> s#click e) !scene event;
+        let li_gmsg = Option.map2_default (fun s e -> s#click e) [] !scene event in
+        List.iter use_gmsg li_gmsg;
         Option.may (fun s -> s#draw ()) !scene;
       end
     with Exit -> running := false

@@ -1,10 +1,11 @@
 
 open Graphics
+open GMessage
 open Base
 
 class frameBSP config posx posy =
   object (self)
-    inherit AComponent.acomponent posx posy as super
+    inherit SLAC.acomponent posx posy as super
 
     val mutable bsp = Generation.random_bsp_naive config
 
@@ -26,5 +27,6 @@ class frameBSP config posx posy =
       |> List.map rects_builder
 
     method subClick c =
-      bsp <- change_rectangle_color c bsp
+      bsp <- change_rectangle_color c bsp;
+      Nothing
   end

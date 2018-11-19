@@ -7,10 +7,10 @@ class frameBSP :
   int ->
   int ->
   object
-    inherit AComponent.acomponent
+    inherit SLAC.acomponent
     val mutable bsp : bsp
 
     method getLines : unit -> (coords * coords * color * int) list
     method getRects : unit -> (coords * dim * color) list
-    method subClick : (coords * color option) -> unit
+    method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
   end

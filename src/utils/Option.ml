@@ -44,6 +44,18 @@ let map_default f a x = match x with
   | Some v -> f v
 
 (*
+  map2_default f x (Some v) (Some w) retourne f v w et retourne x autrement..
+*)
+let map2_default f a x y = match x with
+  | None -> a
+  | Some vx ->
+    begin
+      match y with
+      | None -> a
+      | Some vy -> f vx vy
+    end
+
+(*
   is_none None retourne true sinon il retourne false.
 *)
 let is_none x = match x with
