@@ -20,6 +20,8 @@ ML_FILES = \
 		src/view/graphics/component/FrameBSP.ml \
 		src/view/graphics/Layer.ml \
 		src/view/graphics/Scene.ml \
+		src/view/graphics/GMessage.ml \
+		src/view/graphics/CampingScene.ml \
 		src/view/graphics/GraphicsManager.ml \
 
 LIBS = graphics unix

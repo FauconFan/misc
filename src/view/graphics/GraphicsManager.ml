@@ -4,11 +4,6 @@ open Base
 
 let fps_objective = 60.
 
-let defaultScene config =
-  let frame = new FrameBSP.frameBSP config 0 0 in
-  let layer = new Layer.layer [frame] in
-  new Scene.scene [| layer |]
-
 let scene = ref None
 
 let init (config : config) : unit =
@@ -17,7 +12,7 @@ let init (config : config) : unit =
   open_graph (" " ^ (string_of_int wr) ^ "x" ^ (string_of_int hr));
   set_window_title "PF5_mondrian";
   auto_synchronize false;
-  scene := Some (defaultScene config)
+  scene := Some (CampingScene.defaultScene config)
 
 let close () : unit =
   close_graph ();
