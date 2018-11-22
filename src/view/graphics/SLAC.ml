@@ -21,7 +21,7 @@ and layer (list_compo : acomponent list) =
       List.map (fun comp -> comp#click c) list_compo
   end
 
-and virtual acomponent posx posy =
+and virtual acomponent (posx, posy) =
   object (self)
     method draw () : unit =
       let d_rect ((x, y), (w, h), c) =

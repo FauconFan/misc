@@ -17,8 +17,7 @@ and layer :
   end
 
 and virtual acomponent :
-  int ->
-  int ->
+  coords ->
   object
     method draw : unit -> unit
     method click : (coords * color option) -> (scene GMessage.t)
