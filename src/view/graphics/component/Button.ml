@@ -29,7 +29,7 @@ class Button dim content coord action =
       let dim_str = text_size content in
       let (middle_x, middle_y) = (fst coord + (fst dim / 2), snd coord + (snd dim / 2)) in
       moveto (middle_x - (fst dim_str / 2)) (middle_y - (snd dim_str / 2));
-      draw_string s;
+      draw_string content;
       moveto cur_x cur_y
 
   end

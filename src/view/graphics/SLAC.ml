@@ -2,6 +2,8 @@
 open Base
 open Graphics
 
+exception Wrong_Construct of string
+
 class scene (layers_array : layer array) =
   object (self)
     method draw () : unit =

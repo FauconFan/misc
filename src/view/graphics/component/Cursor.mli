@@ -1,7 +1,7 @@
 open Base
 open Graphics
 
-class Cursor :
+class cursor :
   dim ->
   int -> (* min possible *)
   int -> (* max possible *)
@@ -21,4 +21,10 @@ class Cursor :
 
     (** action when we click on the cursor *)
     method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
+
+    (** Return the value of the cursor *)
+    method get_value : unit -> int
+
+    method private get_middle : unit -> (int * int)
+    method private draw_string : unit -> unit
   end

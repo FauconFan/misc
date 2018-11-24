@@ -1,9 +1,10 @@
 open Base
 open Graphics
 
-class Popup :
+class popup :
   string ->
-  Button list ->
+  button list ->
+  dim ->
   coords ->
   object
     inherit SLAC.acomponent
