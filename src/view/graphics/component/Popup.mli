@@ -3,7 +3,7 @@ open Graphics
 
 class popup :
   string ->
-  button list ->
+  Button.button list ->
   dim ->
   coords ->
   object

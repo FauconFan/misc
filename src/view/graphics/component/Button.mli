@@ -1,17 +1,13 @@
 open Base
 open Graphics
 
-class Button :
+class button :
   dim ->
   string ->
   coords ->
-  ((coords * color option) -> unit) ->
+  ((coords * color option) -> SLAC.scene -> unit) ->
   object
     inherit SLAC.acomponent
-    val mutable name : string
-    
-    (** We draw lines and rects of the button (call of super#draw) and print the content string centered inside the button*)
-    method draw : unit -> unit
 
     (** Get lines which need to be drawn *)
     method getLines : unit -> (coords * coords * color * int) list

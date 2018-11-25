@@ -1,7 +1,7 @@
 open Base
 open Graphics
 
-class Background :
+class background :
   color ->
   dim ->
   coords ->

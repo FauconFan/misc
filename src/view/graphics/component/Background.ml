@@ -1,4 +1,7 @@
-class Background color dim coord =
+open Base
+open Graphics
+
+class background color dim coord =
   object (self)
     inherit SLAC.acomponent coord as super
 

@@ -10,6 +10,14 @@ class cursor :
     inherit SLAC.acomponent
     val mutable pos : int
 
+    val space_cursor_text : int
+    val space_around : int
+
+    val mutable width_cursor : int
+
+    method private get_middle : unit -> coords
+    method private draw_string : unit -> unit 
+
     (** We draw lines and rects of the cursor (call of super#draw) and print the position int on the right*)
     method draw : unit -> unit
 
@@ -24,7 +32,4 @@ class cursor :
 
     (** Return the value of the cursor *)
     method get_value : unit -> int
-
-    method private get_middle : unit -> (int * int)
-    method private draw_string : unit -> unit
   end
