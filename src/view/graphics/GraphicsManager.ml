@@ -13,7 +13,7 @@ let init (config : config) : unit =
   open_graph (" " ^ (string_of_int wr) ^ "x" ^ (string_of_int hr));
   set_window_title "PF5_mondrian";
   auto_synchronize false;
-  scene := Some (CampingScene.defaultScene config)
+  scene := Some (CampingScene.menu config)
 
 let close () : unit =
   close_graph ();

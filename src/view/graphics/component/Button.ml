@@ -16,11 +16,11 @@ class button dim content coord callback =
       let gray = rgb 109 110 112 in
       let black_grayed = rgb 200 200 200 in
       let min_dim = (fst dim - 2, snd dim - 2) in
-      (coord, dim, gray):: ((fst coord + 1, snd coord + 1), min_dim, black_grayed) :: []
+      ((0,0), dim, gray):: (( 1, 1), min_dim, black_grayed) :: []
 
     method subClick (c : (coords * color option)) : (SLAC.scene GMessage.t) =
       let diff (x1, y1) (x2, y2) = (x2-x1, y2-y1) in
-      if bounds (diff (fst c) (coord)) dim then Apply (c |> callback)
+      if bounds (fst c) dim then Apply (c |> callback)
       else Nothing
 
     method private draw_string_center () =
