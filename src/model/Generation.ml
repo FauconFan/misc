@@ -30,7 +30,7 @@ let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) e
   if depth == 0 then R None
   else if even then
     begin
-      if max_width - (min_size * 2) - min_width <= 0 then R None 
+      if max_width - (min_size * 2) - min_width <= 0 then R None
       else
         let coord = random (max_width - (min_size * 2) - min_width) + min_width + min_size in
         let label = {coord = coord; color = None} in
@@ -43,7 +43,7 @@ let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) e
     end
   else
     begin
-      if max_height - (min_size * 2) - min_height <= 0 then R None 
+      if max_height - (min_size * 2) - min_height <= 0 then R None
       else
       let coord = random (max_height - (min_size * 2) - min_height) + min_height + min_size in
       let label = {coord = coord; color = None} in
@@ -74,7 +74,7 @@ let random_bsp_colored (bsp:bsp) : bsp =
     | L (lab, l, r) ->
       begin
         let new_color =
-          if Random.bool () then color_of_line l r even
+          if Random.bool () then Bsp.color_of_line l r even
           else None
         in
         let new_lab = {lab with color = new_color} in

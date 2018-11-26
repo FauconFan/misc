@@ -63,6 +63,6 @@ let launch (config : config) (bsp:bsp) : unit =
   let bsp = ref bsp in
   while true do
     draw_current_bsp config (!bsp);
-    try bsp := change_rectangle_color (Interact.interact ()) (!bsp)
+    try bsp := Bsp.change_rectangle_color (Interact.interact ()) (!bsp)
     with Exit -> close (); exit 0
   done
