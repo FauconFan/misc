@@ -13,12 +13,6 @@ let not_litt (litt : litt) : litt =
   let (b, str) = litt in
   (not b, str)
 
-let rec not_prop (prop : prop) : prop =
-  match prop with
-  | Litt l -> Litt (not_litt l)
-  | Or (l, r) -> And (not_prop l, not_prop r)
-  | And (l, r) -> Or (not_prop l, not_prop r)
-
 let prop_to_fnc (prop : prop) : litt list list =
   let id_inc = ref 0 in
   let uniq_id () =
