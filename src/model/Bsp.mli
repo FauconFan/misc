@@ -2,7 +2,7 @@
 open Base
 open Graphics
 
-val color_of_line : bsp -> bsp -> bool -> color option
+val color_of_line : bsp -> bsp -> bool -> color
 (**
    Returns the color of a ligne based of the two left and right subtrees and the parity of the current depth.
 *)
