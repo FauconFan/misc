@@ -73,7 +73,7 @@ let random_bsp_colored (bsp:bsp) : bsp =
     | L (lab, l, r) ->
       begin
         let new_color =
-          if Random.bool () then Bsp.color_of_line l r even
+          if Random.bool () then Some (Bsp.color_of_line l r even)
           else None
         in
         let new_lab = {lab with color = new_color} in

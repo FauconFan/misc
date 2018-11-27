@@ -9,8 +9,8 @@ ML_FILES = \
 		src/utils/CLIParser.ml \
 		src/utils/Option.ml \
 		src/model/Base.ml \
-		src/model/Bsp.ml \
 		src/model/FNC.ml \
+		src/model/Bsp.ml \
 		src/controller/Interact.ml \
 		src/model/Check.ml \
 		src/model/Generation.ml \
