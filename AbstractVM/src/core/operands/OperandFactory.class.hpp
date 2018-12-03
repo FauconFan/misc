@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/05 16:24:28 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 16:37:16 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/12/03 11:16:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class OperandFactory {
         IOperand const * createInt8(std::string const &) const;
         IOperand const * createInt16(std::string const &) const;
         IOperand const * createInt32(std::string const &) const;
+        IOperand const * createInt64(std::string const &) const;
         IOperand const * createFloat(std::string const &) const;
         IOperand const * createDouble(std::string const &) const;
 };

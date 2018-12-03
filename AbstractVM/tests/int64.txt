@@ -1,0 +1,5 @@
+push int64(131321321)
+push int64(131321321)
+mul
+dump
+exit
