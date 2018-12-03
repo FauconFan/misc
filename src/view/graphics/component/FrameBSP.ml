@@ -29,4 +29,6 @@ class frameBSP config (posx, posy) =
     method subClick c =
       bsp <- change_rectangle_color c bsp;
       Nothing
+
+    method getStrings () = []
   end

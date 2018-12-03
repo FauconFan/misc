@@ -8,8 +8,6 @@ class popup :
   coords ->
   object
     inherit SLAC.acomponent
-    (** We draw lines and rects of the popup (call of super#draw) and print the content string above*)
-    method draw : unit -> unit
 
     (** Get lines which need to be drawn *)
     method getLines : unit -> (coords * coords * color * int) list
@@ -19,4 +17,7 @@ class popup :
 
     (** action when we click on the popup -> distrub it on button *)
     method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
+
+    (** Get strings which need to be drawn *)    
+    method getStrings : unit -> string_content list
   end

@@ -17,4 +17,7 @@ class frameBSP :
 
     (** action when we click on the frameBSP -> change color of a rectangle *)
     method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
+
+    (** Get strings which need to be drawn *)    
+    method getStrings : unit -> string_content list
   end

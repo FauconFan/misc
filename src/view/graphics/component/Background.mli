@@ -14,6 +14,9 @@ class background :
     (** Get rects which need to be drawn *)
     method getRects : unit -> (coords * dim * color) list
 
-    (** action when we click on the Background *)
+    (** Get strings which need to be drawn *)    
+    method getStrings : unit -> string_content list
+
+    (** action when we click on the popup -> distrub it on button *)
     method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
   end

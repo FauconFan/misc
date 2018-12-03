@@ -36,8 +36,16 @@ and virtual acomponent (posx, posy) =
         moveto x1 y1;
         lineto x2 y2;
       in
+      let d_string { coordinate = (coordx, coordy); dimension = (dx, dy); color = c; font = font; size = s; content = content} =
+        set_color c;
+        set_font font;
+        set_text_size s;
+        moveto coordx coordy;
+        draw_string content
+      in
       let rects = self#getRects ()
       and lines = self#getLines ()
+      and strings = self#getStrings ()
       in
       rects
       |> List.map (fun ((x, y), (w, h), c) -> ((x + posx, y + posy), (w, h), c))
@@ -45,10 +53,14 @@ and virtual acomponent (posx, posy) =
       lines
       |> List.map (fun ((x1, y1), (x2, y2), c, w) -> ((x1 + posx, y1 + posy), (x2 + posx, y2 + posy), c, w))
       |> List.iter d_line;
+      strings
+      |> List.map (fun s_con -> {s_con with coordinate = (fst s_con.coordinate + posx, snd s_con.coordinate + posy)})
+      |> List.iter d_string;
 
     method click ((x, y), c) : (scene GMessage.t) =
       self#subClick ((x - posx, y - posy), c)
 
+    method virtual getStrings : unit -> string_content list
     method virtual getLines : unit -> (coords * coords * color * int) list
     method virtual getRects : unit -> (coords * dim * color) list
     method virtual subClick : (coords * color option) -> scene GMessage.t

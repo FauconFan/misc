@@ -24,6 +24,7 @@ and virtual acomponent :
     method draw : unit -> unit
     method click : (coords * color option) -> (scene GMessage.t)
 
+    method virtual getStrings : unit -> string_content list
     method virtual getLines : unit -> (coords * coords * color * int) list
     method virtual getRects : unit -> (coords * dim * color) list
     method virtual subClick : (coords * color option) -> (scene GMessage.t)

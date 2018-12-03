@@ -31,6 +31,24 @@ type config =
     - depth of the final bsp
 *)
 
+type string_content = 
+  {
+    coordinate : coords;
+    dimension : dim;
+    color : color;
+    font : string;
+    size : int;
+    content : string;
+  }
+(** type for string information, it is composed of :
+  - left down corner coordinate
+  - dimension of the area of string
+  - color of the string
+  - font of the string
+  - size of the string
+  - content of the string
+*)
+
 type label =
   {
     coord : int;
