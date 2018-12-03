@@ -1,52 +1,47 @@
 #!/usr/bin/python3
 
 import argparse
-import sys
 
-def getDataFromFile(pathfile):
-    res = {"header" : None, "contents" : []}
-    with open(pathfile, 'r') as file:
-        while True:
-            line = file.readline()
-            if len(line) == 0:
-                break
-            if line[-1] is '\n':
-                line = line[:-1]
-            data = line.split(',')
-            if len(data) != 2:
-                print("Invalid data")
-                sys.exit(1);
-            if res["header"] is None:
-                res["header"] = (data[0], data[1])
-            else:
-                for d in data:
-                    if not d.isdigit():
-                        print("Invalid data")
-                        sys.exit(1)
-                res["contents"].append(data)
-    return res
+from src.Data import Data
 
-def normalizeData(data):
-    if len(data["contents"]) == 0:
-        return
-    min0 = data["contents"][0]
-    max0 = data["contents"][0]
-    min1 = data["contents"][1]
-    max1 = data["contents"][1]
-    for i in range(1, len(data["contents"])):
-        elem0, elem1 = data["contents"][i]
-        
+learning_rate = 0.1
+
+def train(li):
+    t0 = 0
+    t1 = 0
+    m = len(li)
+    while True:
+        tmpt0 = 0
+        tmpt1 = 0
+        for (x, y) in li:
+            tmpt0 = tmpt0 + ((t0 + t1 * x) - y)
+            tmpt1 = tmpt1 + (((t0 + t1 * x) - y) * x)
+        tmpt0 = learning_rate * (1.0 / m) * tmpt0
+        tmpt1 = learning_rate * (1.0 / m) * tmpt1
+        t0 = t0 - tmpt0
+        t1 = t1 - tmpt1
+        print(tmpt0, tmpt1)
+        if (abs(tmpt0) + abs(tmpt1) < 1e-10):
+            break
+    return (t0, t1)
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("file", help="pathfile of the data")
     args = parser.parse_args()
 
-    file = args.file
-    data = getDataFromFile(file)
-    for d in data["contents"]:
+    data = Data(args.file)
+    for d in data.contents:
         print(d)
-
+    data.normalise()
+    (t0, t1) = train(data.contents)
+    print("t0 t1", t0, t1)
+    for (x, y) in data.contents:
+        cand = t0 + t1 * x
+        print(x, cand, y, abs(y - cand))
+    (t0, t1) = data.getnormedt0t1(t0, t1)
+    print(t0, t1)
+    data.unnormalise()
 
 if __name__ == "__main__":
     main()
