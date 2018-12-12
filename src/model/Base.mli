@@ -34,11 +34,10 @@ type config =
 type string_content = 
   {
     coordinate : coords;
-    dimension : dim;
     color : color;
     font : string;
     size : int;
-    content : string;
+    content : string list;
   }
 (** type for string information, it is composed of :
   - left down corner coordinate

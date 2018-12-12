@@ -27,11 +27,10 @@ type config =
   type string_content = 
     {
       coordinate : coords;
-      dimension : dim;
       color : color;
       font : string;
       size : int;
-      content : string;
+      content : string list;
     }
   
 

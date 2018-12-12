@@ -16,8 +16,7 @@ class button dim content coord callback =
       ((0,0), dim, gray):: (( 1, 1), min_dim, black_grayed) :: []
 
     method subClick (c : (coords * color option)) : (SLAC.scene GMessage.t) =
-      let diff (x1, y1) (x2, y2) = (x2-x1, y2-y1) in
-      if bounds (fst c) dim then Apply (c |> callback)
+      if bounds (fst c) dim then (c |> callback)
       else Nothing
 
     (*method private draw_string_center () =
@@ -31,10 +30,9 @@ class button dim content coord callback =
       moveto cur_x cur_y*)
 
     method getStrings () =
-    let construct_string_content coord dim c font s content = 
+    let construct_string_content coord c font s content = 
       {
         coordinate = coord;
-        dimension = dim;
         color = c;
         font = font;
         size = s;
@@ -45,8 +43,7 @@ class button dim content coord callback =
     let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
     let apply_tuple (a,b) f = (f a, f b) in
     let coord = apply_tuple coord (fun a -> padding) in
-    let dim = apply_tuple dim (fun a -> a - (2* padding)) in
-    let cont = construct_string_content coord dim black font 30 content in
+    let cont = construct_string_content coord black font 30 content in
     [cont]
 
   end

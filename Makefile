@@ -21,6 +21,7 @@ ML_FILES = \
 		src/view/graphics/component/Button.ml \
 		src/view/graphics/component/Cursor.ml \
 		src/view/graphics/component/Popup.ml \
+		src/view/graphics/component/Text.ml \
 		src/view/graphics/component/FrameBSP.ml \
 		src/view/graphics/GMessage.ml \
 		src/view/graphics/CampingScene.ml \

@@ -3,9 +3,9 @@ open Graphics
 
 class button :
   dim ->
-  string ->
+  string list ->
   coords ->
-  ((coords * color option) -> SLAC.scene -> unit) ->
+  ((coords * color option) -> SLAC.scene GMessage.t) ->
   object
     inherit SLAC.acomponent
 

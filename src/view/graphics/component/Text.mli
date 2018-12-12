@@ -1,10 +1,8 @@
 open Base
 open Graphics
 
-class popup :
+class text :
   string list ->
-  Button.button list ->
-  dim ->
   coords ->
   object
     inherit SLAC.acomponent
@@ -15,7 +13,7 @@ class popup :
     (** Get rects which need to be drawn *)
     method getRects : unit -> (coords * dim * color) list
 
-    (** action when we click on the popup -> distrub it on button *)
+    (** action when we click on the frameBSP -> change color of a rectangle *)
     method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
 
     (** Get strings which need to be drawn *)    

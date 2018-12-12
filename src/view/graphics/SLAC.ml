@@ -4,8 +4,15 @@ open Graphics
 
 exception Wrong_Construct of string
 
+let id = ref 0
+
 class scene (layers_array : layer array) =
   object (self)
+
+    val id_comp = incr id; !id
+
+    method getId () = id_comp
+
     method draw () : unit =
       Array.iter (fun lay -> lay#draw ()) layers_array
 
@@ -16,6 +23,11 @@ class scene (layers_array : layer array) =
 
 and layer (list_compo : acomponent list) =
   object (self)
+
+    val id_comp = incr id; !id
+
+    method getId () = id_comp
+
     method draw () =
       List.iter (fun comp -> comp#draw ()) list_compo
 
@@ -25,6 +37,11 @@ and layer (list_compo : acomponent list) =
 
 and virtual acomponent (posx, posy) =
   object (self)
+
+    val id_comp = incr id; !id
+
+    method getId () = id_comp
+
     method draw () : unit =
       let d_rect ((x, y), (w, h), c) =
         set_color c;
@@ -36,12 +53,15 @@ and virtual acomponent (posx, posy) =
         moveto x1 y1;
         lineto x2 y2;
       in
-      let d_string { coordinate = (coordx, coordy); dimension = (dx, dy); color = c; font = font; size = s; content = content} =
+      let d_string { coordinate = (coordx, coordy); color = c; font = font; size = s; content = content} =
         set_color c;
         set_font font;
         set_text_size s;
-        moveto coordx coordy;
-        draw_string content
+        let interline = 2 in
+        let move_coord = (List.fold_left (fun a b -> (snd (text_size b)) + a + interline) 0 content) in
+        List.iteri (fun i a -> 
+        moveto coordx (coordy + move_coord - i * ((snd (text_size a)) + interline));
+        draw_string a) content
       in
       let rects = self#getRects ()
       and lines = self#getLines ()

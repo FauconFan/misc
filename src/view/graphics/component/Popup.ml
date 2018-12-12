@@ -30,10 +30,9 @@ class popup content button dim coord =
       aux button
 
     method getStrings () =
-      let construct_string_content coord dim c font s content = 
+      let construct_string_content coord c font s content = 
         {
           coordinate = coord;
-          dimension = dim;
           color = c;
           font = font;
           size = s;
@@ -43,9 +42,7 @@ class popup content button dim coord =
       let padding = 10 in
       let buttons_str = List.fold_left (fun a b -> a @ (b#getStrings())) [] button in
       let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
-      let apply_tuple (a,b) f = (f a, f b) in
-      let dim = apply_tuple dim (fun a -> a - (2*padding)) in
-      let cont = construct_string_content (padding, snd dim) dim black font 30 content in
+      let cont = construct_string_content (padding, snd dim) black font 30 content in
       cont :: buttons_str
         
     
