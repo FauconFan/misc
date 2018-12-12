@@ -46,7 +46,7 @@ class cursor dim min max value coord coord_str =
         }
       in
       let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
-      let cont = construct_string_content (0,0) black font 30 [(string_of_int pos)] in
+      let cont = construct_string_content coord_str black font 30 [(string_of_int pos)] in
       [cont]
       
 

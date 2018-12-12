@@ -40,6 +40,8 @@ and virtual acomponent (posx, posy) =
 
     val id_comp = incr id; !id
 
+    val interline = 2
+
     method getId () = id_comp
 
     method draw () : unit =
@@ -57,10 +59,8 @@ and virtual acomponent (posx, posy) =
         set_color c;
         set_font font;
         set_text_size s;
-        let interline = 2 in
-        let move_coord = (List.fold_left (fun a b -> (snd (text_size b)) + a + interline) 0 content) in
         List.iteri (fun i a -> 
-        moveto coordx (coordy + move_coord - i * ((snd (text_size a)) + interline));
+        moveto coordx (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline));
         draw_string a) content
       in
       let rects = self#getRects ()

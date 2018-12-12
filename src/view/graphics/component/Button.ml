@@ -40,10 +40,13 @@ class button dim content coord callback =
       }
     in
     let padding = 10 in
+    let middle_h font = 
+      let half_h = snd dim / 2 in
+      let size_content = List.fold_left (fun a b -> set_font font; a + snd (text_size b) + 2) 0 content - 2 in
+      half_h + (size_content / 2)
+    in
     let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
-    let apply_tuple (a,b) f = (f a, f b) in
-    let coord = apply_tuple coord (fun a -> padding) in
-    let cont = construct_string_content coord black font 30 content in
+    let cont = construct_string_content (padding, middle_h font) black font 30 content in
     [cont]
 
   end
