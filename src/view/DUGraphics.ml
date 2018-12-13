@@ -68,6 +68,6 @@ let launch (config : config) (bsp:bsp) : unit =
       | Some v -> v
     in
     draw_current_bsp config (!bsp);
-    try bsp := change_rectangle_color (get_next ()) (!bsp)
+    try bsp := Bsp.change_rectangle_color (Interact.interact ()) (!bsp)
     with Exit -> close (); exit 0
   done

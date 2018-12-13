@@ -77,13 +77,3 @@ val diff_dim : int * int -> int * int -> int * int
 (**
   Function that returns the absolute diff between two dimensions.
 *)
-
-val color_of_line : bsp -> bsp -> bool -> color option
-(**
-   Returns the color of a ligne based of the two left and right subtrees and the parity of the current depth.
-*)
-
-val change_rectangle_color : coords * color option -> bsp -> bsp
-(**
-  Change the color of the rectangle pointed by the color.
-*)
