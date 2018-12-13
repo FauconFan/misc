@@ -32,17 +32,36 @@ let changeColor c =
    - 'r'/ 'b' pour mettre en couleur
    - 'n' pour enlever la couleur
 *)
-let rec interact () : coords * color option =
-  let even = wait_next_event([Key_pressed; Button_down])
+let interact () : (coords * color option) option =
+  let check_key_pressed () =
+    let event =
+      let list_events =
+        if key_pressed () then [Key_pressed]
+        else [Key_pressed; Poll]
+      in
+      wait_next_event list_events
+    in
+    if event.keypressed then
+      begin
+        match event.key with
+        | k when k = key_quit -> raise Exit
+        | k -> changeColor k
+      end
+    else ()
   in
-  if even.keypressed then
-    (match even.key with
-     | k when k = key_quit -> raise Exit
-     | k -> changeColor k);
-  if even.button then
-    let mouse = (even.mouse_x, even.mouse_y)
-    and screen = (size_x (), size_y ()) in
-    if bounds mouse screen
-    then (mouse, ! actual_color)
-    else interact ()
-  else interact ()
+  let check_button_pressed () =
+    let event =
+      wait_next_event [Button_down; Poll]
+    in
+    if event.button then
+      begin
+        let mouse = (event.mouse_x, event.mouse_y)
+        and screen = (size_x (), size_y ()) in
+        if bounds mouse screen
+        then Some (mouse, !actual_color)
+        else None
+      end
+    else None
+  in
+  check_key_pressed ();
+  check_button_pressed ()

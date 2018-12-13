@@ -17,8 +17,18 @@ ML_FILES = \
 		src/model/solveur/sat_solver.ml \
 		src/view/Exemple_bsp.ml \
 		src/view/DUGraphics.ml \
+		src/view/graphics/SLAC.ml \
+		src/view/graphics/component/Background.ml \
+		src/view/graphics/component/Button.ml \
+		src/view/graphics/component/Cursor.ml \
+		src/view/graphics/component/Popup.ml \
+		src/view/graphics/component/Text.ml \
+		src/view/graphics/component/FrameBSP.ml \
+		src/view/graphics/GMessage.ml \
+		src/view/graphics/GraphicsManager.ml \
+		src/view/graphics/CampingScene.ml \
 
-LIBS = graphics
+LIBS = graphics unix
 
 MLI_FILES = $(ML_FILES:%.ml=%.mli)
 
