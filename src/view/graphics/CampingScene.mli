@@ -1,6 +1,11 @@
 
+(** CampingScene module *)
+
 open Base
 
-val defaultScene : config  -> SLAC.scene
+(**
+  File containing all difference views. All views are internal connected.
+*)
 
 val menu : config -> SLAC.scene
+(** Menu's view *)

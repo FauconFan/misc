@@ -1,6 +1,10 @@
 open Base
 open Graphics
 
+(**
+  A popup component for graphic's view
+*)
+
 class popup :
   string list ->
   Button.button list ->

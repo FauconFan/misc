@@ -1,6 +1,10 @@
 open Base
 open Graphics
 
+(**
+  A cursor component for graphic's view
+*)
+
 class cursor :
   dim ->
   int -> (* min possible *)
@@ -14,7 +18,8 @@ class cursor :
     val space_around : int
     val width_cursor : int
 
-    method private get_value : unit -> int 
+    (** update the value *)
+    method private update_value : unit -> int 
 
     (** Get lines which need to be drawn *)
     method getLines : unit -> (coords * coords * color * int) list

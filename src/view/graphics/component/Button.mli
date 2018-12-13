@@ -1,6 +1,10 @@
 open Base
 open Graphics
 
+(**
+  A button component for graphic's view
+*)
+
 class button :
   ?color_font:color ->
   dim ->

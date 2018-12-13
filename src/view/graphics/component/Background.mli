@@ -1,6 +1,10 @@
 open Base
 open Graphics
 
+(**
+  A background component for graphic's view
+*)
+
 class background :
   color ->
   dim ->

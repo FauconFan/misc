@@ -2,6 +2,10 @@
 open Base
 open Graphics
 
+(**
+  A frame component for bsp for graphic's view
+*)
+
 class frameBSP :
   config ->
   coords ->
