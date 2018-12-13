@@ -40,7 +40,7 @@ let exemple1 =
   L (
     {coord = 300; color = Some blue},
     L(
-      {coord = 200; color = Some red},
+      {coord = 200; color = Some magenta},
       L(
         {coord = 150; color = Some blue},
         R (None),
@@ -53,9 +53,9 @@ let exemple1 =
       )
     ),
     L(
-      {coord = 600; color = None},
+      {coord = 600; color = Some red},
       L(
-        {coord = 750; color = None},
+        {coord = 750; color = Some blue},
         R (None),
         R (None)
       ),
@@ -67,7 +67,7 @@ let exemple1 =
           R None
         ),
         L(
-          {coord = 800; color = None},
+          {coord = 800; color = Some blue},
           R None,
           R None
         )
