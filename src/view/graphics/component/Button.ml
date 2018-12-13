@@ -3,7 +3,7 @@ open Graphics
 open GMessage
 
 
-class button dim content coord callback =
+class button ?color_font:(cf = rgb 200 200 200) dim content coord callback =
   object (self)
     inherit SLAC.acomponent coord as super
 
@@ -11,7 +11,7 @@ class button dim content coord callback =
 
     method getRects () : (coords * dim * color) list =
       let gray = rgb 109 110 112 in
-      let black_grayed = rgb 200 200 200 in
+      let black_grayed = cf in
       let min_dim = (fst dim - 2, snd dim - 2) in
       ((0,0), dim, gray):: (( 1, 1), min_dim, black_grayed) :: []
 
@@ -30,7 +30,7 @@ class button dim content coord callback =
       moveto cur_x cur_y*)
 
     method getStrings () =
-    let construct_string_content coord c font s content = 
+    let construct_string_content coord c font s content =
       {
         coordinate = coord;
         color = c;
@@ -40,7 +40,7 @@ class button dim content coord callback =
       }
     in
     let padding = 10 in
-    let middle_h font = 
+    let middle_h font =
       let half_h = snd dim / 2 in
       let size_content = List.fold_left (fun a b -> set_font font; a + snd (text_size b) + 2) 0 content - 2 in
       half_h + (size_content / 2)
