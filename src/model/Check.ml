@@ -15,10 +15,13 @@ let check_current (bsp : bsp) =
 module LittSolver = Sat_solver.Make(String)
 
 let check_solve (bsp : bsp) : bool =
+  try
   let fnc = FNC.bsp_to_fnc bsp in
   Option.is_some (LittSolver.solve fnc)
+  with FNC.Unsat -> print_endline "UNSAT"; false
 
 let solve (bsp : bsp) : bsp option =
+  try 
   let fnc = FNC.bsp_to_fnc bsp in
   let fnd_opt = LittSolver.solve fnc in
   let apply_to_fnd (litt_list : (bool * string) list) =
@@ -44,3 +47,4 @@ let solve (bsp : bsp) : bsp option =
     bsp
   in
   Option.map apply_to_fnd fnd_opt
+  with FNC.Unsat -> print_endline "UNSAT"; None

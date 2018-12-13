@@ -60,13 +60,13 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
         else aux_color label l r even prefix c false res
       end
   and aux_color label l r even prefix c is_dual res =
-    (* let crazy_optimisation clause color =
+    let crazy_optimisation clause color =
       if List.length clause = 1 then
         begin
           let name = List.hd clause in
           Hashtbl.replace hash name [color]
         end
-    in *)
+    in
     let (stats_arr, li_opt) = Bsp.stats_of_line l r even (Some prefix) in
     let li = li_opt |> Option.get |> List.map (fun (name, _) -> name) in
     let b = (c == red) in
@@ -92,13 +92,13 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
       |> List.filter (fun name ->
           begin
             let saved = Hashtbl.find hash name in
-            List.mem c saved
+            not (List.mem c saved && List.length saved = 1) 
           end)
       (* Some magic crazy shit happens here *)
       |> k_combinaison (n - (n / 2 + acc) + 1)
       |> List.map (fun ll ->
           begin
-            (* crazy_optimisation ll c; *)
+            crazy_optimisation ll c;
             List.map (fun n -> (b, n))
           end
             ll)
