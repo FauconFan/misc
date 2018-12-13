@@ -1,3 +1,6 @@
+(** GMessage Module *)
+
+(** Interaction between all component's view *)
 
 type 'a t =
   | Nothing

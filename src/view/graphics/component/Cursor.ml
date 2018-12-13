@@ -15,7 +15,7 @@ class cursor dim min max value coord coord_str =
 
     initializer value := Pervasives.min (Pervasives.max min !value) max; pos <-  ((!value - min) * width_cursor) / (max - min)
     
-    method private get_value () = 
+    method private update_value () = 
       min + ((pos * (max - min)) / width_cursor)
 
     method getLines () : (coords * coords * color * int) list =
@@ -33,7 +33,7 @@ class cursor dim min max value coord coord_str =
       if bounds coords (width_cursor + (space_around * 2), space_around * 2) then
         begin
         pos <- Pervasives.min (Pervasives.max (fst coords - space_around) 0) width_cursor;
-        value := self#get_value()
+        value := self#update_value()
         end;
       Nothing
 
