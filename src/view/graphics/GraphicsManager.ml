@@ -6,18 +6,28 @@ open Base
 let fps_objective = 60.
 
 let scene = ref None
+let config = ref None
 
-let init (config : config) : unit =
-  let (w, h) = config.dims in
+let init (conf : config) : unit =
+  let (w, h) = conf.dims in
   let (wr, hr) = (w, h) in
   open_graph (" " ^ (string_of_int wr) ^ "x" ^ (string_of_int hr));
   set_window_title "PF5_mondrian";
   auto_synchronize false;
-  scene := Some (CampingScene.menu config)
+  scene := Some (CampingScene.menu conf);
+  config := Some conf
+
+let changeConfig (conf : config) : unit =
+  config := Some conf
 
 let close () : unit =
   close_graph ();
   scene := None
+
+let changeScene (sce : SLAC.scene) =
+  scene := Some sce;
+  let (w, h) = (Option.get !config).dims in
+  resize_window w h
 
 let run () : unit =
   let running = ref true in
@@ -29,7 +39,7 @@ let run () : unit =
         let use_gmsg gmsg = match gmsg with
           | Nothing -> ()
           | Apply f -> f (Option.get !scene)
-          | Update f -> scene := Some (f ())
+          | Update f -> changeScene (f ())
         in
         let event = Interact.interact () in
         let li_gmsg = Option.map2_default (fun s e -> s#click e) [] !scene event in
