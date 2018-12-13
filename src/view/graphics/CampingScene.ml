@@ -10,18 +10,13 @@ open Text
 
 let beige = rgb 247 226 156
 
-let defaultScene config =
-  let frame = new frameBSP config (0, 0) in
-  let layer = new SLAC.layer [frame] in
-  new SLAC.scene [| layer |]
-
 let rec param config =
   GraphicsManager.changeConfig config;
   let (w, h) = config.dims in
   let background_test = new background beige (w,h) (0,0) in
   let background_layer = new SLAC.layer [background_test] in
   let text_zone = new text ["Vous etes tombes dans une page troll"; "Oulah oulah"; "Retourner au menu en appuyant sur le bouton retour."] (w/2 - 400, h/2 + 100) in
-  let text_layer = new SLAC.layer [text_zone] in
+  let text_layer = new SLAC.layer [(text_zone :> SLAC.acomponent)] in
   let button_retour = new button (100,100) ["Retour"] (w/2 - 100, 200) (fun _ -> GMessage.Update (fun () -> menu config)) in
   let button_layer = new SLAC.layer [button_retour] in
   new SLAC.scene [|background_layer; text_layer; button_layer|]
@@ -46,7 +41,7 @@ and
   let text_depth = new text ["Profondeur du bsp :"] (w/2 - 150, 340) in
   let cursor_depth = new cursor (300,20) 1 50 depth (w/2 - 150, 300) (~- 50, 11) in
   let cursor_layer = new SLAC.layer [cursor_depth; cursor_height; cursor_width] in
-  let text_layer = new SLAC.layer [text_with; text_depth; text_height] in
+  let text_layer = new SLAC.layer [(text_with :> SLAC.acomponent); (text_depth :> SLAC.acomponent); (text_height :> SLAC.acomponent)] in
   new SLAC.scene [|background_layer; button_layer; cursor_layer; text_layer|]
 
 and
@@ -57,9 +52,12 @@ and
   let (w, h) = config.dims in
   let text_check = new text ["zone de texte"] (w - 250, 100) in
   let frame = new frameBSP config_base (0, 0) in
-  let button_solve = new button (180,60) ["Solve"] (w - 230, 800) (fun _ -> GMessage.Apply (fun _ -> print_endline "solve")) in
-  let button_check_solve = new button (180,60) ["Check_solve"] (w - 230, 700) (fun _ -> GMessage.Apply (fun _ -> print_endline "check_solve")) in
-  let button_check = new button (180,60) ["Check"] (w - 230, 600) (fun _ -> GMessage.Apply (fun _ -> print_endline "check_current")) in
+  let button_solve = new button (180,60) ["Solve"] (w - 230, 800) (fun _ -> GMessage.Apply (fun _ -> let bsp = Check.solve (frame#get_bsp ()) in 
+  Option.map_default (text_check#change_content ["Vous avez"; "appele Solve"]; frame#change_bsp) (["Il n'y a pas" ; "de solution possible"] |> text_check#change_content) bsp)) in
+  let button_check_solve = new button (180,60) ["Check_solve"] (w - 230, 700) (fun _ -> GMessage.Apply (fun _ -> let b = Check.check_solve (frame#get_bsp ()) in 
+  if b then text_check#change_content ["Il existe ";"une solution"] else text_check#change_content ["Il n'y a pas" ; "de solution possible"])) in
+  let button_check = new button (180,60) ["Check"] (w - 230, 600) (fun _ -> GMessage.Apply (fun _ -> let b = Check.check_solve (frame#get_bsp ()) in 
+  if b then text_check#change_content ["Il existe une";"solution via" ;"check_current"] else text_check#change_content ["Il n'y a pas" ; "de solution possible"] )) in
   let button_reset = new button (180,60) ["Reset Game"] (w - 230, 500) (fun _ -> GMessage.Update (fun () -> play_game config_base)) in
   let button_menu = new button (180,60) ["Menu"] (w - 230, 400) (fun _ -> GMessage.Update (fun () -> menu config_base)) in
   let button_quit = new button (180,60) ["Quit"] (w - 230, 300) (fun _ -> GMessage.Update (fun () -> raise Exit)) in
@@ -68,6 +66,6 @@ and
   let button_white = new button ~color_font:(rgb 255 255 255) (70,70) [] (w - 175, 120) (fun _ -> GMessage.Apply (fun _ -> print_endline "WHITE")) in
   let button_layer = new SLAC.layer [button_solve; button_check; button_check_solve; button_menu; button_reset; button_quit] in
   let button_colors_layer = new SLAC.layer [button_red; button_blue; button_white] in
-  let bsp_layer = new SLAC.layer [frame] in
-  let text_layer = new SLAC.layer [text_check] in
+  let bsp_layer = new SLAC.layer [(frame :> SLAC.acomponent)] in
+  let text_layer = new SLAC.layer [(text_check :> SLAC.acomponent)] in
   new SLAC.scene [|bsp_layer; button_layer; button_colors_layer; text_layer|]

@@ -6,6 +6,11 @@ class text content coord =
   object (self)
     inherit SLAC.acomponent coord as super
 
+    val mutable content = content
+
+    method change_content (cont : string list) : unit =
+      content <- cont
+
     method getLines () : (coords * coords * color * int) list =
       []
 
