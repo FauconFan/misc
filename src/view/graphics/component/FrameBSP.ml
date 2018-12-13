@@ -26,7 +26,7 @@ class frameBSP config (posx, posy) =
         (co1, co2, real_color, 3) :: l
       in
       bsp
-      |> Translate.lines_from_bsp config
+      |> Bsp.lines_from_bsp config
       |> List.fold_left lines_builder ligne
 
     method getRects () : (coords * dim * color) list =
@@ -34,7 +34,7 @@ class frameBSP config (posx, posy) =
         (co, dim, Option.default white c)
       in
       bsp
-      |> Translate.rectangles_from_bsp config
+      |> Bsp.rectangles_from_bsp config
       |> List.map rects_builder
 
     method subClick c =
