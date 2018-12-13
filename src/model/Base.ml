@@ -24,7 +24,7 @@ type config =
     - size of the string
     - content of the string
   *)
-  type string_content = 
+  type string_content =
     {
       coordinate : coords;
       color : color;
@@ -32,7 +32,7 @@ type config =
       size : int;
       content : string list;
     }
-  
+
 
 (* Types given by the subject *)
 
