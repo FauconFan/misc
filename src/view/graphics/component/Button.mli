@@ -2,6 +2,7 @@ open Base
 open Graphics
 
 class button :
+  ?color_font:color ->
   dim ->
   string list ->
   coords ->
@@ -18,6 +19,6 @@ class button :
     (** action when we click on the button *)
     method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
 
-    (** Get strings which need to be drawn *)    
+    (** Get strings which need to be drawn *)
     method getStrings : unit -> string_content list
   end

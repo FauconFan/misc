@@ -16,7 +16,7 @@ let defaultScene config =
   new SLAC.scene [| layer |]
 
 let rec param config =
-    GraphicsManager.changeConfig config;
+  GraphicsManager.changeConfig config;
   let (w, h) = config.dims in
   let background_test = new background beige (w,h) (0,0) in
   let background_layer = new SLAC.layer [background_test] in
@@ -27,7 +27,7 @@ let rec param config =
   new SLAC.scene [|background_layer; text_layer; button_layer|]
 
 and
-menu config =
+  menu config =
   GraphicsManager.changeConfig config;
   let (w, h) = config.dims in
   let background_test = new background beige (w,h) (0,0) in
@@ -57,13 +57,17 @@ and
   let (w, h) = config.dims in
   let text_check = new text ["zone de texte"] (w - 250, 100) in
   let frame = new frameBSP config_base (0, 0) in
-  let button_solve = new button (175,60) ["Solve"] (w - 225, 800) (fun a -> GMessage.Apply (fun a -> print_endline "solve")) in
-  let button_check_solve = new button (175,60) ["Check_solve"] (w - 225, 700) (fun a -> GMessage.Apply (fun a -> print_endline "check_solve")) in
-  let button_check = new button (175,60) ["Check"] (w - 225, 600) (fun a -> GMessage.Apply (fun a -> print_endline "check_current")) in
-  let button_reset = new button (175,60) ["Reset Game"] (w - 225, 500) (fun a -> GMessage.Update (fun () -> play_game config_base)) in
-  let button_menu = new button (175,60) ["Menu"] (w - 225, 400) (fun a -> GMessage.Update (fun () -> menu config_base)) in
-  let button_quit = new button (175,60) ["Quit"] (w - 225, 300) (fun a -> GMessage.Update (fun () -> raise Exit)) in
+  let button_solve = new button (180,60) ["Solve"] (w - 230, 800) (fun a -> GMessage.Apply (fun a -> print_endline "solve")) in
+  let button_check_solve = new button (180,60) ["Check_solve"] (w - 230, 700) (fun a -> GMessage.Apply (fun a -> print_endline "check_solve")) in
+  let button_check = new button (180,60) ["Check"] (w - 230, 600) (fun a -> GMessage.Apply (fun a -> print_endline "check_current")) in
+  let button_reset = new button (180,60) ["Reset Game"] (w - 230, 500) (fun a -> GMessage.Update (fun () -> play_game config_base)) in
+  let button_menu = new button (180,60) ["Menu"] (w - 230, 400) (fun a -> GMessage.Update (fun () -> menu config_base)) in
+  let button_quit = new button (180,60) ["Quit"] (w - 230, 300) (fun a -> GMessage.Update (fun () -> raise Exit)) in
+  let button_red = new button ~color_font:(rgb 255 0 0) (70,70) [] (w - 215, 200) (fun a -> GMessage.Apply (fun a -> print_endline "RED")) in
+  let button_blue = new button ~color_font:(rgb 0 0 255) (70,70) [] (w - 135, 200) (fun a -> GMessage.Apply (fun a -> print_endline "BLUE")) in
+  let button_white = new button ~color_font:(rgb 255 255 255) (70,70) [] (w - 175, 120) (fun a -> GMessage.Apply (fun a -> print_endline "WHITE")) in
   let button_layer = new SLAC.layer [button_solve; button_check; button_check_solve; button_menu; button_reset; button_quit] in
+  let button_colors_layer = new SLAC.layer [button_red; button_blue; button_white] in
   let bsp_layer = new SLAC.layer [frame] in
   let text_layer = new SLAC.layer [text_check] in
-  new SLAC.scene [|bsp_layer; button_layer; text_layer|]
+  new SLAC.scene [|bsp_layer; button_layer; button_colors_layer; text_layer|]
