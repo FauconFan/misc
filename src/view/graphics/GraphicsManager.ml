@@ -9,7 +9,7 @@ let scene = ref None
 
 let init (config : config) : unit =
   let (w, h) = config.dims in
-  let (wr, hr) = (w + (w / 2), h + (h / 2)) in
+  let (wr, hr) = (w, h) in
   open_graph (" " ^ (string_of_int wr) ^ "x" ^ (string_of_int hr));
   set_window_title "PF5_mondrian";
   auto_synchronize false;
