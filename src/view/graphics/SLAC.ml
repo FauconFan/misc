@@ -4,14 +4,9 @@ open Graphics
 
 exception Wrong_Construct of string
 
-let id = ref 0
 
 class scene (layers_array : layer array) =
   object (self)
-
-    val id_comp = incr id; !id
-
-    method getId () = id_comp
 
     method draw () : unit =
       Array.iter (fun lay -> lay#draw ()) layers_array
@@ -24,10 +19,6 @@ class scene (layers_array : layer array) =
 and layer (list_compo : acomponent list) =
   object (self)
 
-    val id_comp = incr id; !id
-
-    method getId () = id_comp
-
     method draw () =
       List.iter (fun comp -> comp#draw ()) list_compo
 
@@ -38,11 +29,7 @@ and layer (list_compo : acomponent list) =
 and virtual acomponent (posx, posy) =
   object (self)
 
-    val id_comp = incr id; !id
-
     val interline = 2
-
-    method getId () = id_comp
 
     method draw () : unit =
       let d_rect ((x, y), (w, h), c) =
@@ -59,7 +46,7 @@ and virtual acomponent (posx, posy) =
         set_color c;
         set_font font;
         set_text_size s;
-        List.iteri (fun i a -> 
+        List.iteri (fun i a ->
         moveto coordx (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline));
         draw_string a) content
       in
