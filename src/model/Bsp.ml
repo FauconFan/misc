@@ -51,6 +51,8 @@ let stats_of_line
   : (int array * (string * color option) list option) =
   let stats = [|0; 0; 0|] in
   let list_rect = ref [] in
+  let g_prefix_f p = p ^ "l" in
+  let d_prefix_f p = p ^ "r" in
   let apply_on_R c stats id_rect =
     let f c =
       if c = blue then stats.(0) <- stats.(0) + 1
@@ -63,25 +65,22 @@ let stats_of_line
         list_rect := (Option.get id_rect, c) :: !list_rect
       end
   in
-  let rec aux stats bsp l prefix_actu =
+  let rec aux stats bsp l lactu prefix_actu =
     match bsp with
     | R c -> apply_on_R c stats prefix_actu
     | L (_, bsp_g, bsp_d) ->
       begin
         let recall is_left =
-          let g_prefix_f p = p ^ "l" in
-          let d_prefix_f p = p ^ "r" in
           if is_left
-          then aux stats bsp_g (not l) (Option.map g_prefix_f prefix_actu)
-          else aux stats bsp_d (not l) (Option.map d_prefix_f prefix_actu)
+          then aux stats bsp_g (not l) lactu (Option.map g_prefix_f prefix_actu)
+          else aux stats bsp_d (not l) lactu (Option.map d_prefix_f prefix_actu)
         in
-        if (even && l) then recall true
-        else if even = (not l) then (recall true; recall false)
-        else recall false
+        if even = (not l) then (recall true; recall false)
+        else recall lactu
       end
   in
-  aux stats bsp_g (not even) prefix;
-  aux stats bsp_d (not even) prefix;
+  aux stats bsp_g (not even) false (Option.map g_prefix_f prefix);
+  aux stats bsp_d (not even) true (Option.map d_prefix_f prefix);
   if Option.is_none prefix then (stats, None)
   else (stats, Some (!list_rect))
 

@@ -21,3 +21,9 @@ val rectangles_from_bsp : config -> bsp -> (rect * color option) list
 (**
    Returns a list of rects with color from a bsp
 *)
+
+val stats_of_line : bsp -> bsp -> bool -> string option -> (int array * (string * color option) list option)
+(**
+   Returns the statistics about a line, based of the left, and the right subtrees the even of the depth and a prefix.
+   See implementation for details.
+*)

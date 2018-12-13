@@ -4,4 +4,6 @@ open Graphics
 
 type litt = bool * string
 
-val k_combinaison : int -> string list -> string list list
+val string_of_litt : litt -> string
+
+val bsp_to_fnc : bsp -> litt list list

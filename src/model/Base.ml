@@ -21,7 +21,7 @@ type config =
 type label =
   {
     coord : int; (* taille de la ligne. L'interprétation dépend de la position dans le bsp *)
-    color : color option; (* couleur de la ligen si elle existe, noir sinon *)
+    color : color option; (* couleur de la ligne si elle existe, None sinon *)
   }
 
 type bsp =
