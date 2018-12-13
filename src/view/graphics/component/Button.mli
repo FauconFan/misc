@@ -3,9 +3,9 @@ open Graphics
 
 class button :
   dim ->
-  string ->
+  string list ->
   coords ->
-  ((coords * color option) -> SLAC.scene -> unit) ->
+  ((coords * color option) -> SLAC.scene GMessage.t) ->
   object
     inherit SLAC.acomponent
 
@@ -17,4 +17,7 @@ class button :
 
     (** action when we click on the button *)
     method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
+
+    (** Get strings which need to be drawn *)    
+    method getStrings : unit -> string_content list
   end

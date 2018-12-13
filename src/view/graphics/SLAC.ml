@@ -4,8 +4,15 @@ open Graphics
 
 exception Wrong_Construct of string
 
+let id = ref 0
+
 class scene (layers_array : layer array) =
   object (self)
+
+    val id_comp = incr id; !id
+
+    method getId () = id_comp
+
     method draw () : unit =
       Array.iter (fun lay -> lay#draw ()) layers_array
 
@@ -16,6 +23,11 @@ class scene (layers_array : layer array) =
 
 and layer (list_compo : acomponent list) =
   object (self)
+
+    val id_comp = incr id; !id
+
+    method getId () = id_comp
+
     method draw () =
       List.iter (fun comp -> comp#draw ()) list_compo
 
@@ -25,6 +37,13 @@ and layer (list_compo : acomponent list) =
 
 and virtual acomponent (posx, posy) =
   object (self)
+
+    val id_comp = incr id; !id
+
+    val interline = 2
+
+    method getId () = id_comp
+
     method draw () : unit =
       let d_rect ((x, y), (w, h), c) =
         set_color c;
@@ -36,8 +55,17 @@ and virtual acomponent (posx, posy) =
         moveto x1 y1;
         lineto x2 y2;
       in
+      let d_string { coordinate = (coordx, coordy); color = c; font = font; size = s; content = content} =
+        set_color c;
+        set_font font;
+        set_text_size s;
+        List.iteri (fun i a -> 
+        moveto coordx (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline));
+        draw_string a) content
+      in
       let rects = self#getRects ()
       and lines = self#getLines ()
+      and strings = self#getStrings ()
       in
       rects
       |> List.map (fun ((x, y), (w, h), c) -> ((x + posx, y + posy), (w, h), c))
@@ -45,10 +73,14 @@ and virtual acomponent (posx, posy) =
       lines
       |> List.map (fun ((x1, y1), (x2, y2), c, w) -> ((x1 + posx, y1 + posy), (x2 + posx, y2 + posy), c, w))
       |> List.iter d_line;
+      strings
+      |> List.map (fun s_con -> {s_con with coordinate = (fst s_con.coordinate + posx, snd s_con.coordinate + posy)})
+      |> List.iter d_string;
 
     method click ((x, y), c) : (scene GMessage.t) =
       self#subClick ((x - posx, y - posy), c)
 
+    method virtual getStrings : unit -> string_content list
     method virtual getLines : unit -> (coords * coords * color * int) list
     method virtual getRects : unit -> (coords * dim * color) list
     method virtual subClick : (coords * color option) -> scene GMessage.t

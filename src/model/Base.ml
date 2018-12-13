@@ -16,6 +16,24 @@ type config =
     depth : int; (* profondeur de l'arbre *)
   }
 
+  (** type for string information, it is composed of :
+    - left down corner coordinate
+    - dimension of the area of string
+    - color of the string
+    - font of the string
+    - size of the string
+    - content of the string
+  *)
+  type string_content = 
+    {
+      coordinate : coords;
+      color : color;
+      font : string;
+      size : int;
+      content : string list;
+    }
+  
+
 (* Types given by the subject *)
 
 type label =
