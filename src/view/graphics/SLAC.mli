@@ -1,4 +1,13 @@
 
+(** SLAC Module. SLAC stands for Scene, Layer, and AComponent *)
+
+(**
+   This module handles all the magical utilities about the view.
+   A scene is a container for layers.
+   A layer is a container for acomponents.
+   An acomponent can be a clickable, drawable, and / or readable object.
+*)
+
 open Base
 open Graphics
 

@@ -1,5 +1,5 @@
 
-(** Base module *)
+(** Base module for all the project *)
 
 open Graphics
 
@@ -31,7 +31,7 @@ type config =
     - depth of the final bsp
 *)
 
-type string_content = 
+type string_content =
   {
     coordinate : coords;
     color : color;

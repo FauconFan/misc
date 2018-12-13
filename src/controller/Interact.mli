@@ -1,5 +1,5 @@
 
-(** Interact Module *)
+(** Interact Module, interacting with the user *)
 
 open Graphics
 open Base

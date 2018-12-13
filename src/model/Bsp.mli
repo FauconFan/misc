@@ -1,4 +1,6 @@
 
+(** Bsp module *)
+
 open Base
 open Graphics
 
