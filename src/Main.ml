@@ -1,3 +1,16 @@
 
+open Base
+
 let () =
-  print_endline "Hello world"
+  let config = CLIParser.cliparse () in
+
+  Random.self_init ();
+  GraphicsManager.init config (CampingScene.menu config);
+  GraphicsManager.run ();
+  GraphicsManager.close ()
+
+  (* let bsp = Generation.random_bsp_naive config in
+
+  DUGraphics.init config;
+  DUGraphics.launch config bsp;
+  DUGraphics.close () *)

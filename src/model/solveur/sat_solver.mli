@@ -1,3 +1,6 @@
+
+(** Sat_solver module *)
+
 (* Code extrait de:
    SAT-MICRO: petit mais costaud !
    par Sylvain Conchon, Johannes Kanig, Stéphane Lescuyer

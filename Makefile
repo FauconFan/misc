@@ -6,11 +6,27 @@ RESULT = mondrian
 MAIN = src/Main.ml
 
 ML_FILES = \
+		src/utils/CLIParser.ml \
+		src/utils/Option.ml \
 		src/model/Base.ml \
+		src/model/Bsp.ml \
+		src/controller/Interact.ml \
 		src/model/Check.ml \
 		src/model/Generation.ml \
-		src/view/DUGraphics.ml \
-		src/controller/Translate.ml \
+		src/model/solveur/sat_solver.ml \
+		src/view/Exemple_bsp.ml \
+		src/view/graphics/SLAC.ml \
+		src/view/graphics/component/Background.ml \
+		src/view/graphics/component/Button.ml \
+		src/view/graphics/component/Cursor.ml \
+		src/view/graphics/component/Popup.ml \
+		src/view/graphics/component/Text.ml \
+		src/view/graphics/component/FrameBSP.ml \
+		src/view/graphics/GMessage.ml \
+		src/view/graphics/GraphicsManager.ml \
+		src/view/graphics/CampingScene.ml \
+
+LIBS = graphics unix
 
 MLI_FILES = $(ML_FILES:%.ml=%.mli)
 
