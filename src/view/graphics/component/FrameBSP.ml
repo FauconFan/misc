@@ -10,13 +10,15 @@ class frameBSP config (posx, posy) =
     val mutable bsp = Generation.random_bsp_naive config
 
     method getLines () : (coords * coords * color * int) list =
+      let dim_x, dim_y = config.dims in
+      let ligne = [((posx, posy), (posx, posy + dim_y), black, 3); ((posx, posy), (posx + dim_x, posy), black, 3); ((posx, posy + dim_y), (posx + dim_x, posy + dim_y), black, 3); ((posx + dim_x, posy), (posx + dim_x, posy + dim_y), black, 3)] in
       let lines_builder l ((co1, co2), c) =
         let real_color = Option.default black c in
         (co1, co2, white, 5) :: (co1, co2, real_color, 3) :: l
       in
       bsp
       |> Translate.lines_from_bsp config
-      |> List.fold_left lines_builder []
+      |> List.fold_left lines_builder ligne
 
     method getRects () : (coords * dim * color) list =
       let rects_builder ((co, dim), c) =
