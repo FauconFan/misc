@@ -19,8 +19,7 @@ let random var =
     if i < random_pad then aux (tmp + (Random.int var)) (i+1)
     else tmp
   in
-  let t = (aux 0 0) / random_pad in
-  print_string "affiche "; print_int (var); print_string " "; print_int t; print_string "\n"; t
+  (aux 0 0) / random_pad
 
 (*
    Génére un bsp random de profondeur depth où seuls les coordonnées sont définis.

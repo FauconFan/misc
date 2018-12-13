@@ -13,7 +13,7 @@ class frameBSP config (posx, posy) =
       let dim_x, dim_y = config.dims in
       let ligne = [((posx, posy), (posx, posy + dim_y), black, 3); ((posx, posy), (posx + dim_x, posy), black, 3); ((posx, posy + dim_y), (posx + dim_x, posy + dim_y), black, 3); ((posx + dim_x, posy), (posx + dim_x, posy + dim_y), black, 3)] in
       let lines_builder l ((co1, co2), c) =
-        let change_color c = 
+        let change_color c =
         if c = red then rgb 255 120 120
         else if c = green then rgb 120 255 120
         else if c = blue then rgb 120 120 255
@@ -38,7 +38,7 @@ class frameBSP config (posx, posy) =
       |> List.map rects_builder
 
     method subClick c =
-      bsp <- change_rectangle_color c bsp;
+      bsp <- Bsp.change_rectangle_color c bsp;
       Nothing
 
     method getStrings () = []

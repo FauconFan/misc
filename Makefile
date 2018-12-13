@@ -16,7 +16,6 @@ ML_FILES = \
 		src/model/Generation.ml \
 		src/model/solveur/sat_solver.ml \
 		src/view/Exemple_bsp.ml \
-		src/view/DUGraphics.ml \
 		src/view/graphics/SLAC.ml \
 		src/view/graphics/component/Background.ml \
 		src/view/graphics/component/Button.ml \
