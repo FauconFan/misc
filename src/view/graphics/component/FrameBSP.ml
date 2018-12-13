@@ -13,8 +13,17 @@ class frameBSP config (posx, posy) =
       let dim_x, dim_y = config.dims in
       let ligne = [((posx, posy), (posx, posy + dim_y), black, 3); ((posx, posy), (posx + dim_x, posy), black, 3); ((posx, posy + dim_y), (posx + dim_x, posy + dim_y), black, 3); ((posx + dim_x, posy), (posx + dim_x, posy + dim_y), black, 3)] in
       let lines_builder l ((co1, co2), c) =
-        let real_color = Option.default black c in
-        (co1, co2, white, 5) :: (co1, co2, real_color, 3) :: l
+        let change_color c = 
+        if c = red then rgb 255 120 120
+        else if c = green then rgb 120 255 120
+        else if c = blue then rgb 120 120 255
+        else if c = yellow then rgb 255 255 120
+        else if c = cyan then rgb 120 255 255
+        else if c = magenta then rgb 255 120 255
+        else c
+        in
+        let real_color = Option.map_default change_color black c in
+        (co1, co2, real_color, 3) :: l
       in
       bsp
       |> Translate.lines_from_bsp config
