@@ -38,7 +38,7 @@ let run () : unit =
       begin
         let use_gmsg gmsg = match gmsg with
           | Nothing -> ()
-          | Apply f -> f (Option.get !scene)
+          | Apply f -> f ()
           | Update f -> changeScene (f ())
         in
         let event = Interact.interact () in

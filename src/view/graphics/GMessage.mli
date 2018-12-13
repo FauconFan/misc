@@ -1,5 +1,5 @@
 
 type 'a t =
   | Nothing
-  | Apply of ('a -> unit)
+  | Apply of (unit -> unit)
   | Update of (unit -> 'a)
