@@ -7,7 +7,9 @@ class cursor dim min max value coord coord_str =
   object (self)
   inherit SLAC.acomponent coord as super
 
-    val mutable pos = min
+    initializer value := min
+
+    val mutable pos = 0
 
     val space_around = 10
 
@@ -46,7 +48,7 @@ class cursor dim min max value coord coord_str =
         }
       in
       let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
-      let cont = construct_string_content coord_str black font 30 [(string_of_int pos)] in
+      let cont = construct_string_content coord_str black font 30 [(string_of_int !value)] in
       [cont]
       
 
