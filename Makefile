@@ -6,6 +6,7 @@ RESULT = mondrian
 MAIN = src/Main.ml
 
 ML_FILES = \
+		src/model/solveur/sat_solver.ml \
 		src/utils/CLIParser.ml \
 		src/utils/Option.ml \
 		src/model/Base.ml \
@@ -15,7 +16,6 @@ ML_FILES = \
 		src/controller/Interact.ml \
 		src/model/Check.ml \
 		src/model/Generation.ml \
-		src/model/solveur/sat_solver.ml \
 		src/view/Exemple_bsp.ml \
 		src/view/DUGraphics.ml \
 

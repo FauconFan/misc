@@ -42,7 +42,7 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
     | R c ->
       begin
         Hashtbl.replace hash prefix (Option.map_default (fun c -> [c]) [blue; red] c);
-        res
+        [(true, prefix); (false, prefix)] :: res
       end
     | L (label, l, r) ->
       begin
