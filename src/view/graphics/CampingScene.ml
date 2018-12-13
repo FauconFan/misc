@@ -35,6 +35,7 @@ let defaultScene config =
   new SLAC.scene [| background; buttons; cursors; popups; text|]  *)
 
 let rec param config = 
+    GraphicsManager.changeConfig config;
   let (w, h) = config.dims in
   let background_test = new background beige (w,h) (0,0) in
   let background_layer = new SLAC.layer [background_test] in
@@ -46,12 +47,13 @@ let rec param config =
 
 and
 menu config = 
+  GraphicsManager.changeConfig config;
   let (w, h) = config.dims in
   let background_test = new background beige (w,h) (0,0) in
   let background_layer = new SLAC.layer [background_test] in
-  let depth = ref 0 in
-  let width = ref 0 in
-  let height = ref 0 in
+  let depth = ref config.depth in
+  let width = ref w in
+  let height = ref h in
   let button_launch = new button (200,70) ["Jouer"] (w/2 - 100, 800) (fun a -> GMessage.Update (fun () -> play_game {dims = (!width ,!height); depth = !depth})) in
   let button_param = new button (200,70) ["Parametres"] (w/2 - 100, 650) (fun a -> GMessage.Update (fun () -> param config)) in
   let button_quit = new button (200,70) ["Quitter"] (w/2 - 100, 100) (fun a -> GMessage.Update (fun () -> raise Exit)) in  
@@ -59,7 +61,7 @@ menu config =
   let text_with = new text ["Largeur de la fenetre :"] (w/2 - 150, 570) in
   let cursor_width = new cursor (300,20) 200 1920 width (w/2 - 150, 530) (~- 50, 23) in
   let text_height = new text ["Hauteur de la fenetre :"] (w/2 - 150, 455) in
-  let cursor_height = new cursor (300,20) 200 1920 height (w/2 - 150, 415) (~- 50, 23) in
+  let cursor_height = new cursor (300,20) 200 1000 height (w/2 - 150, 415) (~- 50, 23) in
   let text_depth = new text ["Profondeur du bsp :"] (w/2 - 150, 340) in
   let cursor_depth = new cursor (300,20) 1 50 depth (w/2 - 150, 300) (~- 50, 11) in
   let cursor_layer = new SLAC.layer [cursor_depth; cursor_height; cursor_width] in
@@ -68,15 +70,16 @@ menu config =
 
 and 
 play_game config = 
+  GraphicsManager.changeConfig config;
   let (w, h) = config.dims in
   let text_check = new text ["zone de texte"] (100,100) in
   let frame = new frameBSP config (0, 0) in
-  let button_solve = new button (100,100) ["solve"] (w/2 - 50, 800) (fun a -> GMessage.Apply (fun a -> print_endline "solve")) in
-  let button_check = new button (100,100) ["check"] (w/2 - 50, 600) (fun a -> GMessage.Apply (fun a -> print_endline "check_current")) in
-  let button_check_solve = new button (100,100) ["check solve"] (w/2 - 50, 600) (fun a -> GMessage.Apply (fun a -> print_endline "check_solve")) in
-  let button_reset = new button (100,100) ["Reset"; "Game"] (w/2 - 50, 800) (fun a -> GMessage.Update (fun () -> play_game config)) in
-  let button_menu = new button (100,100) ["Menu"] (w/2 - 50, 600) (fun a -> GMessage.Update (fun () -> menu config)) in
-  let button_quit = new button (100,100) ["Quit"] (w/2 - 50, 600) (fun a -> GMessage.Update (fun () -> raise Exit)) in
+  let button_solve = new button (100,60) ["solve"] (w - 200, 800) (fun a -> GMessage.Apply (fun a -> print_endline "solve")) in
+  let button_check = new button (100,60) ["check"] (w - 200, 600) (fun a -> GMessage.Apply (fun a -> print_endline "check_current")) in
+  let button_check_solve = new button (100,60) ["check_solve"] (w - 200, 700) (fun a -> GMessage.Apply (fun a -> print_endline "check_solve")) in
+  let button_reset = new button (100,60) ["Reset"; "Game"] (w - 200, 500) (fun a -> GMessage.Update (fun () -> play_game config)) in
+  let button_menu = new button (100,60) ["Menu"] (w - 200, 400) (fun a -> GMessage.Update (fun () -> menu config)) in
+  let button_quit = new button (100,60) ["Quit"] (w - 200, 300) (fun a -> GMessage.Update (fun () -> raise Exit)) in
   let button_layer = new SLAC.layer [button_solve; button_check; button_check_solve; button_menu; button_reset; button_quit] in
   let bsp_layer = new SLAC.layer [frame] in
   let text_layer = new SLAC.layer [text_check] in

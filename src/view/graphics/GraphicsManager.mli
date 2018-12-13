@@ -2,7 +2,7 @@
 open Graphics
 open Base
 
-val init : config -> unit
+val init : config -> SLAC.scene -> unit
 val close : unit -> unit
 val run : unit -> unit
 

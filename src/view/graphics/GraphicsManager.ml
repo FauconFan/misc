@@ -8,13 +8,13 @@ let fps_objective = 60.
 let scene = ref None
 let config = ref None
 
-let init (conf : config) : unit =
+let init (conf : config) (sce : SLAC.scene) : unit =
   let (w, h) = conf.dims in
   let (wr, hr) = (w, h) in
   open_graph (" " ^ (string_of_int wr) ^ "x" ^ (string_of_int hr));
   set_window_title "PF5_mondrian";
   auto_synchronize false;
-  scene := Some (CampingScene.menu conf);
+  scene := Some sce;
   config := Some conf
 
 let changeConfig (conf : config) : unit =

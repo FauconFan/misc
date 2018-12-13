@@ -6,14 +6,14 @@ class cursor dim min max value coord coord_str =
 
   object (self)
   inherit SLAC.acomponent coord as super
-
-    initializer value := min
-
+    
     val mutable pos = 0
 
     val space_around = 10
 
     val width_cursor = fst dim
+
+    initializer value := Pervasives.min (Pervasives.max min !value) max; pos <-  ((!value - min) * width_cursor) / (max - min)
     
     method private get_value () = 
       min + ((pos * (max - min)) / width_cursor)
