@@ -52,11 +52,11 @@ and
   let (w, h) = config.dims in
   let text_check = new text ["zone de texte"] (w - 250, 100) in
   let frame = new frameBSP config_base (0, 0) in
-  let button_solve = new button (180,60) ["Solve"] (w - 230, 800) (fun _ -> GMessage.Apply (fun _ -> let bsp = Check.solve (frame#get_bsp ()) in 
+  let button_solve = new button (180,60) ["Solve"] (w - 230, 800) (fun _ -> GMessage.Apply (fun _ -> let bsp = Check.solve (frame#get_bsp ()) in
   Option.map_default (text_check#change_content ["Vous avez"; "appele Solve"]; frame#change_bsp) (["Il n'y a pas" ; "de solution possible"] |> text_check#change_content) bsp)) in
-  let button_check_solve = new button (180,60) ["Check_solve"] (w - 230, 700) (fun _ -> GMessage.Apply (fun _ -> let b = Check.check_solve (frame#get_bsp ()) in 
+  let button_check_solve = new button (180,60) ["Check_solve"] (w - 230, 700) (fun _ -> GMessage.Apply (fun _ -> let b = Check.check_solve (frame#get_bsp ()) in
   if b then text_check#change_content ["Il existe ";"une solution"] else text_check#change_content ["Il n'y a pas" ; "de solution possible"])) in
-  let button_check = new button (180,60) ["Check"] (w - 230, 600) (fun _ -> GMessage.Apply (fun _ -> let b = Check.check_solve (frame#get_bsp ()) in 
+  let button_check = new button (180,60) ["Check"] (w - 230, 600) (fun _ -> GMessage.Apply (fun _ -> let b = Check.check_current (frame#get_bsp ()) in 
   if b then text_check#change_content ["Il existe une";"solution via" ;"check_current"] else text_check#change_content ["Il n'y a pas" ; "de solution possible"] )) in
   let button_reset = new button (180,60) ["Reset Game"] (w - 230, 500) (fun _ -> GMessage.Update (fun () -> play_game config_base)) in
   let button_menu = new button (180,60) ["Menu"] (w - 230, 400) (fun _ -> GMessage.Update (fun () -> menu config_base)) in
