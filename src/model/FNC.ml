@@ -25,8 +25,50 @@ let string_of_litt (b, str) =
   else "!" ^ str
 
 let bsp_to_fnc (bsp : bsp) : litt list list =
-  let hash = Hashtbl.create 13 in
   let rec aux bsp even prefix res =
+    match bsp with
+    | R c -> [(true, prefix); (false, prefix)] :: res
+    | L (label, l, r) ->
+      begin
+        res
+        |> aux l (not even) (prefix ^ "l")
+        |> aux r (not even) (prefix ^ "r")
+        |> aux_line label l r even prefix
+      end
+  and aux_line label l r even prefix res =
+    match label.color with
+    | None -> res
+    | Some c ->
+      begin
+        let (stats_arr, li_opt) = Bsp.stats_of_line l r even (Some prefix) in
+        let li = li_opt |> Option.get |> List.map (fun (name, _) -> name) in
+        let f = if c = magenta then aux_magenta else aux_color in
+        f li stats_arr.(2) c res
+      end
+  and aux_color rects_of_line n c res =
+    let b = (c == red) in
+    let k = n - (n / 2 + 1) + 1 in
+    rects_of_line
+    |> k_combinaison k
+    |> List.map (fun l -> List.map (fun (n) -> (b, n)) l)
+    |> (fun li -> li @ res)
+  and aux_magenta rects_of_line n c res =
+    if n mod 2 = 1 then raise Unsat;
+    let k = n / 2 + 1 in
+    let dup2 li =
+      let f b = List.map (fun n -> (b, n)) li in
+      [(f true); (f false)]
+    in
+    rects_of_line
+    |> k_combinaison k
+    |> List.fold_left (fun l a -> (dup2 a) @ l) []
+    |> (fun li -> li @ res)
+  in
+  aux bsp false "" []
+
+(* let bsp_to_fnc (bsp : bsp) : litt list list =
+   let hash = Hashtbl.create 13 in
+   let rec aux bsp even prefix res =
     match bsp with
     | R c ->
       begin
@@ -40,7 +82,7 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
         |> aux r (not even) (prefix ^ "r")
         |> aux_line label l r even prefix
       end
-  and aux_line label l r even prefix res =
+   and aux_line label l r even prefix res =
     match label.color with
     | None -> res
     | Some c ->
@@ -48,7 +90,7 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
         if c = magenta then aux_magenta label l r even prefix c res
         else aux_color label l r even prefix c false res
       end
-  and aux_color label l r even prefix c is_dual res =
+   and aux_color label l r even prefix c is_dual res =
     let crazy_optimisation clause color =
       if List.length clause = 1 then
         begin
@@ -92,11 +134,11 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
           end
             ll)
       |> (fun li -> li @ res)
-  and aux_magenta label l r even prefix c res =
+   and aux_magenta label l r even prefix c res =
     res
     |> aux_color label l r even prefix red true
     |> aux_color label l r even prefix blue true
-  in
-  let res = aux bsp false "" [] in
-  (* Hashtbl.iter (fun a b -> Printf.printf "%s" a; List.iter (fun i -> Printf.printf " %d " i) b; print_newline ()) hash; *)
-  res
+   in
+   let res = aux bsp false "" [] in
+   (* Hashtbl.iter (fun a b -> Printf.printf "%s" a; List.iter (fun i -> Printf.printf " %d " i) b; print_newline ()) hash; *)
+   res *)

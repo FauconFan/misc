@@ -3,7 +3,7 @@ open Graphics
 open GMessage
 open Base
 
-let fps_objective = 5.
+let fps_objective = 60.
 
 let scene = ref None
 let config = ref None

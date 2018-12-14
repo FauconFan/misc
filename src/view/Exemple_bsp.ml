@@ -79,10 +79,15 @@ let simple =
   L (
     {coord = 500; color = Some red},
     L (
-      {coord = 100; color = Some red},
+      {coord = 100; color = None},
       R None,
       R None
     ),
+    L (
+      {coord = 600; color = None},
+      R None,
+      R None
+    )
     (* R None, *)
-    R None
+    (* R None *)
   )
