@@ -27,7 +27,14 @@ let string_of_litt (b, str) =
 let bsp_to_fnc (bsp : bsp) : litt list list =
   let rec aux bsp even prefix res =
     match bsp with
-    | R c -> [(true, prefix); (false, prefix)] :: res
+    | R c ->
+      begin
+        let t = match c with
+          | None -> [(true, prefix); (false, prefix)]
+          | Some cc -> [(cc = red), prefix]
+        in
+        t :: res
+      end
     | L (label, l, r) ->
       begin
         res
