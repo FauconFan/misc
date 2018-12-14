@@ -5,7 +5,7 @@ open GMessage
 
 class button ?color_font:(cf = rgb 200 200 200) dim content coord callback =
   object (self)
-    inherit SLAC.acomponent coord as super
+    inherit SLAC.acomponent coord dim as super
 
     method getLines () : (coords * coords * color * int) list = []
 
@@ -16,8 +16,7 @@ class button ?color_font:(cf = rgb 200 200 200) dim content coord callback =
       ((0,0), dim, gray):: (( 1, 1), min_dim, black_grayed) :: []
 
     method subClick (c : (coords * color option)) : (SLAC.scene GMessage.t) =
-      if bounds (fst c) dim then (c |> callback)
-      else Nothing
+      callback c
 
     (*method private draw_string_center () =
       let (cur_x, cur_y) = current_point () in
@@ -30,23 +29,23 @@ class button ?color_font:(cf = rgb 200 200 200) dim content coord callback =
       moveto cur_x cur_y*)
 
     method getStrings () =
-    let construct_string_content coord c font s content =
-      {
-        coordinate = coord;
-        color = c;
-        font = font;
-        size = s;
-        content = content;
-      }
-    in
-    let padding = 10 in
-    let middle_h font =
-      let half_h = snd dim / 2 in
-      let size_content = List.fold_left (fun a b -> set_font font; a + snd (text_size b) + 2) 0 content - 2 in
-      half_h + (size_content / 2)
-    in
-    let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
-    let cont = construct_string_content (padding, middle_h font) black font 30 content in
-    [cont]
+      let construct_string_content coord c font s content =
+        {
+          coordinate = coord;
+          color = c;
+          font = font;
+          size = s;
+          content = content;
+        }
+      in
+      let padding = 10 in
+      let middle_h font =
+        let half_h = snd dim / 2 in
+        let size_content = List.fold_left (fun a b -> set_font font; a + snd (text_size b) + 2) 0 content - 2 in
+        half_h + (size_content / 2)
+      in
+      let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
+      let cont = construct_string_content (padding, middle_h font) black font 30 content in
+      [cont]
 
   end

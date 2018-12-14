@@ -4,7 +4,7 @@ open Base
 
 class text content coord =
   object (self)
-    inherit SLAC.acomponent coord as super
+    inherit SLAC.acomponent coord (0, 0) as super (* No hitbox *)
 
     method getLines () : (coords * coords * color * int) list =
       []
@@ -15,8 +15,8 @@ class text content coord =
     method subClick c =
       Nothing
 
-    method getStrings () = 
-      let construct_string_content coord c font s content = 
+    method getStrings () =
+      let construct_string_content coord c font s content =
         {
           coordinate = coord;
           color = c;

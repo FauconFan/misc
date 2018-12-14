@@ -26,7 +26,7 @@ and layer (list_compo : acomponent list) =
       List.map (fun comp -> comp#click c) list_compo
   end
 
-and virtual acomponent (posx, posy) =
+and virtual acomponent (posx, posy) dim =
   object (self)
 
     val interline = 2
@@ -65,7 +65,9 @@ and virtual acomponent (posx, posy) =
       |> List.iter d_string;
 
     method click ((x, y), c) : (scene GMessage.t) =
-      self#subClick ((x - posx, y - posy), c)
+      let new_d = (x - posx, y - posy) in
+      if bounds new_d dim then self#subClick (new_d, c)
+      else Nothing
 
     method virtual getStrings : unit -> string_content list
     method virtual getLines : unit -> (coords * coords * color * int) list
