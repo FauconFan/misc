@@ -7,29 +7,18 @@ type litt = bool * string
 exception Unsat
 
 let k_combinaison k sl =
-  let rec aux k sl l res =
-    if k = 0 then res
-    else if k = 1 then res @ List.map (fun i -> [i]) sl
-    else
-      begin
-        if k > l then raise Unsat
-        else if k = l then sl :: res
-        else
-          begin
-            match sl with
-            | []      -> raise Unsat
-            | x :: xs ->
-              begin
-                let ltmp = aux (k - 1) xs (l - 1) res in
-                let left = List.map (fun ll -> x :: ll) ltmp in
-                aux k xs (l - 1) [] @ left
-              end
-          end
-      end
+  let rec core k sl =
+    let rec aux sl = match sl with
+      | []      -> []
+      | x :: xs -> (List.map (fun z -> x :: z) (core (k - 1) xs)) :: aux xs
+    in
+    if k = 0 then [[]]
+    else List.flatten (aux sl)
   in
-  Printf.printf "comb %d %d\n" k (List.length sl);
-  let res = aux k sl (List.length sl) [] in
-  res
+  let l = List.length sl in
+  if k < 0 || k > l then raise Unsat
+  else if k = 0 then [[]]
+  else core k sl
 
 let string_of_litt (b, str) =
   if b then str
@@ -92,7 +81,7 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
       |> List.filter (fun name ->
           begin
             let saved = Hashtbl.find hash name in
-            not (List.mem c saved && List.length saved = 1) 
+            not (List.mem c saved && List.length saved = 1)
           end)
       (* Some magic crazy shit happens here *)
       |> k_combinaison (n - (n / 2 + acc) + 1)
