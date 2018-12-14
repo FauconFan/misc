@@ -29,6 +29,7 @@ and layer :
 
 and virtual acomponent :
   coords ->
+  dim ->
   object
     method draw : unit -> unit
     method click : (coords * color option) -> (scene GMessage.t)

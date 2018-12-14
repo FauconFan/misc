@@ -5,8 +5,8 @@ open GMessage
 class cursor dim min max value coord coord_str =
 
   object (self)
-  inherit SLAC.acomponent coord as super
-    
+  inherit SLAC.acomponent coord dim as super
+
     val mutable pos = 0
 
     val space_around = 10
@@ -14,8 +14,8 @@ class cursor dim min max value coord coord_str =
     val width_cursor = fst dim
 
     initializer value := Pervasives.min (Pervasives.max min !value) max; pos <-  ((!value - min) * width_cursor) / (max - min)
-    
-    method private update_value () = 
+
+    method private update_value () =
       min + ((pos * (max - min)) / width_cursor)
 
     method getLines () : (coords * coords * color * int) list =
@@ -29,7 +29,7 @@ class cursor dim min max value coord coord_str =
       [rect]
 
     method subClick (coords, color) : (SLAC.scene GMessage.t) =
-      let coords = (fst coords + space_around, snd coords + space_around) in 
+      let coords = (fst coords + space_around, snd coords + space_around) in
       if bounds coords (width_cursor + (space_around * 2), space_around * 2) then
         begin
         pos <- Pervasives.min (Pervasives.max (fst coords - space_around) 0) width_cursor;
@@ -37,8 +37,8 @@ class cursor dim min max value coord coord_str =
         end;
       Nothing
 
-    method getStrings () = 
-      let construct_string_content coord c font s content = 
+    method getStrings () =
+      let construct_string_content coord c font s content =
         {
           coordinate = coord;
           color = c;
@@ -50,6 +50,6 @@ class cursor dim min max value coord coord_str =
       let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
       let cont = construct_string_content coord_str black font 30 [(string_of_int !value)] in
       [cont]
-      
+
 
   end
