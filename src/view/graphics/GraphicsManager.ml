@@ -11,7 +11,8 @@ let config = ref None
 let init (conf : config) (sce : SLAC.scene) : unit =
   let (w, h) = conf.dims in
   let (wr, hr) = (w, h) in
-  open_graph (" " ^ (string_of_int wr) ^ "x" ^ (string_of_int hr));
+  let str_to_open_graph = Printf.sprintf " %dx%d" wr hr in
+  open_graph str_to_open_graph;
   set_window_title "PF5_mondrian";
   auto_synchronize false;
   scene := Some sce;
