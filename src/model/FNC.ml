@@ -43,11 +43,10 @@ let add_sol ens p res =
    in
    res := (list_init (Array.length p) (fun a -> ens.(p.(a)))) :: (!res)
 
-let k_combinaison q k ens =
+let k_combinaison k ens =
   let ens = Array.of_list ens in
   let n = Array.length ens in
-   if k <= 0 then raise Unsat
-   else if k > n  then []
+   if k <= 0 || k > n  then []
    else
    let res = ref [] in
    let p = Array.init k (fun a -> a) in
@@ -106,15 +105,15 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
   and aux_color rects_of_line n c res =
     let b = (c = red) in
     let k = n / 2 + (if n mod 2 = 1 then 1 else 0) in
-    let q = ref 0 in
     let p = ref 0 in
     let rects_of_line = 
      List.filter (fun name -> match Hashtbl.find hash name with
       | [] -> failwith "Problème dans aux_color"
-      | [x] -> (if x = c then incr q else incr p); false
+      | [x] -> (if x <> c then incr p); false
       | _ -> true
     ) rects_of_line in
-    k_combinaison !q (k - !p) rects_of_line
+    if(k - !p <= 0) then raise Unsat;
+    k_combinaison (k - !p) rects_of_line
     |> List.map (fun l -> match l with 
                           | [x] -> Hashtbl.replace hash x [c]; List.map (fun (n) -> (b, n)) [x]
                           | _ -> List.map (fun (n) -> (b, n)) l)
