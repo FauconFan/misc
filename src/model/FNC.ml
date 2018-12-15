@@ -22,42 +22,42 @@ let k_combinaison k sl =
   else core k sl
 *)
 let rec shift p v i =
-   if i < Array.length p then begin
-   p.(i) <- v; shift p (v + 1) (i + 1) end
+  if i < Array.length p then begin
+    p.(i) <- v; shift p (v + 1) (i + 1) end
 
 let rec moveLast (p : int array) (s : int) (i : int) =
-   let size_p = Array.length p in
-   if i < 0 then false
-   else if p.(i) >= (s - 1) then moveLast p s (i-1)
-else if i >= (size_p - 1) then begin p.(i) <- p.(i) + 1; true end
-else if p.(i + 1) = p.(i) + 1 then moveLast p s (i - 1)
-else begin shift p (p.(i) + 1) i; true end
+  let size_p = Array.length p in
+  if i < 0 then false
+  else if p.(i) >= (s - 1) then moveLast p s (i-1)
+  else if i >= (size_p - 1) then begin p.(i) <- p.(i) + 1; true end
+  else if p.(i + 1) = p.(i) + 1 then moveLast p s (i - 1)
+  else begin shift p (p.(i) + 1) i; true end
 
 let add_sol ens p res =
-   let list_init n f =
-      let rec add_el i l =
-         if(i < 0 || i >= n) then l
-         else add_el (i-1) ((f i) :: l)
-      in
-      add_el (n-1) []
-   in
-   res := (list_init (Array.length p) (fun a -> ens.(p.(a)))) :: (!res)
+  let list_init n f =
+    let rec add_el i l =
+      if(i < 0 || i >= n) then l
+      else add_el (i-1) ((f i) :: l)
+    in
+    add_el (n-1) []
+  in
+  res := (list_init (Array.length p) (fun a -> ens.(p.(a)))) :: (!res)
 
 let k_combinaison k ens =
   let ens = Array.of_list ens in
   let n = Array.length ens in
-   if k <= 0 || k > n  then []
-   else
-   let res = ref [] in
-   let p = Array.init k (fun a -> a) in
-   let rec aux () = 
+  if k <= 0 || k > n  then []
+  else
+    let res = ref [] in
+    let p = Array.init k (fun a -> a) in
+    let rec aux () =
       begin
-         add_sol ens p res;
-         if(moveLast p (Array.length ens) (Array.length p - 1)) then aux ()
-         else !res
+        add_sol ens p res;
+        if(moveLast p (Array.length ens) (Array.length p - 1)) then aux ()
+        else !res
       end
-   in
-  aux ()
+    in
+    aux ()
 
 let string_of_litt (b, str) =
   if b then str
@@ -73,14 +73,14 @@ let string_of_color c =
   else "Bug"
 
 let bsp_to_fnc (bsp : bsp) : litt list list =
-  let hash = Hashtbl.create 13 in  
+  let hash = Hashtbl.create 13 in
   let rec aux bsp even prefix res =
     match bsp with
     | R c ->
       begin
         let t = match c with
           | None -> Hashtbl.replace hash prefix [red; blue];
-              [(true, prefix); (false, prefix)]
+            [(true, prefix); (false, prefix)]
           | Some cc -> Hashtbl.replace hash prefix [cc]; [(cc = red), prefix]
         in
         t :: res
@@ -106,22 +106,22 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
     let b = (c = red) in
     let k = n / 2 + (if n mod 2 = 1 then 1 else 0) in
     let p = ref 0 in
-    let rects_of_line = 
-     List.filter (fun name -> match Hashtbl.find hash name with
-      | [] -> failwith "Problème dans aux_color"
-      | [x] -> (if x <> c then incr p); false
-      | _ -> true
-    ) rects_of_line in
-    if(k - !p <= 0) then raise Unsat;
+    let rects_of_line =
+      List.filter (fun name -> match Hashtbl.find hash name with
+          | [] -> failwith "Problème dans aux_color"
+          | [x] -> (if x <> c then incr p); false
+          | _ -> true
+        ) rects_of_line in
+    if k - !p <= 0 then raise Unsat;
     k_combinaison (k - !p) rects_of_line
-    |> List.map (fun l -> match l with 
-                          | [x] -> Hashtbl.replace hash x [c]; List.map (fun (n) -> (b, n)) [x]
-                          | _ -> List.map (fun (n) -> (b, n)) l)
+    |> List.map (fun l -> match l with
+        | [x] -> Hashtbl.replace hash x [c]; List.map (fun (n) -> (b, n)) l
+        | _ -> List.map (fun (n) -> (b, n)) l)
     |> (fun li -> li @ res)
   and aux_magenta rects_of_line n c res =
     if n mod 2 = 1 then raise Unsat;
-    let tmp = aux_color rects_of_line (n+2) red res in
-    aux_color rects_of_line (n+2) blue tmp
+    let tmp = aux_color rects_of_line (n + 2) red res in
+    aux_color rects_of_line (n + 2) blue tmp
   in
   aux bsp false "" []
 
