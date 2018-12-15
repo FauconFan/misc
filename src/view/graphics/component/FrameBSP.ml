@@ -22,9 +22,9 @@ class frameBSP config (posx, posy) =
         if c = red then rgb 255 120 120
         else if c = green then rgb 120 255 120
         else if c = blue then rgb 120 120 255
-        else if c = yellow then rgb 255 255 120
-        else if c = cyan then rgb 120 255 255
-        else if c = magenta then rgb 255 120 255
+        else if c = yellow then rgb 255 255 0
+        else if c = cyan then rgb 0 255 255
+        else if c = magenta then rgb 255 0 255
         else c
         in
         let real_color = Option.map_default change_color black c in

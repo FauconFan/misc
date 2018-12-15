@@ -6,6 +6,7 @@ type litt = bool * string
 
 exception Unsat
 
+(*
 let k_combinaison k sl =
   let rec core k sl =
     let rec aux sl = match sl with
@@ -19,19 +20,69 @@ let k_combinaison k sl =
   if k < 0 || k > l then raise Unsat
   else if k = 0 then [[]]
   else core k sl
+*)
+let rec shift p v i =
+   if i < Array.length p then begin
+   p.(i) <- v; shift p (v + 1) (i + 1) end
+
+let rec moveLast (p : int array) (s : int) (i : int) =
+   let size_p = Array.length p in
+   if i < 0 then false
+   else if p.(i) >= (s - 1) then moveLast p s (i-1)
+else if i >= (size_p - 1) then begin p.(i) <- p.(i) + 1; true end
+else if p.(i + 1) = p.(i) + 1 then moveLast p s (i - 1)
+else begin shift p (p.(i) + 1) i; true end
+
+let add_sol ens p res =
+   let list_init n f =
+      let rec add_el i l =
+         if(i < 0 || i >= n) then l
+         else add_el (i-1) ((f i) :: l)
+      in
+      add_el (n-1) []
+   in
+   res := (list_init (Array.length p) (fun a -> ens.(p.(a)))) :: (!res)
+
+let k_combinaison q k ens =
+  let ens = Array.of_list ens in
+  let n = Array.length ens in
+   if k <= 0 then raise Unsat
+   else if k > n  then []
+   else
+   let res = ref [] in
+   let p = Array.init k (fun a -> a) in
+   let rec aux () = 
+      begin
+         add_sol ens p res;
+         if(moveLast p (Array.length ens) (Array.length p - 1)) then aux ()
+         else !res
+      end
+   in
+  aux ()
 
 let string_of_litt (b, str) =
   if b then str
   else "!" ^ str
 
+let string_of_color c =
+  if c = red then "Red"
+  else if c = green then "Green"
+  else if c = blue then "Blue"
+  else if c = yellow then "Yellow"
+  else if c = cyan then "Cyan"
+  else if c = magenta then "Magenta"
+  else "Bug"
+
 let bsp_to_fnc (bsp : bsp) : litt list list =
+  let hash = Hashtbl.create 13 in  
   let rec aux bsp even prefix res =
     match bsp with
     | R c ->
       begin
         let t = match c with
-          | None -> [(true, prefix); (false, prefix)]
-          | Some cc -> [(cc = red), prefix]
+          | None -> Hashtbl.replace hash prefix [red; blue];
+              [(true, prefix); (false, prefix)]
+          | Some cc -> Hashtbl.replace hash prefix [cc]; [(cc = red), prefix]
         in
         t :: res
       end
@@ -53,23 +104,25 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
         f li stats_arr.(2) c res
       end
   and aux_color rects_of_line n c res =
-    let b = (c == red) in
-    let k = n - (n / 2 + 1) + 1 in
-    rects_of_line
-    |> k_combinaison k
-    |> List.map (fun l -> List.map (fun (n) -> (b, n)) l)
+    let b = (c = red) in
+    let k = n / 2 + (if n mod 2 = 1 then 1 else 0) in
+    let q = ref 0 in
+    let p = ref 0 in
+    let rects_of_line = 
+     List.filter (fun name -> match Hashtbl.find hash name with
+      | [] -> failwith "Problème dans aux_color"
+      | [x] -> (if x = c then incr q else incr p); false
+      | _ -> true
+    ) rects_of_line in
+    k_combinaison !q (k - !p) rects_of_line
+    |> List.map (fun l -> match l with 
+                          | [x] -> Hashtbl.replace hash x [c]; List.map (fun (n) -> (b, n)) [x]
+                          | _ -> List.map (fun (n) -> (b, n)) l)
     |> (fun li -> li @ res)
   and aux_magenta rects_of_line n c res =
     if n mod 2 = 1 then raise Unsat;
-    let k = n / 2 + 1 in
-    let dup2 li =
-      let f b = List.map (fun n -> (b, n)) li in
-      [(f true); (f false)]
-    in
-    rects_of_line
-    |> k_combinaison k
-    |> List.fold_left (fun l a -> (dup2 a) @ l) []
-    |> (fun li -> li @ res)
+    let tmp = aux_color rects_of_line (n+2) red res in
+    aux_color rects_of_line (n+2) blue tmp
   in
   aux bsp false "" []
 
@@ -109,6 +162,7 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
     let li = li_opt |> Option.get |> List.map (fun (name, _) -> name) in
     let b = (c == red) in
     let n = stats_arr.(2) in
+    let q = ref 0 in
     let acc = if is_dual then 0 else 1 in
     let stats_hash = [|0; 0|] in
     List.iter
@@ -122,18 +176,15 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
          end)
       li;
     Printf.printf "%d %d\n" stats_hash.(0) stats_hash.(1);
-    if not is_dual && b && stats_hash.(1) > n / 2 + 1 then res
-    else if not is_dual && not b && stats_hash.(0) > n / 2 + 1 then res
-    else if is_dual && stats_arr.(2) / 2 = stats_hash.(1) && stats_hash.(1) = stats_hash.(0) then res
-    else
       li
       |> List.filter (fun name ->
           begin
             let saved = Hashtbl.find hash name in
-            not (List.mem c saved && List.length saved = 1)
+            if (List.mem c saved && List.length saved = 1) then (incr q; false)
+            else true
           end)
       (* Some magic crazy shit happens here *)
-      |> k_combinaison (n - (n / 2 + acc) + 1)
+      |> k_combinaison (!q) (n - (n / 2 + acc) + 1)
       |> List.map (fun ll ->
           begin
             crazy_optimisation ll c;

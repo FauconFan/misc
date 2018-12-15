@@ -77,9 +77,9 @@ let exemple1 =
 
 let simple =
   L (
-    {coord = 500; color = Some red},
+    {coord = 500; color = Some blue},
     L (
-      {coord = 100; color = None},
+      {coord = 100; color = Some red},
       R None,
       R None
     ),
