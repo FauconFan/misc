@@ -18,34 +18,14 @@ class button ?color_font:(cf = rgb 200 200 200) dim content coord callback =
     method subClick (c : (coords * color option)) : (SLAC.scene GMessage.t) =
       callback c
 
-    (*method private draw_string_center () =
-      let (cur_x, cur_y) = current_point () in
-      set_font "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1";
-      let dim_str = text_size content in
-      let (middle_x, middle_y) = (fst coord + (fst dim / 2), snd coord + (snd dim / 2)) in
-      moveto (middle_x - (fst dim_str / 2)) (middle_y - (snd dim_str / 2));
-      set_color black;
-      draw_string content;
-      moveto cur_x cur_y*)
-
     method getStrings () =
-      let construct_string_content coord c font s content =
-        {
-          coordinate = coord;
-          color = c;
-          font = font;
-          size = s;
-          content = content;
-        }
-      in
       let padding = 10 in
-      let middle_h font =
+      let middle_h =
         let half_h = snd dim / 2 in
-        let size_content = List.fold_left (fun a b -> set_font font; a + snd (text_size b) + 2) 0 content - 2 in
+        let size_content = List.fold_left (fun a b -> set_font default_font; a + snd (text_size b) + 2) 0 content - 2 in
         half_h + (size_content / 2)
       in
-      let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
-      let cont = construct_string_content (padding, middle_h font) black font 30 content in
+      let cont = construct_string_content (padding, middle_h) 30 content in
       [cont]
 
   end
