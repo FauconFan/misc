@@ -75,3 +75,11 @@ let is_some x = match x with
 let get x = match x with
   | None -> raise No_value
   | Some v -> v
+
+(*
+  equal None None f returns true, equal (Some x) (Some y) f returns f x y, false otherwise
+*)
+let equal cx cy eq = match (cx, cy) with
+  | (Some x, Some y) -> eq x y
+  | (None, None) -> true
+  | _ -> false
