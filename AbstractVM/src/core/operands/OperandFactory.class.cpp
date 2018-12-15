@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/05 16:35:01 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/20 16:37:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2018/12/03 11:12:17 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void OperandFactory::_fillLinker() noexcept {
     this->_linker[INT8]   = &OperandFactory::createInt8;
     this->_linker[INT16]  = &OperandFactory::createInt16;
     this->_linker[INT32]  = &OperandFactory::createInt32;
+    this->_linker[INT64]  = &OperandFactory::createInt64;
     this->_linker[FLOAT]  = &OperandFactory::createFloat;
     this->_linker[DOUBLE] = &OperandFactory::createDouble;
 }
@@ -94,6 +95,12 @@ IOperand const * OperandFactory::createInt32(std::string const & s) const {
     int32_t value = this->stoT<int32_t>(s);
 
     return new DefaultOperand<int32_t>(value, INT32);
+}
+
+IOperand const * OperandFactory::createInt64(std::string const & s) const {
+    int64_t value = this->stoT<int64_t>(s);
+
+    return new DefaultOperand<int64_t>(value, INT64);
 }
 
 IOperand const * OperandFactory::createFloat(std::string const & s) const {

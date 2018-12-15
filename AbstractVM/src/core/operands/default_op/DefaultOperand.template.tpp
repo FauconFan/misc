@@ -17,8 +17,8 @@
 #include "ZeroException.class.hpp"
 #include "OperandFactory.class.hpp"
 
-#define ABS(x) (((x) > 0) ? (x) : (-x))
-#define PREC_DIV_ZERO 0.0000001
+#define ABS(x)              (((x) > 0) ? (x) : (-x))
+#define PREC_DIV_ZERO       1e-10
 
 template <typename T>
 DefaultOperand<T>::DefaultOperand(T value, eOperandType type)
