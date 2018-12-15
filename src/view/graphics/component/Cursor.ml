@@ -38,17 +38,7 @@ class cursor dim min max value coord coord_str =
       Nothing
 
     method getStrings () =
-      let construct_string_content coord c font s content =
-        {
-          coordinate = coord;
-          color = c;
-          font = font;
-          size = s;
-          content = content;
-        }
-      in
-      let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
-      let cont = construct_string_content coord_str black font 30 [(string_of_int !value)] in
+      let cont = construct_string_content coord_str 30 [(string_of_int !value)] in
       [cont]
 
 

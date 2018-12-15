@@ -54,6 +54,8 @@ type label =
     color : color option;
   }
 
+val default_font : string
+
 (** Label given by the subjet :
     - position of the line. Interpretation depends of the position in the bsp
     - color of the line if it exists, black otherwise.
@@ -76,4 +78,12 @@ val bounds : dim -> dim -> bool
 val diff_dim : int * int -> int * int -> int * int
 (**
   Function that returns the absolute diff between two dimensions.
+*)
+
+val construct_string_content :
+  ?font:string ->
+  ?color:color ->
+  coords -> int -> string list -> string_content
+(**
+  Function that constructs a string_content with a default font.
 *)

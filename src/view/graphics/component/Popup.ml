@@ -30,30 +30,9 @@ class popup content button dim coord =
       aux button
 
     method getStrings () =
-      let construct_string_content coord c font s content =
-        {
-          coordinate = coord;
-          color = c;
-          font = font;
-          size = s;
-          content = content;
-        }
-      in
       let padding = 10 in
       let buttons_str = List.fold_left (fun a b -> a @ (b#getStrings())) [] button in
-      let font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1" in
-      let cont = construct_string_content (padding, snd dim) black font 30 content in
+      let cont = construct_string_content (padding, snd dim) 30 content in
       cont :: buttons_str
-
-
-    (*method private draw_string () =
-      let padding = 10 in
-      let (cur_x, cur_y) = current_point () in
-      set_font "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1";
-      let dim_str = text_size content in
-      let (x, y) = (fst coord + padding, snd coord + snd dim - padding - (snd dim_str)) in
-      moveto x y;
-      draw_string content;
-      moveto cur_x cur_y*)
 
   end
