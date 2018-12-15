@@ -16,7 +16,7 @@ class button_color copt size coord =
       as super
 
     method! getRects () =
-      if Option.equal (Interact.getColorOpt ()) copt (=) then super#setPadding 3
+      if Option.equal (Interact.getColorOpt ()) copt (=) then super#setPadding 5
       else super#resetPadding ();
       super#getRects ()
   end
