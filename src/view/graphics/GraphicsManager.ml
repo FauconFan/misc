@@ -43,9 +43,10 @@ let run () : unit =
           | Update f -> changeScene (f ())
         in
         let event = Interact.interact () in
-        let li_gmsg = Option.map2_default (fun s e -> s#click e) [] !scene event in
+        let conf = Option.get !config in
+        let li_gmsg = Option.map2_default (fun s e -> s#click conf e) [] !scene event in
         List.iter use_gmsg li_gmsg;
-        Option.may (fun s -> s#draw ()) !scene;
+        Option.may (fun s -> s#draw conf) !scene;
       end
     with Exit -> running := false
   in

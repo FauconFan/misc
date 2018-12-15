@@ -8,22 +8,22 @@ exception Wrong_Construct of string
 class scene (layers_array : layer array) =
   object (self)
 
-    method draw () : unit =
-      Array.iter (fun lay -> lay#draw ()) layers_array
+    method draw config : unit =
+      Array.iter (fun lay -> lay#draw config) layers_array
 
-    method click c : (scene GMessage.t) list =
-      let layers_messages = Array.map (fun lay -> (lay#click c)) layers_array in
+    method click config c : (scene GMessage.t) list =
+      let layers_messages = Array.map (fun lay -> (lay#click config c)) layers_array in
       List.flatten @@ Array.to_list layers_messages
   end
 
 and layer (list_compo : acomponent list) =
   object (self)
 
-    method draw () =
-      List.iter (fun comp -> comp#draw ()) list_compo
+    method draw config =
+      List.iter (fun comp -> comp#draw config) list_compo
 
-    method click c =
-      List.rev_map (fun comp -> comp#click c) list_compo
+    method click config c =
+      List.rev_map (fun comp -> comp#click config c) list_compo
   end
 
 and virtual acomponent (posx, posy) dim =
@@ -31,7 +31,18 @@ and virtual acomponent (posx, posy) dim =
 
     val interline = 2
 
-    method draw () : unit =
+    method draw (config : config) : unit =
+      let f_zoom x max1 max2 = (* x / max1 = x' / max2 *)
+        let (x, max1, max2) = (float_of_int x, float_of_int max1, float_of_int max2) in
+        int_of_float (x *. max2 /. max1)
+      in
+      let f_zoom_width x =
+        f_zoom x (fst config.dims) (size_x ())
+      in
+      let f_zoom_height y =
+        f_zoom y (fst config.dims) (size_y ())
+      in
+      let (fzw, fzh) = (f_zoom_width, f_zoom_height) in
       let d_rect ((x, y), (w, h), c) =
         set_color c;
         fill_rect x y w h
@@ -58,18 +69,30 @@ and virtual acomponent (posx, posy) dim =
       in
       rects
       |> List.rev_map (fun ((x, y), (w, h), c) -> ((x + posx, y + posy), (w, h), c))
-      |> List.rev
+      |> List.rev_map (fun ((x, y), (w, h), c) -> ((fzw x, fzh y), (fzw w, fzh h), c))
       |> List.iter d_rect;
       lines
       |> List.rev_map (fun ((x1, y1), (x2, y2), c, w) -> ((x1 + posx, y1 + posy), (x2 + posx, y2 + posy), c, w))
-      |> List.rev
+      |> List.rev_map (fun ((x1, y1), (x2, y2), c, w) -> ((fzw x1, fzh y1), (fzw x2, fzh y2), c, w))
       |> List.iter d_line;
       strings
       |> List.rev_map (fun s_con -> {s_con with coordinate = (fst s_con.coordinate + posx, snd s_con.coordinate + posy)})
-      |> List.rev
+      |> List.rev_map (fun s_con -> {s_con with coordinate = (fzw (fst s_con.coordinate), fzh (snd s_con.coordinate))})
       |> List.iter d_string;
 
-    method click ((x, y), c) : (scene GMessage.t) =
+    method click (config : config) ((x, y), c) : (scene GMessage.t) =
+      let f_zoom x max1 max2 = (* x / max1 = x' / max2 *)
+        let (x, max1, max2) = (float_of_int x, float_of_int max1, float_of_int max2) in
+        int_of_float (x *. max1 /. max2)
+      in
+      let f_zoom_width x =
+        f_zoom x (fst config.dims) (size_x ())
+      in
+      let f_zoom_height y =
+        f_zoom y (fst config.dims) (size_y ())
+      in
+      let (fzw, fzh) = (f_zoom_width, f_zoom_height) in
+      let (x, y) = (fzw x, fzh y) in
       let new_d = (x - posx, y - posy) in
       if bounds new_d dim then self#subClick (new_d, c)
       else Nothing
