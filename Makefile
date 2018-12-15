@@ -32,6 +32,10 @@ MLI_FILES = $(ML_FILES:%.ml=%.mli)
 
 SOURCES = $(MLI_FILES) $(ML_FILES) $(MAIN)
 
+.PHONY: all
+all: nc
+
+.PHONY: help
 help:
 	@printf "Useful commands for this Makefile:\\n"
 	@printf " - help : prints this message\\n"
@@ -48,11 +52,14 @@ help:
 
 $(RESULT): nc
 
+.PHONY: exec
 exec: $(RESULT)
 	./$(RESULT)
 
+.PHONY: fclean
 fclean: clean-all
 
+.PHONY: re
 re: fclean $(RESULT)
 
 include $(OCAMLMAKEFILE)
