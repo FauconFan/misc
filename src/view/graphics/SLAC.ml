@@ -40,7 +40,7 @@ and virtual acomponent (posx, posy) dim =
         f_zoom x (fst config.dims) (size_x ())
       in
       let f_zoom_height y =
-        f_zoom y (fst config.dims) (size_y ())
+        f_zoom y (snd config.dims) (size_y ())
       in
       let (fzw, fzh) = (f_zoom_width, f_zoom_height) in
       let d_rect ((x, y), (w, h), c) =
@@ -89,7 +89,7 @@ and virtual acomponent (posx, posy) dim =
         f_zoom x (fst config.dims) (size_x ())
       in
       let f_zoom_height y =
-        f_zoom y (fst config.dims) (size_y ())
+        f_zoom y (snd config.dims) (size_y ())
       in
       let (fzw, fzh) = (f_zoom_width, f_zoom_height) in
       let (x, y) = (fzw x, fzh y) in

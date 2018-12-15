@@ -3,7 +3,7 @@ open Graphics
 open GMessage
 
 
-class button ?color_font:(cf = rgb 200 200 200) ?default_padding:(df = 1) dim content coord callback =
+class button ?color_font:(cf = rgb 200 200 200) ?default_padding:(df = 2) dim content coord callback =
   object (self)
     inherit SLAC.acomponent coord dim as super
 

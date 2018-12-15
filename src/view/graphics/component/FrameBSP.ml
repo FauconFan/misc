@@ -15,7 +15,7 @@ class frameBSP config (posx, posy) =
     method get_bsp () : bsp = bsp
 
     method getLines () : (coords * coords * color * int) list =
-      let dim_x, dim_y = config.dims in
+      let (dim_x, dim_y) = config.dims in
       let ligne = [((posx, posy), (posx, posy + dim_y), black, 3); ((posx, posy), (posx + dim_x, posy), black, 3); ((posx, posy + dim_y), (posx + dim_x, posy + dim_y), black, 3); ((posx + dim_x, posy), (posx + dim_x, posy + dim_y), black, 3)] in
       let lines_builder l ((co1, co2), c) =
         let change_color c =
