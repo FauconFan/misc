@@ -27,6 +27,8 @@ val is_some : 'a option -> bool
 (** is_some (Some x) returns true otherwise it returns false. *)
 val get : 'a option -> 'a
 (** get (Some x) returns x and get None raises No_value. *)
+val equal : 'a option -> 'b option -> ('a -> 'b -> bool) -> bool
+(** equal None None f returns true, equal (Some x) (Some y) f returns f x y, false otherwise *)
 
 exception No_value
 (** Raised when calling get None.*)

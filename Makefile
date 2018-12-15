@@ -18,6 +18,7 @@ ML_FILES = \
 		src/view/graphics/SLAC.ml \
 		src/view/graphics/component/Background.ml \
 		src/view/graphics/component/Button.ml \
+		src/view/graphics/component/ButtonColor.ml \
 		src/view/graphics/component/Cursor.ml \
 		src/view/graphics/component/Popup.ml \
 		src/view/graphics/component/Text.ml \

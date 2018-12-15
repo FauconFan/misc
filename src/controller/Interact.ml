@@ -15,6 +15,8 @@ let getAllColors () =
 (* Current drawing color *)
 let actual_color = ref None
 
+let getColorOpt () =
+  !actual_color
 
 (* Change the current color and returns it *)
 let changeColor c =
@@ -23,8 +25,15 @@ let changeColor c =
     | None -> None
     | Some (_, c) -> Some c
   in
-  Option.map_default set_color (white |> set_color) col;
   actual_color := col
+
+let changeColorOpt copt =
+  match copt with
+  | None -> actual_color := None
+  | Some c ->
+    begin
+      if List.exists (fun (_, col) -> c = col) table_of_color then actual_color := copt
+    end
 
 (*
    Fonction d'interaction avec l'utilisateur :
