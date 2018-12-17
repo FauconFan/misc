@@ -5,6 +5,8 @@ RESULT = mondrian
 
 MAIN = src/Main.ml
 
+TEST=
+
 ML_FILES = \
 		src/model/solveur/sat_solver.ml \
 		src/utils/CLIParser.ml \
