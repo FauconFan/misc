@@ -2,17 +2,17 @@ open Base
 open Graphics
 
 (**
-  Minimum size of square
+   Minimum size of square
 *)
 let min_size = 20
 
 (**
-  Accurate of the random fonction
+   Accurate of the random fonction
 *)
 let random_pad = 2
 
 (**
-  Random fonction which return a value around half of var. It's depended of random_pad
+   Random fonction which return a value around half of var. It's depended of random_pad
 *)
 let random var =
   let rec aux tmp i =
@@ -44,14 +44,14 @@ let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) e
     begin
       if max_height - (min_size * 2) - min_height <= 0 then R None
       else
-      let coord = random (max_height - (min_size * 2) - min_height) + min_height + min_size in
-      let label = {coord = coord; color = None} in
-      let d_left = (min_height, coord)
-      and d_right = (coord, max_height)
-      and d_width = (min_width, max_width) in
-      let left = random_bsp_empty (depth - 1) d_width d_left (not even)
-      and right = random_bsp_empty (depth - 1) d_width d_right (not even) in
-      L (label, left, right)
+        let coord = random (max_height - (min_size * 2) - min_height) + min_height + min_size in
+        let label = {coord = coord; color = None} in
+        let d_left = (min_height, coord)
+        and d_right = (coord, max_height)
+        and d_width = (min_width, max_width) in
+        let left = random_bsp_empty (depth - 1) d_width d_left (not even)
+        and right = random_bsp_empty (depth - 1) d_width d_right (not even) in
+        L (label, left, right)
     end
 
 (*

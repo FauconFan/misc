@@ -112,7 +112,7 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
           | [x] -> (if x <> c then incr p); false
           | _ -> true
         ) rects_of_line in
-    if k - !p <= 0 then raise Unsat;
+    if (k - !p) <= 0 then raise Unsat;
     k_combinaison (k - !p) rects_of_line
     |> List.map (fun l -> match l with
         | [x] -> Hashtbl.replace hash x [c]; List.map (fun (n) -> (b, n)) l
@@ -120,8 +120,9 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
     |> (fun li -> li @ res)
   and aux_magenta rects_of_line n c res =
     if n mod 2 = 1 then raise Unsat;
-    let tmp = aux_color rects_of_line (n + 2) red res in
-    aux_color rects_of_line (n + 2) blue tmp
+    res
+    |> aux_color rects_of_line (n + 2) red
+    |> aux_color rects_of_line (n + 2) blue
   in
   aux bsp false "" []
 
