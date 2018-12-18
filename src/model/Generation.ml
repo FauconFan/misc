@@ -4,7 +4,7 @@ open Graphics
 (**
   Minimum size of square
 *)
-let min_size = 20
+let min_size = 15
 
 (**
   Accurate of the random fonction
