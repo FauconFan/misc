@@ -28,20 +28,7 @@ let random var =
 let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) even : bsp =
   if depth == 0 then R None
   else if even then
-  	begin
-      if max_height - (min_size * 2) - min_height <= 0 then R None
-      else
-      let coord = random (max_height - (min_size * 2) - min_height) + min_height + min_size in
-      let label = {coord = coord; color = None} in
-      let d_left = (min_height, coord)
-      and d_right = (coord, max_height)
-      and d_width = (min_width, max_width) in
-      let left = random_bsp_empty (depth - 1) d_width d_left (not even)
-      and right = random_bsp_empty (depth - 1) d_width d_right (not even) in
-      L (label, left, right)
-    end
-  else
-  	begin
+    begin
       if max_width - (min_size * 2) - min_width <= 0 then R None
       else
         let coord = random (max_width - (min_size * 2) - min_width) + min_width + min_size in
@@ -53,7 +40,19 @@ let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) e
         and right = random_bsp_empty (depth - 1) d_right d_height (not even) in
         L (label, left, right)
     end
-    
+  else
+    begin
+      if max_height - (min_size * 2) - min_height <= 0 then R None
+      else
+      let coord = random (max_height - (min_size * 2) - min_height) + min_height + min_size in
+      let label = {coord = coord; color = None} in
+      let d_left = (min_height, coord)
+      and d_right = (coord, max_height)
+      and d_width = (min_width, max_width) in
+      let left = random_bsp_empty (depth - 1) d_width d_left (not even)
+      and right = random_bsp_empty (depth - 1) d_width d_right (not even) in
+      L (label, left, right)
+    end
 
 (*
    Prend un bsp et renvoie le même bsp avec les couleurs des lignes, quand il y en a.
@@ -91,7 +90,6 @@ let random_bsp_colored (bsp:bsp) : bsp =
    *)
 let random_bsp_naive config : bsp =
   let (width, height) = config.dims in
-  Printf.printf "width=%d height=%d\n" width height;
   let (width_d, height_d) = (0, width), (0, height) in
   let res = random_bsp_empty config.depth width_d height_d false in
   random_bsp_colored res
