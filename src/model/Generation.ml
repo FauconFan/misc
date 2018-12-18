@@ -91,7 +91,6 @@ let random_bsp_colored (bsp:bsp) : bsp =
    *)
 let random_bsp_naive config : bsp =
   let (width, height) = config.dims in
-  Printf.printf "width=%d height=%d\n" width height;
   let (width_d, height_d) = (0, width), (0, height) in
   let res = random_bsp_empty config.depth width_d height_d false in
   random_bsp_colored res
