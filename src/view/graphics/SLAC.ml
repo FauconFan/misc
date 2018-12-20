@@ -23,7 +23,7 @@ and layer (list_compo : acomponent list) =
       List.iter (fun comp -> comp#draw ()) list_compo
 
     method click c =
-      List.map (fun comp -> comp#click c) list_compo
+      List.rev_map (fun comp -> comp#click c) list_compo
   end
 
 and virtual acomponent (posx, posy) =
@@ -47,21 +47,21 @@ and virtual acomponent (posx, posy) =
         set_font font;
         set_text_size s;
         List.iteri (fun i a ->
-        moveto coordx (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline));
-        draw_string a) content
+            moveto coordx (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline));
+            draw_string a) content
       in
       let rects = self#getRects ()
       and lines = self#getLines ()
       and strings = self#getStrings ()
       in
       rects
-      |> List.map (fun ((x, y), (w, h), c) -> ((x + posx, y + posy), (w, h), c))
+      |> List.rev_map (fun ((x, y), (w, h), c) -> ((x + posx, y + posy), (w, h), c))
       |> List.iter d_rect;
       lines
-      |> List.map (fun ((x1, y1), (x2, y2), c, w) -> ((x1 + posx, y1 + posy), (x2 + posx, y2 + posy), c, w))
+      |> List.rev_map (fun ((x1, y1), (x2, y2), c, w) -> ((x1 + posx, y1 + posy), (x2 + posx, y2 + posy), c, w))
       |> List.iter d_line;
       strings
-      |> List.map (fun s_con -> {s_con with coordinate = (fst s_con.coordinate + posx, snd s_con.coordinate + posy)})
+      |> List.rev_map (fun s_con -> {s_con with coordinate = (fst s_con.coordinate + posx, snd s_con.coordinate + posy)})
       |> List.iter d_string;
 
     method click ((x, y), c) : (scene GMessage.t) =

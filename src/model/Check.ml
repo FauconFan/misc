@@ -16,8 +16,12 @@ module LittSolver = Sat_solver.Make(String)
 
 let check_solve (bsp : bsp) : bool =
   try
+    Printf.printf "before bsp_to_fnc\n";
     let fnc = FNC.bsp_to_fnc bsp in
-    Option.is_some (LittSolver.solve fnc)
+    Printf.printf "after bsp_to_fnc %d\n" (List.fold_left (fun a b -> List.length b + a) 0 fnc);
+    let res = Option.is_some (LittSolver.solve fnc) in
+    Printf.printf "afer solver\n";
+    res
   with FNC.Unsat -> print_endline "UNSAT"; false
 
 let solve (bsp : bsp) : bsp option =
@@ -28,7 +32,7 @@ let solve (bsp : bsp) : bsp option =
       let litt_list =
         litt_list
         |> List.sort (fun (_, str1) (_, str2) -> Pervasives.compare str1 str2)
-        |> List.map (fun (b, _) -> if b then red else blue)
+        |> List.rev_map (fun (b, _) -> if b then red else blue)
       in
       let rec parcours_prefix bsp litt_list = match bsp with
         | R _ ->

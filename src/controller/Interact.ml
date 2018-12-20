@@ -10,7 +10,7 @@ let key_quit = 'q'
 
 let getAllColors () =
   table_of_color
-  |> List.map (fun (_, c) -> c)
+  |> List.rev_map (fun (_, c) -> c)
 
 (* Current drawing color *)
 let actual_color = ref None
