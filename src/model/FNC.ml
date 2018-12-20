@@ -73,8 +73,10 @@ let string_of_color c =
   else "Bug"
 
 let bsp_to_fnc (bsp : bsp) : litt list list =
+  (*Printf.printf "begin bsp_to_fnc\n";*)
   let hash = Hashtbl.create 13 in
   let rec aux bsp even prefix res =
+    (*Printf.printf "begin aux\n";*)
     match bsp with
     | R c ->
       begin
@@ -83,26 +85,34 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
             [(true, prefix); (false, prefix)]
           | Some cc -> Hashtbl.replace hash prefix [cc]; [(cc = red), prefix]
         in
-        t :: res
+        let zzz = t :: res in
+        (*Printf.printf "end bsp_to_fnc rect\n";*)
+        zzz
       end
     | L (label, l, r) ->
       begin
-        res
-        |> aux l (not even) (prefix ^ "l")
-        |> aux r (not even) (prefix ^ "r")
-        |> aux_line label l r even prefix
+        let zzz = res
+                  |> aux l (not even) (prefix ^ "l")
+                  |> aux r (not even) (prefix ^ "r")
+                  |> aux_line label l r even prefix in
+        (*Printf.printf "end bsp_to_fnc line\n";*)
+        zzz
       end
   and aux_line label l r even prefix res =
+    (*Printf.printf "begin aux_line\n";*)
     match label.color with
-    | None -> res
+    | None -> (*Printf.printf "end aux_line none\n";*) res
     | Some c ->
       begin
         let (stats_arr, li_opt) = Bsp.stats_of_line l r even (Some prefix) in
-        let li = li_opt |> Option.get |> List.map (fun (name, _) -> name) in
+        let li = li_opt |> Option.get |> List.rev_map (fun (name, _) -> name) in
         let f = if c = magenta then aux_magenta else aux_color in
-        f li stats_arr.(2) c res
+        let zzz = f li stats_arr.(2) c res in
+        (*Printf.printf "end aux_line %s\n" (string_of_color c);*)
+        zzz
       end
   and aux_color rects_of_line n c res =
+    (*Printf.printf "begin aux_color %s\n" (string_of_color c);*)
     let b = (c = red) in
     let k = n / 2 + (if n mod 2 = 1 then 1 else 0) in
     let p = ref 0 in
@@ -113,16 +123,25 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
           | _ -> true
         ) rects_of_line in
     if (k - !p) <= 0 then raise Unsat;
-    k_combinaison (k - !p) rects_of_line
-    |> List.map (fun l -> match l with
-        | [x] -> Hashtbl.replace hash x [c]; List.map (fun (n) -> (b, n)) l
-        | _ -> List.map (fun (n) -> (b, n)) l)
-    |> (fun li -> li @ res)
+    (*Printf.printf "middle 1 aux_color %s\n" (string_of_color c);*)
+    let tmp = k_combinaison (k - !p) rects_of_line in
+    (*Printf.printf "middle 2 aux_color %s\n" (string_of_color c);*)
+    let aaa = List.rev_map (fun l -> match l with
+        | [x] -> (*Printf.printf "aaa 1 aux_color %s\n" (string_of_color c);*) Hashtbl.replace hash x [c]; (*Printf.printf "aaa 2 aux_color %s\n" (string_of_color c);*) List.rev_map (fun (n) -> (b, n)) l
+        | _ -> (*Printf.printf "aaa 3 aux_color %s\n" (string_of_color c);*) List.rev_map (fun (n) -> (b, n)) l) tmp in
+    (*Printf.printf "middle 3 aux_color %s\n" (string_of_color c);*)
+    let bbb = (List.rev_append aaa res) in
+    (*Printf.printf "middle 4 aux_color %s\n" (string_of_color c);*)
+    (*Printf.printf "end aux_color %s\n" (string_of_color c);*)
+    bbb
   and aux_magenta rects_of_line n c res =
+    (*Printf.printf "begin aux_magenta\n";*)
     if n mod 2 = 1 then raise Unsat;
-    res
-    |> aux_color rects_of_line (n + 2) red
-    |> aux_color rects_of_line (n + 2) blue
+    let zzz = res
+              |> aux_color rects_of_line (n + 2) red
+              |> aux_color rects_of_line (n + 2) blue in
+    (*Printf.printf "end aux_magenta\n";*)
+    zzz
   in
   aux bsp false "" []
 
