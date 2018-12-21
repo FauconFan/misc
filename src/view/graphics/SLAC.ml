@@ -58,12 +58,15 @@ and virtual acomponent (posx, posy) dim =
       in
       rects
       |> List.rev_map (fun ((x, y), (w, h), c) -> ((x + posx, y + posy), (w, h), c))
+      |> List.rev
       |> List.iter d_rect;
       lines
       |> List.rev_map (fun ((x1, y1), (x2, y2), c, w) -> ((x1 + posx, y1 + posy), (x2 + posx, y2 + posy), c, w))
+      |> List.rev
       |> List.iter d_line;
       strings
       |> List.rev_map (fun s_con -> {s_con with coordinate = (fst s_con.coordinate + posx, snd s_con.coordinate + posy)})
+      |> List.rev
       |> List.iter d_string;
 
     method click ((x, y), c) : (scene GMessage.t) =

@@ -33,6 +33,7 @@ let solve (bsp : bsp) : bsp option =
         litt_list
         |> List.sort (fun (_, str1) (_, str2) -> Pervasives.compare str1 str2)
         |> List.rev_map (fun (b, _) -> if b then red else blue)
+        |> List.rev
       in
       let rec parcours_prefix bsp litt_list = match bsp with
         | R _ ->

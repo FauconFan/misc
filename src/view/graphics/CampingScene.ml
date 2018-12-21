@@ -53,21 +53,21 @@ and
   let (w, h) = config.dims in
   let text_check = new text ~center:true ["zone de texte"] (w - 150, 70) in
   let frame = new frameBSP config_base (0, 0) in
-  let fun_solve _ =  
+  let fun_solve _ =
     let bsp = Check.solve (frame#get_bsp ()) in
     Option.map_default
     (fun a -> (["Vous avez"; "appele Solve"] |> text_check#change_content; frame#change_bsp a) )
     ((["Solve : Il n'y"; "a pas de solution"; "possible"] |> text_check#change_content))
     bsp
   in
-  let fun_check_solve _ = 
+  let fun_check_solve _ =
     let b = Check.check_solve (frame#get_bsp ()) in
-    if b then text_check#change_content ["Il existe ";"une solution"] 
+    if b then text_check#change_content ["Il existe ";"une solution"]
     else text_check#change_content ["Il n'y a pas" ; "de solution"; "possible"]
   in
-  let fun_check _ = 
-    let b = Check.check_current (frame#get_bsp ()) in 
-    if b then text_check#change_content ["Il existe une";"solution via" ;"check_current"] 
+  let fun_check _ =
+    let b = Check.check_current (frame#get_bsp ()) in
+    if b then text_check#change_content ["Il existe une";"solution via" ;"check_current"]
     else text_check#change_content ["Il n'y a pas" ; "de solution"; "possible"]
   in
   let button_solve = new button (180,60) ["Solve"] (w - 230, 800) (fun _ -> GMessage.Apply fun_solve) in
@@ -81,6 +81,6 @@ and
   let button_white = new button_color None 70 (w - 175, 120) in
   let button_layer = new SLAC.layer [(button_solve :> SLAC.acomponent); (button_check :> SLAC.acomponent); (button_check_solve :> SLAC.acomponent); (button_menu :> SLAC.acomponent); (button_reset :> SLAC.acomponent); (button_quit :> SLAC.acomponent)] in
   let button_colors_layer = new SLAC.layer [(button_red :> SLAC.acomponent); (button_blue :> SLAC.acomponent); (button_white :> SLAC.acomponent)] in
-  let bsp_layer = new SLAC.layer [frame] in
-  let text_layer = new SLAC.layer [text_check] in
+  let bsp_layer = new SLAC.layer [(frame :> SLAC.acomponent)] in
+  let text_layer = new SLAC.layer [(text_check :> SLAC.acomponent)] in
   new SLAC.scene [|bsp_layer; button_layer; button_colors_layer; text_layer|]
