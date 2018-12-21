@@ -13,6 +13,12 @@ class frameBSP :
     inherit SLAC.acomponent
     val mutable bsp : bsp
 
+    method change_bsp : bsp -> unit
+
+    method get_bsp : unit -> bsp
+
+
+
     (** Get lines which need to be drawn *)
     method getLines : unit -> (coords * coords * color * int) list
 

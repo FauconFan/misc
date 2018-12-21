@@ -6,14 +6,16 @@ RESULT = mondrian
 MAIN = src/Main.ml
 
 ML_FILES = \
+		src/model/solveur/sat_solver.ml \
 		src/utils/CLIParser.ml \
 		src/utils/Option.ml \
+		src/utils/Combinatorics.ml \
 		src/model/Base.ml \
 		src/model/Bsp.ml \
+		src/model/FNC.ml \
 		src/controller/Interact.ml \
 		src/model/Check.ml \
 		src/model/Generation.ml \
-		src/model/solveur/sat_solver.ml \
 		src/view/Exemple_bsp.ml \
 		src/view/graphics/SLAC.ml \
 		src/view/graphics/component/Background.ml \

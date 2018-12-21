@@ -12,6 +12,12 @@ class text :
   object
     inherit SLAC.acomponent
 
+    (** content of the text box *)
+    val mutable content : string list
+
+    (** change content of text box *)
+    method change_content : string list -> unit
+
     (** Get lines which need to be drawn *)
     method getLines : unit -> (coords * coords * color * int) list
 
