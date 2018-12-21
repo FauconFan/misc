@@ -5,7 +5,7 @@ open Base
 
 class frameBSP config (posx, posy) =
   object (self)
-    inherit SLAC.acomponent (posx, posy) as super
+    inherit SLAC.acomponent (posx, posy) config.dims as super
 
     val mutable bsp = Generation.random_bsp_naive config
 

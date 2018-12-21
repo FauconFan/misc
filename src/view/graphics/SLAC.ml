@@ -26,7 +26,7 @@ and layer (list_compo : acomponent list) =
       List.rev_map (fun comp -> comp#click c) list_compo
   end
 
-and virtual acomponent (posx, posy) =
+and virtual acomponent (posx, posy) dim =
   object (self)
 
     val interline = 2
@@ -42,12 +42,14 @@ and virtual acomponent (posx, posy) =
         moveto x1 y1;
         lineto x2 y2;
       in
-      let d_string { coordinate = (coordx, coordy); color = c; font = font; size = s; content = content} =
+      let d_string { coordinate = (coordx, coordy); color = c; font = font; size = s; center=y; content = content} =
         set_color c;
         set_font font;
         set_text_size s;
         List.iteri (fun i a ->
-            moveto coordx (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline));
+            let coordy = (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline)) in
+            let coordx = if y then (coordx - (fst (text_size a)) / 2) else coordx in
+            moveto coordx coordy;
             draw_string a) content
       in
       let rects = self#getRects ()
@@ -65,7 +67,9 @@ and virtual acomponent (posx, posy) =
       |> List.iter d_string;
 
     method click ((x, y), c) : (scene GMessage.t) =
-      self#subClick ((x - posx, y - posy), c)
+      let new_d = (x - posx, y - posy) in
+      if bounds new_d dim then self#subClick (new_d, c)
+      else Nothing
 
     method virtual getStrings : unit -> string_content list
     method virtual getLines : unit -> (coords * coords * color * int) list

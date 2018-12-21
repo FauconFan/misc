@@ -20,6 +20,7 @@ ML_FILES = \
 		src/view/graphics/SLAC.ml \
 		src/view/graphics/component/Background.ml \
 		src/view/graphics/component/Button.ml \
+		src/view/graphics/component/ButtonColor.ml \
 		src/view/graphics/component/Cursor.ml \
 		src/view/graphics/component/Popup.ml \
 		src/view/graphics/component/Text.ml \
@@ -34,6 +35,10 @@ MLI_FILES = $(ML_FILES:%.ml=%.mli)
 
 SOURCES = $(MLI_FILES) $(ML_FILES) $(MAIN)
 
+.PHONY: all
+all: nc
+
+.PHONY: help
 help:
 	@printf "Useful commands for this Makefile:\\n"
 	@printf " - help : prints this message\\n"
@@ -50,11 +55,14 @@ help:
 
 $(RESULT): nc
 
+.PHONY: exec
 exec: $(RESULT)
 	./$(RESULT)
 
+.PHONY: fclean
 fclean: clean-all
 
+.PHONY: re
 re: fclean $(RESULT)
 
 include $(OCAMLMAKEFILE)

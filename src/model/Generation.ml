@@ -4,7 +4,7 @@ open Graphics
 (**
    Minimum size of square
 *)
-let min_size = 20
+let min_size = 15
 
 (**
    Accurate of the random fonction
@@ -28,20 +28,7 @@ let random var =
 let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) even : bsp =
   if depth == 0 then R None
   else if even then
-    begin
-      if max_width - (min_size * 2) - min_width <= 0 then R None
-      else
-        let coord = random (max_width - (min_size * 2) - min_width) + min_width + min_size in
-        let label = {coord = coord; color = None} in
-        let d_left = (min_width, coord)
-        and d_right = (coord, max_width)
-        and d_height = (min_height, max_height) in
-        let left = random_bsp_empty (depth - 1) d_left d_height (not even)
-        and right = random_bsp_empty (depth - 1) d_right d_height (not even) in
-        L (label, left, right)
-    end
-  else
-    begin
+  	begin
       if max_height - (min_size * 2) - min_height <= 0 then R None
       else
         let coord = random (max_height - (min_size * 2) - min_height) + min_height + min_size in
@@ -53,6 +40,20 @@ let rec random_bsp_empty depth (min_width, max_width) (min_height, max_height) e
         and right = random_bsp_empty (depth - 1) d_width d_right (not even) in
         L (label, left, right)
     end
+  else
+  	begin
+      if max_width - (min_size * 2) - min_width <= 0 then R None
+      else
+        let coord = random (max_width - (min_size * 2) - min_width) + min_width + min_size in
+        let label = {coord = coord; color = None} in
+        let d_left = (min_width, coord)
+        and d_right = (coord, max_width)
+        and d_height = (min_height, max_height) in
+        let left = random_bsp_empty (depth - 1) d_left d_height (not even)
+        and right = random_bsp_empty (depth - 1) d_right d_height (not even) in
+        L (label, left, right)
+    end
+    
 
 (*
    Prend un bsp et renvoie le même bsp avec les couleurs des lignes, quand il y en a.

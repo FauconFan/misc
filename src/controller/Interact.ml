@@ -15,6 +15,8 @@ let getAllColors () =
 (* Current drawing color *)
 let actual_color = ref None
 
+let getColorOpt () =
+  !actual_color
 
 (* Change the current color and returns it *)
 let changeColor c =
@@ -23,8 +25,17 @@ let changeColor c =
     | None -> None
     | Some (_, c) -> Some c
   in
-  Option.map_default set_color (white |> set_color) col;
   actual_color := col
+
+let changeColorOpt copt =
+  match copt with
+  | None -> actual_color := None
+  | Some c ->
+    begin
+      if List.exists (fun (_, col) -> c = col) table_of_color then actual_color := copt
+    end
+
+let last_button_pressed = ref false
 
 (*
    Fonction d'interaction avec l'utilisateur :
@@ -53,15 +64,20 @@ let interact () : (coords * color option) option =
     let event =
       wait_next_event [Button_down; Poll]
     in
-    if event.button then
+    if event.button && not !last_button_pressed then
       begin
+        last_button_pressed := true;
         let mouse = (event.mouse_x, event.mouse_y)
         and screen = (size_x (), size_y ()) in
         if bounds mouse screen
         then Some (mouse, !actual_color)
         else None
       end
-    else None
+    else
+      begin
+        if not event.button then last_button_pressed := false;
+        None
+      end
   in
   check_key_pressed ();
   check_button_pressed ()
