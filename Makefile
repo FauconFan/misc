@@ -9,6 +9,7 @@ ML_FILES = \
 		src/model/solveur/sat_solver.ml \
 		src/utils/CLIParser.ml \
 		src/utils/Option.ml \
+		src/utils/Combinatorics.ml \
 		src/model/Base.ml \
 		src/model/Bsp.ml \
 		src/model/FNC.ml \
