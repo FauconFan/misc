@@ -37,15 +37,16 @@ type string_content =
     color : color;
     font : string;
     size : int;
+    center : bool;
     content : string list;
   }
 (** type for string information, it is composed of :
-  - left down corner coordinate
-  - dimension of the area of string
-  - color of the string
-  - font of the string
-  - size of the string
-  - content of the string
+    - left down corner coordinate
+    - dimension of the area of string
+    - color of the string
+    - font of the string
+    - size of the string
+    - content of the string
 *)
 
 type label =
@@ -72,18 +73,19 @@ type bsp =
 
 val bounds : dim -> dim -> bool
 (**
-  Function thats return if a point is in a given dimension.
+   Function thats return if a point is in a given dimension.
 *)
 
 val diff_dim : int * int -> int * int -> int * int
 (**
-  Function that returns the absolute diff between two dimensions.
+   Function that returns the absolute diff between two dimensions.
 *)
 
 val construct_string_content :
   ?font:string ->
   ?color:color ->
+  ?center:bool->
   coords -> int -> string list -> string_content
 (**
-  Function that constructs a string_content with a default font.
+   Function that constructs a string_content with a default font.
 *)

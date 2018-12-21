@@ -56,7 +56,7 @@ and
   let config = {config_base with dims = (w + 300, h) } in
   GraphicsManager.changeConfig config;
   let (w, h) = config.dims in
-  let text_check = new text ["zone de texte"] (w - 250, 100) in
+  let text_check = new text ~center:true ["zone de texte"] (w - 150, 70) in
   let frame = new frameBSP config_base (0, 0) in
   let button_solve = new button (180,60) ["Solve"] (w - 230, 800) (fun _ -> GMessage.Apply (fun _ -> print_endline "solve")) in
   let button_check_solve = new button (180,60) ["Check_solve"] (w - 230, 700) (fun _ -> GMessage.Apply (fun _ -> print_endline "check_solve")) in

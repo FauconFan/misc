@@ -42,13 +42,15 @@ and virtual acomponent (posx, posy) dim =
         moveto x1 y1;
         lineto x2 y2;
       in
-      let d_string { coordinate = (coordx, coordy); color = c; font = font; size = s; content = content} =
+      let d_string { coordinate = (coordx, coordy); color = c; font = font; size = s; center=y; content = content} =
         set_color c;
         set_font font;
         set_text_size s;
         List.iteri (fun i a ->
-        moveto coordx (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline));
-        draw_string a) content
+            let coordy = (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline)) in
+            let coordx = if y then (coordx - (fst (text_size a)) / 2) else coordx in
+            moveto coordx coordy;
+            draw_string a) content
       in
       let rects = self#getRects ()
       and lines = self#getLines ()

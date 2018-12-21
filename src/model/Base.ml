@@ -30,6 +30,7 @@ type string_content =
     color : color;
     font : string;
     size : int;
+    center : bool;
     content : string list;
   }
 
@@ -72,11 +73,13 @@ let diff_dim (x1, y1) (x2, y2) = (abs (x1 - x2), abs (y1 - y2))
 let construct_string_content
     ?font:(font = default_font)
     ?color:(color = black)
+    ?center:(center = false)
     coord size content =
   {
     coordinate = coord;
     color = color;
     font = font;
     size = size;
+    center = center;
     content = content;
   }

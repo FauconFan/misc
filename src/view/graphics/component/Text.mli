@@ -2,10 +2,11 @@ open Base
 open Graphics
 
 (**
-  A text component for graphic's view
+   A text component for graphic's view
 *)
 
 class text :
+  ?center:bool ->
   string list ->
   coords ->
   object
