@@ -5,7 +5,7 @@ open Graphics
 exception Wrong_Construct of string
 
 let minRatio = 0.5
-let maxRatio = 1.5
+let maxRatio = 2.
 
 let getRatios config : float * float =
   let ratW = (float_of_int (size_x ())) /. (float_of_int (fst config.dims))
@@ -30,7 +30,8 @@ class scene (layers_array : layer array) =
 
     method draw config : unit =
       let draw_problem str =
-        moveto 50 50;
+        let (dimx, dimy) = (Graphics.size_x (), Graphics.size_y ()) in
+        moveto (dimx / 2-20) (dimy / 2);
         draw_string str
       in
       match isCritical config with
