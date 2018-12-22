@@ -14,8 +14,9 @@ class frameBSP config (posx, posy) =
 
     method get_bsp () : bsp = bsp
 
-    method getLines () : (coords * coords * color * int) list =
-      let (dim_x, dim_y) = config.dims in
+
+    method! getLines () : (coords * coords * color * int) list =
+      let dim_x, dim_y = config.dims in
       let ligne = [((posx, posy), (posx, posy + dim_y), black, 3); ((posx, posy), (posx + dim_x, posy), black, 3); ((posx, posy + dim_y), (posx + dim_x, posy + dim_y), black, 3); ((posx + dim_x, posy), (posx + dim_x, posy + dim_y), black, 3)] in
       let lines_builder l ((co1, co2), c) =
         let change_color c =
@@ -34,7 +35,7 @@ class frameBSP config (posx, posy) =
       |> Bsp.lines_from_bsp config
       |> List.fold_left lines_builder ligne
 
-    method getRects () : (coords * dim * color) list =
+    method! getRects () : (coords * dim * color) list =
       let rects_builder ((co, dim), c) =
         (co, dim, Option.default white c)
       in
@@ -42,9 +43,11 @@ class frameBSP config (posx, posy) =
       |> Bsp.rectangles_from_bsp config
       |> List.rev_map rects_builder
 
-    method subClick c =
-      bsp <- Bsp.change_rectangle_color c bsp;
+    method subClick uevent =
+      begin
+        match uevent with
+        | Click (co, c) -> bsp <- Bsp.change_rectangle_color (co, c) bsp
+        | _ -> ()
+      end;
       Nothing
-
-    method getStrings () = []
   end

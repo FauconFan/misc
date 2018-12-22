@@ -15,18 +15,13 @@ class button ?color_font:(cf = rgb 200 200 200) ?default_padding:(df = 2) dim co
     method setPadding (p : int) =
       padding <- p
 
-    method getLines () : (coords * coords * color * int) list = []
-
-    method getRects () : (coords * dim * color) list =
+    method! getRects () : (coords * dim * color) list =
       let gray = rgb 109 110 112 in
       let black_grayed = cf in
       let max_dim = (fst dim + 2 * padding, snd dim + (2 * padding)) in
       ((-padding, -padding), max_dim, gray):: ((0, 0), dim, black_grayed) :: []
 
-    method subClick (c : (coords * color option)) : (SLAC.scene GMessage.t) =
-      callback c
-
-    method getStrings () =
+    method! getStrings () =
       let padding_str = 10 in
       let size = 30 in
       let middle_h =
@@ -36,5 +31,9 @@ class button ?color_font:(cf = rgb 200 200 200) ?default_padding:(df = 2) dim co
       in
       let cont = construct_string_content (padding_str, middle_h) size content in
       [cont]
+
+    method subClick uevent : (SLAC.scene GMessage.t) = match uevent with
+      | Click (co, c) -> callback (co, c)
+      | _ -> Nothing
 
   end

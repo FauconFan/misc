@@ -17,25 +17,30 @@ class scene :
   layer array ->
   object
     method draw : config -> unit
-    method click : config -> (coords * color option) -> (scene GMessage.t) list
+    method click : config -> uevent -> (scene GMessage.t) list
   end
 
 and layer :
   acomponent list ->
   object
+
     method draw : config -> unit
-    method click : config -> (coords * color option) -> (scene GMessage.t) list
+    method click : config -> uevent -> (scene GMessage.t) list
+
   end
 
 and virtual acomponent :
   coords ->
   dim ->
   object
-    method draw : config -> unit
-    method click : config -> (coords * color option) -> (scene GMessage.t)
 
-    method virtual getStrings : unit -> string_content list
-    method virtual getLines : unit -> (coords * coords * color * int) list
-    method virtual getRects : unit -> (coords * dim * color) list
-    method virtual subClick : (coords * color option) -> (scene GMessage.t)
+    method draw : config -> unit
+    method click : config -> uevent -> (scene GMessage.t)
+
+
+    method getStrings : unit -> string_content list
+    method getLines : unit -> (coords * coords * color * int) list
+    method getRects : unit -> (coords * dim * color) list
+
+    method virtual subClick : uevent -> (scene GMessage.t)
   end

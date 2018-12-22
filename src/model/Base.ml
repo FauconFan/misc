@@ -86,3 +86,19 @@ let construct_string_content
     center = center;
     content = content;
   }
+
+type uevent =
+  | Click of coords * color option
+  | Motion of coords * color option
+
+let getUEventData u = match u with
+  | Click (co, c) -> (co, c)
+  | Motion (co, c) -> (co, c)
+
+let getUEventCoords u = match u with
+  | Click (co, _) -> co
+  | Motion (co, _) -> co
+
+let shiftUevent u co = match u with
+  | Click (_, c) -> Click (co, c)
+  | Motion (_, c) -> Motion (co, c)

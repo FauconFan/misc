@@ -89,3 +89,11 @@ val construct_string_content :
 (**
    Function that constructs a string_content with a default font.
 *)
+
+type uevent =
+  | Click of coords * color option
+  | Motion of coords * color option
+
+val getUEventData : uevent -> coords * color option
+val getUEventCoords : uevent -> coords
+val shiftUevent : uevent -> coords -> uevent
