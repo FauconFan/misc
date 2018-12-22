@@ -35,7 +35,6 @@ type string_content =
   {
     coordinate : coords;
     color : color;
-    font : string;
     size : int;
     center : bool;
     content : string list;
@@ -55,7 +54,9 @@ type label =
     color : color option;
   }
 
-val default_font : string
+val font_format : (int -> string, unit, string) format
+
+val construct_font : int -> string
 
 (** Label given by the subjet :
     - position of the line. Interpretation depends of the position in the bsp
@@ -82,7 +83,6 @@ val diff_dim : int * int -> int * int -> int * int
 *)
 
 val construct_string_content :
-  ?font:string ->
   ?color:color ->
   ?center:bool->
   coords -> int -> string list -> string_content

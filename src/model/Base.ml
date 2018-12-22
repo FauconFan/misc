@@ -28,7 +28,6 @@ type string_content =
   {
     coordinate : coords;
     color : color;
-    font : string;
     size : int;
     center : bool;
     content : string list;
@@ -50,7 +49,13 @@ type bsp =
 (*
   The default font used in the all program.
 *)
-let default_font = "-*-fixed-medium-r-semicondensed--30-*-*-*-*-*-iso8859-1"
+let (font_format : (int -> string, unit, string) format) = "-*-fixed-medium-r-semicondensed--%d-*-*-*-*-*-iso8859-1"
+
+(*
+  construct_font return a fresh string based on size
+*)
+let construct_font size =
+  Printf.sprintf font_format size
 
 (*
    Fonction prenant deux dimensions en arguments (x,y) et (width, height) et renvoyant si la dimension
@@ -71,14 +76,12 @@ let diff_dim (x1, y1) (x2, y2) = (abs (x1 - x2), abs (y1 - y2))
   Fonction constructeur de string_content
 *)
 let construct_string_content
-    ?font:(font = default_font)
     ?color:(color = black)
     ?center:(center = false)
     coord size content =
   {
     coordinate = coord;
     color = color;
-    font = font;
     size = size;
     center = center;
     content = content;

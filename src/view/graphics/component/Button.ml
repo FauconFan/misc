@@ -3,7 +3,7 @@ open Graphics
 open GMessage
 
 
-class button ?color_font:(cf = rgb 200 200 200) ?default_padding:(df = 1) dim content coord callback =
+class button ?color_font:(cf = rgb 200 200 200) ?default_padding:(df = 2) dim content coord callback =
   object (self)
     inherit SLAC.acomponent coord dim as super
 
@@ -23,12 +23,13 @@ class button ?color_font:(cf = rgb 200 200 200) ?default_padding:(df = 1) dim co
 
     method! getStrings () =
       let padding_str = 10 in
+      let size = 30 in
       let middle_h =
         let half_h = snd dim / 2 in
-        let size_content = List.fold_left (fun a b -> set_font default_font; a + snd (text_size b) + 2) 0 content - 2 in
+        let size_content = List.fold_left (fun a b -> set_font (construct_font size); a + snd (text_size b) + 2) 0 content - 2 in
         half_h + (size_content / 2)
       in
-      let cont = construct_string_content (padding_str, middle_h) 30 content in
+      let cont = construct_string_content (padding_str, middle_h) size content in
       [cont]
 
     method subClick uevent : (SLAC.scene GMessage.t) = match uevent with

@@ -16,23 +16,27 @@ exception Wrong_Construct of string
 class scene :
   layer array ->
   object
-    method draw : unit -> unit
-    method click : uevent -> (scene GMessage.t) list
+    method draw : config -> unit
+    method click : config -> uevent -> (scene GMessage.t) list
   end
 
 and layer :
   acomponent list ->
   object
-    method draw : unit -> unit
-    method click : uevent -> (scene GMessage.t) list
+
+    method draw : config -> unit
+    method click : config -> uevent -> (scene GMessage.t) list
+
   end
 
 and virtual acomponent :
   coords ->
   dim ->
   object
-    method draw : unit -> unit
-    method click : uevent -> (scene GMessage.t)
+
+    method draw : config -> unit
+    method click : config -> uevent -> (scene GMessage.t)
+
 
     method getStrings : unit -> string_content list
     method getLines : unit -> (coords * coords * color * int) list
