@@ -17,9 +17,6 @@ class button :
 
     val mutable padding : int
 
-    (** Get lines which need to be drawn *)
-    method getLines : unit -> (coords * coords * color * int) list
-
     (** Get rects which need to be drawn *)
     method getRects : unit -> (coords * dim * color) list
 

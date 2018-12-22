@@ -34,8 +34,9 @@ and virtual acomponent :
     method draw : unit -> unit
     method click : uevent -> (scene GMessage.t)
 
-    method virtual getStrings : unit -> string_content list
-    method virtual getLines : unit -> (coords * coords * color * int) list
-    method virtual getRects : unit -> (coords * dim * color) list
+    method getStrings : unit -> string_content list
+    method getLines : unit -> (coords * coords * color * int) list
+    method getRects : unit -> (coords * dim * color) list
+
     method virtual subClick : uevent -> (scene GMessage.t)
   end

@@ -75,8 +75,9 @@ and virtual acomponent (posx, posy) dim =
       if bounds new_d dim then self#subClick @@ shiftUevent uevent new_d
       else Nothing
 
-    method virtual getStrings : unit -> string_content list
-    method virtual getLines : unit -> (coords * coords * color * int) list
-    method virtual getRects : unit -> (coords * dim * color) list
+    method getStrings () : string_content list = []
+    method getLines () : (coords * coords * color * int) list = []
+    method getRects () : (coords * dim * color) list = []
+
     method virtual subClick : uevent -> scene GMessage.t
   end

@@ -18,12 +18,6 @@ class text :
     (** change content of text box *)
     method change_content : string list -> unit
 
-    (** Get lines which need to be drawn *)
-    method getLines : unit -> (coords * coords * color * int) list
-
-    (** Get rects which need to be drawn *)
-    method getRects : unit -> (coords * dim * color) list
-
     (** action when we click on the frameBSP -> change color of a rectangle *)
     method subClick : uevent -> (SLAC.scene GMessage.t)
 
