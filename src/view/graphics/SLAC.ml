@@ -4,16 +4,48 @@ open Graphics
 
 exception Wrong_Construct of string
 
+let minRatio = 0.5
+let maxRatio = 1.5
+
+let getRatios config : float * float =
+  let ratW = (float_of_int (size_x ())) /. (float_of_int (fst config.dims))
+  and ratH = (float_of_int (size_y ())) /. (float_of_int (snd config.dims)) in
+  let minS = Pervasives.min ratW ratH
+  and maxS = Pervasives.max ratW ratH
+  in
+  (minS, maxS)
+
+let isCritical config : bool * bool =
+  let (minS, maxS) = getRatios config in
+  (minS < minRatio, maxS > maxRatio)
+
+let getMinRatio config =
+  fst @@ getRatios config
+
+let getMaxRatio config =
+  snd @@ getRatios config
 
 class scene (layers_array : layer array) =
   object (self)
 
     method draw config : unit =
-      Array.iter (fun lay -> lay#draw config) layers_array
+      let draw_problem str =
+        moveto 50 50;
+        draw_string str
+      in
+      match isCritical config with
+      | (true, _) -> draw_problem "Too small"
+      | (_, true) ->  draw_problem "Too big"
+      | (false, false) -> Array.iter (fun lay -> lay#draw config) layers_array
 
     method click config c : (scene GMessage.t) list =
-      let layers_messages = Array.map (fun lay -> (lay#click config c)) layers_array in
-      List.flatten @@ Array.to_list layers_messages
+      match isCritical config with
+      | (false, false) ->
+        begin
+          let layers_messages = Array.map (fun lay -> (lay#click config c)) layers_array in
+          List.flatten @@ Array.to_list layers_messages
+        end
+      | (_, _) -> []
   end
 
 and layer (list_compo : acomponent list) =
@@ -53,12 +85,12 @@ and virtual acomponent (posx, posy) dim =
         moveto x1 y1;
         lineto x2 y2;
       in
-      let d_string { coordinate = (coordx, coordy); color = c; font = font; size = s; center=y; content = content} =
+      let d_string { coordinate = (coordx, coordy); color = c; size = s; center = y; content = content} =
+        let s = int_of_float @@ ((float_of_int s) *. (getMinRatio config)) in
         set_color c;
-        set_font font;
-        set_text_size s;
+        set_font (construct_font s);
         List.iteri (fun i a ->
-            let coordy = (coordy - (i + 1) * ((snd (text_size a)) + if(i = 0) then 0 else interline)) in
+            let coordy = (coordy - (i + 1) * ((snd (text_size a)) + if (i = 0) then 0 else interline)) in
             let coordx = if y then (coordx - (fst (text_size a)) / 2) else coordx in
             moveto coordx coordy;
             draw_string a) content
