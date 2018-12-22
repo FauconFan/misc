@@ -69,13 +69,14 @@ and virtual acomponent (posx, posy) dim =
       |> List.rev
       |> List.iter d_string;
 
-    method click ((x, y), c) : (scene GMessage.t) =
+    method click uevent : (scene GMessage.t) =
+      let (x, y) = getUEventCoords uevent in
       let new_d = (x - posx, y - posy) in
-      if bounds new_d dim then self#subClick (new_d, c)
+      if bounds new_d dim then self#subClick @@ shiftUevent uevent new_d
       else Nothing
 
     method virtual getStrings : unit -> string_content list
     method virtual getLines : unit -> (coords * coords * color * int) list
     method virtual getRects : unit -> (coords * dim * color) list
-    method virtual subClick : (coords * color option) -> scene GMessage.t
+    method virtual subClick : uevent -> scene GMessage.t
   end

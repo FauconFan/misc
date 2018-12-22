@@ -19,7 +19,7 @@ class cursor :
     val width_cursor : int
 
     (** update the value *)
-    method private update_value : unit -> int 
+    method private update_value : unit -> int
 
     (** Get lines which need to be drawn *)
     method getLines : unit -> (coords * coords * color * int) list
@@ -28,9 +28,9 @@ class cursor :
     method getRects : unit -> (coords * dim * color) list
 
     (** action when we click on the cursor *)
-    method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
+    method subClick : uevent -> (SLAC.scene GMessage.t)
 
-    (** Get strings which need to be drawn *)    
+    (** Get strings which need to be drawn *)
     method getStrings : unit -> string_content list
 
   end

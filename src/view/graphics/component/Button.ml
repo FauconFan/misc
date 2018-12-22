@@ -23,8 +23,9 @@ class button ?color_font:(cf = rgb 200 200 200) ?default_padding:(df = 1) dim co
       let max_dim = (fst dim + 2 * padding, snd dim + (2 * padding)) in
       ((-padding, -padding), max_dim, gray):: ((0, 0), dim, black_grayed) :: []
 
-    method subClick (c : (coords * color option)) : (SLAC.scene GMessage.t) =
-      callback c
+    method subClick uevent : (SLAC.scene GMessage.t) = match uevent with
+      | Click (co, c) -> callback (co, c)
+      | _ -> Nothing
 
     method getStrings () =
       let padding_str = 10 in

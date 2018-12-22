@@ -11,7 +11,7 @@ class background color dim coord =
     method getRects () : (coords * dim * color) list =
       [((0,0), dim, color)]
 
-    method subClick (c : (coords * color option)) : (SLAC.scene GMessage.t) =
+    method subClick (c) : (SLAC.scene GMessage.t) =
       GMessage.Nothing
 
     method getStrings () = []

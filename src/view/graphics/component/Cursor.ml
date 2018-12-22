@@ -28,9 +28,10 @@ class cursor dim min max value coord coord_str =
       let rect = (coord_rect, dim_rect, blue) in
       [rect]
 
-    method subClick (coords, color) : (SLAC.scene GMessage.t) =
+    method subClick uevent : (SLAC.scene GMessage.t) =
+      let coords = getUEventCoords uevent in
       pos <- Pervasives.min (Pervasives.max (fst coords) space_around) (width_cursor - space_around);
-      value := self#update_value();
+      value := self#update_value ();
       Nothing
 
     method getStrings () =

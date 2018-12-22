@@ -18,16 +18,21 @@ class popup content button dim coord =
       let content = ((padding, padding), (fst dim - (padding * 2), snd dim - (padding * 2)), beige) in
       contour :: content :: buttons
 
-    method subClick ((coords, color) as click) : (SLAC.scene GMessage.t) =
-      let rec aux l =
-        match l with
-        | [] -> Nothing
-        | h :: q ->
-          let message = h#subClick click in
-          if message = Nothing then aux q
-          else message
-      in
-      aux button
+    method subClick uevent : (SLAC.scene GMessage.t) =
+      match uevent with
+      | Click (_, _) as click ->
+        begin
+          let rec aux l =
+            match l with
+            | [] -> Nothing
+            | h :: q ->
+              let message = h#subClick click in
+              if message = Nothing then aux q
+              else message
+          in
+          aux button
+        end
+      | _ -> Nothing
 
     method getStrings () =
       let padding = 10 in

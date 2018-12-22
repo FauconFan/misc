@@ -42,8 +42,12 @@ class frameBSP config (posx, posy) =
       |> Bsp.rectangles_from_bsp config
       |> List.rev_map rects_builder
 
-    method subClick c =
-      bsp <- Bsp.change_rectangle_color c bsp;
+    method subClick uevent =
+      begin
+        match uevent with
+        | Click (co, c) -> bsp <- Bsp.change_rectangle_color (co, c) bsp
+        | _ -> ()
+      end;
       Nothing
 
     method getStrings () = []
