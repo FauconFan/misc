@@ -7,7 +7,7 @@ type litt = bool * string
 exception Unsat
 
 let bsp_to_fnc (bsp : bsp) : litt list list =
-  let hash = Hashtbl.create 13 in
+  let hash = Hashtbl.create 256 in
   let rec aux bsp even prefix res =
     match bsp with
     | R c ->

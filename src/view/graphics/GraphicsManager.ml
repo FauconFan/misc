@@ -61,7 +61,6 @@ let run () : unit =
     incr fps;
     if Unix.gettimeofday () -. !second >= 1. then
       begin
-        print_endline @@ Printf.sprintf "FPS : %d" !fps;
         fps := 0;
         second := !second +. 1.;
       end

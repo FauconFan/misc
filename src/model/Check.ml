@@ -16,13 +16,10 @@ module LittSolver = Sat_solver.Make(String)
 
 let check_solve (bsp : bsp) : bool =
   try
-    Printf.printf "before bsp_to_fnc\n";
     let fnc = FNC.bsp_to_fnc bsp in
-    Printf.printf "after bsp_to_fnc %d\n" (List.fold_left (fun a b -> List.length b + a) 0 fnc);
     let res = Option.is_some (LittSolver.solve fnc) in
-    Printf.printf "afer solver\n";
     res
-  with FNC.Unsat -> print_endline "UNSAT"; false
+  with FNC.Unsat -> false
 
 let solve (bsp : bsp) : bsp option =
   try
@@ -52,4 +49,4 @@ let solve (bsp : bsp) : bsp option =
       bsp
     in
     Option.map apply_to_fnd fnd_opt
-  with FNC.Unsat -> print_endline "UNSAT"; None
+  with FNC.Unsat -> None
