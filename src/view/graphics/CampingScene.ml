@@ -31,7 +31,7 @@ and
   let depth = ref config.depth in
   let width = ref w in
   let height = ref h in
-  let button_launch = new button (200,70) ["Jouer"] (w/2 - 100, 800) (fun _ -> GMessage.Update (fun () -> play_game {dims = (!width ,!height); depth = !depth})) in
+  let button_launch = new button (200,70) ["Jouer"] (w/2 - 100, 800) (fun _ -> GMessage.Update (fun () -> play_game config {dims = (!width ,!height); depth = !depth})) in
   let button_param = new button (200,70) ["Parametres"] (w/2 - 100, 650) (fun _ -> GMessage.Update (fun () -> param config)) in
   let button_quit = new button (200,70) ["Quitter"] (w/2 - 100, 100) (fun _ -> GMessage.Update (fun () -> raise Exit)) in
   let button_layer = new SLAC.layer [(button_launch :> SLAC.acomponent); (button_param :> SLAC.acomponent); (button_quit :> SLAC.acomponent)] in
@@ -46,7 +46,7 @@ and
   new SLAC.scene [|background_layer; button_layer; cursor_layer; text_layer|]
 
 and
-  play_game config_base =
+  play_game config_menu config_base =
   let (w, h) = config_base.dims in
   let config = {config_base with dims = (w + 300, h) } in
   GraphicsManager.changeConfig config;
@@ -73,8 +73,8 @@ and
   let button_solve = new button (180,60) ["Solve"] (w - 230, 800) (fun _ -> GMessage.Apply fun_solve) in
   let button_check_solve = new button (180,60) ["Check_solve"] (w - 230, 700) (fun _ -> GMessage.Apply fun_check_solve) in
   let button_check = new button (180,60) ["Check"] (w - 230, 600) (fun _ -> GMessage.Apply fun_check) in
-  let button_reset = new button (180,60) ["Reset Game"] (w - 230, 500) (fun _ -> GMessage.Update (fun () -> play_game config_base)) in
-  let button_menu = new button (180,60) ["Menu"] (w - 230, 400) (fun _ -> GMessage.Update (fun () -> menu config_base)) in
+  let button_reset = new button (180,60) ["Reset Game"] (w - 230, 500) (fun _ -> GMessage.Update (fun () -> play_game config_menu config_base)) in
+  let button_menu = new button (180,60) ["Menu"] (w - 230, 400) (fun _ -> GMessage.Update (fun () -> menu config_menu)) in
   let button_quit = new button (180,60) ["Quit"] (w - 230, 300) (fun _ -> GMessage.Update (fun () -> raise Exit)) in
   let button_red = new button_color (Some red) 70 (w - 215, 200) in
   let button_blue = new button_color (Some blue) 70 (w - 135, 200) in
