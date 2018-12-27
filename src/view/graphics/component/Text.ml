@@ -14,7 +14,7 @@ class text ?center:(center = false) content coord =
     method! getStrings () =
       let padding = 10 in
       let coord = (padding, padding) in
-      let cont = construct_string_content ~center:center coord 30 content in
+      let cont = construct_string_content ~center:center coord GraphicsConstant.size_str content in
       [cont]
 
     method subClick c =

@@ -3,8 +3,6 @@ open Graphics
 open GMessage
 open Base
 
-let fps_objective = 60.
-
 let scene = ref None
 let config = ref None
 
@@ -57,7 +55,7 @@ let run () : unit =
     synchronize ();
     let end_turn = Unix.gettimeofday () in
     let ecart = end_turn -. begin_turn in
-    Unix.sleepf ((1. /. fps_objective) -. ecart);
+    Unix.sleepf ((1. /. GraphicsConstant.fps_objective) -. ecart);
     incr fps;
     if Unix.gettimeofday () -. !second >= 1. then
       begin

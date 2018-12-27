@@ -2,7 +2,7 @@ open Base
 open Graphics
 
 (**
-  A cursor component for graphic's view
+   A cursor component for graphic's view
 *)
 
 class cursor :
@@ -15,7 +15,6 @@ class cursor :
   object
     inherit SLAC.acomponent
     val mutable pos : int
-    val space_around : int
     val width_cursor : int
 
     (** update the value *)

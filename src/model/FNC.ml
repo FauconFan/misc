@@ -59,4 +59,4 @@ let bsp_to_fnc (bsp : bsp) : litt list list =
     |> aux_color rects_of_line (n + 2) red
     |> aux_color rects_of_line (n + 2) blue
   in
-  aux bsp false "" []
+  aux bsp ModelConstant.first_line_vertical "" []

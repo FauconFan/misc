@@ -11,17 +11,15 @@ class popup content button dim coord =
 
     method! getRects () : (coords * dim * color) list =
       let buttons = List.fold_left (fun a b -> a @ (b#getRects())) [] button in
-      let gray = rgb 105 109 110 in
-      let beige = rgb 245 246 245 in
       let padding = 2 in
-      let contour = ((0,0), dim, gray) in
-      let content = ((padding, padding), (fst dim - (padding * 2), snd dim - (padding * 2)), beige) in
+      let contour = ((0,0), dim, GraphicsConstant.gray) in
+      let content = ((padding, padding), (fst dim - (padding * 2), snd dim - (padding * 2)), GraphicsConstant.light_gray) in
       contour :: content :: buttons
 
     method! getStrings () =
       let padding = 10 in
       let buttons_str = List.fold_left (fun a b -> a @ (b#getStrings())) [] button in
-      let cont = construct_string_content (padding, snd dim) 30 content in
+      let cont = construct_string_content (padding, snd dim) GraphicsConstant.size_str content in
       cont :: buttons_str
 
     method subClick uevent : (SLAC.scene GMessage.t) =

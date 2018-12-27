@@ -10,6 +10,7 @@ ML_FILES = \
 		src/utils/CLIParser.ml \
 		src/utils/Option.ml \
 		src/utils/Combinatorics.ml \
+		src/model/ModelConstant.ml \
 		src/model/Base.ml \
 		src/model/Bsp.ml \
 		src/model/FNC.ml \
@@ -17,6 +18,7 @@ ML_FILES = \
 		src/model/Check.ml \
 		src/model/Generation.ml \
 		src/view/Exemple_bsp.ml \
+		src/view/graphics/GraphicsConstant.ml \
 		src/view/graphics/SLAC.ml \
 		src/view/graphics/component/Background.ml \
 		src/view/graphics/component/Button.ml \

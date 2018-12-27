@@ -5,12 +5,12 @@ open Graphics
 let check_current (bsp : bsp) =
   let rec aux bsp even =
     match bsp with
-    | R _ -> true
+    | R c -> Option.is_some c
     | L (lab, bsp_g, bsp_d) ->
       if (not (aux bsp_g (not even)) || not (aux bsp_d (not even)))
       then false
       else Option.map_default (fun c -> (Bsp.color_of_line bsp_g bsp_d even) = c) true lab.color
-  in aux bsp false
+  in aux bsp ModelConstant.first_line_vertical
 
 module LittSolver = Sat_solver.Make(String)
 

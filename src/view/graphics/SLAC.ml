@@ -4,9 +4,6 @@ open Graphics
 
 exception Wrong_Construct of string
 
-let minRatio = 0.5
-let maxRatio = 2.
-
 let getRatios config : float * float =
   let ratW = (float_of_int (size_x ())) /. (float_of_int (fst config.dims))
   and ratH = (float_of_int (size_y ())) /. (float_of_int (snd config.dims)) in
@@ -17,7 +14,7 @@ let getRatios config : float * float =
 
 let isCritical config : bool * bool =
   let (minS, maxS) = getRatios config in
-  (minS < minRatio, maxS > maxRatio)
+  (minS < GraphicsConstant.minRatio, maxS > GraphicsConstant.maxRatio)
 
 let getMinRatio config =
   fst @@ getRatios config
@@ -62,8 +59,6 @@ and layer (list_compo : acomponent list) =
 and virtual acomponent (posx, posy) dim =
   object (self)
 
-    val interline = 2
-
     method draw (config : config) : unit =
       let f_zoom x max1 max2 = (* x / max1 = x' / max2 *)
         let (x, max1, max2) = (float_of_int x, float_of_int max1, float_of_int max2) in
@@ -91,7 +86,7 @@ and virtual acomponent (posx, posy) dim =
         set_color c;
         set_font (construct_font s);
         List.iteri (fun i a ->
-            let coordy = (coordy - (i + 1) * ((snd (text_size a)) + if (i = 0) then 0 else interline)) in
+            let coordy = (coordy - (i + 1) * ((snd (text_size a)) + if (i = 0) then 0 else GraphicsConstant.interline)) in
             let coordx = if y then (coordx - (fst (text_size a)) / 2) else coordx in
             moveto coordx coordy;
             draw_string a) content

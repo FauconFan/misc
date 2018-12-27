@@ -23,7 +23,7 @@ let change_rectangle_color (coords, color) bsp =
         label
         bsp_g
         bsp_d
-  in parcours false coords bsp
+  in parcours ModelConstant.first_line_vertical coords bsp
 
 (*
   On renvoie la couleur correspondant à la différence entre i et j :
@@ -110,7 +110,7 @@ let lines_from_bsp (config : config) (bsp:bsp) : (line * color option) list =
         let l_left = aux (line :: l) (not even) bsp_g dim_max_left min_dim in
         aux l_left (not even) bsp_d max_dim dim_min_right
       end
-  in aux [] false bsp config.dims (0,0)
+  in aux [] ModelConstant.first_line_vertical bsp config.dims (0,0)
 
 let rectangles_from_bsp (config : config) (bsp : bsp) : (rect * color option) list =
   let rec aux res even bsp max_dim min_dim =
@@ -123,17 +123,4 @@ let rectangles_from_bsp (config : config) (bsp : bsp) : (rect * color option) li
         let l_left = aux res (not even) bsp_g dim_max_left min_dim in
         aux l_left (not even) bsp_d max_dim dim_min_right
       end
-  in aux [] false bsp config.dims (0,0)
-
-
-(* let bsp_to_prop (bsp : bsp) : FNC.prop =
-   let hash_rect = Hashtbl.create 13 in
-   let res = ref None in
-   let add_in_res prop =
-    let f prop1 prop2 = FNC.And (prop1, prop2) in
-    res := Some (Option.map_default (f prop) prop !res)
-   in
-   let bsp_to_prop_recu bsp even =
-    let core bsp_g bsp_d
-    in
-    bsp_to_prop_recu bsp false *)
+  in aux [] ModelConstant.first_line_vertical bsp config.dims (0,0)

@@ -17,7 +17,7 @@ class frameBSP config (posx, posy) =
 
     method! getLines () : (coords * coords * color * int) list =
       let dim_x, dim_y = config.dims in
-      let ligne = [((posx, posy), (posx, posy + dim_y), black, 3); ((posx, posy), (posx + dim_x, posy), black, 3); ((posx, posy + dim_y), (posx + dim_x, posy + dim_y), black, 3); ((posx + dim_x, posy), (posx + dim_x, posy + dim_y), black, 3)] in
+      let ligne = [((posx, posy), (posx, posy + dim_y), black, GraphicsConstant.widthline); ((posx, posy), (posx + dim_x, posy), black, GraphicsConstant.widthline); ((posx, posy + dim_y), (posx + dim_x, posy + dim_y), black, GraphicsConstant.widthline); ((posx + dim_x, posy), (posx + dim_x, posy + dim_y), black, GraphicsConstant.widthline)] in
       let lines_builder l ((co1, co2), c) =
         let change_color c =
           if c = red then rgb 255 120 120
@@ -29,7 +29,7 @@ class frameBSP config (posx, posy) =
           else c
         in
         let real_color = Option.map_default change_color black c in
-        (co1, co2, real_color, 3) :: l
+        (co1, co2, real_color, GraphicsConstant.widthline) :: l
       in
       bsp
       |> Bsp.lines_from_bsp config
