@@ -55,6 +55,9 @@ type label =
   }
 
 val font_format : (int -> string, unit, string) format
+(**
+   font format for a graphic's string
+*)
 
 val construct_font : int -> string
 
@@ -93,7 +96,21 @@ val construct_string_content :
 type uevent =
   | Click of coords * color option
   | Motion of coords * color option
+  (**
+     type for any graphic's action of the user
+  *)
 
 val getUEventData : uevent -> coords * color option
+(**
+   Get the data of the uevent, whithout knowing its type
+*)
+
 val getUEventCoords : uevent -> coords
+(**
+   Get the coordinate of the uevent, whithout knowing its type
+*)
+
 val shiftUevent : uevent -> coords -> uevent
+(**
+   change coordinate of the uevent, whithout knowing its type
+*)

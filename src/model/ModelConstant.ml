@@ -1,5 +1,5 @@
 (**
-  Boolean explains if the first line is a vertical line or a horizontal one.
+   Boolean explains if the first line is a vertical line or a horizontal one.
 *)
 let first_line_vertical = false
 
