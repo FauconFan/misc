@@ -6,6 +6,8 @@ let () =
 
   Random.self_init ();
 
-  GraphicsManager.init config (CampingScene.menu config);
-  GraphicsManager.run ();
-  GraphicsManager.close ()
+  try 
+    GraphicsManager.init config (CampingScene.menu config config);
+    GraphicsManager.run ();
+  with Graphics.Graphic_failure _ -> GraphicsManager.close ();
+    GraphicsManager.close ()

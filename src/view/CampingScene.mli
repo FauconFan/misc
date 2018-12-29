@@ -4,8 +4,8 @@
 open Base
 
 (**
-  File containing all difference views. All views are internal connected.
+   File containing all difference views. All views are internal connected.
 *)
 
-val menu : config -> SLAC.scene
+val menu : config -> config -> SLAC.scene
 (** Menu's view *)
