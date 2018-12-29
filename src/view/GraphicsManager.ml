@@ -3,15 +3,14 @@ open Graphics
 open GMessage
 open Base
 
-let fps_objective = 60.
-
 let scene = ref None
 let config = ref None
 
 let init (conf : config) (sce : SLAC.scene) : unit =
   let (w, h) = conf.dims in
   let (wr, hr) = (w, h) in
-  open_graph (" " ^ (string_of_int wr) ^ "x" ^ (string_of_int hr));
+  let str_to_open_graph = Printf.sprintf " %dx%d" wr hr in
+  open_graph str_to_open_graph;
   set_window_title "PF5_mondrian";
   auto_synchronize false;
   scene := Some sce;
@@ -42,9 +41,10 @@ let run () : unit =
           | Update f -> changeScene (f ())
         in
         let event = Interact.interact () in
-        let li_gmsg = Option.map2_default (fun s e -> s#click e) [] !scene event in
+        let conf = Option.get !config in
+        let li_gmsg = Option.map2_default (fun s e -> s#click conf e) [] !scene event in
         List.iter use_gmsg li_gmsg;
-        Option.may (fun s -> s#draw ()) !scene;
+        Option.may (fun s -> s#draw conf) !scene;
       end
     with Exit -> running := false
   in
@@ -55,11 +55,10 @@ let run () : unit =
     synchronize ();
     let end_turn = Unix.gettimeofday () in
     let ecart = end_turn -. begin_turn in
-    Unix.sleepf ((1. /. fps_objective) -. ecart);
+    Unix.sleepf ((1. /. GraphicsConstant.fps_objective) -. ecart);
     incr fps;
     if Unix.gettimeofday () -. !second >= 1. then
       begin
-        print_endline @@ Printf.sprintf "FPS : %d" !fps;
         fps := 0;
         second := !second +. 1.;
       end

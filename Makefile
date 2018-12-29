@@ -6,25 +6,29 @@ RESULT = mondrian
 MAIN = src/Main.ml
 
 ML_FILES = \
+		src/model/solveur/sat_solver.ml \
 		src/utils/CLIParser.ml \
 		src/utils/Option.ml \
+		src/utils/Combinatorics.ml \
+		src/model/ModelConstant.ml \
 		src/model/Base.ml \
 		src/model/Bsp.ml \
+		src/model/FNC.ml \
 		src/controller/Interact.ml \
 		src/model/Check.ml \
 		src/model/Generation.ml \
-		src/model/solveur/sat_solver.ml \
-		src/view/Exemple_bsp.ml \
-		src/view/graphics/SLAC.ml \
-		src/view/graphics/component/Background.ml \
-		src/view/graphics/component/Button.ml \
-		src/view/graphics/component/Cursor.ml \
-		src/view/graphics/component/Popup.ml \
-		src/view/graphics/component/Text.ml \
-		src/view/graphics/component/FrameBSP.ml \
-		src/view/graphics/GMessage.ml \
-		src/view/graphics/GraphicsManager.ml \
-		src/view/graphics/CampingScene.ml \
+		src/view/GraphicsConstant.ml \
+		src/view/SLAC.ml \
+		src/view/components/Background.ml \
+		src/view/components/Button.ml \
+		src/view/components/ButtonColor.ml \
+		src/view/components/Cursor.ml \
+		src/view/components/Popup.ml \
+		src/view/components/Text.ml \
+		src/view/components/FrameBSP.ml \
+		src/view/GMessage.ml \
+		src/view/GraphicsManager.ml \
+		src/view/CampingScene.ml \
 
 LIBS = graphics unix
 

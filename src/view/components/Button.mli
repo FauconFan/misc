@@ -1,12 +1,14 @@
+
+(**
+   A button component for graphic's view
+*)
+
 open Base
 open Graphics
 
-(**
-  A button component for graphic's view
-*)
-
 class button :
   ?color_font:color ->
+  ?default_padding:int ->
   dim ->
   string list ->
   coords ->
@@ -14,15 +16,20 @@ class button :
   object
     inherit SLAC.acomponent
 
-    (** Get lines which need to be drawn *)
-    method getLines : unit -> (coords * coords * color * int) list
+    val mutable padding : int
 
     (** Get rects which need to be drawn *)
     method getRects : unit -> (coords * dim * color) list
 
     (** action when we click on the button *)
-    method subClick : (coords * color option) -> (SLAC.scene GMessage.t)
+    method subClick : uevent -> (SLAC.scene GMessage.t)
 
     (** Get strings which need to be drawn *)
     method getStrings : unit -> string_content list
+
+    (** Reset the padding according to the default padding *)
+    method resetPadding : unit -> unit
+
+    (** Set padding *)
+    method setPadding : int -> unit
   end

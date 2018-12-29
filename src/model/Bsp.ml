@@ -23,7 +23,7 @@ let change_rectangle_color (coords, color) bsp =
         label
         bsp_g
         bsp_d
-  in parcours false coords bsp
+  in parcours ModelConstant.first_line_vertical coords bsp
 
 (*
   On renvoie la couleur correspondant à la différence entre i et j :
@@ -32,9 +32,57 @@ let change_rectangle_color (coords, color) bsp =
   - i = j : magenta
 *)
 let get_max_color i j =
-  if i > j then Some blue
-  else if i < j then Some red
-  else Some magenta
+  if i > j then blue
+  else if i < j then red
+  else magenta
+
+(*
+  Renvoie les stats relatifs à une ligne, sous la forme d'un tuple.
+  Le premier membre du tuple est un array de taille qui contient :
+  (0) -> le nombre de rectangles bleus.
+  (1) -> le nombre de rectangles rouges.
+  (2) -> le nombre de rectangle au total.
+  Le second membre est une liste optionnelle d'identifiants et de couleurs désignant les rectangles.
+  Le second membre est None si et seulement si le prefix est None.
+  Sinon le second membre est de la forme [("ll", None); ("lr", Some red)]
+*)
+let stats_of_line
+    (bsp_g : bsp) (bsp_d : bsp) (even : bool) (prefix : string option)
+  : (int array * (string * color option) list option) =
+  let stats = [|0; 0; 0|] in
+  let list_rect = ref [] in
+  let g_prefix_f p = p ^ "l" in
+  let d_prefix_f p = p ^ "r" in
+  let apply_on_R c stats id_rect =
+    let f c =
+      if c = blue then stats.(0) <- stats.(0) + 1
+      else if c = red then stats.(1) <- stats.(1) + 1
+    in
+    Option.may f c;
+    stats.(2) <- stats.(2) + 1;
+    if Option.is_some id_rect then
+      begin
+        list_rect := (Option.get id_rect, c) :: !list_rect
+      end
+  in
+  let rec aux stats bsp l lactu prefix_actu =
+    match bsp with
+    | R c -> apply_on_R c stats prefix_actu
+    | L (_, bsp_g, bsp_d) ->
+      begin
+        let recall is_left =
+          if is_left
+          then aux stats bsp_g (not l) lactu (Option.map g_prefix_f prefix_actu)
+          else aux stats bsp_d (not l) lactu (Option.map d_prefix_f prefix_actu)
+        in
+        if even = (not l) then (recall true; recall false)
+        else recall lactu
+      end
+  in
+  aux stats bsp_g (not even) false (Option.map g_prefix_f prefix);
+  aux stats bsp_d (not even) true (Option.map d_prefix_f prefix);
+  if Option.is_none prefix then (stats, None)
+  else (stats, Some (!list_rect))
 
 (*
    Renvoie la couleur d'une ligne en fonction de :
@@ -42,18 +90,8 @@ let get_max_color i j =
    - ligne verticale (even = false) ou horizontale (even = true)
 *)
 let color_of_line bsp_g bsp_d even =
-  let rec aux color bsp l =
-    match bsp with
-    | R c -> Option.may (fun c -> if c = blue then color.(0) <- color.(0) + 1 else color.(1) <- color.(1) + 1) c
-    | L (_, bsp_g, bsp_d) ->
-      if (even && l) then aux color bsp_g (not l)
-      else if even = (not l) then (aux color bsp_g (not l); aux color bsp_d (not l))
-      else aux color bsp_d (not l)
-  in
-  let tab = [|0;0|] in
-  aux tab bsp_g (not even);
-  aux tab bsp_d (not even);
-  get_max_color (tab.(0)) (tab.(1))
+  let (stats, _) = stats_of_line bsp_g bsp_d even None in
+  get_max_color stats.(0) stats.(1)
 
 let lines_from_bsp (config : config) (bsp:bsp) : (line * color option) list =
   let rec aux l even bsp max_dim min_dim =
@@ -72,7 +110,7 @@ let lines_from_bsp (config : config) (bsp:bsp) : (line * color option) list =
         let l_left = aux (line :: l) (not even) bsp_g dim_max_left min_dim in
         aux l_left (not even) bsp_d max_dim dim_min_right
       end
-  in aux [] false bsp config.dims (0,0)
+  in aux [] ModelConstant.first_line_vertical bsp config.dims (0,0)
 
 let rectangles_from_bsp (config : config) (bsp : bsp) : (rect * color option) list =
   let rec aux res even bsp max_dim min_dim =
@@ -85,4 +123,4 @@ let rectangles_from_bsp (config : config) (bsp : bsp) : (rect * color option) li
         let l_left = aux res (not even) bsp_g dim_max_left min_dim in
         aux l_left (not even) bsp_d max_dim dim_min_right
       end
-  in aux [] false bsp config.dims (0,0)
+  in aux [] ModelConstant.first_line_vertical bsp config.dims (0,0)
