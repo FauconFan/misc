@@ -5,6 +5,9 @@ RESULT = mondrian
 
 MAIN = src/Main.ml
 
+TAR = durand-priou.tar.gz
+TAR_DIR = $(basename $(basename $(TAR)))
+
 ML_FILES = \
 		src/model/solveur/sat_solver.ml \
 		src/utils/CLIParser.ml \
@@ -62,8 +65,18 @@ exec: $(RESULT)
 
 .PHONY: fclean
 fclean: clean-all
+	rm -f $(TAR)
 
 .PHONY: re
 re: fclean $(RESULT)
+
+.PHONY: tar
+tar: $(TAR)
+
+$(TAR): fclean
+	mkdir -p $(TAR_DIR)
+	cp -r src/ Makefile $(OCAMLMAKEFILE) README.md $(TAR_DIR)
+	tar -czf $@ $(TAR_DIR)
+	rm -rf $(TAR_DIR)
 
 include $(OCAMLMAKEFILE)
