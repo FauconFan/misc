@@ -55,12 +55,12 @@ and
   let background_test = new background GraphicsConstant.beige (w,h) (0,0) in
   let background_layer = new SLAC.layer [background_test] in
   let text_message = new text ~center:true ["Bravo !!"; "Vous avez reussi a finir le puzzle !!"] (w/2, h - 100) in
-  let text_zone = new text ~center:true ["Records :"; ""; "Directeurs en chef   : Joseph Priou et Xavier Durand"; "Designers en chef    : Joseph Priou et Xavier Durand"; "Programmeurs en chef : Joseph Priou et Xavier Durand"] (w/2, h - 250) in
+  let text_zone = new text ~center:true ["Records :"; ""; "Directeurs en chef   : Joseph Priou et Xavier Durand"; "Designers en chef    : Un ours et un tigre          "; "Programmeurs en chef : Un grand gros et un petit fin"] (w/2, h - 250) in
   let text_layer = new SLAC.layer [(text_message :> SLAC.acomponent); (text_zone :> SLAC.acomponent)] in
   let button_reset = new button (180,60) ["Recommencer"] (w/2 - 90, 350) (fun _ -> GMessage.Update (fun () -> play_game config_menu config_base)) in
   let button_menu = new button (180,60) ["Menu"] (w/2 - 90, 250) (fun _ -> GMessage.Update (fun () -> menu config_menu)) in
   let button_quit = new button (180,60) ["Quitter"] (w/2 - 90, 150) (fun _ -> GMessage.Update (fun () -> raise Exit)) in
-  let button_layer = new SLAC.layer [(button_menu :> SLAC.acomponent); (button_reset :> SLAC.acomponent); (button_quit :> SLAC.acomponent)] in  
+  let button_layer = new SLAC.layer [(button_menu :> SLAC.acomponent); (button_reset :> SLAC.acomponent); (button_quit :> SLAC.acomponent)] in
   new SLAC.scene [|background_layer; text_layer; button_layer|]
 
 and
