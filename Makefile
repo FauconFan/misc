@@ -26,7 +26,6 @@ ML_FILES = \
 		src/view/components/Button.ml \
 		src/view/components/ButtonColor.ml \
 		src/view/components/Cursor.ml \
-		src/view/components/Popup.ml \
 		src/view/components/Text.ml \
 		src/view/components/FrameBSP.ml \
 		src/view/GMessage.ml \
