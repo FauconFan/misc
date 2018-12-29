@@ -30,7 +30,6 @@ Comme vous pouvez le voir lors du lancement de notre programme, nous avons cré�
 - un background
 - des curseurs
 - des zones d'affichage de text qui peuvent être centré ou non
-- des popups
 - une zone d'affichage du bsp
 
 Ensuite, tous ces composants sont ensuite reliés à l'aide d'une couche. Et on assemble ensute plusieurs couches pour former une page graphique.

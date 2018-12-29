@@ -1,6 +1,6 @@
 
 (**
-  A background component for graphic's view
+   A background component for graphic's view
 *)
 
 open Base
@@ -16,6 +16,6 @@ class background :
     (** Get rects which need to be drawn *)
     method getRects : unit -> (coords * dim * color) list
 
-    (** action when we click on the popup -> distrub it on button *)
+    (** action when we click on the background *)
     method subClick : uevent -> (SLAC.scene GMessage.t)
   end
