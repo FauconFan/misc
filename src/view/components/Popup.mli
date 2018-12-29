@@ -1,9 +1,10 @@
-open Base
-open Graphics
 
 (**
   A popup component for graphic's view
 *)
+
+open Base
+open Graphics
 
 class popup :
   string list ->

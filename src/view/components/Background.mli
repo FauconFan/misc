@@ -1,9 +1,10 @@
-open Base
-open Graphics
 
 (**
   A background component for graphic's view
 *)
+
+open Base
+open Graphics
 
 class background :
   color ->

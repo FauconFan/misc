@@ -1,9 +1,10 @@
-open Base
-open Graphics
 
 (**
    A button component for graphic's view
 *)
+
+open Base
+open Graphics
 
 class button :
   ?color_font:color ->

@@ -1,9 +1,10 @@
-open Base
-open Graphics
 
 (**
    A text component for graphic's view
 *)
+
+open Base
+open Graphics
 
 class text :
   ?center:bool ->

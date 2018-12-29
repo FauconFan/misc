@@ -1,9 +1,10 @@
-open Base
-open Graphics
 
 (**
    A cursor component for graphic's view
 *)
+
+open Base
+open Graphics
 
 class cursor :
   dim ->

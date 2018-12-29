@@ -1,10 +1,10 @@
 
-open Base
-open Graphics
-
 (**
   A frame component for bsp for graphic's view
 *)
+
+open Base
+open Graphics
 
 class frameBSP :
   config ->
