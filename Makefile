@@ -78,4 +78,8 @@ $(TAR): fclean
 	tar -czf $@ $(TAR_DIR)
 	rm -rf $(TAR_DIR)
 
+.PHONY: install
+install: $(RESULT)
+	cp $(RESULT) /usr/local/bin/$(RESULT)
+
 include $(OCAMLMAKEFILE)
