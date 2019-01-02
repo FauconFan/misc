@@ -58,5 +58,5 @@ La gestion de tous nos composants sont gérés dans SLAC.ml (Scene Layer and Abs
 
 # Auteurs
 
-Xavier Durand et Joseph Priou.
+Xavier Durand et Joseph Priou.  
 Ce programme a été fait au sein d'un projet pédagogique pour l'Université Paris Diderot (Paris 7).
