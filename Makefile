@@ -46,6 +46,7 @@ help:
 	@printf "Useful commands for this Makefile:\\n"
 	@printf " - help : prints this message\\n"
 	@printf " - mondrian : same as nc\\n"
+	@printf " - install : install the binary in the /usr/local/bin folder\\n"
 	@printf " - exec : compiles and runs\\n"
 	@printf " - bytecode (bc) : compiles in bytecode\\n"
 	@printf " - nativecode (nc) : compiles in nativecode\\n"
