@@ -5,6 +5,9 @@ RESULT = mondrian
 
 MAIN = src/Main.ml
 
+TAR = durand-priou.tar.gz
+TAR_DIR = $(basename $(basename $(TAR)))
+
 ML_FILES = \
 		src/model/solveur/sat_solver.ml \
 		src/utils/CLIParser.ml \
@@ -23,7 +26,6 @@ ML_FILES = \
 		src/view/components/Button.ml \
 		src/view/components/ButtonColor.ml \
 		src/view/components/Cursor.ml \
-		src/view/components/Popup.ml \
 		src/view/components/Text.ml \
 		src/view/components/FrameBSP.ml \
 		src/view/GMessage.ml \
@@ -44,6 +46,7 @@ help:
 	@printf "Useful commands for this Makefile:\\n"
 	@printf " - help : prints this message\\n"
 	@printf " - mondrian : same as nc\\n"
+	@printf " - install : install the binary in the /usr/local/bin folder\\n"
 	@printf " - exec : compiles and runs\\n"
 	@printf " - bytecode (bc) : compiles in bytecode\\n"
 	@printf " - nativecode (nc) : compiles in nativecode\\n"
@@ -62,8 +65,22 @@ exec: $(RESULT)
 
 .PHONY: fclean
 fclean: clean-all
+	rm -f $(TAR)
 
 .PHONY: re
 re: fclean $(RESULT)
+
+.PHONY: tar
+tar: $(TAR)
+
+$(TAR): fclean
+	mkdir -p $(TAR_DIR)
+	cp -r src/ Makefile $(OCAMLMAKEFILE) README.md $(TAR_DIR)
+	tar -czf $@ $(TAR_DIR)
+	rm -rf $(TAR_DIR)
+
+.PHONY: install
+install: $(RESULT)
+	cp $(RESULT) /usr/local/bin/$(RESULT)
 
 include $(OCAMLMAKEFILE)
