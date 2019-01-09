@@ -1,5 +1,7 @@
 # PF5_Mondrian
 
+![Puzzle du Mondrian](https://github.com/FauconFan/PF5_Mondrian/blob/master/.github/logo.png)
+
 Le projet consiste à coder un jeu dont le but est de résoudre un puzzle de Mondrian.
 
 Un puzzle de mondrian consiste à colorier, avec les couleurs rouge et bleu, un plan partitionné en rectangles. Au début du jeu, tous les rectangles sont blancs, et les lignes partitionnant le plan peuvent être de couleur noire, rouge, bleu ou violet. Le joueur doit choisir une couleur de remplissage pour chaque rectangle, en respectant les contraintes suivantes. Pour chaque ligne de séparation, on considère l’ensemble des rectangles dont le bord se superpose à celle-ci :
