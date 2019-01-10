@@ -9,6 +9,7 @@
 # include <termios.h>
 # include <unistd.h>
 # include <signal.h>
+# include <string.h>
 # include <sys/ioctl.h>
 
 typedef struct		s_atpt
@@ -38,5 +39,11 @@ void				reset_termios(void);
 */
 
 void				init_signal_handlers(void);
+
+/*
+**	src/string_utils.c
+*/
+
+char				*replace_in_string(char *format, char car, char *by);
 
 #endif

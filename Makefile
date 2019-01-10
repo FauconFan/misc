@@ -20,6 +20,7 @@ SRC = \
 	src/loader.c \
 	src/setup_termios.c \
 	src/signal_handler.c \
+	src/string_utils.c \
 
 OBJ = $(SRC:%.c=%.o)
 

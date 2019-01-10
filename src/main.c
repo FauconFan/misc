@@ -1,7 +1,6 @@
 
 #include "atpt.h"
 
-
 static int	core(char *file, char *cmd)
 {
 	(void)file;
