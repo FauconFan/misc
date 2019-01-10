@@ -1,4 +1,8 @@
 Core:
-	☐ Ecrire une interface claire
-	☐ Écrire un onSave
-	☐ Index
+	☐ Termcap utils
+	☐ String utils
+	☐ Make atpt works
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+	✔ Ecrire une interface claire @done(2019-01-10 23:08) @project(Core)
