@@ -12,10 +12,14 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I ./
+LFLAGS = -lncurses
 FLAGS = $(CFLAGS) $(IFLAGS)
 
 SRC = \
 	src/main.c \
+	src/loader.c \
+	src/setup_termios.c \
+	src/signal_handler.c \
 
 OBJ = $(SRC:%.c=%.o)
 
@@ -24,7 +28,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@printf "Program %s... " "$(NAME)"
-	@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
 	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
 
 %.o: %.c

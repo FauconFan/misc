@@ -1,5 +1,5 @@
 Core:
-	☐ Termcap utils
+	✔ Termcap utils @done(2019-01-11 00:02) @project(Core)
 	☐ String utils
 	☐ Make atpt works
 
