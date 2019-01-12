@@ -20,53 +20,65 @@
 # define PREFIX_HEADER_FILE		"File : "
 # define PREFIX_HEADER_CMD		"Cmd :  "
 
-typedef struct		s_atpt
-{
-	struct termios	ios_old;
-	struct termios	ios_actu;
-	struct winsize	ws;
-	char			*file;
-	char			*cmd;
-}					t_atpt;
+# define TRUE					1
+# define FALSE					0
 
-extern t_atpt		*g_atpt;
+typedef unsigned char			t_bool;
+
+typedef struct					s_atpt
+{
+	struct termios				ios_old;
+	struct termios				ios_actu;
+	struct winsize				ws;
+	char						*file;
+	char						*cmd;
+}								t_atpt;
+
+extern t_atpt					*g_atpt;
 
 /*
 **	src/loader.c
 */
 
-int					atpt_init(char *file, char *cmd);
-void				atpt_end(void);
+int								atpt_init(char *file, char *cmd);
+void							atpt_end(void);
 
 /*
 **	src/core.c
 */
 
-void				core(void);
-
-/*
-**	src/print_header.c
-*/
-
-void				print_header(void);
+void							core(void);
 
 /*
 **	src/setup_termios.c
 */
 
-int					setup_termios(void);
-void				reset_termios(void);
+int								setup_termios(void);
+void							reset_termios(void);
 
 /*
 **	src/signal_handler.c
 */
 
-void				init_signal_handlers(void);
+void							init_signal_handlers(void);
 
 /*
-**	src/string_utils.c
+**	src/utils/header.c
 */
 
-char				*replace_in_string(char *format, char car, char *by);
+void							print_header(void);
+
+/*
+**	src/utils/string.c
+*/
+
+char							*replace_in_string(char *format, char car, char *by);
+
+/*
+**	src/utils/fs.c
+*/
+
+time_t							getModificationDate(char *file);
+t_bool							isFileExists(char *file);
 
 #endif

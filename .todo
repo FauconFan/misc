@@ -3,7 +3,10 @@ Core:
 	✔ String utils @done(2019-01-11 00:40) @project(Core)
 	✔ Make atpt works @done(2019-01-12 11:24) @project(Core)
 	✔ Add a header @done(2019-01-12 11:53) @project(Core)
-	☐ Check if the file exists...
+	✔ Check if the file exists... @done(2019-01-12 12:05) @project(Core)
+	☐ Add an option noncurses
+	☐ make install
+	☐ add a usage
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:

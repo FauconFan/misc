@@ -1,23 +1,5 @@
 #include "atpt.h"
 
-static void		updateTime(time_t *tptr)
-{
-	struct stat		sstat;
-
-	if (lstat(g_atpt->file, &sstat) < 0)
-	{
-		if (errno == ENOENT)
-		{
-			usleep(MICRO_REFRESH_TIME);
-			if (lstat(g_atpt->file, &sstat) < 0)
-				exit(1);
-		}
-		else
-			exit(1);
-	}
-	*tptr = sstat.st_mtime;
-}
-
 static void		core_child(void)
 {
 	char		*argv[] = {"/bin/sh", "-c", NULL, NULL};
@@ -41,7 +23,7 @@ void			core(void)
 
 	while (1)
 	{
-		updateTime(&t2);
+		t2 = getModificationDate(g_atpt->file);
 		if (t1 != t2)
 		{
 			t1 = t2;

@@ -19,10 +19,11 @@ SRC = \
 	src/main.c \
 	src/loader.c \
 	src/core.c \
-	src/print_header.c \
 	src/setup_termios.c \
 	src/signal_handler.c \
-	src/string_utils.c \
+	src/utils/header.c \
+	src/utils/string.c \
+	src/utils/fs.c \
 
 OBJ = $(SRC:%.c=%.o)
 
