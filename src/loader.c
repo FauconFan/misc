@@ -7,6 +7,7 @@ int				atpt_init(void)
 {
 	if ((g_atpt = (t_atpt *)malloc(sizeof(t_atpt))) == NULL)
 		return (1);
+	printf("%s\n", "oi");
 	if (setup_termios())
 	{
 		free(g_atpt);

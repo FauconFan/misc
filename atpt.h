@@ -7,10 +7,16 @@
 # include <termcap.h>
 # include <term.h>
 # include <termios.h>
+# include <time.h>
+# include <errno.h>
 # include <unistd.h>
 # include <signal.h>
 # include <string.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+
+# define MICRO_REFRESH_TIME		1e5
 
 typedef struct		s_atpt
 {
