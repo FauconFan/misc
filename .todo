@@ -1,13 +1,14 @@
 Core:
+	☐ Add an option noncurses
+	☐ Add a showcase for github
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
 	✔ Termcap utils @done(2019-01-11 00:02) @project(Core)
 	✔ String utils @done(2019-01-11 00:40) @project(Core)
 	✔ Make atpt works @done(2019-01-12 11:24) @project(Core)
 	✔ Add a header @done(2019-01-12 11:53) @project(Core)
 	✔ Check if the file exists... @done(2019-01-12 12:05) @project(Core)
-	☐ Add an option noncurses
 	✔ make install @done(2019-01-12 12:10) @project(Core)
 	✔ add a usage @done(2019-01-12 12:12) @project(Core)
-
-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-Archive:
 	✔ Ecrire une interface claire @done(2019-01-10 23:08) @project(Core)
