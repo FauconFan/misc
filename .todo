@@ -2,7 +2,7 @@ Core:
 	✔ Termcap utils @done(2019-01-11 00:02) @project(Core)
 	✔ String utils @done(2019-01-11 00:40) @project(Core)
 	✔ Make atpt works @done(2019-01-12 11:24) @project(Core)
-	☐ Add a header
+	✔ Add a header @done(2019-01-12 11:53) @project(Core)
 	☐ Check if the file exists...
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
