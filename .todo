@@ -5,8 +5,8 @@ Core:
 	✔ Add a header @done(2019-01-12 11:53) @project(Core)
 	✔ Check if the file exists... @done(2019-01-12 12:05) @project(Core)
 	☐ Add an option noncurses
-	☐ make install
-	☐ add a usage
+	✔ make install @done(2019-01-12 12:10) @project(Core)
+	✔ add a usage @done(2019-01-12 12:12) @project(Core)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:

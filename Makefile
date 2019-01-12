@@ -52,3 +52,8 @@ fclean: clean
 
 .PHONY: re
 re: fclean all
+
+.PHONY: install
+install:
+	@test -f $(NAME) || (printf "'make all' before\\n" && false)
+	cp $(NAME) /usr/local/bin/$(NAME)
