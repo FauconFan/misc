@@ -3,7 +3,7 @@
 
 static void		usage(char *argv0)
 {
-	printf("%s [FILE] [CMD]\n\n", argv0);
+	printf("usage: %s [FILE] [CMD]\n\n", argv0);
 	printf("atpt will run the command CMD at any change of FILE\n");
 }
 
