@@ -20,26 +20,41 @@ KEY3="6162636461626364"
 KEY4="DD334A3DE9C4C449"
 KEY5="914A103B0CE0A235"
 KEY6="2A"
+KEY7="2A2A2"
 
-KEYS="${KEY1};${KEY2};${KEY3};${KEY4};${KEY5};${KEY6};"
+KEYS="${KEY1};${KEY2};${KEY3};${KEY4};${KEY5};${KEY6};${KEY7};"
 
-# MODES="des-ecb;"
-MODES=""
+IV1="0011223344556677"
+IV2="8899AABBCCDDEEFF"
+IV3="F0E1D2C3B4A59687"
+
+IVS="${IV1};${IV2};${IV3};"
+
+MODES="des-ecb;des-cbc;des-cfb;des-ocb;"
 
 BASE64="base64,base64 -d,./ft_ssl base64,./ft_ssl base64 -d,1"
 BASE64_URL="base64 | tr '+/' '-_', tr -- '-_' '+/' | base64 -d,./ft_ssl base64_url,./ft_ssl base64_url -d,1"
 
 build_commands()
 {
+	rm -f tmp.txt
 	echo "${BASE64};" > tmp.txt
 	echo "${BASE64_URL};" >> tmp.txt
 	echo "${MODES}" | while read -d';' MODE; do
 		echo "${KEYS}" | while read -d';' KEY; do
-			echo "openssl ${MODE} -K ${KEY},openssl ${MODE} -d -K ${KEY},./ft_ssl ${MODE} -k ${KEY},./ft_ssl ${MODE} -d -k ${KEY},0;" >> tmp.txt
+			if [ ${MODE} = "des-ecb" ]; then
+				echo "openssl ${MODE} -K ${KEY},openssl ${MODE} -d -K ${KEY},./ft_ssl ${MODE} -k ${KEY},./ft_ssl ${MODE} -d -k ${KEY},0;" >> tmp.txt
+				echo "openssl ${MODE} -K ${KEY} -a,openssl ${MODE} -d -K ${KEY} -a,./ft_ssl ${MODE} -k ${KEY} -a,./ft_ssl ${MODE} -d -k ${KEY} -a,0;" >> tmp.txt
+			else
+				echo "${IVS}" | while read -d';' IV; do
+					echo "openssl ${MODE} -K ${KEY} -iv ${IV},openssl ${MODE} -d -K ${KEY} -iv ${IV},./ft_ssl ${MODE} -k ${KEY} -v ${IV},./ft_ssl ${MODE} -d -k ${KEY} -v ${IV},0;" >> tmp.txt
+					echo "openssl ${MODE} -K ${KEY} -iv ${IV} -a,openssl ${MODE} -d -K ${KEY} -iv ${IV} -a,./ft_ssl ${MODE} -k ${KEY} -v ${IV} -a,./ft_ssl ${MODE} -d -k ${KEY} -v ${IV} -a,0;" >> tmp.txt
+				done
+			fi
 		done
 	done
 	cat tmp.txt | tr -d '\n'
-	rm tmp.txt
+	rm -f tmp.txt
 }
 
 ENCRYPT_META="$(build_commands)"
@@ -123,9 +138,12 @@ checks_encrypt()
 			if diff ${ENC_OUT_REAL} ${ENC_OUT_MINE} > /dev/null 2>&1 && diff ${DEC_OUT_REAL} ${DEC_OUT_MINE} > /dev/null 2>&1; then
 				compt_OK
 			else
+				diff ${ENC_OUT_REAL} ${ENC_OUT_MINE}
+				diff ${DEC_OUT_REAL} ${DEC_OUT_MINE}
 				compt_reset
 				printf "Failed on :\\n"
 				printf "\"%s\"\\n" "${STR}"
+				exit 1
 			fi
 			rm -f ${ENC_OUT_REAL} ${ENC_OUT_MINE} ${DEC_OUT_REAL} ${DEC_OUT_MINE}
 		done

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 11:07:25 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/13 11:17:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/13 21:45:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define HELP_DGT			"Digest messages with %s algorithm."
 # define HELP_BASE64		"Base64 encode or decode."
 # define HELP_DES			"Encrypt (DES) using %s cipher mode algorithm"
+
+# define PAD_PRINT_ASCII	64
 
 /*
 **	Commands defines
@@ -38,6 +40,9 @@
 # define CMD_BASE64			"base64"
 # define CMD_BASE64_URL		"base64_url"
 # define CMD_ECB			"des-ecb"
+# define CMD_CBC			"des-cbc"
+# define CMD_OFB			"des-ofb"
+# define CMD_CFB			"des-cfb"
 
 /*
 **	Specifig commands helpers

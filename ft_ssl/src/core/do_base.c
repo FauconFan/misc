@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/19 16:28:46 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/26 11:21:22 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/13 17:14:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void		do_do_base(
 			}
 			else
 				content_out = (char *)unf(content_in, &len);
-			set_out(ft_cli_gets(parser->parser, HELP_OUT_TAG), content_out, len, TRUE);
+			set_out(ft_cli_gets(parser->parser, HELP_OUT_TAG), content_out, len, FALSE);
 			ft_strdel(&content_in);
 			ft_strdel(&content_out);
 		}

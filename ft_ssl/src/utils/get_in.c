@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 09:28:14 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/25 09:50:59 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/13 16:49:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ char		*get_in_ascii(char *input_file, size_t *len_in, t_bool ascii_mode)
 		return (NULL);
 	if (ascii_mode)
 	{
-		tmp = (char *)ft_unbase64(res, len_in);
+		tmp = ft_strdeleteif(res, ft_isspace);
 		ft_strdel(&res);
-		res = tmp;
+		res = (char *)ft_unbase64(tmp, len_in);
+		ft_strdel(&tmp);
 	}
 	return (res);
 }

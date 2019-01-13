@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 17:58:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/13 11:39:11 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/13 16:19:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ t_des_cmd			*ft_ssl_des_init(t_cmd_parser *parser)
 	res->in = ft_cli_gets(parser->parser, HELP_IN_TAG);
 	res->out = ft_cli_gets(parser->parser, HELP_OUT_TAG);
 	res->key = ft_cli_gets(parser->parser, HELP_KEY_TAG);
-	res->ask_password = ft_cli_getb(parser->parser, HELP_PWD);
-	res->salt = ft_cli_gets(parser->parser, HELP_SALT_HEX);
-	res->vector = ft_cli_gets(parser->parser, HELP_VEC_HEX);
+	res->ask_password = ft_cli_getb(parser->parser, HELP_KEY_TAG);
+	res->salt = ft_cli_gets(parser->parser, HELP_SALT_TAG);
+	res->vector = ft_cli_gets(parser->parser, HELP_VEC_TAG);
 	return res;
 }
 
