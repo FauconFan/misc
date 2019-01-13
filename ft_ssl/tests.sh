@@ -23,13 +23,16 @@ KEY6="2A"
 
 KEYS="${KEY1};${KEY2};${KEY3};${KEY4};${KEY5};${KEY6};"
 
-MODES="des-ecb;"
+# MODES="des-ecb;"
+MODES=""
 
 BASE64="base64,base64 -d,./ft_ssl base64,./ft_ssl base64 -d,1"
+BASE64_URL="base64 | tr '+/' '-_', tr -- '-_' '+/' | base64 -d,./ft_ssl base64_url,./ft_ssl base64_url -d,1"
 
 build_commands()
 {
 	echo "${BASE64};" > tmp.txt
+	echo "${BASE64_URL};" >> tmp.txt
 	echo "${MODES}" | while read -d';' MODE; do
 		echo "${KEYS}" | while read -d';' KEY; do
 			echo "openssl ${MODE} -K ${KEY},openssl ${MODE} -d -K ${KEY},./ft_ssl ${MODE} -k ${KEY},./ft_ssl ${MODE} -d -k ${KEY},0;" >> tmp.txt
@@ -77,8 +80,8 @@ checks_hash()
 	echo "${HASH_META}" | while IFS=',' read -d';' REAL_CMD MINE_CMD; do
 		printf "============ %s ===========\\n" "${MINE_CMD}"
 		echo "${DATA}" | while read -d'.' STR; do
-			OR=$(echo "${STR}" | ${REAL_CMD} | sed 's/(stdin)//' | tr -d '= -')
-			OM=$(echo "${STR}" | ${MINE_CMD})
+			OR=$(eval "echo \"${STR}\" | ${REAL_CMD} | sed 's/(stdin)//' | tr -d '= -'")
+			OM=$(eval "echo \"${STR}\" | ${MINE_CMD}")
 			if ! [ ${OR} = ${OM} ]; then
 				RET=1
 				compt_reset
@@ -105,8 +108,8 @@ checks_encrypt()
 	echo "${ENCRYPT_META}" | while IFS=',' read -d';' REAL_ENC REAL_DEC MINE_ENC MINE_DEC DELETE_SP; do
 		printf "============ %s ===========\\n" "${MINE_ENC}"
 		echo "${DATA}" | while read -d'.' STR; do
-			echo ${STR} | ${REAL_ENC} > ${ENC_OUT_REAL}
-			echo ${STR} | ${MINE_ENC} > ${ENC_OUT_MINE}
+			eval "echo \"${STR}\" | ${REAL_ENC}" > ${ENC_OUT_REAL}
+			eval "echo \"${STR}\" | ${MINE_ENC}" > ${ENC_OUT_MINE}
 			if [ ${DELETE_SP} = "1" ]; then
 				tmp=$(mktemp)
 				cat ${ENC_OUT_REAL} | tr -d '\n ' > ${tmp}
@@ -115,8 +118,8 @@ checks_encrypt()
 				mv ${tmp} ${ENC_OUT_MINE}
 				rm -f ${tmp}
 			fi
-			cat ${ENC_OUT_REAL} | ${REAL_DEC} > ${DEC_OUT_REAL}
-			cat ${ENC_OUT_MINE} | ${MINE_DEC} > ${DEC_OUT_MINE}
+			eval "cat ${ENC_OUT_REAL} | ${REAL_DEC}" > ${DEC_OUT_REAL}
+			eval "cat ${ENC_OUT_MINE} | ${MINE_DEC}" > ${DEC_OUT_MINE}
 			if diff ${ENC_OUT_REAL} ${ENC_OUT_MINE} > /dev/null 2>&1 && diff ${DEC_OUT_REAL} ${DEC_OUT_MINE} > /dev/null 2>&1; then
 				compt_OK
 			else

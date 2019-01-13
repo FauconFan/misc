@@ -6,44 +6,46 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 11:58:06 by jpriou            #+#    #+#             */
-/*   Updated: 2018/09/20 12:01:32 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/13 10:45:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-static t_cmd_builder_parser_n	*build_msg_digest_cmd(char *title, char *cmd)
+static t_arg_config		g_config_args_dgst[] =
 {
-	t_cli_builder_parser	*cli;
-	char					*helper;
+	{'p', NULL, HELP_OPT_P, HELP_STDIN_TAG, CLI_BOOL, {FALSE}},
+	{'q', NULL, HELP_OPT_Q, HELP_QUIET_TAG, CLI_BOOL, {FALSE}},
+	{'r', NULL, HELP_OPT_R, HELP_REV_TAG, CLI_BOOL, {FALSE}},
+	{'s', NULL, HELP_OPT_S, HELP_SAM_TAG, CLI_ARRAY, {FALSE}},
+};
 
-	ft_sprintf(&helper, HELP_DGT, title);
-	cli = ft_create_cli_builder(helper);
-	ft_strdel(&helper);
-	ft_cli_add_u(cli,
-				ft_create_s_opt('p', HELP_OPT_P),
-				ft_create_bool_arg(HELP_STDIN_TAG, FALSE));
-	ft_cli_add_u(cli,
-				ft_create_s_opt('q', HELP_OPT_Q),
-				ft_create_bool_arg(HELP_QUIET_TAG, FALSE));
-	ft_cli_add_u(cli,
-				ft_create_s_opt('r', HELP_OPT_R),
-				ft_create_bool_arg(HELP_REV_TAG, FALSE));
-	ft_cli_add_u(cli,
-				ft_create_s_opt('s', HELP_OPT_S),
-				ft_create_array_arg(HELP_SAM_TAG));
-	return (ft_create_cmd_builder_parser_node_cli(cmd, &cli));
+static void				build_dgst_cmd(
+							t_cmd_config_n *cptr,
+							t_dgst_config dgst_cmd)
+{
+	t_cli_config	*cconf;
+
+	if ((cconf = (t_cli_config *)malloc(sizeof(t_cli_config))) == NULL)
+		exit(2);
+	cptr->cmd = ft_strdup(dgst_cmd.cmd);
+	cptr->help = NULL;
+	cptr->cmd_type = CMD_CLI;
+	cptr->u.cli_config = cconf;
+	ft_sprintf(&cconf->help, HELP_DGT, dgst_cmd.help_title);
+	cconf->len = sizeof(g_config_args_dgst) / sizeof(g_config_args_dgst[0]);
+	cconf->args = g_config_args_dgst;
 }
 
-void							ft_ssl_add_dgst_cmd(t_cmd_builder_parser *bd_parser)
+t_cmd_config_n			*ft_ssl_add_dgst_cmd(t_cmd_config_n *cmds_tab)
 {
 	size_t		i;
 
-	i = 0;
-	while (i < g_cmds_dgst_size)
+	i = -1;
+	while (++i < g_cmds_dgst_size)
 	{
-		ft_add_cmd_u(bd_parser,
-			build_msg_digest_cmd(g_cmds_dgst[i].help_title, g_cmds_dgst[i].cmd));
-		i++;
+		build_dgst_cmd(cmds_tab, g_cmds_dgst[i]);
+		++cmds_tab;
 	}
+	return (cmds_tab);
 }

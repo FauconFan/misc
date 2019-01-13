@@ -6,43 +6,35 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/26 11:19:57 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/13 11:36:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SSL_COMMAND_H
-#define FT_SSL_COMMAND_H
+# define FT_SSL_COMMAND_H
 
 // #include <linux/random.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <errno.h>
-#include "libft.h"
-#include "ft_dgst_config.h"
-#include "ft_base_config.h"
-#include "ft_des_config.h"
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <sys/ioctl.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <errno.h>
+# include "libft.h"
+# include "ft_dgst_config.h"
+# include "ft_base_config.h"
+# include "ft_des_config.h"
+# include "ssl_defines.h"
 
-/*
-**	Define common to multiple modes (des, base)
-*/
-
-#define HELP_OPT_DEC	"decode mode"
-#define HELP_OPT_ENC	"encode mode (default)"
-#define HELP_OPT_IN		"input file (default:stdin)"
-#define HELP_OPT_OUT	"output file (default:stdout)"
-
-#define HELP_ENC_TAG	"encode_tag"
-#define HELP_DEC_TAG	"decode_tag"
-#define HELP_IN_TAG		"input_file_tag"
-#define HELP_OUT_TAG	"output_file_tag"
-
-#define HELP_PROG		"Program tool to crypt, hash or decrypt contents"
+extern t_dgst_config	g_cmds_dgst[];
+extern t_des_config		g_cmds_des[];
+extern size_t			g_cmds_dgst_size;
+extern size_t			g_cmds_des_size;
 
 void					ft_ssl_add_cmds(t_cmd_builder_parser *bd_parser);
 
+t_cmd_config			*cmd_config_init();
+void					cmd_config_end(t_cmd_config *conf);
 
 char					*get_in(char *input_file, size_t *len_in);
 char					*get_in_ascii(

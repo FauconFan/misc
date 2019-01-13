@@ -6,15 +6,42 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 12:04:56 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/18 09:33:08 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/13 11:03:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-void					ft_ssl_add_cmds(t_cmd_builder_parser *bd_parser)
+t_cmd_config			*cmd_config_init()
 {
-	ft_ssl_add_base_cmd(bd_parser);
-	ft_ssl_add_dgst_cmd(bd_parser);
-	ft_ssl_add_des_cmd(bd_parser);
+	t_cmd_config		*conf;
+	t_cmd_config_n		*ptrtmp;
+
+	if ((conf = (t_cmd_config *)malloc(sizeof(t_cmd_config))) == NULL)
+		exit(2);
+	conf->help = ft_strdup(HELP_PROG);
+	conf->nb_cmds = g_cmds_dgst_size + g_cmds_des_size + 2;
+	if ((conf->cmds = (t_cmd_config_n *)malloc(sizeof(t_cmd_config_n) * (conf->nb_cmds))) == NULL)
+		exit(2);
+	ptrtmp = conf->cmds;
+	ptrtmp = ft_ssl_add_dgst_cmd(ptrtmp);
+	ptrtmp = ft_ssl_add_des_cmd(ptrtmp);
+	ptrtmp = ft_ssl_add_base_cmd(ptrtmp);
+	return (conf);
+}
+
+void					cmd_config_end(t_cmd_config *conf)
+{
+	size_t				i;
+
+	i = -1;
+	while (++i < conf->nb_cmds)
+	{
+		free(conf->cmds[i].cmd);
+		free(conf->cmds[i].u.cli_config->help);
+		free(conf->cmds[i].u.cli_config);
+	}
+	free(conf->cmds);
+	free(conf->help);
+	free(conf);
 }

@@ -6,18 +6,11 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 17:58:02 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/21 11:43:42 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/13 11:39:11 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-
-size_t			g_cmds_des_size = 1;
-
-t_des_config	g_cmds_des[1] =
-{
-	{"ecb", CMD_ECB, ECB},
-};
 
 static t_des_config *get_des_config(t_cmd_parser *parser)
 {
@@ -30,7 +23,7 @@ static t_des_config *get_des_config(t_cmd_parser *parser)
 			return (g_cmds_des + i);
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }
 
 t_bool				is_des_cmd(char *cmd)

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2018/10/25 09:56:03 by jpriou           ###   ########.fr        #
+#    Updated: 2019/01/13 11:38:15 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC_PROJECT = \
 				parser/cmds.c \
 				structures/t_dgst_cmd.c \
 				structures/t_des_cmd.c \
+				structures/globals.c \
 				core/do_dgst.c \
 				core/do_base.c \
 				core/do_des.c \

@@ -6,34 +6,12 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 09:37:56 by jpriou            #+#    #+#             */
-/*   Updated: 2018/10/18 09:44:41 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/13 11:36:26 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_DGST_CONFIG_H
 #define FT_DGST_CONFIG_H
-
-#define HELP_DGT		"Digest messages with %s algorithm."
-
-#define HELP_OPT_P		"STDIN to STDOUT and append the checksum to STDOUT"
-#define HELP_OPT_Q		"quiet mode"
-#define HELP_OPT_R		"reverse the format of the output"
-#define HELP_OPT_S		"print the sum of the given string"
-
-#define HELP_STDIN_TAG	"stdin_tag"
-#define HELP_QUIET_TAG	"quiet_tag"
-#define HELP_REV_TAG	"reverse_tag"
-#define HELP_SAM_TAG	"samples_tag"
-
-#define CMD_MD5			"md5"
-#define CMD_MD4			"md4"
-#define CMD_SHA1		"sha1"
-#define CMD_SHA224		"sha224"
-#define CMD_SHA256		"sha256"
-#define CMD_SHA384		"sha384"
-#define CMD_SHA512		"sha512"
-#define CMD_SHA512_256	"sha512_256"
-#define CMD_SHA512_224	"sha512_224"
 
 typedef struct			s_dgst_config
 {
@@ -55,10 +33,7 @@ typedef struct			s_dgst_cmd
 	char				*name;
 }						t_dgst_cmd;
 
-extern size_t			g_cmds_dgst_size;
-extern t_dgst_config	g_cmds_dgst[];
-
-void					ft_ssl_add_dgst_cmd(t_cmd_builder_parser *bd_parser);
+t_cmd_config_n			*ft_ssl_add_dgst_cmd(t_cmd_config_n *cmds_tab);
 
 t_dgst_cmd				*ft_ssl_dgst_init(t_cmd_parser *parser);
 void					ft_ssl_dgst_free(t_dgst_cmd **cmd);
