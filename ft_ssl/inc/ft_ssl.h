@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 16:09:31 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:58:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
+# include <termios.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <errno.h>
@@ -61,6 +62,7 @@ void					prepare_out_ascii(
 							t_bool ascii_mode);
 
 int						ask_key_iv(t_des_cmd *cmd);
+char					*ft_ask_pass(char *prompt);
 
 t_bool					ft_str_to_uint64_ssl(uint64_t *key, char *str);
 

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2019/01/15 16:08:04 by jpriou           ###   ########.fr        #
+#    Updated: 2019/01/15 17:22:51 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC_PROJECT = \
 				utils/get_in.c \
 				utils/set_out.c \
 				utils/ask_key_iv.c \
+				utils/ask_pass.c \
 				utils/ft_getrandom.c \
 				utils/ft_str_to_uint64_ssl.c \
 				custom_pbkdf2/ft_poor_pbkdf2.c \

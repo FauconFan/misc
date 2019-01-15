@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:00:15 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 16:25:09 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/15 17:18:06 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,22 @@ static char		*getpassphrase()
 {
 	char	*in[2];
 
-	in[0] = getpass(ASK_PWD);
+	in[0] = ft_ask_pass(ASK_PWD);
 	if (in[0] == NULL)
-	{
-		ft_dprintf(2, "%s\n", strerror(errno));
 		return (NULL);
-	}
-	in[0] = ft_strdup(in[0]);
-	in[1] = getpass(ASK_VERIFYING_PWD);
+	in[1] = ft_ask_pass(ASK_VERIFYING_PWD);
 	if (in[1] == NULL)
 	{
-		ft_dprintf(2, "%s\n", strerror(errno));
 		free(in[0]);
 		return (NULL);
 	}
 	if (ft_strcmp(in[0], in[1]) == 0)
+	{
+		free(in[1]);
 		return (in[0]);
+	}
 	free(in[0]);
+	free(in[1]);
 	ft_dprintf(2, ASK_PWD_FAILURE "\n");
 	return (NULL);
 }
