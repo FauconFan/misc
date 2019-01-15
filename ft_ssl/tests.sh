@@ -123,7 +123,7 @@ checks_hash()
 	done
 }
 
-checks_encrypt()
+checks_des()
 {
 	ENC_OUT_REAL="enc_real.out"
 	ENC_OUT_MINE="enc_mine.out"
@@ -187,15 +187,15 @@ else
 		hash )
 			checks_hash
 			;;
-		encrypt )
-			checks_encrypt
+		des )
+			checks_des
 			;;
 		leaks )
 			checks_leaks
 			;;
 		all )
 			checks_hash
-			checks_encrypt
+			checks_des
 			checks_leaks
 			;;
 		* )

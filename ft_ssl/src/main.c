@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:24:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 14:07:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/15 14:47:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ int					main(int argc, char **argv) {
 			do_des(parser);
 	}
 	ft_free_cmd_parser(&parser);
-    return 0;
+	return (0);
 }

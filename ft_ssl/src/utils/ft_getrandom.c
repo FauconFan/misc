@@ -6,7 +6,7 @@
 /*   By: pepe <pepe@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:21:04 by pepe              #+#    #+#             */
-/*   Updated: 2018/10/18 08:59:26 by pepe             ###   ########.fr       */
+/*   Updated: 2019/01/15 16:10:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		fill_buffer(int fd, char *buffer, size_t len)
 	return (0);
 }
 
-int				getrandom(char *buffer, size_t len)
+int				ft_getrandom(char *buffer, size_t len)
 {
 	int		entropy;
 	int		fd_random;
@@ -38,7 +38,6 @@ int				getrandom(char *buffer, size_t len)
 		return (1);
 	else if (ioctl(fd_random, RNDGETENTCNT, &entropy) == 0)
 	{
-		ft_printf("entropy : %d\n", entropy);
 		if (entropy < (int)(sizeof(int) * 8))
 			ret = 2;
 		else if (fill_buffer(fd_random, buffer, len))

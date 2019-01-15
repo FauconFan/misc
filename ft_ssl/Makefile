@@ -6,11 +6,20 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2019/01/13 14:48:35 by jpriou           ###   ########.fr        #
+#    Updated: 2019/01/15 16:08:04 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ssl
+
+_RED=$(shell tput setaf 1 2> /dev/null || echo "")
+_GREEN=$(shell tput setaf 2 2> /dev/null || echo "")
+_YELLOW=$(shell tput setaf 3 2> /dev/null || echo "")
+_BLUE=$(shell tput setaf 4 2> /dev/null || echo "")
+_PURPLE=$(shell tput setaf 5 2> /dev/null || echo "")
+_CYAN=$(shell tput setaf 6 2> /dev/null || echo "")
+_WHITE=$(shell tput setaf 7 2> /dev/null || echo "")
+_END=$(shell tput sgr0 2> /dev/null || echo "")
 
 SRC_FOLDER = src/
 INCLUDES_FOLDER = inc/
@@ -31,8 +40,13 @@ SRC_PROJECT = \
 				core/do_dgst.c \
 				core/do_base.c \
 				core/do_des.c \
+				core/do_des2.c \
 				utils/get_in.c \
 				utils/set_out.c \
+				utils/ask_key_iv.c \
+				utils/ft_getrandom.c \
+				utils/ft_str_to_uint64_ssl.c \
+				custom_pbkdf2/ft_poor_pbkdf2.c \
 				main.c \
 
 SRC_FP = $(addprefix $(SRC_FOLDER), $(SRC_PROJECT))
@@ -47,11 +61,15 @@ all :
 	make $(NAME)
 
 $(NAME) : $(OBJ) $(LIBFTA)
-	make -C $(LIBFT_FOLDER)
-	$(GWW) $(OBJ) -o $@ $(LIBS)
+	@make -C $(LIBFT_FOLDER)
+	@printf "Program %s... " "$(NAME)"
+	@$(GWW) $(OBJ) -o $@ $(LIBS)
+	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
 
 %.o : %.c
-	$(GWW) -c $? -o $@
+	@printf "Compiling %s... " "$?"
+	@$(GWW) -c $? -o $@
+	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
 
 .PHONY: clean
 clean :

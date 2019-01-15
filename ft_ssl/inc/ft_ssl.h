@@ -6,14 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/13 11:36:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:09:31 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SSL_COMMAND_H
 # define FT_SSL_COMMAND_H
 
-// #include <linux/random.h>
+# include <linux/random.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
@@ -36,6 +36,13 @@ void					ft_ssl_add_cmds(t_cmd_builder_parser *bd_parser);
 t_cmd_config			*cmd_config_init();
 void					cmd_config_end(t_cmd_config *conf);
 
+void					core(t_des_cmd *cmd, uint64_t key, uint64_t iv);
+char					*ft_poor_pbkdf2(char *password, char *salt);
+
+/*
+**	Utils
+*/
+
 char					*get_in(char *input_file, size_t *len_in);
 char					*get_in_ascii(
 							char *input_file,
@@ -53,7 +60,10 @@ void					prepare_out_ascii(
 							size_t *len,
 							t_bool ascii_mode);
 
-// uint64_t				custom_pbkdf2(char *pwd);
-// int						getrandom(char *buffer, size_t len);
+int						ask_key_iv(t_des_cmd *cmd);
+
+t_bool					ft_str_to_uint64_ssl(uint64_t *key, char *str);
+
+int						ft_getrandom(char *buffer, size_t len);
 
 #endif

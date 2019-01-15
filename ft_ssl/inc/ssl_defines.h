@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 11:07:25 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/13 21:45:30 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:17:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 # define HELP_DES			"Encrypt (DES) using %s cipher mode algorithm"
 
 # define PAD_PRINT_ASCII	64
+# define ASK_PWD			"enter encryption password:"
+# define ASK_VERIFYING_PWD	"Verifying - enter encryption password:"
+# define ASK_PWD_FAILURE	"Verification failure"
+
+# define MSG_VALID_KEY		"You should provide a valid key."
+# define MSG_VALID_IV		"You should provide a valid initialisation vector (iv)."
+# define MSG_VALID_SALT		"You should provide a valid salt, or just miss it."
 
 /*
 **	Commands defines
