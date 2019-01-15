@@ -1,6 +1,16 @@
 #!/bin/bash
 
+_RED=$(tput setaf 1 2> /dev/null || echo "")
+_GREEN=$(tput setaf 2 2> /dev/null || echo "")
+_YELLOW=$(tput setaf 3 2> /dev/null || echo "")
+_BLUE=$(tput setaf 4 2> /dev/null || echo "")
+_PURPLE=$(tput setaf 5 2> /dev/null || echo "")
+_CYAN=$(tput setaf 6 2> /dev/null || echo "")
+_WHITE=$(tput setaf 7 2> /dev/null || echo "")
+_END=$(tput sgr0 2> /dev/null || echo "")
+
 TMP_SCORE=$(mktemp)
+DUMP_LEAKS_FILE="dump_leaks.txt"
 
 MD5_META="openssl md5,./ft_ssl md5"
 MD4_META="openssl md4,./ft_ssl md4"
@@ -30,7 +40,7 @@ IV3="F0E1D2C3B4A59687"
 
 IVS="${IV1};${IV2};${IV3};"
 
-MODES="des-ecb;des-cbc;des-cfb;des-ocb;"
+MODES="des-ecb;des-cbc;des-cfb;des-ofb;"
 
 BASE64="base64,base64 -d,./ft_ssl base64,./ft_ssl base64 -d,1"
 BASE64_URL="base64 | tr '+/' '-_', tr -- '-_' '+/' | base64 -d,./ft_ssl base64_url,./ft_ssl base64_url -d,1"
@@ -75,11 +85,11 @@ compt_OK()
 {
 	N=$(cat ${TMP_SCORE})
 	if [ -z ${N} ]; then
-		printf "OK 1"
+		printf "OK %s1%s" "${_GREEN}" "${_END}"
 		echo "1" > ${TMP_SCORE}
 	else
 		N=$((N + 1))
-		printf "\\rOK %d" "${N}"
+		printf "\\rOK %s%d%s" "${_GREEN}" "${N}" "${_END}"
 		echo ${N} > ${TMP_SCORE}
 	fi
 }
@@ -151,6 +161,25 @@ checks_encrypt()
 	done
 }
 
+_check_leak()
+{
+	BEG_CMD="if !"
+	END_CMD="2>&1 | tee -a ${DUMP_LEAKS_FILE} | grep 'definitely lost' ; then printf '${_GREEN}OK${_END}\\n'; else printf '${_RED}KO${_END}\\n'; fi"
+
+	eval "${BEG_CMD} $1 ${END_CMD}"
+}
+
+checks_leaks()
+{
+	VG="valgrind --leak-check=full"
+	RD="cat /dev/urandom | head -c 512"
+	CMD="${VG} ./ft_ssl"
+
+	rm -f ${DUMP_LEAKS_FILE}
+	_check_leak "${CMD}"
+	_check_leak "${RD} | ${CMD} md5"
+}
+
 if ! [ $# = 1 ]; then
 	RET=1
 else
@@ -161,9 +190,13 @@ else
 		encrypt )
 			checks_encrypt
 			;;
+		leaks )
+			checks_leaks
+			;;
 		all )
 			checks_hash
 			checks_encrypt
+			checks_leaks
 			;;
 		* )
 			RET=1
