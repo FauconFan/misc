@@ -164,9 +164,10 @@ checks_des()
 _check_leak()
 {
 	BEG_CMD="if !"
-	END_CMD="2>&1 | tee -a ${DUMP_LEAKS_FILE} | grep 'definitely lost' ; then printf '${_GREEN}OK${_END}\\n'; else printf '${_RED}KO${_END}\\n'; fi"
+	END_CMD="2>&1 | tee -a ${DUMP_LEAKS_FILE} | grep 'definitely lost' ; then printf '${_GREEN}OK${_END}'; else printf '${_RED}KO${_END}'; fi"
 
-	eval "${BEG_CMD} $1 ${END_CMD}"
+	eval "${BEG_CMD} $* ${END_CMD}"
+	printf " : \"%s\"\\n" "$*"
 }
 
 checks_leaks()
