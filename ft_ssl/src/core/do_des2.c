@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 14:53:17 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 14:53:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/16 23:42:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void		core(t_des_cmd *cmd, uint64_t key, uint64_t iv)
 
 	action = (cmd->encode_mode) ? ENCRYPT : DECRYPT;
 	des = ft_des_new(key, iv, action, cmd->mode_cipher);
+	if (cmd->no_pad)
+		ft_des_set_pad(des, FALSE);
 	content_in = (uint8_t *)get_in_ascii(cmd->in, &l_in, (action == DECRYPT) && cmd->ascii);
 	if (content_in)
 	{

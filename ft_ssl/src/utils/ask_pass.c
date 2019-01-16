@@ -6,40 +6,51 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 16:51:06 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 17:17:32 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/17 00:33:11 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-static void		core_ask(t_sb *sb, int fd)
+static char		*core_ask(int fd)
 {
-	char	buff[2048 + 1];
+	char	*buff;
+	char	*tmp;
+	size_t	len;
+	size_t	count;
 	int		ret;
-	int		count;
 
+	len = 128;
 	count = 0;
+	buff = ft_strnew(len);
 	while ((ret = read(fd, buff + count, 1)) > 0 && buff[count] != '\n')
 	{
-		count++;
-		if (count == 2048)
+		if (buff[count] == 127)
 		{
-			buff[count] = 0;
-			ft_sb_append(sb, buff);
-			count = 0;
+			if (count > 0)
+			{
+				buff[count] = 0;
+				--count;
+			}
+		}
+		else
+		{
+			count++;
+			if (count == len)
+			{
+				len *= 2;
+				tmp = ft_strndup(buff, len);
+				free(buff);
+				buff = tmp;
+			}
 		}
 	}
-	if (ret > 0)
-	{
-		buff[count] = '\0';
-		ft_sb_append(sb, buff);
-	}
 	write(1, "\n", 1);
+	return (buff);
 }
 
 char			*ft_ask_pass(char *prompt)
 {
-	t_sb			*sb;
 	char			*res;
 	struct termios	t_old;
 	struct termios	t_new;
@@ -51,12 +62,9 @@ char			*ft_ask_pass(char *prompt)
 	tcgetattr(fd, &t_new);
 	t_new.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(fd, TCSANOW, &t_new);
-	sb = ft_sb_new();
 	ft_putstr(prompt);
-	core_ask(sb, fd);
+	res = core_ask(fd);
 	tcsetattr(fd, TCSANOW, &t_old);
-	res = ft_sb_tostring(sb);
-	ft_sb_free(&sb);
 	if (close(fd) < 0)
 	{
 		free(res);

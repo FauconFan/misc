@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:00:15 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 17:18:06 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/16 23:39:49 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,15 @@ static int 		get_salt(t_des_cmd *cmd)
 	return (0);
 }
 
+static void		put_in_w_sum(char **str, char *md5_sum, size_t pad)
+{
+	if (*str == NULL)
+	{
+		*str = ft_strnew(16);
+		ft_strncpy(*str, md5_sum + pad, 16);
+	}
+}
+
 int				ask_key_iv(t_des_cmd *cmd)
 {
 	char	*pwd;
@@ -71,7 +80,11 @@ int				ask_key_iv(t_des_cmd *cmd)
 	ret = 0;
 	if (cmd->key && (cmd->vector || ft_need_iv(cmd->mode_cipher) == FALSE))
 		return (1);
-	pwd = getpassphrase();
+	pwd = NULL;
+	if (cmd->password)
+		pwd = ft_strdup(cmd->password);
+	if (pwd == NULL)
+		pwd = getpassphrase();
 	if (pwd == NULL)
 		ret = 1;
 	else
@@ -79,16 +92,8 @@ int				ask_key_iv(t_des_cmd *cmd)
 		if (get_salt(cmd))
 			ret = 1;
 		md5_sum = ft_poor_pbkdf2(pwd, cmd->salt);
-		if (cmd->key == NULL)
-		{
-			cmd->key = ft_strnew(16);
-			ft_strncpy(cmd->key, md5_sum, 16);
-		}
-		if (cmd->vector == NULL)
-		{
-			cmd->vector = ft_strnew(16);
-			ft_strncpy(cmd->vector, md5_sum + 16, 16);
-		}
+		put_in_w_sum(&cmd->key, md5_sum, 0);
+		put_in_w_sum(&cmd->vector, md5_sum, 16);
 		free(md5_sum);
 	}
 	free(pwd);

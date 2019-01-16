@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 17:58:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 15:11:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/16 22:53:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ t_des_cmd			*ft_ssl_des_init(t_cmd_parser *parser)
 	res->in = ft_cli_gets(parser->parser, HELP_IN_TAG);
 	res->out = ft_cli_gets(parser->parser, HELP_OUT_TAG);
 	res->key = alloc_if_necessary(ft_cli_gets(parser->parser, HELP_KEY_TAG));
-	res->ask_password = ft_cli_getb(parser->parser, HELP_PWD_TAG);
+	res->ask_password = ft_cli_getb(parser->parser, HELP_APWD_TAG);
+	res->password = alloc_if_necessary(ft_cli_gets(parser->parser, HELP_PWD_TAG));
 	res->salt = alloc_if_necessary(ft_cli_gets(parser->parser, HELP_SALT_TAG));
 	res->vector = alloc_if_necessary(ft_cli_gets(parser->parser, HELP_VEC_TAG));
+	res->no_pad = ft_cli_getb(parser->parser, HELP_NOPAD_TAG);
 	return res;
 }
 
@@ -83,6 +85,8 @@ void				ft_ssl_des_free(t_des_cmd **cmd)
 		free((*cmd)->salt);
 	if ((*cmd)->vector)
 		free((*cmd)->vector);
+	if ((*cmd)->password)
+		free((*cmd)->password);
 	free(*cmd);
 	*cmd = NULL;
 }

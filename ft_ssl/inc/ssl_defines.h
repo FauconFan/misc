@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 11:07:25 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/16 00:55:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/16 22:52:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@
 # define CMD_SHA512_224		"sha512_224"
 # define CMD_BASE64			"base64"
 # define CMD_BASE64_URL		"base64_url"
-# define CMD_ECB			"des-ecb"
-# define CMD_CBC			"des-cbc"
-# define CMD_OFB			"des-ofb"
-# define CMD_CFB			"des-cfb"
+# define CMD_DES			"des"
+# define CMD_DES_ECB		"des-ecb"
+# define CMD_DES_CBC		"des-cbc"
+# define CMD_DES_OFB		"des-ofb"
+# define CMD_DES_CFB		"des-cfb"
 
 /*
 **	Specifig commands helpers
@@ -65,9 +66,11 @@
 # define HELP_OPT_S			"print the sum of the given string"
 # define HELP_ASC_OUTPUT	"process (input/output) with base64 algorithm"
 # define HELP_KEY_HEX		"key in hexadecimal form"
-# define HELP_PWD			"password is asked, and key and iv are generated"
+# define HELP_PWD			"password is given in the next argument"
+# define HELP_APWD			"password is asked, and key and iv are generated"
 # define HELP_SALT_HEX		"salt in hexadecimal form"
 # define HELP_VEC_HEX		"initialization vector in hexadecimal form"
+# define HELP_NOPAD			"disable standard block padding"
 
 /*
 **	Tags
@@ -84,7 +87,9 @@
 # define HELP_ASC_TAG		"ascii_tag"
 # define HELP_KEY_TAG		"key_tag"
 # define HELP_PWD_TAG		"password_tag"
+# define HELP_APWD_TAG		"ask_password_tag"
 # define HELP_SALT_TAG		"salt_tag"
 # define HELP_VEC_TAG		"vector_tag"
+# define HELP_NOPAD_TAG		"nopad_tag"
 
 #endif

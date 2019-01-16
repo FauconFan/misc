@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 09:37:56 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 14:53:54 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/16 22:56:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 typedef struct			s_des_config
 {
-	char				*help_title;
 	char				*cmd;
 	t_enc_mode			mode_cipher;
+	char				*help_title;
 }						t_des_config;
 
 typedef struct			s_des_cmd
@@ -29,8 +29,10 @@ typedef struct			s_des_cmd
 	char				*out;
 	char				*key;
 	t_bool				ask_password;
+	char				*password;
 	char				*salt;
 	char				*vector;
+	t_bool				no_pad;
 }						t_des_cmd;
 
 t_cmd_config_n			*ft_ssl_add_des_cmd(t_cmd_config_n *cmds_tab);

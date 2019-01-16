@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 11:34:36 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/13 22:49:23 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/16 22:17:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ t_dgst_config	g_cmds_dgst[] =
 
 t_des_config	g_cmds_des[] =
 {
-	{"ecb", CMD_ECB, ECB},
-	{"cbc", CMD_CBC, CBC},
-	{"cfb", CMD_CFB, CFB},
-	{"ofb", CMD_OFB, OFB},
+	{CMD_DES, CBC, "cbc"},
+	{CMD_DES_ECB, ECB, "ecb"},
+	{CMD_DES_CBC, CBC, "cbc"},
+	{CMD_DES_CFB, CFB, "cfb"},
+	{CMD_DES_OFB, OFB, "ofb"},
 };
 
 size_t			g_cmds_dgst_size = sizeof(g_cmds_dgst) / sizeof(*g_cmds_dgst);

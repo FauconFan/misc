@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 11:19:18 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 16:28:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/16 21:57:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ static t_bool	handle_error(
 	return (TRUE);
 }
 
+static void		print_metadata(t_des_cmd *cmd)
+{
+	char	*tmp[3];
+
+	tmp[0] = ft_str_toupper(cmd->salt);
+	tmp[1] = ft_str_toupper(cmd->key);
+	tmp[2] = ft_str_toupper(cmd->vector);
+	ft_printf("SALT = %s\n", tmp[0]);
+	ft_printf("KEY  = %s\n", tmp[1]);
+	if (ft_need_iv(cmd->mode_cipher))
+		ft_printf("IV   = %s\n", tmp[2]);
+	free(tmp[0]);
+	free(tmp[1]);
+	free(tmp[2]);
+}
+
 void			do_des(t_cmd_parser *parser)
 {
 	t_des_cmd		*cmd;
@@ -52,12 +68,7 @@ void			do_des(t_cmd_parser *parser)
 		if (handle_error(cmd, &key, &iv))
 		{
 			if (need_key)
-			{
-				ft_printf("SALT = %s\n", cmd->salt);
-				ft_printf("KEY  = %s\n", cmd->key);
-				if (ft_need_iv(cmd->mode_cipher))
-					ft_printf("IV   = %s\n", cmd->vector);
-			}
+				print_metadata(cmd);
 			if (cmd->ask_password == FALSE)
 				core(cmd, key, iv);
 		}
