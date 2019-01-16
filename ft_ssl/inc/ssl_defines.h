@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 11:07:25 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 16:17:37 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/16 00:55:17 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@
 # define HELP_OPT_S			"print the sum of the given string"
 # define HELP_ASC_OUTPUT	"process (input/output) with base64 algorithm"
 # define HELP_KEY_HEX		"key in hexadecimal form"
-# define HELP_PWD			"password in ascii is the next argument"
+# define HELP_PWD			"password is asked, and key and iv are generated"
 # define HELP_SALT_HEX		"salt in hexadecimal form"
 # define HELP_VEC_HEX		"initialization vector in hexadecimal form"
 

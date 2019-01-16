@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 09:33:08 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 13:26:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/16 00:43:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		set_out(char *output_file, char *o, size_t len_out, t_bool nl)
 	char	*tmp_o;
 	size_t	len_tmp;
 
+	errno_str = NULL;
 	if (nl && len_out != 0)
 		is_nl(o, len_out, &tmp_o, &len_tmp);
 	else
