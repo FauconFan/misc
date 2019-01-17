@@ -1,7 +1,11 @@
-package fr.jpriou.forty_two.avaj_launcher.vehicles;
+package fr.jpriou.forty_two.avaj_launcher;
 
-import fr.jpriou.forty_two.avaj_launcher.weather.Coordinates;
+import fr.jpriou.forty_two.avaj_launcher.Coordinates;
 import fr.jpriou.forty_two.avaj_launcher.WeatherTower;
+
+/*
+**	Simple Helicopter object according to specification.
+*/
 
 class Helicopter extends Aircraft implements Flyable
 {
@@ -12,10 +16,7 @@ class Helicopter extends Aircraft implements Flyable
 		super(name, coordinates);
 	}
 
-	public String _getType()
-	{
-		return (super._HELICOPTER);
-	}
+	public String _getType() { return (super._HELICOPTER); }
 
 	public void updateConditions()
 	{

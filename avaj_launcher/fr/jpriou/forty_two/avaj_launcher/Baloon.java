@@ -1,7 +1,11 @@
-package fr.jpriou.forty_two.avaj_launcher.vehicles;
+package fr.jpriou.forty_two.avaj_launcher;
 
-import fr.jpriou.forty_two.avaj_launcher.weather.Coordinates;
+import fr.jpriou.forty_two.avaj_launcher.Coordinates;
 import fr.jpriou.forty_two.avaj_launcher.WeatherTower;
+
+/*
+**	Simple Baloon object according to specification.
+*/
 
 class Baloon extends Aircraft implements Flyable
 {
@@ -12,10 +16,7 @@ class Baloon extends Aircraft implements Flyable
 		super(name, coordinates);
 	}
 
-	public String _getType()
-	{
-		return (super._BALOON);
-	}
+	public String _getType() { return (super._BALOON); }
 
 	public void updateConditions()
 	{

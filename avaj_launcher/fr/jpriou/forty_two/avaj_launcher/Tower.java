@@ -3,8 +3,8 @@ package fr.jpriou.forty_two.avaj_launcher;
 import java.util.ArrayList;
 
 import fr.jpriou.forty_two.avaj_launcher.Logger;
-import fr.jpriou.forty_two.avaj_launcher.vehicles.Aircraft;
-import fr.jpriou.forty_two.avaj_launcher.vehicles.Flyable;
+import fr.jpriou.forty_two.avaj_launcher.Aircraft;
+import fr.jpriou.forty_two.avaj_launcher.Flyable;
 
 public abstract class Tower
 {
@@ -25,6 +25,13 @@ public abstract class Tower
 					 ((Aircraft)fl)._buildPrefixLogger() +
 					 " unregistered from weather tower.");
 	}
+
+	/*
+	**	We have to change this part if we want to register a flyable object
+	**	during execution.
+	**	For now, the conditionsChanged function just adapt when a flyable object
+	**	get removed from the observers Arraylist attribute.
+	*/
 
 	protected void conditionsChanged()
 	{

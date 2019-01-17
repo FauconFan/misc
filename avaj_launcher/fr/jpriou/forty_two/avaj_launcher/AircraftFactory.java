@@ -1,15 +1,19 @@
-package fr.jpriou.forty_two.avaj_launcher.vehicles;
+package fr.jpriou.forty_two.avaj_launcher;
 
-import fr.jpriou.forty_two.avaj_launcher.vehicles.Aircraft;
-import fr.jpriou.forty_two.avaj_launcher.vehicles.Flyable;
-import fr.jpriou.forty_two.avaj_launcher.weather.Coordinates;
+import fr.jpriou.forty_two.avaj_launcher.Aircraft;
+import fr.jpriou.forty_two.avaj_launcher.Flyable;
+import fr.jpriou.forty_two.avaj_launcher.Coordinates;
 
 import java.lang.Exception;
 
 public class AircraftFactory
 {
-	public static Flyable newAircraft(String type, String name,
-									  int longitude, int latitude, int height)
+	public static Flyable newAircraft(
+							String type,
+							String name,
+							int longitude,
+							int latitude,
+							int height)
 	{
 		Coordinates coo = new Coordinates(longitude, latitude, height);
 

@@ -1,7 +1,7 @@
-package fr.jpriou.forty_two.avaj_launcher.vehicles;
+package fr.jpriou.forty_two.avaj_launcher;
 
 import fr.jpriou.forty_two.avaj_launcher.Logger;
-import fr.jpriou.forty_two.avaj_launcher.weather.Coordinates;
+import fr.jpriou.forty_two.avaj_launcher.Coordinates;
 
 public abstract class Aircraft
 {
@@ -37,6 +37,10 @@ public abstract class Aircraft
 
 	public void _logChangingWeather(String msg)
 	{
-		Logger.write(this._buildPrefixLogger() + ": " + msg);
+		String line = "";
+
+		line += this._buildPrefixLogger();
+		line += ": " + msg;
+		Logger.write(line);
 	}
 }

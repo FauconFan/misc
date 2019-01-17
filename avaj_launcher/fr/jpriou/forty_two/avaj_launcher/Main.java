@@ -1,8 +1,8 @@
 package fr.jpriou.forty_two.avaj_launcher;
 
 import fr.jpriou.forty_two.avaj_launcher.Logger;
-import fr.jpriou.forty_two.avaj_launcher.vehicles.AircraftFactory;
-import fr.jpriou.forty_two.avaj_launcher.vehicles.Flyable;
+import fr.jpriou.forty_two.avaj_launcher.AircraftFactory;
+import fr.jpriou.forty_two.avaj_launcher.Flyable;
 import fr.jpriou.forty_two.avaj_launcher.WeatherTower;
 
 import java.io.IOException;
@@ -59,6 +59,10 @@ class Main
 	public static Flyable[] loadFlyables(String[] contentFile)
 	{
 		Flyable[] flyables = new Flyable[contentFile.length - 1];
+		int longitude = 0;
+		int latitude  = 0;
+		int height    = 0;
+
 		for (int i = 1; i < contentFile.length; i++)
 		{
 			String[] splittedLine = contentFile[i].split(" ");
@@ -69,9 +73,6 @@ class Main
 				System.err.println("\t-> line number " + (i + 1) + ": \"" + contentFile[i] + "\"");
 				System.exit(1);
 			}
-			int longitude = 0;
-			int latitude  = 0;
-			int height    = 0;
 			try {
 				longitude = Integer.parseInt(splittedLine[2], 10);
 				latitude  = Integer.parseInt(splittedLine[3], 10);

@@ -6,9 +6,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/*
+**	Stores all lines in a ArrayList then open the log file then write to it.
+*/
+
 public final class Logger
 {
-	private static String pathLog = "./log.txt";
+	private static String pathLog;
 	private static ArrayList <String> contentLog = new ArrayList <>();
 
 	public static void changeLogoutFile(String p)

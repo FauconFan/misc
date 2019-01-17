@@ -1,7 +1,11 @@
-package fr.jpriou.forty_two.avaj_launcher.vehicles;
+package fr.jpriou.forty_two.avaj_launcher;
 
-import fr.jpriou.forty_two.avaj_launcher.weather.Coordinates;
+import fr.jpriou.forty_two.avaj_launcher.Coordinates;
 import fr.jpriou.forty_two.avaj_launcher.WeatherTower;
+
+/*
+**	Simple JetPlane object according to specification.
+*/
 
 class JetPlane extends Aircraft implements Flyable
 {
@@ -12,10 +16,7 @@ class JetPlane extends Aircraft implements Flyable
 		super(name, coordinates);
 	}
 
-	public String _getType()
-	{
-		return (super._JETPLANE);
-	}
+	public String _getType() { return (super._JETPLANE); }
 
 	public void updateConditions()
 	{
