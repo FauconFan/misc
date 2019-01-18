@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 17:58:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/18 10:44:18 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 11:19:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_des_cmd			*ft_ssl_des_init(t_cmd_parser *par)
 		ft_dprintf(2, "Cannot encode AND decode mode at the same time\n");
 		return (NULL);
 	}
-	config = get_des_config(parser);
+	config = get_des_config(par);
 	ft_memcheck((res = (t_des_cmd *)malloc(sizeof(t_des_cmd))));
 	res->ascii = ft_cli_getb(par->parser, HELP_ASC_TAG);
 	res->mode_cipher = config->mode_cipher;
