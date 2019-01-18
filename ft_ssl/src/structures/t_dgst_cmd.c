@@ -6,13 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 17:58:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/13 11:39:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:44:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-static t_dgst_config *get_dgst_config(t_cmd_parser *parser)
+static t_dgst_config	*get_dgst_config(t_cmd_parser *parser)
 {
 	size_t	i;
 
@@ -26,7 +26,7 @@ static t_dgst_config *get_dgst_config(t_cmd_parser *parser)
 	return (NULL);
 }
 
-t_bool				is_dgst_cmd(char *cmd)
+t_bool					is_dgst_cmd(char *cmd)
 {
 	size_t	i;
 
@@ -40,7 +40,7 @@ t_bool				is_dgst_cmd(char *cmd)
 	return (FALSE);
 }
 
-t_dgst_cmd			*ft_ssl_dgst_init(t_cmd_parser *parser)
+t_dgst_cmd				*ft_ssl_dgst_init(t_cmd_parser *parser)
 {
 	t_dgst_cmd		*res;
 	t_dgst_config	*config;
@@ -58,7 +58,7 @@ t_dgst_cmd			*ft_ssl_dgst_init(t_cmd_parser *parser)
 	return (res);
 }
 
-void			ft_ssl_dgst_free(t_dgst_cmd **cmd)
+void					ft_ssl_dgst_free(t_dgst_cmd **cmd)
 {
 	free(*cmd);
 	*cmd = NULL;

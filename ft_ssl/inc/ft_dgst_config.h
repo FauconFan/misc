@@ -6,12 +6,12 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 09:37:56 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/13 11:36:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:34:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_DGST_CONFIG_H
-#define FT_DGST_CONFIG_H
+# define FT_DGST_CONFIG_H
 
 typedef struct			s_dgst_config
 {

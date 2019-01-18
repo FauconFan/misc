@@ -6,13 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 12:04:56 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/13 11:03:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:46:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-t_cmd_config			*cmd_config_init()
+t_cmd_config			*cmd_config_init(void)
 {
 	t_cmd_config		*conf;
 	t_cmd_config_n		*ptrtmp;
@@ -21,7 +21,8 @@ t_cmd_config			*cmd_config_init()
 		exit(2);
 	conf->help = ft_strdup(HELP_PROG);
 	conf->nb_cmds = g_cmds_dgst_size + g_cmds_des_size + 2;
-	if ((conf->cmds = (t_cmd_config_n *)malloc(sizeof(t_cmd_config_n) * (conf->nb_cmds))) == NULL)
+	if ((conf->cmds = (t_cmd_config_n *)malloc(
+						sizeof(t_cmd_config_n) * (conf->nb_cmds))) == NULL)
 		exit(2);
 	ptrtmp = conf->cmds;
 	ptrtmp = ft_ssl_add_dgst_cmd(ptrtmp);

@@ -6,39 +6,39 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/19 16:28:46 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/16 00:34:16 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:51:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
 static void		do_do_base(
-						t_cmd_parser *parser,
+						t_cmd_parser *par,
 						char *(*f)(uint8_t *, size_t),
 						uint8_t *(*unf)(char *, size_t *))
 {
 	t_bool		decode_flag;
-	char		*content_in;
-	char		*content_out;
+	char		*ctin;
+	char		*ctout;
 	size_t		len;
 
-	decode_flag = ft_cli_getb(parser->parser, HELP_DEC_TAG);
-	if (decode_flag && ft_cli_getb(parser->parser, HELP_ENC_TAG))
+	decode_flag = ft_cli_getb(par->parser, HELP_DEC_TAG);
+	if (decode_flag && ft_cli_getb(par->parser, HELP_ENC_TAG))
 		ft_dprintf(2, "You cannot use -e -d flag at the same time\n");
 	else
 	{
-		if ((content_in = get_in(ft_cli_gets(parser->parser, HELP_IN_TAG), &len)))
+		if ((ctin = get_in(ft_cli_gets(par->parser, HELP_IN_TAG), &len)))
 		{
 			if (decode_flag == FALSE)
 			{
-				content_out = f((uint8_t *)content_in, len);
-				len = ft_strlen(content_out);
+				ctout = f((uint8_t *)ctin, len);
+				len = ft_strlen(ctout);
 			}
 			else
-				content_out = (char *)unf(content_in, &len);
-			set_out(ft_cli_gets(parser->parser, HELP_OUT_TAG), content_out, len, FALSE);
-			ft_strdel(&content_in);
-			ft_strdel(&content_out);
+				ctout = (char *)unf(ctin, &len);
+			set_out(ft_cli_gets(par->parser, HELP_OUT_TAG), ctout, len, FALSE);
+			ft_strdel(&ctin);
+			ft_strdel(&ctout);
 		}
 	}
 }

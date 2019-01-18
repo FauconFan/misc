@@ -6,12 +6,12 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/18 08:34:31 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:37:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SSL_COMMAND_H
-# define FT_SSL_COMMAND_H
+#ifndef FT_SSL_H
+# define FT_SSL_H
 
 # include <sys/types.h>
 # include <sys/stat.h>

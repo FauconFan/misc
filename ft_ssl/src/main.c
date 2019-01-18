@@ -6,13 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 08:24:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/15 17:04:40 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:46:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-int					main(int argc, char **argv) {
+int					main(int argc, char **argv)
+{
 	t_cmd_config			*conf;
 	t_cmd_parser			*parser;
 	t_opt_error				err;

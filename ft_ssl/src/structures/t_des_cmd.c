@@ -6,13 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 17:58:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/16 22:53:42 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:44:18 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-static t_des_config *get_des_config(t_cmd_parser *parser)
+static t_des_config	*get_des_config(t_cmd_parser *parser)
 {
 	size_t	i;
 
@@ -47,34 +47,31 @@ t_bool				is_des_cmd(char *cmd)
 	return (FALSE);
 }
 
-t_des_cmd			*ft_ssl_des_init(t_cmd_parser *parser)
+t_des_cmd			*ft_ssl_des_init(t_cmd_parser *par)
 {
 	t_des_cmd		*res;
 	t_des_config	*config;
-	t_bool			encode_mode;
-	t_bool			decode_mode;
 
-	encode_mode = ft_cli_getb(parser->parser, HELP_ENC_TAG);
-	decode_mode = ft_cli_getb(parser->parser, HELP_DEC_TAG);
-	if (encode_mode && decode_mode)
+	if (ft_cli_getb(par->parser, HELP_ENC_TAG) &&
+		ft_cli_getb(par->parser, HELP_DEC_TAG))
 	{
 		ft_dprintf(2, "Cannot encode AND decode mode at the same time\n");
 		return (NULL);
 	}
 	config = get_des_config(parser);
 	ft_memcheck((res = (t_des_cmd *)malloc(sizeof(t_des_cmd))));
-	res->ascii = ft_cli_getb(parser->parser, HELP_ASC_TAG);
+	res->ascii = ft_cli_getb(par->parser, HELP_ASC_TAG);
 	res->mode_cipher = config->mode_cipher;
-	res->encode_mode = !ft_cli_getb(parser->parser, HELP_DEC_TAG);
-	res->in = ft_cli_gets(parser->parser, HELP_IN_TAG);
-	res->out = ft_cli_gets(parser->parser, HELP_OUT_TAG);
-	res->key = alloc_if_necessary(ft_cli_gets(parser->parser, HELP_KEY_TAG));
-	res->ask_password = ft_cli_getb(parser->parser, HELP_APWD_TAG);
-	res->password = alloc_if_necessary(ft_cli_gets(parser->parser, HELP_PWD_TAG));
-	res->salt = alloc_if_necessary(ft_cli_gets(parser->parser, HELP_SALT_TAG));
-	res->vector = alloc_if_necessary(ft_cli_gets(parser->parser, HELP_VEC_TAG));
-	res->no_pad = ft_cli_getb(parser->parser, HELP_NOPAD_TAG);
-	return res;
+	res->encode_mode = !ft_cli_getb(par->parser, HELP_DEC_TAG);
+	res->in = ft_cli_gets(par->parser, HELP_IN_TAG);
+	res->out = ft_cli_gets(par->parser, HELP_OUT_TAG);
+	res->key = alloc_if_necessary(ft_cli_gets(par->parser, HELP_KEY_TAG));
+	res->ask_password = ft_cli_getb(par->parser, HELP_APWD_TAG);
+	res->password = alloc_if_necessary(ft_cli_gets(par->parser, HELP_PWD_TAG));
+	res->salt = alloc_if_necessary(ft_cli_gets(par->parser, HELP_SALT_TAG));
+	res->vector = alloc_if_necessary(ft_cli_gets(par->parser, HELP_VEC_TAG));
+	res->no_pad = ft_cli_getb(par->parser, HELP_NOPAD_TAG);
+	return (res);
 }
 
 void				ft_ssl_des_free(t_des_cmd **cmd)

@@ -42,8 +42,8 @@ IVS="${IV1};${IV2};${IV3};"
 
 MODES="des-ecb;des-cbc;des-cfb;des-ofb;"
 
-BASE64="base64,base64 -d,./ft_ssl base64,./ft_ssl base64 -d,1"
-BASE64_URL="base64 | tr '+/' '-_', tr -- '-_' '+/' | base64 -d,./ft_ssl base64_url,./ft_ssl base64_url -d,1"
+BASE64="base64,base64 -D,./ft_ssl base64,./ft_ssl base64 -d,1"
+BASE64_URL="base64 | tr '+/' '-_', tr -- '-_' '+/' | base64 -D,./ft_ssl base64_url,./ft_ssl base64_url -d,1"
 
 build_commands()
 {
@@ -164,7 +164,7 @@ checks_des()
 _check_leak()
 {
 	BEG_CMD="if !"
-	END_CMD="2>&1 | tee -a ${DUMP_LEAKS_FILE} | grep 'definitely lost' ; then printf '${_GREEN}OK${_END}'; else printf '${_RED}KO${_END}'; fi"
+	END_CMD="2>&1 | tee -a ${DUMP_LEAKS_FILE} | grep 'definitely lost' | grep -v ' 0 bytes' ; then printf '${_GREEN}OK${_END}'; else printf '${_RED}KO${_END}'; fi"
 
 	eval "${BEG_CMD} $* ${END_CMD}"
 	printf " : \"%s\"\\n" "$*"

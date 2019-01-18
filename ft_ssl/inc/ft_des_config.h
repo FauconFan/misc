@@ -6,12 +6,12 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 09:37:56 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/16 22:56:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:34:20 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_DES_CONFIG_H
-#define FT_DES_CONFIG_H
+# define FT_DES_CONFIG_H
 
 typedef struct			s_des_config
 {

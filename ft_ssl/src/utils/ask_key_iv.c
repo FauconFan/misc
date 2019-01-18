@@ -6,13 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:00:15 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/16 23:39:49 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:40:36 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-static char		*getpassphrase()
+static char		*getpassphrase(void)
 {
 	char	*in[2];
 
@@ -36,7 +36,7 @@ static char		*getpassphrase()
 	return (NULL);
 }
 
-static int 		get_salt(t_des_cmd *cmd)
+static int		get_salt(t_des_cmd *cmd)
 {
 	char	rnd[8];
 	size_t	l;

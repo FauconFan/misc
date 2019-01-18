@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 11:58:06 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/16 22:57:13 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:45:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static t_arg_config		g_config_args_des[] =
 	{'e', NULL, HELP_OPT_ENC, HELP_ENC_TAG, CLI_BOOL, {FALSE}},
 	{'i', "in", HELP_OPT_IN, HELP_IN_TAG, CLI_STRING, { .str_val = NULL }},
 	{'o', "out", HELP_OPT_OUT, HELP_OUT_TAG, CLI_STRING, { .str_val = NULL }},
-	{'k', "key", HELP_KEY_HEX, HELP_KEY_TAG, CLI_STRING, { .str_val = NULL }},
+	{'k', "key", HELP_KEY, HELP_KEY_TAG, CLI_STRING, { .str_val = NULL }},
 	{'p', "password", HELP_PWD, HELP_PWD_TAG, CLI_STRING, { .str_val = NULL }},
 	{0, "ask-pass", HELP_APWD, HELP_APWD_TAG, CLI_BOOL, {FALSE}},
-	{'s', "salt", HELP_SALT_HEX, HELP_SALT_TAG, CLI_STRING, { .str_val = NULL }},
-	{'v', "iv", HELP_VEC_HEX, HELP_VEC_TAG, CLI_STRING, { .str_val = NULL }},
+	{'s', "salt", HELP_SALT, HELP_SALT_TAG, CLI_STRING, { .str_val = NULL }},
+	{'v', "iv", HELP_VEC, HELP_VEC_TAG, CLI_STRING, { .str_val = NULL }},
 	{0, "no-pad", HELP_NOPAD, HELP_NOPAD_TAG, CLI_BOOL, {FALSE}},
 };
 

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 11:07:25 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/16 22:52:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:45:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define ASK_PWD_FAILURE	"Verification failure"
 
 # define MSG_VALID_KEY		"You should provide a valid key."
-# define MSG_VALID_IV		"You should provide a valid initialisation vector (iv)."
+# define MSG_VALID_IV		"You should provide a valid init vector (iv)."
 # define MSG_VALID_SALT		"You should provide a valid salt, or just miss it."
 
 /*
@@ -65,11 +65,11 @@
 # define HELP_OPT_R			"reverse the format of the output"
 # define HELP_OPT_S			"print the sum of the given string"
 # define HELP_ASC_OUTPUT	"process (input/output) with base64 algorithm"
-# define HELP_KEY_HEX		"key in hexadecimal form"
+# define HELP_KEY			"key in hexadecimal form"
 # define HELP_PWD			"password is given in the next argument"
 # define HELP_APWD			"password is asked, and key and iv are generated"
-# define HELP_SALT_HEX		"salt in hexadecimal form"
-# define HELP_VEC_HEX		"initialization vector in hexadecimal form"
+# define HELP_SALT			"salt in hexadecimal form"
+# define HELP_VEC			"initialization vector in hexadecimal form"
 # define HELP_NOPAD			"disable standard block padding"
 
 /*

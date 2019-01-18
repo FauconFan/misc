@@ -6,16 +6,25 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 16:51:06 by jpriou            #+#    #+#             */
-/*   Updated: 2019/01/17 00:33:11 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 10:43:38 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
+static void		extend_buffer(char **buff, size_t *len)
+{
+	char	*tmp;
+
+	*len *= 2;
+	tmp = ft_strndup(*buff, *len);
+	free(*buff);
+	*buff = tmp;
+}
+
 static char		*core_ask(int fd)
 {
 	char	*buff;
-	char	*tmp;
 	size_t	len;
 	size_t	count;
 	int		ret;
@@ -28,21 +37,12 @@ static char		*core_ask(int fd)
 		if (buff[count] == 127)
 		{
 			if (count > 0)
-			{
-				buff[count] = 0;
-				--count;
-			}
+				buff[count--] = 0;
 		}
 		else
 		{
-			count++;
-			if (count == len)
-			{
-				len *= 2;
-				tmp = ft_strndup(buff, len);
-				free(buff);
-				buff = tmp;
-			}
+			if (++count == len)
+				extend_buffer(&buff, &len);
 		}
 	}
 	write(1, "\n", 1);
