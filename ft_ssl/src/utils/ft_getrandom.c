@@ -6,7 +6,7 @@
 /*   By: pepe <pepe@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:21:04 by pepe              #+#    #+#             */
-/*   Updated: 2019/01/15 16:10:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/01/18 08:35:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,14 @@ static int		fill_buffer(int fd, char *buffer, size_t len)
 
 int				ft_getrandom(char *buffer, size_t len)
 {
-	int		entropy;
 	int		fd_random;
 	int		ret;
 
 	ret = 0;
 	if ((fd_random = open("/dev/urandom", O_RDONLY)) < 0)
 		return (1);
-	else if (ioctl(fd_random, RNDGETENTCNT, &entropy) == 0)
-	{
-		if (entropy < (int)(sizeof(int) * 8))
-			ret = 2;
-		else if (fill_buffer(fd_random, buffer, len))
-			ret = 3;
-	}
+	if (fill_buffer(fd_random, buffer, len))
+		ret = 2;
 	if (close(fd_random))
 		ret = 1;
 	return (ret);
