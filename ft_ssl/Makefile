@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/21 08:09:16 by jpriou            #+#    #+#              #
-#    Updated: 2019/01/15 17:22:51 by jpriou           ###   ########.fr        #
+#    Updated: 2019/01/19 09:08:51 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC_FOLDER = src/
 INCLUDES_FOLDER = inc/
 LIBFT_FOLDER = ../../my_awesome_libft/libft/
 
-GWW = gcc -g -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
+GWW = gcc -Wall -Wextra -Werror -I $(INCLUDES_FOLDER) -I $(LIBFT_FOLDER)
 LIBS = -L $(LIBFT_FOLDER) -l ft
 LIBFTA = $(LIBFT_FOLDER)libft.a
 
