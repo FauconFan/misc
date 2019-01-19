@@ -1,5 +1,7 @@
 package fr.jpriou.forty_two.avaj_launcher;
 
+import java.util.Random;
+
 /*
 **	WeatherProvider is a singleton class.
 **
@@ -19,9 +21,12 @@ public class WeatherProvider
 
 	public Weather getCurrentWeather(Coordinates coo)
 	{
-		int cand;
+		int		cand;
+		Random	rand;
 
+		rand = new Random();
 		cand = coo.getLongitude() + coo.getLatitude() + coo.getHeight();
+		cand += rand.nextInt();
 		cand %= 4;
 
 		if (cand == 0)

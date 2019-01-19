@@ -119,7 +119,7 @@ class Main
 		Flyable[]    flyables      = loadFlyables(contentFile);
 		WeatherTower weatherTower  = new WeatherTower();
 
-		Logger.changeLogoutFile(args[0] + ".log");
+		Logger.changeLogoutFile("simulation.txt");
 
 		for (Flyable flyable : flyables)
 		{
