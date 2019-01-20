@@ -29,19 +29,24 @@ SHA512_META="openssl sha -sha512,./ft_ssl sha512"
 SHA512224_META="shasum -a 512224,./ft_ssl sha512_224"
 SHA512256_META="shasum -a 512256,./ft_ssl sha512_256"
 
-BASE64="base64,base64 -D,./ft_ssl base64,./ft_ssl base64 -d,1"
-BASE64_URL="base64 | tr '+/' '-_', tr -- '-_' '+/' | base64 -D,./ft_ssl base64_url,./ft_ssl base64_url -d,1"
+# You may have to change the option of base64 for decrypt (differs in versions)
+BASE64="base64,base64 -d,./ft_ssl base64,./ft_ssl base64 -d,1"
+BASE64_URL="base64 | tr '+/' '-_', tr -- '-_' '+/' | base64 -d,./ft_ssl base64_url,./ft_ssl base64_url -d,1"
 
 # FIXME you can change this if you don't handle such features
 
 HASH_META="${MD5_META};${MD4_META};${SHA256_META};${SHA1_META};${SHA224_META};${SHA384_META};${SHA512_META};${SHA512224_META};${SHA512256_META};"
 MODES_META="des-ecb;des-cbc;des-cfb;des-ofb;"
-BASE64_META="${BASE64};${BASE64_URL}"
+BASE64_META="${BASE64};${BASE64_URL};"
 
 # FIXME you can change the default values of nb_keys and nb_ivs
 
 NB_KEYS="3"
 NB_IVS="1"
+
+# FIXME you can change the default value of the number of random inputs
+
+NB_RANDOM_INPUT="100"
 
 ################################## CORE ########################################
 
@@ -77,7 +82,7 @@ build_commands()
 {
 	rm -f tmp.txt
 	echo "${BASE64_META}" | while read -r -d';' BASE; do
-		echo "${BASE}" >> tmp.txt
+		echo "${BASE};" >> tmp.txt
 	done
 	echo "${MODES_META}" | while read -r -d';' MODE; do
 		echo "${KEYS}" | while read -r -d';' KEY; do
@@ -123,6 +128,29 @@ compt_reset()
 {
 	echo "" > "${TMP_SCORE}"
 	printf "\\n"
+}
+
+header()
+{
+	for (( i = 0; i < 80 / 5; i++ )); do
+		printf "#####"
+	done
+	printf "\\n#####"
+	M=${#1}
+	N=$((35 - (M / 2)))
+	O=$((70 - N - M))
+	for (( i = 0; i < N; i++ )); do
+		printf " "
+	done
+	printf "%s" "${1}"
+	for (( i = 0; i < O; i++ )); do
+		printf " "
+	done
+	printf "#####\\n"
+	for (( i = 0; i < 80 / 5; i++ )); do
+		printf "#####"
+	done
+	printf "\\n\\n"
 }
 
 # ================ Abstract check hash function =====================
@@ -204,6 +232,7 @@ _check_des()
 # checks_hash checks hash with fixed data
 checks_hash()
 {
+	header "Test script - Hash functions"
 	echo "${HASH_META}" | while IFS=',' read -r -d';' A B; do
 		printf "============ %s ===========\\n" "${B}"
 		echo "${DATA}" | while read -r -d'.' STR; do
@@ -217,9 +246,10 @@ checks_hash()
 # checks_hash checks hash with random data
 checks_random_hash()
 {
+	header "Test script - Hash functions (random input)"
 	echo "${HASH_META}" | while IFS=',' read -r -d';' A B; do
 		printf "============ %s ===========\\n" "${B}"
-		for (( i = 0; i < 50; i++ )); do
+		for (( i = 0; i < NB_RANDOM_INPUT; i++ )); do
 			head -c ${RANDOM} < /dev/urandom > "${TMP_FILE}"
 			_check_hash "${TMP_FILE}" "${A}" "${B}"
 		done
@@ -230,8 +260,9 @@ checks_random_hash()
 # checks_des checks hash with fixed data
 checks_des()
 {
+	header "Test script - Des modes and base64"
 	echo "${ENCRYPT_META}" | while IFS=',' read -r -d';' A B C D E; do
-		printf "============ %s ===========\\n" "${D}"
+		printf "============ %s ===========\\n" "${C}"
 		echo "${DATA}" | while read -r -d'.' STR; do
 			echo "${STR}" > "${TMP_FILE}"
 			_check_des "${TMP_FILE}" "${A}" "${B}" "${C}" "${D}" "${E}"
@@ -243,9 +274,10 @@ checks_des()
 # checks_des checks hash with random data
 checks_random_des()
 {
+	header "Test script - Des modes and base64 (random input)"
 	echo "${ENCRYPT_META}" | while IFS=',' read -r -d';' A B C D E; do
-		printf "============ %s ===========\\n" "${D}"
-		for (( i = 0; i < 50; i++ )); do
+		printf "============ %s ===========\\n" "${C}"
+		for (( i = 0; i < NB_RANDOM_INPUT; i++ )); do
 			head -c ${RANDOM} < /dev/urandom > "${TMP_FILE}"
 			_check_des "${TMP_FILE}" "${A}" "${B}" "${C}" "${D}" "${E}"
 		done
@@ -274,6 +306,7 @@ checks_leaks()
 	RD="cat /dev/urandom | head -c 512"
 	CMD="${VG} ./ft_ssl"
 
+	header "Test script - check leaks"
 	rm -f ${DUMP_LEAKS_FILE}
 	_check_leak "${CMD}"
 	echo "${HASH_META}" | while IFS=',' read -r -d';' REAL_CMD MINE_CMD; do
@@ -336,6 +369,7 @@ usage()
 	printf "\\t- random_hash : check hash of random data\\n"
 	printf "\\t- des : check des of fixed data (includes base64)\\n"
 	printf "\\t- random_des : check des of random data (includes base64)\\n"
+	printf "\\t- random : check hash and des of random data\\n"
 	printf "\\t- leaks : checks leaks of several commands\\n"
 	printf "\\t- all : all of above\\n"
 	printf "\\t- usage|help : print this message\\n"
@@ -376,6 +410,10 @@ else
 			checks_des
 			;;
 		random_des )
+			checks_random_des
+			;;
+		random )
+			checks_random_hash
 			checks_random_des
 			;;
 		leaks )
