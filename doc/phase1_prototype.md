@@ -30,8 +30,8 @@ cimp>> help
  - open [NAME]
  - close [NAME]
  - list
- - symm_verti
- - symm_hori
+ - sym_verti
+ - sym_hori
  - rotate [ANGLE]
 ```
 

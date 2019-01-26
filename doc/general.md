@@ -30,7 +30,7 @@ typedef struct      s_cimp
 }                   t_cimp;
 ```
 
-NB_SCREENS correspond à la valeur maximale d' écrans qu'il est permit d'ouvrir simultanément.
+NB_SCREENS correspond à la valeur maximale d' écrans qu'il est permis d'ouvrir simultanément.
 
 Chaque image est représentée par un identifiant (son index dans le tableau).
 
@@ -132,7 +132,7 @@ cut copie la zone sélectionnée (ou donnée en argument) et la garde en mémoir
 copy fait la même chose mais n'efface pas la zone sélectionnée.  
 paste copie la zone en mémoire aux coordonnées spécifiées.
 
-### sym_verti/symm_hori
+### sym_verti/sym_hori
 
 Ces deux commandes appliquent une symétrie verticale ou horizontale sur la zone sélectionnée.
 
