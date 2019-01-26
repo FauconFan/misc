@@ -1,6 +1,6 @@
 # Doc
 
-Ce document présente la documentation finale de ce projet. C'est un idéal. Au fur et à mesure du développement nous affinerons ce document puis le perfectionnerons.
+Ce document présente la documentation finale de ce projet. C'est un idéal. Au fur et à mesure du développement nous compléterons ce document en le perfectionnant.
 
 Ce document ne traite que de la partie obligatoire de ce projet.  
 
@@ -30,9 +30,9 @@ typedef struct      s_cimp
 }                   t_cimp;
 ```
 
-Le NB_SCREENS est une valeur maximale des écrans que nous permettons d'ouvrir en même temps.
+NB_SCREENS correspond à la valeur maximale d' écrans qu'il est permit d'ouvrir simultanément.
 
-Chaque image est symbolisée par son identifiant (son index dans le tableau).
+Chaque image est représentée par un identifiant (son index dans le tableau).
 
 La structure t_cimp_select stocke la zone sélectionnée ainsi que l'identifiant de l'écran.
 
@@ -49,12 +49,12 @@ Le caractère '?' signifie que l'argument est optionnel.
 La notation [...] désigne juste un argument.  
 La notation [...|...] désigne un type d'agument ou un autre. (e.g.: [NAME|ID]).  
 
-Pour simplifier la lecture, des raccourcis ont été pris:
+Pour simplifier la lecture, nous utiliseront les raccourcis suivants :
  - [RECT] <~> [X0] [Y0] [W] [H]
  - [COLOR] <~> [[R] [G] [B]|[RGB]]
  - [NAME] <~> [? [NAME|ID]]
 
-RECT désigne bien 4 arguments.  
+RECT désigne 4 arguments.  
 COLOR permet d'écrire une couleur sous la forme décimale ou héxadécimale. (e.g: 255 0 0 ou FF00000)
 NAME permet de savoir de qu'elle image on parle.  
 Si il y a plus d'une image, l'argument NAME est obligatoire.  
@@ -74,8 +74,8 @@ cimp>> help
  - cut [? [NAME] [RECT]]
  - copy [? [NAME] [RECT]]
  - paste [NAME] [X0] [Y0]
- - symm_verti [NAME] [? [RECT]]
- - symm_hori [NAME] [? [RECT]]
+ - sym_verti [NAME] [? [RECT]]
+ - sym_hori [NAME] [? [RECT]]
  - rotate [NAME] [ANGLE]
  - crop_reduce [NAME] [? [COORD]]
  - crop_extend [NAME] [? [COORD]]
@@ -88,11 +88,11 @@ cimp>> help
  - ajust_light_contrast [NAME] [???]
 ```
 
-Dans toutes les commandes après la commande list, l'action ne s'application que sur [NAME] (dans le cas où il y a plusieurs images).
+Pour les commandes après la commande list, l'action ne s'applique que sur [NAME] (dans le cas où il y a plusieurs images).
 
 ### open
 
-open est la commande qui permet d'ouvrir une nouvelle image si le nombre totale de fenêtre déjà ouverte n'est pas atteint.
+open permet d'ouvrir une nouvelle image si le nombre total de fenêtre déjà ouverte n'est pas atteint.
 
 ### close
 
@@ -112,7 +112,7 @@ fleur.img		1		640x480		/home/.../cimp/tests/fleur.img
 
 ### save
 
-save permet de sauvegarder l'image NAME|ID dans le chemin PATH, si le chemin PATH n'est pas spécifié, on sauvegarde l'image avec le même chemin chargé.
+save permet de sauvegarder l'image NAME|ID dans le chemin PATH, si le chemin PATH n'est pas spécifié, on sauvegarde l'image avec le chemin initial (utilisé pour charger l'image).
 
 ### update
 
@@ -120,7 +120,7 @@ update permet de recharger une image depuis le chemin donné. Si le chemin donn�
 
 ### select
 
-select définit la zone sélectionnée (un rectangle) par le point de coordonnée (X0, Y0) qui désigne le point le plus en bas à gauche de l'image, puis le rectangle est de taille W * H. Si le name (ou l'identifiant) n'est pas spécifié et qu'il y a plus qu'une image, cela résulte en une erreur.
+select définit la zone sélectionnée (un rectangle) par le point de coordonnée (X0, Y0) qui désigne le point le plus en bas à gauche de l'image, puis le rectangle est de taille W * H. Si le name (ou l'identifiant) n'est pas spécifié et qu'il y a plus qu'une image, produit une erreur.
 
 ### unselect
 
@@ -128,28 +128,28 @@ unselect efface les coordonnées de la zone en mémoire.
 
 ### cut/copy/paste
 
-cut copie la zone sélectionnée (ou donnée en argument) et la garde en mémoire, et efface la zone sélectionnée avec du blanc.  
-copy fait la même chose hormis qu'elle n'efface pas la zone sélectionnée.  
+cut copie la zone sélectionnée (ou donnée en argument) et la garde en mémoire, et remplace la zone sélectionnée par du blanc.  
+copy fait la même chose mais n'efface pas la zone sélectionnée.  
 paste copie la zone en mémoire aux coordonnées spécifiées.
 
-### symm_verti/symm_hori
+### sym_verti/symm_hori
 
-Ces deux commandes font une symmétrie verticale ou horizontale sur la zone sélectionnée.
+Ces deux commandes appliquent une symétrie verticale ou horizontale sur la zone sélectionnée.
 
 ### rotate
 
-rotate est une commande qui prend un angle en argument (multiple de 90) et qui tourne l'image de ANGLE degré. Le sens est le même que les aiguilles d'une montre.
+rotate est une commande qui prend un angle en argument (multiple de 90) et qui tourne l'image de ANGLE degré dans le sens horaire.
 
 ### crop_reduce/crop_extend
 
-Ces commandes correspond à la modification de l'espace de travail.  
-crop_reduce effectue un découpage rectangulaire de l'image.  
-crop_extend agrandit l'espace de travail (par des pixels blancs)
+Ces commandes correspondent à la modification de l'espace de travail.  
+crop_reduce réduit l'image a l'aide d'un découpage rectangulaire.  
+crop_extend agrandit l'espace de travail (avec des pixels blancs)
 
 ### scale
 
-scale est une commande qui aggrandit/réduit l'espace de travail ainsi que la taille de l'image.
-Les arguments sont un facteur multiplicatif (e.g: scale x1.2), ou une nouvelle taille directement.
+scale est une commande qui agrandit/réduit l'espace de travail ainsi que la taille de l'image.
+Les arguments sont  soit un facteur multiplicatif (e.g: scale x1.2), soit une nouvelle taille.
 
 ### fill
 
@@ -171,7 +171,7 @@ color_gray remplace tous les pixels de la zone sélectionnée par son équivalen
 
 color_white_black remplace toutes les couleurs de la zone sélectionnée par blanc ou noir en respectant la règle suivante:
 
-Si margin n'est pas donée, elle vaut 128.
+Si margin n'est pas donnée, elle vaut 128.
 
 Si le représentant en variation de gris du pixel traité est plus grand (ou égale) que le margin alors le nouveau pixel est de couleur noir sinon il est de couleur blanc.
 
