@@ -14,7 +14,7 @@ CC = gcc
 SDL_FLAGS = $(shell sdl2-config --cflags)
 SDL_LIBS = $(shell sdl2-config --libs)
 
-CFLAGS = -Wall -Wextra -Werror $(SDL_FLAGS)
+CFLAGS = -g -Wall -Wextra -Werror $(SDL_FLAGS)
 IFLAGS = -I ./inc/
 LFLAGS = $(SDL_LIBS)
 FLAGS = $(CFLAGS) $(IFLAGS)
