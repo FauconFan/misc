@@ -14,7 +14,7 @@ CC = gcc
 SDL_FLAGS = $(shell sdl2-config --cflags)
 SDL_LIBS = $(shell sdl2-config --libs)
 
-CFLAGS = -Wall -Wextra -Werror $(SDL_FLAGS)
+CFLAGS = -g -Wall -Wextra -Werror $(SDL_FLAGS)
 IFLAGS = -I ./inc/
 LFLAGS = $(SDL_LIBS)
 FLAGS = $(CFLAGS) $(IFLAGS)
@@ -23,6 +23,8 @@ SRC := ""
 include files.mk # On charge la liste des fichiers depuis le fichier files.mk
 
 OBJ = $(SRC:%.c=%.o)
+
+#################################### COMPILATION ###############################
 
 .PHONY: all
 all: $(NAME)
@@ -50,7 +52,20 @@ fclean: clean
 .PHONY: re
 re: fclean all
 
+###################################### INSTALL #################################
+
 .PHONY: install
 install:
 	@test -f $(NAME) || (printf "'make all' before\\n" && false)
 	cp $(NAME) /usr/local/bin/$(NAME)
+
+###################################### IMAGES ##################################
+
+BMP_IMAGES_REMOTE = \
+			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled17.bmp \
+			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled5.bmp \
+			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled3.bmp \
+
+images:
+	mkdir -p $@
+	$(foreach url, $(BMP_IMAGES_REMOTE), curl $(url) -o images/$(shell basename $(url));)
