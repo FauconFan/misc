@@ -36,19 +36,6 @@ t_parser_config * init_p_config (char * n, short hn, short ha){
 }
 */
 
-/*Une fonction dupliquant la chaine de caractere s (comportement similaire a strdup) si elle n'est aps NULL*/
-char *dupstr(const char *s, t_error_parser * error){
-    if(s == NULL){
-        return NULL;
-    }
-  char *r = malloc(strlen(s)+1);
-  if(r == NULL){
-      *error = MALLOC_EST_LE_MAILLON_FAIBLE;
-      return NULL;
-  }
-  strcpy (r, s);
-  return r;
-}
 
 /*Une fonction qui cree un pointeur vers un t_parser_out avec les champs c pour cmd, nf pour name_file et a pour angle*/
 t_parser_out * init_p_out (char * c, char * nf, int  a, t_error_parser * error){
@@ -58,8 +45,8 @@ t_parser_out * init_p_out (char * c, char * nf, int  a, t_error_parser * error){
     return NULL;
   }
 
-  res->cmd = dupstr(c, error);
-  res->name_file = dupstr(nf, error);
+  res->cmd = dupstr(c);
+  res->name_file = dupstr(nf);
   res->angle = a;
   return res;
 }

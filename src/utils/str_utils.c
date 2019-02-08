@@ -71,3 +71,16 @@ char		*strjoin_c(const char *dir, const char *file, const char joiner)
 	res[len1 + len2] = 0;
 	return (res);
 }
+
+/*Une fonction dupliquant la chaine de caractere s (comportement similaire a strdup) si elle n'est aps NULL*/
+char *dupstr(const char *s){
+    if(s == NULL){
+        return NULL;
+    }
+  char *r = malloc(strlen(s)+1);
+  if(r == NULL){
+      return NULL;
+  }
+  strcpy (r, s);
+  return r;
+}
