@@ -14,5 +14,9 @@ void cimp_help();
 //cimp_list.c:
 void cimp_list();
 
+//cimp_sym.c:
+void cimp_sym_verti();
+void cimp_sym_hori();
+
 
 #endif

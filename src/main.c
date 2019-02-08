@@ -9,8 +9,8 @@ void test(int id)
 	if (id == 0 && g_cimp->screen == NULL)
 	{
 		cimp_open("images/untitled3.bmp", &errno_str);
-		cimp_help();
-		cimp_list();
+		cimp_sym_verti();
+		
 		if (errno_str)
 			printf("Something went wrong %s\n", errno_str);
 	}

@@ -21,7 +21,8 @@ COMMANDS_FILES =\
 			cimp_close.c\
 			cimp_help.c\
 			cimp_list.c\
-						
+			cimp_sym.c\
+			
 
 SRC = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \
