@@ -36,9 +36,16 @@ t_parser_config * init_p_config (char * n, short hn, short ha){
 }
 */
 
-/*Une fonction dupliquant la chaine de caractere s (comportement similaire a strdup)*/
-char *dupstr(const char *s){
+/*Une fonction dupliquant la chaine de caractere s (comportement similaire a strdup) si elle n'est aps NULL*/
+char *dupstr(const char *s, t_error_parser * error){
+    if(s == NULL){
+        return NULL;
+    }
   char *r = malloc(strlen(s)+1);
+  if(r == NULL){
+      *error = MALLOC_EST_LE_MAILLON_FAIBLE;
+      return NULL;
+  }
   strcpy (r, s);
   return r;
 }
@@ -51,8 +58,8 @@ t_parser_out * init_p_out (char * c, char * nf, int  a, t_error_parser * error){
     return NULL;
   }
 
-  res->cmd = dupstr(c);
-  res->name_file = dupstr(nf);
+  res->cmd = dupstr(c, error);
+  res->name_file = dupstr(nf, error);
   res->angle = a;
   return res;
 }
@@ -127,13 +134,13 @@ t_parser_out * parse_line (char * line, t_error_parser * error) {
 
   if(args < 0){
     * error = TOO_MUCH_ARGS ;
-    free(res);
+    free_p_out(res);
     return NULL;
   }
 
   if(args > 0){
     * error = NOT_ENOUGH_ARGS ;
-    free(res);
+    free_p_out(res);
     return NULL;
   }
 
