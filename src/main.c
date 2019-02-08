@@ -8,14 +8,13 @@ void test(int id)
 
 	if (id == 0 && g_cimp->screen == NULL)
 	{
-		g_cimp->screen = cimp_init_screen("images/untitled3.bmp", &errno_str);
+		cimp_open("images/untitled3.bmp", &errno_str);
 		if (errno_str)
 			printf("Something went wrong %s\n", errno_str);
 	}
 	else if (id == 1 && g_cimp->screen)
 	{
-		cimp_end_screen(g_cimp->screen);
-		g_cimp->screen = NULL;
+		cimp_close(g_cimp->screen);
 	}
 }
 
