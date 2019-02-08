@@ -108,11 +108,13 @@ align_pp_define_span        = 2
 sp_pp_concat                = add       # ignore/add/remove/force
 
 # Add or remove space after preprocessor '#' stringify operator. Also affects the '#@' charizing operator.
-sp_pp_stringify             = ignore    # ignore/add/remove/force
+sp_pp_stringify             = add    # ignore/add/remove/force
 
 # Add or remove space before preprocessor '#' stringify operator as in '#define x(y) L#y'.
-sp_before_pp_stringify      = ignore    # ignore/add/remove/force
+sp_before_pp_stringify      = add    # ignore/add/remove/force
 
+# Add tab after define
+force_tab_after_define      = true
 
 # Template
 # --------------------------------------------------------------------------------------------------
