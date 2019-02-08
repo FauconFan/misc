@@ -32,6 +32,13 @@ int main(void)
 {
 	char			*line;
 	int				running;
+	t_error_parser 	*error = malloc(sizeof(t_error_parser));
+	if( error == NULL){
+		perror("malloc");
+		exit(1);
+	}
+
+	t_parser_out	*cmd;
 
 	if (cimp_init())
 	{
@@ -49,8 +56,14 @@ int main(void)
 			test(1);
 		else
 		{
-			printf("The line entered is : %s\n", line);
-			printf("Enter 'QUIT' to exit the program properly\n");
+			cmd = parse_line(line, error);
+			if(cmd != NULL){
+				printf("DAMN nous avons parser une ligne ! cmd : %s name_file : %s angle : %d \n",cmd->cmd, cmd->name_file, cmd->angle );
+				free_p_out(cmd);
+			}else
+				printf("Attention une erreur est apparue ! ERREUR : \n %s \n", get_error(*error));
+			//printf("The line entered is : %s\n", line);
+			//printf("Enter 'QUIT' to exit the program properly\n");
 		}
 		free(line);
 		line = NULL;

@@ -18,6 +18,7 @@
 # include "typedefs.h"
 # include "env.h"
 # include "utils.h"
+# include "parser.h"
 
 # define CIMP_PROMPT	"cimp>> "
 
