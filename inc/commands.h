@@ -11,5 +11,8 @@ int cimp_close();
 //cimp_help.c:
 void cimp_help();
 
+//cimp_list.c:
+void cimp_list();
+
 
 #endif
