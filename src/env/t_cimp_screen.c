@@ -21,7 +21,6 @@ t_cimp_screen		*cimp_init_screen(
 	t_cimp_screen	*sc;
 	SDL_Window		*win;
 	SDL_Surface		*surf;
-	SDL_Rect		full_rect;
 	char			*path;
 
 	if ((path = normalize_path(path_bmp)) == NULL)
@@ -35,10 +34,6 @@ t_cimp_screen		*cimp_init_screen(
 		free(path);
 		return (NULL);
 	}
-	full_rect.x = 0;
-	full_rect.y = 0;
-	full_rect.w = surf->w;
-	full_rect.h = surf->h;
 	if (NULL == (win = SDL_CreateWindow(basename(path),
 						SDL_WINDOWPOS_UNDEFINED,
 						SDL_WINDOWPOS_UNDEFINED,
@@ -51,8 +46,6 @@ t_cimp_screen		*cimp_init_screen(
 		SDL_FreeSurface(surf);
 		return (NULL);
 	}
-	SDL_BlitSurface(surf, &full_rect, SDL_GetWindowSurface(win), NULL);
-	SDL_UpdateWindowSurface(win);
 	if ((sc = (t_cimp_screen *)malloc(sizeof(t_cimp_screen))) == NULL)
 	{
 		*errno_str = MALLOC_FAIL;
@@ -64,6 +57,7 @@ t_cimp_screen		*cimp_init_screen(
 	sc->window = win;
 	sc->buff_screen = surf;
 	sc->original_path = path;
+	cimp_update_screen(sc);
 	return (sc);
 }
 
@@ -77,4 +71,24 @@ void				cimp_end_screen(t_cimp_screen *sc)
 	SDL_FreeSurface(sc->buff_screen);
 	SDL_DestroyWindow(sc->window);
 	free(sc);
+}
+
+/**
+ * update the SDL window using the buffered SDL_Surface.
+ * @param  screen the cimp screen pointer
+ * @return        nothing
+ */
+void				cimp_update_screen(t_cimp_screen *screen)
+{
+	SDL_Rect		full_rect;
+
+	if (screen == NULL)
+		return ;
+
+	full_rect.x = 0;
+	full_rect.y = 0;
+	full_rect.w = screen->buff_screen->w;
+	full_rect.h = screen->buff_screen->h;
+	SDL_BlitSurface(screen->buff_screen, &full_rect, SDL_GetWindowSurface(screen->window), NULL);
+	SDL_UpdateWindowSurface(screen->window);
 }
