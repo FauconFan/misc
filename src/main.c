@@ -10,7 +10,8 @@ void test(int id)
 	{
 		cimp_open("images/untitled3.bmp", &errno_str);
 		cimp_sym_verti();
-		
+		cimp_update_screen(g_cimp->screen);
+
 		if (errno_str)
 			printf("Something went wrong %s\n", errno_str);
 	}
