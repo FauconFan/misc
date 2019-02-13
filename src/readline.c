@@ -1,4 +1,3 @@
-
 #include "cimp.h"
 
 /**
@@ -9,13 +8,13 @@
  * @param  size_max_ptr pointeur vers la taille du buffer
  * @return              un booléen qui indique si ça s'est bien passé
  */
-static int		extend_buffer(char **str_ptr, size_t *size_max_ptr)
-{
-	char	*next_buffer;
+static int      extend_buffer(char ** str_ptr, size_t * size_max_ptr) {
+	char * next_buffer;
 
 	next_buffer = malloc(*size_max_ptr * 2);
 	if (next_buffer == NULL)
 		return (1);
+
 	memcpy(next_buffer, *str_ptr, *size_max_ptr);
 	memset(next_buffer + *size_max_ptr, 0, *size_max_ptr);
 	free(*str_ptr);
@@ -28,41 +27,36 @@ static int		extend_buffer(char **str_ptr, size_t *size_max_ptr)
  * de caractères allouée contenant l'entrée donnée par l'utilisateur.
  * @return  un pointeur vers la chaîne allouée.
  */
-char			*cimp_readline(void)
-{
-	char	*res;
-	size_t	len;
-	size_t	size_max;
-	int		ret;
+char * cimp_readline(void) {
+	char * res;
+	size_t len;
+	size_t size_max;
+	int ret;
 
-	len = 0;
+	len      = 0;
 	size_max = 256;
-	res = malloc(size_max);
+	res      = malloc(size_max);
 	if (res == NULL)
 		return (NULL);
+
 	memset(res, 0, size_max);
 	write(1, CIMP_PROMPT, strlen(CIMP_PROMPT));
-	while ((ret = read(0, res + len, 1)) > 0)
-	{
-		if (res[len] == '\n')
-		{
+	while ((ret = read(0, res + len, 1)) > 0) {
+		if (res[len] == '\n') {
 			res[len] = '\0';
-			break ;
+			break;
 		}
 		len++;
-		if (len == size_max)
-		{
-			if (extend_buffer(&res, &size_max))
-			{
+		if (len == size_max) {
+			if (extend_buffer(&res, &size_max)) {
 				free(res);
 				return (NULL);
 			}
 		}
 	}
-	if (ret < 0)
-	{
+	if (ret < 0) {
 		free(res);
 		return (NULL);
 	}
 	return (res);
-}
+} /* cimp_readline */
