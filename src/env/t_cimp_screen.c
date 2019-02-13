@@ -20,7 +20,9 @@ t_cimp_screen		*cimp_init_screen(
 {
 	t_cimp_screen	*sc;
 	SDL_Window		*win;
+	SDL_Surface		*bmp;
 	SDL_Surface		*surf;
+	SDL_Rect		origin;
 	char			*path;
 
 	if ((path = normalize_path(path_bmp)) == NULL)
@@ -28,12 +30,25 @@ t_cimp_screen		*cimp_init_screen(
 		*errno_str = NOT_A_PATH;
 		return (NULL);
 	}
-	if ((surf = SDL_LoadBMP(path)) == NULL)
+	if ((bmp = SDL_LoadBMP(path)) == NULL)
 	{
 		*errno_str = (char *)SDL_GetError();
 		free(path);
 		return (NULL);
 	}
+	if ((surf = SDL_CreateRGBSurface(0, bmp->w, bmp->h, 32, 0, 0, 0, 0)) == NULL)
+	{
+		*errno_str = (char *)SDL_GetError();
+		free(path);
+		SDL_FreeSurface(bmp);
+		return (NULL);
+	}
+	origin.x = 0;
+	origin.y = 0;
+	origin.w = bmp->w;
+	origin.h = bmp->h;
+	SDL_BlitSurface(bmp, &origin, surf, NULL);
+	SDL_FreeSurface(bmp);
 	if (NULL == (win = SDL_CreateWindow(basename(path),
 						SDL_WINDOWPOS_UNDEFINED,
 						SDL_WINDOWPOS_UNDEFINED,
