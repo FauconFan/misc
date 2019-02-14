@@ -18,5 +18,7 @@ void cimp_list();
 void cimp_sym_verti();
 void cimp_sym_hori();
 
+//cimp_rotate.c:
+void cimp_rotate(int angle);
 
 #endif

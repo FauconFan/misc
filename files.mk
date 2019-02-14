@@ -22,7 +22,9 @@ COMMANDS_FILES =\
 			cimp_help.c\
 			cimp_list.c\
 			cimp_sym.c\
-			
+			cimp_rotate.c\
+
+
 
 SRC = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \
