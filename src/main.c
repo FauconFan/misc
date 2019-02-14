@@ -9,7 +9,7 @@ void test(int id)
 	if (id == 0 && g_cimp->screen == NULL)
 	{
 		cimp_open("images/untitled3.bmp", &errno_str);
-		cimp_sym_verti();
+		cimp_sym_hori();
 		cimp_update_screen(g_cimp->screen);
 
 		if (errno_str)
