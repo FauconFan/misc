@@ -1,4 +1,3 @@
-
 #include "cimp.h"
 
 /**
@@ -7,26 +6,24 @@
  * @param  s2
  * @return    un pointeur allouée
  */
-char		*strjoin(const char *s1, const char *s2)
-{
-	size_t			len1;
-	size_t			len2;
-	size_t			len_tot;
-	char			*res;
+char * strjoin(const char * s1, const char * s2) {
+	size_t len1;
+	size_t len2;
+	size_t len_tot;
+	char * res;
 
 	len_tot = strlen(s1) + strlen(s2);
-	res = (char *)malloc(sizeof(char) * (len_tot + 1));
+	res     = (char *) malloc(sizeof(char) * (len_tot + 1));
 	if (res == NULL)
 		return (NULL);
+
 	len1 = 0;
 	len2 = 0;
-	while (s1[len1])
-	{
+	while (s1[len1]) {
 		res[len1] = s1[len1];
 		len1++;
 	}
-	while (s2[len2])
-	{
+	while (s2[len2]) {
 		res[len1 + len2] = s2[len2];
 		len2++;
 	}
@@ -42,29 +39,27 @@ char		*strjoin(const char *s1, const char *s2)
  * @param  joiner le charactère dit de connexion.
  * @return        un pointerur allouée
  */
-char		*strjoin_c(const char *dir, const char *file, const char joiner)
-{
-	size_t		len1;
-	size_t		len2;
-	size_t		len_tot;
-	char		*res;
+char * strjoin_c(const char * dir, const char * file, const char joiner) {
+	size_t len1;
+	size_t len2;
+	size_t len_tot;
+	char * res;
 
-	len1 = strlen(dir);
+	len1    = strlen(dir);
 	len_tot = len1 + strlen(file) + 1;
-	res = (char *)malloc(sizeof(char) * (len_tot + 1));
+	res     = (char *) malloc(sizeof(char) * (len_tot + 1));
 	if (res == NULL)
 		return (NULL);
+
 	len1 = 0;
 	len2 = 0;
-	while (dir[len1])
-	{
+	while (dir[len1]) {
 		res[len1] = dir[len1];
 		len1++;
 	}
 	res[len1] = joiner;
 	len1++;
-	while (file[len2])
-	{
+	while (file[len2]) {
 		res[len1 + len2] = file[len2];
 		len2++;
 	}

@@ -1,0 +1,6 @@
+language: c
+matrix:
+    include:
+        - name: check uncrustify
+          env: NAME="check uncrustify"
+          script: make uncrustify_check
