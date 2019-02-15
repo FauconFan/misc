@@ -81,7 +81,7 @@ CONFIG_UNCRUSTIFY = uncrustify_config.txt
 $(BIN_UNCRUSTIFY): submodule
 	mkdir -p uncrustify/build
 	(cd uncrustify/build && cmake ..)
-	make -C uncrustify/build
+	make -C uncrustify/build -j8
 
 .PHONY: uncrustify_apply
 uncrustify_apply: $(BIN_UNCRUSTIFY)
