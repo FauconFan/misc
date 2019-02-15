@@ -22,6 +22,9 @@ FLAGS = $(CFLAGS) $(IFLAGS)
 SRC := ""
 include files.mk # On charge la liste des fichiers depuis le fichier files.mk
 
+HEADERS_FILES = $(shell find inc -name "*.h")
+ALL_FILES = $(SRC) $(HEADERS_FILES)
+
 OBJ = $(SRC:%.c=%.o)
 
 #################################### COMPILATION ###############################
@@ -69,3 +72,28 @@ BMP_IMAGES_REMOTE = \
 images:
 	mkdir -p $@
 	$(foreach url, $(BMP_IMAGES_REMOTE), curl $(url) -o images/$(shell basename $(url));)
+
+###################################### Uncrustify ##############################
+
+BIN_UNCRUSTIFY = uncrustify/build/uncrustify
+CONFIG_UNCRUSTIFY = uncrustify_config.txt
+
+$(BIN_UNCRUSTIFY): submodule
+	mkdir -p uncrustify/build
+	(cd uncrustify/build && cmake ..)
+	make -C uncrustify/build
+
+.PHONY: uncrustify_apply
+uncrustify_apply: $(BIN_UNCRUSTIFY)
+	$(BIN_UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --replace --no-backup --mtime $(ALL_FILES)
+
+.PHONY: uncrustify_check
+uncrustify_check: $(BIN_UNCRUSTIFY)
+	$(BIN_UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --check $(ALL_FILES)
+
+###################################### SUBMODULES ##############################
+
+.PHONY: submodule
+submodule:
+	git submodule init
+	git submodule update

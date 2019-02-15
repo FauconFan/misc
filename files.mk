@@ -7,6 +7,7 @@ COMMANDS_FOLDER = src/commands/
 SRC_FILES = \
 			main.c \
 			readline.c \
+			parser.c \
 
 ENV_FILES = \
 			t_cimp.c \

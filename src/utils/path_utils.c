@@ -1,4 +1,3 @@
-
 #include "cimp.h"
 
 /**
@@ -7,13 +6,13 @@
  * @param  f2 le suffixe
  * @return    un nouveau pointeur allouée.
  */
-static char		*concat_dir_str(char *f1, char *f2)
-{
-	size_t	len;
+static char * concat_dir_str(char * f1, char * f2) {
+	size_t len;
 
 	len = strlen(f1);
 	if (len > 0 && f1[len - 1] == '/')
 		return (strjoin(f1, f2));
+
 	return (strjoin_c(f1, f2, '/'));
 }
 
@@ -25,33 +24,34 @@ static char		*concat_dir_str(char *f1, char *f2)
  * @param  res la chaîne de charactères à manipuler.
  * @return     un code d'erreur.
  */
-static int		normalize_absolute_path(char *res)
-{
-	int		size;
-	int		index;
+static int      normalize_absolute_path(char * res) {
+	int size;
+	int index;
 
 	size = 1;
-	while (res[size] != 0 && (res[size] != '/' || size++))
-	{
-		if (strncmp(res + size, "../", 3) == 0)
-		{
+	while (res[size] != 0 && (res[size] != '/' || size++)) {
+		if (strncmp(res + size, "../", 3) == 0) {
 			size--;
 			index = 4;
 			while (--size >= 0 && res[size] != '/')
 				index++;
 			if (size < 0)
 				return (1);
+
 			memmove(res + size, res + size + index, strlen(res + size + index) + 1);
 			size++;
 		}
-		else if (strncmp(res + size, "./", 2) == 0)
+		else if (strncmp(res + size, "./", 2) == 0) {
 			memmove(res + size, res + size + 2, strlen(res + size + 2) + 1);
-		else
+		}
+		else {
 			while (res[size] != '/' && res[size] != 0)
 				size++;
+		}
 	}
 	if (size == 1 && res[size] != 0)
 		return (1);
+
 	return (0);
 }
 
@@ -65,38 +65,38 @@ static int		normalize_absolute_path(char *res)
  * @param  curpath le chemin
  * @return         le chemin absolu
  */
-char			*normalize_path(char *curpath)
-{
-	char	*res;
-	char	*tmp;
-	char	pwd[1025];
-	size_t	l;
+char * normalize_path(char * curpath) {
+	char * res;
+	char * tmp;
+	char pwd[1025];
+	size_t l;
 
-	if (strncmp(curpath, "~/", 2) == 0 || strcmp(curpath, "~") == 0)
-	{
+	if (strncmp(curpath, "~/", 2) == 0 || strcmp(curpath, "~") == 0) {
 		l = 1;
 		if (strncmp(curpath, "~/", 2) == 0)
 			l = 2;
 		tmp = getenv("HOME");
 		tmp = concat_dir_str(tmp, curpath + l);
 	}
-	else if (*curpath != '/')
-	{
+	else if (*curpath != '/') {
 		memset(pwd, 0, 1025);
 		if (getcwd(pwd, 1024) == NULL)
 			return (NULL);
+
 		tmp = concat_dir_str(pwd, curpath);
 	}
-	else
+	else {
 		tmp = strdup(curpath);
+	}
 	if (tmp == NULL)
 		return (NULL);
+
 	res = concat_dir_str(tmp, "");
 	free(tmp);
 	if (res == NULL)
 		return (NULL);
-	if (normalize_absolute_path(res))
-	{
+
+	if (normalize_absolute_path(res)) {
 		free(res);
 		res = NULL;
 	}
@@ -104,4 +104,4 @@ char			*normalize_path(char *curpath)
 	if (l > 0 && res[l - 1] == '/')
 		res[l - 1] = '\0';
 	return (res);
-}
+} /* normalize_path */
