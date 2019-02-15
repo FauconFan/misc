@@ -1,7 +1,7 @@
 #ifndef CIMP_H
 #define	CIMP_H
 
-#define _POSIX_SOURCE
+#define	_POSIX_SOURCE
 
 // Standards includes
 #include <stdio.h>
