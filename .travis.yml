@@ -4,8 +4,6 @@ matrix:
         - name: check uncrustify
           script: make uncrustify_check
         - name: run cpplint
-          before_install:
-            - sudo apt-get update
-            - sudo apt-get upgrade -y
+          before_install: sudo apt-get update
           install: sudo apt-get install -y --no-install-recommends python3-venv
           script: make cpplint_run
