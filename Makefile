@@ -16,7 +16,7 @@ SDL_LIBS = $(shell sdl2-config --libs)
 
 INC_FOLDER = inc/
 
-CFLAGS = -g -Wall -Wextra -Werror $(SDL_FLAGS)
+CFLAGS = -g -Wall -Wextra -Werror -std=c11 $(SDL_FLAGS)
 IFLAGS = -I $(INC_FOLDER)
 LFLAGS = $(SDL_LIBS)
 FLAGS = $(CFLAGS) $(IFLAGS)
