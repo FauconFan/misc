@@ -4,3 +4,5 @@ matrix:
         - name: check uncrustify
           env: NAME="check uncrustify"
           script: make uncrustify_check
+        - name: make
+          script: make
