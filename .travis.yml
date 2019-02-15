@@ -16,9 +16,9 @@ install:
 
 matrix:
     include:
+        - name: make
+          script: make
         - name: check uncrustify
           script: make uncrustify_check
         - name: run cpplint
           script: make cpplint_run
-        - name: make
-          script: make
