@@ -1,4 +1,16 @@
 
+################################# HEADERS CODE #################################
+
+INC_FILES = \
+	cimp.h \
+	env.h \
+	typedefs.h \
+	utils.h \
+
+INC = $(addprefix $(INC_FOLDER), $(INC_FILES))
+
+################################# SOURCE CODE ##################################
+
 SRC_FOLDER			= src/
 ENV_FOLDER			= src/env/
 UTILS_FOLDER		= src/utils/
