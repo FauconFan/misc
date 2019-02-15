@@ -123,3 +123,22 @@ CPPCHECK = cppcheck
 .PHONY: cppcheck_run
 cppcheck_run: venv
 	$(CPPCHECK) --error-exitcode=1 --enable=all --suppress=style -I inc $(ALL_FILES)
+
+##################################### CLANG_TIDY ###############################
+
+CLANG_TIDY = clang-tidy-6.0
+
+.PHONY: clang_tidy_run
+clang_tidy_run:
+	$(CLANG_TIDY) \
+		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-readability-braces-around-statements" \
+		-header-filter=".*" \
+		$(SRC) -- -I inc
+
+.PHONY: clang_tidy_fix
+clang_tidy_fix:
+	$(CLANG_TIDY) \
+		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-readability-braces-around-statements" \
+		-header-filter=".*" \
+		-fix-errors \
+		$(SRC) -- -I inc
