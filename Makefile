@@ -14,16 +14,18 @@ CC = gcc
 SDL_FLAGS = $(shell sdl2-config --cflags)
 SDL_LIBS = $(shell sdl2-config --libs)
 
+INC_FOLDER = inc/
+
 CFLAGS = -g -Wall -Wextra -Werror $(SDL_FLAGS)
-IFLAGS = -I ./inc/
+IFLAGS = -I $(INC_FOLDER)
 LFLAGS = $(SDL_LIBS)
 FLAGS = $(CFLAGS) $(IFLAGS)
 
 SRC := ""
+INC := ""
 include files.mk # On charge la liste des fichiers depuis le fichier files.mk
 
-HEADERS_FILES = $(shell find inc -name "*.h")
-ALL_FILES = $(SRC) $(HEADERS_FILES)
+ALL_FILES = $(SRC) $(INC)
 
 OBJ = $(SRC:%.c=%.o)
 
@@ -73,7 +75,24 @@ images:
 	mkdir -p $@
 	$(foreach url, $(BMP_IMAGES_REMOTE), curl $(url) -o images/$(shell basename $(url));)
 
-###################################### Uncrustify ##############################
+###################################### VENV ####################################
+
+CPPLINT = venv/bin/cpplint
+
+venv:
+	python3 -m venv venv
+	venv/bin/pip3 install pip --upgrade
+	venv/bin/pip3 install cpplint
+
+
+###################################### SUBMODULES ##############################
+
+.PHONY: submodule
+submodule:
+	git submodule init
+	git submodule update
+
+###################################### UNCRUSTIFY ##############################
 
 BIN_UNCRUSTIFY = uncrustify/build/uncrustify
 CONFIG_UNCRUSTIFY = uncrustify_config.txt
@@ -91,9 +110,8 @@ uncrustify_apply: $(BIN_UNCRUSTIFY)
 uncrustify_check: $(BIN_UNCRUSTIFY)
 	$(BIN_UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --check $(ALL_FILES)
 
-###################################### SUBMODULES ##############################
+###################################### CPPLINT #################################
 
-.PHONY: submodule
-submodule:
-	git submodule init
-	git submodule update
+.PHONY: cpplint_run
+cpplint_run: venv
+	$(CPPLINT) $(ALL_FILES)
