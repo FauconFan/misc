@@ -2,9 +2,7 @@ language: c
 matrix:
     include:
         - name: check uncrustify
-          env: NAME="check uncrustify"
           script: make uncrustify_check
         - name: run cpplint
-          env: NAME="run cpplint"
-          install: apt-get install -y --no-install-recommands python3-venv
+          install: apt-get install -y --no-install-recommends python3-venv
           script: make cpplint_run
