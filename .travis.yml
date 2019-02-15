@@ -6,6 +6,7 @@ before_install:
 install:
     - sudo apt-get install -y --no-install-recommends
         python3.4-venv
+        cppcheck
     - travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz;
         cd SDL2-2.0.9;
         ./configure;
@@ -22,3 +23,5 @@ matrix:
           script: make uncrustify_check
         - name: run cpplint
           script: make cpplint_run
+        - name: run cppcheck
+          script: make cppcheck_run

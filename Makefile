@@ -115,3 +115,11 @@ uncrustify_check: $(BIN_UNCRUSTIFY)
 .PHONY: cpplint_run
 cpplint_run: venv
 	$(CPPLINT) $(ALL_FILES)
+
+##################################### CPPCHECK #################################
+
+CPPCHECK = cppcheck
+
+.PHONY: cppcheck_run
+cppcheck_run: venv
+	$(CPPCHECK) --error-exitcode=1 --enable=all -I inc $(ALL_FILES)

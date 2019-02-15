@@ -99,6 +99,7 @@ char * normalize_path(char * curpath) {
 	if (normalize_absolute_path(res)) {
 		free(res);
 		res = NULL;
+		return (NULL);
 	}
 	l = strlen(res);
 	if (l > 0 && res[l - 1] == '/')
