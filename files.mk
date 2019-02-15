@@ -6,6 +6,7 @@ UTILS_FOLDER		= src/utils/
 SRC_FILES = \
 			main.c \
 			readline.c \
+			parser.c \
 
 ENV_FILES = \
 			t_cimp.c \
