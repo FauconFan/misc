@@ -33,10 +33,9 @@ void cimp_rotate90(){
   for(int i=0;i<new_height;i++){
     for(int j=0;j<new_width;j++){
       new[new_width-1-j+i*new_width]=old[i+j*new_height];
-      printf("%d\n",new_width-1-j+i*new_width);
     }
   }
-  // libérer buff_screen
+  SDL_FreeSurface(g_cimp->screen->buff_screen);
   g_cimp->screen->buff_screen=surf;
   SDL_SetWindowSize(g_cimp->screen->window,new_width,new_height);
   //g_cimp->screen->buff_screen=surf;
