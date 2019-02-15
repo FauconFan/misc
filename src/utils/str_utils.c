@@ -69,7 +69,7 @@ char * strjoin_c(const char * dir, const char * file, const char joiner) {
 
 /*Une fonction dupliquant la chaine de caractere s (comportement similaire a strdup) si elle n'est aps NULL*/
 char * dupstr(const char * s) {
-	size_t	l;
+	size_t l;
 
 	if (s == NULL) {
 		return NULL;
