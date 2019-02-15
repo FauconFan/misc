@@ -31,9 +31,8 @@ t_cimp_screen * cimp_init_screen(
 		free(path);
 		return (NULL);
 	}
-	if ((surf = SDL_CreateRGBSurface(0, bmp->w, bmp->h, 32, 0, 0, 0, 0)) == NULL)
-	{
-		*errno_str = (char *)SDL_GetError();
+	if ((surf = SDL_CreateRGBSurface(0, bmp->w, bmp->h, 32, 0, 0, 0, 0)) == NULL) {
+		*errno_str = (char *) SDL_GetError();
 		free(path);
 		SDL_FreeSurface(bmp);
 		return (NULL);
@@ -88,12 +87,11 @@ void                cimp_end_screen(t_cimp_screen * sc) {
  * @param  screen the cimp screen pointer
  * @return        nothing
  */
-void				cimp_update_screen(t_cimp_screen *screen)
-{
-	SDL_Rect		full_rect;
+void                cimp_update_screen(t_cimp_screen * screen) {
+	SDL_Rect full_rect;
 
 	if (screen == NULL)
-		return ;
+		return;
 
 	full_rect.x = 0;
 	full_rect.y = 0;
