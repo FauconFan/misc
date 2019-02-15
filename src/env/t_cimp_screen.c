@@ -19,14 +19,15 @@ t_cimp_screen * cimp_init_screen(
 	t_cimp_screen * sc;
 	SDL_Window * win;
 	SDL_Surface * surf;
-	SDL_Rect full_rect;
+	SDL_Surface * bmp;
+	SDL_Rect origin;
 	char * path;
 
 	if ((path = normalize_path(path_bmp)) == NULL) {
 		*errno_str = NOT_A_PATH;
 		return (NULL);
 	}
-	if ((surf = SDL_LoadBMP(path)) == NULL) {
+	if ((bmp = SDL_LoadBMP(path)) == NULL) {
 		*errno_str = (char *) SDL_GetError();
 		free(path);
 		return (NULL);
@@ -55,7 +56,7 @@ t_cimp_screen * cimp_init_screen(
 		SDL_FreeSurface(surf);
 		return (NULL);
 	}
-	SDL_BlitSurface(surf, &full_rect, SDL_GetWindowSurface(win), NULL);
+	SDL_BlitSurface(surf, &origin, SDL_GetWindowSurface(win), NULL);
 	SDL_UpdateWindowSurface(win);
 	if ((sc = (t_cimp_screen *) malloc(sizeof(t_cimp_screen))) == NULL) {
 		*errno_str = MALLOC_FAIL;
