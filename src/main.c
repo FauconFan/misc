@@ -24,12 +24,11 @@ void test(int id) {
  * Loop : on recommence
  * @return  0
  */
-int main(void)
-{
-	char			*line;
-	int				running;
-	t_error_parser 	error;
-	t_parser_out	*cmd;
+int main(void) {
+	char * line;
+	int running;
+	t_error_parser error;
+	t_parser_out * cmd;
 
 	if (cimp_init()) {
 		printf("Something went terribly wrong\n");
@@ -45,16 +44,19 @@ int main(void)
 		}
 		else if (strcmp(line, "close") == 0) { // harcoded test
 			test(1);
-		else
-		{
+		}
+		else {
 			cmd = parse_line(line, &error);
-			if(cmd != NULL){
-				printf("DAMN nous avons parser une ligne ! cmd : %s name_file : %s angle : %d \n", cmd->cmd, cmd->name_file, cmd->angle);
+			if (cmd != NULL) {
+				printf("DAMN nous avons parser une ligne ! cmd : %s name_file : %s angle : %d \n",
+				  cmd->cmd, cmd->name_file, cmd->angle);
 				free_p_out(cmd);
-			}else
+			}
+			else {
 				printf("Attention une erreur est apparue ! ERREUR : \n %s \n", get_error(error));
-			  printf("The line entered is : %s\n", line);
-			  printf("Enter 'QUIT' to exit the program properly\n");
+				printf("The line entered is : %s\n", line);
+				printf("Enter 'QUIT' to exit the program properly\n");
+			}
 		}
 		free(line);
 		line = NULL;
