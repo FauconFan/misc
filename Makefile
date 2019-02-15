@@ -122,4 +122,4 @@ CPPCHECK = cppcheck
 
 .PHONY: cppcheck_run
 cppcheck_run: venv
-	$(CPPCHECK) --error-exitcode=1 --enable=all -I inc $(ALL_FILES)
+	$(CPPCHECK) --error-exitcode=1 --enable=all --suppress=style -I inc $(ALL_FILES)
