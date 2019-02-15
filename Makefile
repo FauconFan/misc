@@ -121,5 +121,5 @@ cpplint_run: venv
 CPPCHECK = cppcheck
 
 .PHONY: cppcheck_run
-cppcheck_run: venv
+cppcheck_run:
 	$(CPPCHECK) --error-exitcode=1 --enable=all --suppress=style -I inc $(ALL_FILES)
