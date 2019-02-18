@@ -86,7 +86,7 @@ char * normalize_path(char * curpath) {
 		tmp = concat_dir_str(pwd, curpath);
 	}
 	else {
-		tmp = strdup(curpath);
+		tmp = dupstr(curpath);
 	}
 	if (tmp == NULL)
 		return (NULL);
@@ -99,6 +99,7 @@ char * normalize_path(char * curpath) {
 	if (normalize_absolute_path(res)) {
 		free(res);
 		res = NULL;
+		return (NULL);
 	}
 	l = strlen(res);
 	if (l > 0 && res[l - 1] == '/')

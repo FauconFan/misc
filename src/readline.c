@@ -18,6 +18,7 @@ static int      extend_buffer(char ** str_ptr, size_t * size_max_ptr) {
 	memcpy(next_buffer, *str_ptr, *size_max_ptr);
 	memset(next_buffer + *size_max_ptr, 0, *size_max_ptr);
 	free(*str_ptr);
+	*str_ptr       = next_buffer;
 	*size_max_ptr *= 2;
 	return (0);
 }

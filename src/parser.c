@@ -88,7 +88,7 @@ char * get_error(t_error_parser error) {
 /*Une fonction qui renvoie un pointeur vers un t_parser_out correspondant a la commande correspondant a line si la commande existe;
  * si elle n'existe pas ou que le nombre d'arguments ne correspond pas on met a jour le champs error et on renvoie NULL*/
 t_parser_out * parse_line(char * line, t_error_parser * error) {
-	char * token = strtok(line, " ");
+	char * token = strtok_r(line, " ", &line);
 	t_parser_config * commande = get_cmd(token);
 	int args = nb_args(commande);
 
@@ -102,9 +102,7 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 		return NULL;
 	}
 
-	token = strtok(NULL, " ");
-
-	while (token != NULL) {
+	while ((token = strtok_r(line, " ", &line)) != NULL) {
 		if (commande->has_name && res->name_file == NULL) {
 			res->name_file = token;
 		}
@@ -113,7 +111,6 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 		}
 
 		args--;
-		token = strtok(NULL, " ");
 	}
 
 	if (args < 0) {

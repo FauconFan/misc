@@ -1,6 +1,28 @@
 language: c
+dist: xenial
+
+before_install:
+    - sudo apt-get update
+
+install:
+    - sudo apt-get install -y --no-install-recommends
+        python3-venv
+        cppcheck
+    - travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz;
+        cd SDL2-2.0.9;
+        ./configure;
+        make;
+        sudo make install;
+        cd ..;
+        rm -rf SDL2-2.0.9
+
 matrix:
     include:
+        - name: make
+          script: make
         - name: check uncrustify
-          env: NAME="check uncrustify"
           script: make uncrustify_check
+        - name: run cpplint
+          script: make cpplint_run
+        - name: run cppcheck
+          script: make cppcheck_run
