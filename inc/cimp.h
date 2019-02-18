@@ -18,6 +18,7 @@
 #include "env.h"
 #include "utils.h"
 #include "parser.h"
+#include "commands.h"
 
 #define	CIMP_PROMPT "cimp>> "
 
