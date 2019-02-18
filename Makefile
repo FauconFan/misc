@@ -95,7 +95,7 @@ submodule:
 ###################################### UNCRUSTIFY ##############################
 
 BIN_UNCRUSTIFY = uncrustify/build/uncrustify
-CONFIG_UNCRUSTIFY = uncrustify_config.txt
+CONFIG_UNCRUSTIFY = UNCRUSTIFY.cfg
 
 $(BIN_UNCRUSTIFY): submodule
 	mkdir -p uncrustify/build
