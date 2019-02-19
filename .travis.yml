@@ -63,7 +63,7 @@ jobs:
       stage: Test
       before_install: sudo apt-get update
       install:
-        - sudo apt-get install -y --no-install-recommends python3-venv
+        - sudo apt-get install -y --no-install-recommends python3-venv check
         - travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9
       script:
         - make cimp_check
