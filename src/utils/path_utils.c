@@ -76,6 +76,8 @@ char * normalize_path(char * curpath) {
 		if (strncmp(curpath, "~/", 2) == 0)
 			l = 2;
 		tmp = getenv("HOME");
+		if (tmp == NULL)
+			return (NULL);
 		tmp = concat_dir_str(tmp, curpath + l);
 	}
 	else if (*curpath != '/') {

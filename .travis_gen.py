@@ -30,6 +30,7 @@ LINT_TASKS = [
     (J_LINT, "cpplint", (["python3-venv"], False), ["make cpplint_run"]),
     (J_LINT, "cppcheck", (["cppcheck"], False), ["make cppcheck_run"]),
     (J_LINT, "clang-tidy", (["clang-tidy-6.0"], False), ["make clang_tidy_run"]),
+    (J_LINT, "infer", None, ["make infer_run"]),
 ]
 
 INSTALL_SDL = "travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9"

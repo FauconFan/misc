@@ -41,7 +41,7 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	@printf "Compiling %s... " "$?"
-	@$(CC) $(FLAGS) -c $? -o $@
+	$(CC) $(FLAGS) -c $? -o $@
 	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
 
 .PHONY: clean
@@ -149,3 +149,25 @@ clang_tidy_fix:
 		-header-filter=".*" \
 		-fix-errors \
 		$(SRC) -- -I inc \
+
+###################################### INFER ##################################
+
+INFER = /usr/local/bin/infer
+INFER_TAR = infer.tar.xz
+VERSION_INFER = 0.15.0
+PATH_DL_INFER = https://github.com/facebook/infer/releases/download/v$(VERSION_INFER)/infer-linux64-v$(VERSION_INFER).tar.xz
+SHASUM_INFER = f6eb98162927735e8c545528bb5a472312e5defcf0761e43c07c73fe214cb18a
+
+$(INFER):
+	test -f $(INFER_TAR) || make $(INFER_TAR)
+	tar -C /opt -xJf $(INFER_TAR)
+	rm -rf $(INFER_TAR)
+	ln -s /opt/infer-linux64-v$(VERSION_INFER)/bin/infer $@
+
+$(INFER_TAR):
+	curl -sSL $(PATH_DL_INFER) -o $@
+	echo "$(SHASUM_INFER)  $@" | shasum -a 256 -c -
+
+.PHONY: infer_run
+infer_run: $(INFER)
+	make CC="$(INFER) run --fail-on-issue -- $(CC)" all

@@ -46,3 +46,7 @@ jobs:
         - sudo apt-get install -y --no-install-recommends clang-tidy-6.0
       script:
         - make clang_tidy_run
+    - name: infer
+      stage: Lint
+      script:
+        - make infer_run

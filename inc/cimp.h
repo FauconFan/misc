@@ -15,10 +15,12 @@
 // SDL includes
 #include <SDL.h>
 
+// Typedef includes, needs to come first
+#include "typedefs.h"
+
 // Cimp includes
 #include "env.h"
 #include "parser.h"
-#include "typedefs.h"
 #include "utils.h"
 
 #define	CIMP_PROMPT "cimp>> "
