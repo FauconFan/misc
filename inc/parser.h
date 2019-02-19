@@ -6,8 +6,8 @@
 
 typedef struct      s_parser_config {
 	char * name;
-	short  has_name;
-	short  has_angle;
+	int8_t has_name;
+	int8_t has_angle;
 }                   t_parser_config;
 
 extern t_parser_config g_config[];
