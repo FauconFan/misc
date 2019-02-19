@@ -1,3 +1,23 @@
+#                                  |\    /|
+#                               ___| \,,/_/
+#                            ---__/ \/    \
+#                           __--/     (D)  \
+#                           _ -/    (_      \
+#                          // /       \_ / ==\
+#    __-------------------/           / \_ O o)
+#   /                                 /   \==/`
+#  /                                 /
+# ||          )                   \_/\
+# ||         /              _      /  |
+# | |      /--------      ___\    /\  :
+# | /   __-  - _/   ------    |  |   \ \
+#  |   -  -   /                | |     \ )
+#  |  |   -  |                 | )     | |
+#   | |    | |                 | |    | |
+#   | |    < |                 | |   |_/
+#   < |    /__\                <  \
+#   /__\                       /___\
+
 NAME = cimp
 
 _RED=$(shell tput setaf 1 2> /dev/null || echo "")
@@ -41,7 +61,7 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	@printf "Compiling %s... " "$?"
-	$(CC) $(FLAGS) -c $? -o $@
+	@$(CC) $(FLAGS) -c $? -o $@
 	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
 
 .PHONY: clean
@@ -77,12 +97,11 @@ images:
 
 ###################################### VENV ####################################
 
-CPPLINT = venv/bin/cpplint
-
 venv:
 	python3 -m venv venv
 	venv/bin/pip3 install pip --upgrade
 	venv/bin/pip3 install cpplint
+	venv/bin/pip3 install gcovr
 
 
 ###################################### SUBMODULES ##############################
@@ -95,26 +114,31 @@ submodule:
 ###################################### UTILS ###################################
 ## This part is for continuous integration, testing, linting, etc...
 
+UNCRUSTIFY = uncrustify/build/uncrustify
+CPPLINT = venv/bin/cpplint
+CPPCHECK = cppcheck
+CLANG_TIDY = clang-tidy-6.0
+INFER = /usr/local/bin/infer
+
 print-%:
 	@echo $($*)
 
 ###################################### UNCRUSTIFY ##############################
 
-BIN_UNCRUSTIFY = uncrustify/build/uncrustify
 CONFIG_UNCRUSTIFY = uncrustify_config.txt
 
-$(BIN_UNCRUSTIFY): submodule
+$(UNCRUSTIFY): submodule
 	mkdir -p uncrustify/build
 	(cd uncrustify/build && cmake ..)
 	make -C uncrustify/build
 
 .PHONY: uncrustify_apply
-uncrustify_apply: $(BIN_UNCRUSTIFY)
-	$(BIN_UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --replace --no-backup --mtime $(ALL_FILES)
+uncrustify_apply: $(UNCRUSTIFY)
+	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --replace --no-backup --mtime $(ALL_FILES)
 
 .PHONY: uncrustify_check
-uncrustify_check: $(BIN_UNCRUSTIFY)
-	$(BIN_UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --check $(ALL_FILES)
+uncrustify_check: $(UNCRUSTIFY)
+	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --check $(ALL_FILES)
 
 ###################################### CPPLINT #################################
 
@@ -124,15 +148,11 @@ cpplint_run: venv
 
 ##################################### CPPCHECK #################################
 
-CPPCHECK = cppcheck
-
 .PHONY: cppcheck_run
 cppcheck_run:
 	$(CPPCHECK) --error-exitcode=1 --enable=all -I inc $(ALL_FILES)
 
 ##################################### CLANG_TIDY ###############################
-
-CLANG_TIDY = clang-tidy-6.0
 
 .PHONY: clang_tidy_run
 clang_tidy_run:
@@ -152,7 +172,6 @@ clang_tidy_fix:
 
 ###################################### INFER ##################################
 
-INFER = /usr/local/bin/infer
 INFER_TAR = infer.tar.xz
 VERSION_INFER = 0.15.0
 PATH_DL_INFER = https://github.com/facebook/infer/releases/download/v$(VERSION_INFER)/infer-linux64-v$(VERSION_INFER).tar.xz

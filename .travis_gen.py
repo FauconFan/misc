@@ -20,7 +20,7 @@ JOBS = [J_BASE, J_LINT, J_TEST]
 
 BASE_TASKS = [
     (J_BASE, "verifying travis.yml file", None, ["python3 .travis_gen.py > expected.out", "diff .travis.yml expected.out"]),
-    # (J_BASE, "test project compile", (None, True), ["make"]),
+    (J_BASE, "test project compile", (None, True), ["make"]),
     (J_BASE, "all C files in Makefile", None, ["diff <(make print-SRC | tr ' ' '\\n' | sort) <(find src -name \"*.c\" | sort)"]),
     (J_BASE, "all headers files in Makefile", None, ["diff <(make print-INC | tr ' ' '\\n' | sort) <(find inc -name \"*.h\" | sort)"]),
 ]
