@@ -49,4 +49,5 @@ jobs:
     - name: infer
       stage: Lint
       script:
+        - sudo make /usr/local/bin/infer
         - make infer_run
