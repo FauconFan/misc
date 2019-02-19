@@ -92,6 +92,12 @@ submodule:
 	git submodule init
 	git submodule update
 
+###################################### UTILS ###################################
+## This part is for continuous integration, testing, linting, etc...
+
+print-%:
+	@echo $($*)
+
 ###################################### UNCRUSTIFY ##############################
 
 BIN_UNCRUSTIFY = uncrustify/build/uncrustify
