@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 #define	PARSER_H
 
-#define	NO_ANGLE -1
+#define	NO_ANGLE (-1)
 
 
 typedef struct      s_parser_config {
