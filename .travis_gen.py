@@ -27,8 +27,8 @@ BASE_TASKS = [
 
 LINT_TASKS = [
     (J_LINT, "uncrustify", None, ["make uncrustify_check"]),
-    (J_LINT, "cpplint", None, ["make cpplint_run"]),
-    (J_LINT, "cppcheck", None, ["make cppcheck_run"]),
+    (J_LINT, "cpplint", (True, False, False), ["make cpplint_run"]),
+    (J_LINT, "cppcheck", (False, True, False), ["make cppcheck_run"]),
 ]
 
 INSTALL_SDL = "travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9"
