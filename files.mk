@@ -16,8 +16,9 @@ SRC_FOLDER			= src/
 ENV_FOLDER			= src/env/
 UTILS_FOLDER		= src/utils/
 
+MAIN_FILE = $(SRC_FOLDER)main.c
+
 SRC_FILES = \
-			main.c \
 			readline.c \
 			parser.c \
 
@@ -29,7 +30,21 @@ UTILS_FILES = \
 			path_utils.c \
 			str_utils.c \
 
-SRC = \
+SRC_NO_MAIN = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \
 		$(addprefix $(ENV_FOLDER), $(ENV_FILES)) \
 		$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
+
+SRC = \
+		$(SRC_NO_MAIN) \
+		$(MAIN_FILE) \
+
+################################# TEST SOURCE CODE ############################
+
+TEST_FOLDER			= tests/
+
+TEST_FILES = \
+			main_test.c \
+
+TEST_SRC = \
+		$(addprefix $(TEST_FOLDER), $(TEST_FILES)) \

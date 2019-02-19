@@ -48,6 +48,8 @@ include files.mk # On charge la liste des fichiers depuis le fichier files.mk
 ALL_FILES = $(SRC) $(INC)
 
 OBJ = $(SRC:%.c=%.o)
+OBJ_NO_MAIN = $(SRC_NO_MAIN:%.c=%.o)
+OBJ_TEST = $(TEST_SRC:%.c=%.o)
 
 #################################### COMPILATION ###############################
 
@@ -66,13 +68,26 @@ $(NAME): $(OBJ)
 
 .PHONY: clean
 clean:
-	@echo "Objects removed"
 	@rm -rf $(OBJ)
+	@echo "Objects removed"
 
 .PHONY: fclean
 fclean: clean
-	@echo "Program $(NAME) removed"
 	@rm -rf $(NAME)
+	@echo "Program $(NAME) removed"
+
+.PHONY: ffclean
+ffclean: fclean
+	@rm -rf \
+		$(CIMP_CHECK) \
+		gcovr \
+		venv \
+		infer.tar.xz infer-out \
+		images/
+	@find . -name "*.o" -delete
+	@find . -name "*.gcda" -delete
+	@find . -name "*.gcno" -delete
+	@echo "Projecl all cleaned"
 
 .PHONY: re
 re: fclean all
@@ -119,9 +134,25 @@ CPPLINT = venv/bin/cpplint
 CPPCHECK = cppcheck
 CLANG_TIDY = clang-tidy-6.0
 INFER = /usr/local/bin/infer
+GCOVR = venv/bin/gcovr
 
 print-%:
 	@echo $($*)
+
+###################################### CHECK ###################################
+
+CIMP_CHECK = cimp_check
+GCOV_LIBS = -lcheck -lm -lpthread -lrt -lsubunit -lgcov -coverage
+
+$(CIMP_CHECK): fclean venv recompile_with_profile_args $(OBJ_TEST)
+	@$(CC) $(OBJ_NO_MAIN) $(OBJ_TEST) $(GCOV_LIBS) $(LFLAGS) -o $@
+	./$@
+	mkdir -p gcovr
+	$(GCOVR) -r . --html --html-details -o gcovr/index.html
+
+.PHONY: recompile_with_profile_args
+recompile_with_profile_args:
+	make CFLAGS="$(CFLAGS) -fprofile-arcs -ftest-coverage" $(OBJ_NO_MAIN)
 
 ###################################### UNCRUSTIFY ##############################
 

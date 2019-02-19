@@ -33,10 +33,14 @@ LINT_TASKS = [
     (J_LINT, "infer", (None, True), ["sudo make /usr/local/bin/infer", "make infer_run"]),
 ]
 
+TEST_TASKS = [
+    (J_TEST, "libcheck", (["python3-venv"], True), ["make cimp_check"]),
+]
+
 INSTALL_SDL = "travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9"
 INSTALL_APT_PREFIX = "sudo apt-get install -y --no-install-recommends"
 
-TASKS = BASE_TASKS + LINT_TASKS
+TASKS = BASE_TASKS + LINT_TASKS + TEST_TASKS
 
 print("language:", LANG)
 print("dist:", DIST)

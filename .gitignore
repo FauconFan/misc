@@ -58,3 +58,7 @@ venv/
 infer.tar.xz
 .vscode/
 infer-out/
+gcovr/
+cimp_check
+*.gcda
+*.gcno
