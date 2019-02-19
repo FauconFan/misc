@@ -13,12 +13,6 @@ jobs:
       script:
         - python3 .travis_gen.py > expected.out
         - diff .travis.yml expected.out
-    - name: test project compile
-      stage: Base
-      install:
-        - travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9
-      script:
-        - make
     - name: all C files in Makefile
       stage: Base
       script:
@@ -27,3 +21,15 @@ jobs:
       stage: Base
       script:
         - diff <(make print-INC | tr ' ' '\n' | sort) <(find inc -name "*.h" | sort)
+    - name: uncrustify
+      stage: Lint
+      script:
+        - make uncrustify_check
+    - name: cpplint
+      stage: Lint
+      script:
+        - make cpplint_run
+    - name: cppcheck
+      stage: Lint
+      script:
+        - make cppcheck_run
