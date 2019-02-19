@@ -39,3 +39,10 @@ jobs:
         - sudo apt-get install -y --no-install-recommends cppcheck
       script:
         - make cppcheck_run
+    - name: clang-tidy
+      stage: Lint
+      before_install: sudo apt-get update
+      install:
+        - sudo apt-get install -y --no-install-recommends clang-tidy-6.0
+      script:
+        - make clang_tidy_run

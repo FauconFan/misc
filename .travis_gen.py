@@ -20,15 +20,16 @@ JOBS = [J_BASE, J_LINT, J_TEST]
 
 BASE_TASKS = [
     (J_BASE, "verifying travis.yml file", None, ["python3 .travis_gen.py > expected.out", "diff .travis.yml expected.out"]),
-    # (J_BASE, "test project compile", (False, False, True), ["make"]),
+    # (J_BASE, "test project compile", (None, True), ["make"]),
     (J_BASE, "all C files in Makefile", None, ["diff <(make print-SRC | tr ' ' '\\n' | sort) <(find src -name \"*.c\" | sort)"]),
     (J_BASE, "all headers files in Makefile", None, ["diff <(make print-INC | tr ' ' '\\n' | sort) <(find inc -name \"*.h\" | sort)"]),
 ]
 
 LINT_TASKS = [
     (J_LINT, "uncrustify", None, ["make uncrustify_check"]),
-    (J_LINT, "cpplint", (True, False, False), ["make cpplint_run"]),
-    (J_LINT, "cppcheck", (False, True, False), ["make cppcheck_run"]),
+    (J_LINT, "cpplint", (["python3-venv"], False), ["make cpplint_run"]),
+    (J_LINT, "cppcheck", (["cppcheck"], False), ["make cppcheck_run"]),
+    (J_LINT, "clang-tidy", (["clang-tidy-6.0"], False), ["make clang_tidy_run"]),
 ]
 
 INSTALL_SDL = "travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9"
@@ -50,15 +51,11 @@ for (stage, name, dep, cmds) in TASKS:
     print("    - name:", name)
     print("      stage:", stage)
     if dep is not None:
-        (b_install_venv, b_install_cppcheck, b_install_sdl) = dep
+        (apt_deps, b_install_sdl) = dep
         install_apt_cmd = None
-        if b_install_venv or b_install_cppcheck:
+        if apt_deps is not None:
             print("      before_install: sudo apt-get update")
-            install_apt_cmd = INSTALL_APT_PREFIX
-            if b_install_venv:
-                install_apt_cmd += " python3-venv"
-            if b_install_cppcheck:
-                install_apt_cmd += " cppcheck"
+            install_apt_cmd = INSTALL_APT_PREFIX + " " + " ".join(apt_deps)
         if install_apt_cmd is not None or b_install_sdl:
             print("      install:")
             if install_apt_cmd is not None:
