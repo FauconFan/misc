@@ -20,15 +20,21 @@ JOBS = [J_BASE, J_LINT, J_TEST]
 
 BASE_TASKS = [
     (J_BASE, "verifying travis.yml file", None, ["python3 .travis_gen.py > expected.out", "diff .travis.yml expected.out"]),
-    (J_BASE, "test project compile", (False, False, True), ["make"]),
+    # (J_BASE, "test project compile", (False, False, True), ["make"]),
     (J_BASE, "all C files in Makefile", None, ["diff <(make print-SRC | tr ' ' '\\n' | sort) <(find src -name \"*.c\" | sort)"]),
     (J_BASE, "all headers files in Makefile", None, ["diff <(make print-INC | tr ' ' '\\n' | sort) <(find inc -name \"*.h\" | sort)"]),
+]
+
+LINT_TASKS = [
+    (J_LINT, "uncrustify", None, ["make uncrustify_check"]),
+    (J_LINT, "cpplint", None, ["make cpplint_run"]),
+    (J_LINT, "cppcheck", None, ["make cppcheck_run"]),
 ]
 
 INSTALL_SDL = "travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9"
 INSTALL_APT_PREFIX = "sudo apt-get install -y --no-install-recommends"
 
-TASKS = BASE_TASKS
+TASKS = BASE_TASKS + LINT_TASKS
 
 print("language:", LANG)
 print("dist:", DIST)
