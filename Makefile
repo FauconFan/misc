@@ -133,7 +133,8 @@ clang_tidy_run:
 	$(CLANG_TIDY) \
 		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-readability-braces-around-statements" \
 		-header-filter=".*" \
-		$(SRC) -- -I inc
+		-warnings-as-errors="*" \
+		$(SRC) -- -I inc \
 
 .PHONY: clang_tidy_fix
 clang_tidy_fix:
@@ -141,4 +142,4 @@ clang_tidy_fix:
 		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-readability-braces-around-statements" \
 		-header-filter=".*" \
 		-fix-errors \
-		$(SRC) -- -I inc
+		$(SRC) -- -I inc \
