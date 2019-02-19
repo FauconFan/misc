@@ -139,6 +139,12 @@ GCOVR = venv/bin/gcovr
 print-%:
 	@echo $($*)
 
+.PHONY: lint_apply
+lint_apply: uncrustify_apply clang_tidy_fix
+
+.PHONY: lint_check
+lint_check: uncrustify_check cpplint_run cppcheck_run clang_tidy_run infer_run
+
 ###################################### CHECK ###################################
 
 CIMP_CHECK = cimp_check
