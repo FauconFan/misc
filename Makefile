@@ -118,7 +118,6 @@ venv:
 	venv/bin/pip3 install cpplint
 	venv/bin/pip3 install gcovr
 
-
 ###################################### SUBMODULES ##############################
 
 .PHONY: submodule
