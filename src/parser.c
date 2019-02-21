@@ -17,6 +17,7 @@ char * g_error_parser_strings [] = {
 	"Il y a trop peu d'arguments pour cette commande",
 	"Le nom de la commande n'est pas connu",
 	"Le malloc a echoue",
+    "L'argument est invalide",
 };
 
 /*Une fonction qui cree un pointeur vers un t_parser_config avec les champs nm pour name,  hn pour has_name et ha pour has_angle
@@ -91,6 +92,8 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 	char * token = strtok_r(line, " ", &line);
 	t_parser_config * commande = get_cmd(token);
 	int args = nb_args(commande);
+    char * tmp;
+    int rc;
 
 	if (commande == NULL) {
 		*error = UNKNOW_NAME;
@@ -107,7 +110,14 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 			res->name_file = token;
 		}
 		else if (commande->has_angle && res->angle == NO_ANGLE) {
-			res->angle = atoi(token);
+            errno = 0;
+            rc = strtol(token, &tmp, 10);
+            if( errno == EINVAL || errno == ERANGE || tmp == token ) {
+                *error = INVALID_ARGUMENT;
+                return NULL;
+            }
+
+            res->angle = rc;
 		}
 
 		args--;
