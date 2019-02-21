@@ -10,8 +10,8 @@ typedef struct      s_parser_config {
 	short  has_angle;
 }                   t_parser_config;
 
-extern t_parser_config g_config[];
-extern size_t g_config_size;
+extern t_parser_config g_command_list[];
+extern size_t g_command_list_size;
 
 typedef struct      s_parser_out {
 	char * cmd;

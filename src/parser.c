@@ -1,6 +1,6 @@
 #include "cimp.h"
 
-t_parser_config g_config[] = {
+t_parser_config g_command_list[] = {
 	{"help",      0, 0},
 	{"open",      1, 0},
 	{"close",     1, 0},
@@ -10,7 +10,7 @@ t_parser_config g_config[] = {
 	{"rotate",    0, 1},
 };
 
-size_t g_config_size = sizeof(g_config) / sizeof(*g_config);
+size_t g_command_list_size = sizeof(g_command_list) / sizeof(*g_command_list);
 
 char * g_error_parser_strings [] = {
 	"Il y a trop d'arguments pour cette commande",
@@ -59,9 +59,9 @@ void free_p_out(t_parser_out * cmd) {
 
 /*Renvoie le t_parser_config correspondant a la commande cmd et NULL si elle n'existe pas*/
 t_parser_config * get_cmd(char * cmd) {
-	for (int i = 0; i < (int) g_config_size; i++) {
-		if (strcmp(cmd, g_config[i].name) == 0) {
-			return g_config + i;
+	for (int i = 0; i < (int) g_command_list_size; i++) {
+		if (strcmp(cmd, g_command_list[i].name) == 0) {
+			return g_command_list + i;
 		}
 	}
 	return NULL;
