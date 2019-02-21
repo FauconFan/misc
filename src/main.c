@@ -37,6 +37,7 @@ int main(void) {
 		return (1);
 	}
 	running = 1;
+	cimp_help();
 	while (running && (line = cimp_readline()) != NULL) {
 		if (strcmp(line, "QUIT") == 0) {
 			running = 0;
