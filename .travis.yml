@@ -6,7 +6,7 @@ stages:
   - Lint
   - Test
 
-jobs:
+matrix:
   include:
     - name: verifying travis.yml file
       stage: Base

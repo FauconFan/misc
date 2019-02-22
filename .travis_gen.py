@@ -92,7 +92,7 @@ def print_task(task):
 
 def main():
     print_header()
-    print("jobs:")
+    print("matrix:")
     print("  include:")
     for task in TASKS:
         print_task(task)
