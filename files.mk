@@ -39,8 +39,6 @@ COMMANDS_FILES =\
 			cimp_exe.c\
 			
 
-
-
 SRC = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \
 		$(addprefix $(ENV_FOLDER), $(ENV_FILES)) \
