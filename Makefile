@@ -161,12 +161,12 @@ recompile_with_profile_args:
 
 ###################################### UNCRUSTIFY ##############################
 
-CONFIG_UNCRUSTIFY = uncrustify_config.txt
+CONFIG_UNCRUSTIFY = UNCRUSTIFY.cfg
 
 $(UNCRUSTIFY): submodule
 	mkdir -p uncrustify/build
 	(cd uncrustify/build && cmake ..)
-	make -C uncrustify/build
+	make -C uncrustify/build -j8
 
 .PHONY: uncrustify_apply
 uncrustify_apply: $(UNCRUSTIFY)
