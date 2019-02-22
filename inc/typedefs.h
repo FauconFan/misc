@@ -21,9 +21,5 @@ typedef struct          s_cimp {
 
 extern t_cimp * g_cimp;
 
-/**
-* Définition du tableau de correspondance entre les appelles et les pointeurs de fonctions
-*/
-
 
 #endif // ifndef TYPEDEFS_H
