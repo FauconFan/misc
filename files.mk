@@ -7,6 +7,7 @@ INC_FILES = \
 	typedefs.h \
 	utils.h \
 	parser.h \
+	commands.h \
 
 INC = $(addprefix $(INC_FOLDER), $(INC_FILES))
 
