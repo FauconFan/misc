@@ -36,6 +36,8 @@ COMMANDS_FILES =\
 			cimp_list.c\
 			cimp_sym.c\
 			cimp_rotate.c\
+			cimp_exe.c\
+			
 
 
 

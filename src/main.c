@@ -10,7 +10,7 @@ void test(int id) {
 		cimp_update_screen(g_cimp->screen);
 
 		if (errno_str)
-			printf("Something went wrong %s\n", errno_str);
+		printf("Something went wrong %s\n", errno_str);
 	}
 	else if (id == 1 && g_cimp->screen) {
 		cimp_close(g_cimp->screen);
@@ -18,14 +18,14 @@ void test(int id) {
 }
 
 /**
- * main gère la boucle principale du programme sous forme d'un REPL.
- * REPL := Read Eval Print Loop
- * Read : appel de la fonction cimp_readline
- * Eval : interprétation pour le programme
- * Print : actualisation de l'interface utilisateur
- * Loop : on recommence
- * @return  0
- */
+* main gère la boucle principale du programme sous forme d'un REPL.
+* REPL := Read Eval Print Loop
+* Read : appel de la fonction cimp_readline
+* Eval : interprétation pour le programme
+* Print : actualisation de l'interface utilisateur
+* Loop : on recommence
+* @return  0
+*/
 int main(void) {
 	char * line;
 	int running;
@@ -37,37 +37,26 @@ int main(void) {
 		return (1);
 	}
 	running = 1;
-	cimp_help();
 	while (running && (line = cimp_readline()) != NULL) {
-		if (strcmp(line, "QUIT") == 0) {
-			running = 0;
-		}
-		else if (strcmp(line, "init") == 0) { // harcoded test
-			test(0);
-		}
-		else if (strcmp(line, "close") == 0) { // harcoded test
-			test(1);
+		cmd = parse_line(line, &error);
+		if (cmd != NULL) {
+			printf("DAMN nous avons parser une ligne ! cmd : %s name_file : %s angle : %d \n",
+			cmd->cmd, cmd->name_file, cmd->angle);
+			cimp_exe(cmd);
+			free_p_out(cmd);
 		}
 		else {
-			cmd = parse_line(line, &error);
-			if (cmd != NULL) {
-				printf("DAMN nous avons parser une ligne ! cmd : %s name_file : %s angle : %d \n",
-				  cmd->cmd, cmd->name_file, cmd->angle);
-				free_p_out(cmd);
-			}
-			else {
-				printf("Attention une erreur est apparue ! ERREUR : \n %s \n", get_error(error));
-				printf("The line entered is : %s\n", line);
-				printf("Enter 'QUIT' to exit the program properly\n");
-			}
+			printf("Attention une erreur est apparue ! ERREUR : \n %s \n", get_error(error));
+			printf("The line entered is : %s\n", line);
+			printf("Enter 'QUIT' to exit the program properly\n");
 		}
 		free(line);
 		line = NULL;
 	}
 	if (line)
-		free(line);
+	free(line);
 	if (running)
-		printf("cimp error feedback : %s\n", strerror(errno));
+	printf("cimp error feedback : %s\n", strerror(errno));
 	cimp_end();
 	return (0);
 } /* main */

@@ -8,6 +8,7 @@ t_parser_config g_command_list[] = {
 	{"sym_verti", 0, 0},
 	{"sym_horti", 0, 0},
 	{"rotate",    0, 1},
+	{"QUIT", 			0, 0},
 };
 
 size_t g_command_list_size = sizeof(g_command_list) / sizeof(*g_command_list);
