@@ -28,7 +28,6 @@ ENV_FILES = \
 UTILS_FILES = \
 			path_utils.c \
 			str_utils.c \
-			math_utils.c \
 
 COMMANDS_FILES =\
 			cimp_open.c\
@@ -37,8 +36,6 @@ COMMANDS_FILES =\
 			cimp_list.c\
 			cimp_sym.c\
 			cimp_rotate.c\
-
-
 
 SRC = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \

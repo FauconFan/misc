@@ -4,7 +4,9 @@ void cimp_help() {
 	int max_name = 0;
 
 	for (size_t i = 0; i < g_command_list_size; i++) {
-		max_name = max(max_name, strlen(g_command_list[i].name));
+		int tmp = strlen(g_command_list[i].name);
+		if (tmp > max_name)
+			max_name = tmp;
 	}
 	max_name++;
 	for (size_t i = 0; i < g_command_list_size; i++) {
