@@ -19,10 +19,10 @@
 #include "typedefs.h"
 
 // Cimp includes
+#include "commands.h"
 #include "env.h"
 #include "parser.h"
 #include "utils.h"
-#include "commands.h"
 
 #define	CIMP_PROMPT "cimp>> "
 
