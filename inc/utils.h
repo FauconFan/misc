@@ -15,4 +15,9 @@ char * strjoin_c(const char * dir, const char * file, const char joiner);
 
 char * dupstr(const char * s);
 
+// math_utils
+
+int  max(int a, int b);
+int  min(int a, int b);
+
 #endif // ifndef UTILS_H

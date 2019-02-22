@@ -28,6 +28,7 @@ ENV_FILES = \
 UTILS_FILES = \
 			path_utils.c \
 			str_utils.c \
+			math_utils.c \
 
 COMMANDS_FILES =\
 			cimp_open.c\
