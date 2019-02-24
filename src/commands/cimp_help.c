@@ -1,19 +1,6 @@
 #include "cimp.h"
 
 void cimp_help() {
-<<<<<<< HEAD
-	for (unsigned int i = 0; i < g_command_list_size; i++) {
-		char * tmp = malloc(sizeof(char) * 100);
-		strcpy(tmp, g_command_list[i].name);
-		if (g_command_list[i].has_name) {
-			strcat(tmp, " [PATH]");
-		}
-		if (g_command_list[i].has_angle) {
-			strcat(tmp, " [ANGLE]");
-		}
-		printf("%s \n", tmp);
-		free(tmp);
-=======
 	int max_name = 0;
 
 	for (size_t i = 0; i < g_command_list_size; i++) {
@@ -31,6 +18,5 @@ void cimp_help() {
 			printf(" [ANGLE]");
 		}
 		printf("\n");
->>>>>>> 37d3ce710378f70d00f91ff8ecc57b2dc7d5b405
 	}
 }

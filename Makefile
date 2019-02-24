@@ -36,7 +36,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@printf "Program %s... " "$(NAME)"
-	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
+	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LFLAGS) -lreadline
 	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
 
 %.o: %.c

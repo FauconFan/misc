@@ -9,7 +9,8 @@
 #include <unistd.h>
 #include <errno.h>
 #include <libgen.h>
-
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <string.h>
 
 // SDL includes
@@ -24,6 +25,6 @@
 
 #define	CIMP_PROMPT "cimp>> "
 
-char * cimp_readline(void);
+int initialize_readline(void);
 
 #endif // ifndef CIMP_H

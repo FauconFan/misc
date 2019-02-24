@@ -31,13 +31,14 @@ int main(void) {
 	int running;
 	t_error_parser error;
 	t_parser_out * cmd;
-
+	initialize_readline();
 	if (cimp_init()) {
 		printf("Something went terribly wrong\n");
 		return (1);
 	}
 	running = 1;
-	while (running && (line = cimp_readline()) != NULL) {
+	while (running && (line = readline("cimp>>")) != NULL) {
+		add_history(line);
 		cmd = parse_line(line, &error);
 		if (cmd != NULL) {
 			printf("DAMN nous avons parser une ligne ! cmd : %s name_file : %s angle : %d \n",

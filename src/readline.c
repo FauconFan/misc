@@ -1,63 +1,65 @@
 #include "cimp.h"
 
-/**
- * Prend un buffer et sa taille en argument (sous forme de pointeurs)
- * et realloue un espace 2 fois plus gros, libère la mémoire du buffer et le remplace
- * par un buffer 2 fois plus gros
- * @param  str_ptr      pointeur sur le buffer
- * @param  size_max_ptr pointeur vers la taille du buffer
- * @return              un booléen qui indique si ça s'est bien passé
- */
-static int      extend_buffer(char ** str_ptr, size_t * size_max_ptr) {
-	char * next_buffer;
+int nb_completions=7;
+char *completions[]={"help","close","list","sym_verti","sym_hori","rotate","QUIT"};
+int nb_cmd=9;
+char ** fileman_completion (const char *com, int start, int end);
+char *command_generator (const char *com, int num);
 
-	next_buffer = malloc(*size_max_ptr * 2);
-	if (next_buffer == NULL)
-		return (1);
+int initialize_readline(){
+  using_history();//initialisation de l'utilisation de la librairie history de readline
+  rl_readline_name = "mon prompt>>";
 
-	memcpy(next_buffer, *str_ptr, *size_max_ptr);
-	memset(next_buffer + *size_max_ptr, 0, *size_max_ptr);
-	free(*str_ptr);
-	*str_ptr       = next_buffer;
-	*size_max_ptr *= 2;
-	return (0);
+  /* explicite la complÃ©tion souhaitÃ©e */
+  rl_attempted_completion_function = fileman_completion;
+  return 0;
 }
 
-/**
- * cimp_readline demande une entrée à l'utilisateur et renvoie une chaîne
- * de caractères allouée contenant l'entrée donnée par l'utilisateur.
- * @return  un pointeur vers la chaîne allouée.
- */
-char * cimp_readline(void) {
-	char * res;
-	size_t len;
-	size_t size_max;
-	int ret;
+/* com : tout ce que l'utilisateur a dÃ©jÃ  Ã©crit sur la ligne de commande
+   start, end : les indices de dÃ©but et de fin du mot sur lequel TAB a Ã©tÃ© lancÃ© */
+char ** fileman_completion (const char *com, int start, int end){
+  char **matches;
+  end ++;
+  matches = (char **)NULL; /* assure la complÃ©tion par dÃ©faut */
 
-	len      = 0;
-	size_max = 256;
-	res      = malloc(size_max);
-	if (res == NULL)
-		return (NULL);
+  /* si c'est le premier mot de la ligne de commande, on l'analyse;
+     sinon on utilise l'analyse par dÃ©faut */
+  if (start == 0)
+    matches = rl_completion_matches (com, command_generator);
 
-	memset(res, 0, size_max);
-	write(1, CIMP_PROMPT, strlen(CIMP_PROMPT));
-	while ((ret = read(0, res + len, 1)) > 0) {
-		if (res[len] == '\n') {
-			res[len] = '\0';
-			break;
-		}
-		len++;
-		if (len == size_max) {
-			if (extend_buffer(&res, &size_max)) {
-				free(res);
-				return (NULL);
-			}
-		}
-	}
-	if (ret < 0) {
-		free(res);
-		return (NULL);
-	}
-	return (res);
-} /* cimp_readline */
+  return (matches);
+}
+
+/* fonction qui engendre les complÃ©tions possibles :
+   Ã  chaque num >= 0 correspond une complÃ©tion;
+   la fin de la liste des complÃ©tions est donnÃ©e par NULL
+
+   ici on complÃ¨te si c'est un prÃ©fixe de "toto" ou de "turlututu",
+   sinon c'est la complÃ©tion par dÃ©faut */
+char *command_generator (const char *com, int num){
+  /* Ã  l'entrÃ©e de cette fonction : com est le dÃ©but dÃ©jÃ  Ã©crit de la commande,
+     on est en train de chercher la complÃ©tion numÃ©ro num */
+  static int indice, len;
+  char *completion;
+
+  /* si c'est la premiÃ¨re complÃ©tion qu'on cherche, on dit qu'on va chercher Ã  partir
+     de la premiere case du tableau completion et on garde en mÃ©moire la longueur
+     du texte tapÃ© */
+  if (num == 0){
+    indice = 0;
+    len = strlen(com);
+  }
+
+  /* on renvoie une complÃ©tion de prÃ©fixe le dÃ©but de la commande Ã©crite */
+  while (indice < nb_completions)
+    {
+      completion = completions[indice++];
+
+      if (strncmp (completion, com, len) == 0)
+  return completion;
+    }
+
+  /* est renvoyÃ© quand num est > au numÃ©ro de la derniÃ¨re complÃ©tion
+     automatique */
+  return NULL;
+}
