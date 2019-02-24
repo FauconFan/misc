@@ -16,7 +16,7 @@ void initialisation_tab_completion() {
 	if (completions != NULL) {
 		for (size_t i = 0; i < g_command_list_size; i++) {
 			completions[i] = malloc(sizeof(char) * (strlen(g_command_list[i].name) + 1));
-			strcpy(completions[i], g_command_list[i].name);
+			strncpy(completions[i], g_command_list[i].name, strlen(g_command_list[i].name));
 		}
 	}
 	else {

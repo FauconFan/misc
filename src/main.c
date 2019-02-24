@@ -1,7 +1,7 @@
 #include "cimp.h"
 
 // Fonction temporaire pour tester si le système en place marche bien.
-void test(int id) {
+/*void test(int id) {
 	char * errno_str = NULL;
 
 	if (id == 0 && g_cimp->screen == NULL) {
@@ -15,7 +15,7 @@ void test(int id) {
 	else if (id == 1 && g_cimp->screen) {
 		cimp_close(g_cimp->screen);
 	}
-}
+}*/
 
 /**
  * main gère la boucle principale du programme sous forme d'un REPL.
