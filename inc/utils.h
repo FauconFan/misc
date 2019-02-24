@@ -11,7 +11,7 @@ char * normalize_path(char * curpath);
 // str_utils
 
 char * strjoin(const char * s1, const char * s2);
-char * strjoin_c(const char * dir, const char * file, const char joiner);
+char * strjoin_c(const char * dir, const char * file, char joiner);
 
 char * dupstr(const char * s);
 

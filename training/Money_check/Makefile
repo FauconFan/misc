@@ -21,7 +21,7 @@ money.o:  $(SRC_FILES) $(addprefix $(SRC_DIR)/, money.h)
 	$(CC) $(CFLAGS) $(PROFILE_FLAGS) $(SRC_FILES)
 
 check_money.o: $(TST_FILES)
-	$(CC) $(CFLAGS) $(PROFILE_FLAGS) $(TST_FILES)
+	$(CC) $(CFLAGS) $(TST_FILES)
 
 check_money_tests: money.o check_money.o
 	$(CC) money.o check_money.o $(TST_LIBS) $(COV_LIBS) -o check_money_tests
