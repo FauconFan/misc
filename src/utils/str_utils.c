@@ -106,9 +106,7 @@ char * itoa(int i, char b[]) {
 		i   *= -1;
 	}
 	int num_digit = nb_digit(i);
-	for (int y = 0; y < num_digit; y++) {
-		++p;
-	}
+	p=p+num_digit;
 	*p = '\0';
 	do {
 		*--p = digit[i % 10];
