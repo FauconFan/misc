@@ -30,9 +30,9 @@ void cimp_list() {
 		itoa(w, width);
 		itoa(h, height);
 
-		strncpy(taille, width, w_len+1);
-		strncpy(taille+w_len, "x", 2);
-		strncpy(taille+w_len+1, height, h_len+1);
+		strncpy(taille, width, w_len + 1);
+		strncpy(taille + w_len, "x", 2);
+		strncpy(taille + w_len + 1, height, h_len + 1);
 
 		printf("w : %s h : %s \n", width, height);
 
