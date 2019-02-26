@@ -83,3 +83,34 @@ char * dupstr(const char * s) {
 	r[l] = 0;
 	return r;
 }
+
+/** Une foncton qui retounre le nombre de decimal de l'entier i**/
+int nb_digit(int i) {
+	int res = 0;
+	int nb  = i;
+
+	do {
+		res++;
+		nb = nb / 10;
+	} while (nb);
+	return res;
+}
+
+/**La fonction itoa : convertit un int en chaine de caractere **/
+char * itoa(int i, char b[]) {
+	char const digit[] = "0123456789";
+	char * p = b;
+
+	if (i < 0) {
+		*p++ = '-';
+		i   *= -1;
+	}
+	int num_digit = nb_digit(i);
+	p  = p + num_digit;
+	*p = '\0';
+	do {
+		*--p = digit[i % 10];
+		i    = i / 10;
+	} while (i);
+	return b;
+}
