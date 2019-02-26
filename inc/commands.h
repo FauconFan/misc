@@ -20,8 +20,4 @@ void cimp_sym_hori();
 // cimp_rotate.c:
 void cimp_rotate(int angle);
 
-
-/* /!\ /!\ POSITION PROVISOIRE /!\/!\ */
-void cimp_exe(t_parser_out * cmd);
-
 #endif // ifndef COMMANDS_H

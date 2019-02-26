@@ -20,6 +20,7 @@ SRC_FILES = \
 			main.c \
 			readline.c \
 			parser.c \
+			cimp_exe.c\
 
 ENV_FILES = \
 			t_cimp.c \
@@ -36,8 +37,7 @@ COMMANDS_FILES =\
 			cimp_list.c\
 			cimp_sym.c\
 			cimp_rotate.c\
-			cimp_exe.c\
-			
+
 
 SRC = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \

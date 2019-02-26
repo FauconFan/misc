@@ -6,8 +6,6 @@ char ** completions;
 /* Fonctions internes à readline */
 char ** fileman_completion(const char * com, int start, int end);
 char * command_generator(const char * com, int num);
-char * ft_strdup(char * src);
-
 /*********************************/
 
 void initialisation_tab_completion() {
@@ -39,13 +37,15 @@ int initialize_readline() {
 char ** fileman_completion(const char * com, int start, int end) {
 	char ** matches;
 
-	end++;
 	matches = (char **) NULL; /* assure la complÃ©tion par dÃ©faut */
 
 	/* si c'est le premier mot de la ligne de commande, on l'analyse;
 	 * sinon on utilise l'analyse par dÃ©faut */
 	if (start == 0)
 		matches = rl_completion_matches(com, command_generator);
+	if (start == end) {
+		printf("Star = end");
+	}
 
 	return (matches);
 }
@@ -60,7 +60,7 @@ char * command_generator(const char * com, int num) {
 	/* Ã  l'entrÃ©e de cette fonction : com est le dÃ©but dÃ©jÃ  Ã©crit de la commande,
 	 * on est en train de chercher la complÃ©tion numÃ©ro num */
 	static int indice, len;
-	char * completion;
+
 
 	/* si c'est la premiÃ¨re complÃ©tion qu'on cherche, on dit qu'on va chercher Ã  partir
 	 * de la premiere case du tableau completion et on garde en mÃ©moire la longueur
@@ -72,26 +72,13 @@ char * command_generator(const char * com, int num) {
 
 	/* on renvoie une complÃ©tion de prÃ©fixe le dÃ©but de la commande Ã©crite */
 	while (indice < nb_completions) {
-		completion = completions[indice++];
+		char * completion = completions[indice++];
 
 		if (strncmp(completion, com, len) == 0)
-			return ft_strdup(completion);
+			return dupstr(completion);
 	}
 
 	/* est renvoyÃ© quand num est > au numÃ©ro de la derniÃ¨re complÃ©tion
 	 * automatique */
 	return NULL;
-}
-
-char * ft_strdup(char * src) {
-	char * str;
-	char * p;
-	int len = strlen(src);
-
-	str = malloc(len + 1);
-	p   = str;
-	while (*src)
-		*p++ = *src++;
-	*p = '\0';
-	return str;
 }

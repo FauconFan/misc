@@ -1,7 +1,5 @@
 #include "cimp.h"
 
-/* /!\ /!\ POSITION PROVISOIRE /!\/!\ */
-
 void cimp_exe(t_parser_out * cmd) {
 	if (strstr(cmd->cmd, "help")) {
 		cimp_help();

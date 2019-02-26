@@ -26,5 +26,6 @@
 #define	CIMP_PROMPT "cimp>> "
 
 int initialize_readline(void);
+void cimp_exe(t_parser_out * cmd);
 
 #endif // ifndef CIMP_H
