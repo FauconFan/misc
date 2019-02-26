@@ -3,7 +3,7 @@
 
 typedef struct Money Money;
 
-Money *create_money(int amount, char *currenty);
+Money *money_create(int amount, char *currenty);
 int money_amount(Money *m);
 char *money_currency(Money *m);
 void money_free(Money *m);
