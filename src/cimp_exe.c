@@ -1,31 +1,31 @@
 #include "cimp.h"
 
 void cimp_exe(t_parser_out * cmd) {
-	if (strstr(cmd->cmd, "help")) {
+	if (strcmp(cmd->cmd, "help") == 0) {
 		cimp_help();
 	}
-	else if (strstr(cmd->cmd, "open")) {
+	else if (strcmp(cmd->cmd, "open") == 0) {
 		char * errno_str = NULL;
 		cimp_open(cmd->name_file, &errno_str);
 		if (errno_str)
 			printf("Something went wrong %s\n", errno_str);
 	}
-	else if (strstr(cmd->cmd, "list")) {
+	else if (strcmp(cmd->cmd, "list") == 0) {
 		cimp_list();
 	}
-	else if (strstr(cmd->cmd, "rotate")) {
+	else if (strcmp(cmd->cmd, "rotate") == 0) {
 		cimp_rotate(cmd->angle);
 	}
-	else if (strstr(cmd->cmd, "sym_verti")) {
+	else if (strcmp(cmd->cmd, "sym_verti") == 0) {
 		cimp_sym_verti();
 	}
-	else if (strstr(cmd->cmd, "sym_hori")) {
+	else if (strcmp(cmd->cmd, "sym_hori") == 0) {
 		cimp_sym_hori();
 	}
-	else if (strstr(cmd->cmd, "close")) {
+	else if (strcmp(cmd->cmd, "close") == 0) {
 		cimp_close();
 	}
-	else if (strstr(cmd->cmd, "QUIT")) {
+	else if (strcmp(cmd->cmd, "QUIT") == 0) {
 		exit(0);
 	}
 }
