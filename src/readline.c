@@ -43,8 +43,8 @@ char ** fileman_completion(const char * com, int start, int end) {
 	 * sinon on utilise l'analyse par dÃ©faut */
 	if (start == 0)
 		matches = rl_completion_matches(com, command_generator);
-	if (start == end) {
-		printf("Star = end");
+	if (end == 100000) {
+		printf("Very long");
 	}
 
 	return (matches);
