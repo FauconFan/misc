@@ -55,3 +55,10 @@ dkms.conf
 cimp
 images/
 venv/
+infer.tar.xz
+.vscode/
+infer-out/
+gcovr/
+cimp_check
+*.gcda
+*.gcno

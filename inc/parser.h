@@ -1,13 +1,13 @@
 #ifndef PARSER_H
 #define	PARSER_H
 
-#define	NO_ANGLE -1
+#define	NO_ANGLE (-1)
 
 
 typedef struct      s_parser_config {
 	char * name;
-	short  has_name;
-	short  has_angle;
+	int8_t has_name;
+	int8_t has_angle;
 }                   t_parser_config;
 
 extern t_parser_config g_command_list[];
@@ -25,6 +25,7 @@ typedef enum e_error_parser {
 	NOT_ENOUGH_ARGS,
 	UNKNOW_NAME,
 	MALLOC_EST_LE_MAILLON_FAIBLE,
+	INVALID_ARGUMENT,
 }            t_error_parser;
 
 extern char * g_error_parser_strings [];
