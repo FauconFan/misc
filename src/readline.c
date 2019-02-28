@@ -43,6 +43,9 @@ char ** fileman_completion(const char * com, int start, int end) {
 	 * sinon on utilise l'analyse par dÃ©faut */
 	if (start == 0)
 		matches = rl_completion_matches(com, command_generator);
+
+	/* Condition inutile et délirante, end ne peut être enlevé du prototype
+	 *  de fonction et n'est pas utilisé pour l'instant donc ne passe pas cppcheck */
 	if (end == 100000) {
 		printf("Very long");
 	}
