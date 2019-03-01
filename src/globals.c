@@ -20,4 +20,5 @@ const char * g_error_parser_strings [] = {
 	"Le nom de la commande n'est pas connu",
 	"Le malloc a echoue",
 	"L'argument est invalide",
+	"La ligne entrée est vide",
 };
