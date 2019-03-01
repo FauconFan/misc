@@ -9,10 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <errno.h>
-#include <libgen.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
 #include <string.h>
 
 // SDL includes
