@@ -91,7 +91,7 @@ char * get_error(t_error_parser error) {
  * si elle n'existe pas ou que le nombre d'arguments ne correspond pas on met a jour le champs error et on renvoie NULL
  * si la ligne est vide on renvoit NULL*/
 t_parser_out * parse_line(char * line, t_error_parser * error) {
-	if (strcmp(line, "\0") == 0) {
+	if ((*line) == 0) {
 		*error = NO_LINE;
 		return NULL;
 	}
