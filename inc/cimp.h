@@ -6,6 +6,8 @@
 // Standards includes
 #include <errno.h>
 #include <libgen.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -26,6 +28,7 @@
 
 #define	CIMP_PROMPT "cimp>> "
 
-char * cimp_readline(void);
+int initialize_readline(void);
+int cimp_exe(t_parser_out * cmd);
 
 #endif // ifndef CIMP_H
