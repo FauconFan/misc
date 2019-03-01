@@ -24,9 +24,9 @@ void free_p_out(t_parser_out * cmd) {
 
 /*Renvoie le t_parser_config correspondant a la commande cmd et NULL si elle n'existe pas*/
 const t_parser_config * get_cmd(char * cmd) {
-	for (int i = 0; i < (int) g_config_size; i++) {
-		if (strcmp(cmd, g_config[i].name) == 0) {
-			return g_config + i;
+	for (int i = 0; i < (int) g_command_list_size; i++) {
+		if (strcmp(cmd, g_command_list[i].name) == 0) {
+			return g_command_list + i;
 		}
 	}
 	return NULL;

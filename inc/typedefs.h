@@ -46,8 +46,8 @@ typedef enum e_error_parser {
 extern t_cimp * g_cimp;
 
 // Parser globals
-extern const t_parser_config g_config[];
-extern const size_t g_config_size;
+extern const t_parser_config g_command_list[];
+extern const size_t g_command_list_size;
 
 extern const char * g_error_parser_strings [];
 
