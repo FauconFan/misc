@@ -1,6 +1,8 @@
 #ifndef TYPEDEFS_H
 #define	TYPEDEFS_H
 
+#include "cimp.h"
+
 /**
  * Ici sont définies les structures standards utilisées dans le programme.
  */

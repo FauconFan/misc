@@ -186,7 +186,7 @@ cpplint_run: venv
 
 .PHONY: cppcheck_run
 cppcheck_run:
-	$(CPPCHECK) --error-exitcode=1 --enable=all -I inc $(ALL_FILES)
+	$(CPPCHECK) --error-exitcode=1 --enable=all --suppress=missingIncludeSystem -I inc $(SRC)
 
 ##################################### CLANG_TIDY ###############################
 
