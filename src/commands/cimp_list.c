@@ -23,10 +23,12 @@ void cimp_list() {
 		char * taille = malloc(sizeof(char) * (w_len + h_len + 2));
 
 		if (width == NULL || height == NULL || taille == NULL) {
-			free(taille);
-			free(width);
-			free(height);
-			perror("malloc");
+			if (taille)
+				free(taille);
+			if (width)
+				free(width);
+			if (height)
+				free(height);
 			return;
 		}
 

@@ -18,6 +18,7 @@ static void analyse(char * line, int * running) {
 		printf("DAMN nous avons parser une ligne ! cmd : %s name_file : %s angle : %d \n",
 		  cmd->cmd, cmd->name_file, cmd->angle);
 		*running = cimp_exe(cmd);
+		cimp_update_screen(g_cimp->screen);
 		free_p_out(cmd);
 	}
 	else {

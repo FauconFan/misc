@@ -26,7 +26,7 @@ int cimp_exe(t_parser_out * cmd) {
 		cimp_close();
 	}
 	else if (strcmp(cmd->cmd, "QUIT") == 0) {
-		return -1;
+		return 0;
 	}
 	return 1;
 }
