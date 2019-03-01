@@ -6,9 +6,20 @@ Clause::Clause() : _litts(NULL)
     this->_litts = new std::vector<int> ();
 }
 
+Clause::Clause(const Clause & rhs) : _litts(NULL) {
+    *this = rhs;
+}
+
 Clause::Clause(const std::vector<int> & litts) : _litts(NULL)
 {
     this->_litts = new std::vector<int> (litts);
+}
+
+Clause &Clause::operator=(const Clause & rhs) {
+    if (this->_litts != NULL)
+        delete this->_litts;
+    this->_litts = new std::vector<int> (*(rhs.getLitts()));
+    return (*this);
 }
 
 Clause::~Clause() {

@@ -11,6 +11,7 @@ _WHITE=$(shell tput setaf 7 2> /dev/null || echo "")
 _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 SRC_FOLDER = src/
+MODEL_FOLDER = src/model/
 
 AR = ar
 CXX = clang++
@@ -22,7 +23,8 @@ INC_FLAGS = -I ./
 FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 
 SRC = \
-	$(SRC_FOLDER)Clause.class.cpp \
+	$(MODEL_FOLDER)Clause.class.cpp \
+	$(MODEL_FOLDER)FNC.class.cpp \
 
 OBJ = $(SRC:%.cpp=%.o)
 

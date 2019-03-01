@@ -2,14 +2,17 @@
 #ifndef CLAUSE_CLASS_HPP
 #define CLAUSE_CLASS_HPP
 
-#include <vector>
+#include "libsat.hpp"
 
 class Clause
 {
     public:
         Clause();
+        Clause(const Clause & rhs);
         Clause(const std::vector<int> & litts);
         virtual ~Clause();
+
+        Clause &operator=(const Clause & rhs);
 
         std::vector<int>    *getLitts() const;
 
@@ -17,7 +20,7 @@ class Clause
         std::vector<int>    *_litts;
 };
 
-std::ostream &operator<<(std::ostream &, const Clause & cl);
+std::ostream &operator<<(std::ostream &, const Clause &);
 
 
 #endif
