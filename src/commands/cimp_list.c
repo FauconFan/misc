@@ -39,8 +39,6 @@ void cimp_list() {
 		strncpy(taille + w_len, "x", 2);
 		strncpy(taille + w_len + 1, height, h_len + 1);
 
-		printf("w : %s h : %s \n", width, height);
-
 		printf("%-*s %-*s %-*s %-*s\n", max_name, "NAME", max_ID, "ID", max_taille, "TAILLE",
 		  max_path, "FILEPATH");
 
