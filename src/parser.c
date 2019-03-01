@@ -1,41 +1,5 @@
 #include "cimp.h"
 
-t_parser_config g_config[] = {
-	{"help",      0, 0},
-	{"open",      1, 0},
-	{"close",     1, 0},
-	{"list",      0, 0},
-	{"sym_verti", 0, 0},
-	{"sym_horti", 0, 0},
-	{"rotate",    0, 1},
-};
-
-size_t g_config_size = sizeof(g_config) / sizeof(*g_config);
-
-char * g_error_parser_strings [] = {
-	"Il y a trop d'arguments pour cette commande",
-	"Il y a trop peu d'arguments pour cette commande",
-	"Le nom de la commande n'est pas connu",
-	"Le malloc a echoue",
-	"L'argument est invalide",
-};
-
-/*Une fonction qui cree un pointeur vers un t_parser_config avec les champs nm pour name,  hn pour has_name et ha pour has_angle
- * t_parser_config * init_p_config (char * n, short hn, short ha){
- * t_parser_config * res = malloc(sizeof(t_parser_config));
- * if(res == NULL){
- *  perror("malloc");
- *  exit(1);
- * }
- *
- * res->name = n;
- * res->has_name = hn;
- * res->has_angle = hr;
- * return res;
- * }
- */
-
-
 /*Une fonction qui cree un pointeur vers un t_parser_out avec les champs c pour cmd, nf pour name_file et a pour angle*/
 t_parser_out * init_p_out(char * c, char * nf, int a, t_error_parser * error) {
 	t_parser_out * res = malloc(sizeof(t_parser_out));
@@ -59,7 +23,7 @@ void free_p_out(t_parser_out * cmd) {
 }
 
 /*Renvoie le t_parser_config correspondant a la commande cmd et NULL si elle n'existe pas*/
-t_parser_config * get_cmd(char * cmd) {
+const t_parser_config * get_cmd(char * cmd) {
 	for (int i = 0; i < (int) g_config_size; i++) {
 		if (strcmp(cmd, g_config[i].name) == 0) {
 			return g_config + i;
@@ -69,7 +33,7 @@ t_parser_config * get_cmd(char * cmd) {
 }
 
 /*Renvoie le nombre d'arguments correspondant a la commande cmd ou -1 si elle vaut NULL*/
-int nb_args(t_parser_config * cmd) {
+int nb_args(const t_parser_config * cmd) {
 	int res = 0;
 
 	if (cmd == NULL) {
@@ -82,7 +46,7 @@ int nb_args(t_parser_config * cmd) {
 }
 
 /*Renvoie l'explication de l'erreur correspondant a error*/
-char * get_error(t_error_parser error) {
+const char * get_error(t_error_parser error) {
 	return g_error_parser_strings[error];
 }
 
@@ -90,7 +54,7 @@ char * get_error(t_error_parser error) {
  * si elle n'existe pas ou que le nombre d'arguments ne correspond pas on met a jour le champs error et on renvoie NULL*/
 t_parser_out * parse_line(char * line, t_error_parser * error) {
 	char * token = strtok_r(line, " ", &line);
-	t_parser_config * commande = get_cmd(token);
+	const t_parser_config * commande = get_cmd(token);
 	int args = nb_args(commande);
 	char * tmp;
 	int rc;
