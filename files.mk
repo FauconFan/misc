@@ -23,7 +23,8 @@ MAIN_FILE = $(SRC_FOLDER)main.c
 SRC_FILES = \
 			readline.c \
 			parser.c \
-			cimp_exe.c\
+			globals.c \
+			cimp_exe.c \
 
 ENV_FILES = \
 			t_cimp.c \

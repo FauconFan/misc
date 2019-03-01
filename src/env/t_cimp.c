@@ -1,7 +1,5 @@
 #include "cimp.h"
 
-t_cimp * g_cimp = NULL;
-
 /**
  * Initialise l'environnement, charge SDL et alloue la structure globale g_cimp
  */
