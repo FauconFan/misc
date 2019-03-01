@@ -13,9 +13,11 @@ void initialisation_tab_completion() {
 	completions    = malloc(sizeof(char *) * nb_completions);
 	if (completions != NULL) {
 		for (size_t i = 0; i < g_command_list_size; i++) {
-			completions[i] = malloc(sizeof(char) * (strlen(g_command_list[i].name) + 1));
+			int len = strlen(g_command_list[i].name);
+			completions[i] = malloc(sizeof(char) * (len + 1));
 			if (completions[i]) {
-				strncpy(completions[i], g_command_list[i].name, strlen(g_command_list[i].name));
+				strncpy(completions[i], g_command_list[i].name, len);
+				completions[i][len] = '\0';
 			}
 			else {
 				printf("Erreur lors de la création du tableau de complétion");
