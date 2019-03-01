@@ -21,4 +21,5 @@ typedef struct          s_cimp {
 
 extern t_cimp * g_cimp;
 
+
 #endif // ifndef TYPEDEFS_H
