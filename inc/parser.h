@@ -26,6 +26,7 @@ typedef enum e_error_parser {
 	UNKNOW_NAME,
 	MALLOC_EST_LE_MAILLON_FAIBLE,
 	INVALID_ARGUMENT,
+	NO_LINE,
 }            t_error_parser;
 
 extern char * g_error_parser_strings [];
