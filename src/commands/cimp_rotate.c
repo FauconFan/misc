@@ -1,6 +1,8 @@
 #include "cimp.h"
-void cimp_rotate90();
-int max(int a, int b);
+
+// Local to cimp_rotate.c
+static void cimp_rotate90();
+
 void cimp_rotate(int angle) {
 	while (angle < 0)
 		angle += 360;
@@ -19,11 +21,11 @@ void cimp_rotate(int angle) {
 			cimp_rotate(90);
 			break;
 		default:
-			printf("Nothing to do   for now, invalid angle value, choose a multiple of 90°\n");
+			printf("Nothing to do for now, invalid angle value, choose a multiple of 90°\n");
 	}
 }
 
-void cimp_rotate90() {
+static void cimp_rotate90() {
 	int new_width;
 	int new_height;
 
@@ -39,5 +41,4 @@ void cimp_rotate90() {
 	SDL_FreeSurface(g_cimp->screen->buff_screen);
 	g_cimp->screen->buff_screen = surf;
 	SDL_SetWindowSize(g_cimp->screen->window, new_width, new_height);
-	// g_cimp->screen->buff_screen=surf;
 }

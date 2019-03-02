@@ -23,10 +23,12 @@ void cimp_list() {
 		char * taille = malloc(sizeof(char) * (w_len + h_len + 2));
 
 		if (width == NULL || height == NULL || taille == NULL) {
-			free(taille);
-			free(width);
-			free(height);
-			perror("malloc");
+			if (taille)
+				free(taille);
+			if (width)
+				free(width);
+			if (height)
+				free(height);
 			return;
 		}
 
@@ -36,8 +38,6 @@ void cimp_list() {
 		strncpy(taille, width, w_len + 1);
 		strncpy(taille + w_len, "x", 2);
 		strncpy(taille + w_len + 1, height, h_len + 1);
-
-		printf("w : %s h : %s \n", width, height);
 
 		printf("%-*s %-*s %-*s %-*s\n", max_name, "NAME", max_ID, "ID", max_taille, "TAILLE",
 		  max_path, "FILEPATH");
