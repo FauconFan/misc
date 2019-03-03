@@ -1,16 +1,38 @@
 #include "sat.hpp"
+#include <stdio.h>
 
-int main(void)
+extern int yyparse();
+extern FILE *yyin;
+
+static void test_bison_yacc(const char * path) {
+    FILE *myfile = NULL;
+    
+    myfile = fopen(path, "r");
+    if (!myfile) {
+        std::cout << "I can't open my file!" << std::endl;
+        return;
+    }
+    yyin = myfile;
+
+    yyparse();
+
+    FNC     *fnc;
+
+    fnc = FNC_builder::get().getFNC();
+
+    std::cout << *fnc << std::endl;
+
+    delete fnc;
+
+    fclose(myfile);
+}
+
+int main(int argc, char **argv)
 {
-    std::vector<int>    litts1 = {2, 3, 4, 5};
-    std::vector<int>    litts2 = {2, 3, 4, 5, 6, 7, 8};
-    Clause c1(litts1);
-    Clause c2(litts2);
-    std::vector<Clause> cl = {c1, c2};
-
-    FNC fnc(cl);
-
-    std::cout << "Hello World !" << std::endl;
-    std::cout << fnc;
-    return 0;
+    if (argc == 2) {
+        test_bison_yacc(argv[1]);
+    }
+    else
+        return (1);
+    return (0);
 }

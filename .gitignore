@@ -34,4 +34,5 @@
 # Custom
 libsat/libsat.a
 sat/sat
+sat/src/lexer_parser/dimacs.parser.hpp
 input_files/satlib/

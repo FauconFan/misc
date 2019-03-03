@@ -12,6 +12,8 @@ Mandatory Part:
     Code:
         ☐ Modélisation des FNC, Clauses, Variables, etc...
         ☐ Faire le parser DIMACS
+            ☐ Faire des tests poussés de gestion d'erreur
+            ☐ Abstraire le tout
         ☐ Coupures
         ☐ DPLL
         ☐ CDCL
