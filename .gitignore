@@ -34,3 +34,4 @@
 # Custom
 libsat/libsat.a
 sat/sat
+input_files/satlib/
