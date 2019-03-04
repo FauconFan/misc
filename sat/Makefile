@@ -12,6 +12,7 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 SRC_FOLDER = src/
 LEXER_PARSER_FOLDER = src/lexer_parser/
+FLEX_BISON_FOLDER = src/lexer_parser/flex_bison/
 
 LIBA = ../libsat/libsat.a
 LIB_FLAGS = -L../libsat/ -lsat -lfl
@@ -27,10 +28,11 @@ FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 
 SRC = \
 		$(SRC_FOLDER)main.cpp \
-		$(SRC_FOLDER)FNC_builder.class.cpp \
+		$(LEXER_PARSER_FOLDER)FNC_builder.class.cpp \
+		$(LEXER_PARSER_FOLDER)getinput.cpp \
 
-SRC_FLEX = $(LEXER_PARSER_FOLDER)dimacs.l
-SRC_BISON = $(LEXER_PARSER_FOLDER)dimacs.y
+SRC_FLEX = $(FLEX_BISON_FOLDER)dimacs.l
+SRC_BISON = $(FLEX_BISON_FOLDER)dimacs.y
 
 OBJ = \
 		$(SRC_BISON:%.y=%.parser.o) \
@@ -76,13 +78,11 @@ $(LEXER_PARSER_FOLDER)%.parser.o: $(LEXER_PARSER_FOLDER)%.y
 .PHONY: clean
 clean:
 	@echo "Objects removed"
-	@rm -rf $(OBJ) $(SRC_BISON:%.y=%.parser.hpp)
+	rm -rf $(OBJ) $(SRC_BISON:%.y=%.parser.hpp)
 	@make -C $(dir $(LIBA)) clean
 
 .PHONY: fclean
-fclean:
-	@echo "Objects removed"
-	@rm -rf $(OBJ)
+fclean: clean
 	@echo "Program $(NAME) removed"
 	@rm -rf $(NAME)
 	@make -C $(dir $(LIBA)) fclean

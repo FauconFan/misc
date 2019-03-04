@@ -10,10 +10,8 @@ Mandatory Part:
         ☐ Modélisation de problèmes en FNC
 
     Code:
-        ☐ Modélisation des FNC, Clauses, Variables, etc...
-        ☐ Faire le parser DIMACS
-            ☐ Faire des tests poussés de gestion d'erreur
-            ☐ Abstraire le tout
+        ✔ Modélisation des FNC, Clauses, Variables, etc... @done(19-03-04 20:30)
+        ✔ Faire le parser DIMACS @done(19-03-04 20:30)
         ☐ Coupures
         ☐ DPLL
         ☐ CDCL

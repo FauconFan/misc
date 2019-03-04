@@ -2,9 +2,12 @@
     #include "sat.hpp"
 
     extern int yylex();
+    extern int lexer_line_num;
 
     void yyerror(const char *s);
 %}
+
+%error-verbose
 
 %union {
     int ival;
@@ -12,6 +15,7 @@
 
 %token CNF
 %token ZERO
+%token UNKNOWN
 
 %token <ival> INT
 
@@ -50,5 +54,7 @@ var:
 %%
 
 void yyerror(const char *s) {
-  std::cout << "EEK, parse error!  Message: " << s << std::endl;
+  std::cout
+    << "Parser error (Line " << lexer_line_num << "):" << std::endl
+    << "\t" << s << std::endl;
 }
