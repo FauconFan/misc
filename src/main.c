@@ -30,11 +30,17 @@ static void analyse(char * line, int * running) {
 
 static char * getline_from_child() {
 	char * line = NULL;
-	size_t len  = 0;
+	int len     = 0;
 
 	while (read(g_cimp->fd_readline, &len, sizeof(len)) == -1)
 		usleep(30);  // 30 ms
+	if (len == -1)
+		return (NULL);
+
 	line = (char *) malloc(sizeof(char) * (len + 1));
+	if (line == NULL)
+		return (NULL);
+
 	memset(line, 0, len + 1);
 	read(g_cimp->fd_readline, line, len);
 	return (line);

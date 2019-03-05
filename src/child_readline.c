@@ -2,15 +2,18 @@
 
 static void core_child_inner(int fd_write, int fd_callback) {
 	char * line = NULL;
-	size_t len  = 0;
+	int len     = 0;
 
 	line = readline("cimp>>");
-	len  = strlen(line);
-	write(fd_write, &len, sizeof(len));
-	write(fd_write, line, len);
+	len  = (line == NULL) ? -1 : (int) strlen(line);
+	if (len != 0) {
+		write(fd_write, &len, sizeof(len));
+		if (len > 0)
+			write(fd_write, line, len);
+		while (read(fd_callback, &len, sizeof(len)) == -1)
+			usleep(5);
+	}
 	free(line);
-	while (read(fd_callback, &len, sizeof(len)) == -1)
-		usleep(5);
 }
 
 static void core_child(int fd_write, int fd_callback) {
