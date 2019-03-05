@@ -1,8 +1,9 @@
 #include "cimp.h"
 
-static void core_child_inner(int fd_write, int fd_callback) {
+static int core_child_inner(int fd_write, int fd_callback) {
 	char * line = NULL;
 	int len     = 0;
+	int ret     = 0;
 
 	line = readline("cimp>>");
 	len  = (line == NULL) ? -1 : (int) strlen(line);
@@ -10,17 +11,17 @@ static void core_child_inner(int fd_write, int fd_callback) {
 		write(fd_write, &len, sizeof(len));
 		if (len > 0)
 			write(fd_write, line, len);
-		while (read(fd_callback, &len, sizeof(len)) == -1)
+		while (read(fd_callback, &ret, sizeof(ret)) == -1)
 			usleep(5);
 	}
 	free(line);
+	return (ret);
 }
 
 static void core_child(int fd_write, int fd_callback) {
 	initialize_readline();
-	while (1) {
-		core_child_inner(fd_write, fd_callback);
-	}
+	while (core_child_inner(fd_write, fd_callback) == 0);
+	exit(0);
 }
 
 int     setup_child() {

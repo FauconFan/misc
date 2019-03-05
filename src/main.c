@@ -60,8 +60,11 @@ int main(void) {
 		analyse(line, &running);
 		free(line);
 		line = NULL;
-		size_t tmp = 0;
-		write(g_cimp->fd_callback, &tmp, sizeof(tmp));
+
+		if (running) {
+			size_t tmp = 0;
+			write(g_cimp->fd_callback, &tmp, sizeof(tmp));
+		}
 	}
 	if (line)
 		free(line);

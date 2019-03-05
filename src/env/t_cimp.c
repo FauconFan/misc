@@ -28,12 +28,14 @@ void            cimp_end() {
 	if (g_cimp) {
 		if (g_cimp->screen)
 			cimp_end_screen(g_cimp->screen);
+		if (g_cimp->child_pid >= 0) {
+			int tmp = 1;
+			write(g_cimp->fd_callback, &tmp, sizeof(tmp));
+		}
 		if (g_cimp->fd_readline >= 0)
 			close(g_cimp->fd_readline);
 		if (g_cimp->fd_callback >= 0)
 			close(g_cimp->fd_callback);
-		if (g_cimp->child_pid >= 0)
-			kill(g_cimp->child_pid, SIGKILL);
 		free(g_cimp);
 		g_cimp = NULL;
 		SDL_Quit();
