@@ -25,6 +25,7 @@ SRC_FILES = \
 			parser.c \
 			globals.c \
 			cimp_exe.c \
+			child_readline.c \
 
 ENV_FILES = \
 			t_cimp.c \

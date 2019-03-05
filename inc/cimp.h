@@ -5,17 +5,24 @@
 # define	_POSIX_SOURCE
 #endif // ifndef _POSIX_SOURCE
 
+#ifndef _GNU_SOURCE
+# define	_GNU_SOURCE
+#endif // ifndef _GNU_SOURCE
+
 // Standards includes
 #include <errno.h>
+#include <fcntl.h>
 #include <libgen.h>
+#include <signal.h>
 #include <stdio.h>
-
-#include <readline/history.h>
-#include <readline/readline.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
 #include <unistd.h>
 
-#include <string.h>
+// Readline include
+#include <readline/history.h>
+#include <readline/readline.h>
 
 // SDL includes
 #include <SDL.h>
@@ -33,5 +40,6 @@
 
 int initialize_readline(void);
 int cimp_exe(t_parser_out * cmd);
+int setup_child();
 
 #endif // ifndef CIMP_H

@@ -15,6 +15,9 @@ typedef struct          s_cimp_screen {
 
 typedef struct          s_cimp {
 	t_cimp_screen * screen;
+	pid_t           child_pid;
+	int             fd_readline;
+	int             fd_callback;
 }                       t_cimp;
 
 /********************************* PARSER ************************************/

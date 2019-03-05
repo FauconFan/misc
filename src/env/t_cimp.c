@@ -14,7 +14,10 @@ int             cimp_init() {
 	if ((g_cimp = (t_cimp *) malloc(sizeof(t_cimp))) == NULL)
 		return (1);
 
-	g_cimp->screen = NULL;
+	g_cimp->screen      = NULL;
+	g_cimp->child_pid   = -1;
+	g_cimp->fd_readline = -1;
+	g_cimp->fd_callback = -1;
 	return (0);
 }
 
@@ -25,6 +28,12 @@ void            cimp_end() {
 	if (g_cimp) {
 		if (g_cimp->screen)
 			cimp_end_screen(g_cimp->screen);
+		if (g_cimp->fd_readline >= 0)
+			close(g_cimp->fd_readline);
+		if (g_cimp->fd_callback >= 0)
+			close(g_cimp->fd_callback);
+		if (g_cimp->child_pid >= 0)
+			kill(g_cimp->child_pid, SIGKILL);
 		free(g_cimp);
 		g_cimp = NULL;
 		SDL_Quit();

@@ -28,21 +28,34 @@ static void analyse(char * line, int * running) {
 	}
 }
 
+static char * getline_from_child() {
+	char * line = NULL;
+	size_t len  = 0;
+
+	while (read(g_cimp->fd_readline, &len, sizeof(len)) == -1)
+		usleep(30);  // 30 ms
+	line = (char *) malloc(sizeof(char) * (len + 1));
+	memset(line, 0, len + 1);
+	read(g_cimp->fd_readline, line, len);
+	return (line);
+}
+
 int main(void) {
 	char * line;
 	int running;
 
-	initialize_readline();
 	if (cimp_init()) {
 		printf("Something went terribly wrong\n");
 		return (1);
 	}
+	setup_child();
 	running = 1;
-	while (running && (line = readline("cimp>>")) != NULL) {
-		add_history(line);
+	while (running && (line = getline_from_child()) != NULL) {
 		analyse(line, &running);
 		free(line);
 		line = NULL;
+		size_t tmp = 0;
+		write(g_cimp->fd_callback, &tmp, sizeof(tmp));
 	}
 	if (line)
 		free(line);
