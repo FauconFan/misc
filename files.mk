@@ -8,6 +8,7 @@ INC_FILES = \
 	utils.h \
 	parser.h \
 	commands.h \
+	child_readline.h \
 
 INC = $(addprefix $(INC_FOLDER), $(INC_FILES))
 
