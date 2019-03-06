@@ -2,6 +2,9 @@
     #include "sat.hpp"
     #include "dimacs.parser.hpp"
 
+    #define YYINITDEPTH 100000
+    #define YYMAXDEPTH 500000
+
     bool        yy_ok = true;
 
     extern int yylex();
@@ -47,15 +50,15 @@ cnf:
 fzero:
     zero
     | zero endls
-    | var fzero
-    | var endls fzero
+    | fnzero zero
+    | fnzero zero endls
     ;
 
 fnzero:
     var
     | var endls
-    | var fnzero
-    | var endls fnzero
+    | fnzero var
+    | fnzero var endls
     ;
 
 var:
