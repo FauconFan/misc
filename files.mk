@@ -23,14 +23,14 @@ CHILD_RD_FOLDER		= src/child_readline/
 MAIN_FILE = $(SRC_FOLDER)main.c
 
 SRC_FILES = \
-			readline.c \
 			parser.c \
 			globals.c \
 			cimp_exe.c \
 
 CHILD_RD_FILES = \
 			child_readline.c \
-			child_send.c \
+			child_communicate.c \
+			core_readline.c \
 
 ENV_FILES = \
 			t_cimp.c \
