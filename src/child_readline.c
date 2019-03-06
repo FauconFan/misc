@@ -11,8 +11,7 @@ static int core_child_inner(int fd_write, int fd_callback) {
 		write(fd_write, &len, sizeof(len));
 		if (len > 0)
 			write(fd_write, line, len);
-		while (read(fd_callback, &ret, sizeof(ret)) == -1)
-			usleep(5);
+		read(fd_callback, &ret, sizeof(ret));
 	}
 	free(line);
 	return (ret);
@@ -33,7 +32,7 @@ int     setup_child() {
 		printf("setup_child failed at pipe2");
 		return (1);
 	}
-	if (pipe2(fds_callback, O_NONBLOCK) == -1) {
+	if (pipe(fds_callback) == -1) {
 		printf("setup_child failed at pipe2");
 		close(fds_rl[0]);
 		close(fds_rl[1]);

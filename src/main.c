@@ -15,10 +15,9 @@ static void analyse(char * line, int * running) {
 	t_parser_out * cmd = parse_line(line, &error);
 
 	if (cmd != NULL) {
-		printf("DAMN nous avons parser une ligne ! cmd : %s name_file : %s angle : %d \n",
+		printf("DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d } \n",
 		  cmd->cmd, cmd->name_file, cmd->angle);
 		*running = cimp_exe(cmd);
-		cimp_update_screen(g_cimp->screen);
 		free_p_out(cmd);
 	}
 	else {
@@ -32,8 +31,9 @@ static char * getline_from_child() {
 	char * line = NULL;
 	int len     = 0;
 
-	while (read(g_cimp->fd_readline, &len, sizeof(len)) == -1)
-		usleep(30);  // 30 ms
+	if (read(g_cimp->fd_readline, &len, sizeof(len)) == -1)
+		return (NULL);
+
 	if (len == -1)
 		return (NULL);
 
@@ -56,15 +56,23 @@ int main(void) {
 	}
 	setup_child();
 	running = 1;
-	while (running && (line = getline_from_child()) != NULL) {
-		analyse(line, &running);
-		free(line);
-		line = NULL;
+	while (running) {
+		line = getline_from_child();
 
-		if (running) {
-			size_t tmp = 0;
-			write(g_cimp->fd_callback, &tmp, sizeof(tmp));
+		if (line != NULL) {
+			analyse(line, &running);
+			free(line);
+			line = NULL;
+
+			if (running) {
+				int tmp = 0;
+				write(g_cimp->fd_callback, &tmp, sizeof(tmp));
+			}
 		}
+
+		usleep(30); // 30 ms arbitrary
+		cimp_update_screen(g_cimp->screen);
+
 	}
 	if (line)
 		free(line);
