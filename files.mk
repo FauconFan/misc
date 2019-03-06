@@ -16,7 +16,8 @@ INC = $(addprefix $(INC_FOLDER), $(INC_FILES))
 SRC_FOLDER			= src/
 ENV_FOLDER			= src/env/
 UTILS_FOLDER		= src/utils/
-COMMANDS_FOLDER = src/commands/
+COMMANDS_FOLDER     = src/commands/
+CHILD_RD_FOLDER		= src/child_readline/
 
 MAIN_FILE = $(SRC_FOLDER)main.c
 
@@ -25,7 +26,10 @@ SRC_FILES = \
 			parser.c \
 			globals.c \
 			cimp_exe.c \
+
+CHILD_RD_FILES = \
 			child_readline.c \
+			child_send.c \
 
 ENV_FILES = \
 			t_cimp.c \
@@ -46,6 +50,7 @@ COMMANDS_FILES = \
 
 SRC_NO_MAIN = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \
+		$(addprefix $(CHILD_RD_FOLDER), $(CHILD_RD_FILES)) \
 		$(addprefix $(ENV_FOLDER), $(ENV_FILES)) \
 		$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
 		$(addprefix $(COMMANDS_FOLDER), $(COMMANDS_FILES)) \

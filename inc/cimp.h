@@ -31,6 +31,7 @@
 #include "typedefs.h"
 
 // Cimp includes
+#include "child_readline.h"
 #include "commands.h"
 #include "env.h"
 #include "parser.h"
@@ -39,7 +40,7 @@
 #define	CIMP_PROMPT "cimp>> "
 
 int initialize_readline(void);
-int cimp_exe(t_parser_out * cmd);
+void cimp_exe(t_parser_out * cmd);
 int setup_child();
 
 #endif // ifndef CIMP_H

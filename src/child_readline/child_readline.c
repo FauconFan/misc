@@ -26,6 +26,7 @@ static void core_child(int fd_write, int fd_callback) {
 int     setup_child() {
 	int fds_rl[2];
 	int fds_callback[2];
+	pid_t pid_child;
 
 	// Setting up connection with pipes
 	if (pipe2(fds_rl, O_NONBLOCK) == -1) {
@@ -40,14 +41,14 @@ int     setup_child() {
 	}
 
 
-	g_cimp->child_pid = fork();
-	if (g_cimp->child_pid == -1) {
+	pid_child = fork();
+	if (pid_child == -1) {
 		printf("setup_child failed at fork");
 		return (1);
 	}
 
 	// Child
-	if (g_cimp->child_pid == 0) {
+	if (pid_child == 0) {
 		close(fds_rl[0]);
 		close(fds_callback[1]);
 
@@ -60,8 +61,8 @@ int     setup_child() {
 		close(fds_rl[1]);
 		close(fds_callback[0]);
 
-		g_cimp->fd_readline = fds_rl[0];
-		g_cimp->fd_callback = fds_callback[1];
+		g_fd_readline = fds_rl[0];
+		g_fd_callback = fds_callback[1];
 	}
 	return (0);
 } /* setup_child */
