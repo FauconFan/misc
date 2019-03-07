@@ -1,5 +1,10 @@
 # Journal de Bord
 
+## Semaine 4 - 10 Mars 2019
+
+- Mise en place de la phase 2 : Moon (Spécification)
+- Readline dans un processus fork pour permettre une "game loop"
+
 ## Semaine 25 Février - 3 Mars 2019
 
 - Mise en place du journal de bord, simulation des semaines précédentes depuis l'historique git
