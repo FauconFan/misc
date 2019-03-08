@@ -1,6 +1,6 @@
 #include "cimp.h"
 
-int cimp_exe(t_parser_out * cmd) {
+void cimp_exe(t_parser_out * cmd) {
 	if (strcmp(cmd->cmd, "help") == 0) {
 		cimp_help();
 	}
@@ -26,7 +26,6 @@ int cimp_exe(t_parser_out * cmd) {
 		cimp_close();
 	}
 	else if (strcmp(cmd->cmd, "QUIT") == 0) {
-		return 0;
+		g_cimp->running = 0;
 	}
-	return 1;
 }

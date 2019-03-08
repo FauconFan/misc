@@ -23,3 +23,6 @@ const char * g_error_parser_strings [] = {
 	"L'argument est invalide",
 	"La ligne entrée est vide",
 };
+
+int g_fd_readline = -1;
+int g_fd_callback = -1;

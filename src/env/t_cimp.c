@@ -14,7 +14,8 @@ int             cimp_init() {
 	if ((g_cimp = (t_cimp *) malloc(sizeof(t_cimp))) == NULL)
 		return (1);
 
-	g_cimp->screen = NULL;
+	g_cimp->screen  = NULL;
+	g_cimp->running = 1;
 	return (0);
 }
 

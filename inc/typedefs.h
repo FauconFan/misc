@@ -15,6 +15,7 @@ typedef struct          s_cimp_screen {
 
 typedef struct          s_cimp {
 	t_cimp_screen * screen;
+	int             running;
 }                       t_cimp;
 
 /********************************* PARSER ************************************/
@@ -51,5 +52,9 @@ extern const t_parser_config g_command_list[];
 extern const size_t g_command_list_size;
 
 extern const char * g_error_parser_strings [];
+
+// Childs globals
+extern int g_fd_readline;
+extern int g_fd_callback;
 
 #endif // ifndef TYPEDEFS_H
