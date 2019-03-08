@@ -39,8 +39,7 @@
 
 #define	CIMP_PROMPT "cimp>> "
 
-int initialize_readline(void);
-void cimp_exe(t_cmd * cmd);
+int cimp_exe(t_cmd * cmd);
 int setup_child();
 void treat_line(char * line);
 void handle_line();

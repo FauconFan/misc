@@ -2,13 +2,17 @@
 
 void treat_line(char * line) {
 	t_error_parser error;
-	t_cmd * cmd = parse_line(line, &error);
+	t_cmd * cmd;
 
+	cmd = parse_line(line, &error);
 	if (cmd != NULL) {
 		printf(
 		  "DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d } \n",
 		  cmd->cmd, cmd->name_file, cmd->angle);
-		cimp_exe(cmd);
+		if (cimp_exe(cmd) == -1) {
+			printf("Internal program error !!!\n");
+			printf("Please contact maintainers !!!\n");
+		}
 		free_p_out(cmd);
 	}
 	else {

@@ -26,6 +26,7 @@ typedef struct      s_cmd {
 
 typedef struct      s_cmd_config {
 	char * name;
+	int (* func_cmd_ptr)(t_cmd *);
 	int8_t has_name;
 	int8_t has_angle;
 }                   t_cmd_config;

@@ -1,31 +1,37 @@
 #include "cimp.h"
 
 // Local to cimp_rotate.c
-static void cimp_rotate90();
+static void real_rotate(t_cmd * cmd, int angle);
+static void real_rotate90();
 
-void cimp_rotate(int angle) {
+int cimp_rotate(t_cmd * cmd) {
+	real_rotate(cmd, cmd->angle);
+	return (0);
+}
+
+static void real_rotate(t_cmd * cmd, int angle) {
 	while (angle < 0)
 		angle += 360;
 	switch (angle % 360) {
 		case 0:
 			break;
 		case 90:
-			cimp_rotate90();
+			real_rotate90();
 			break;
 		case 180:
-			cimp_sym_hori();
-			cimp_sym_verti();
+			cimp_sym_hori(cmd);
+			cimp_sym_verti(cmd);
 			break;
 		case 270:
-			cimp_rotate(180);
-			cimp_rotate(90);
+			real_rotate(cmd, 180);
+			real_rotate(cmd, 90);
 			break;
 		default:
 			printf("Nothing to do for now, invalid angle value, choose a multiple of 90°\n");
 	}
 }
 
-static void cimp_rotate90() {
+static void real_rotate90() {
 	int new_width;
 	int new_height;
 

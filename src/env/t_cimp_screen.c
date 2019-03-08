@@ -13,9 +13,7 @@
  * @param  errno_str un pointeur vers une chaîne de charactères
  * @return           un pointeur vers la structure allouée
  */
-t_cimp_screen * cimp_init_screen(
-  char *  path_bmp,
-  char ** errno_str) {
+t_cimp_screen * cimp_init_screen(char * path_bmp) {
 	t_cimp_screen * sc;
 	SDL_Window * win;
 	SDL_Surface * surf;
@@ -24,16 +22,16 @@ t_cimp_screen * cimp_init_screen(
 	char * path;
 
 	if ((path = normalize_path(path_bmp)) == NULL) {
-		*errno_str = NOT_A_PATH;
+		printf("%s\n", NOT_A_PATH);
 		return (NULL);
 	}
 	if ((bmp = SDL_LoadBMP(path)) == NULL) {
-		*errno_str = (char *) SDL_GetError();
+		printf("%s\n", SDL_GetError());
 		free(path);
 		return (NULL);
 	}
 	if ((surf = SDL_CreateRGBSurface(0, bmp->w, bmp->h, 32, 0, 0, 0, 0)) == NULL) {
-		*errno_str = (char *) SDL_GetError();
+		printf("%s\n", SDL_GetError());
 		free(path);
 		SDL_FreeSurface(bmp);
 		return (NULL);
@@ -51,7 +49,7 @@ t_cimp_screen * cimp_init_screen(
 			surf->h,
 			SDL_WINDOW_SHOWN)))
 	{
-		*errno_str = (char *) SDL_GetError();
+		printf("%s\n", SDL_GetError());
 		free(path);
 		SDL_FreeSurface(surf);
 		return (NULL);
@@ -59,7 +57,7 @@ t_cimp_screen * cimp_init_screen(
 	SDL_BlitSurface(surf, &origin, SDL_GetWindowSurface(win), NULL);
 	SDL_UpdateWindowSurface(win);
 	if ((sc = (t_cimp_screen *) malloc(sizeof(t_cimp_screen))) == NULL) {
-		*errno_str = MALLOC_FAIL;
+		printf("%s\n", MALLOC_FAIL);
 		free(path);
 		SDL_FreeSurface(surf);
 		SDL_DestroyWindow(win);
