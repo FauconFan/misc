@@ -1,6 +1,6 @@
 #include "cimp.h"
 
-void cimp_exe(t_parser_out * cmd) {
+void cimp_exe(t_cmd * cmd) {
 	if (strcmp(cmd->cmd, "help") == 0) {
 		cimp_help();
 	}

@@ -2,7 +2,7 @@
 
 t_cimp * g_cimp = NULL;
 
-const t_parser_config g_command_list[] = {
+const t_cmd_config g_command_list[] = {
 	{"help",      0, 0},
 	{"open",      1, 0},
 	{"close",     0, 0},

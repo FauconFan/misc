@@ -2,7 +2,7 @@
 
 void treat_line(char * line) {
 	t_error_parser error;
-	t_parser_out * cmd = parse_line(line, &error);
+	t_cmd * cmd = parse_line(line, &error);
 
 	if (cmd != NULL) {
 		printf(
