@@ -4,6 +4,10 @@
 
 - Mise en place de la phase 2 : Moon (Spécification)
 - Readline dans un processus fork pour permettre une "game loop"
+- Gestion des events SDL (fermeture fenêtre)
+- Comencement des commandes select, unselect
+- Restructuration du code
+- Mise en place des tests unitaires
 
 ## Semaine 25 Février - 3 Mars 2019
 
