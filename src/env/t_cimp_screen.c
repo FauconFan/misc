@@ -101,11 +101,12 @@ void                cimp_update_screen(t_cimp_screen * screen) {
 	SDL_BlitSurface(screen->buff_screen, &full_rect, SDL_GetWindowSurface(screen->window), NULL);
 	SDL_UpdateWindowSurface(screen->window);
 
-    SDL_Event event;
-    while(SDL_PollEvent(&event) == 1){
-        if(event.type == SDL_QUIT || (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE)){
-            cimp_close();
-        }
-    }
-
+	SDL_Event event;
+	while (SDL_PollEvent(&event) == 1) {
+		if (event.type == SDL_QUIT ||
+		  (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE))
+		{
+			cimp_close();
+		}
+	}
 }
