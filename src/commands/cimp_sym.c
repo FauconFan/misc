@@ -1,7 +1,7 @@
 #include "cimp.h"
 
 void cimp_sym_verti() {
-	if (g_cimp->screen->buff_screen) {
+	if (g_cimp->screen) {
 		SDL_Surface * buff_screen = g_cimp->screen->buff_screen;
 		if (SDL_MUSTLOCK(buff_screen))
 			SDL_LockSurface(buff_screen);
@@ -24,7 +24,7 @@ void cimp_sym_verti() {
 }
 
 void cimp_sym_hori() {
-	if (g_cimp->screen->buff_screen) {
+	if (g_cimp->screen) {
 		SDL_Surface * buff_screen = g_cimp->screen->buff_screen;
 		if (SDL_MUSTLOCK(buff_screen))
 			SDL_LockSurface(buff_screen);
