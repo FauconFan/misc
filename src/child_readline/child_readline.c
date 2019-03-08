@@ -13,6 +13,7 @@ static int core_child_inner(int fd_write, int fd_callback) {
 			write(fd_write, line, len);
 		read(fd_callback, &ret, sizeof(ret));
 	}
+	add_history(line);
 	free(line);
 	return (ret);
 }
