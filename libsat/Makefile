@@ -12,6 +12,8 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 SRC_FOLDER = src/
 MODEL_FOLDER = src/model/
+COUPURE_FOLDER = src/coupure/
+UTILS_FOLDER = src/utils/
 
 AR = ar
 CXX = clang++
@@ -23,8 +25,11 @@ INC_FLAGS = -I ./
 FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 
 SRC = \
+	$(MODEL_FOLDER)ImplClause.class.cpp \
 	$(MODEL_FOLDER)Clause.class.cpp \
 	$(MODEL_FOLDER)FNC.class.cpp \
+	$(UTILS_FOLDER)occ_list.cpp \
+	$(COUPURE_FOLDER)Coupure.cpp \
 
 OBJ = $(SRC:%.cpp=%.o)
 
