@@ -29,7 +29,9 @@ SRC = \
 	$(MODEL_FOLDER)Clause.class.cpp \
 	$(MODEL_FOLDER)FNC.class.cpp \
 	$(UTILS_FOLDER)occ_list.cpp \
-	$(COUPURE_FOLDER)Coupure.cpp \
+
+	#$(UTILS_FOLDER)distrib.cpp \
+	#$(COUPURE_FOLDER)Coupure.cpp \
 
 OBJ = $(SRC:%.cpp=%.o)
 
