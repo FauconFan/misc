@@ -162,7 +162,7 @@ std::ostream &operator<<(std::ostream & os, const ImplClause & icl)
 	for (j = 0; j < neg_litts->size(); j++){
 		if (j != 0)
 			os << " & ";
-		os << -neg_litts->at(j);
+		os << neg_litts->at(j);
 	}
 
 	os << " -> ";
