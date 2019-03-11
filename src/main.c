@@ -46,7 +46,7 @@ int main(void) {
 		usleep(30); // 30 ms arbitrary
 		cimp_update_screen(g_cimp->screen);
 	}
-	child_send_stop();
+	child_stop();
 	cimp_end();
 	return (0);
 } /* main */
