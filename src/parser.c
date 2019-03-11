@@ -1,7 +1,7 @@
 #include "cimp.h"
 
 /*Une fonction qui cree un pointeur vers un t_parser_out avec les champs c pour cmd, nf pour name_file et a pour angle*/
-t_parser_out * init_p_out(char * c, char * nf, int a, t_error_parser * error) {
+t_parser_out * init_p_out(char * c, char * nf, int a, SDL_Rect rectangle, t_error_parser * error) {
 	t_parser_out * res = malloc(sizeof(t_parser_out));
 
 	if (res == NULL) {
@@ -12,6 +12,7 @@ t_parser_out * init_p_out(char * c, char * nf, int a, t_error_parser * error) {
 	res->cmd       = dupstr(c);
 	res->name_file = dupstr(nf);
 	res->angle     = a;
+	res->rect      = rectangle;
 	return res;
 }
 
@@ -42,6 +43,7 @@ int nb_args(const t_parser_config * cmd) {
 
 	if (cmd->has_name) res++;
 	if (cmd->has_angle) res++;
+	if (cmd->has_rect) res += 4;
 	return res;
 }
 
@@ -59,18 +61,24 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 		return NULL;
 	}
 
+	SDL_Rect rectangle;
 	char * token = strtok_r(line, " ", &line);
 	const t_parser_config * commande = get_cmd(token);
 	int args = nb_args(commande);
 	char * tmp;
 	int rc;
 
+	rectangle.x = -1;
+	rectangle.y = -1;
+	rectangle.w = -1;
+	rectangle.h = -1;
+
 	if (commande == NULL) {
 		*error = UNKNOW_NAME;
 		return NULL;
 	}
 
-	t_parser_out * res = init_p_out(token, NULL, NO_ANGLE, error);
+	t_parser_out * res = init_p_out(token, NULL, NO_ANGLE, rectangle, error);
 	if (res == NULL) {
 		return NULL;
 	}
@@ -89,6 +97,28 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 
 			res->angle = rc;
 		}
+		else if (commande->has_rect &&
+		  (res->rect.x == -1 || res->rect.y == -1 || res->rect.h == -1 || res->rect.w == -1 ) )
+		{
+			errno = 0;
+			rc    = strtol(token, &tmp, 10);
+			if (errno == EINVAL || errno == ERANGE || tmp == token) {
+				*error = INVALID_ARGUMENT;
+				return NULL;
+			}
+			if (res->rect.x == -1) {
+				res->rect.x = rc;
+			}
+			else if (res->rect.y == -1) {
+				res->rect.y = rc;
+			}
+			else if (res->rect.w == -1) {
+				res->rect.w = rc;
+			}
+			else if (res->rect.h == -1) {
+				res->rect.h = rc;
+			}
+		}
 
 		args--;
 	}
@@ -105,5 +135,12 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 		return NULL;
 	}
 
+	/**
+	 * if(commande->has_rect && (rectangle.x ==-1 || rectangle.y == -1 || rectangle.h == -1  || rectangle.w ==-1 )){
+	 * error = INVALID_RECT;
+	 *  free_p_out(res);
+	 *  return NULL;
+	 * }
+	 **/
 	return res;
 } /* parse_line */

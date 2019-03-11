@@ -15,6 +15,7 @@ int             cimp_init() {
 		return (1);
 
 	g_cimp->screen  = NULL;
+	g_cimp->select  = NULL;
 	g_cimp->running = 1;
 	return (0);
 }

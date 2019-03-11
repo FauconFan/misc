@@ -6,6 +6,9 @@
 /**
  * Ici sont définies les structures standards utilisées dans le programme.
  */
+typedef struct s_cimp_select {
+	SDL_Rect surface;
+} t_cimp_select;
 
 typedef struct          s_cimp_screen {
 	SDL_Window *  window;
@@ -15,6 +18,7 @@ typedef struct          s_cimp_screen {
 
 typedef struct          s_cimp {
 	t_cimp_screen * screen;
+	t_cimp_select * select;
 	int             running;
 }                       t_cimp;
 
@@ -24,12 +28,14 @@ typedef struct      s_parser_config {
 	char * name;
 	int8_t has_name;
 	int8_t has_angle;
+	int8_t has_rect;
 }                   t_parser_config;
 
 typedef struct      s_parser_out {
-	char * cmd;
-	char * name_file;
-	int    angle;
+	char *   cmd;
+	char *   name_file;
+	int      angle;
+	SDL_Rect rect;
 }                   t_parser_out;
 
 typedef enum e_error_parser {
@@ -39,6 +45,7 @@ typedef enum e_error_parser {
 	MALLOC_EST_LE_MAILLON_FAIBLE,
 	INVALID_ARGUMENT,
 	NO_LINE,
+	INVALID_RECT,
 }            t_error_parser;
 
 /**
@@ -47,7 +54,7 @@ typedef enum e_error_parser {
 
 extern t_cimp * g_cimp;
 
-// Parser globals
+// Parser globalscimp_end_select
 extern const t_parser_config g_command_list[];
 extern const size_t g_command_list_size;
 

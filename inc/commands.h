@@ -20,4 +20,8 @@ void cimp_sym_hori();
 // cimp_rotate.c:
 void cimp_rotate(int angle);
 
+// cimp_select.c :
+int cimp_select(SDL_Rect rectangle, char ** errno_str);
+void cimp_unselect();
+
 #endif // ifndef COMMANDS_H

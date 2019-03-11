@@ -25,7 +25,16 @@ void cimp_exe(t_parser_out * cmd) {
 	else if (strcmp(cmd->cmd, "close") == 0) {
 		cimp_close();
 	}
+	else if (strcmp(cmd->cmd, "select") == 0) {
+		char * errno_str = NULL;
+		cimp_select(cmd->rect, &errno_str);
+		if (errno_str)
+			printf("Something went wrong %s\n", errno_str);
+	}
+	else if (strcmp(cmd->cmd, "unselect") == 0) {
+		cimp_unselect();
+	}
 	else if (strcmp(cmd->cmd, "QUIT") == 0) {
 		g_cimp->running = 0;
 	}
-}
+} /* cimp_exe */

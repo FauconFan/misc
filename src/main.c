@@ -6,8 +6,8 @@ static void treat_line(char * line) {
 
 	if (cmd != NULL) {
 		printf(
-		  "DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d } \n",
-		  cmd->cmd, cmd->name_file, cmd->angle);
+		  "DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d \n rect : x=%d y=%d w=%d h=%d} \n",
+		  cmd->cmd, cmd->name_file, cmd->angle, cmd->rect.x, cmd->rect.y, cmd->rect.w, cmd->rect.h);
 		cimp_exe(cmd);
 		free_p_out(cmd);
 	}
