@@ -9,7 +9,7 @@ int main(void) {
 		return (1);
 	}
 	core();
-	child_send_stop();
+	child_stop();
 	cimp_end();
 	return (0);
 } /* main */
