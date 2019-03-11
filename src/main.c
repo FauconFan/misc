@@ -8,6 +8,11 @@ static void treat_line(char * line) {
 		printf(
 		  "DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d \n rect : x=%d y=%d w=%d h=%d} \n",
 		  cmd->cmd, cmd->name_file, cmd->angle, cmd->rect.x, cmd->rect.y, cmd->rect.w, cmd->rect.h);
+		if (g_cimp->select == NULL)
+			printf("Pas de selection courrante \n");
+		else
+			printf("Selection courrante :  x=%d y=%d w=%d h=%d\n", g_cimp->select->surface.x,
+			  g_cimp->select->surface.y, g_cimp->select->surface.w, g_cimp->select->surface.h);
 		cimp_exe(cmd);
 		free_p_out(cmd);
 	}

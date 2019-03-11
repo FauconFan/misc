@@ -19,6 +19,3 @@ t_cimp_select * cimp_init_select(SDL_Rect rectangle, char ** errno_str) {
 void cimp_end_select(t_cimp_select * selection) {
 	free(selection);
 }
-
-/**
-**/
