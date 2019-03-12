@@ -61,32 +61,26 @@ std::vector<unsigned int> * ImplClause::getNegLitts () const
 	return this->_neg_litts;
 }
 
-bool ImplClause::contains_litt (int litt)
+ClauseType ImplClause::getType() const{
+	return IMPLCLAUSE;
+}
+
+void ImplClause::add (int val){
+	if (val > 0){
+		this->_pos_litts->push_back(val);
+	}else{
+		this->_neg_litts->push_back(-val);
+	}
+}
+
+bool ImplClause::contains_litt (int litt) const
 {
 	if (litt < 0)
 		return std::find(this->_neg_litts->begin(), this->_neg_litts->end(), litt) != this->_neg_litts->end();
 	return std::find(this->_pos_litts->begin(), this->_pos_litts->end(), litt) != this->_pos_litts->end();
 }
 
-bool ImplClause::equals (const ImplClause & icl)
-{
-	if (this->_pos_litts->size() != icl._pos_litts->size() || this->_neg_litts->size() != icl._neg_litts->size())
-		return false;
-
-	for (auto i = this->_pos_litts->begin(); i != this->_pos_litts->end(); i++){
-		if (std::find(icl._pos_litts->begin(), icl._pos_litts->end(), *i) == icl._pos_litts->end())
-			return false;
-	}
-
-	for (auto i = this->_neg_litts->begin(); i != this->_neg_litts->end(); i++){
-		if (std::find(icl._neg_litts->begin(), icl._neg_litts->end(), *i) == icl._neg_litts->end())
-			return false;
-	}
-
-	return true;
-}
-
-bool ImplClause::isTautology ()
+bool ImplClause::is_tautology () const
 {
 	unsigned i, j;
 
@@ -100,14 +94,14 @@ bool ImplClause::isTautology ()
 	return false;
 }
 
-void ImplClause::simplify_clause (occ_list & ol){
+void ImplClause::simplify_clause (){
 	unsigned int i,j;
 
 	for (i = 0; i < this->_neg_litts->size(); i++){
 		for (j = i + 1; j < this->_neg_litts->size(); j++){
 			if (_neg_litts->at(i) == _neg_litts->at(j)){
 				_neg_litts->erase(_neg_litts->begin() + j);
-				ol[_neg_litts->at(i)]=ol[_neg_litts->at(i)] + pair(0, -1);
+				//ol[_neg_litts->at(i)]=ol[_neg_litts->at(i)] + pair(0, -1);
 				j--;
 			}
 		}
@@ -117,35 +111,36 @@ void ImplClause::simplify_clause (occ_list & ol){
 		for (j = i + 1; j < this->_pos_litts->size(); j++){
 			if (_pos_litts->at(i) == _pos_litts->at(j)){
 				_pos_litts->erase(_pos_litts->begin() + j);
-				ol[_pos_litts->at(i)]=ol[_pos_litts->at(i)] + pair(-1, 0);
+				//ol[_pos_litts->at(i)]=ol[_pos_litts->at(i)] + pair(-1, 0);
 				j--;
 			}
 		}
 	}
 }
 
-ImplClause cut (ImplClause & dest_icl, const ImplClause & src_icl){
+ImplClause * cut (const ImplClause & icl1, const ImplClause & icl2){
 	const std::vector<unsigned int> * src_pos_litts;
 	const std::vector<unsigned int> * src_neg_litts;
 	std::vector<unsigned int> * dest_pos_litts;
 	std::vector<unsigned int> * dest_neg_litts;
+	ImplClause * res_cut = new ImplClause();
 
-	src_pos_litts = src_icl.getPosLitts();
-	src_neg_litts = src_icl.getNegLitts();
-	dest_pos_litts = dest_icl.getPosLitts();
-	dest_neg_litts = dest_icl.getNegLitts();
+	src_pos_litts = icl1.getPosLitts();
+	src_neg_litts = icl1.getNegLitts();
+	dest_pos_litts = icl2.getPosLitts();
+	dest_neg_litts = icl2.getNegLitts();
 
 	for (auto i = src_pos_litts->begin(); i != src_pos_litts->end(); i++){
 		if (std::find(dest_pos_litts->begin(), dest_pos_litts->end(), *i) == dest_pos_litts->end())
-			dest_pos_litts->push_back(*i);
+			res_cut->add(*i);
 	}
 
 	for (auto i = src_neg_litts->begin(); i != src_neg_litts->end(); i++){
 		if (std::find(dest_neg_litts->begin(), dest_neg_litts->end(), *i) == dest_neg_litts->end())
-			dest_neg_litts->push_back(*i);
+			res_cut->add(*i);
 	}
 
-	return dest_icl;
+	return res_cut;
 }
 
 std::ostream &operator<<(std::ostream & os, const ImplClause & icl)

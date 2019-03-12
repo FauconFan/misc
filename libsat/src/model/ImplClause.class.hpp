@@ -3,7 +3,7 @@
 
 #include "libsat.hpp"
 
-class ImplClause
+class ImplClause : public AClause
 {
 	public:	
 		ImplClause ();
@@ -16,19 +16,19 @@ class ImplClause
 
 		std::vector<unsigned int> * getPosLitts () const;
 		std::vector<unsigned int> * getNegLitts () const;
+		ClauseType getType() const;
 
-		bool contains_litt (int litt);
-		bool equals (const ImplClause & icl);
-		bool isTautology ();
-		void simplify_clause (occ_list & ol);
+		void add (int val);
+		bool contains_litt (int litt) const;//Contains_litt(val) renvoit de quel coté se situe val.
+		bool is_tautology () const;//Use find
+		void simplify_clause ();
 
 	private:
 		std::vector<unsigned int> * _pos_litts;
 		std::vector<unsigned int> * _neg_litts;
 };
 
-
-ImplClause cut (ImplClause & dest_icl, const ImplClause & src_icl);
+ImplClause * cut (const ImplClause & dest_icl, const ImplClause & src_icl);
 
 std::ostream &operator<<(std::ostream & os, const ImplClause & icl);
 

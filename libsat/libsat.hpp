@@ -8,8 +8,11 @@
 #include <unordered_map>
 #include <algorithm>
 
+typedef std::unordered_map<unsigned int, bool> Distrib;
+typedef std::pair<unsigned int, unsigned int> pair;
+typedef std::unordered_map<unsigned int, pair> occ_list;
+
 #include "src/utils/occ_list.hpp"
-//#include "src/utils/distrib.hpp"
 
 #include "src/model/AClause.class.hpp"
 #include "src/model/Clause.class.hpp"

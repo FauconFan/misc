@@ -5,7 +5,7 @@
 
 enum ClauseType {
     CLAUSE,
-    // IMPLCLAUSE,
+    IMPLCLAUSE,
 };
 
 class AClause

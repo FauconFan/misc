@@ -3,9 +3,7 @@
 
 #include "libsat.hpp"
 
-typedef std::pair<unsigned int, unsigned int> pair;
-typedef std::unordered_map<unsigned int, pair> occ_list;
-
 pair operator+ (pair r, pair l);
+//litt_occ & operator+=(const litt_occ &ol);
 
 #endif
