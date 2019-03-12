@@ -11,7 +11,6 @@ enum ClauseType {
 class AClause
 {
     public:
-        AClause() = default;
         virtual ~AClause() = default;
 
         bool operator==(const AClause & rhs) const;
@@ -21,6 +20,9 @@ class AClause
         virtual bool is_tautology() const = 0;
         virtual void simplify_clause() = 0;
     
+    protected:
+        AClause() = default;
+
     private:
         AClause(const AClause & rhs);
         AClause &operator=(const AClause & rhs);

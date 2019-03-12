@@ -16,8 +16,8 @@ typedef std::unordered_map<unsigned int, pair> occ_list;
 
 #include "src/model/AClause.class.hpp"
 #include "src/model/Clause.class.hpp"
-#include "src/model/FNC.class.hpp"
 #include "src/model/ImplClause.class.hpp"
+#include "src/model/FNC.namespace.hpp"
 
 //#include "src/coupure/Coupure.hpp"
 

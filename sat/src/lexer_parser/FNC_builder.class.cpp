@@ -31,12 +31,6 @@ void    FNC_builder::endOfClause() {
     }
 }
 
-FNC     *FNC_builder::getFNC() {
-    FNC     *res = NULL;
-
-    this->endOfClause();
-    res = new FNC(this->_clauses);
-    this->_clauses.clear();
-    this->_vars.clear();
-    return (res);
+std::vector<AClause *> FNC_builder::getClauses() {
+    return (this->_clauses);
 }

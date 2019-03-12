@@ -28,7 +28,7 @@ SRC = \
 	$(MODEL_FOLDER)ImplClause.class.cpp \
 	$(MODEL_FOLDER)AClause.class.cpp \
 	$(MODEL_FOLDER)Clause.class.cpp \
-	$(MODEL_FOLDER)FNC.class.cpp \
+	$(MODEL_FOLDER)FNC.namespace.cpp \
 	$(UTILS_FOLDER)occ_list.cpp \
 
 	#$(COUPURE_FOLDER)Coupure.cpp \

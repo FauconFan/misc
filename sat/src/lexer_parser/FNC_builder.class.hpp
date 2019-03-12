@@ -17,7 +17,7 @@ class FNC_builder final
         void    addVar(int var);
         void    endOfClause();
 
-        FNC     *getFNC();
+        std::vector<AClause *>  getClauses();
 
     private:
         FNC_builder();

@@ -3,18 +3,17 @@
 int main(int argc, char **argv)
 {
     if (argc == 2) {
-        FNC     *fnc = getInputFNC(argv[1]);
+        std::vector<AClause *> *fnc = getInputFNC(argv[1]);
 
         if (fnc != NULL) {
-            std::cout << *fnc;
+            FNC::printFNC(fnc);
+            FNC::delete_tautologies(fnc);
+            FNC::simplify(fnc);
+            FNC::printFNC(fnc);
 
-            fnc->delete_tautologies();
+            std::vector<ImplClause *> *impl_clauses = FNC::convert<ImplClause>(fnc);
 
-            std::cout << *fnc;
-
-            // for (AClause clause : *(fnc->getClauses())) {
-            //     std::cout << ImplClause(clause);
-            // }
+            FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(impl_clauses));
 
             delete fnc;
         }

@@ -34,9 +34,9 @@ static void             fill_buff_lines_yyin(const std::string & contentFile) {
 
 }
 
-FNC                     *getInputFNC(const char * path) {
-    FILE            *file = NULL;
-    FNC             *fnc = NULL;
+std::vector<AClause *> *getInputFNC(const char * path) {
+    FILE                        *file = NULL;
+    std::vector<AClause *>      res;
 
     file = fopen(path, "r");
 
@@ -55,7 +55,7 @@ FNC                     *getInputFNC(const char * path) {
     if (yy_ok == false)
         return (NULL);
 
-    fnc = FNC_builder::get().getFNC();
+    res = FNC_builder::get().getClauses();
     fclose(file);
-    return (fnc);
+    return (new std::vector<AClause *> (res));
 }
