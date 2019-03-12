@@ -8,9 +8,13 @@ int main(int argc, char **argv)
         if (fnc != NULL) {
             std::cout << *fnc;
 
-            for (Clause clause : *(fnc->getClauses())) {
-                std::cout << ImplClause(clause);
-            }
+            fnc->delete_tautologies();
+
+            std::cout << *fnc;
+
+            // for (AClause clause : *(fnc->getClauses())) {
+            //     std::cout << ImplClause(clause);
+            // }
 
             delete fnc;
         }

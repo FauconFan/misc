@@ -26,6 +26,7 @@ FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 
 SRC = \
 	$(MODEL_FOLDER)ImplClause.class.cpp \
+	$(MODEL_FOLDER)AClause.class.cpp \
 	$(MODEL_FOLDER)Clause.class.cpp \
 	$(MODEL_FOLDER)FNC.class.cpp \
 	$(UTILS_FOLDER)occ_list.cpp \

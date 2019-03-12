@@ -27,7 +27,7 @@ class FNC_builder final
         int                     _nb_vars; // hidden
         int                     _nb_clauses; // hidden
         std::vector<int>        _vars;
-        std::vector<Clause>     _clauses;
+        std::vector<AClause *>  _clauses;
 };
 
 

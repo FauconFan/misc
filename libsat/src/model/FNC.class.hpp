@@ -9,15 +9,18 @@ class FNC
     public:
         FNC();
         FNC(const FNC & rhs);
-        FNC(const std::vector<Clause> & cl);
+        FNC(const std::vector<AClause *> & cl);
         virtual ~FNC();
 
         FNC &operator=(const FNC & rhs);
         
-        std::vector<Clause>     *getClauses() const;
+        std::vector<AClause *>  *getClauses() const;
+
+        void                    delete_tautologies();             
+        void                    simplify();             
 
     private:
-        std::vector<Clause>     *_clauses;
+        std::vector<AClause *>   *_clauses;
 };
 
 std::ostream &operator<<(std::ostream &, const FNC &);

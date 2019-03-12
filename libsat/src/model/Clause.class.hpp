@@ -4,7 +4,7 @@
 
 #include "libsat.hpp"
 
-class Clause
+class Clause : public AClause
 {
     public:
         Clause();
@@ -13,8 +13,14 @@ class Clause
         virtual ~Clause();
 
         Clause &operator=(const Clause & rhs);
+        bool operator==(const Clause & rhs) const;
 
         std::vector<int>    *getLitts() const;
+        ClauseType          getType() const;
+        
+        bool                contains_litt(int litt) const;
+        bool                is_tautology() const;
+        void                simplify_clause();
 
     private:
         std::vector<int>    *_litts;

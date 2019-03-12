@@ -26,7 +26,7 @@ void    FNC_builder::addVar(int var) {
 
 void    FNC_builder::endOfClause() {
     if (this->_vars.empty() == false) {
-        this->_clauses.push_back(Clause(this->_vars));
+        this->_clauses.push_back(new Clause(this->_vars));
         this->_vars.clear();
     }
 }
