@@ -10,9 +10,13 @@ namespace FNC {
         );
     }
 
-    void        simplify(std::vector<AClause *> * vec) {
+    Occ_list        simplify(std::vector<AClause *> * vec) {
+		Occ_list res;
+
         for (AClause * acl : *vec)
-            acl->simplify_clause();
+            res += acl->simplify_clause();
+
+		return res;
     }
 
     void        printFNC(const std::vector<AClause *> * vec) {

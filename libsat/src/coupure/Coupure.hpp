@@ -3,6 +3,6 @@
 
 #include "libsat.hpp"
 
-void cut_solve (std::vector<ImplClause> cls);
+bool cut_solve (std::vector<ImplClause>);
 
 #endif

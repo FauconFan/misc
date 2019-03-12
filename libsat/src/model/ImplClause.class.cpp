@@ -94,10 +94,32 @@ bool ImplClause::is_tautology () const
 	return false;
 }
 
-void ImplClause::simplify_clause (){
-	unsigned int i,j;
+Occ_list ImplClause::simplify_clause (){
+	Occ_list res;
+	std::set<unsigned int> buff;
+	
+	for (unsigned int val : *(this->_neg_litts)){
+		if (buff.find(val) == buff.end())
+            buff.insert(val);
+		else
+			res[val] += Pair (0, 1);
+	}
 
-	for (i = 0; i < this->_neg_litts->size(); i++){
+	this->_neg_litts->clear();
+    this->_neg_litts->assign(buff.begin(), buff.end());
+	buff.clear();
+
+	for (unsigned int val : *(this->_pos_litts)){
+		if (buff.find(val) == buff.end())
+            buff.insert(val);
+		else
+			res[val] += Pair (1, 0);
+	}
+
+	this->_pos_litts->clear();
+    this->_pos_litts->assign(buff.begin(), buff.end());
+
+	/*for (i = 0; i < this->_neg_litts->size(); i++){
 		for (j = i + 1; j < this->_neg_litts->size(); j++){
 			if (_neg_litts->at(i) == _neg_litts->at(j)){
 				_neg_litts->erase(_neg_litts->begin() + j);
@@ -115,7 +137,9 @@ void ImplClause::simplify_clause (){
 				j--;
 			}
 		}
-	}
+	}*/
+
+	return res;
 }
 
 ImplClause * cut (const ImplClause & icl1, const ImplClause & icl2){

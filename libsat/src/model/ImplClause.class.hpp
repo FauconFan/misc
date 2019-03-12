@@ -21,7 +21,7 @@ class ImplClause : public AClause
 		void add (int val);
 		bool contains_litt (int litt) const;//Contains_litt(val) renvoit de quel coté se situe val.
 		bool is_tautology () const;//Use find
-		void simplify_clause ();
+		Occ_list simplify_clause ();
 
 	private:
 		std::vector<unsigned int> * _pos_litts;

@@ -58,15 +58,25 @@ bool                Clause::is_tautology() const {
     return (false);
 }
 
-void                Clause::simplify_clause() {
+Occ_list                Clause::simplify_clause() {
+	Occ_list res;
     std::set<int>       buff;
 
     for (int val : *(this->_litts)) {
         if (buff.find(val) == buff.end())
             buff.insert(val);
+		else{
+			if (val > 0)
+				res[val] += Pair (1, 0);
+			else
+				res[-val] += Pair (0, 1);
+		}
     }
+
     this->_litts->clear();
     this->_litts->assign(buff.begin(), buff.end());
+
+	return res;
 }
 
 std::ostream &operator<<(std::ostream & os, const Clause & cl) {

@@ -20,7 +20,7 @@ class Clause : public AClause
         
         bool                contains_litt(int litt) const;
         bool                is_tautology() const;
-        void                simplify_clause();
+        Occ_list                simplify_clause();
 
     private:
         std::vector<int>    *_litts;

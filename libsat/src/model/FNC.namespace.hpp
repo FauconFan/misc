@@ -6,7 +6,7 @@
 
 namespace FNC {
     void                delete_tautologies(std::vector<AClause *> * vec);
-    void                simplify(std::vector<AClause *> * vec);
+    Occ_list                simplify(std::vector<AClause *> * vec);
 
     void                printFNC(const std::vector<AClause *> * vec);
 };
