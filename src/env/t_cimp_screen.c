@@ -25,8 +25,8 @@ t_cimp_screen * cimp_init_screen(char * path_bmp) {
 		printf("%s\n", NOT_A_PATH);
 		return (NULL);
 	}
-	if ((bmp = SDL_LoadBMP(path)) == NULL) {
-		printf("%s\n", SDL_GetError());
+	if ((bmp = IMG_Load(path)) == NULL) {
+		printf("%s\n", IMG_GetError());
 		free(path);
 		return (NULL);
 	}

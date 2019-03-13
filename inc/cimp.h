@@ -26,6 +26,7 @@
 
 // SDL includes
 #include <SDL.h>
+#include <SDL_image.h>
 
 // Typedef includes, needs to come first
 #include "typedefs.h"

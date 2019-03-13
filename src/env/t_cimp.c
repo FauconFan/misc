@@ -8,7 +8,11 @@ int             cimp_init() {
 		return (0);
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		printf("SDL couldn't initialize ! SDL_Error: %s\n", SDL_GetError());
+		return (2);
+	}
+	if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) != (IMG_INIT_JPG | IMG_INIT_PNG)) {
+		printf("SDL_IMG couldn't initialize ! IMG_Error: %s\n", IMG_GetError());
 		return (2);
 	}
 	if ((g_cimp = (t_cimp *) malloc(sizeof(t_cimp))) == NULL)
@@ -28,6 +32,7 @@ void            cimp_end() {
 			cimp_end_screen(g_cimp->screen);
 		free(g_cimp);
 		g_cimp = NULL;
+		IMG_Quit();
 		SDL_Quit();
 	}
 }

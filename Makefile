@@ -32,7 +32,7 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 CC = gcc
 
 SDL_FLAGS = $(shell sdl2-config --cflags)
-SDL_LIBS = $(shell sdl2-config --libs)
+SDL_LIBS = $(shell sdl2-config --libs) -lSDL2_image
 
 INC_FOLDER = inc/
 
@@ -105,6 +105,8 @@ BMP_IMAGES_REMOTE = \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled17.bmp \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled5.bmp \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled3.bmp \
+			https://upload.wikimedia.org/wikipedia/commons/6/6e/Fruits.png \
+			https://upload.wikimedia.org/wikipedia/commons/a/ae/Graphe.jpg \
 
 images:
 	mkdir -p $@
