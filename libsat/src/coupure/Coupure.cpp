@@ -43,7 +43,7 @@ static void nettoyage (std::vector<ImplClause *> * fnc, Occ_list & litt_occ, Dis
 }
 
 /*Effectue la coupure de f par rapport a val*/
-static std::vector<ImplClause *> apply_cut (std::vector<ImplClause *> * fnc, Occ_list litt_occ, unsigned int val)
+static std::vector<ImplClause *> apply_cut (std::vector<ImplClause *> * fnc, Occ_list & litt_occ, unsigned int val)
 {
 	std::vector<ImplClause *> * cls_without_val = new std::vector<ImplClause *>();
    	std::vector<ImplClause *> * cls_with_val_premisse = new std::vector<ImplClause *>();
@@ -62,7 +62,7 @@ static std::vector<ImplClause *> apply_cut (std::vector<ImplClause *> * fnc, Occ
 			cls_without_val->push_back(*i);
 		}
 	}
-
+	
 	std::cout << "FNC without val\n";
 	FNC::printFNC(reinterpret_cast<std::vector<AClause *>*>(cls_without_val));
 	std::cout << "FNC with val in premisse\n";
@@ -70,19 +70,22 @@ static std::vector<ImplClause *> apply_cut (std::vector<ImplClause *> * fnc, Occ
 	std::cout << "FNC with val in conclusion\n";
 	FNC::printFNC(reinterpret_cast<std::vector<AClause *>*>(cls_with_val_conclusion));
 
+	//XXX Il faut enlever une seule fois les occurences de cls with val premisse/conclusion
 	std::cout << "start cutting...\n";
 	for (auto i = cls_with_val_premisse->begin(); i != cls_with_val_premisse->end(); i++){
+		litt_occ -= (*i)->get_occ_list();
 		for (auto j = cls_with_val_conclusion->begin(); j != cls_with_val_conclusion->end(); j++){
 
-			litt_occ -= (*i)->get_occ_list();
-		   	litt_occ -= (*j)->get_occ_list();
-			std::cout << "New litt_occ : " << litt_occ << "\n";
+			if (i == cls_with_val_premisse->begin()){
+				litt_occ -= (*j)->get_occ_list();
+			}
 
 			res_fusion = cut(**i, **j, val);
 			std::cout << **i << " ; " << **j << " -> " << *res_fusion;
-			if (!res_fusion->is_tautology() && !FNC::contains(reinterpret_cast<std::vector<AClause *>*>(cls_without_val), res_fusion))
+			if (!res_fusion->is_tautology() && !FNC::contains(reinterpret_cast<std::vector<AClause *>*>(cls_without_val), res_fusion)){
 				cls_without_val->push_back(res_fusion);
 				litt_occ += res_fusion->get_occ_list();
+			}
 		}
 	}
 
@@ -90,12 +93,12 @@ static std::vector<ImplClause *> apply_cut (std::vector<ImplClause *> * fnc, Occ
 
 	FNC::printFNC(reinterpret_cast<std::vector<AClause *>*>(cls_without_val));
 
-	std::cout << "New litt_occ : " << litt_occ << "\n";
+	std::cout << "New litt_occ : " << litt_occ << "\nend cut\n" ;
 
 	return *cls_without_val;
 }
 
-static bool rec_cut (std::vector<ImplClause *> fnc, Occ_list litt_occ, Distrib dist){
+static bool rec_cut (std::vector<ImplClause *> fnc, Occ_list & litt_occ, Distrib dist){
 	nettoyage (&fnc, litt_occ, dist);
 
 	if (litt_occ.empty()){
@@ -110,13 +113,11 @@ static bool rec_cut (std::vector<ImplClause *> fnc, Occ_list litt_occ, Distrib d
 
 	fnc = apply_cut(&fnc, litt_occ, i->first);
 
-	litt_occ.erase(i);
-
 	return rec_cut (fnc, litt_occ, dist);
 }
 
 /*Distrib **/bool cut_solve (std::vector<ImplClause *> fnc){
-	Occ_list litt_occ {};
+	Occ_list litt_occ;
 	Distrib dist;
 
 	init_litt_occ (litt_occ, fnc);
