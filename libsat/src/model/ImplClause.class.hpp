@@ -13,12 +13,15 @@ class ImplClause : public AClause
 		virtual ~ImplClause();
 
 		ImplClause &operator=(const ImplClause & icl);
+        bool operator==(const ImplClause & rhs) const;
 
 		std::vector<unsigned int> * getPosLitts () const;
 		std::vector<unsigned int> * getNegLitts () const;
 		ClauseType getType() const;
+		Occ_list get_occ_list () const;
 
 		void add (int val);
+		void delete_litt (int val);
 		bool contains_litt (int litt) const;//Contains_litt(val) renvoit de quel coté se situe val.
 		bool is_tautology () const;//Use find
 		Occ_list simplify_clause ();
@@ -28,7 +31,7 @@ class ImplClause : public AClause
 		std::vector<unsigned int> * _neg_litts;
 };
 
-ImplClause * cut (const ImplClause & dest_icl, const ImplClause & src_icl);
+ImplClause * cut (const ImplClause & dest_icl, const ImplClause & src_icl, unsigned int val);
 
 std::ostream &operator<<(std::ostream & os, const ImplClause & icl);
 

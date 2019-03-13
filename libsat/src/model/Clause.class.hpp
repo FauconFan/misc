@@ -17,6 +17,7 @@ class Clause : public AClause
 
         std::vector<int>    *getLitts() const;
         ClauseType          getType() const;
+		Occ_list			get_occ_list() const;
         
         bool                contains_litt(int litt) const;
         bool                is_tautology() const;

@@ -43,6 +43,18 @@ ClauseType          Clause::getType() const {
     return (CLAUSE);
 }
 
+Occ_list 			Clause::get_occ_list () const {
+	Occ_list res;
+	for (int val : *(this->_litts)){
+		if (val > 0)
+			res[val] += Pair(1, 0);
+		else
+			res[-val] += Pair(0, 1);
+	}
+
+	return res;
+}
+
 bool                Clause::contains_litt(int litt) const {
     return (std::find(this->_litts->begin(), this->_litts->end(), litt) != this->_litts->end());
 }
@@ -63,9 +75,7 @@ Occ_list                Clause::simplify_clause() {
     std::set<int>       buff;
 
     for (int val : *(this->_litts)) {
-        if (buff.find(val) == buff.end())
-            buff.insert(val);
-		else{
+		if (!buff.insert(val).second){
 			if (val > 0)
 				res[val] += Pair (1, 0);
 			else

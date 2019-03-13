@@ -2,15 +2,21 @@
 #include "FNC.namespace.hpp"
 
 namespace FNC {
-    void        delete_tautologies(std::vector<AClause *> * vec) {
-        vec->erase(
-            std::remove_if(vec->begin(), vec->end(),
-                    [](const AClause * acl) -> bool {return (acl->is_tautology());}),
-                vec->end()
-        );
+    Occ_list	delete_tautologies(std::vector<AClause *> * vec) {
+		Occ_list res;
+
+		for (auto i = vec->begin(); i != vec->end(); i++){
+			if ((*i)->is_tautology()){
+				res += (*i)->get_occ_list();
+				i--;
+				vec->erase(i + 1);
+			}
+		}
+
+		return res;
     }
 
-    Occ_list        simplify(std::vector<AClause *> * vec) {
+    Occ_list 	simplify(std::vector<AClause *> * vec) {
 		Occ_list res;
 
         for (AClause * acl : *vec)
@@ -25,4 +31,27 @@ namespace FNC {
             std::cout << "\t" << *ac;
         std::cout << "]\n";
     }
+
+	bool 		contains(const std::vector<AClause *> * vec, const AClause * aclause){
+		for (AClause * ac : *vec){
+			if (*ac == *aclause)
+				return true;
+		}
+
+		return false;
+	}
+
+	Occ_list 	delete_if_contains (std::vector<AClause *> * vec, int val){
+		Occ_list res;
+
+		for (auto i = vec->begin(); i != vec->end(); i++){
+			if ((*i)->contains_litt(val)){
+				res += (*i)->get_occ_list();
+				i--;
+				vec->erase(i + 1);
+			}
+		}
+
+		return res;
+	}
 }

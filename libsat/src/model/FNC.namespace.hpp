@@ -5,10 +5,12 @@
 #include "libsat.hpp"
 
 namespace FNC {
-    void                delete_tautologies(std::vector<AClause *> * vec);
-    Occ_list                simplify(std::vector<AClause *> * vec);
+    Occ_list            delete_tautologies(std::vector<AClause *> * vec);
+    Occ_list 	        simplify(std::vector<AClause *> * vec);
 
     void                printFNC(const std::vector<AClause *> * vec);
+	bool				contains(const std::vector<AClause *> * vec, const AClause * aclause);
+	Occ_list 			delete_if_contains (std::vector<AClause *> * vec, const int val);
 };
 
 namespace FNC {
