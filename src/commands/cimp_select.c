@@ -2,7 +2,7 @@
 
 
 /**Une fonction qui cree la zone de selection associee au rectangle rect.
- * Si une selectionexiste deja on met a jour les donnees du rectangle  **/
+* Si une selectionexiste deja on met a jour les donnees du rectangle  **/
 int cimp_select(SDL_Rect rect, char ** errno_str) {
 	if (g_cimp->select != NULL) {
 		g_cimp->select->surface = rect;
