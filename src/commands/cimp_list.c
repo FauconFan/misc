@@ -1,7 +1,7 @@
 #include "cimp.h"
 
-
-void cimp_list() {
+int cimp_list(t_cmd * cmd) {
+	(void) *cmd;
 	if (g_cimp->screen) {
 		int max_name, max_ID, max_taille, max_path, w, h;
 		int space_default = 5;
@@ -29,7 +29,7 @@ void cimp_list() {
 				free(width);
 			if (height)
 				free(height);
-			return;
+			return (1);
 		}
 
 		itoa(w, width);
@@ -49,4 +49,5 @@ void cimp_list() {
 		free(width);
 		free(height);
 	}
+	return (0);
 } /* cimp_list */

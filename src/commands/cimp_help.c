@@ -1,8 +1,10 @@
 #include "cimp.h"
 
-void cimp_help() {
-	int max_name = 0;
+int cimp_help(t_cmd * cmd) {
+	int max_name;
 
+	(void) cmd;
+	max_name = 0;
 	for (size_t i = 0; i < g_command_list_size; i++) {
 		int tmp = strlen(g_command_list[i].name);
 		if (tmp > max_name)
@@ -19,4 +21,5 @@ void cimp_help() {
 		}
 		printf("\n");
 	}
+	return (0);
 }

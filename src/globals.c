@@ -2,15 +2,15 @@
 
 t_cimp * g_cimp = NULL;
 
-const t_parser_config g_command_list[] = {
-	{"help",      0, 0},
-	{"open",      1, 0},
-	{"close",     0, 0},
-	{"list",      0, 0},
-	{"sym_verti", 0, 0},
-	{"sym_hori",  0, 0},
-	{"rotate",    0, 1},
-	{"QUIT",      0, 0},
+const t_cmd_config g_command_list[] = {
+	{"help",      cimp_help,      0, 0},
+	{"open",      cimp_open,      1, 0},
+	{"close",     cimp_close,     0, 0},
+	{"list",      cimp_list,      0, 0},
+	{"sym_verti", cimp_sym_verti, 0, 0},
+	{"sym_hori",  cimp_sym_hori,  0, 0},
+	{"rotate",    cimp_rotate,    0, 1},
+	{"QUIT",      NULL,           0, 0}, // QUIT must have NULL as func_ptr
 };
 
 const size_t g_command_list_size = sizeof(g_command_list) / sizeof(*g_command_list);

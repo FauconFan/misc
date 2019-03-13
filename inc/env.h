@@ -8,9 +8,7 @@ void            cimp_end();
 
 // t_cimp_screen.c
 
-t_cimp_screen * cimp_init_screen(
-  char *  path_bmp,
-  char ** errno_str);
+t_cimp_screen * cimp_init_screen(char * path_bmp);
 void                cimp_end_screen(t_cimp_screen * sc);
 void                cimp_update_screen(t_cimp_screen * screen);
 

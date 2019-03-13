@@ -18,19 +18,18 @@ typedef struct          s_cimp {
 	int             running;
 }                       t_cimp;
 
-/********************************* PARSER ************************************/
-
-typedef struct      s_parser_config {
-	char * name;
-	int8_t has_name;
-	int8_t has_angle;
-}                   t_parser_config;
-
-typedef struct      s_parser_out {
+typedef struct      s_cmd {
 	char * cmd;
 	char * name_file;
 	int    angle;
-}                   t_parser_out;
+}                   t_cmd;
+
+typedef struct      s_cmd_config {
+	char * name;
+	int (* func_cmd_ptr)(t_cmd *);
+	int8_t has_name;
+	int8_t has_angle;
+}                   t_cmd_config;
 
 typedef enum e_error_parser {
 	TOO_MUCH_ARGS = 0,
@@ -48,7 +47,7 @@ typedef enum e_error_parser {
 extern t_cimp * g_cimp;
 
 // Parser globals
-extern const t_parser_config g_command_list[];
+extern const t_cmd_config g_command_list[];
 extern const size_t g_command_list_size;
 
 extern const char * g_error_parser_strings [];
