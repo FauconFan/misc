@@ -12,6 +12,6 @@ Occ_list &operator-=(Occ_list &, const Occ_list &);
 
 std::ostream &operator<<(std::ostream & os, const Pair & p);
 std::ostream &operator<<(std::ostream & os, const Occ_list & ol);
-
+std::ostream & operator<< (std::ostream & os, const Distrib & d);
 
 #endif

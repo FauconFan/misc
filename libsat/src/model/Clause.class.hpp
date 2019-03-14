@@ -19,7 +19,7 @@ class Clause : public AClause
         ClauseType          getType() const;
 		Occ_list			get_occ_list() const;
         
-        bool                contains_litt(int litt) const;
+        int 	            contains_litt(int litt) const;
         bool                is_tautology() const;
         Occ_list                simplify_clause();
 

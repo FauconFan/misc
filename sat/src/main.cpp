@@ -16,7 +16,10 @@ int main(int argc, char **argv)
 
             FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(impl_clauses));
 	
-			std::cout << cut_solve (*impl_clauses);
+			if (cut_solve(*impl_clauses))
+				std::cout << "true\n";
+			else
+				std::cout << "false\n";
 
             delete fnc;
         }

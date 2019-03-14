@@ -17,7 +17,7 @@ class AClause
 
         virtual ClauseType getType() const = 0;
 		virtual Occ_list get_occ_list() const = 0;
-        virtual bool contains_litt(int litt) const = 0;
+		virtual int contains_litt (int) const = 0;
         virtual bool is_tautology() const = 0;
         virtual Occ_list simplify_clause() = 0;
     

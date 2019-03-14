@@ -55,7 +55,7 @@ Occ_list 			Clause::get_occ_list () const {
 	return res;
 }
 
-bool                Clause::contains_litt(int litt) const {
+int               	Clause::contains_litt(int litt) const {
     return (std::find(this->_litts->begin(), this->_litts->end(), litt) != this->_litts->end());
 }
 

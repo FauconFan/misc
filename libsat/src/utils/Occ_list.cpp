@@ -73,3 +73,14 @@ std::ostream & operator<< (std::ostream & os, const Occ_list & ol){
 	}
 	return os << "\n]\n";
 }
+
+std::ostream & operator<< (std::ostream & os, const Distrib & d){
+	os << "Distrib [\n";
+
+	for (auto i : d) {
+	//for (auto i = d.begin(); i != d.end(); i++){
+		os << "val " << i.first << " to " << i.second << "\n";
+	}
+
+	return os << "]\n";
+}

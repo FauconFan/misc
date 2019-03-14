@@ -20,11 +20,11 @@ class ImplClause : public AClause
 		ClauseType getType() const;
 		Occ_list get_occ_list () const;
 
-		void add (int val);
-		void delete_litt (int val);
-		bool contains_litt (int litt) const;//Contains_litt(val) renvoit de quel coté se situe val.
-		bool is_tautology () const;//Use find
+		int contains_litt (int) const;
+		bool is_tautology () const;
 		Occ_list simplify_clause ();
+		//bool unit_propagation(Distrib & dist) const; //On suppose que la clause est nettoyée
+
 
 	private:
 		std::vector<unsigned int> * _pos_litts;

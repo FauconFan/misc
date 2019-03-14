@@ -15,14 +15,10 @@ ImplClause::ImplClause (const Clause & cl) : ImplClause(*(cl.getLitts())) {}
 
 ImplClause::ImplClause (const std::vector<int> litts) : _pos_litts(NULL), _neg_litts(NULL)
 {
-	unsigned int i;
-	int current_elt;
-
 	this->_pos_litts = new std::vector<unsigned int> ();
 	this->_neg_litts = new std::vector<unsigned int> ();
 
-	for (i = 0; i < litts.size(); i++){
-		current_elt = litts.at(i);
+	for (int current_elt : litts){
 		if (current_elt > 0)
 			this->_pos_litts->push_back(current_elt);
 		else
@@ -93,29 +89,24 @@ Occ_list ImplClause::get_occ_list () const{
 	return res;
 }
 
-void ImplClause::add (int val){
-	if (val > 0){
-		this->_pos_litts->push_back(val);
-	}else{
-		this->_neg_litts->push_back(-val);
-	}
-}
-
-bool ImplClause::contains_litt (int litt) const
+int ImplClause::contains_litt (int litt) const
 {
 	if (litt < 0)
-		return std::find(this->_neg_litts->begin(), this->_neg_litts->end(), -litt) != this->_neg_litts->end();
-	return std::find(this->_pos_litts->begin(), this->_pos_litts->end(), litt) != this->_pos_litts->end();
+		litt = -litt;
+
+	if (std::find(this->_neg_litts->begin(), this->_neg_litts->end(), litt) != this->_neg_litts->end())
+		return -1;
+	if (std::find(this->_pos_litts->begin(), this->_pos_litts->end(), litt) != this->_pos_litts->end())
+		return 1;
+
+	return 0;
 }
 
 bool ImplClause::is_tautology () const
 {
-	unsigned i, j;
-
-	for (i = 0; i < this->_neg_litts->size(); i++){
-		for (j = 0; j < this->_pos_litts->size(); j++){
-			if (this->_neg_litts->at(i) == this->_pos_litts->at(j))
-				return true;
+	for (unsigned int litt : *(this->_neg_litts)){
+		if (std::find(this->_pos_litts->begin(), this->_pos_litts->end(), litt) != this->_pos_litts->end()){
+			return true;
 		}
 	}
 
@@ -145,6 +136,44 @@ Occ_list ImplClause::simplify_clause (){
 
 	return res;
 }
+
+/*bool ImplClause::unit_propagation (Distrib & dist) const{
+	int res = 0; 
+
+	for (unsigned int val : *(this->_neg_litts)){
+		auto current_elt = dist.find(val);
+		if (current_elt == dist.end()){
+			if (res != 0)
+				return false;
+			else
+				res = -val;
+		}else{
+			if (current_elt->second == false)
+				return false;
+		}
+	}
+
+	for (unsigned int val : *(this->_pos_litts)){
+		auto current_elt = dist.find(val);
+		if (current_elt == dist.end()){
+			if (res != 0)
+				return false;
+			else
+				res = val;
+		}else{
+			if (current_elt->second == true)
+				return false;
+		}
+	}
+
+	if (res > 0)
+		dist[res] = true;
+	else if (res < 0)
+		dist[-res] = false;
+	else
+		return false;
+	return true;
+}*/
 
 ImplClause * cut (const ImplClause & icl1, const ImplClause & icl2, unsigned int val){
 	std::vector<unsigned int> * icl1_pos_litts;
