@@ -17,5 +17,8 @@ char * dupstr(const char * s);
 int nb_digit(int i);
 char * itoa(int i, char * b);
 
+// save_surface/save_surface_png.c
+
+int     save_surface_png(const char * file, SDL_Surface * surface);
 
 #endif // ifndef UTILS_H

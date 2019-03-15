@@ -17,6 +17,7 @@ INC = $(addprefix $(INC_FOLDER), $(INC_FILES))
 SRC_FOLDER			= src/
 ENV_FOLDER			= src/env/
 UTILS_FOLDER		= src/utils/
+SAVE_SURF_FOLDER	= src/utils/save_surface/
 COMMANDS_FOLDER     = src/commands/
 CHILD_RD_FOLDER		= src/child_readline/
 
@@ -41,6 +42,8 @@ UTILS_FILES = \
 			path_utils.c \
 			str_utils.c \
 
+SAVE_SURF_FILES = \
+			save_surface_png.c \
 
 COMMANDS_FILES = \
 			cimp_open.c \
@@ -55,6 +58,7 @@ SRC_NO_MAIN = \
 		$(addprefix $(CHILD_RD_FOLDER), $(CHILD_RD_FILES)) \
 		$(addprefix $(ENV_FOLDER), $(ENV_FILES)) \
 		$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
+		$(addprefix $(SAVE_SURF_FOLDER), $(SAVE_SURF_FILES)) \
 		$(addprefix $(COMMANDS_FOLDER), $(COMMANDS_FILES)) \
 
 SRC = \
