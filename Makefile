@@ -36,8 +36,8 @@ SDL_LIBS = $(shell sdl2-config --libs)
 
 INC_FOLDER = inc/
 
-CFLAGS = -g -Wall -Wextra -Werror -std=c11 $(SDL_FLAGS)
-IFLAGS = -I $(INC_FOLDER)
+CFLAGS = -g -Wall -Wextra -Werror -std=c11
+IFLAGS = -I $(INC_FOLDER) $(SDL_FLAGS)
 LFLAGS = $(SDL_LIBS) -lreadline
 FLAGS = $(CFLAGS) $(IFLAGS)
 
@@ -193,18 +193,17 @@ cppcheck_run:
 .PHONY: clang_tidy_run
 clang_tidy_run:
 	$(CLANG_TIDY) \
-		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-readability-braces-around-statements" \
-		-header-filter=".*" \
+		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-hicpp-signed-bitwise,-readability-braces-around-statements" \
 		-warnings-as-errors="*" \
-		$(SRC) -- -I inc \
+		$(SRC) -- $(IFLAGS) \
 
 .PHONY: clang_tidy_fix
 clang_tidy_fix:
 	$(CLANG_TIDY) \
-		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-readability-braces-around-statements" \
+		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-hicpp-signed-bitwise,-readability-braces-around-statements" \
 		-header-filter=".*" \
 		-fix-errors \
-		$(SRC) -- -I inc \
+		$(SRC) -- $(IFLAGS) \
 
 ###################################### INFER ##################################
 
