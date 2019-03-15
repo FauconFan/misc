@@ -4,13 +4,8 @@ void    test(void);
 
 int main(void)
 {
-    int     juliusz;
-
-    printf("Coucou le monde\n");
-
-    juliusz = getSocketJuliusz();
-
-    close(juliusz);
+    // client();
+    // serveur();
 
     return 0;
 }

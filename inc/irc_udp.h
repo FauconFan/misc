@@ -16,5 +16,7 @@
 #include <arpa/inet.h>
 
 int    getSocketJuliusz(void);
+int    serveur();
+void   client(void);
 
 #endif
