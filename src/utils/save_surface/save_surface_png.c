@@ -1,5 +1,7 @@
 #include "cimp.h"
 
+static void     fill_png(png_structp png_ptr, SDL_Surface * surface, png_bytep row);
+
 int     save_surface_png(const char * file, SDL_Surface * surface) {
 	int ret;
 
@@ -8,20 +10,12 @@ int     save_surface_png(const char * file, SDL_Surface * surface) {
 	png_infop info_ptr;
 	png_bytep row;
 
-	uint32_t * pixels;
-	uint32_t pix;
-	uint8_t r;
-	uint8_t g;
-	uint8_t b;
-	uint8_t a;
-
-	fp       = NULL;
 	png_ptr  = NULL;
 	info_ptr = NULL;
 	row      = NULL;
 	ret      = 1; // Failure
 
-	fp = fopen(file, "wb");
+	fp = fopen(file, "wbe");
 	if (fp == NULL) {
 		printf("PNG export : %s\n", strerror(errno));
 	}
@@ -59,21 +53,7 @@ int     save_surface_png(const char * file, SDL_Surface * surface) {
 						if (SDL_MUSTLOCK(surface))
 							SDL_LockSurface(surface);
 
-						pixels = (uint32_t *) surface->pixels;
-
-						for (int j = 0; j < surface->h; j++) {
-							for (int i = 0; i < surface->w; i++) {
-								pix = pixels[j * surface->w + i];
-								SDL_GetRGBA(pix, surface->format, &r, &g, &b, &a);
-
-								row[4 * i]     = r;
-								row[4 * i + 1] = g;
-								row[4 * i + 2] = b;
-								row[4 * i + 3] = a;
-							}
-
-							png_write_row(png_ptr, row);
-						}
+						fill_png(png_ptr, surface, row);
 
 						png_write_end(png_ptr, NULL);
 						ret = 0; // Success
@@ -93,3 +73,28 @@ int     save_surface_png(const char * file, SDL_Surface * surface) {
 
 	return (ret);
 } /* save_surface_png */
+
+static void     fill_png(png_structp png_ptr, SDL_Surface * surface, png_bytep row) {
+	uint32_t * pixels;
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+	uint8_t a;
+
+	pixels = (uint32_t *) surface->pixels;
+	for (int j = 0; j < surface->h; j++) {
+		for (int i = 0; i < surface->w; i++) {
+			SDL_GetRGBA(
+			  pixels[j * surface->w + i],
+			  surface->format,
+			  &r, &g, &b, &a);
+
+			row[4 * i]     = r;
+			row[4 * i + 1] = g;
+			row[4 * i + 2] = b;
+			row[4 * i + 3] = a;
+		}
+
+		png_write_row(png_ptr, row);
+	}
+}
