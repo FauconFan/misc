@@ -79,11 +79,17 @@ Occ_list ImplClause::get_occ_list () const{
 	Occ_list res;
 
 	for (unsigned int val : *(this->_pos_litts)){
-		res[val] += Pair (1, 0);
+		//std::cout << "\nres.getContent()[val] before adding Pair (1, 0) : " << res.getContent()[val];
+		res.addPair(val, Pair (1, 0));
+		//res.getContent().at(val) += Pair (1, 0);
+		//std::cout << "\nres.getContent()[val] after adding Pair (1, 0) :" << res.getContent()[val];
 	}
 
 	for (unsigned int val : *(this->_neg_litts)){
-		res[val] += Pair (0, 1);
+		res.addPair(val, Pair (0, 1));
+		//std::cout << "\nres.getContent()[val] before adding Pair (0, 1) :" << res.getContent()[val];
+		//res.getContent()[val] += Pair (0, 1);
+		//std::cout << "\nres.getContent()[val] after adding Pair (0, 1) :" << res.getContent()[val];
 	}
 
 	return res;
@@ -119,7 +125,8 @@ Occ_list ImplClause::simplify_clause (){
 	
 	for (unsigned int val : *(this->_neg_litts)){
 		if (!buff.insert(val).second)
-			res[val] += Pair (0, 1);
+			res.addPair(val, Pair (0, 1));
+			//res.getContent()[val] += Pair (0, 1);
 	}
 
 	this->_neg_litts->clear();
@@ -128,7 +135,8 @@ Occ_list ImplClause::simplify_clause (){
 
 	for (unsigned int val : *(this->_pos_litts)){
 		if (!buff.insert(val).second)
-			res[val] += Pair (1, 0);
+			res.addPair(val, Pair (1, 0));
+			//res.getContent()[val] += Pair (1, 0);
 	}
 
 	this->_pos_litts->clear();

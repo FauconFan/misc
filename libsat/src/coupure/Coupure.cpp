@@ -6,8 +6,8 @@ static unsigned int choose_cut_value (const Occ_list litt_occ){
 	min_occ_value = 0;
 	nb_occ_value = 0;
 
-	for (auto i = litt_occ.begin(); i != litt_occ.end(); i++){
-		current_nb_occ = i->second.first + i->second.second;
+	for (auto i = litt_occ.getContent()->begin(); i != litt_occ.getContent()->end(); i++){
+		current_nb_occ = i->second.getLeft() + i->second.getRight();
 		if (current_nb_occ < nb_occ_value || min_occ_value == 0){
 			min_occ_value = i->first;
 			nb_occ_value = current_nb_occ;
@@ -17,22 +17,27 @@ static unsigned int choose_cut_value (const Occ_list litt_occ){
 	return min_occ_value;
 }
 
-static bool polarity_check (Occ_list & litt_occ, Distrib & dist, std::vector<ImplClause *> * fnc){
-	for (auto current_elt = litt_occ.begin(); current_elt != litt_occ.end(); current_elt++){
-		if (current_elt->second.first == 0){
+static void polarity_check (Occ_list & litt_occ, Distrib & dist, std::vector<ImplClause *> * fnc){
+	bool again = false;
+
+	for (auto current_elt = litt_occ.getContent()->begin(); current_elt != litt_occ.getContent()->end(); current_elt++){
+		if (current_elt->second.getRight() == 0){
 			std::cout << current_elt->first << " : negative polarity\n";
 			dist[current_elt->first]=0;
 			litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *>*>(fnc), -current_elt->first);
-			return true;
-		}else if (current_elt->second.second == 0){
+			again = true;
+			break;
+		}else if (current_elt->second.getLeft() == 0){
 			std::cout << current_elt->first << " : positive polarity\n";
 			dist[current_elt->first]=1;
 			litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *>*>(fnc), current_elt->first);
-			return true;
+			again = true;
+			break;
 		}
 	}
 
-	return false;
+	if (again)
+		polarity_check(litt_occ, dist, fnc);
 }
 
 /* Simplifier (Une seule occurence de chaque littéral dans la prémisse (conclusion))
@@ -50,8 +55,8 @@ static void nettoyage (std::vector<ImplClause *> * fnc, Occ_list & litt_occ, Dis
 	
 	//Suppression si polarité unique
 	std::cout << "Polarity test\n";
-	while (polarity_check(litt_occ, dist, fnc)){/*boucle vide*/}
-	std::cout << "done\n";
+	polarity_check(litt_occ, dist, fnc);
+	std::cout << litt_occ << "\ndone\n";
 
 	FNC::printFNC(reinterpret_cast<std::vector<AClause *>*>(fnc));
 
@@ -147,10 +152,9 @@ static bool rec_cut (std::vector<ImplClause *> fnc, Occ_list & litt_occ, Distrib
 }
 
 /*Distrib **/bool cut_solve (std::vector<ImplClause *> fnc){
-	Occ_list litt_occ;
+	Occ_list litt_occ = Occ_list (fnc);
 	Distrib dist;
 
-	init_litt_occ (litt_occ, fnc);
 	std::cout << litt_occ << "\n"; 
 
 	bool res = rec_cut(fnc, litt_occ, dist);

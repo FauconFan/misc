@@ -45,7 +45,8 @@ namespace FNC {
 		Occ_list res;
 
 		for (auto i = vec->begin(); i != vec->end(); i++){
-			if ((*i)->contains_litt(val)){
+			int litt_side = (*i)->contains_litt(val);
+			if (litt_side != 0){
 				res += (*i)->get_occ_list();
 				i--;
 				vec->erase(i + 1);

@@ -47,9 +47,9 @@ Occ_list 			Clause::get_occ_list () const {
 	Occ_list res;
 	for (int val : *(this->_litts)){
 		if (val > 0)
-			res[val] += Pair(1, 0);
+			res.addPair(val, Pair(1, 0));
 		else
-			res[-val] += Pair(0, 1);
+			res.addPair(-val, Pair(0, 1));
 	}
 
 	return res;
@@ -77,9 +77,11 @@ Occ_list                Clause::simplify_clause() {
     for (int val : *(this->_litts)) {
 		if (!buff.insert(val).second){
 			if (val > 0)
-				res[val] += Pair (1, 0);
+				res.addPair(val, Pair (1, 0));
+				//res.getContent()[val] += Pair (1, 0);
 			else
-				res[-val] += Pair (0, 1);
+				res.addPair(val, Pair (0, 1));
+				//res.getContent()[-val] += Pair (0, 1);
 		}
     }
 

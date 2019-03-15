@@ -9,16 +9,14 @@
 #include <algorithm>
 
 typedef std::unordered_map<unsigned int, bool> Distrib;
-typedef std::pair<unsigned int, unsigned int> Pair;
-typedef std::unordered_map<unsigned int, Pair> Occ_list;
 
+#include "src/utils/Pair.class.hpp"
+#include "src/utils/Occ_list.class.hpp"
 
 #include "src/model/AClause.class.hpp"
 #include "src/model/Clause.class.hpp"
 #include "src/model/ImplClause.class.hpp"
 #include "src/model/FNC.namespace.hpp"
-
-#include "src/utils/Occ_list.hpp"
 
 #include "src/coupure/Coupure.hpp"
 
