@@ -36,6 +36,7 @@ ENV_FILES = \
 			t_cimp.c \
 			t_cimp_screen.c \
 			t_cimp_select.c \
+			t_cimp_event.c \
 
 UTILS_FILES = \
 			path_utils.c \
