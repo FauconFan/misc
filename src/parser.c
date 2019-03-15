@@ -54,12 +54,14 @@ const char * get_error(t_error_parser error) {
  * si elle n'existe pas ou que le nombre d'arguments ne correspond pas on met a jour le champs error et on renvoie NULL
  * si la ligne est vide on renvoit NULL*/
 t_cmd * parse_line(char * line, t_error_parser * error) {
-	if ((*line) == 0) {
+	char * line_copy = dupstr(line);
+
+	if ((*line_copy) == 0) {
 		*error = NO_LINE;
 		return NULL;
 	}
-
-	char * token = strtok_r(line, " ", &line);
+	char * buff  = NULL;
+	char * token = strtok_r(line_copy, " ", &buff);
 	const t_cmd_config * commande = get_cmd(token);
 	int args = nb_args(commande);
 	char * tmp;
@@ -75,7 +77,7 @@ t_cmd * parse_line(char * line, t_error_parser * error) {
 		return NULL;
 	}
 
-	while ((token = strtok_r(line, " ", &line)) != NULL) {
+	while ((token = strtok_r(NULL, " ", &buff)) != NULL) {
 		if (commande->has_name && res->name_file == NULL) {
 			res->name_file = dupstr(token);
 		}
@@ -104,6 +106,6 @@ t_cmd * parse_line(char * line, t_error_parser * error) {
 		free_p_out(res);
 		return NULL;
 	}
-
+	free(line_copy);
 	return res;
 } /* parse_line */
