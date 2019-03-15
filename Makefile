@@ -38,7 +38,7 @@ CC = gcc
 
 INC_FOLDER = inc/
 
-CFLAGS = -g -Wall -Wextra -Werror -std=c11
+CFLAGS = -g -Wall -Wextra -Werror
 IFLAGS = -I $(INC_FOLDER)
 LFLAGS =
 FLAGS = $(CFLAGS) $(IFLAGS)
