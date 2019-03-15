@@ -12,13 +12,13 @@ void    client(void) {
     /*Configure settings in address struct*/
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(4242);
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    serverAddr.sin_addr.s_addr = inet_addr("192.168.42.82");
     memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);  
 
     /*Initialize size variable to be used later on*/
     addr_size = sizeof serverAddr;
 
-    while(1){
+    while (1) {
         printf("Type a sentence to send to server:\n");
         fgets(buffer, 1024, stdin);
         printf("You typed: %s",buffer);
@@ -26,12 +26,15 @@ void    client(void) {
         nBytes = strlen(buffer) + 1;
 
         /*Send message to server*/
-        printf("oui\n");
-        sendto(clientSocket,buffer,nBytes,0,(struct sockaddr *)&serverAddr,addr_size);
-        printf("oui\n");
+        ssize_t rc = sendto(clientSocket, buffer, nBytes, 0, (struct sockaddr *)&serverAddr, addr_size);
+
+        printf("%ld\n", rc);
+        if (rc < 0)
+            printf ("%s\n", strerror(errno));
 
         /*Receive message from server*/
-        nBytes = recvfrom(clientSocket,buffer,1024,0,NULL, NULL);
+        memset(buffer, 0, 1024);
+        nBytes = recv(clientSocket, buffer, 1024, 0);
 
         printf("Received from server: %s\n", buffer);
     }

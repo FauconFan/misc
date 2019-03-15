@@ -4,7 +4,7 @@ void    test(void);
 
 int main(void)
 {
-    // client();
+    client();
     // serveur();
 
     return 0;
