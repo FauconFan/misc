@@ -84,6 +84,7 @@ t_cmd * parse_line(char * line, t_error_parser * error) {
 			rc    = strtol(token, &tmp, 10);
 			if (errno == EINVAL || errno == ERANGE || tmp == token) {
 				*error = INVALID_ARGUMENT;
+				free_p_out(res);
 				return NULL;
 			}
 
