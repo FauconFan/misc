@@ -18,7 +18,7 @@ typedef struct          s_cimp_screen {
 
 typedef struct      s_cimp_event {
 	SDL_Rect selection;
-	short    button_pressed;
+	int8_t   button_pressed;
 } t_cimp_event;
 
 typedef struct          s_cimp {
