@@ -16,9 +16,11 @@ int     save_surface_jpeg(const char * file, SDL_Surface * surface) {
 	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_compress(&cinfo);
 
-	fp = fopen(file, "wbe");
-	if (fp == NULL) {
+	if ((fp = fopen(file, "wbe")) == NULL) {
 		printf("JPEG export : %s\n", strerror(errno));
+	}
+	else if ((line = (uint8_t *) malloc(surface->w * 3)) == NULL) {
+		printf("JPEG export : malloc fails\n");
 	}
 	else {
 		jpeg_stdio_dest(&cinfo, fp);
@@ -30,27 +32,19 @@ int     save_surface_jpeg(const char * file, SDL_Surface * surface) {
 
 		jpeg_set_defaults(&cinfo);
 
+		jpeg_start_compress(&cinfo, FALSE);
 
-		line = (uint8_t *) malloc(surface->w * 3);
-		if (line == NULL) {
-			printf("JPEG export : malloc fails\n");
-		}
-		else {
-			jpeg_start_compress(&cinfo, FALSE);
+		fill_jpeg(&cinfo, surface, line);
 
-			fill_jpeg(&cinfo, surface, line);
+		jpeg_finish_compress(&cinfo);
 
-			jpeg_finish_compress(&cinfo);
+		ret = 0; // Success
 
-			ret = 0; // Success
-
-			fclose(fp);
-			fp = NULL;
-
-			jpeg_destroy_compress(&cinfo);
-		}
+		fclose(fp);
+		fp = NULL;
 	}
 
+	jpeg_destroy_compress(&cinfo);
 	if (fp != NULL) fclose(fp);
 	if (line != NULL) free(line);
 

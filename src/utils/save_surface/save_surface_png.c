@@ -15,49 +15,34 @@ int     save_surface_png(const char * file, SDL_Surface * surface) {
 	row      = NULL;
 	ret      = 1; // Failure
 
-	fp = fopen(file, "wbe");
-	if (fp == NULL) {
+	if ((fp = fopen(file, "wbe")) == NULL) {
 		printf("PNG export : %s\n", strerror(errno));
 	}
+	else if ((png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL)) == NULL) {
+		printf("PNG export : Could not allocate write struct\n");
+	}
+	else if ((info_ptr = png_create_info_struct(png_ptr)) == NULL) {
+		printf("PNG export : Could not create info struct\n");
+	}
+	else if (setjmp(png_jmpbuf(png_ptr))) {
+		printf("PNG export : unexpected setjmp failed\n");
+	}
+	else if ((row = (png_bytep) malloc(4 * surface->w * sizeof(png_byte))) == NULL) {
+		printf("PNG export : Malloc fails\n");
+	}
 	else {
-		png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+		png_init_io(png_ptr, fp);
 
-		if (png_ptr == NULL) {
-			printf("PNG export : Could not allocate write struct\n");
-		}
-		else {
-			info_ptr = png_create_info_struct(png_ptr);
+		png_set_IHDR(png_ptr, info_ptr, surface->w, surface->h, 8, PNG_COLOR_TYPE_RGBA,
+		  PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
+		  PNG_FILTER_TYPE_DEFAULT);
 
-			if (info_ptr == NULL) {
-				printf("PNG export : Could not create info struct\n");
-			}
-			else {
-				if (setjmp(png_jmpbuf(png_ptr))) {
-					printf("PNG export : unexpected setjmp failed\n");
-				}
-				else {
-					png_init_io(png_ptr, fp);
+		png_write_info(png_ptr, info_ptr);
 
-					png_set_IHDR(png_ptr, info_ptr, surface->w, surface->h, 8, PNG_COLOR_TYPE_RGBA,
-					  PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
-					  PNG_FILTER_TYPE_DEFAULT);
+		fill_png(png_ptr, surface, row);
 
-					png_write_info(png_ptr, info_ptr);
-
-					row = (png_bytep) malloc(4 * surface->w * sizeof(png_byte));
-
-					if (row == NULL) {
-						printf("PNG export : Malloc fails\n");
-					}
-					else {
-						fill_png(png_ptr, surface, row);
-
-						png_write_end(png_ptr, NULL);
-						ret = 0; // Success
-					}
-				}
-			}
-		}
+		png_write_end(png_ptr, NULL);
+		ret = 0; // Success
 	}
 
 	if (fp != NULL) fclose(fp);
