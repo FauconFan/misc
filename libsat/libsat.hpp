@@ -8,10 +8,9 @@
 #include <unordered_map>
 #include <algorithm>
 
-typedef std::unordered_map<unsigned int, bool> Distrib;
-
 #include "src/utils/Pair.class.hpp"
 #include "src/utils/Occ_list.class.hpp"
+#include "src/utils/Distrib.class.hpp"
 
 #include "src/model/AClause.class.hpp"
 #include "src/model/Clause.class.hpp"

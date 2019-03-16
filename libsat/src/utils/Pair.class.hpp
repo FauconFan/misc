@@ -10,6 +10,8 @@ class Pair {
 		Pair (unsigned int, unsigned int);
 		virtual ~Pair ();
 
+		Pair & operator=(const Pair &);
+
 		Pair & operator+= (const Pair &);
 		Pair & operator-= (const Pair &);
 		bool operator== (const Pair &);

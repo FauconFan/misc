@@ -31,6 +31,7 @@ SRC = \
 	$(MODEL_FOLDER)FNC.namespace.cpp \
 	$(UTILS_FOLDER)Pair.class.cpp \
 	$(UTILS_FOLDER)Occ_list.class.cpp \
+	$(UTILS_FOLDER)Distrib.class.cpp \
 	$(COUPURE_FOLDER)Coupure.cpp \
 
 OBJ = $(SRC:%.cpp=%.o)

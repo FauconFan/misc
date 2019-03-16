@@ -1,43 +1,29 @@
 #include "libsat.hpp"
 
-static unsigned int choose_cut_value (const Occ_list litt_occ){
-	unsigned int min_occ_value, nb_occ_value, current_nb_occ;
-
-	min_occ_value = 0;
-	nb_occ_value = 0;
-
-	for (auto i = litt_occ.getContent()->begin(); i != litt_occ.getContent()->end(); i++){
-		current_nb_occ = i->second.getLeft() + i->second.getRight();
-		if (current_nb_occ < nb_occ_value || min_occ_value == 0){
-			min_occ_value = i->first;
-			nb_occ_value = current_nb_occ;
-		}
-	}
-
-	return min_occ_value;
-}
-
 static void polarity_check (Occ_list & litt_occ, Distrib & dist, std::vector<ImplClause *> * fnc){
-	bool again = false;
+	std::pair<std::vector<unsigned int>, std::vector<unsigned int> > p;
 
-	for (auto current_elt = litt_occ.getContent()->begin(); current_elt != litt_occ.getContent()->end(); current_elt++){
-		if (current_elt->second.getRight() == 0){
-			std::cout << current_elt->first << " : negative polarity\n";
-			dist[current_elt->first]=0;
-			litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *>*>(fnc), -current_elt->first);
-			again = true;
-			break;
-		}else if (current_elt->second.getLeft() == 0){
-			std::cout << current_elt->first << " : positive polarity\n";
-			dist[current_elt->first]=1;
-			litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *>*>(fnc), current_elt->first);
-			again = true;
-			break;
+	while (true) {
+		p = litt_occ.getSoloPolarity();
+		auto pos = p.first;
+		auto neg = p.second;
+
+		std::cout << "STEP ======= " << std::endl;
+		FNC::printFNC(reinterpret_cast<std::vector<AClause *>*>(fnc));
+
+		std::cout << litt_occ;
+
+		if (pos.empty() && neg.empty())
+			break ;
+		for (auto i : pos) {
+			dist.set(i, true);
+			litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *>*>(fnc), i);
+		}
+		for (auto i : neg) {
+			dist.set(i, false);
+			litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *>*>(fnc), -i);
 		}
 	}
-
-	if (again)
-		polarity_check(litt_occ, dist, fnc);
 }
 
 /* Simplifier (Une seule occurence de chaque littéral dans la prémisse (conclusion))
@@ -135,7 +121,7 @@ static bool rec_cut (std::vector<ImplClause *> fnc, Occ_list & litt_occ, Distrib
 
 	std::vector<ImplClause *> * copy_fnc = new std::vector<ImplClause *>(fnc);
 
-	cut_value = choose_cut_value(litt_occ);
+	cut_value = litt_occ.getMinOccu();
 	std::cout << "cut_value : " << cut_value << "\n";
 	fnc = apply_cut(&fnc, litt_occ, cut_value);
 

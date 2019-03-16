@@ -21,7 +21,7 @@ class Clause : public AClause
         
         int 	            contains_litt(int litt) const;
         bool                is_tautology() const;
-        Occ_list                simplify_clause();
+        Occ_list            simplify_clause();
 
     private:
         std::vector<int>    *_litts;

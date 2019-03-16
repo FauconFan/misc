@@ -8,6 +8,12 @@ Pair::Pair (unsigned int l, unsigned int r) : _left(l), _right(r) {}
 
 Pair::~Pair (){}
 
+Pair	&Pair::operator=(Pair const & rhs) {
+	this->_left = rhs.getLeft();
+	this->_right = rhs.getRight();
+	return (*this);
+}
+
 unsigned int Pair::getLeft () const {
 	return this->_left;
 }
