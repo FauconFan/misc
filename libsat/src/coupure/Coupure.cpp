@@ -1,27 +1,27 @@
 #include "libsat.hpp"
 
-static void polarity_check(Occ_list & litt_occ, Distrib & dist, std::vector<ImplClause *> * fnc) {
+static void polarity_check(Occ_list * litt_occ, Distrib * dist, std::vector<ImplClause *> * fnc) {
 	std::pair<std::vector<unsigned int>, std::vector<unsigned int> > p;
 
 	while (true) {
-		p = litt_occ.getSoloPolarity();
+		p = litt_occ->getSoloPolarity();
 		auto pos = p.first;
 		auto neg = p.second;
 
 		std::cout << "STEP ======= " << std::endl;
 		FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(fnc));
 
-		std::cout << litt_occ;
+		std::cout << *litt_occ;
 
 		if (pos.empty() && neg.empty())
 			break;
 		for (auto i : pos) {
-			dist.set(i, true);
-			litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *> *>(fnc), i);
+			dist->set(i, true);
+			*litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *> *>(fnc), i);
 		}
 		for (auto i : neg) {
-			dist.set(i, false);
-			litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *> *>(fnc), -i);
+			dist->set(i, false);
+			*litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *> *>(fnc), -i);
 		}
 	}
 }
@@ -31,19 +31,19 @@ static void polarity_check(Occ_list & litt_occ, Distrib & dist, std::vector<Impl
  * Si x a toujours une polarité négative, la retirer partout et mettre x = 0
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
-static void nettoyage(std::vector<ImplClause *> * fnc, Occ_list & litt_occ, Distrib & dist) {
+static void nettoyage(std::vector<ImplClause *> * fnc, Occ_list * litt_occ, Distrib * dist) {
 	std::cout << "clean... \nSimplify... done\n";
 
-	litt_occ -= FNC::simplify(reinterpret_cast<std::vector<AClause *> *>(fnc));
+	*litt_occ -= FNC::simplify(reinterpret_cast<std::vector<AClause *> *>(fnc));
 	std::cout << "Delete tautologies... done\n";
-	litt_occ -= FNC::delete_tautologies(reinterpret_cast<std::vector<AClause *> *>(fnc));
-	std::cout << "New litt_occ " << litt_occ;
+	*litt_occ -= FNC::delete_tautologies(reinterpret_cast<std::vector<AClause *> *>(fnc));
+	std::cout << "New litt_occ " << *litt_occ;
 	FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(fnc));
 
 	// Suppression si polarité unique
 	std::cout << "Polarity test\n";
 	polarity_check(litt_occ, dist, fnc);
-	std::cout << litt_occ << "\ndone\n";
+	std::cout << *litt_occ << "\ndone\n";
 
 	FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(fnc));
 
@@ -51,7 +51,7 @@ static void nettoyage(std::vector<ImplClause *> * fnc, Occ_list & litt_occ, Dist
 }
 
 /*Effectue la coupure de f par rapport a val*/
-static std::vector<ImplClause *> apply_cut(std::vector<ImplClause *> * fnc, Occ_list & litt_occ, unsigned int val) {
+static std::vector<ImplClause *> apply_cut(std::vector<ImplClause *> * fnc, Occ_list * litt_occ, unsigned int val) {
 	int litt_side;
 	std::vector<ImplClause *> * cls_without_val         = new std::vector<ImplClause *>();
 	std::vector<ImplClause *> * cls_with_val_premisse   = new std::vector<ImplClause *>();
@@ -83,10 +83,10 @@ static std::vector<ImplClause *> apply_cut(std::vector<ImplClause *> * fnc, Occ_
 
 	std::cout << "start cut...\n";
 	for (auto i = cls_with_val_premisse->begin(); i != cls_with_val_premisse->end(); i++) {
-		litt_occ -= (*i)->get_occ_list();
+		*litt_occ -= (*i)->get_occ_list();
 		for (auto j = cls_with_val_conclusion->begin(); j != cls_with_val_conclusion->end(); j++) {
 			if (i == cls_with_val_premisse->begin()) {
-				litt_occ -= (*j)->get_occ_list();
+				*litt_occ -= (*j)->get_occ_list();
 			}
 
 			res_fusion = cut(**i, **j, val);
@@ -95,7 +95,7 @@ static std::vector<ImplClause *> apply_cut(std::vector<ImplClause *> * fnc, Occ_
 			  !FNC::contains(reinterpret_cast<std::vector<AClause *> *>(cls_without_val), res_fusion))
 			{
 				cls_without_val->push_back(res_fusion);
-				litt_occ += res_fusion->get_occ_list();
+				*litt_occ += res_fusion->get_occ_list();
 			}
 		}
 	}
@@ -104,7 +104,7 @@ static std::vector<ImplClause *> apply_cut(std::vector<ImplClause *> * fnc, Occ_
 
 	FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(cls_without_val));
 
-	std::cout << "New litt_occ : " << litt_occ << "\nend cut\n";
+	std::cout << "New litt_occ : " << *litt_occ << "\nend cut\n";
 
 	delete cls_with_val_premisse;
 	delete cls_with_val_conclusion;
@@ -112,19 +112,19 @@ static std::vector<ImplClause *> apply_cut(std::vector<ImplClause *> * fnc, Occ_
 	return *cls_without_val;
 } // apply_cut
 
-static bool rec_cut(std::vector<ImplClause *> fnc, Occ_list & litt_occ, Distrib & dist) {
+static bool rec_cut(std::vector<ImplClause *> fnc, Occ_list * litt_occ, Distrib * dist) {
 	unsigned int cut_value;
 	bool ret;
 
 	nettoyage(&fnc, litt_occ, dist);
 
-	if (litt_occ.empty()) {
+	if (litt_occ->empty()) {
 		return fnc.empty();
 	}
 
 	std::vector<ImplClause *> * copy_fnc = new std::vector<ImplClause *>(fnc);
 
-	cut_value = litt_occ.getMinOccu();
+	cut_value = litt_occ->getMinOccu();
 	std::cout << "cut_value : " << cut_value << "\n";
 	fnc = apply_cut(&fnc, litt_occ, cut_value);
 
@@ -145,7 +145,7 @@ static bool rec_cut(std::vector<ImplClause *> fnc, Occ_list & litt_occ, Distrib 
 
 	std::cout << litt_occ << "\n";
 
-	bool res = rec_cut(fnc, litt_occ, dist);
+	bool res = rec_cut(fnc, &litt_occ, &dist);
 
 	std::cout << dist;
 

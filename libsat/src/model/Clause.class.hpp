@@ -8,7 +8,7 @@ class Clause: public AClause
 	public:
 		Clause();
 		Clause(const Clause & rhs);
-		Clause(const std::vector<int> & litts);
+		explicit Clause(const std::vector<int> & litts);
 		virtual~Clause();
 
 		Clause &operator=(const Clause & rhs);

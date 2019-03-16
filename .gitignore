@@ -37,3 +37,4 @@ sat/sat
 sat/src/lexer_parser/flex_bison/dimacs.parser.hpp
 input_files/satlib/
 .vscode/
+venv/

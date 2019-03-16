@@ -9,7 +9,7 @@ class Occ_list{
 	public:
 		Occ_list ();
 		Occ_list (const Occ_list &);
-		Occ_list (const std::vector<ImplClause *>);
+		explicit Occ_list (const std::vector<ImplClause *>);
 		virtual~Occ_list();
 
 		Occ_list & operator=(const Occ_list &);

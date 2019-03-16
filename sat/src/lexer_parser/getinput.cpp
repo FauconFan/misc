@@ -1,8 +1,7 @@
+#include <string.h> // strerror
 #include "sat.hpp"
 
 // This is a C-style file because we use Flex / Bison to parse Dimacs format, so we use global variables and some crazy stuff to make the things work together.
-
-#include <string.h> // strerror
 
 extern int yyparse();
 extern FILE * yyin;
