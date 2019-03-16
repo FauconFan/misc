@@ -11,7 +11,7 @@ ImplClause::ImplClause (const ImplClause & icl) : _pos_litts(NULL), _neg_litts(N
 
 ImplClause::ImplClause (const Clause & cl) : ImplClause(*(cl.getLitts())) {}
 
-ImplClause::ImplClause (const std::vector<int> litts) : _pos_litts(NULL), _neg_litts(NULL) {
+ImplClause::ImplClause (const std::vector<int> & litts) : _pos_litts(NULL), _neg_litts(NULL) {
 	this->_pos_litts = new std::vector<unsigned int> ();
 	this->_neg_litts = new std::vector<unsigned int> ();
 
@@ -24,14 +24,15 @@ ImplClause::ImplClause (const std::vector<int> litts) : _pos_litts(NULL), _neg_l
 }
 
 ImplClause & ImplClause::operator=(const ImplClause & icl) {
-	if (this->_pos_litts != NULL)
-		delete this->_pos_litts;
-	if (this->_neg_litts != NULL)
-		delete this->_neg_litts;
+	if (this != &icl) {
+		if (this->_pos_litts != NULL)
+			delete this->_pos_litts;
+		if (this->_neg_litts != NULL)
+			delete this->_neg_litts;
 
-	this->_pos_litts = new std::vector<unsigned int>(*(icl.getPosLitts()));
-	this->_neg_litts = new std::vector<unsigned int>(*(icl.getNegLitts()));
-
+		this->_pos_litts = new std::vector<unsigned int>(*(icl.getPosLitts()));
+		this->_neg_litts = new std::vector<unsigned int>(*(icl.getNegLitts()));
+	}
 	return *this;
 }
 

@@ -9,7 +9,7 @@ class Occ_list{
 	public:
 		Occ_list ();
 		Occ_list (const Occ_list &);
-		explicit Occ_list (const std::vector<ImplClause *>);
+		explicit Occ_list (const std::vector<ImplClause *> &);
 		virtual~Occ_list();
 
 		Occ_list & operator=(const Occ_list &);
@@ -19,7 +19,7 @@ class Occ_list{
 
 		Pair getPair(unsigned int) const;
 
-		void addPair(unsigned int, const Pair);
+		void addPair(unsigned int, const Pair &);
 		bool empty() const;
 
 		unsigned int getMinOccu() const;

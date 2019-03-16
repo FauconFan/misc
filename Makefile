@@ -106,7 +106,7 @@ cpplint_run: venv
 
 .PHONY: cppcheck_run
 cppcheck_run:
-	$(CPPCHECK) --error-exitcode=1 --enable=all --suppress=missingIncludeSystem $(IFLAGS) $(SRC_FILES)
+	$(CPPCHECK) --error-exitcode=1 --enable=all --suppress=missingIncludeSystem --suppress=unusedFunction $(IFLAGS) $(SRC_FILES)
 
 ##################################### CLANG_TIDY ###############################
 

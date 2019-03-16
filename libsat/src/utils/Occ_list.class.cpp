@@ -6,7 +6,7 @@ Occ_list::Occ_list (const Occ_list & ol) : _content() {
 	*this = ol;
 }
 
-Occ_list::Occ_list (const std::vector<ImplClause *> fnc) {
+Occ_list::Occ_list (const std::vector<ImplClause *> & fnc) {
 	std::vector<unsigned int> pos_litts, neg_litts;
 
 	for (auto i = fnc.begin(); i != fnc.end(); i++) {
@@ -54,7 +54,7 @@ Pair Occ_list::getPair(unsigned int key) const{
 	return this->_content.at(key);
 }
 
-void Occ_list::addPair(unsigned int key, const Pair p) {
+void Occ_list::addPair(unsigned int key, const Pair & p) {
 	this->_content[key] += p;
 }
 
@@ -65,7 +65,6 @@ bool Occ_list::empty() const{
 unsigned int Occ_list::getMinOccu() const{
 	unsigned int res;
 	unsigned int nb;
-	unsigned int current;
 
 	res = 0;
 	nb  = -1; // Max value
@@ -73,6 +72,8 @@ unsigned int Occ_list::getMinOccu() const{
 		return (0);
 
 	for (auto i : this->_content) {
+		unsigned int current;
+
 		current = i.second.getLeft() + i.second.getRight();
 		if (current < nb) {
 			current = nb;
@@ -85,7 +86,6 @@ unsigned int Occ_list::getMinOccu() const{
 unsigned int Occ_list::getMaxOccu() const{
 	unsigned int res;
 	unsigned int nb;
-	unsigned int current;
 
 	res = 0;
 	nb  = 0; // Min value
@@ -93,6 +93,8 @@ unsigned int Occ_list::getMaxOccu() const{
 		return (0);
 
 	for (auto i : this->_content) {
+		unsigned int current;
+	
 		current = i.second.getLeft() + i.second.getRight();
 		if (current > nb) {
 			current = nb;

@@ -9,7 +9,7 @@ class ImplClause: public AClause
 		ImplClause ();
 		ImplClause (const ImplClause & icl);
 		explicit ImplClause (const Clause & cl);
-		explicit ImplClause (const std::vector<int> litts);
+		explicit ImplClause (const std::vector<int> & litts);
 		virtual~ImplClause();
 
 		ImplClause &operator=(const ImplClause & icl);

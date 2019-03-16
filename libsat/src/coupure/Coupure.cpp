@@ -52,7 +52,6 @@ static void nettoyage(std::vector<ImplClause *> * fnc, Occ_list * litt_occ, Dist
 
 /*Effectue la coupure de f par rapport a val*/
 static std::vector<ImplClause *> apply_cut(std::vector<ImplClause *> * fnc, Occ_list * litt_occ, unsigned int val) {
-	int litt_side;
 	std::vector<ImplClause *> * cls_without_val         = new std::vector<ImplClause *>();
 	std::vector<ImplClause *> * cls_with_val_premisse   = new std::vector<ImplClause *>();
 	std::vector<ImplClause *> * cls_with_val_conclusion = new std::vector<ImplClause *>();
@@ -62,7 +61,7 @@ static std::vector<ImplClause *> apply_cut(std::vector<ImplClause *> * fnc, Occ_
 
 	// Range les clauses pour préparer la coupure
 	for (auto i = fnc->begin(); i != fnc->end(); i++) {
-		litt_side = (*i)->contains_litt(val);
+		int litt_side = (*i)->contains_litt(val);
 		if (litt_side == -1) {
 			cls_with_val_premisse->push_back(*i);
 		}
