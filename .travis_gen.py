@@ -39,7 +39,7 @@ LINT_TASKS = [
     (J_LINT, "uncrustify", None, ["make uncrustify_check"]),
     (J_LINT, "cpplint", (["python3-venv"], False), ["make cpplint_run"]),
     (J_LINT, "cppcheck", (["cppcheck"], False), ["make cppcheck_run"]),
-    (J_LINT, "clang-tidy", (["clang-tidy-6.0", "clang-6.0"], False), ["make clang_tidy_run"]),
+    (J_LINT, "clang-tidy", (["clang-tidy-6.0", "clang-6.0"], True), ["make clang_tidy_run"]),
     (J_LINT, "infer", (None, True), ["sudo make /usr/local/bin/infer", "make infer_run"]),
 ]
 

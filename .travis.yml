@@ -46,7 +46,7 @@ matrix:
     - name: clang-tidy
       stage: Lint
       before_install: sudo apt-get update
-      install: sudo apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0
+      install: sudo apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0 libsdl2-dev libsdl2-image-dev
       script:
         - make clang_tidy_run
     - name: infer
