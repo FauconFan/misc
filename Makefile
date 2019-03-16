@@ -38,7 +38,7 @@ INC_FOLDER = inc/
 
 CFLAGS = -g -Wall -Wextra -Werror -std=c11 
 IFLAGS = -I $(INC_FOLDER) $(SDL_FLAGS)
-LFLAGS = $(SDL_LIBS) -lreadline -lpng
+LFLAGS = $(SDL_LIBS) -lreadline -lpng -ljpeg
 FLAGS = $(CFLAGS) $(IFLAGS)
 
 SRC := ""

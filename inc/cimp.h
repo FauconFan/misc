@@ -20,16 +20,21 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-// Readline include
+// External library includes
+// - readline
+// - sdl
+// - libpng
+// - libjpeg
+
 #include <readline/history.h>
 #include <readline/readline.h>
 
-// SDL includes
 #include <SDL.h>
 #include <SDL_image.h>
 
-// Libpng includes
 #include <png.h>
+
+#include <jpeglib.h>
 
 // Typedef includes, needs to come first
 #include "typedefs.h"

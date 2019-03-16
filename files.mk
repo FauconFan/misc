@@ -44,6 +44,7 @@ UTILS_FILES = \
 
 SAVE_SURF_FILES = \
 			save_surface_png.c \
+			save_surface_jpeg.c \
 
 COMMANDS_FILES = \
 			cimp_open.c \

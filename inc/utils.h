@@ -20,5 +20,6 @@ char * itoa(int i, char * b);
 // save_surface/save_surface_png.c
 
 int     save_surface_png(const char * file, SDL_Surface * surface);
+int     save_surface_jpeg(const char * file, SDL_Surface * surface);
 
 #endif // ifndef UTILS_H

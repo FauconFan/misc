@@ -50,16 +50,10 @@ int     save_surface_png(const char * file, SDL_Surface * surface) {
 						printf("PNG export : Malloc fails\n");
 					}
 					else {
-						if (SDL_MUSTLOCK(surface))
-							SDL_LockSurface(surface);
-
 						fill_png(png_ptr, surface, row);
 
 						png_write_end(png_ptr, NULL);
 						ret = 0; // Success
-
-						if (SDL_MUSTLOCK(surface))
-							SDL_UnlockSurface(surface);
 					}
 				}
 			}
@@ -81,6 +75,9 @@ static void     fill_png(png_structp png_ptr, SDL_Surface * surface, png_bytep r
 	uint8_t b;
 	uint8_t a;
 
+	if (SDL_MUSTLOCK(surface))
+		SDL_LockSurface(surface);
+
 	pixels = (uint32_t *) surface->pixels;
 	for (int j = 0; j < surface->h; j++) {
 		for (int i = 0; i < surface->w; i++) {
@@ -97,4 +94,7 @@ static void     fill_png(png_structp png_ptr, SDL_Surface * surface, png_bytep r
 
 		png_write_row(png_ptr, row);
 	}
+
+	if (SDL_MUSTLOCK(surface))
+		SDL_UnlockSurface(surface);
 }
