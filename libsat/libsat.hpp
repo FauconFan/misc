@@ -1,6 +1,5 @@
-
 #ifndef LIBSAT_HPP
-#define LIBSAT_HPP
+#define	LIBSAT_HPP
 
 #include <iostream>
 #include <vector>
@@ -19,4 +18,4 @@
 
 #include "src/coupure/Coupure.hpp"
 
-#endif
+#endif // ifndef LIBSAT_HPP

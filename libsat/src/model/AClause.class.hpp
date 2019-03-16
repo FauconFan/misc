@@ -1,34 +1,34 @@
 #ifndef INTERFACE_CLAUSE_HPP
-#define INTERFACE_CLAUSE_HPP
+#define	INTERFACE_CLAUSE_HPP
 
 #include "libsat.hpp"
 
-enum ClauseType {
-    CLAUSE,
-    IMPLCLAUSE,
+enum ClauseType{
+	CLAUSE,
+	IMPLCLAUSE,
 };
 
 class AClause
 {
-    public:
-        virtual ~AClause() = default;
+	public:
+		virtual~AClause() = default;
 
-        bool operator==(const AClause & rhs) const;
+		bool operator==(const AClause & rhs) const;
 
-        virtual ClauseType getType() const = 0;
+		virtual ClauseType getType() const    = 0;
 		virtual Occ_list get_occ_list() const = 0;
-		virtual int contains_litt (int) const = 0;
-        virtual bool is_tautology() const = 0;
-        virtual Occ_list simplify_clause() = 0;
-    
-    protected:
-        AClause() = default;
+		virtual int contains_litt(int) const  = 0;
+		virtual bool is_tautology() const     = 0;
+		virtual Occ_list simplify_clause() = 0;
 
-    private:
-        AClause(const AClause & rhs);
-        AClause &operator=(const AClause & rhs);
+	protected:
+		AClause() = default;
+
+	private:
+		AClause(const AClause & rhs);
+		AClause &operator=(const AClause & rhs);
 };
 
 std::ostream &operator<<(std::ostream &, const AClause &);
 
-#endif
+#endif // ifndef INTERFACE_CLAUSE_HPP
