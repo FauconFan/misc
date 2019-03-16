@@ -8,5 +8,6 @@ int cimp_list(t_cmd * cmd);
 int cimp_sym_verti(t_cmd * cmd);
 int cimp_sym_hori(t_cmd * cmd);
 int cimp_rotate(t_cmd * cmd);
+int cimp_save(t_cmd * cmd);
 
 #endif // ifndef COMMANDS_H

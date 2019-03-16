@@ -40,8 +40,8 @@ int nb_args(const t_cmd_config * cmd) {
 		return -1;
 	}
 
-	if (cmd->has_name) res++;
-	if (cmd->has_angle) res++;
+	if (cmd->need_name) res++;
+	if (cmd->need_angle) res++;
 	return res;
 }
 
@@ -76,10 +76,10 @@ t_cmd * parse_line(char * line, t_error_parser * error) {
 	}
 
 	while ((token = strtok_r(line, " ", &line)) != NULL) {
-		if (commande->has_name && res->name_file == NULL) {
+		if (commande->need_name && res->name_file == NULL) {
 			res->name_file = dupstr(token);
 		}
-		else if (commande->has_angle && res->angle == NO_ANGLE) {
+		else if (commande->need_angle && res->angle == NO_ANGLE) {
 			errno = 0;
 			rc    = strtol(token, &tmp, 10);
 			if (errno == EINVAL || errno == ERANGE || tmp == token) {

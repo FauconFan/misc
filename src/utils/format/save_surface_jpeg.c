@@ -1,6 +1,7 @@
 #include "cimp.h"
 
-static void fill_jpeg(struct jpeg_compress_struct * cinfo, SDL_Surface * surface, uint8_t * line);
+static void     fill_jpeg(struct jpeg_compress_struct * cinfo, SDL_Surface * surface,
+  uint8_t * line);
 
 int     save_surface_jpeg(const char * file, SDL_Surface * surface) {
 	int ret;
