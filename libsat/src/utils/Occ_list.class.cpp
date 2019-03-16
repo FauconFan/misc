@@ -94,7 +94,7 @@ unsigned int Occ_list::getMaxOccu() const{
 
 	for (auto i : this->_content) {
 		unsigned int current;
-	
+
 		current = i.second.getLeft() + i.second.getRight();
 		if (current > nb) {
 			current = nb;

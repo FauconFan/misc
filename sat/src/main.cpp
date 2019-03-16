@@ -6,9 +6,9 @@ int main(int argc, char ** argv) {
 
 		if (fnc != NULL) {
 			/*FNC::printFNC(fnc);
-			*  FNC::delete_tautologies(fnc);
-			*  FNC::simplify(fnc);
-			*  FNC::printFNC(fnc);*/
+			 *  FNC::delete_tautologies(fnc);
+			 *  FNC::simplify(fnc);
+			 *  FNC::printFNC(fnc);*/
 
 			std::vector<ImplClause *> * impl_clauses = FNC::convert<ImplClause>(fnc);
 
