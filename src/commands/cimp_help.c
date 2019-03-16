@@ -13,10 +13,10 @@ int cimp_help(t_cmd * cmd) {
 	max_name++;
 	for (size_t i = 0; i < g_command_list_size; i++) {
 		printf("%-*s", max_name, g_command_list[i].name);
-		if (g_command_list[i].has_name) {
+		if (g_command_list[i].need_name) {
 			printf(" [PATH]");
 		}
-		if (g_command_list[i].has_angle) {
+		if (g_command_list[i].need_angle) {
 			printf(" [ANGLE]");
 		}
 		printf("\n");

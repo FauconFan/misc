@@ -1,6 +1,6 @@
 #include "cimp.h"
 
-#define	SIZE_TAB(t) sizeof(t) / sizeof(*t)
+#define	SIZE_TAB(t) (sizeof(t) / sizeof(*(t)))
 
 t_cimp * g_cimp = NULL;
 
