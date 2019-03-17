@@ -1,8 +1,8 @@
 #include "cimp.h"
 
-/*Une fonction qui cree un pointeur vers un t_parser_out avec les champs c pour cmd, nf pour name_file et a pour angle*/
-t_parser_out * init_p_out(char * c, char * nf, int a, SDL_Rect rectangle, t_error_parser * error) {
-	t_parser_out * res = malloc(sizeof(t_parser_out));
+/*Une fonction qui cree un pointeur vers un t_cmd avec les champs c pour cmd, nf pour name_file et a pour angle*/
+t_cmd * init_p_out(char * c, char * nf, int a, SDL_Rect rectangle, t_error_parser * error) {
+	t_cmd * res = malloc(sizeof(t_cmd));
 
 	if (res == NULL) {
 		*error = MALLOC_EST_LE_MAILLON_FAIBLE;
@@ -16,15 +16,15 @@ t_parser_out * init_p_out(char * c, char * nf, int a, SDL_Rect rectangle, t_erro
 	return res;
 }
 
-/*Une fonction qui libere la memoire allouee au t_parser_out cmd*/
-void free_p_out(t_parser_out * cmd) {
+/*Une fonction qui libere la memoire allouee au t_cmd cmd*/
+void free_p_out(t_cmd * cmd) {
 	free(cmd->cmd);
 	free(cmd->name_file);
 	free(cmd);
 }
 
-/*Renvoie le t_parser_config correspondant a la commande cmd et NULL si elle n'existe pas*/
-const t_parser_config * get_cmd(char * cmd) {
+/*Renvoie le t_cmd_config correspondant a la commande cmd et NULL si elle n'existe pas*/
+const t_cmd_config * get_cmd(char * cmd) {
 	for (int i = 0; i < (int) g_command_list_size; i++) {
 		if (strcmp(cmd, g_command_list[i].name) == 0) {
 			return g_command_list + i;
@@ -34,7 +34,7 @@ const t_parser_config * get_cmd(char * cmd) {
 }
 
 /*Renvoie le nombre d'arguments correspondant a la commande cmd ou -1 si elle vaut NULL*/
-int nb_args(const t_parser_config * cmd) {
+int nb_args(const t_cmd_config * cmd) {
 	int res = 0;
 
 	if (cmd == NULL) {
@@ -52,10 +52,10 @@ const char * get_error(t_error_parser error) {
 	return g_error_parser_strings[error];
 }
 
-/*Une fonction qui renvoie un pointeur vers un t_parser_out correspondant a la commande correspondant a line si la commande existe;
+/*Une fonction qui renvoie un pointeur vers un t_cmd correspondant a la commande correspondant a line si la commande existe;
  * si elle n'existe pas ou que le nombre d'arguments ne correspond pas on met a jour le champs error et on renvoie NULL
  * si la ligne est vide on renvoit NULL*/
-t_parser_out * parse_line(char * line, t_error_parser * error) {
+t_cmd * parse_line(char * line, t_error_parser * error) {
 	if ((*line) == 0) {
 		*error = NO_LINE;
 		return NULL;
@@ -63,7 +63,7 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 
 	SDL_Rect rectangle;
 	char * token = strtok_r(line, " ", &line);
-	const t_parser_config * commande = get_cmd(token);
+	const t_cmd_config * commande = get_cmd(token);
 	int args = nb_args(commande);
 	char * tmp;
 	int rc;
@@ -78,7 +78,7 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 		return NULL;
 	}
 
-	t_parser_out * res = init_p_out(token, NULL, NO_ANGLE, rectangle, error);
+	t_cmd * res = init_p_out(token, NULL, NO_ANGLE, rectangle, error);
 	if (res == NULL) {
 		return NULL;
 	}
@@ -92,6 +92,7 @@ t_parser_out * parse_line(char * line, t_error_parser * error) {
 			rc    = strtol(token, &tmp, 10);
 			if (errno == EINVAL || errno == ERANGE || tmp == token) {
 				*error = INVALID_ARGUMENT;
+				free_p_out(res);
 				return NULL;
 			}
 

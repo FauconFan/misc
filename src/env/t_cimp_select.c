@@ -2,11 +2,11 @@
 
 /** Une fontion qui alloue la memoire necessaire et cree un t_cimp_select correspondant
  * au SDL_Rect passe en argument**/
-t_cimp_select * cimp_init_select(SDL_Rect rectangle, char ** errno_str) {
+t_cimp_select * cimp_init_select(SDL_Rect rectangle) {
 	t_cimp_select * res = malloc(sizeof(t_cimp_select));
 
 	if (res == NULL) {
-		*errno_str = MALLOC_FAIL;
+		printf("erreur de mallox\n");
 		return NULL;
 	}
 

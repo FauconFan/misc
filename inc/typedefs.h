@@ -23,27 +23,27 @@ typedef struct      s_cimp_event {
 
 typedef struct          s_cimp {
 	t_cimp_screen * screen;
-	t_cimp_select * select;
-	t_cimp_event *  event;
 	int             running;
+	t_cimp_select * select;
+	t_cimp_event * event;
+
 }                       t_cimp;
 
+typedef struct      s_cmd {
+	char * cmd;
+	char * name_file;
+	int    angle;
+	SDL_Rect rect;
+}                   t_cmd;
 
-/********************************* PARSER ************************************/
-
-typedef struct      s_parser_config {
+typedef struct      s_cmd_config {
 	char * name;
+	int (* func_cmd_ptr)(t_cmd *);
 	int8_t has_name;
 	int8_t has_angle;
 	int8_t has_rect;
-}                   t_parser_config;
+} t_cmd_config;
 
-typedef struct      s_parser_out {
-	char *   cmd;
-	char *   name_file;
-	int      angle;
-	SDL_Rect rect;
-}                   t_parser_out;
 
 typedef enum e_error_parser {
 	TOO_MUCH_ARGS = 0,
@@ -61,8 +61,8 @@ typedef enum e_error_parser {
 
 extern t_cimp * g_cimp;
 
-// Parser globalscimp_end_select
-extern const t_parser_config g_command_list[];
+// Parser globals
+extern const t_cmd_config g_command_list[];
 extern const size_t g_command_list_size;
 
 extern const char * g_error_parser_strings [];

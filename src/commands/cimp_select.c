@@ -3,13 +3,13 @@
 
 /**Une fonction qui cree la zone de selection associee au rectangle rect.
 * Si une selectionexiste deja on met a jour les donnees du rectangle  **/
-int cimp_select(SDL_Rect rect, char ** errno_str) {
+int cimp_select(t_cmd * cmd) {
 	if (g_cimp->screen == NULL) {
 		printf("Pas d'ecran ouvert donc pas de selection possible \n");
 		return -1;
 	}
 	if (g_cimp->select != NULL) {
-		g_cimp->select->surface = rect;
+		g_cimp->select->surface = cmd->rect;
 
 		/**
 		 * SDL_LockSurface(g_cimp->screen->buff_screen);
@@ -24,7 +24,7 @@ int cimp_select(SDL_Rect rect, char ** errno_str) {
 		return 0;
 	}
 
-	t_cimp_select * selection = cimp_init_select(rect, errno_str);
+	t_cimp_select * selection = cimp_init_select(cmd->rect);
 
 	if (selection == NULL) {
 		return -1;
@@ -49,7 +49,10 @@ int cimp_select(SDL_Rect rect, char ** errno_str) {
 
 /** Une fonction aui libere la memoire associee a une selection,
  * mets a jour le champ correspondant dans g_cimp.**/
-void cimp_unselect() {
+int cimp_unselect(t_cmd * cmd) {
+	(void) cmd;
+
 	cimp_end_select(g_cimp->select);
 	g_cimp->select = NULL;
+	return 0;
 }

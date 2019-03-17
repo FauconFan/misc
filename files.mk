@@ -26,6 +26,7 @@ SRC_FILES = \
 			parser.c \
 			globals.c \
 			cimp_exe.c \
+			core.c \
 
 CHILD_RD_FILES = \
 			child_readline.c \

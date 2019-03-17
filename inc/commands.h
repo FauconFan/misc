@@ -1,27 +1,14 @@
 #ifndef COMMANDS_H
 #define	COMMANDS_H
 
-// cimp_open.c:
-int cimp_open(char * path, char ** errno_str);
-
-// cimp_close.c:
-int cimp_close();
-
-// cimp_help.c:
-void cimp_help();
-
-// cimp_list.c:
-void cimp_list();
-
-// cimp_sym.c:
-void cimp_sym_verti();
-void cimp_sym_hori();
-
-// cimp_rotate.c:
-void cimp_rotate(int angle);
-
-// cimp_select.c :
-int cimp_select(SDL_Rect rectangle, char ** errno_str);
-void cimp_unselect();
+int cimp_open(t_cmd * cmd);
+int cimp_close(t_cmd * cmd);
+int cimp_help(t_cmd * cmd);
+int cimp_list(t_cmd * cmd);
+int cimp_sym_verti(t_cmd * cmd);
+int cimp_sym_hori(t_cmd * cmd);
+int cimp_rotate(t_cmd * cmd);
+int cimp_select(t_cmd * cmd);
+int cimp_unselect(t_cmd * cmd);
 
 #endif // ifndef COMMANDS_H

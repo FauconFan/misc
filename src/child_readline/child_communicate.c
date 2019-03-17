@@ -6,10 +6,12 @@ void        child_send_ok() {
 	write(g_fd_callback, &tmp, sizeof(tmp));
 }
 
-void        child_send_stop() {
+void        child_stop() {
 	int tmp = 1;
 
 	write(g_fd_callback, &tmp, sizeof(tmp));
+	close(g_fd_readline);
+	close(g_fd_callback);
 }
 
 char * child_getline() {

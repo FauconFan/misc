@@ -34,7 +34,7 @@ void update_event(t_cimp_event * evnmt) {
 		if (event.type == SDL_QUIT ||
 		  (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE))
 		{
-			cimp_close();
+			cimp_close(NULL);
 		}
 		else if (event.type == SDL_MOUSEBUTTONDOWN) {
 			evnmt->button_pressed = 0;
@@ -48,9 +48,10 @@ void update_event(t_cimp_event * evnmt) {
 			if (evnmt->selection.x >= -0 && evnmt->selection.y >= 0 && evnmt->selection.w >= 0 &&
 			  evnmt->selection.h >= 0)
 			{
-				char * errno_str;
-				if (cimp_select(evnmt->selection, &errno_str) < 0)
+				t_cmd * cmd = init_p_out (NULL, NULL, NO_ANGLE, evnmt->selection, NULL);
+				if (cimp_select(cmd) < 0)
 					printf("Terrible erreur\n");
+				free_p_out (cmd);
 			}
 		}
 	}
