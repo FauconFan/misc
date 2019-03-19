@@ -25,14 +25,13 @@ typedef struct          s_cimp {
 	t_cimp_screen * screen;
 	int             running;
 	t_cimp_select * select;
-	t_cimp_event * event;
-
+	t_cimp_event *  event;
 }                       t_cimp;
 
 typedef struct      s_cmd {
-	char * cmd;
-	char * name_file;
-	int    angle;
+	char *   cmd;
+	char *   name_file;
+	int      angle;
 	SDL_Rect rect;
 }                   t_cmd;
 

@@ -19,7 +19,7 @@ void treat_line(char * line) {
 		else {
 			printf("Selection courrante :  x=%d y=%d w=%d h=%d\n", g_cimp->select->surface.x,
 			  g_cimp->select->surface.y, g_cimp->select->surface.w, g_cimp->select->surface.h);
-}
+		}
 		free_p_out(cmd);
 	}
 	else {
