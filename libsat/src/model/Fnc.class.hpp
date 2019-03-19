@@ -1,19 +1,19 @@
-#ifndef FNCC_CLASS_HPP
-#define	FNCC_CLASS_HPP
+#ifndef FNC_CLASS_HPP
+#define	FNC_CLASS_HPP
 
 #include "libsat.hpp"
 
-class FNCC{
+class Fnc {
 	public:
-		FNCC();
-		FNCC(const FNCC &);
-		FNCC &operator=(const FNCC &);
-		explicit FNCC(const std::vector<ImplClause> &);
-		virtual~FNCC();
+		Fnc();
+		Fnc(const Fnc &);
+		Fnc &operator=(const Fnc &);
+		explicit Fnc(const std::vector<ImplClause> &);
+		virtual~Fnc();
 
 		bool                        empty() const;
 		void                        add_clause(const ImplClause &);
-		void                        add_fnc(const FNCC &);
+		void                        add_fnc(const Fnc &);
 		std::vector<ImplClause>     get_implclauses();
 
 		Occ_list        build_occ_list() const;
@@ -33,6 +33,6 @@ class FNCC{
 		void                    transform_to_impl_clauses();
 };
 
-std::ostream    &operator<<(std::ostream &, const FNCC &);
+std::ostream    &operator<<(std::ostream &, const Fnc &);
 
-#endif // ifndef FNCC_CLASS_HPP
+#endif // ifndef Fnc_CLASS_HPP

@@ -4,7 +4,7 @@ Occ_list::Occ_list () = default;
 
 Occ_list::Occ_list (const Occ_list & ol) = default;
 
-Occ_list::Occ_list (const FNCC & fnc) {
+Occ_list::Occ_list (const Fnc & fnc) {
 	*this = fnc.build_occ_list();
 }
 

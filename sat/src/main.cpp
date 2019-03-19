@@ -2,7 +2,7 @@
 
 int main(int argc, char ** argv) {
 	if (argc == 2) {
-		FNCC * fnc = getInputFNC(argv[1]);
+		Fnc * fnc = getInputFNC(argv[1]);
 
 		if (fnc != nullptr) {
 			/*FNC::printFNC(fnc);

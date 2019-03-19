@@ -3,13 +3,13 @@
 
 #include "libsat.hpp"
 
-class FNCC;
+class Fnc;
 
 class Occ_list{
 	public:
 		Occ_list ();
 		Occ_list (const Occ_list &);
-		explicit Occ_list (const FNCC &);
+		explicit Occ_list (const Fnc &);
 		virtual~Occ_list();
 
 		Occ_list & operator=(const Occ_list &);

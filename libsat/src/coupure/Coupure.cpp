@@ -1,6 +1,6 @@
 #include "libsat.hpp"
 
-static void polarity_check(FNCC & fnc, Occ_list * litt_occ, Distrib * dist) {
+static void polarity_check(Fnc & fnc, Occ_list * litt_occ, Distrib * dist) {
 	std::pair<std::vector<unsigned int>, std::vector<unsigned int> > p;
 
 	while (true) {
@@ -30,7 +30,7 @@ static void polarity_check(FNCC & fnc, Occ_list * litt_occ, Distrib * dist) {
  * Si x a toujours une polarité négative, la retirer partout et mettre x = 0
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
-static void nettoyage(FNCC fnc, Occ_list * litt_occ, Distrib * dist) {
+static void nettoyage(Fnc fnc, Occ_list * litt_occ, Distrib * dist) {
 	std::cout << "clean... \nSimplify... done\n";
 
 	*litt_occ -= fnc.simplify();
@@ -50,10 +50,10 @@ static void nettoyage(FNCC fnc, Occ_list * litt_occ, Distrib * dist) {
 }
 
 /*Effectue la coupure de f par rapport a val*/
-static void apply_cut(FNCC & fnc, Occ_list * litt_occ, unsigned int val) {
-	FNCC fnc_without_val;
-	FNCC fnc_premisse;
-	FNCC fnc_conclusion;
+static void apply_cut(Fnc & fnc, Occ_list * litt_occ, unsigned int val) {
+	Fnc fnc_without_val;
+	Fnc fnc_premisse;
+	Fnc fnc_conclusion;
 	ImplClause res_fusion;
 
 	std::cout << "cut...\n";
@@ -105,10 +105,10 @@ static void apply_cut(FNCC & fnc, Occ_list * litt_occ, unsigned int val) {
 	fnc = fnc_without_val;
 } // apply_cut
 
-static bool rec_cut(FNCC fnc, Occ_list * litt_occ, Distrib * dist) {
+static bool rec_cut(Fnc fnc, Occ_list * litt_occ, Distrib * dist) {
 	unsigned int cut_value;
 	bool ret;
-	FNCC next;
+	Fnc next;
 
 	nettoyage(fnc, litt_occ, dist);
 
@@ -116,7 +116,7 @@ static bool rec_cut(FNCC fnc, Occ_list * litt_occ, Distrib * dist) {
 		return (!fnc.empty());
 	}
 
-	FNCC copy_fnc = FNCC(fnc);
+	Fnc copy_fnc = Fnc(fnc);
 
 	cut_value = litt_occ->getMinOccu();
 	std::cout << "cut_value : " << cut_value << "\n";
@@ -134,13 +134,13 @@ static bool rec_cut(FNCC fnc, Occ_list * litt_occ, Distrib * dist) {
 	return ret;
 }
 
-bool cut_solve(const FNCC & fnc) {
+bool cut_solve(const Fnc & fnc) {
 	Occ_list litt_occ = Occ_list(fnc);
 	Distrib dist;
 
 	std::cout << litt_occ << "\n";
 
-	bool res = rec_cut(FNCC(fnc), &litt_occ, &dist);
+	bool res = rec_cut(Fnc(fnc), &litt_occ, &dist);
 
 	std::cout << dist;
 

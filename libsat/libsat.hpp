@@ -12,7 +12,7 @@
 #include "src/utils/Distrib.class.hpp"
 
 #include "src/model/ImplClause.class.hpp"
-#include "src/model/FNCC.class.hpp"
+#include "src/model/Fnc.class.hpp"
 
 #include "src/coupure/Coupure.hpp"
 

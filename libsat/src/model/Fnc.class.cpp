@@ -1,23 +1,23 @@
 #include "libsat.hpp"
 
-FNCC::FNCC() = default;
+Fnc::Fnc() = default;
 
-FNCC::FNCC(const FNCC & fncc) {
+Fnc::Fnc(const Fnc & fncc) {
 	*this = fncc;
 }
 
-FNCC        &FNCC::operator=(const FNCC & fnc) {
+Fnc        &Fnc::operator=(const Fnc & fnc) {
 	this->_clauses = std::vector<ImplClause>(fnc._clauses);
 	return (*this);
 }
 
-FNCC::FNCC(const std::vector<ImplClause> & vec) {
+Fnc::Fnc(const std::vector<ImplClause> & vec) {
 	this->_clauses = std::vector<ImplClause>(vec);
 }
 
-FNCC::~FNCC() = default;
+Fnc::~Fnc() = default;
 
-Occ_list FNCC::build_occ_list() const{
+Occ_list Fnc::build_occ_list() const{
 	Occ_list res;
 
 	for (const auto & acl : this->_clauses) {
@@ -26,23 +26,23 @@ Occ_list FNCC::build_occ_list() const{
 	return (res);
 }
 
-bool FNCC::empty() const{
+bool Fnc::empty() const{
 	return (this->_clauses.empty());
 }
 
-void FNCC::add_clause(const ImplClause & acl) {
+void Fnc::add_clause(const ImplClause & acl) {
 	this->_clauses.push_back(acl);
 }
 
-void FNCC::add_fnc(const FNCC & fnc) {
+void Fnc::add_fnc(const Fnc & fnc) {
 	this->_clauses.insert(this->_clauses.end(), fnc._clauses.begin(), fnc._clauses.end());
 }
 
-std::vector<ImplClause>   FNCC::get_implclauses() {
+std::vector<ImplClause>   Fnc::get_implclauses() {
 	return (this->_clauses);
 }
 
-Occ_list FNCC::delete_tautologies() {
+Occ_list Fnc::delete_tautologies() {
 	Occ_list res;
 
 	for (auto it = this->_clauses.begin(); it != this->_clauses.end(); ++it) {
@@ -55,7 +55,7 @@ Occ_list FNCC::delete_tautologies() {
 	return (res);
 }
 
-Occ_list FNCC::simplify() {
+Occ_list Fnc::simplify() {
 	Occ_list res;
 
 	for (auto & acl : this->_clauses) {
@@ -64,7 +64,7 @@ Occ_list FNCC::simplify() {
 	return (res);
 }
 
-Occ_list FNCC::delete_if_contains(int val) {
+Occ_list Fnc::delete_if_contains(int val) {
 	Occ_list res;
 
 	for (auto it = this->_clauses.begin(); it != this->_clauses.end(); ++it) {
@@ -78,7 +78,7 @@ Occ_list FNCC::delete_if_contains(int val) {
 	return (res);
 }
 
-bool FNCC::contains(const ImplClause & acl) {
+bool Fnc::contains(const ImplClause & acl) {
 	for (const auto & ac : this->_clauses) {
 		if (ac == acl)
 			return (true);
@@ -86,7 +86,7 @@ bool FNCC::contains(const ImplClause & acl) {
 	return (false);
 }
 
-void FNCC::display(std::ostream & os) const{
+void Fnc::display(std::ostream & os) const{
 	os << "FNC [\n";
 
 	for (const auto & acl : this->_clauses) {
@@ -95,7 +95,7 @@ void FNCC::display(std::ostream & os) const{
 	os << "]\n";
 }
 
-std::ostream &operator<<(std::ostream & os, const FNCC & fnc) {
+std::ostream &operator<<(std::ostream & os, const Fnc & fnc) {
 	fnc.display(os);
 	return (os);
 }

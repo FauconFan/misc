@@ -31,7 +31,7 @@ static void             fill_buff_lines_yyin(const std::string & contentFile) {
 	buff_lines_yyin.push_back(contentFile.substr(prev));
 }
 
-FNCC * getInputFNC(const char * path) {
+Fnc * getInputFNC(const char * path) {
 	FILE * file = nullptr;
 	std::vector<ImplClause> res;
 
@@ -54,5 +54,5 @@ FNCC * getInputFNC(const char * path) {
 
 	res = FNC_builder::get().getClauses();
 	fclose(file);
-	return (new FNCC(res));
+	return (new Fnc(res));
 }
