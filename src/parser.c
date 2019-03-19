@@ -1,7 +1,7 @@
 #include "cimp.h"
 
 /*Une fonction qui cree un pointeur vers un t_cmd avec les champs c pour cmd, nf pour name_file et a pour angle*/
-t_cmd * init_p_out(char * c, char * nf, int a, t_error_parser * error) {
+t_cmd * init_p_out(char * c, char * nf, int a, SDL_Rect rectangle, t_error_parser * error) {
 	t_cmd * res = malloc(sizeof(t_cmd));
 
 	if (res == NULL) {
@@ -12,6 +12,7 @@ t_cmd * init_p_out(char * c, char * nf, int a, t_error_parser * error) {
 	res->cmd       = dupstr(c);
 	res->name_file = dupstr(nf);
 	res->angle     = a;
+	res->rect      = rectangle;
 	return res;
 }
 
@@ -42,6 +43,7 @@ int nb_args(const t_cmd_config * cmd) {
 
 	if (cmd->has_name) res++;
 	if (cmd->has_angle) res++;
+	if (cmd->has_rect) res += 4;
 	return res;
 }
 
@@ -59,18 +61,24 @@ t_cmd * parse_line(char * line, t_error_parser * error) {
 		return NULL;
 	}
 
+	SDL_Rect rectangle;
 	char * token = strtok_r(line, " ", &line);
 	const t_cmd_config * commande = get_cmd(token);
 	int args = nb_args(commande);
 	char * tmp;
 	int rc;
 
+	rectangle.x = -1;
+	rectangle.y = -1;
+	rectangle.w = -1;
+	rectangle.h = -1;
+
 	if (commande == NULL) {
 		*error = UNKNOW_NAME;
 		return NULL;
 	}
 
-	t_cmd * res = init_p_out(token, NULL, NO_ANGLE, error);
+	t_cmd * res = init_p_out(token, NULL, NO_ANGLE, rectangle, error);
 	if (res == NULL) {
 		return NULL;
 	}
@@ -89,6 +97,29 @@ t_cmd * parse_line(char * line, t_error_parser * error) {
 			}
 
 			res->angle = rc;
+		}
+		else if (commande->has_rect &&
+		  (res->rect.x == -1 || res->rect.y == -1 || res->rect.h == -1 || res->rect.w == -1 ) )
+		{
+			errno = 0;
+			rc    = strtol(token, &tmp, 10);
+			if (errno == EINVAL || errno == ERANGE || tmp == token) {
+				*error = INVALID_ARGUMENT;
+				free_p_out(res);
+				return NULL;
+			}
+			if (res->rect.x == -1) {
+				res->rect.x = rc;
+			}
+			else if (res->rect.y == -1) {
+				res->rect.y = rc;
+			}
+			else if (res->rect.w == -1) {
+				res->rect.w = rc;
+			}
+			else if (res->rect.h == -1) {
+				res->rect.h = rc;
+			}
 		}
 
 		args--;

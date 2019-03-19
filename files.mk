@@ -36,6 +36,8 @@ CHILD_RD_FILES = \
 ENV_FILES = \
 			t_cimp.c \
 			t_cimp_screen.c \
+			t_cimp_select.c \
+			t_cimp_event.c \
 
 UTILS_FILES = \
 			path_utils.c \
@@ -49,6 +51,7 @@ COMMANDS_FILES = \
 			cimp_list.c \
 			cimp_sym.c \
 			cimp_rotate.c \
+			cimp_select.c \
 
 SRC_NO_MAIN = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \

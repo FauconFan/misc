@@ -7,11 +7,18 @@ void treat_line(char * line) {
 	cmd = parse_line(line, &error);
 	if (cmd != NULL) {
 		printf(
-		  "DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d } \n",
-		  cmd->cmd, cmd->name_file, cmd->angle);
+		  "DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d  rect : x=%d y=%d w=%d h=%d} \n",
+		  cmd->cmd, cmd->name_file, cmd->angle, cmd->rect.x, cmd->rect.y, cmd->rect.w, cmd->rect.h);
 		if (cimp_exe(cmd) == -1) {
 			printf("Internal program error !!!\n");
 			printf("Please contact maintainers !!!\n");
+		}
+		if (g_cimp->select == NULL) {
+			printf("Pas de selection courante \n");
+		}
+		else {
+			printf("Selection courrante :  x=%d y=%d w=%d h=%d\n", g_cimp->select->surface.x,
+			  g_cimp->select->surface.y, g_cimp->select->surface.w, g_cimp->select->surface.h);
 		}
 		free_p_out(cmd);
 	}

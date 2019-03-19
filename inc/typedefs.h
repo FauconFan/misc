@@ -6,6 +6,9 @@
 /**
  * Ici sont définies les structures standards utilisées dans le programme.
  */
+typedef struct s_cimp_select {
+	SDL_Rect surface;
+} t_cimp_select;
 
 typedef struct          s_cimp_screen {
 	SDL_Window *  window;
@@ -13,15 +16,23 @@ typedef struct          s_cimp_screen {
 	char *        original_path;
 }                       t_cimp_screen;
 
+typedef struct      s_cimp_event {
+	SDL_Rect selection;
+	int8_t   button_pressed;
+} t_cimp_event;
+
 typedef struct          s_cimp {
 	t_cimp_screen * screen;
 	int             running;
+	t_cimp_select * select;
+	t_cimp_event *  event;
 }                       t_cimp;
 
 typedef struct      s_cmd {
-	char * cmd;
-	char * name_file;
-	int    angle;
+	char *   cmd;
+	char *   name_file;
+	int      angle;
+	SDL_Rect rect;
 }                   t_cmd;
 
 typedef struct      s_cmd_config {
@@ -29,7 +40,9 @@ typedef struct      s_cmd_config {
 	int (* func_cmd_ptr)(t_cmd *);
 	int8_t has_name;
 	int8_t has_angle;
-}                   t_cmd_config;
+	int8_t has_rect;
+} t_cmd_config;
+
 
 typedef enum e_error_parser {
 	TOO_MUCH_ARGS = 0,
@@ -38,6 +51,7 @@ typedef enum e_error_parser {
 	MALLOC_EST_LE_MAILLON_FAIBLE,
 	INVALID_ARGUMENT,
 	NO_LINE,
+	INVALID_RECT,
 }            t_error_parser;
 
 /**

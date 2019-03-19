@@ -1,0 +1,35 @@
+#include "cimp.h"
+
+
+/**Une fonction qui cree la zone de selection associee au rectangle rect.
+* Si une selectionexiste deja on met a jour les donnees du rectangle  **/
+int cimp_select(t_cmd * cmd) {
+	if (g_cimp->screen == NULL) {
+		printf("Pas d'ecran ouvert donc pas de selection possible \n");
+		return -1;
+	}
+	if (g_cimp->select != NULL) {
+		g_cimp->select->surface = cmd->rect;
+		return 0;
+	}
+
+	t_cimp_select * selection = cimp_init_select(cmd->rect);
+
+	if (selection == NULL) {
+		return -1;
+	}
+
+	g_cimp->select = selection;
+
+	return 0;
+}
+
+/** Une fonction aui libere la memoire associee a une selection,
+ * mets a jour le champ correspondant dans g_cimp.**/
+int cimp_unselect(t_cmd * cmd) {
+	(void) cmd;
+
+	cimp_end_select(g_cimp->select);
+	g_cimp->select = NULL;
+	return 0;
+}
