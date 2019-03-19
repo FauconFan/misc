@@ -1,0 +1,47 @@
+language: C
+dist: xenial
+
+stages:
+  - Base
+  - Lint
+
+matrix:
+  include:
+    - name: verifying travis.yml file
+      stage: Base
+      script:
+        - python3 .travis_gen.py > expected.out
+        - diff .travis.yml expected.out
+    - name: compile libsat
+      stage: Base
+      script:
+        - make -C libsat
+    - name: compile sat
+      stage: Base
+      script:
+        - make -C sat
+    - name: uncrustify
+      stage: Lint
+      script:
+        - make uncrustify_check
+    - name: cpplint
+      stage: Lint
+      before_install: sudo apt-get update
+      install:
+        - sudo apt-get install -y --no-install-recommends python3-venv
+      script:
+        - make cpplint_run
+    - name: cppcheck
+      stage: Lint
+      before_install: sudo apt-get update
+      install:
+        - sudo apt-get install -y --no-install-recommends cppcheck
+      script:
+        - make cppcheck_run
+    - name: clang-tidy
+      stage: Lint
+      before_install: sudo apt-get update
+      install:
+        - sudo apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0
+      script:
+        - make clang_tidy_run
