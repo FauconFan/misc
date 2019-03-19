@@ -3,7 +3,7 @@
 
 #include "libsat.hpp"
 
-class Fnc {
+class Fnc{
 	public:
 		Fnc();
 		Fnc(const Fnc &);
@@ -14,7 +14,7 @@ class Fnc {
 		bool                        empty() const;
 		void                        add_clause(const Clause &);
 		void                        add_fnc(const Fnc &);
-		std::vector<Clause>     get_implclauses();
+		std::vector<Clause>         get_implclauses();
 
 		Occ_list        build_occ_list() const;
 
@@ -28,9 +28,6 @@ class Fnc {
 
 	private:
 		std::vector<Clause> _clauses {};
-		bool _is_impl_clauses {false};
-
-		void                    transform_to_impl_clauses();
 };
 
 std::ostream    &operator<<(std::ostream &, const Fnc &);

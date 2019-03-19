@@ -77,7 +77,7 @@ INFER = /usr/local/bin/infer
 lint_apply: uncrustify_apply clang_tidy_fix
 
 .PHONY: lint_check
-lint_check: uncrustify_check cpplint_run cppcheck_run clang_tidy_run infer_run
+lint_check: uncrustify_check cpplint_run cppcheck_run clang_tidy_run
 
 ###################################### UNCRUSTIFY ##############################
 
@@ -131,6 +131,7 @@ WARNS_EXCEPTS = \
 				readability-simplify-boolean-expr \
 				fuchsia-overloaded-operator \
 				fuchsia-default-arguments \
+				modernize-pass-by-value \
 
 WARNS = $(shell echo "*$(foreach warn,$(WARNS_EXCEPTS),,-$(warn))" | tr -d ' ')
 

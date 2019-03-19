@@ -56,8 +56,8 @@ unsigned int Occ_list::getMinOccu() const{
 
 		current = i.second.getLeft() + i.second.getRight();
 		if (current < nb) {
-			nb = current;
-			res     = i.first;
+			nb  = current;
+			res = i.first;
 		}
 	}
 	return (res);
@@ -77,8 +77,8 @@ unsigned int Occ_list::getMaxOccu() const{
 
 		current = i.second.getLeft() + i.second.getRight();
 		if (current > nb) {
-			nb = current;
-			res     = i.first;
+			nb  = current;
+			res = i.first;
 		}
 	}
 	return (res);

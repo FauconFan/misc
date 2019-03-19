@@ -11,9 +11,7 @@ Fnc        &Fnc::operator=(const Fnc & fnc) {
 	return (*this);
 }
 
-Fnc::Fnc(const std::vector<Clause> & vec) {
-	this->_clauses = std::vector<Clause>(vec);
-}
+Fnc::Fnc(const std::vector<Clause> & vec) : _clauses(vec) {}
 
 Fnc::~Fnc() = default;
 
