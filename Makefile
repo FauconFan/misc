@@ -110,17 +110,42 @@ cppcheck_run:
 
 ##################################### CLANG_TIDY ###############################
 
+WARNS_EXCEPTS = \
+				cppcoreguidelines-owning-memory \
+				cppcoreguidelines-special-member-functions \
+				llvm-header-guard \
+				llvm-namespace-comment \
+				llvm-include-order \
+				google-readability-braces-around-statements \
+				google-readability-namespace-comments \
+				hicpp-braces-around-statements \
+				hicpp-use-equals-delete \
+				hicpp-signed-bitwise \
+				hicpp-special-member-functions \
+				hicpp-use-override \
+				readability-braces-around-statements \
+				readability-named-parameter \
+				readability-delete-null-pointer \
+				fuchsia-overloaded-operator \
+				
+
+WARNS = $(shell echo "*$(foreach warn,$(WARNS_EXCEPTS),,-$(warn))" | tr -d ' ')
+
+tete:
+	@echo $(WARNS)
+
 .PHONY: clang_tidy_run
 clang_tidy_run:
 	$(CLANG_TIDY) \
-		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-hicpp-signed-bitwise,-readability-braces-around-statements" \
+		-checks="$(WARNS)" \
+		-header-filter=".*" \
 		-warnings-as-errors="*" \
 		$(SRC_FILES) -- $(IFLAGS) \
 
 .PHONY: clang_tidy_fix
 clang_tidy_fix:
 	$(CLANG_TIDY) \
-		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-hicpp-signed-bitwise,-readability-braces-around-statements" \
+		-checks="$(WARNS)" \
 		-header-filter=".*" \
 		-fix-errors \
 		$(SRC_FILES) -- $(IFLAGS) \

@@ -3,6 +3,6 @@
 
 #include "libsat.hpp"
 
-bool cut_solve(std::vector<ImplClause *>);
+bool cut_solve(const FNCC &);
 
 #endif // ifndef COUPURE_HPP

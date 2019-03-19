@@ -2,19 +2,17 @@
 
 int main(int argc, char ** argv) {
 	if (argc == 2) {
-		std::vector<AClause *> * fnc = getInputFNC(argv[1]);
+		FNCC * fnc = getInputFNC(argv[1]);
 
-		if (fnc != NULL) {
+		if (fnc != nullptr) {
 			/*FNC::printFNC(fnc);
 			 *  FNC::delete_tautologies(fnc);
 			 *  FNC::simplify(fnc);
 			 *  FNC::printFNC(fnc);*/
 
-			std::vector<ImplClause *> * impl_clauses = FNC::convert<ImplClause>(fnc);
+			std::cout << *fnc;
 
-			FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(impl_clauses));
-
-			if (cut_solve(*impl_clauses))
+			if (cut_solve(*fnc))
 				std::cout << "true\n";
 			else
 				std::cout << "false\n";

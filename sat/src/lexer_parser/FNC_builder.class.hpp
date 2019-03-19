@@ -6,6 +6,8 @@
 class FNC_builder final
 {
 	public:
+		FNC_builder(const FNC_builder & rhs) = delete;
+		FNC_builder &operator=(const FNC_builder & rhs) = delete;
 		virtual~FNC_builder();
 
 		static FNC_builder  &get();
@@ -16,17 +18,15 @@ class FNC_builder final
 		void    addVar(int var);
 		void    endOfClause();
 
-		std::vector<AClause *>  getClauses();
+		std::vector<ImplClause>  getClauses();
 
 	private:
 		FNC_builder();
-		FNC_builder(const FNC_builder & rhs);            // Not implemented
-		FNC_builder &operator=(const FNC_builder & rhs); // Not implemented
 
 		int _nb_vars;    // hidden
 		int _nb_clauses; // hidden
 		std::vector<int> _vars;
-		std::vector<AClause *> _clauses;
+		std::vector<ImplClause> _clauses;
 };
 
 

@@ -1,6 +1,6 @@
 #include "libsat.hpp"
 
-static void polarity_check(Occ_list * litt_occ, Distrib * dist, std::vector<ImplClause *> * fnc) {
+static void polarity_check(FNCC & fnc, Occ_list * litt_occ, Distrib * dist) {
 	std::pair<std::vector<unsigned int>, std::vector<unsigned int> > p;
 
 	while (true) {
@@ -8,8 +8,7 @@ static void polarity_check(Occ_list * litt_occ, Distrib * dist, std::vector<Impl
 		auto pos = p.first;
 		auto neg = p.second;
 
-		std::cout << "STEP ======= " << std::endl;
-		FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(fnc));
+		std::cout << fnc;
 
 		std::cout << *litt_occ;
 
@@ -17,11 +16,11 @@ static void polarity_check(Occ_list * litt_occ, Distrib * dist, std::vector<Impl
 			break;
 		for (auto i : pos) {
 			dist->set(i, true);
-			*litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *> *>(fnc), i);
+			*litt_occ -= fnc.delete_if_contains(i);
 		}
 		for (auto i : neg) {
 			dist->set(i, false);
-			*litt_occ -= FNC::delete_if_contains(reinterpret_cast<std::vector<AClause *> *>(fnc), -i);
+			*litt_occ -= fnc.delete_if_contains(i);
 		}
 	}
 }
@@ -31,120 +30,117 @@ static void polarity_check(Occ_list * litt_occ, Distrib * dist, std::vector<Impl
  * Si x a toujours une polarité négative, la retirer partout et mettre x = 0
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
-static void nettoyage(std::vector<ImplClause *> * fnc, Occ_list * litt_occ, Distrib * dist) {
+static void nettoyage(FNCC fnc, Occ_list * litt_occ, Distrib * dist) {
 	std::cout << "clean... \nSimplify... done\n";
 
-	*litt_occ -= FNC::simplify(reinterpret_cast<std::vector<AClause *> *>(fnc));
+	*litt_occ -= fnc.simplify();
 	std::cout << "Delete tautologies... done\n";
-	*litt_occ -= FNC::delete_tautologies(reinterpret_cast<std::vector<AClause *> *>(fnc));
+	*litt_occ -= fnc.delete_tautologies();
 	std::cout << "New litt_occ " << *litt_occ;
-	FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(fnc));
+	std::cout << fnc;
 
 	// Suppression si polarité unique
 	std::cout << "Polarity test\n";
-	polarity_check(litt_occ, dist, fnc);
+	polarity_check(fnc, litt_occ, dist);
 	std::cout << *litt_occ << "\ndone\n";
 
-	FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(fnc));
+	std::cout << fnc;
 
 	std::cout << "end clean\n";
 }
 
 /*Effectue la coupure de f par rapport a val*/
-static std::vector<ImplClause *> apply_cut(std::vector<ImplClause *> * fnc, Occ_list * litt_occ, unsigned int val) {
-	std::vector<ImplClause *> * cls_without_val         = new std::vector<ImplClause *>();
-	std::vector<ImplClause *> * cls_with_val_premisse   = new std::vector<ImplClause *>();
-	std::vector<ImplClause *> * cls_with_val_conclusion = new std::vector<ImplClause *>();
-	ImplClause * res_fusion;
+static void apply_cut(FNCC & fnc, Occ_list * litt_occ, unsigned int val) {
+	FNCC fnc_without_val;
+	FNCC fnc_premisse;
+	FNCC fnc_conclusion;
+	ImplClause res_fusion;
 
 	std::cout << "cut...\n";
 
+	std::vector<ImplClause> clauses = fnc.get_implclauses();
+
 	// Range les clauses pour préparer la coupure
-	for (auto i = fnc->begin(); i != fnc->end(); i++) {
-		int litt_side = (*i)->contains_litt(val);
+	for (auto implc : clauses) {
+		int litt_side = implc.contains_litt(val);
 		if (litt_side == -1) {
-			cls_with_val_premisse->push_back(*i);
+			fnc_premisse.add_clause(implc);
 		}
 		else if (litt_side == 1) {
-			cls_with_val_conclusion->push_back(*i);
+			fnc_conclusion.add_clause(implc);
 		}
 		else {
-			cls_without_val->push_back(*i);
+			fnc_without_val.add_clause(implc);
 		}
 	}
 
-	std::cout << "FNC without val\n";
-	FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(cls_without_val));
-	std::cout << "FNC with val in premisse\n";
-	FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(cls_with_val_premisse));
-	std::cout << "FNC with val in conclusion\n";
-	FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(cls_with_val_conclusion));
+	std::cout << "FNC without val\n" << fnc_without_val;
+	std::cout << "FNC with val in premisse\n" << fnc_premisse;
+	std::cout << "FNC with val in conclusion\n" << fnc_conclusion;
+
+	auto cls_with_val_premisse       = fnc_premisse.get_implclauses();
+	auto cls_cls_with_val_conclusion = fnc_conclusion.get_implclauses();
 
 	std::cout << "start cut...\n";
-	for (auto i = cls_with_val_premisse->begin(); i != cls_with_val_premisse->end(); i++) {
-		*litt_occ -= (*i)->get_occ_list();
-		for (auto j = cls_with_val_conclusion->begin(); j != cls_with_val_conclusion->end(); j++) {
-			if (i == cls_with_val_premisse->begin()) {
-				*litt_occ -= (*j)->get_occ_list();
-			}
+	for (auto i : cls_with_val_premisse)
+		*litt_occ -= i.get_occ_list();
+	for (auto j : cls_cls_with_val_conclusion)
+		*litt_occ -= j.get_occ_list();
 
-			res_fusion = cut(**i, **j, val);
-			std::cout << **i << "\t ; " << **j << "\t -> " << *res_fusion;
-			if (!res_fusion->is_tautology() &&
-			  !FNC::contains(reinterpret_cast<std::vector<AClause *> *>(cls_without_val), res_fusion))
-			{
-				cls_without_val->push_back(res_fusion);
-				*litt_occ += res_fusion->get_occ_list();
+	for (auto i : cls_with_val_premisse) {
+		for (auto j : cls_cls_with_val_conclusion) {
+			res_fusion = cut(i, j, val);
+			std::cout << "; " << i << "; " << j << "\t -> " << res_fusion;
+			if (!res_fusion.is_tautology() && fnc.contains(res_fusion)) {
+				fnc_without_val.add_clause(res_fusion);
+				*litt_occ += res_fusion.get_occ_list();
 			}
 		}
 	}
 
 	std::cout << "fnc become : ";
-
-	FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(cls_without_val));
-
+	std::cout << fnc_without_val;
 	std::cout << "New litt_occ : " << *litt_occ << "\nend cut\n";
 
-	delete cls_with_val_premisse;
-	delete cls_with_val_conclusion;
-
-	return *cls_without_val;
+	fnc = fnc_without_val;
 } // apply_cut
 
-static bool rec_cut(std::vector<ImplClause *> fnc, Occ_list * litt_occ, Distrib * dist) {
+static bool rec_cut(FNCC fnc, Occ_list * litt_occ, Distrib * dist) {
 	unsigned int cut_value;
 	bool ret;
+	FNCC next;
 
-	nettoyage(&fnc, litt_occ, dist);
+	nettoyage(fnc, litt_occ, dist);
 
 	if (litt_occ->empty()) {
-		return fnc.empty();
+		return (!fnc.empty());
 	}
 
-	std::vector<ImplClause *> * copy_fnc = new std::vector<ImplClause *>(fnc);
+	FNCC copy_fnc = FNCC(fnc);
 
 	cut_value = litt_occ->getMinOccu();
 	std::cout << "cut_value : " << cut_value << "\n";
-	fnc = apply_cut(&fnc, litt_occ, cut_value);
+
+	apply_cut(fnc, litt_occ, cut_value);
 
 	if ((ret = rec_cut(fnc, litt_occ, dist))) {
 		std::cout << "Reassembly... \n";
-		FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(copy_fnc));
+
+		std::cout << copy_fnc;
 
 		// Il faut assigner les valeurs non assignée apparaissant dans copy_fnc
 	}
 
-	delete copy_fnc;
 	return ret;
 }
 
-/*Distrib **/ bool cut_solve(std::vector<ImplClause *> fnc) {
+bool cut_solve(const FNCC & fnc) {
 	Occ_list litt_occ = Occ_list(fnc);
 	Distrib dist;
 
 	std::cout << litt_occ << "\n";
 
-	bool res = rec_cut(fnc, &litt_occ, &dist);
+	bool res = rec_cut(FNCC(fnc), &litt_occ, &dist);
 
 	std::cout << dist;
 

@@ -6,22 +6,8 @@ Occ_list::Occ_list (const Occ_list & ol) : _content() {
 	*this = ol;
 }
 
-Occ_list::Occ_list (const std::vector<ImplClause *> & fnc) {
-	std::vector<unsigned int> pos_litts, neg_litts;
-
-	for (auto i = fnc.begin(); i != fnc.end(); i++) {
-		pos_litts = *((*i)->getPosLitts());
-
-		for (auto j = pos_litts.begin(); j != pos_litts.end(); j++) {
-			this->_content[*j] += Pair(1, 0);
-		}
-
-		neg_litts = *((*i)->getNegLitts());
-
-		for (auto j = neg_litts.begin(); j < neg_litts.end(); j++) {
-			this->_content[*j] += Pair(0, 1);
-		}
-	}
+Occ_list::Occ_list (const FNCC & fnc) {
+	*this = fnc.build_occ_list();
 }
 
 Occ_list::~Occ_list () {}

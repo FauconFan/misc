@@ -31,16 +31,16 @@ static void             fill_buff_lines_yyin(const std::string & contentFile) {
 	buff_lines_yyin.push_back(contentFile.substr(prev));
 }
 
-std::vector<AClause *> * getInputFNC(const char * path) {
-	FILE * file = NULL;
-	std::vector<AClause *> res;
+FNCC * getInputFNC(const char * path) {
+	FILE * file = nullptr;
+	std::vector<ImplClause> res;
 
 	file = fopen(path, "r");
 
-	if (file == NULL) {
+	if (file == nullptr) {
 		std::cerr << "I can't open the file : " << path << std::endl;
 		std::cerr << strerror(errno) << std::endl;
-		return (NULL);
+		return (nullptr);
 	}
 
 	fill_buff_lines_yyin(getContentFile(file));
@@ -50,9 +50,9 @@ std::vector<AClause *> * getInputFNC(const char * path) {
 	yyparse();
 
 	if (yy_ok == false)
-		return (NULL);
+		return (nullptr);
 
 	res = FNC_builder::get().getClauses();
 	fclose(file);
-	return (new std::vector<AClause *>(res));
+	return (new FNCC(res));
 }

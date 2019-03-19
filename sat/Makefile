@@ -14,7 +14,7 @@ SRC_FOLDER = src/
 LEXER_PARSER_FOLDER = src/lexer_parser/
 FLEX_BISON_FOLDER = src/lexer_parser/flex_bison/
 
-LIBA = ../libsat/libsat.a
+# LIBA = ../libsat/libsat.a
 LIB_FLAGS = -L../libsat/ -lsat
 LIB_INCS = -I ../libsat/
 
@@ -42,15 +42,25 @@ OBJ = \
 .PHONY: all
 all: $(NAME)
 
-$(NAME): $(LIBA) $(OBJ)
+# $(NAME): $(LIBA) $(OBJ)
+# 	@printf "Program %s... " "$(NAME)"
+# 	@$(CXX) $(FLAGS) $(OBJ) -o $(NAME) $(LIB_FLAGS)
+# 	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
+
+# %.a:
+# 	@printf "Compiling %s... " "$?"
+# 	@make -C $(dir $@) $(notdir $@)
+# 	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
+
+$(NAME): libsat $(OBJ)
 	@printf "Program %s... " "$(NAME)"
 	@$(CXX) $(FLAGS) $(OBJ) -o $(NAME) $(LIB_FLAGS)
 	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
 
-%.a:
-	@printf "Compiling %s... " "$?"
-	@make -C $(dir $@) $(notdir $@)
-	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
+libsat:
+	@printf "Compiling %s...\\n" "$@"
+	@make -C ../libsat
+	@printf "%slibsat linked%s\\n" "$(_GREEN)" "$(_END)"
 
 %.o: %.cpp
 	@printf "Compiling %s... " "$?"

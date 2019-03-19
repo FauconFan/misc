@@ -1,17 +1,15 @@
 #include "libsat.hpp"
 
-ImplClause::ImplClause () : _pos_litts(NULL), _neg_litts(NULL) {
+ImplClause::ImplClause () : _pos_litts(nullptr), _neg_litts(nullptr) {
 	this->_pos_litts = new std::vector<unsigned int> ();
 	this->_neg_litts = new std::vector<unsigned int> ();
 }
 
-ImplClause::ImplClause (const ImplClause & icl) : _pos_litts(NULL), _neg_litts(NULL) {
+ImplClause::ImplClause (const ImplClause & icl) : _pos_litts(nullptr), _neg_litts(nullptr) {
 	*this = icl;
 }
 
-ImplClause::ImplClause (const Clause & cl) : ImplClause(*(cl.getLitts())) {}
-
-ImplClause::ImplClause (const std::vector<int> & litts) : _pos_litts(NULL), _neg_litts(NULL) {
+ImplClause::ImplClause (const std::vector<int> & litts) : _pos_litts(nullptr), _neg_litts(nullptr) {
 	this->_pos_litts = new std::vector<unsigned int> ();
 	this->_neg_litts = new std::vector<unsigned int> ();
 
@@ -25,9 +23,9 @@ ImplClause::ImplClause (const std::vector<int> & litts) : _pos_litts(NULL), _neg
 
 ImplClause & ImplClause::operator=(const ImplClause & icl) {
 	if (this != &icl) {
-		if (this->_pos_litts != NULL)
+		if (this->_pos_litts != nullptr)
 			delete this->_pos_litts;
-		if (this->_neg_litts != NULL)
+		if (this->_neg_litts != nullptr)
 			delete this->_neg_litts;
 
 		this->_pos_litts = new std::vector<unsigned int>(*(icl.getPosLitts()));
@@ -51,9 +49,9 @@ bool ImplClause::operator==(const ImplClause & rhs) const{
 }
 
 ImplClause::~ImplClause () {
-	if (this->_pos_litts != NULL)
+	if (this->_pos_litts != nullptr)
 		delete this->_pos_litts;
-	if (this->_neg_litts != NULL)
+	if (this->_neg_litts != nullptr)
 		delete this->_neg_litts;
 }
 
@@ -63,10 +61,6 @@ std::vector<unsigned int> * ImplClause::getPosLitts() const{
 
 std::vector<unsigned int> * ImplClause::getNegLitts() const{
 	return this->_neg_litts;
-}
-
-ClauseType ImplClause::getType() const{
-	return IMPLCLAUSE;
 }
 
 Occ_list ImplClause::get_occ_list() const{
@@ -176,12 +170,12 @@ Occ_list ImplClause::simplify_clause() {
  *  return true;
  * }*/
 
-ImplClause * cut(const ImplClause & icl1, const ImplClause & icl2, unsigned int val) {
+ImplClause cut(const ImplClause & icl1, const ImplClause & icl2, unsigned int val) {
 	std::vector<unsigned int> * icl1_pos_litts;
 	std::vector<unsigned int> * icl1_neg_litts;
 	std::vector<unsigned int> * icl2_pos_litts;
 	std::vector<unsigned int> * icl2_neg_litts;
-	ImplClause * res_cut = new ImplClause();
+	ImplClause res_cut;
 
 	std::set<unsigned int> buff;
 
@@ -200,7 +194,7 @@ ImplClause * cut(const ImplClause & icl1, const ImplClause & icl2, unsigned int 
 			buff.insert(i);
 	}
 
-	res_cut->getPosLitts()->assign(buff.begin(), buff.end());
+	res_cut.getPosLitts()->assign(buff.begin(), buff.end());
 	buff.clear();
 
 	for (unsigned int i : *icl1_neg_litts) {
@@ -213,7 +207,7 @@ ImplClause * cut(const ImplClause & icl1, const ImplClause & icl2, unsigned int 
 			buff.insert(i);
 	}
 
-	res_cut->getNegLitts()->assign(buff.begin(), buff.end());
+	res_cut.getNegLitts()->assign(buff.begin(), buff.end());
 
 	return res_cut;
 } // cut

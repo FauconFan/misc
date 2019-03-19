@@ -7,6 +7,8 @@ class Distrib
 {
 	public:
 		Distrib();
+		Distrib(const Distrib &) = delete;
+		Distrib &operator=(const Distrib &) = delete;
 		virtual~Distrib();
 
 		const std::unordered_map<unsigned int, bool> * getDistrib() const;
@@ -15,9 +17,6 @@ class Distrib
 
 	private:
 		std::unordered_map<unsigned int, bool> _distrib;
-
-		Distrib(const Distrib &);            // Not implemented
-		Distrib &operator=(const Distrib &); // Not implemented
 };
 
 std::ostream & operator<<(std::ostream & os, const Distrib & d);
