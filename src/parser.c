@@ -137,12 +137,5 @@ t_cmd * parse_line(char * line, t_error_parser * error) {
 		return NULL;
 	}
 
-	/**
-	 * if(commande->has_rect && (rectangle.x ==-1 || rectangle.y == -1 || rectangle.h == -1  || rectangle.w ==-1 )){
-	 * error = INVALID_RECT;
-	 *  free_p_out(res);
-	 *  return NULL;
-	 * }
-	 **/
 	return res;
 } /* parse_line */
