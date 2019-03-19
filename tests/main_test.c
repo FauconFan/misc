@@ -36,7 +36,7 @@ START_TEST(test_sym_verti){
 }END_TEST
 
 START_TEST(test_sym_hori){
-  SDL_Surface *surf=SDL_CreateRGBSurface(0, 6, 4, 32, 0, 0, 0, 0);
+  SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
   uint32_t * new = (uint32_t *) surf->pixels;
   uint32_t to_test =(uint32_t)32;
   new[0]=to_test;
@@ -85,6 +85,7 @@ int main(void) {
   int no_failed = 0;
   Suite *s;
   SRunner *runner;
+  libtest_viewing_enabled=0;
   cimp_init();
 
   s = sample_suite();
