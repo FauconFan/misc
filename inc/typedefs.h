@@ -26,6 +26,7 @@ typedef struct          s_cimp {
 	int             running;
 	t_cimp_select * select;
 	t_cimp_event *  event;
+	SDL_Surface * copy_buffer;
 }                       t_cimp;
 
 typedef struct      s_cmd {
@@ -33,6 +34,8 @@ typedef struct      s_cmd {
 	char *   name_file;
 	int      angle;
 	SDL_Rect rect;
+	int x0;
+	int y0;
 }                   t_cmd;
 
 typedef struct      s_cmd_config {
@@ -41,6 +44,7 @@ typedef struct      s_cmd_config {
 	int8_t has_name;
 	int8_t has_angle;
 	int8_t has_rect;
+	int8_t has_x0_y0;
 } t_cmd_config;
 
 

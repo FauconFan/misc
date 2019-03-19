@@ -48,7 +48,7 @@ void update_event(t_cimp_event * evnmt) {
 			if (evnmt->selection.x >= -0 && evnmt->selection.y >= 0 && evnmt->selection.w >= 0 &&
 			  evnmt->selection.h >= 0)
 			{
-				t_cmd * cmd = init_p_out(NULL, NULL, NO_ANGLE, evnmt->selection, NULL);
+				t_cmd * cmd = init_p_out(NULL, NULL, NO_ANGLE, evnmt->selection,NO_VALUE, NO_VALUE, NULL);
 				if (cimp_select(cmd) < 0)
 					printf("Terrible erreur\n");
 				free_p_out(cmd);

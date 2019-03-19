@@ -52,6 +52,7 @@ COMMANDS_FILES = \
 			cimp_sym.c \
 			cimp_rotate.c \
 			cimp_select.c \
+			cimp_copy.c \
 
 SRC_NO_MAIN = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \
