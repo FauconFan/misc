@@ -111,23 +111,26 @@ cppcheck_run:
 ##################################### CLANG_TIDY ###############################
 
 WARNS_EXCEPTS = \
+				android-cloexec-fopen \
 				cppcoreguidelines-owning-memory \
 				cppcoreguidelines-special-member-functions \
+				cppcoreguidelines-pro-bounds-pointer-arithmetic \
+				cppcoreguidelines-pro-bounds-array-to-pointer-decay \
 				llvm-header-guard \
-				llvm-namespace-comment \
 				llvm-include-order \
 				google-readability-braces-around-statements \
 				google-readability-namespace-comments \
+				google-runtime-references \
 				hicpp-braces-around-statements \
-				hicpp-use-equals-delete \
 				hicpp-signed-bitwise \
 				hicpp-special-member-functions \
-				hicpp-use-override \
+				hicpp-no-array-decay \
 				readability-braces-around-statements \
 				readability-named-parameter \
 				readability-delete-null-pointer \
+				readability-simplify-boolean-expr \
 				fuchsia-overloaded-operator \
-				
+				fuchsia-default-arguments \
 
 WARNS = $(shell echo "*$(foreach warn,$(WARNS_EXCEPTS),,-$(warn))" | tr -d ' ')
 

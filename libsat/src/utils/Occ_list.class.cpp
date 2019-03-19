@@ -1,35 +1,29 @@
 #include "libsat.hpp"
 
-Occ_list::Occ_list () : _content() {}
+Occ_list::Occ_list () = default;
 
-Occ_list::Occ_list (const Occ_list & ol) : _content() {
-	*this = ol;
-}
+Occ_list::Occ_list (const Occ_list & ol) = default;
 
 Occ_list::Occ_list (const FNCC & fnc) {
 	*this = fnc.build_occ_list();
 }
 
-Occ_list::~Occ_list () {}
+Occ_list::~Occ_list () = default;
 
-Occ_list & Occ_list::operator=(const Occ_list & ol) {
-	this->_content = ol._content;
+Occ_list & Occ_list::operator=(const Occ_list & ol) = default;
+
+Occ_list & Occ_list::operator+=(const Occ_list & ol) {
+	for (const auto & p : ol._content) {
+		this->_content[p.first] += p.second;
+	}
 	return (*this);
 }
 
-Occ_list & Occ_list::operator+=(const Occ_list & ol) {
-	for (auto i = ol._content.begin(); i != ol._content.end(); i++) {
-		this->_content[i->first] += i->second;
-	}
-
-	return *this;
-}
-
 Occ_list & Occ_list::operator-=(const Occ_list & ol) {
-	for (auto i = ol._content.begin(); i != ol._content.end(); i++) {
-		this->_content[i->first] -= i->second;
-		if (this->_content[i->first] == Pair(0, 0)) {
-			this->_content.erase(i->first);
+	for (const auto & p : ol._content) {
+		this->_content[p.first] -= p.second;
+		if (this->_content[p.first] == Pair(0, 0)) {
+			this->_content.erase(p.first);
 		}
 	}
 
@@ -62,7 +56,7 @@ unsigned int Occ_list::getMinOccu() const{
 
 		current = i.second.getLeft() + i.second.getRight();
 		if (current < nb) {
-			current = nb;
+			nb = current;
 			res     = i.first;
 		}
 	}
@@ -83,7 +77,7 @@ unsigned int Occ_list::getMaxOccu() const{
 
 		current = i.second.getLeft() + i.second.getRight();
 		if (current > nb) {
-			current = nb;
+			nb = current;
 			res     = i.first;
 		}
 	}

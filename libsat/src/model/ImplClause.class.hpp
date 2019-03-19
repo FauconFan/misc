@@ -24,11 +24,11 @@ class ImplClause
 	// bool unit_propagation(Distrib & dist) const; //On suppose que la clause est nettoyée
 
 	private:
-		std::vector<unsigned int> * _pos_litts;
-		std::vector<unsigned int> * _neg_litts;
+		std::vector<unsigned int> * _pos_litts {nullptr};
+		std::vector<unsigned int> * _neg_litts {nullptr};
 };
 
-ImplClause cut(const ImplClause & dest_icl, const ImplClause & src_icl, unsigned int val);
+ImplClause cut(const ImplClause & icl1, const ImplClause & icl2, unsigned int val);
 
 std::ostream &operator<<(std::ostream & os, const ImplClause & icl);
 

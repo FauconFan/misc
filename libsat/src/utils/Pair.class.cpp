@@ -1,12 +1,12 @@
 #include "libsat.hpp"
 
-Pair::Pair () : _left(0), _right(0) {}
+Pair::Pair () = default;
 
-Pair::Pair (const Pair & p) : _left(p._left), _right(p._right) {}
+Pair::Pair (const Pair & p) = default;
 
 Pair::Pair (unsigned int l, unsigned int r) : _left(l), _right(r) {}
 
-Pair::~Pair () {}
+Pair::~Pair () = default;
 
 Pair    &Pair::operator=(Pair const & rhs) {
 	this->_left  = rhs.getLeft();

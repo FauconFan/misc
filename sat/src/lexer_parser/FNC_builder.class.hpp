@@ -23,10 +23,10 @@ class FNC_builder final
 	private:
 		FNC_builder();
 
-		int _nb_vars;    // hidden
-		int _nb_clauses; // hidden
-		std::vector<int> _vars;
-		std::vector<ImplClause> _clauses;
+		int _nb_vars {0};    // hidden
+		int _nb_clauses {0}; // hidden
+		std::vector<int> _vars {};
+		std::vector<ImplClause> _clauses {};
 };
 
 

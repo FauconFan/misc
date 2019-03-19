@@ -20,7 +20,7 @@ FNCC::~FNCC() = default;
 Occ_list FNCC::build_occ_list() const{
 	Occ_list res;
 
-	for (auto acl : this->_clauses) {
+	for (const auto & acl : this->_clauses) {
 		res += acl.get_occ_list();
 	}
 	return (res);
@@ -58,7 +58,7 @@ Occ_list FNCC::delete_tautologies() {
 Occ_list FNCC::simplify() {
 	Occ_list res;
 
-	for (auto acl : this->_clauses) {
+	for (auto & acl : this->_clauses) {
 		res += acl.simplify_clause();
 	}
 	return (res);
@@ -79,7 +79,7 @@ Occ_list FNCC::delete_if_contains(int val) {
 }
 
 bool FNCC::contains(const ImplClause & acl) {
-	for (auto ac : this->_clauses) {
+	for (const auto & ac : this->_clauses) {
 		if (ac == acl)
 			return (true);
 	}
@@ -89,7 +89,7 @@ bool FNCC::contains(const ImplClause & acl) {
 void FNCC::display(std::ostream & os) const{
 	os << "FNC [\n";
 
-	for (auto acl : this->_clauses) {
+	for (const auto & acl : this->_clauses) {
 		os << "\t" << acl;
 	}
 	os << "]\n";

@@ -16,7 +16,7 @@ class Distrib
 		void        set(unsigned int, bool);
 
 	private:
-		std::unordered_map<unsigned int, bool> _distrib;
+		std::unordered_map<unsigned int, bool> _distrib {};
 };
 
 std::ostream & operator<<(std::ostream & os, const Distrib & d);

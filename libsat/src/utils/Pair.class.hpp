@@ -20,8 +20,8 @@ class Pair{
 		unsigned int getRight() const;
 
 	private:
-		unsigned int _left;
-		unsigned int _right;
+		unsigned int _left {0};
+		unsigned int _right {0};
 };
 
 std::ostream & operator<<(std::ostream & os, const Pair & p);

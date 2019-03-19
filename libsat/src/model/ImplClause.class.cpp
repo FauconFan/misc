@@ -1,15 +1,15 @@
 #include "libsat.hpp"
 
-ImplClause::ImplClause () : _pos_litts(nullptr), _neg_litts(nullptr) {
+ImplClause::ImplClause () {
 	this->_pos_litts = new std::vector<unsigned int> ();
 	this->_neg_litts = new std::vector<unsigned int> ();
 }
 
-ImplClause::ImplClause (const ImplClause & icl) : _pos_litts(nullptr), _neg_litts(nullptr) {
+ImplClause::ImplClause (const ImplClause & icl) {
 	*this = icl;
 }
 
-ImplClause::ImplClause (const std::vector<int> & litts) : _pos_litts(nullptr), _neg_litts(nullptr) {
+ImplClause::ImplClause (const std::vector<int> & litts) {
 	this->_pos_litts = new std::vector<unsigned int> ();
 	this->_neg_litts = new std::vector<unsigned int> ();
 

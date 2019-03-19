@@ -61,7 +61,7 @@ static void apply_cut(FNCC & fnc, Occ_list * litt_occ, unsigned int val) {
 	std::vector<ImplClause> clauses = fnc.get_implclauses();
 
 	// Range les clauses pour préparer la coupure
-	for (auto implc : clauses) {
+	for (const auto & implc : clauses) {
 		int litt_side = implc.contains_litt(val);
 		if (litt_side == -1) {
 			fnc_premisse.add_clause(implc);
@@ -82,13 +82,13 @@ static void apply_cut(FNCC & fnc, Occ_list * litt_occ, unsigned int val) {
 	auto cls_cls_with_val_conclusion = fnc_conclusion.get_implclauses();
 
 	std::cout << "start cut...\n";
-	for (auto i : cls_with_val_premisse)
+	for (const auto & i : cls_with_val_premisse)
 		*litt_occ -= i.get_occ_list();
-	for (auto j : cls_cls_with_val_conclusion)
+	for (const auto & j : cls_cls_with_val_conclusion)
 		*litt_occ -= j.get_occ_list();
 
-	for (auto i : cls_with_val_premisse) {
-		for (auto j : cls_cls_with_val_conclusion) {
+	for (const auto & i : cls_with_val_premisse) {
+		for (const auto & j : cls_cls_with_val_conclusion) {
 			res_fusion = cut(i, j, val);
 			std::cout << "; " << i << "; " << j << "\t -> " << res_fusion;
 			if (!res_fusion.is_tautology() && fnc.contains(res_fusion)) {

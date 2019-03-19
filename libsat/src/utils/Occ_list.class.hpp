@@ -30,7 +30,7 @@ class Occ_list{
 		void display(std::ostream & os) const;
 
 	private:
-		std::unordered_map<unsigned int, Pair> _content;
+		std::unordered_map<unsigned int, Pair> _content {};
 };
 
 std::ostream & operator<<(std::ostream & os, const Occ_list & ol);
