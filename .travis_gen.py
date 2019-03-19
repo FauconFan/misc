@@ -34,7 +34,7 @@ LINT_TASKS = [
     (J_LINT, "uncrustify", [], ["make uncrustify_check"]),
     (J_LINT, "cpplint", ["python3-venv"], ["make cpplint_run"]),
     (J_LINT, "cppcheck", ["cppcheck"], ["make cppcheck_run"]),
-    (J_LINT, "clang-tidy", ["clang-tidy-6.0", "clang-6.0"], ["make clang_tidy_run"]),
+    (J_LINT, "clang-tidy", ["clang-tidy-6.0", "clang-6.0"], ["travis_retry make clang_tidy_run"]),
 ]
 
 INSTALL_APT_PREFIX = "sudo apt-get install -y --no-install-recommends"

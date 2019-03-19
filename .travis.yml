@@ -44,4 +44,4 @@ matrix:
       install:
         - sudo apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0
       script:
-        - make clang_tidy_run
+        - travis_retry make clang_tidy_run
