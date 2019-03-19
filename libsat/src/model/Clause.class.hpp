@@ -1,18 +1,18 @@
-#ifndef IMPL_CLAUSE_CLASS_HPP
-#define	IMPL_CLAUSE_CLASS_HPP
+#ifndef CLAUSE_CLASS_HPP
+#define	CLAUSE_CLASS_HPP
 
 #include "libsat.hpp"
 
-class ImplClause
+class Clause
 {
 	public:
-		ImplClause ();
-		ImplClause (const ImplClause & icl);
-		explicit ImplClause (const std::vector<int> & litts);
-		virtual~ImplClause();
+		Clause ();
+		Clause (const Clause & icl);
+		explicit Clause (const std::vector<int> & litts);
+		virtual~Clause();
 
-		ImplClause &operator=(const ImplClause & icl);
-		bool operator==(const ImplClause & rhs) const;
+		Clause &operator=(const Clause & icl);
+		bool operator==(const Clause & rhs) const;
 
 		std::vector<unsigned int> * getPosLitts() const;
 		std::vector<unsigned int> * getNegLitts() const;
@@ -28,8 +28,8 @@ class ImplClause
 		std::vector<unsigned int> * _neg_litts {nullptr};
 };
 
-ImplClause cut(const ImplClause & icl1, const ImplClause & icl2, unsigned int val);
+Clause cut(const Clause & icl1, const Clause & icl2, unsigned int val);
 
-std::ostream &operator<<(std::ostream & os, const ImplClause & icl);
+std::ostream &operator<<(std::ostream & os, const Clause & icl);
 
 #endif // ifndef IMPL_CLAUSE_CLASS_HPP

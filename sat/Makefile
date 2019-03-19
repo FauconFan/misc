@@ -14,7 +14,7 @@ SRC_FOLDER = src/
 LEXER_PARSER_FOLDER = src/lexer_parser/
 FLEX_BISON_FOLDER = src/lexer_parser/flex_bison/
 
-# LIBA = ../libsat/libsat.a
+LIBA = ../libsat/libsat.a
 LIB_FLAGS = -L../libsat/ -lsat
 LIB_INCS = -I ../libsat/
 

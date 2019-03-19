@@ -11,7 +11,7 @@
 #include "src/utils/Occ_list.class.hpp"
 #include "src/utils/Distrib.class.hpp"
 
-#include "src/model/ImplClause.class.hpp"
+#include "src/model/Clause.class.hpp"
 #include "src/model/Fnc.class.hpp"
 
 #include "src/coupure/Coupure.hpp"

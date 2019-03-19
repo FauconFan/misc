@@ -24,11 +24,11 @@ void FNC_builder::addVar(int var) {
 
 void FNC_builder::endOfClause() {
 	if (this->_vars.empty() == false) {
-		this->_clauses.emplace_back(ImplClause(this->_vars));
+		this->_clauses.emplace_back(Clause(this->_vars));
 		this->_vars.clear();
 	}
 }
 
-std::vector<ImplClause> FNC_builder::getClauses() {
+std::vector<Clause> FNC_builder::getClauses() {
 	return (this->_clauses);
 }

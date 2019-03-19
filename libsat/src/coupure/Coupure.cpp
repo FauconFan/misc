@@ -54,11 +54,11 @@ static void apply_cut(Fnc & fnc, Occ_list * litt_occ, unsigned int val) {
 	Fnc fnc_without_val;
 	Fnc fnc_premisse;
 	Fnc fnc_conclusion;
-	ImplClause res_fusion;
+	Clause res_fusion;
 
 	std::cout << "cut...\n";
 
-	std::vector<ImplClause> clauses = fnc.get_implclauses();
+	std::vector<Clause> clauses = fnc.get_implclauses();
 
 	// Range les clauses pour préparer la coupure
 	for (const auto & implc : clauses) {

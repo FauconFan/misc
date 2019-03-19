@@ -7,12 +7,12 @@ Fnc::Fnc(const Fnc & fncc) {
 }
 
 Fnc        &Fnc::operator=(const Fnc & fnc) {
-	this->_clauses = std::vector<ImplClause>(fnc._clauses);
+	this->_clauses = std::vector<Clause>(fnc._clauses);
 	return (*this);
 }
 
-Fnc::Fnc(const std::vector<ImplClause> & vec) {
-	this->_clauses = std::vector<ImplClause>(vec);
+Fnc::Fnc(const std::vector<Clause> & vec) {
+	this->_clauses = std::vector<Clause>(vec);
 }
 
 Fnc::~Fnc() = default;
@@ -30,7 +30,7 @@ bool Fnc::empty() const{
 	return (this->_clauses.empty());
 }
 
-void Fnc::add_clause(const ImplClause & acl) {
+void Fnc::add_clause(const Clause & acl) {
 	this->_clauses.push_back(acl);
 }
 
@@ -38,7 +38,7 @@ void Fnc::add_fnc(const Fnc & fnc) {
 	this->_clauses.insert(this->_clauses.end(), fnc._clauses.begin(), fnc._clauses.end());
 }
 
-std::vector<ImplClause>   Fnc::get_implclauses() {
+std::vector<Clause>   Fnc::get_implclauses() {
 	return (this->_clauses);
 }
 
@@ -78,7 +78,7 @@ Occ_list Fnc::delete_if_contains(int val) {
 	return (res);
 }
 
-bool Fnc::contains(const ImplClause & acl) {
+bool Fnc::contains(const Clause & acl) {
 	for (const auto & ac : this->_clauses) {
 		if (ac == acl)
 			return (true);

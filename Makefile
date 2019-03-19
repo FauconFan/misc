@@ -38,13 +38,13 @@ satlib_bench:
 
 .PHONY: clean
 clean:
-	make -C clean libsat
-	make -C clean sat
+	make -C libsat clean
+	make -C sat clean
 
 .PHONY: fclean
 fclean:
-	make -C fclean libsat
-	make -C fclean sat
+	make -C libsat fclean
+	make -C sat fclean
 
 ###################################### VENV ####################################
 

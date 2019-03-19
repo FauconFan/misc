@@ -1,15 +1,15 @@
 #include "libsat.hpp"
 
-ImplClause::ImplClause () {
+Clause::Clause () {
 	this->_pos_litts = new std::vector<unsigned int> ();
 	this->_neg_litts = new std::vector<unsigned int> ();
 }
 
-ImplClause::ImplClause (const ImplClause & icl) {
+Clause::Clause (const Clause & icl) {
 	*this = icl;
 }
 
-ImplClause::ImplClause (const std::vector<int> & litts) {
+Clause::Clause (const std::vector<int> & litts) {
 	this->_pos_litts = new std::vector<unsigned int> ();
 	this->_neg_litts = new std::vector<unsigned int> ();
 
@@ -21,7 +21,7 @@ ImplClause::ImplClause (const std::vector<int> & litts) {
 	}
 }
 
-ImplClause & ImplClause::operator=(const ImplClause & icl) {
+Clause & Clause::operator=(const Clause & icl) {
 	if (this != &icl) {
 		if (this->_pos_litts != nullptr)
 			delete this->_pos_litts;
@@ -34,7 +34,7 @@ ImplClause & ImplClause::operator=(const ImplClause & icl) {
 	return *this;
 }
 
-bool ImplClause::operator==(const ImplClause & rhs) const{
+bool Clause::operator==(const Clause & rhs) const{
 	for (unsigned int val : *(this->_neg_litts)) {
 		if (std::find(rhs.getNegLitts()->begin(), rhs.getNegLitts()->end(), val) == rhs.getNegLitts()->end())
 			return (false);
@@ -48,22 +48,22 @@ bool ImplClause::operator==(const ImplClause & rhs) const{
 	return (true);
 }
 
-ImplClause::~ImplClause () {
+Clause::~Clause () {
 	if (this->_pos_litts != nullptr)
 		delete this->_pos_litts;
 	if (this->_neg_litts != nullptr)
 		delete this->_neg_litts;
 }
 
-std::vector<unsigned int> * ImplClause::getPosLitts() const{
+std::vector<unsigned int> * Clause::getPosLitts() const{
 	return this->_pos_litts;
 }
 
-std::vector<unsigned int> * ImplClause::getNegLitts() const{
+std::vector<unsigned int> * Clause::getNegLitts() const{
 	return this->_neg_litts;
 }
 
-Occ_list ImplClause::get_occ_list() const{
+Occ_list Clause::get_occ_list() const{
 	Occ_list res;
 
 	for (unsigned int val : *(this->_pos_litts)) {
@@ -83,7 +83,7 @@ Occ_list ImplClause::get_occ_list() const{
 	return res;
 }
 
-int ImplClause::contains_litt(int litt) const{
+int Clause::contains_litt(int litt) const{
 	if (litt < 0)
 		litt = -litt;
 
@@ -96,7 +96,7 @@ int ImplClause::contains_litt(int litt) const{
 	return 0;
 }
 
-bool ImplClause::is_tautology() const{
+bool Clause::is_tautology() const{
 	for (unsigned int litt : *(this->_neg_litts)) {
 		if (std::find(this->_pos_litts->begin(), this->_pos_litts->end(), litt) != this->_pos_litts->end()) {
 			return true;
@@ -106,7 +106,7 @@ bool ImplClause::is_tautology() const{
 	return false;
 }
 
-Occ_list ImplClause::simplify_clause() {
+Occ_list Clause::simplify_clause() {
 	Occ_list res;
 	std::set<unsigned int> buff;
 
@@ -132,7 +132,7 @@ Occ_list ImplClause::simplify_clause() {
 	return res;
 }
 
-/*bool ImplClause::unit_propagation (Distrib & dist) const{
+/*bool Clause::unit_propagation (Distrib & dist) const{
  *  int res = 0;
  *
  *  for (unsigned int val : *(this->_neg_litts)){
@@ -170,12 +170,12 @@ Occ_list ImplClause::simplify_clause() {
  *  return true;
  * }*/
 
-ImplClause cut(const ImplClause & icl1, const ImplClause & icl2, unsigned int val) {
+Clause cut(const Clause & icl1, const Clause & icl2, unsigned int val) {
 	std::vector<unsigned int> * icl1_pos_litts;
 	std::vector<unsigned int> * icl1_neg_litts;
 	std::vector<unsigned int> * icl2_pos_litts;
 	std::vector<unsigned int> * icl2_neg_litts;
-	ImplClause res_cut;
+	Clause res_cut;
 
 	std::set<unsigned int> buff;
 
@@ -212,7 +212,7 @@ ImplClause cut(const ImplClause & icl1, const ImplClause & icl2, unsigned int va
 	return res_cut;
 } // cut
 
-std::ostream & operator<<(std::ostream & os, const ImplClause & icl) {
+std::ostream & operator<<(std::ostream & os, const Clause & icl) {
 	std::vector<unsigned int> * pos_litts;
 	std::vector<unsigned int> * neg_litts;
 	unsigned int i, j;

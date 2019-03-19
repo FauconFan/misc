@@ -25,7 +25,7 @@ INC_FLAGS = -I ./
 FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 
 SRC = \
-	$(MODEL_FOLDER)ImplClause.class.cpp \
+	$(MODEL_FOLDER)Clause.class.cpp \
 	$(MODEL_FOLDER)Fnc.class.cpp \
 	$(UTILS_FOLDER)Pair.class.cpp \
 	$(UTILS_FOLDER)Occ_list.class.cpp \

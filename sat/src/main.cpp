@@ -24,7 +24,7 @@ int main(int argc, char ** argv) {
 		return (1);
 	}
 
-	/*ImplClause * icl = new ImplClause ({2, -3, 6, 1});
+	/*Clause * icl = new Clause ({2, -3, 6, 1});
 	 * if (*icl == *icl){
 	 *  std::cout << "true";
 	 * }else{
@@ -35,7 +35,7 @@ int main(int argc, char ** argv) {
 	 * std::cout << icl->contains_litt(-3);
 	 *
 	 * std::vector <AClause *> * fnc = getInputFNC("../input_files/custom/sample1.cnf");
-	 * std::vector<ImplClause *> *impl_clauses = FNC::convert<ImplClause>(fnc);
+	 * std::vector<Clause *> *impl_clauses = FNC::convert<Clause>(fnc);
 	 *
 	 * FNC::printFNC(reinterpret_cast<std::vector<AClause *> *>(impl_clauses));
 	 *

@@ -18,7 +18,7 @@ class FNC_builder final
 		void    addVar(int var);
 		void    endOfClause();
 
-		std::vector<ImplClause>  getClauses();
+		std::vector<Clause>  getClauses();
 
 	private:
 		FNC_builder();
@@ -26,7 +26,7 @@ class FNC_builder final
 		int _nb_vars {0};    // hidden
 		int _nb_clauses {0}; // hidden
 		std::vector<int> _vars {};
-		std::vector<ImplClause> _clauses {};
+		std::vector<Clause> _clauses {};
 };
 
 
