@@ -27,4 +27,4 @@ const char * g_error_parser_strings [] = {
 int g_fd_readline = -1;
 int g_fd_callback = -1;
 
-short libtest_viewing_enabled=1;
+int libtest_viewing_enabled = 1;

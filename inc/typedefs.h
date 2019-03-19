@@ -57,6 +57,6 @@ extern int g_fd_readline;
 extern int g_fd_callback;
 
 // libtest globale
-extern short libtest_viewing_enabled;
+extern int libtest_viewing_enabled;
 
 #endif // ifndef TYPEDEFS_H
