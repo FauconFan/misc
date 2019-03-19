@@ -7,7 +7,7 @@ void treat_line(char * line) {
 	cmd = parse_line(line, &error);
 	if (cmd != NULL) {
 		printf(
-		  "DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d  rect : x=%d y=%d w=%d h=%d} \n",
+		  "DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d  \n rect : x=%d y=%d w=%d h=%d} \n",
 		  cmd->cmd, cmd->name_file, cmd->angle, cmd->rect.x, cmd->rect.y, cmd->rect.w, cmd->rect.h);
 		if (cimp_exe(cmd) == -1) {
 			printf("Internal program error !!!\n");

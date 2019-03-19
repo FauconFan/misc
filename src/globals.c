@@ -10,12 +10,12 @@ const t_cmd_config g_command_list[] = {
 	{"sym_verti", cimp_sym_verti, 0, 0, 0, 0},
 	{"sym_hori",  cimp_sym_hori,  0, 0, 0, 0},
 	{"rotate",    cimp_rotate,    0, 1, 0, 0},
-	{"QUIT",      NULL,           0, 0, 0, 0},
 	{"select",    cimp_select,    0, 0, 1, 0},
 	{"unselect",  cimp_unselect,  0, 0, 0, 0},
 	{"copy",      cimp_copy,      0, 0, 1, 0},
 	{"cut",       cimp_cut,       0, 0, 1, 0},
-	{"paste",     cimp_paste,     0, 0, 0, 1}
+	{"paste",     cimp_paste,     0, 0, 0, 1},
+	{"QUIT",      NULL,           0, 0, 0, 0} // QUIT must have NULL as func_ptr
 };
 
 const size_t g_command_list_size = sizeof(g_command_list) / sizeof(*g_command_list);
