@@ -16,6 +16,8 @@
 t_cimp_screen * cimp_init_screen(char * path_bmp) {
 	t_cimp_screen * sc;
 	SDL_Window * win;
+	if(libtest_viewing_enabled)
+		win=NULL;
 	SDL_Surface * surf;
 	SDL_Surface * bmp;
 	SDL_Rect origin;
@@ -42,20 +44,23 @@ t_cimp_screen * cimp_init_screen(char * path_bmp) {
 	origin.h = bmp->h;
 	SDL_BlitSurface(bmp, &origin, surf, NULL);
 	SDL_FreeSurface(bmp);
-	if (NULL == (win = SDL_CreateWindow(basename(path),
-			SDL_WINDOWPOS_UNDEFINED,
-			SDL_WINDOWPOS_UNDEFINED,
-			surf->w,
-			surf->h,
-			SDL_WINDOW_SHOWN)))
-	{
-		printf("%s\n", SDL_GetError());
-		free(path);
-		SDL_FreeSurface(surf);
-		return (NULL);
+	if(libtest_viewing_enabled){
+		if (NULL == (win = SDL_CreateWindow(basename(path),
+				SDL_WINDOWPOS_UNDEFINED,
+				SDL_WINDOWPOS_UNDEFINED,
+				surf->w,
+				surf->h,
+				SDL_WINDOW_SHOWN)))
+		{
+			printf("%s\n", SDL_GetError());
+			free(path);
+			SDL_FreeSurface(surf);
+			return (NULL);
+		}
 	}
 	SDL_BlitSurface(surf, &origin, SDL_GetWindowSurface(win), NULL);
-	SDL_UpdateWindowSurface(win);
+	if(libtest_viewing_enabled)
+		SDL_UpdateWindowSurface(win);
 	if ((sc = (t_cimp_screen *) malloc(sizeof(t_cimp_screen))) == NULL) {
 		printf("%s\n", MALLOC_FAIL);
 		free(path);
@@ -66,7 +71,8 @@ t_cimp_screen * cimp_init_screen(char * path_bmp) {
 	sc->window        = win;
 	sc->buff_screen   = surf;
 	sc->original_path = path;
-	cimp_update_screen(sc);
+	if(libtest_viewing_enabled)
+		cimp_update_screen(sc);
 	return (sc);
 } /* cimp_init_screen */
 
