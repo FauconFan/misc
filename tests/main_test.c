@@ -104,7 +104,7 @@ START_TEST(test_close){
 }END_TEST
 
 START_TEST(test_open){
-  treat_line("open images/untitles17.bmp");
+  treat_line("open images/untitled17.bmp");
   ck_assert(1);
 }END_TEST
 
@@ -132,7 +132,6 @@ int main(void) {
   SRunner *runner;
   libtest_viewing_enabled=0;
   cimp_init();
-
   s = sample_suite();
   runner = srunner_create(s);
 
