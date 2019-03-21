@@ -105,6 +105,7 @@ START_TEST(test_close){
 
 START_TEST(test_open){
   treat_line("open images/untitles17.bmp");
+  ck_assert(1);
 }END_TEST
 
 Suite *sample_suite(void) {
