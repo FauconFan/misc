@@ -46,7 +46,7 @@ LINT_TASKS = [
 # Test is a stage that test if the project runs the unit tests, used by libcheck
 
 TEST_TASKS = [
-    (J_TEST, "libcheck", (["python3-venv", "check"], True), ["make cimp_check"]),
+    (J_TEST, "libcheck", (["python3-venv", "check"], True), ["make images && make cimp_check"]),
 ]
 
 INSTALL_SDL = "travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9"
