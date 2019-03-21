@@ -97,7 +97,7 @@ START_TEST(test_close){
   g_cimp->screen=malloc(sizeof(t_cimp_screen));
   g_cimp->screen->buff_screen=surf;
   treat_line("close");
-  //truth = truth && g_cimp->screen == NULL;
+  truth = truth && g_cimp->screen == NULL;
   ck_assert(truth);
 
 
@@ -105,7 +105,7 @@ START_TEST(test_close){
 
 START_TEST(test_open){
   treat_line("open images/untitled17.bmp");
-  ck_assert(1);
+  ck_assert(g_cimp->screen != NULL && g_cimp->screen->buff_screen!=NULL && strcmp("images/untitled17.bmp",g_cimp->screen->original_path));
 }END_TEST
 
 Suite *sample_suite(void) {
