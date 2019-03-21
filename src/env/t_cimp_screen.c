@@ -82,10 +82,10 @@ t_cimp_screen * cimp_init_screen(char * path_bmp) {
  * @param  sc l'instance de t_cimp_screen
  */
 void                cimp_end_screen(t_cimp_screen * sc) {
-	free(sc->original_path);
-	//SDL_FreeSurface(sc->buff_screen);
-	//SDL_DestroyWindow(sc->window);
-	//free(sc);
+	//free(sc->original_path);
+	SDL_FreeSurface(sc->buff_screen);
+	SDL_DestroyWindow(sc->window);
+	free(sc);
 }
 
 /**
