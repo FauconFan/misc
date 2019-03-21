@@ -114,13 +114,13 @@ Suite *sample_suite(void) {
 
   s = suite_create("cimp commandes");
   tc_sample = tcase_create("Sample");
-  tcase_add_test(tc_sample, test_quit);
   tcase_add_test(tc_sample, test_rotate);
   tcase_add_test(tc_sample,test_sym_verti);
   tcase_add_test(tc_sample,test_sym_hori);
   tcase_add_test(tc_sample,empty_line);
   tcase_add_test(tc_sample,test_close);
   tcase_add_test(tc_sample,test_open);
+  tcase_add_test(tc_sample, test_quit);
   suite_add_tcase(s, tc_sample);
 
   return s;
@@ -134,7 +134,6 @@ int main(void) {
   cimp_init();
   s = sample_suite();
   runner = srunner_create(s);
-
   srunner_run_all(runner, CK_NORMAL);
   no_failed = srunner_ntests_failed(runner);
   srunner_free(runner);
