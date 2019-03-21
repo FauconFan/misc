@@ -93,10 +93,10 @@ START_TEST(test_close){
   short truth=1;
   treat_line("close");
   truth = truth && g_cimp->screen == NULL;
-  /*SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
+  SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
   g_cimp->screen=malloc(sizeof(t_cimp_screen));
   g_cimp->screen->buff_screen=surf;
-  treat_line("close");
+  /*treat_line("close");
   truth = truth && g_cimp->screen == NULL;*/
   ck_assert(truth);
 
