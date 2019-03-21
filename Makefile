@@ -30,6 +30,7 @@ _WHITE=$(shell tput setaf 7 2> /dev/null || echo "")
 _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 CC = gcc
+FL = flex
 
 SDL_FLAGS = $(shell sdl2-config --cflags)
 SDL_LIBS = $(shell sdl2-config --libs)
@@ -47,9 +48,11 @@ include files.mk # On charge la liste des fichiers depuis le fichier files.mk
 
 ALL_FILES = $(SRC) $(INC)
 
-OBJ = $(SRC:%.c=%.o)
 OBJ_NO_MAIN = $(SRC_NO_MAIN:%.c=%.o)
 OBJ_TEST = $(TEST_SRC:%.c=%.o)
+OBJ = \
+		$(SRC:%.c=%.o) \
+		$(LEX_FILE:%.l=%.lexer.o) \
 
 #################################### COMPILATION ###############################
 
@@ -65,6 +68,15 @@ $(NAME): $(OBJ)
 	@printf "Compiling %s... " "$?"
 	@$(CC) $(FLAGS) -c $? -o $@
 	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
+
+$(LEX_PAR_FOLDER)%.lexer.o: $(LEX_PAR_FOLDER)%.l
+	@printf "Lexer generating %s... " "$?"
+	@$(FL) -o $(@:.o=.c) $?
+	@printf "%sgenerated%s\\n" "$(_YELLOW)" "$(_END)"
+	@printf "Lexer compiling %s... " "$?"
+	@$(CC) $(IFLAGS) $(SDL_FLAGS) $(CXX_STD) -c $(@:.o=.c) -o $@
+	@printf "%scompiled%s\\n" "$(_YELLOW)" "$(_END)"
+	@rm -f $(@:.o=.c)
 
 .PHONY: clean
 clean:

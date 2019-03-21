@@ -3,6 +3,11 @@
 
 #include "cimp.h"
 
+#define TRUE			1
+#define FALSE			0
+
+typedef unsigned char	t_bool;
+
 /**
  * Ici sont définies les structures standards utilisées dans le programme.
  */
