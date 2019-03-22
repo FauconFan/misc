@@ -16,8 +16,18 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-int    getSocketJuliusz(void);
-int    serveur();
-void   client(void);
+void    getSocketJuliusz(
+                const char * node,
+                const char * service,
+                int * sfd,
+                struct sockaddr ** sock_addr,
+                socklen_t * sock_len);
+
+void    client(
+                int sfd,
+                struct sockaddr *sock_addr,
+                socklen_t sock_len,
+                const void * buff,
+                size_t len_buff);
 
 #endif

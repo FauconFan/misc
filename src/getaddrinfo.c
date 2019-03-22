@@ -1,6 +1,11 @@
 #include "irc_udp.h"
 
-int    getSocketJuliusz(void) {
+void    getSocketJuliusz(
+                const char * node,
+                const char * service,
+                int * sfd,
+                struct sockaddr ** sock_addr,
+                socklen_t * sock_len) {
     struct addrinfo     hints;
     struct addrinfo     *res;
     struct addrinfo     *p;
@@ -11,9 +16,9 @@ int    getSocketJuliusz(void) {
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_DGRAM;
     hints.ai_protocol = 0;
-    hints.ai_flags = 0;
+    hints.ai_flags = (AI_V4MAPPED | AI_ALL);
 
-    rc = getaddrinfo("jch.irif.fr", "1212", &hints, &res);
+    rc = getaddrinfo(node, service, &hints, &res);
     if(rc != 0) {
         fprintf(stderr, "Échec cinglant : %s\n", gai_strerror(rc));
         exit(1);
@@ -28,11 +33,13 @@ int    getSocketJuliusz(void) {
         break ;
     }
 
-    if(p == NULL) {
+    if (p == NULL) {
         fprintf(stderr, "La connection a échoué.\n");
         exit(1);
     }
-    
+    *sfd = s;
+    *sock_addr = p->ai_addr;
+    *sock_len = p->ai_addrlen;
     freeaddrinfo(res);
-    return (s);
+
 }
