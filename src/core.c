@@ -1,24 +1,15 @@
 #include "cimp.h"
 
 void treat_line(char * line) {
-	t_error_parser error;
 	t_cmd * cmd;
 
-	cmd = parse_line(line, &error);
+	cmd = parser(line);
 	if (cmd != NULL) {
-		printf(
-		  "DAMN nous avons parser une ligne ! \n{ cmd : %s\n  name_file : %s\n  angle : %d } \n",
-		  cmd->cmd, cmd->name_file, cmd->angle);
 		if (cimp_exe(cmd) == -1) {
 			printf("Internal program error !!!\n");
 			printf("Please contact maintainers !!!\n");
 		}
-		free_p_out(cmd);
-	}
-	else {
-		printf("Attention une erreur est apparue ! ERREUR : \n %s \n", get_error(error));
-		printf("The line entered is : %s\n", line);
-		printf("Enter 'QUIT' to exit the program properly\n");
+		cmd_free(cmd);
 	}
 }
 
