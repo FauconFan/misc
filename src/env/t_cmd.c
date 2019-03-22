@@ -13,7 +13,7 @@ t_cmd * cmd_alloc() {
 void cmd_free(t_cmd * cmd) {
 	if (cmd->cmd)
 		free(cmd->cmd);
-	if (cmd->name_file)
-		free(cmd->name_file);
+	if (cmd->name)
+		free(cmd->name);
 	free(cmd);
 }

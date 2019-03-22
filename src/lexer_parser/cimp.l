@@ -12,8 +12,8 @@
 DIGIT       [0-9]
 LETTER      [a-zA-Z]
 
-NUMBER      {DIGIT}+
-WORD        ({LETTER}|{DIGIT}|\.)+
+NUMBER      \-?{DIGIT}+
+WORD        ({LETTER}|{DIGIT}|\.|\_)+
 PT_FOLDER   (\.\/|\.\.\/|{WORD}\/)
 PATH        (\/)?{PT_FOLDER}+{WORD}?
 

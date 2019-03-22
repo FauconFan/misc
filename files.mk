@@ -58,7 +58,6 @@ COMMANDS_FILES = \
 
 LEX_PAR_FILES = \
 			parser.c \
-			next_parser.c \
 			tokens.c \
 			li_tokens.c \
 

@@ -35,8 +35,8 @@ typedef struct          s_cimp {
 
 typedef struct      s_cmd {
 	char *   cmd;
-	char *   name_file;
-	int      angle;
+	char *   name;
+	int      num;
 	SDL_Rect rect;
 }                   t_cmd;
 
