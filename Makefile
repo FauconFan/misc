@@ -169,8 +169,8 @@ lint_check: uncrustify_check cpplint_run cppcheck_run clang_tidy_run infer_run
 CIMP_CHECK = cimp_check
 GCOV_LIBS = -lcheck -lm -lpthread -lrt -lsubunit -lgcov -coverage
 
-$(CIMP_CHECK): fclean venv recompile_with_profile_args $(OBJ_TEST)
-	@$(CC) $(OBJ_NO_MAIN) $(OBJ_TEST) $(GCOV_LIBS) $(LFLAGS) -o $@
+$(CIMP_CHECK): fclean venv recompile_with_profile_args $(OBJ_TEST) $(OBJ_LEX_PAR)
+	@$(CC) $(OBJ_NO_MAIN) $(OBJ_TEST) $(OBJ_LEX_PAR) $(GCOV_LIBS) $(LFLAGS) -o $@
 	./$@
 	mkdir -p gcovr
 	$(GCOVR) -r . --html --html-details -o gcovr/index.html
