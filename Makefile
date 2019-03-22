@@ -59,31 +59,31 @@ OBJ = $(OBJ_SRC) $(OBJ_LEX_PAR)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "Program %s... " "$(NAME)"
+	@printf "\\t%sLD%s\\t" "$(_GREEN)" "$(_END)"
 	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
-	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
+	@printf "%s\\n" "$@"
 
 %.o: %.c
-	@printf "Compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
 	@$(CC) $(FLAGS) -c $? -o $@
-	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
+	@printf "%s\\n" "$?"
 
 $(LEX_PAR_FOLDER)%.lexer.o: $(LEX_PAR_FOLDER)%.l
-	@printf "Lexer generating %s... " "$?"
+	@printf "\\t%sFL%s\\t" "$(_YELLOW)" "$(_END)"
 	@$(FL) -o $(@:.o=.c) $?
-	@printf "%sgenerated%s\\n" "$(_YELLOW)" "$(_END)"
-	@printf "Lexer compiling %s... " "$?"
+	@printf "%s\\n" "$?"
+	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
 	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
-	@printf "%scompiled%s\\n" "$(_YELLOW)" "$(_END)"
+	@printf "%s\\n" "$(@:.o=.c)"
 	@rm -f $(@:.o=.c)
 
 $(LEX_PAR_FOLDER)%.parser.o: $(LEX_PAR_FOLDER)%.y
-	@printf "Parser generating %s... " "$?"
+	@printf "\\t%sBS%s\\t" "$(_PURPLE)" "$(_END)"
 	@$(BS) -d -o $(@:.o=.c) $?
-	@printf "%sgenerated%s\\n" "$(_YELLOW)" "$(_END)"
-	@printf "Parser compiling %s... " "$?"
+	@printf "%s\\n" "$?"
+	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
 	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
-	@printf "%scompiled%s\\n" "$(_YELLOW)" "$(_END)"
+	@printf "%s\\n" "$(@:.o=.c)"
 	@rm -f $(@:.o=.c)
 
 .PHONY: clean
