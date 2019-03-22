@@ -18,7 +18,7 @@ typedef struct s_cimp_select {
 typedef struct          s_cimp_screen {
 	SDL_Window *  window;
 	SDL_Surface * buff_screen;
-	char *        original_path;
+	char *        path;
 }                       t_cimp_screen;
 
 typedef struct      s_cimp_event {
@@ -57,8 +57,8 @@ typedef struct      s_cmd_config {
 } t_cmd_config;
 
 typedef enum            e_type_img {
-	BMP,
 	NO_SUPPORTED = -1,
+	BMP,
 	JPG,
 	PNG,
 }                       t_type_img;
@@ -66,7 +66,7 @@ typedef enum            e_type_img {
 typedef struct          s_extension_img {
 	t_type_img type;
 	char **    li_extensions;
-	size_t len_nb_extensions;
+	size_t     len_nb_extensions;
 }                       t_extension_img;
 
 typedef int (* t_export_img_func_ptr)(const char *, SDL_Surface *);

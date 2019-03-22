@@ -13,7 +13,7 @@
  * @param  errno_str un pointeur vers une chaîne de charactères
  * @return           un pointeur vers la structure allouée
  */
-t_cimp_screen * cimp_init_screen(char * path_img) {
+t_cimp_screen * cimp_screen_init(char * path_img) {
 	t_cimp_screen * sc;
 	SDL_Window * win;
 	SDL_Surface * surf;
@@ -54,9 +54,9 @@ t_cimp_screen * cimp_init_screen(char * path_img) {
 		origin.w = tmp->w;
 		origin.h = tmp->h;
 		SDL_BlitSurface(tmp, &origin, surf, NULL);
-		sc->window        = win;
-		sc->buff_screen   = surf;
-		sc->original_path = path;
+		sc->window      = win;
+		sc->buff_screen = surf;
+		sc->path        = path;
 	}
 
 	if (tmp != NULL) SDL_FreeSurface(tmp);
@@ -73,8 +73,9 @@ t_cimp_screen * cimp_init_screen(char * path_img) {
  * cimp_end_screen libère les ressources associé à cette instance de t_cimp_screen
  * @param  sc l'instance de t_cimp_screen
  */
-void                cimp_end_screen(t_cimp_screen * sc) {
-	free(sc->original_path);
+void                cimp_screen_end(t_cimp_screen * sc) {
+	if (sc->path)
+		free(sc->path);
 	SDL_FreeSurface(sc->buff_screen);
 	SDL_DestroyWindow(sc->window);
 	free(sc);
@@ -85,7 +86,7 @@ void                cimp_end_screen(t_cimp_screen * sc) {
  * @param  screen the cimp screen pointer
  * @return        nothing
  */
-void                cimp_update_screen(t_cimp_screen * screen) {
+void                cimp_screen_update(t_cimp_screen * screen) {
 	SDL_Rect full_rect;
 
 	if (screen == NULL)
@@ -98,4 +99,16 @@ void                cimp_update_screen(t_cimp_screen * screen) {
 	SDL_BlitSurface(screen->buff_screen, &full_rect, SDL_GetWindowSurface(screen->window), NULL);
 	SDL_UpdateWindowSurface(screen->window);
 	update_event(g_cimp->event);
+}
+
+t_bool              cimp_screen_set_path(t_cimp_screen * screen, char * path) {
+	char * p;
+
+	p = normalize_path(path);
+	if (p == NULL)
+		return (FALSE);
+
+	free(screen->path);
+	screen->path = p;
+	return (TRUE);
 }

@@ -6,7 +6,7 @@ int cimp_list(t_cmd * cmd) {
 		int max_name, max_ID, max_taille, max_path, w, h;
 		int space_default = 5;
 
-		char * name = basename(g_cimp->screen->original_path);
+		char * name = basename(g_cimp->screen->path);
 
 		w = g_cimp->screen->buff_screen->w;
 		h = g_cimp->screen->buff_screen->h;
@@ -16,7 +16,7 @@ int cimp_list(t_cmd * cmd) {
 		max_name   = strlen(name) + space_default;
 		max_ID     = strlen("ID") + space_default;
 		max_taille = w_len + h_len + 1 + space_default;
-		max_path   = strlen(g_cimp->screen->original_path);
+		max_path   = strlen(g_cimp->screen->path);
 
 		char * width  = malloc(sizeof(char) * (w_len + 1));
 		char * height = malloc(sizeof(char) * (h_len + 1));
@@ -43,7 +43,7 @@ int cimp_list(t_cmd * cmd) {
 		  max_path, "FILEPATH");
 
 		printf("%-*s %-*s %-*s %-*s\n", max_name, name, max_ID, "1", max_taille, taille, max_path,
-		  g_cimp->screen->original_path);
+		  g_cimp->screen->path);
 
 		free(taille);
 		free(width);

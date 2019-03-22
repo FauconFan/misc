@@ -31,7 +31,7 @@ int             cimp_init() {
 void            cimp_end() {
 	if (g_cimp) {
 		if (g_cimp->screen)
-			cimp_end_screen(g_cimp->screen);
+			cimp_screen_end(g_cimp->screen);
 		free_cimp_event(g_cimp->event);
 		cimp_end_select(g_cimp->select);
 		free(g_cimp);
