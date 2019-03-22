@@ -8,7 +8,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 static const t_cmd_config * get_conf_cmd(char * cmd);
 static char * eat_cmd(t_li_token * li_token);
 
-t_cmd * next_parser(char * line) {
+t_cmd * parser(char * line) {
 	t_li_token * li_toks;
 	t_cmd * res;
 	t_bool ok;
@@ -22,10 +22,13 @@ t_cmd * next_parser(char * line) {
 		if (li_token_empty(li_toks) == FALSE && li_toks->ok == TRUE) {
 			res      = cmd_alloc();
 			res->cmd = eat_cmd(li_toks);
-			if (res->cmd == NULL)
+			if (res->cmd == NULL) {
+				printf("La commande entrée n'est pas reconnue...\n");
 				ok = FALSE;
-			else
+			}
+			else {
 				ok = run_parser_with_config(res, li_toks, get_conf_cmd(res->cmd));
+			}
 		}
 
 		li_token_free(li_toks);

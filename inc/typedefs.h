@@ -56,17 +56,6 @@ typedef struct      s_cmd_config {
 	uint8_t opts_opt; // Optionnal opts
 } t_cmd_config;
 
-
-typedef enum e_error_parser {
-	TOO_MUCH_ARGS = 0,
-	NOT_ENOUGH_ARGS,
-	UNKNOW_NAME,
-	MALLOC_EST_LE_MAILLON_FAIBLE,
-	INVALID_ARGUMENT,
-	NO_LINE,
-	INVALID_RECT,
-}            t_error_parser;
-
 /**
  * Ici est définie la variable globale g_cimp qui stocke l'instance de notre programme.
  */
@@ -76,8 +65,6 @@ extern t_cimp * g_cimp;
 // Parser globals
 extern const t_cmd_config g_command_list[];
 extern const size_t g_command_list_size;
-
-extern const char * g_error_parser_strings [];
 
 // Childs globals
 extern int g_fd_readline;

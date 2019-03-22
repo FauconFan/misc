@@ -27,7 +27,7 @@ typedef struct  s_li_token {
 	t_bool    ok;
 }               t_li_token;
 
-t_cmd * next_parser(char * line);
+t_cmd * parser(char * line);
 void cmd_free(t_cmd * cmd);
 
 void free_li_token();
@@ -43,10 +43,5 @@ t_bool li_token_empty(t_li_token * li);
 void li_token_print(t_li_token * li);
 void li_token_add(t_li_token * li, t_token * tok);
 t_token * li_token_get_next(t_li_token * li);
-
-t_cmd * parse_line(char * line, t_error_parser * error);
-
-const char * get_error(t_error_parser error);
-
 
 #endif // ifndef PARSER_H
