@@ -3,6 +3,11 @@
 
 #include "cimp.h"
 
+#define	TRUE  1
+#define	FALSE 0
+
+typedef unsigned char t_bool;
+
 /**
  * Ici sont définies les structures standards utilisées dans le programme.
  */
@@ -30,29 +35,26 @@ typedef struct          s_cimp {
 
 typedef struct      s_cmd {
 	char *   cmd;
-	char *   name_file;
-	int      angle;
+	char *   name;
+	int      num;
 	SDL_Rect rect;
 }                   t_cmd;
 
+#define	NB_ARG_TYPE 4
+
+typedef enum        e_arg_type {
+	ARG_NAME = 0x1,
+	ARG_NUM  = 0x2,
+	ARG_PATH = 0x4,
+	ARG_RECT = 0x8,
+}                   t_arg_type;
+
 typedef struct      s_cmd_config {
-	char * name;
+	char *  name;
 	int (* func_cmd_ptr)(t_cmd *);
-	int8_t has_name;
-	int8_t has_angle;
-	int8_t has_rect;
+	uint8_t opts;     // Necessary opts
+	uint8_t opts_opt; // Optionnal opts
 } t_cmd_config;
-
-
-typedef enum e_error_parser {
-	TOO_MUCH_ARGS = 0,
-	NOT_ENOUGH_ARGS,
-	UNKNOW_NAME,
-	MALLOC_EST_LE_MAILLON_FAIBLE,
-	INVALID_ARGUMENT,
-	NO_LINE,
-	INVALID_RECT,
-}            t_error_parser;
 
 /**
  * Ici est définie la variable globale g_cimp qui stocke l'instance de notre programme.
@@ -63,8 +65,6 @@ extern t_cimp * g_cimp;
 // Parser globals
 extern const t_cmd_config g_command_list[];
 extern const size_t g_command_list_size;
-
-extern const char * g_error_parser_strings [];
 
 // Childs globals
 extern int g_fd_readline;
