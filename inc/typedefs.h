@@ -40,14 +40,14 @@ typedef struct      s_cmd {
 	SDL_Rect rect;
 }                   t_cmd;
 
-#define NB_ARG_TYPE		4
+#define	NB_ARG_TYPE 4
 
-typedef enum		e_arg_type {
+typedef enum        e_arg_type {
 	ARG_NAME = 0x1,
-	ARG_NUM = 0x2,
+	ARG_NUM  = 0x2,
 	ARG_PATH = 0x4,
 	ARG_RECT = 0x8,
-}					t_arg_type;
+}                   t_arg_type;
 
 typedef struct      s_cmd_config {
 	char *  name;

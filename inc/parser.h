@@ -13,8 +13,8 @@ typedef enum    e_type_token {
 typedef struct  s_token {
 	t_type_token type;
 	union {
-		int64_t num;
-		char *  str;
+		int64_t  num;
+		char *   str;
 		SDL_Rect rect;
 	}                u;
 	struct s_token * next;
@@ -24,7 +24,7 @@ typedef struct  s_li_token {
 	t_token * first;
 	t_token * last;
 	t_token * actu;
-	t_bool ok;
+	t_bool    ok;
 }               t_li_token;
 
 t_cmd * next_parser(char * line);

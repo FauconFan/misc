@@ -49,10 +49,9 @@ ALL_FILES = $(SRC) $(INC)
 
 OBJ_NO_MAIN = $(SRC_NO_MAIN:%.c=%.o)
 OBJ_TEST = $(TEST_SRC:%.c=%.o)
-OBJ = \
-		$(SRC:%.c=%.o) \
-		$(PAR_FILE:%.y=%.parser.o) \
-		$(LEX_FILE:%.l=%.lexer.o) \
+OBJ_SRC = $(SRC:%.c=%.o)
+OBJ_LEX_PAR = $(PAR_FILE:%.y=%.parser.o) $(LEX_FILE:%.l=%.lexer.o)
+OBJ = $(OBJ_SRC) $(OBJ_LEX_PAR)
 
 #################################### COMPILATION ###############################
 
@@ -244,5 +243,7 @@ $(INFER_TAR):
 	echo "$(SHASUM_INFER)  $@" | shasum -a 256 -c -
 
 .PHONY: infer_run
-infer_run: $(INFER)
+infer_run: $(INFER) fclean
+	make CC="$(INFER) run --fail-on-issue -- $(CC)" $(OBJ_SRC)
+	make $(OBJ_LEX_PAR)
 	make CC="$(INFER) run --fail-on-issue -- $(CC)" all

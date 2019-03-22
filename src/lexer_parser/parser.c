@@ -1,6 +1,6 @@
 #include "cimp.h"
 
-//flex
+// flex
 extern t_li_token * scan_string(const char * str);
 
 static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
@@ -41,14 +41,14 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
   const t_cmd_config * cmd_cf) {
 	uint8_t opts;
 	uint8_t opts_opt;
-	t_token	*tok;
+	t_token * tok;
 
 	if (cmd_cf == NULL)
 		return (FALSE);
 
 	opts     = cmd_cf->opts;
 	opts_opt = cmd_cf->opts_opt;
-	tok = NULL;
+	tok      = NULL;
 	while (li_token_empty(li_toks) == FALSE) {
 		tok = li_token_get_next(li_toks);
 		switch (tok->type) {
@@ -59,7 +59,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 				}
 				if (opts & ARG_NAME || opts & ARG_PATH) {
 					cmd->name = dupstr(tok->u.str);
-					opts &= ~(ARG_NAME | ARG_PATH);
+					opts     &= ~(ARG_NAME | ARG_PATH);
 				}
 				else if (opts_opt & ARG_NAME || opts_opt & ARG_PATH) {
 					cmd->name = dupstr(tok->u.str);
@@ -69,7 +69,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 					printf("No need a name for this command\n");
 					return (FALSE);
 				}
-				break ;
+				break;
 			case PATH:
 				if (cmd->name != NULL) {
 					printf("Have already a path paramecmter\n");
@@ -77,7 +77,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 				}
 				if (opts & ARG_PATH) {
 					cmd->name = dupstr(tok->u.str);
-					opts &= ~(ARG_PATH);
+					opts     &= ~(ARG_PATH);
 				}
 				else if (opts_opt & ARG_PATH) {
 					cmd->name = dupstr(tok->u.str);
@@ -87,7 +87,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 					printf("No need a path parameter\n");
 					return (FALSE);
 				}
-				break ;
+				break;
 			case NUM:
 				if (cmd_cf->opts & ARG_NUM && (opts & ARG_NUM) == 0) {
 					printf("Have already a num parameter\n");
@@ -95,17 +95,17 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 				}
 				else if (opts & ARG_NUM) {
 					cmd->num = tok->u.num;
-					opts &= ~(ARG_NUM);
+					opts    &= ~(ARG_NUM);
 				}
 				else if (opts_opt & ARG_NUM) {
-					cmd->num = tok->u.num;
+					cmd->num  = tok->u.num;
 					opts_opt &= ~(ARG_NUM);
 				}
 				else {
 					printf("No need a num parameter\n");
 					return (FALSE);
 				}
-				break ;
+				break;
 			case RECT:
 				if (cmd_cf->opts & ARG_RECT && (opts & ARG_RECT) == 0) {
 					printf("Hav already a rect parameter\n");
@@ -113,7 +113,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 				}
 				else if (opts & ARG_RECT) {
 					cmd->rect = tok->u.rect;
-					opts &= ~(ARG_RECT);
+					opts     &= ~(ARG_RECT);
 				}
 				else if (opts_opt & ARG_RECT) {
 					cmd->rect = tok->u.rect;
@@ -123,7 +123,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 					printf("No need a rect parameter\n");
 					return (FALSE);
 				}
-				break ;
+				break;
 		}
 	}
 	if (opts != 0) {
@@ -132,7 +132,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 	}
 	// Some busy stuff to assimilate things
 	return (TRUE);
-}
+} /* run_parser_with_config */
 
 static const t_cmd_config * get_conf_cmd(char * cmd) {
 	for (int i = 0; i < (int) g_command_list_size; i++) {

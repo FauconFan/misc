@@ -27,8 +27,9 @@ void                print_token(t_token * tok) {
 			printf("PATH(%s)\n", tok->u.str);
 			break;
 		case RECT:
-			printf("RECT(%d %d %d %d)\n", tok->u.rect.x, tok->u.rect.y, tok->u.rect.w, tok->u.rect.h);
-			break ;
+			printf("RECT(%d %d %d %d)\n", tok->u.rect.x, tok->u.rect.y, tok->u.rect.w,
+			  tok->u.rect.h);
+			break;
 	}
 }
 

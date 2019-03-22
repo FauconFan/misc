@@ -118,6 +118,7 @@ char * itoa(int i, char b[]) {
 t_bool safe_strtol10(const char * word, char ** next, int * nump) {
 	if (word == NULL || nump == NULL)
 		return (FALSE);
+
 	errno = 0;
 	*nump = strtol(word, next, 10);
 	if (errno == EINVAL || errno == ERANGE) {

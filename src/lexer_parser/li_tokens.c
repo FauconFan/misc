@@ -46,7 +46,7 @@ void        li_token_print(t_li_token * li) {
 void        li_token_add(t_li_token * li, t_token * tok) {
 	if (tok == NULL) {
 		li->ok = FALSE;
-		return ;
+		return;
 	}
 	if (li->first == NULL) {
 		li->first = tok;
