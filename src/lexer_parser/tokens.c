@@ -30,6 +30,9 @@ void                print_token(t_token * tok) {
 			printf("RECT(%d %d %d %d)\n", tok->u.rect.x, tok->u.rect.y, tok->u.rect.w,
 			  tok->u.rect.h);
 			break;
+		case POINT:
+			printf("POINT(%d %d)\n", tok->u.point.x, tok->u.point.y);
+			break ;
 	}
 }
 
@@ -76,8 +79,13 @@ t_token * token_rect(int x, int y, int w, int h) {
 	return (tok);
 }
 
-// t_bool              eat_word_token(char ** word) {
-//     if (word == NULL || g_li_token == NULL)
-//         return (FALSE);
+t_token * token_point(int x, int y) {
+	t_token * tok;
 
-// }
+	if ((tok = token_alloc(POINT)) == NULL)
+		return (NULL);
+	
+	tok->u.point.x = x;
+	tok->u.point.y = y;
+	return (tok);
+}

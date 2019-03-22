@@ -34,19 +34,21 @@ typedef struct          s_cimp {
 }                       t_cimp;
 
 typedef struct      s_cmd {
-	char *   cmd;
-	char *   name;
-	int      num;
-	SDL_Rect rect;
+	char *    cmd;
+	char *    name;
+	int       num;
+	SDL_Rect  rect;
+	SDL_Point point;
 }                   t_cmd;
 
-#define	NB_ARG_TYPE 4
+#define	NB_ARG_TYPE 5
 
 typedef enum        e_arg_type {
 	ARG_NAME = 0x1,
 	ARG_NUM  = 0x2,
 	ARG_PATH = 0x4,
 	ARG_RECT = 0x8,
+	ARG_PT = 0x10,
 }                   t_arg_type;
 
 typedef struct      s_cmd_config {
