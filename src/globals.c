@@ -16,21 +16,11 @@ const t_cmd_config g_command_list[] = {
 	{"rotate",    cimp_rotate,    ARG_NUM,  0},
 	{"select",    cimp_select,    ARG_RECT, 0},
 	{"unselect",  cimp_unselect,  0,        0},
-	{"save", cimp_save, ARG_PATH, 0},
-	{"QUIT",      NULL,           0,        0} // QUIT must have NULL as func_ptr
+	{"save",      cimp_save,      ARG_PATH, 0},
+	{"QUIT",      NULL,           0,        0}, // QUIT must have NULL as func_ptr
 };
 
 const size_t g_command_list_size = SIZE_TAB(g_command_list);
-
-<<<<<<< HEAD
-const char * g_error_parser_strings [] = {
-	"Il y a trop d'arguments pour cette commande",
-	"Il y a trop peu d'arguments pour cette commande",
-	"Le nom de la commande n'est pas connu",
-	"Le malloc a echoue",
-	"L'argument est invalide",
-	"La ligne entrée est vide",
-};
 
 static const char * bmp_list[] = {"bmp", "dib", "rle"};
 static const char * png_list[] = {"png"};
@@ -52,7 +42,5 @@ const t_assoc_type_img_func g_assoc_type_img_func_list[] = {
 
 const size_t g_assoc_type_img_func_size = SIZE_TAB(g_assoc_type_img_func_list);
 
-=======
->>>>>>> dev
 int g_fd_readline = -1;
 int g_fd_callback = -1;

@@ -62,20 +62,20 @@ typedef enum            e_type_img {
 	JPG,
 	PNG,
 }                       t_type_img;
-typedef struct          s_extension_img {
 
+typedef struct          s_extension_img {
 	t_type_img type;
 	char **    li_extensions;
+	size_t len_nb_extensions;
 }                       t_extension_img;
-	size_t     len_nb_extensions;
+
 typedef int (* t_export_img_func_ptr)(const char *, SDL_Surface *);
 
 typedef struct          s_assoc_type_img_func {
-
 	t_type_img            type;
 	t_export_img_func_ptr func_export;
-
 }                       t_assoc_type_img_func;
+
 /**
  * Ici est définie la variable globale g_cimp qui stocke l'instance de notre programme.
  */
@@ -86,6 +86,11 @@ extern t_cimp * g_cimp;
 extern const t_cmd_config g_command_list[];
 extern const size_t g_command_list_size;
 
+extern const t_extension_img g_extension_img_list[];
+extern const size_t g_extension_img_size;
+
+extern const t_assoc_type_img_func g_assoc_type_img_func_list[];
+extern const size_t g_assoc_type_img_func_size;
 
 // Childs globals
 extern int g_fd_readline;
