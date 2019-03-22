@@ -80,8 +80,16 @@ SRC = \
 
 TEST_FOLDER			= tests/
 
+INC_FILES = \
+	cimp.h \
+	libtest.h \
+
 TEST_FILES = \
 			main_test.c \
+			modif_test.c \
+			window_test.c \
+			parsing_test.c \
+
 
 TEST_SRC = \
 		$(addprefix $(TEST_FOLDER), $(TEST_FILES)) \
