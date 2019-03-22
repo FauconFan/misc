@@ -19,6 +19,8 @@ int             cimp_init() {
 		return (1);
 
 	g_cimp->screen  = NULL;
+	g_cimp->select  = NULL;
+	g_cimp->event   = init_cimp_event();
 	g_cimp->running = 1;
 	return (0);
 }
@@ -30,6 +32,8 @@ void            cimp_end() {
 	if (g_cimp) {
 		if (g_cimp->screen)
 			cimp_end_screen(g_cimp->screen);
+		free_cimp_event(g_cimp->event);
+		cimp_end_select(g_cimp->select);
 		free(g_cimp);
 		g_cimp = NULL;
 		IMG_Quit();

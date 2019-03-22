@@ -1,6 +1,8 @@
 
 ################################# HEADERS CODE #################################
 
+INC_FOLDER = inc/
+
 INC_FILES = \
 	cimp.h \
 	env.h \
@@ -20,11 +22,11 @@ UTILS_FOLDER		= src/utils/
 FORMAT_FOLDER		= src/utils/format/
 COMMANDS_FOLDER     = src/commands/
 CHILD_RD_FOLDER		= src/child_readline/
+LEX_PAR_FOLDER		= src/lexer_parser/
 
 MAIN_FILE = $(SRC_FOLDER)main.c
 
 SRC_FILES = \
-			parser.c \
 			globals.c \
 			cimp_exe.c \
 			core.c \
@@ -37,6 +39,10 @@ CHILD_RD_FILES = \
 ENV_FILES = \
 			t_cimp.c \
 			t_cimp_screen.c \
+			t_cimp_select.c \
+			t_cimp_event.c \
+			t_arg_type.c \
+			t_cmd.c \
 
 UTILS_FILES = \
 			path_utils.c \
@@ -56,7 +62,16 @@ COMMANDS_FILES = \
 			cimp_list.c \
 			cimp_sym.c \
 			cimp_rotate.c \
+			cimp_select.c \
 			cimp_save.c \
+
+LEX_PAR_FILES = \
+			parser.c \
+			tokens.c \
+			li_tokens.c \
+
+LEX_FILE = $(LEX_PAR_FOLDER)cimp.l
+PAR_FILE = $(LEX_PAR_FOLDER)cimp.y
 
 SRC_NO_MAIN = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \
@@ -65,6 +80,7 @@ SRC_NO_MAIN = \
 		$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
 		$(addprefix $(FORMAT_FOLDER), $(FORMAT_FILES)) \
 		$(addprefix $(COMMANDS_FOLDER), $(COMMANDS_FILES)) \
+		$(addprefix $(LEX_PAR_FOLDER), $(LEX_PAR_FILES)) \
 
 SRC = \
 		$(SRC_NO_MAIN) \

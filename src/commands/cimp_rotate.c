@@ -5,7 +5,7 @@ static void real_rotate(t_cmd * cmd, int angle);
 static void real_rotate90();
 
 int cimp_rotate(t_cmd * cmd) {
-	real_rotate(cmd, cmd->angle);
+	real_rotate(cmd, cmd->num);
 	return (0);
 }
 

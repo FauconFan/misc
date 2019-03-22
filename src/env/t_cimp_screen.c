@@ -97,4 +97,5 @@ void                cimp_update_screen(t_cimp_screen * screen) {
 	full_rect.h = screen->buff_screen->h;
 	SDL_BlitSurface(screen->buff_screen, &full_rect, SDL_GetWindowSurface(screen->window), NULL);
 	SDL_UpdateWindowSurface(screen->window);
+	update_event(g_cimp->event);
 }

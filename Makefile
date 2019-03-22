@@ -30,26 +30,28 @@ _WHITE=$(shell tput setaf 7 2> /dev/null || echo "")
 _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 CC = gcc
-
-SDL_FLAGS = $(shell sdl2-config --cflags)
-SDL_LIBS = $(shell sdl2-config --libs) -lSDL2_image
-
-INC_FOLDER = inc/
-
-CFLAGS = -g -Wall -Wextra -Werror -std=c11 
-IFLAGS = -I $(INC_FOLDER) $(SDL_FLAGS)
-LFLAGS = $(SDL_LIBS) -lreadline -lpng -ljpeg
-FLAGS = $(CFLAGS) $(IFLAGS)
+FL = flex
+BS = bison
 
 SRC := ""
 INC := ""
 include files.mk # On charge la liste des fichiers depuis le fichier files.mk
 
+SDL_FLAGS = $(shell sdl2-config --cflags)
+SDL_LIBS = $(shell sdl2-config --libs) -lSDL2_image
+
+CFLAGS = -g -Wall -Wextra -Werror -std=c11
+IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(SDL_FLAGS)
+LFLAGS = $(SDL_LIBS) -lreadline -lpng -ljpeg
+FLAGS = $(CFLAGS) $(IFLAGS)
+
 ALL_FILES = $(SRC) $(INC)
 
-OBJ = $(SRC:%.c=%.o)
 OBJ_NO_MAIN = $(SRC_NO_MAIN:%.c=%.o)
 OBJ_TEST = $(TEST_SRC:%.c=%.o)
+OBJ_SRC = $(SRC:%.c=%.o)
+OBJ_LEX_PAR = $(PAR_FILE:%.y=%.parser.o) $(LEX_FILE:%.l=%.lexer.o)
+OBJ = $(OBJ_SRC) $(OBJ_LEX_PAR)
 
 #################################### COMPILATION ###############################
 
@@ -57,14 +59,32 @@ OBJ_TEST = $(TEST_SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "Program %s... " "$(NAME)"
+	@printf "\\t%sLD%s\\t" "$(_GREEN)" "$(_END)"
 	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
-	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
+	@printf "%s\\n" "$@"
 
 %.o: %.c
-	@printf "Compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
 	@$(CC) $(FLAGS) -c $? -o $@
-	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
+	@printf "%s\\n" "$?"
+
+$(LEX_PAR_FOLDER)%.lexer.o: $(LEX_PAR_FOLDER)%.l
+	@printf "\\t%sFL%s\\t" "$(_YELLOW)" "$(_END)"
+	@$(FL) -o $(@:.o=.c) $?
+	@printf "%s\\n" "$?"
+	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
+	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
+	@printf "%s\\n" "$(@:.o=.c)"
+	@rm -f $(@:.o=.c)
+
+$(LEX_PAR_FOLDER)%.parser.o: $(LEX_PAR_FOLDER)%.y
+	@printf "\\t%sBS%s\\t" "$(_PURPLE)" "$(_END)"
+	@$(BS) -d -o $(@:.o=.c) $?
+	@printf "%s\\n" "$?"
+	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
+	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
+	@printf "%s\\n" "$(@:.o=.c)"
+	@rm -f $(@:.o=.c)
 
 .PHONY: clean
 clean:
@@ -87,6 +107,7 @@ ffclean: fclean
 	@find . -name "*.o" -delete
 	@find . -name "*.gcda" -delete
 	@find . -name "*.gcno" -delete
+	@rm -f $(LEX_PAR_FOLDER)cimp.parser.h
 	@echo "Projecl all cleaned"
 
 .PHONY: re
@@ -151,8 +172,8 @@ lint_check: uncrustify_check cpplint_run cppcheck_run clang_tidy_run infer_run
 CIMP_CHECK = cimp_check
 GCOV_LIBS = -lcheck -lm -lpthread -lrt -lsubunit -lgcov -coverage
 
-$(CIMP_CHECK): fclean venv recompile_with_profile_args $(OBJ_TEST)
-	@$(CC) $(OBJ_NO_MAIN) $(OBJ_TEST) $(GCOV_LIBS) $(LFLAGS) -o $@
+$(CIMP_CHECK): fclean venv recompile_with_profile_args $(OBJ_TEST) $(OBJ_LEX_PAR)
+	@$(CC) $(OBJ_NO_MAIN) $(OBJ_TEST) $(OBJ_LEX_PAR) $(GCOV_LIBS) $(LFLAGS) -o $@
 	./$@
 	mkdir -p gcovr
 	$(GCOVR) -r . --html --html-details -o gcovr/index.html
@@ -225,5 +246,7 @@ $(INFER_TAR):
 	echo "$(SHASUM_INFER)  $@" | shasum -a 256 -c -
 
 .PHONY: infer_run
-infer_run: $(INFER)
+infer_run: $(INFER) fclean
+	make CC="$(INFER) run --fail-on-issue -- $(CC)" $(OBJ_SRC)
+	make $(OBJ_LEX_PAR)
 	make CC="$(INFER) run --fail-on-issue -- $(CC)" all

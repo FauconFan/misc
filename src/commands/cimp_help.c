@@ -1,5 +1,20 @@
 #include "cimp.h"
 
+static void print_command_config(int max_name, const t_cmd_config * cmd_cf) {
+	printf("%-*s", max_name, cmd_cf->name);
+	for (int arg = 1; arg < (1 << NB_ARG_TYPE); arg = arg << 1) {
+		if (cmd_cf->opts & arg) {
+			printf(" [%s]", arg_type_to_string(arg));
+		}
+	}
+	for (int arg = 1; arg < (1 << NB_ARG_TYPE); arg = arg << 1) {
+		if (cmd_cf->opts_opt & arg) {
+			printf(" [? %s]", arg_type_to_string(arg));
+		}
+	}
+	printf("\n");
+}
+
 int cimp_help(t_cmd * cmd) {
 	int max_name;
 
@@ -12,14 +27,7 @@ int cimp_help(t_cmd * cmd) {
 	}
 	max_name++;
 	for (size_t i = 0; i < g_command_list_size; i++) {
-		printf("%-*s", max_name, g_command_list[i].name);
-		if (g_command_list[i].need_name) {
-			printf(" [PATH]");
-		}
-		if (g_command_list[i].need_angle) {
-			printf(" [ANGLE]");
-		}
-		printf("\n");
+		print_command_config(max_name, g_command_list + i);
 	}
 	return (0);
 }
