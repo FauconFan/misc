@@ -1,5 +1,7 @@
 #ifndef COMMANDS_H
 #define	COMMANDS_H
+#define max(a,b) (a>=b?a:b)
+#define min(a,b) (a<=b?a:b)
 
 int cimp_open(t_cmd * cmd);
 int cimp_close(t_cmd * cmd);
