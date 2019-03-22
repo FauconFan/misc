@@ -107,6 +107,7 @@ ffclean: fclean
 	@find . -name "*.o" -delete
 	@find . -name "*.gcda" -delete
 	@find . -name "*.gcno" -delete
+	@rm -f $(LEX_PAR_FOLDER)cimp.parser.h
 	@echo "Projecl all cleaned"
 
 .PHONY: re
