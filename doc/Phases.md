@@ -9,41 +9,15 @@ Il y a 4 phases dans le développement de ce projet.
 
 ## Phase de mise en place
 
-Cette phase sert à commencer le projet et est subdivisé en 3 sous phases :
+Cette phase sert à commencer le projet et est subdivisé en une simple phase :
 
 - Écriture d'un protocole de communication UDP serveur/client sur chaque instance du programme.
-- Interface utilisateur interaction avec l'utilisateur.
-- Logger verbosity / filelog etc...
 
 ### Communication
 
 Il faut une implémentation serveur en mode non bloquant, et une implémentation client pour envoyer des données bruts.
 
-### Interface utilisateur
-
-L'interface utilisateur devra permettre 2 choses : la lecture d'une entrée en mode non-bloquant et l'affichage d'un message (idéalement sur la ligne du dessus).
-
-Il faut aussi qu'on puisse taper une "commande" à l'aide de slash '/', par exemple '/help' ou '/list'. Ce qui permet au programme (et non aux reste du réseau) pour avoir des informations supplémentaires. L'idée est que l'on puisse accéder aux données du programmes sur demande et non en regardant les logs...
-
-Il faut que la structure qui gère les commandes soit dynamique, i.e. on doit pouvoir rajouter une commande très facilement.
-
-Pour l'affichage du message, il faut qu'on puisse afficher les messages venant d'ailleurs mais également les messages venant du programme (à l'aide des commandes).
-
-Chaque affichage est précédé de l'heure actuelle, format "[HH:MM:SS] | " suivi du message potentiellement d'un marqueur pour indiquer si il s'agit du programme ou d'un message provenant du réseau. Peut-être avec des codes couleurs également.
-
-### Logger
-
-Il faut avoir un fichier qui gère les logs au format printf, avec une gestion du degré de verbosity au lancement.
-
-Les logs seront reportés à 2 endroits différents : dans le terminal et dans un fichier.
-
-Les logs ne sont reportés dans le terminal que si le degré de verbosity au lancement du programme est assez haut.
-
-Si un message est d'importance 2, et que le degré est 3 actuelle, alors le message est affiché. De même si le degré actuelle est de 1, alors le message n'est pas affichée. Si l'importance et le degré sont les mêmes, alors le message est affiché.
-
-Par défaut le degré de verbosity est de 0, et aucun message n'est d'importance 0, en particulier l'importance d'un message est strictement positif.
-
-Les logs sont toujours reportés dans un fichier .logs gitignoré dans le dossier actuelle. Au début du lancement du programme, le programme indique le chemin vers le fichier de log actuel. Dans ce fichier est conservé la date (jour + date), le degré d'importance du message et le message lui-même le tout sur une même ligne.
+Il faut qu'on puisse maintenir la connexion avec Juliusz, que l'on affiche les messages qu'il nous envoie, qu'on lui envoie un hello long toutes les 25 30 secondes.
 
 ## Phase de réflexion de structure de données
 
