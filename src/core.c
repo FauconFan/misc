@@ -20,9 +20,10 @@ void treat_line(char * line) {
 			printf("Selection courrante :  x=%d y=%d w=%d h=%d\n", g_cimp->select->surface.x,
 			  g_cimp->select->surface.y, g_cimp->select->surface.w, g_cimp->select->surface.h);
 		}
-		if(g_cimp->copy_buffer == NULL){
+		if (g_cimp->copy_buffer == NULL) {
 			printf("Pas de copy buffer initialise\n");
-		}else {
+		}
+		else {
 			printf("copy_buffer present\n");
 		}
 		free_p_out(cmd);
@@ -32,7 +33,7 @@ void treat_line(char * line) {
 		printf("The line entered is : %s\n", line);
 		printf("Enter 'QUIT' to exit the program properly\n");
 	}
-}
+} /* treat_line */
 
 void handle_line() {
 	char * line = NULL;
