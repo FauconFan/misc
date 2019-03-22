@@ -32,7 +32,7 @@ void                print_token(t_token * tok) {
 			break;
 		case POINT:
 			printf("POINT(%d %d)\n", tok->u.point.x, tok->u.point.y);
-			break ;
+			break;
 	}
 }
 
@@ -84,7 +84,7 @@ t_token * token_point(int x, int y) {
 
 	if ((tok = token_alloc(POINT)) == NULL)
 		return (NULL);
-	
+
 	tok->u.point.x = x;
 	tok->u.point.y = y;
 	return (tok);

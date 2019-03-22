@@ -134,17 +134,17 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 				}
 				else if (opts & ARG_PT) {
 					cmd->point = tok->u.point;
-					opts &= ~(ARG_PT);
+					opts      &= ~(ARG_PT);
 				}
 				else if (opts_opt & ARG_PT) {
 					cmd->point = tok->u.point;
-					opts_opt &= ~(ARG_PT);
+					opts_opt  &= ~(ARG_PT);
 				}
 				else {
 					printf("No need a point parameter\n");
 					return (FALSE);
 				}
-				break ;
+				break;
 		}
 	}
 	if (opts != 0) {

@@ -14,9 +14,9 @@ typedef enum    e_type_token {
 typedef struct  s_token {
 	t_type_token type;
 	union {
-		int64_t  num;
-		char *   str;
-		SDL_Rect rect;
+		int64_t   num;
+		char *    str;
+		SDL_Rect  rect;
 		SDL_Point point;
 	}                u;
 	struct s_token * next;

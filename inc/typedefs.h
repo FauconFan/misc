@@ -48,7 +48,7 @@ typedef enum        e_arg_type {
 	ARG_NUM  = 0x2,
 	ARG_PATH = 0x4,
 	ARG_RECT = 0x8,
-	ARG_PT = 0x10,
+	ARG_PT   = 0x10,
 }                   t_arg_type;
 
 typedef struct      s_cmd_config {

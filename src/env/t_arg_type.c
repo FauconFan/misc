@@ -4,7 +4,7 @@
 #define	ARG_NUM_TAG  "NUM"
 #define	ARG_PATH_TAG "PATH"
 #define	ARG_RECT_TAG "RECT"
-#define ARG_PT_TAG "POINT"
+#define	ARG_PT_TAG   "POINT"
 
 const char * arg_type_to_string(t_arg_type atype) {
 	switch (atype) {
