@@ -41,9 +41,9 @@ int nb_args(const t_cmd_config * cmd) {
 		return -1;
 	}
 
-	if (cmd->has_name) res++;
-	if (cmd->has_angle) res++;
-	if (cmd->has_rect) res += 4;
+	if (cmd->opts & ARG_NAME) res++;
+	if (cmd->opts & ARG_NUM) res++;
+	if (cmd->opts & ARG_RECT) res += 4;
 	return res;
 }
 
@@ -84,10 +84,10 @@ t_cmd * parse_line(char * line, t_error_parser * error) {
 	}
 
 	while ((token = strtok_r(line, " ", &line)) != NULL) {
-		if (commande->has_name && res->name_file == NULL) {
+		if (commande->opts & ARG_NAME && res->name_file == NULL) {
 			res->name_file = dupstr(token);
 		}
-		else if (commande->has_angle && res->angle == NO_ANGLE) {
+		else if (commande->opts & ARG_NUM && res->angle == NO_ANGLE) {
 			errno = 0;
 			rc    = strtol(token, &tmp, 10);
 			if (errno == EINVAL || errno == ERANGE || tmp == token) {
@@ -98,7 +98,7 @@ t_cmd * parse_line(char * line, t_error_parser * error) {
 
 			res->angle = rc;
 		}
-		else if (commande->has_rect &&
+		else if (commande->opts & ARG_RECT &&
 		  (res->rect.x == -1 || res->rect.y == -1 || res->rect.h == -1 || res->rect.w == -1 ) )
 		{
 			errno = 0;

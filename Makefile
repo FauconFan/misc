@@ -31,20 +31,19 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 CC = gcc
 FL = flex
-
-SDL_FLAGS = $(shell sdl2-config --cflags)
-SDL_LIBS = $(shell sdl2-config --libs)
-
-INC_FOLDER = inc/
-
-CFLAGS = -g -Wall -Wextra -Werror -std=c11
-IFLAGS = -I $(INC_FOLDER) $(SDL_FLAGS)
-LFLAGS = $(SDL_LIBS) -lreadline
-FLAGS = $(CFLAGS) $(IFLAGS)
+BS = bison
 
 SRC := ""
 INC := ""
 include files.mk # On charge la liste des fichiers depuis le fichier files.mk
+
+SDL_FLAGS = $(shell sdl2-config --cflags)
+SDL_LIBS = $(shell sdl2-config --libs)
+
+CFLAGS = -g -Wall -Wextra -Werror -std=c11
+IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(SDL_FLAGS)
+LFLAGS = $(SDL_LIBS) -lreadline
+FLAGS = $(CFLAGS) $(IFLAGS)
 
 ALL_FILES = $(SRC) $(INC)
 
@@ -52,6 +51,7 @@ OBJ_NO_MAIN = $(SRC_NO_MAIN:%.c=%.o)
 OBJ_TEST = $(TEST_SRC:%.c=%.o)
 OBJ = \
 		$(SRC:%.c=%.o) \
+		$(PAR_FILE:%.y=%.parser.o) \
 		$(LEX_FILE:%.l=%.lexer.o) \
 
 #################################### COMPILATION ###############################
@@ -74,7 +74,16 @@ $(LEX_PAR_FOLDER)%.lexer.o: $(LEX_PAR_FOLDER)%.l
 	@$(FL) -o $(@:.o=.c) $?
 	@printf "%sgenerated%s\\n" "$(_YELLOW)" "$(_END)"
 	@printf "Lexer compiling %s... " "$?"
-	@$(CC) $(IFLAGS) $(SDL_FLAGS) $(CXX_STD) -c $(@:.o=.c) -o $@
+	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
+	@printf "%scompiled%s\\n" "$(_YELLOW)" "$(_END)"
+	@rm -f $(@:.o=.c)
+
+$(LEX_PAR_FOLDER)%.parser.o: $(LEX_PAR_FOLDER)%.y
+	@printf "Parser generating %s... " "$?"
+	@$(BS) -d -o $(@:.o=.c) $?
+	@printf "%sgenerated%s\\n" "$(_YELLOW)" "$(_END)"
+	@printf "Parser compiling %s... " "$?"
+	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
 	@printf "%scompiled%s\\n" "$(_YELLOW)" "$(_END)"
 	@rm -f $(@:.o=.c)
 

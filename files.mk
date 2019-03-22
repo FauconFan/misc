@@ -1,6 +1,8 @@
 
 ################################# HEADERS CODE #################################
 
+INC_FOLDER = inc/
+
 INC_FILES = \
 	cimp.h \
 	env.h \
@@ -38,6 +40,8 @@ ENV_FILES = \
 			t_cimp_screen.c \
 			t_cimp_select.c \
 			t_cimp_event.c \
+			t_arg_type.c \
+			t_cmd.c \
 
 UTILS_FILES = \
 			path_utils.c \
@@ -59,6 +63,7 @@ LEX_PAR_FILES = \
 			li_tokens.c \
 
 LEX_FILE = $(LEX_PAR_FOLDER)cimp.l
+PAR_FILE = $(LEX_PAR_FOLDER)cimp.y
 
 SRC_NO_MAIN = \
 		$(addprefix $(SRC_FOLDER), $(SRC_FILES)) \

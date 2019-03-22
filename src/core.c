@@ -1,25 +1,18 @@
 #include "cimp.h"
 
 void treat_line(char * line) {
-	t_error_parser error;
 	t_cmd * cmd;
 
-	char	*cpy;
-
-	cpy = dupstr(line);
-	next_parser(cpy);
-	free(cpy);
-
-	cmd = parse_line(line, &error);
+	cmd = next_parser(line);
 	if (cmd != NULL) {
 		if (cimp_exe(cmd) == -1) {
 			printf("Internal program error !!!\n");
 			printf("Please contact maintainers !!!\n");
 		}
-		free_p_out(cmd);
+		cmd_free(cmd);
 	}
 	else {
-		printf("Attention une erreur est apparue ! ERREUR : %s \n", get_error(error));
+		printf("Attention une erreur est apparue ! ERREUR\n");
 	}
 }
 

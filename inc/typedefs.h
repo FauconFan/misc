@@ -3,10 +3,10 @@
 
 #include "cimp.h"
 
-#define TRUE			1
-#define FALSE			0
+#define	TRUE  1
+#define	FALSE 0
 
-typedef unsigned char	t_bool;
+typedef unsigned char t_bool;
 
 /**
  * Ici sont définies les structures standards utilisées dans le programme.
@@ -40,12 +40,20 @@ typedef struct      s_cmd {
 	SDL_Rect rect;
 }                   t_cmd;
 
+#define NB_ARG_TYPE		4
+
+typedef enum		e_arg_type {
+	ARG_NAME = 0x1,
+	ARG_NUM = 0x2,
+	ARG_PATH = 0x4,
+	ARG_RECT = 0x8,
+}					t_arg_type;
+
 typedef struct      s_cmd_config {
-	char * name;
+	char *  name;
 	int (* func_cmd_ptr)(t_cmd *);
-	int8_t has_name;
-	int8_t has_angle;
-	int8_t has_rect;
+	uint8_t opts;     // Necessary opts
+	uint8_t opts_opt; // Optionnal opts
 } t_cmd_config;
 
 
