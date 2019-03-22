@@ -1,8 +1,8 @@
 #ifndef COUPURE_HPP
-#define COUPURE_HPP
+#define	COUPURE_HPP
 
 #include "libsat.hpp"
 
-bool cut_solve (std::vector<ImplClause *>);
+bool cut_solve(const Fnc &);
 
-#endif
+#endif // ifndef COUPURE_HPP

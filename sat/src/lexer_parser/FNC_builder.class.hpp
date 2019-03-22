@@ -1,34 +1,33 @@
-
 #ifndef FNC_BUILDER_CLASS_HPP
-#define FNC_BUILDER_CLASS_HPP
+#define	FNC_BUILDER_CLASS_HPP
 
 #include "sat.hpp"
 
 class FNC_builder final
 {
-    public:
-        virtual ~FNC_builder();
+	public:
+		FNC_builder(const FNC_builder & rhs) = delete;
+		FNC_builder &operator=(const FNC_builder & rhs) = delete;
+		virtual~FNC_builder();
 
-        static FNC_builder  &get();
+		static FNC_builder  &get();
 
-        void    setNbVar(int nbvar);
-        void    setNbClause(int nbclause);
+		void    setNbVar(int nbvar);
+		void    setNbClause(int nbclause);
 
-        void    addVar(int var);
-        void    endOfClause();
+		void    addVar(int var);
+		void    endOfClause();
 
-        std::vector<AClause *>  getClauses();
+		std::vector<Clause>  getClauses();
 
-    private:
-        FNC_builder();
-        FNC_builder(const FNC_builder & rhs); // Not implemented
-        FNC_builder &operator=(const FNC_builder & rhs); // Not implemented
+	private:
+		FNC_builder();
 
-        int                     _nb_vars; // hidden
-        int                     _nb_clauses; // hidden
-        std::vector<int>        _vars;
-        std::vector<AClause *>  _clauses;
+		int _nb_vars {0};    // hidden
+		int _nb_clauses {0}; // hidden
+		std::vector<int> _vars {};
+		std::vector<Clause> _clauses {};
 };
 
 
-#endif
+#endif // ifndef FNC_BUILDER_CLASS_HPP
