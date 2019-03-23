@@ -90,20 +90,32 @@ void                cimp_screen_update(t_cimp_screen * screen) {
 	SDL_Rect full_rect;
 	int w_buff;
 	int h_buff;
+	char * name_actu;
 
 	if (screen == NULL)
 		return;
 
+	// Update window size
 	SDL_GetWindowSize(screen->window, &w_buff, &h_buff);
 	if (w_buff != screen->buff_screen->w || h_buff != screen->buff_screen->h) {
 		SDL_SetWindowSize(screen->window, screen->buff_screen->w, screen->buff_screen->h);
 	}
+
+	// Update window title
+	name_actu = basename(screen->path);
+	if (strcmp(name_actu, SDL_GetWindowTitle(screen->window)) != 0) {
+		SDL_SetWindowTitle(screen->window, name_actu);
+	}
+
+	// Update content of the window
 	full_rect.x = 0;
 	full_rect.y = 0;
 	full_rect.w = screen->buff_screen->w;
 	full_rect.h = screen->buff_screen->h;
 	SDL_BlitSurface(screen->buff_screen, &full_rect, SDL_GetWindowSurface(screen->window), NULL);
 	SDL_UpdateWindowSurface(screen->window);
+
+	// Update events (if any)
 	update_event(g_cimp->event);
 }
 
@@ -118,3 +130,41 @@ t_bool              cimp_screen_set_path(t_cimp_screen * screen, char * path) {
 	screen->path = p;
 	return (TRUE);
 }
+
+t_bool              cimp_screen_set_surface(t_cimp_screen * screen, char * path) {
+	SDL_Rect rect;
+	SDL_Surface * tmp;
+	SDL_Surface * surf;
+	t_bool res;
+
+	res  = FALSE;
+	tmp  = NULL;
+	surf = NULL;
+	if ((tmp = IMG_Load(path)) == NULL) {
+		printf("%s\n", IMG_GetError());
+	}
+	else if ((surf = SDL_CreateRGBSurface(0, tmp->w, tmp->h, 32, 0, 0, 0, 0)) == NULL) {
+		printf("%s\n", SDL_GetError());
+	}
+	else {
+		res = TRUE;
+
+		rect.x = 0;
+		rect.y = 0;
+		rect.w = tmp->w;
+		rect.h = tmp->h;
+		SDL_BlitSurface(tmp, &rect, surf, NULL);
+		SDL_FreeSurface(screen->buff_screen);
+		screen->buff_screen = surf;
+		SDL_FreeSurface(tmp);
+		tmp = NULL;
+	}
+
+	if (tmp)
+		SDL_FreeSurface(tmp);
+	if (res == FALSE) {
+		if (surf)
+			SDL_FreeSurface(surf);
+	}
+	return (res);
+} /* cimp_screen_set_surface */

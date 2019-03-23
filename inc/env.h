@@ -9,6 +9,7 @@ void            cimp_end();
 t_cimp_screen * cimp_screen_init(char * path_img);
 void cimp_screen_update(t_cimp_screen * screen);
 void cimp_screen_end(t_cimp_screen * sc);
+t_bool cimp_screen_set_surface(t_cimp_screen * screen, char * path);
 
 // t_cimp_select.c
 t_cimp_select * cimp_init_select(SDL_Rect rectangle);

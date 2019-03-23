@@ -21,5 +21,5 @@ int cimp_save(t_cmd * cmd) {
 			ret = (cimp_screen_set_path(g_cimp->screen, namefile) == FALSE);
 		return (ret);
 	}
-	return (1);
+	return (0);
 }

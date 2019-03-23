@@ -64,6 +64,7 @@ COMMANDS_FILES = \
 			cimp_rotate.c \
 			cimp_select.c \
 			cimp_save.c \
+			cimp_update.c \
 
 LEX_PAR_FILES = \
 			parser.c \
