@@ -87,9 +87,9 @@ void                cimp_screen_end(t_cimp_screen * sc) {
  * @return        nothing
  */
 void                cimp_screen_update(t_cimp_screen * screen) {
-	SDL_Rect 	full_rect;
-	int			w_buff;
-	int			h_buff;
+	SDL_Rect full_rect;
+	int w_buff;
+	int h_buff;
 
 	if (screen == NULL)
 		return;
