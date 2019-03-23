@@ -87,11 +87,17 @@ void                cimp_screen_end(t_cimp_screen * sc) {
  * @return        nothing
  */
 void                cimp_screen_update(t_cimp_screen * screen) {
-	SDL_Rect full_rect;
+	SDL_Rect 	full_rect;
+	int			w_buff;
+	int			h_buff;
 
 	if (screen == NULL)
 		return;
 
+	SDL_GetWindowSize(screen->window, &w_buff, &h_buff);
+	if (w_buff != screen->buff_screen->w || h_buff != screen->buff_screen->h) {
+		SDL_SetWindowSize(screen->window, screen->buff_screen->w, screen->buff_screen->h);
+	}
 	full_rect.x = 0;
 	full_rect.y = 0;
 	full_rect.w = screen->buff_screen->w;
