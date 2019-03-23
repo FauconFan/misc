@@ -32,17 +32,26 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 CC = gcc
 FL = flex
 BS = bison
+PKG = pkg-config
 
 SRC := ""
 INC := ""
 include files.mk # On charge la liste des fichiers depuis le fichier files.mk
 
+LIBS_DEP = \
+			sdl2 \
+			SDL2_image \
+			libjpeg \
+			libpng \
+
 SDL_FLAGS = $(shell sdl2-config --cflags)
 SDL_LIBS = $(shell sdl2-config --libs) -lSDL2_image
 
+RD_LIBS = -lreadline
+
 CFLAGS = -g -Wall -Wextra -Werror -std=c11
-IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(SDL_FLAGS)
-LFLAGS = $(SDL_LIBS) -lreadline -lpng -ljpeg
+IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(shell $(PKG) $(LIBS_DEP) --cflags)
+LFLAGS = $(shell $(PKG) $(LIBS_DEP) --libs) $(RD_LIBS)
 FLAGS = $(CFLAGS) $(IFLAGS)
 
 ALL_FILES = $(SRC) $(INC)
@@ -73,7 +82,7 @@ $(LEX_PAR_FOLDER)%.lexer.o: $(LEX_PAR_FOLDER)%.l
 	@$(FL) -o $(@:.o=.c) $?
 	@printf "%s\\n" "$?"
 	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
-	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
+	@$(CC) $(IFLAGS) -c $(@:.o=.c) -o $@
 	@printf "%s\\n" "$(@:.o=.c)"
 	@rm -f $(@:.o=.c)
 
@@ -82,7 +91,7 @@ $(LEX_PAR_FOLDER)%.parser.o: $(LEX_PAR_FOLDER)%.y
 	@$(BS) -d -o $(@:.o=.c) $?
 	@printf "%s\\n" "$?"
 	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
-	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
+	@$(CC) $(IFLAGS) -c $(@:.o=.c) -o $@
 	@printf "%s\\n" "$(@:.o=.c)"
 	@rm -f $(@:.o=.c)
 
