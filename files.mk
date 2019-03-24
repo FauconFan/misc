@@ -19,6 +19,7 @@ INC = $(addprefix $(INC_FOLDER), $(INC_FILES))
 SRC_FOLDER			= src/
 ENV_FOLDER			= src/env/
 UTILS_FOLDER		= src/utils/
+FORMAT_FOLDER		= src/utils/format/
 COMMANDS_FOLDER     = src/commands/
 CHILD_RD_FOLDER		= src/child_readline/
 LEX_PAR_FOLDER		= src/lexer_parser/
@@ -47,6 +48,13 @@ UTILS_FILES = \
 			path_utils.c \
 			str_utils.c \
 
+FORMAT_FILES = \
+			save_surface_png.c \
+			save_surface_jpeg.c \
+			save_surface_bmp.c \
+			get_type_img.c \
+			get_func_img.c \
+
 COMMANDS_FILES = \
 			cimp_open.c \
 			cimp_close.c \
@@ -55,6 +63,8 @@ COMMANDS_FILES = \
 			cimp_sym.c \
 			cimp_rotate.c \
 			cimp_select.c \
+			cimp_save.c \
+			cimp_update.c \
 
 LEX_PAR_FILES = \
 			parser.c \
@@ -69,6 +79,7 @@ SRC_NO_MAIN = \
 		$(addprefix $(CHILD_RD_FOLDER), $(CHILD_RD_FILES)) \
 		$(addprefix $(ENV_FOLDER), $(ENV_FILES)) \
 		$(addprefix $(UTILS_FOLDER), $(UTILS_FILES)) \
+		$(addprefix $(FORMAT_FOLDER), $(FORMAT_FILES)) \
 		$(addprefix $(COMMANDS_FOLDER), $(COMMANDS_FILES)) \
 		$(addprefix $(LEX_PAR_FOLDER), $(LEX_PAR_FILES)) \
 

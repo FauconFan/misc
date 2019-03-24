@@ -46,5 +46,4 @@ static void real_rotate90() {
 	}
 	SDL_FreeSurface(g_cimp->screen->buff_screen);
 	g_cimp->screen->buff_screen = surf;
-	SDL_SetWindowSize(g_cimp->screen->window, new_width, new_height);
 }

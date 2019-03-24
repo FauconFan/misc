@@ -32,17 +32,26 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 CC = gcc
 FL = flex
 BS = bison
+PKG = pkg-config
 
 SRC := ""
 INC := ""
 include files.mk # On charge la liste des fichiers depuis le fichier files.mk
 
+LIBS_DEP = \
+			sdl2 \
+			SDL2_image \
+			libjpeg \
+			libpng \
+
 SDL_FLAGS = $(shell sdl2-config --cflags)
-SDL_LIBS = $(shell sdl2-config --libs)
+SDL_LIBS = $(shell sdl2-config --libs) -lSDL2_image
+
+RD_LIBS = -lreadline
 
 CFLAGS = -g -Wall -Wextra -Werror -std=c11
-IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(SDL_FLAGS)
-LFLAGS = $(SDL_LIBS) -lreadline
+IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(shell $(PKG) $(LIBS_DEP) --cflags)
+LFLAGS = $(shell $(PKG) $(LIBS_DEP) --libs) $(RD_LIBS)
 FLAGS = $(CFLAGS) $(IFLAGS)
 
 ALL_FILES = $(SRC) $(INC)
@@ -73,7 +82,7 @@ $(LEX_PAR_FOLDER)%.lexer.o: $(LEX_PAR_FOLDER)%.l
 	@$(FL) -o $(@:.o=.c) $?
 	@printf "%s\\n" "$?"
 	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
-	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
+	@$(CC) $(IFLAGS) -c $(@:.o=.c) -o $@
 	@printf "%s\\n" "$(@:.o=.c)"
 	@rm -f $(@:.o=.c)
 
@@ -82,7 +91,7 @@ $(LEX_PAR_FOLDER)%.parser.o: $(LEX_PAR_FOLDER)%.y
 	@$(BS) -d -o $(@:.o=.c) $?
 	@printf "%s\\n" "$?"
 	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
-	@$(CC) $(IFLAGS) $(SDL_FLAGS) -c $(@:.o=.c) -o $@
+	@$(CC) $(IFLAGS) -c $(@:.o=.c) -o $@
 	@printf "%s\\n" "$(@:.o=.c)"
 	@rm -f $(@:.o=.c)
 
@@ -126,6 +135,13 @@ BMP_IMAGES_REMOTE = \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled17.bmp \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled5.bmp \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled3.bmp \
+			https://upload.wikimedia.org/wikipedia/commons/6/6e/Fruits.png \
+			https://upload.wikimedia.org/wikipedia/commons/a/ae/Graphe.jpg \
+			https://pixabay.com/get/e83db40e2cfd023ed1584d05fb0938c9bd22ffd41cb4124297f7c77aaf/abbey-1851493_1280.jpg \
+			https://pixabay.com/get/e136b80a21f41c22d2524518a33219c8b66ae3d01cb2124392f7c07d/water-839590_1280.jpg \
+			https://pixabay.com/get/eb37b90e2af5013ed1534705fb0938c9bd22ffd41cb4124297f7c67ca0/vegetables-2281210_1920.jpg \
+			https://pixabay.com/get/e033b00828f41c22d2524518a33219c8b66ae3d01cb2124392f9c07a/map-961700_1280.png \
+			https://pixabay.com/get/eb31b20a2cfc073ed1584d05fb0938c9bd22ffd41cb4124297f7c87ca4/hat-2435486_1280.png \
 
 images:
 	mkdir -p $@
