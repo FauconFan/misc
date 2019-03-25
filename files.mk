@@ -82,9 +82,9 @@ TEST_FOLDER			= tests/
 
 INC_FILES = \
 	cimp.h \
-	libtest.h \
 
 TEST_FILES = \
+			libtest.h \
 			main_test.c \
 			modif_test.c \
 			window_test.c \
