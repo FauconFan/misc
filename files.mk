@@ -11,6 +11,7 @@ INC_FILES = \
 	parser.h \
 	commands.h \
 	child_readline.h \
+	libtest.h \
 
 INC = $(addprefix $(INC_FOLDER), $(INC_FILES))
 
@@ -82,9 +83,9 @@ TEST_FOLDER			= tests/
 
 INC_FILES = \
 	cimp.h \
+	libtest.h \
 
 TEST_FILES = \
-			libtest.h \
 			main_test.c \
 			modif_test.c \
 			window_test.c \
