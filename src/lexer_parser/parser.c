@@ -75,7 +75,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 				break;
 			case PATH:
 				if (cmd->name != NULL) {
-					printf("Have already a path paramecmter\n");
+					printf("Have already a path parameter\n");
 					return (FALSE);
 				}
 				if (opts & ARG_PATH) {
