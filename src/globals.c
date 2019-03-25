@@ -7,21 +7,6 @@ t_cimp * g_cimp = NULL;
 // Take care to configure the opts properly
 // No opts of type ARG_PATH | ARG_OPT_PATH
 const t_cmd_config g_command_list[] = {
-<<<<<<< HEAD
-	{"help",      cimp_help,      0, 0, 0, 0},
-	{"open",      cimp_open,      1, 0, 0, 0},
-	{"close",     cimp_close,     0, 0, 0, 0},
-	{"list",      cimp_list,      0, 0, 0, 0},
-	{"sym_verti", cimp_sym_verti, 0, 0, 0, 0},
-	{"sym_hori",  cimp_sym_hori,  0, 0, 0, 0},
-	{"rotate",    cimp_rotate,    0, 1, 0, 0},
-	{"select",    cimp_select,    0, 0, 1, 0},
-	{"unselect",  cimp_unselect,  0, 0, 0, 0},
-	{"copy",      cimp_copy,      0, 0, 1, 0},
-	{"cut",       cimp_cut,       0, 0, 1, 0},
-	{"paste",     cimp_paste,     0, 0, 0, 1},
-	{"QUIT",      NULL,           0, 0, 0, 0} // QUIT must have NULL as func_ptr
-=======
 	{"help",      cimp_help,      0,        0       },
 	{"open",      cimp_open,      ARG_PATH, 0       },
 	{"close",     cimp_close,     0,        0       },
@@ -33,6 +18,9 @@ const t_cmd_config g_command_list[] = {
 	{"unselect",  cimp_unselect,  0,        0       },
 	{"save",      cimp_save,      0,        ARG_PATH},
 	{"update",    cimp_update,    0,        ARG_PATH},
+	{"copy",      cimp_copy,      0,        ARG_RECT},
+	{"cut",       cimp_cut,       0,        ARG_RECT},
+	{"paste",     cimp_paste,     ARG_PT,   0       },
 	{"QUIT",      NULL,           0,        0       }, // QUIT must have NULL as func_ptr
 };
 
@@ -46,7 +34,6 @@ const t_extension_img g_extension_img_list[] = {
 	{BMP, (char **) bmp_list, SIZE_TAB(bmp_list)},
 	{PNG, (char **) png_list, SIZE_TAB(png_list)},
 	{JPG, (char **) jpg_list, SIZE_TAB(jpg_list)},
->>>>>>> a0feaab77d832127e8028fca2fc584d7f27d912a
 };
 
 const size_t g_extension_img_size = SIZE_TAB(g_extension_img_list);

@@ -48,16 +48,11 @@ void update_event(t_cimp_event * evnmt) {
 			if (evnmt->selection.x >= -0 && evnmt->selection.y >= 0 && evnmt->selection.w >= 0 &&
 			  evnmt->selection.h >= 0)
 			{
-<<<<<<< HEAD
-				t_cmd * cmd = init_p_out(NULL, NULL, NO_ANGLE, evnmt->selection, NO_VALUE, NO_VALUE,
-						NULL);
-=======
-				t_cmd * cmd = cmd_alloc(NULL, NULL, NO_ANGLE, evnmt->selection, NULL);
->>>>>>> a0feaab77d832127e8028fca2fc584d7f27d912a
+				  t_cmd * cmd = cmd_alloc(NULL, NULL, NO_ANGLE, evnmt->selection, NULL);
 				if (cimp_select(cmd) < 0)
 					printf("Terrible erreur\n");
 				cmd_free(cmd);
 			}
 		}
 	}
-}
+} /* update_event */

@@ -35,35 +35,28 @@ typedef struct          s_cimp {
 }                       t_cimp;
 
 typedef struct      s_cmd {
-	char *   cmd;
-	char *   name;
-	int      num;
-	SDL_Rect rect;
-	int      x0;
-	int      y0;
+	char *    cmd;
+	char *    name;
+	int       num;
+	SDL_Rect  rect;
+	SDL_Point point;
 }                   t_cmd;
 
-#define	NB_ARG_TYPE 4
+#define	NB_ARG_TYPE 5
 
 typedef enum        e_arg_type {
 	ARG_NAME = 0x1,
 	ARG_NUM  = 0x2,
 	ARG_PATH = 0x4,
 	ARG_RECT = 0x8,
+	ARG_PT   = 0x10,
 }                   t_arg_type;
 
 typedef struct      s_cmd_config {
 	char *  name;
 	int (* func_cmd_ptr)(t_cmd *);
-<<<<<<< HEAD
-	int8_t has_name;
-	int8_t has_angle;
-	int8_t has_rect;
-	int8_t has_x0_y0;
-=======
 	uint8_t opts;     // Necessary opts
 	uint8_t opts_opt; // Optionnal opts
->>>>>>> a0feaab77d832127e8028fca2fc584d7f27d912a
 } t_cmd_config;
 
 typedef enum            e_type_img {

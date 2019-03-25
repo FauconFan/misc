@@ -31,15 +31,11 @@ int             cimp_init() {
  */
 void            cimp_end() {
 	if (g_cimp) {
-		if (g_cimp->screen)
-<<<<<<< HEAD
-			cimp_end_screen(g_cimp->screen);
+		if (g_cimp->screen) {
+			cimp_screen_end(g_cimp->screen);
+		}
 		if (g_cimp->copy_buffer)
 			SDL_FreeSurface(g_cimp->copy_buffer);
-=======
-			cimp_screen_end(g_cimp->screen);
->>>>>>> a0feaab77d832127e8028fca2fc584d7f27d912a
-		free_cimp_event(g_cimp->event);
 		cimp_end_select(g_cimp->select);
 		free(g_cimp);
 		g_cimp = NULL;

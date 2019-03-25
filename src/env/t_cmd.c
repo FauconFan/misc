@@ -6,7 +6,15 @@ t_cmd * cmd_alloc() {
 	if ((cmd = malloc(sizeof(t_cmd))) == NULL) {
 		return (NULL);
 	}
-	memset(cmd, 0, sizeof(t_cmd));
+	cmd->cmd     = NULL;
+	cmd->name    = NULL;
+	cmd->num     = 0;
+	cmd->rect.x  = -1;
+	cmd->rect.y  = -1;
+	cmd->rect.w  = -1;
+	cmd->rect.h  = -1;
+	cmd->point.x = -1;
+	cmd->point.y = -1;
 	return (cmd);
 }
 
