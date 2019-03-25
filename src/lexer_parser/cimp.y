@@ -9,7 +9,7 @@
     void yyerror(const char *s);
 %}
 
-%error-verbose
+%define parse.error verbose
 
 %union {
     int numval;
