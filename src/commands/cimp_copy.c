@@ -72,7 +72,7 @@ int cimp_paste(t_cmd * cmd) {
 		printf("Pas d'image ouverte : le collage est impossible\n");
 		return -1;
 	}
-	else if (!g_cimp->copy_buffer) {
+	if (!g_cimp->copy_buffer) {
 		printf("Rien n'a ete copie : le collage est impossible\n");
 		return -1;
 	}
