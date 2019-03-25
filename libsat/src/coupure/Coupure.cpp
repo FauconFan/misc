@@ -30,7 +30,7 @@ static void polarity_check(Fnc & fnc, Occ_list * litt_occ, Distrib * dist) {
  * Si x a toujours une polarité négative, la retirer partout et mettre x = 0
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
-static void nettoyage(Fnc fnc, Occ_list * litt_occ, Distrib * dist) {
+static void nettoyage(Fnc & fnc, Occ_list * litt_occ, Distrib * dist) {
 	std::cout << "clean... \nSimplify... done\n";
 
 	*litt_occ -= fnc.simplify();
@@ -91,7 +91,8 @@ static void apply_cut(Fnc & fnc, Occ_list * litt_occ, unsigned int val) {
 		for (const auto & j : cls_cls_with_val_conclusion) {
 			res_fusion = cut(i, j, val);
 			std::cout << "; " << i << "; " << j << "\t -> " << res_fusion;
-			if (!res_fusion.is_tautology() && fnc.contains(res_fusion)) {
+			if (!res_fusion.is_tautology() && !fnc.contains(res_fusion)) {
+				std::cout << "hh\n";
 				fnc_without_val.add_clause(res_fusion);
 				*litt_occ += res_fusion.get_occ_list();
 			}
@@ -113,7 +114,7 @@ static bool rec_cut(Fnc fnc, Occ_list * litt_occ, Distrib * dist) {
 	nettoyage(fnc, litt_occ, dist);
 
 	if (litt_occ->empty()) {
-		return (!fnc.empty());
+		return (fnc.empty());
 	}
 
 	Fnc copy_fnc = Fnc(fnc);

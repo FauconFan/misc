@@ -32,7 +32,7 @@ static void             fill_buff_lines_yyin(const std::string & contentFile) {
 }
 
 Fnc * getInputFNC(const char * path) {
-	FILE * file = nullptr;
+	FILE * file;
 	std::vector<Clause> res;
 
 	file = fopen(path, "r");
