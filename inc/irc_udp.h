@@ -22,6 +22,7 @@
 typedef uint8_t     t_bool;
 
 #include "t_msg_hdr_builder.h"
+#include "t_tlv.h"
 
 void    getSocketJuliusz(
                 const char * node,

@@ -17,11 +17,24 @@ int main(void)
 
     // return 0;
 
-    t_msg_hdr_builder   *msg;
+    // t_msg_hdr_builder   *msg;
 
-    msg = mhb_alloc();
-    for (size_t i = 0; i < 12; ++i)
-        mbh_add(msg, "coucou", 6);
-    mbh_print(msg);
-    mbh_free(msg);
+    // msg = mhb_alloc();
+    // mbh_set(msg, 16, "o", 1);
+    // for (size_t i = 0; i < 5; ++i)
+    //     mbh_push(msg, "coucou", 6);
+    // mbh_skip(msg);
+    // for (size_t i = 0; i < 5; ++i)
+    //     mbh_push(msg, "coucou", 6);
+    // mbh_print(msg);
+    // mbh_free(msg);
+
+    t_tlv   * tlv;
+
+    tlv = tlv_alloc();
+    tlv_add_pad1(tlv);
+    tlv_add_padN(tlv, 20);
+    tlv_finish(tlv);
+    mbh_print(tlv->msg);
+    tlv_free(tlv);
 }
