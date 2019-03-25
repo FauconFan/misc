@@ -15,8 +15,8 @@ matrix:
         - diff .travis.yml expected.out
     - name: test project compile
       stage: Base
-      install:
-        - travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9
+      before_install: sudo apt-get update
+      install: sudo apt-get install -y --no-install-recommends libsdl2-dev libsdl2-image-dev
       script:
         - make
     - name: all C files in Makefile
@@ -34,37 +34,31 @@ matrix:
     - name: cpplint
       stage: Lint
       before_install: sudo apt-get update
-      install:
-        - sudo apt-get install -y --no-install-recommends python3-venv
+      install: sudo apt-get install -y --no-install-recommends python3-venv
       script:
         - make cpplint_run
     - name: cppcheck
       stage: Lint
       before_install: sudo apt-get update
-      install:
-        - sudo apt-get install -y --no-install-recommends cppcheck
+      install: sudo apt-get install -y --no-install-recommends cppcheck
       script:
         - make cppcheck_run
     - name: clang-tidy
       stage: Lint
       before_install: sudo apt-get update
-      install:
-        - sudo apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0
-        - travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9
+      install: sudo apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0 libsdl2-dev libsdl2-image-dev
       script:
         - make clang_tidy_run
     - name: infer
       stage: Lint
-      install:
-        - travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9
+      before_install: sudo apt-get update
+      install: sudo apt-get install -y --no-install-recommends libsdl2-dev libsdl2-image-dev
       script:
         - sudo make /usr/local/bin/infer
         - make infer_run
     - name: libcheck
       stage: Test
       before_install: sudo apt-get update
-      install:
-        - sudo apt-get install -y --no-install-recommends python3-venv check
-        - travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9
+      install: sudo apt-get install -y --no-install-recommends python3-venv check libsdl2-dev libsdl2-image-dev
       script:
         - make cimp_check

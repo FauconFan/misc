@@ -5,7 +5,7 @@ static void real_rotate(t_cmd * cmd, int angle);
 static void real_rotate90();
 
 int cimp_rotate(t_cmd * cmd) {
-	real_rotate(cmd, cmd->angle);
+	real_rotate(cmd, cmd->num);
 	return (0);
 }
 
@@ -46,5 +46,4 @@ static void real_rotate90() {
 	}
 	SDL_FreeSurface(g_cimp->screen->buff_screen);
 	g_cimp->screen->buff_screen = surf;
-	SDL_SetWindowSize(g_cimp->screen->window, new_width, new_height);
 }
