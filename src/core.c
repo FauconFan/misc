@@ -5,11 +5,11 @@ void treat_line(char * line) {
 
 	cmd = parser(line);
 	if (cmd != NULL) {
-		  if (cimp_exe(cmd) == -1) {
+		if (cimp_exe(cmd) == -1) {
 			printf("Internal program error !!!\n");
 			printf("Please contact maintainers !!!\n");
 		}
-		  cmd_free(cmd);
+		cmd_free(cmd);
 	}
 } /* treat_line */
 

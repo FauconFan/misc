@@ -110,6 +110,7 @@ int cimp_paste(t_cmd * cmd) {
 int cimp_cut(t_cmd * cmd) {
 	if (cimp_copy(cmd) < 0)
 		return -1;
+
 	SDL_Rect rect;
 	if (cmd->rect.x != -1 && cmd->rect.y != -1 && cmd->rect.w != -1 && cmd->rect.h != -1) {
 		rect = cmd->rect;
