@@ -34,6 +34,10 @@ tok:
                 {
                     li_token_add(li_token, token_rect($2, $3, $4, $5));
                 }
+    |   '(' NUM_B NUM_B ')'
+                {
+                    li_token_add(li_token, token_point($2, $3));
+                }
     ;
 
 %%
