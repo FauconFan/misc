@@ -58,8 +58,8 @@ t_cimp_screen * cimp_init_screen(char * path_bmp) {
 			SDL_FreeSurface(surf);
 			return (NULL);
 		}
+		SDL_BlitSurface(surf, &origin, SDL_GetWindowSurface(win), NULL);
 	}
-	SDL_BlitSurface(surf, &origin, SDL_GetWindowSurface(win), NULL);
 	if (libtest_viewing_enabled)
 		SDL_UpdateWindowSurface(win);
 	if ((sc = (t_cimp_screen *) malloc(sizeof(t_cimp_screen))) == NULL) {
