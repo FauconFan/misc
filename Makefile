@@ -137,11 +137,11 @@ BMP_IMAGES_REMOTE = \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled3.bmp \
 			https://upload.wikimedia.org/wikipedia/commons/6/6e/Fruits.png \
 			https://upload.wikimedia.org/wikipedia/commons/a/ae/Graphe.jpg \
-			https://pixabay.com/get/e83db40e2cfd023ed1584d05fb0938c9bd22ffd41cb4124297f7c77aaf/abbey-1851493_1280.jpg \
-			https://pixabay.com/get/e136b80a21f41c22d2524518a33219c8b66ae3d01cb2124392f7c07d/water-839590_1280.jpg \
-			https://pixabay.com/get/eb37b90e2af5013ed1534705fb0938c9bd22ffd41cb4124297f7c67ca0/vegetables-2281210_1920.jpg \
-			https://pixabay.com/get/e033b00828f41c22d2524518a33219c8b66ae3d01cb2124392f9c07a/map-961700_1280.png \
-			https://pixabay.com/get/eb31b20a2cfc073ed1584d05fb0938c9bd22ffd41cb4124297f7c87ca4/hat-2435486_1280.png \
+			https://cdn.pixabay.com/photo/2016/11/23/00/38/abbey-1851493_960_720.jpg \
+			https://cdn.pixabay.com/photo/2014/02/27/16/08/splashing-275950_960_720.jpg \
+			https://cdn.pixabay.com/photo/2017/09/22/19/05/casserole-dish-2776735_960_720.jpg \
+			https://cdn.pixabay.com/photo/2013/06/06/15/36/world-117174_960_720.png \
+			https://cdn.pixabay.com/photo/2016/06/13/10/45/polar-1453993_960_720.png \
 
 images:
 	mkdir -p $@
