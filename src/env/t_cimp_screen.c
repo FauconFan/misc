@@ -54,8 +54,8 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 		origin.w = tmp->w;
 		origin.h = tmp->h;
 		SDL_BlitSurface(tmp, &origin, surf, NULL);
-		if(libtest_viewing_enabled)
-			sc->window      = win;
+		if (libtest_viewing_enabled)
+			sc->window = win;
 		sc->buff_screen = surf;
 		sc->path        = path;
 	}

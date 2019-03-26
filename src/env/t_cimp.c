@@ -6,6 +6,7 @@
 int             cimp_init() {
 	if (g_cimp)
 		return (0);
+
 	if (libtest_viewing_enabled) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 			printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
