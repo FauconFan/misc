@@ -16,9 +16,9 @@ START_TEST(test_close){
 START_TEST(test_open){
   ck_assert(cimp_open(NULL)==0);
   treat_line("open images/untitled17.bmp");
-  ck_assert(g_cimp->screen != NULL && g_cimp->screen->buff_screen!=NULL && strcmp("images/untitled17.bmp",g_cimp->screen->original_path));
+  ck_assert(g_cimp->screen != NULL && g_cimp->screen->buff_screen!=NULL && strcmp("images/untitled17.bmp",g_cimp->screen->path));
   treat_line("open images/untitled5.bmp");
-  ck_assert(strcmp("images/untitled17.bmp",g_cimp->screen->original_path));
+  ck_assert(strcmp("images/untitled17.bmp",g_cimp->screen->path));
 }END_TEST
 
 TCase *window_test(){
