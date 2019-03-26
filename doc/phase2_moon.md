@@ -51,5 +51,3 @@ Il faut aussi voir les comportements adaptés, et les cas particuliers (ouvrir u
 - ajust_light_contrast
 
 Les commandes précédentes sont rapides à partir du moment où le parser est suffisamment fourni pour accepter le format de toutes ces commandes.
-
-Toutes les commandes sont faciles à implémenter hormis la dernière qui (à priori) demande à ce qu'on s'y penche un peu plus.
