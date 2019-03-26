@@ -69,8 +69,8 @@ t_cimp_screen * cimp_init_screen(char * path_bmp) {
 		SDL_DestroyWindow(win);
 		return (NULL);
 	}
-	if(libtest_viewing_enabled)
-		sc->window        = win;
+	if (libtest_viewing_enabled)
+		sc->window = win;
 	sc->buff_screen   = surf;
 	sc->original_path = path;
 	if (libtest_viewing_enabled)
