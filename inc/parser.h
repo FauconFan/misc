@@ -8,14 +8,16 @@ typedef enum    e_type_token {
 	PATH,
 	NUM,
 	RECT,
+	POINT,
 }               t_type_token;
 
 typedef struct  s_token {
 	t_type_token type;
 	union {
-		int64_t  num;
-		char *   str;
-		SDL_Rect rect;
+		int64_t   num;
+		char *    str;
+		SDL_Rect  rect;
+		SDL_Point point;
 	}                u;
 	struct s_token * next;
 }               t_token;
@@ -36,6 +38,7 @@ t_token * token_word(const char * word);
 t_token * token_path(const char * word);
 t_token * token_num(int num);
 t_token * token_rect(int x, int y, int w, int h);
+t_token * token_point(int x, int y);
 
 t_li_token * li_token_alloc();
 void li_token_free(t_li_token * li);

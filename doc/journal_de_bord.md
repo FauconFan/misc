@@ -1,5 +1,12 @@
 # Journal de Bord
 
+## Semaine 18 - 24 Mars 2019
+
+- Rework parser, lexer bison + parser local
+- Finir l'export images + commande save / update
+- Travail sur les tests unitaires
+- Fin de cut/copy/paste
+
 ## Semaine 11 - 17 Mars 2019
 
 - Travail sur l'export en jpeg, png

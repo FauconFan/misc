@@ -111,7 +111,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 				break;
 			case RECT:
 				if (cmd_cf->opts & ARG_RECT && (opts & ARG_RECT) == 0) {
-					printf("Hav already a rect parameter\n");
+					printf("Have already a rect parameter\n");
 					return (FALSE);
 				}
 				else if (opts & ARG_RECT) {
@@ -124,6 +124,24 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 				}
 				else {
 					printf("No need a rect parameter\n");
+					return (FALSE);
+				}
+				break;
+			case POINT:
+				if (cmd_cf->opts & ARG_PT && (opts & ARG_PT) == 0) {
+					printf("Have already a point paraeter\n");
+					return (FALSE);
+				}
+				else if (opts & ARG_PT) {
+					cmd->point = tok->u.point;
+					opts      &= ~(ARG_PT);
+				}
+				else if (opts_opt & ARG_PT) {
+					cmd->point = tok->u.point;
+					opts_opt  &= ~(ARG_PT);
+				}
+				else {
+					printf("No need a point parameter\n");
 					return (FALSE);
 				}
 				break;
