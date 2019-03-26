@@ -84,6 +84,18 @@ bool Fnc::contains(const Clause & acl) {
 	return (false);
 }
 
+void Fnc::assign_other_value(unsigned int val, Distrib & dist) const{
+	for (const auto & ac : this->_clauses) {
+		ac.assign_other_value(val, dist);
+	}
+}
+
+void Fnc::unit_propagation(Distrib & dist) const{
+	for (const auto & ac : this->_clauses) {
+		ac.unit_propagation(dist);
+	}
+}
+
 void Fnc::display(std::ostream & os) const{
 	os << "FNC [\n";
 

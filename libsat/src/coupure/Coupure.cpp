@@ -1,26 +1,26 @@
 #include "libsat.hpp"
 
-static void polarity_check(Fnc & fnc, Occ_list * litt_occ, Distrib * dist) {
+static void polarity_check(Fnc & fnc, Occ_list & litt_occ, Distrib & dist) {
 	std::pair<std::vector<unsigned int>, std::vector<unsigned int> > p;
 
 	while (true) {
-		p = litt_occ->getSoloPolarity();
+		p = litt_occ.getSoloPolarity();
 		auto pos = p.first;
 		auto neg = p.second;
 
 		std::cout << fnc;
 
-		std::cout << *litt_occ;
+		std::cout << litt_occ;
 
 		if (pos.empty() && neg.empty())
 			break;
 		for (auto i : pos) {
-			dist->set(i, true);
-			*litt_occ -= fnc.delete_if_contains(i);
+			dist.set(i, true);
+			litt_occ -= fnc.delete_if_contains(i);
 		}
 		for (auto i : neg) {
-			dist->set(i, false);
-			*litt_occ -= fnc.delete_if_contains(i);
+			dist.set(i, false);
+			litt_occ -= fnc.delete_if_contains(i);
 		}
 	}
 }
@@ -30,19 +30,19 @@ static void polarity_check(Fnc & fnc, Occ_list * litt_occ, Distrib * dist) {
  * Si x a toujours une polarité négative, la retirer partout et mettre x = 0
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
-static void nettoyage(Fnc & fnc, Occ_list * litt_occ, Distrib * dist) {
+static void nettoyage(Fnc & fnc, Occ_list & litt_occ, Distrib & dist) {
 	std::cout << "clean... \nSimplify... done\n";
 
-	*litt_occ -= fnc.simplify();
+	litt_occ -= fnc.simplify();
 	std::cout << "Delete tautologies... done\n";
-	*litt_occ -= fnc.delete_tautologies();
-	std::cout << "New litt_occ " << *litt_occ;
+	litt_occ -= fnc.delete_tautologies();
+	std::cout << "New litt_occ " << litt_occ;
 	std::cout << fnc;
 
 	// Suppression si polarité unique
 	std::cout << "Polarity test\n";
 	polarity_check(fnc, litt_occ, dist);
-	std::cout << *litt_occ << "\ndone\n";
+	std::cout << litt_occ << "\ndone\n";
 
 	std::cout << fnc;
 
@@ -50,7 +50,7 @@ static void nettoyage(Fnc & fnc, Occ_list * litt_occ, Distrib * dist) {
 }
 
 /*Effectue la coupure de f par rapport a val*/
-static void apply_cut(Fnc & fnc, Occ_list * litt_occ, unsigned int val) {
+static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 	Fnc fnc_without_val;
 	Fnc fnc_premisse;
 	Fnc fnc_conclusion;
@@ -83,9 +83,9 @@ static void apply_cut(Fnc & fnc, Occ_list * litt_occ, unsigned int val) {
 
 	std::cout << "start cut...\n";
 	for (const auto & i : cls_with_val_premisse)
-		*litt_occ -= i.get_occ_list();
+		litt_occ -= i.get_occ_list();
 	for (const auto & j : cls_cls_with_val_conclusion)
-		*litt_occ -= j.get_occ_list();
+		litt_occ -= j.get_occ_list();
 
 	for (const auto & i : cls_with_val_premisse) {
 		for (const auto & j : cls_cls_with_val_conclusion) {
@@ -94,32 +94,32 @@ static void apply_cut(Fnc & fnc, Occ_list * litt_occ, unsigned int val) {
 			if (!res_fusion.is_tautology() && !fnc.contains(res_fusion)) {
 				std::cout << "hh\n";
 				fnc_without_val.add_clause(res_fusion);
-				*litt_occ += res_fusion.get_occ_list();
+				litt_occ += res_fusion.get_occ_list();
 			}
 		}
 	}
 
 	std::cout << "fnc become : ";
 	std::cout << fnc_without_val;
-	std::cout << "New litt_occ : " << *litt_occ << "\nend cut\n";
+	std::cout << "New litt_occ : " << litt_occ << "\nend cut\n";
 
 	fnc = fnc_without_val;
 } // apply_cut
 
-static bool rec_cut(Fnc fnc, Occ_list * litt_occ, Distrib * dist) {
+static bool rec_cut(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	unsigned int cut_value;
 	bool ret;
 	Fnc next;
 
 	nettoyage(fnc, litt_occ, dist);
 
-	if (litt_occ->empty()) {
+	if (litt_occ.empty()) {
 		return (fnc.empty());
 	}
 
 	Fnc copy_fnc = Fnc(fnc);
 
-	cut_value = litt_occ->getMinOccu();
+	cut_value = litt_occ.getMinOccu();
 	std::cout << "cut_value : " << cut_value << "\n";
 
 	apply_cut(fnc, litt_occ, cut_value);
@@ -129,7 +129,8 @@ static bool rec_cut(Fnc fnc, Occ_list * litt_occ, Distrib * dist) {
 
 		std::cout << copy_fnc;
 
-		// Il faut assigner les valeurs non assignée apparaissant dans copy_fnc
+		copy_fnc.assign_other_value(cut_value, dist);
+		copy_fnc.unit_propagation(dist);
 	}
 
 	return ret;
@@ -141,7 +142,9 @@ bool cut_solve(const Fnc & fnc) {
 
 	std::cout << litt_occ << "\n";
 
-	bool res = rec_cut(Fnc(fnc), &litt_occ, &dist);
+	bool res = rec_cut(Fnc(fnc), litt_occ, dist);
+
+	fnc.assign_other_value(0, dist);
 
 	std::cout << dist;
 

@@ -22,6 +22,8 @@ class Fnc{
 		Occ_list        simplify();
 		Occ_list        delete_if_contains(int);
 		bool            contains(const Clause &);
+		void            assign_other_value(unsigned int, Distrib &) const;
+		void            unit_propagation(Distrib &) const;
 
 		void            display(std::ostream &) const;
 

@@ -67,17 +67,11 @@ Occ_list Clause::get_occ_list() const{
 	Occ_list res;
 
 	for (unsigned int val : *(this->_pos_litts)) {
-		// std::cout << "\nres.getContent()[val] before adding Pair (1, 0) : " << res.getContent()[val];
 		res.addPair(val, Pair(1, 0));
-		// res.getContent().at(val) += Pair (1, 0);
-		// std::cout << "\nres.getContent()[val] after adding Pair (1, 0) :" << res.getContent()[val];
 	}
 
 	for (unsigned int val : *(this->_neg_litts)) {
 		res.addPair(val, Pair(0, 1));
-		// std::cout << "\nres.getContent()[val] before adding Pair (0, 1) :" << res.getContent()[val];
-		// res.getContent()[val] += Pair (0, 1);
-		// std::cout << "\nres.getContent()[val] after adding Pair (0, 1) :" << res.getContent()[val];
 	}
 
 	return res;
@@ -113,7 +107,6 @@ Occ_list Clause::simplify_clause() {
 	for (unsigned int val : *(this->_neg_litts)) {
 		if (!buff.insert(val).second)
 			res.addPair(val, Pair(0, 1));
-		// res.getContent()[val] += Pair (0, 1);
 	}
 
 	this->_neg_litts->clear();
@@ -123,7 +116,6 @@ Occ_list Clause::simplify_clause() {
 	for (unsigned int val : *(this->_pos_litts)) {
 		if (!buff.insert(val).second)
 			res.addPair(val, Pair(1, 0));
-		// res.getContent()[val] += Pair (1, 0);
 	}
 
 	this->_pos_litts->clear();
@@ -132,43 +124,64 @@ Occ_list Clause::simplify_clause() {
 	return res;
 }
 
-/*bool Clause::unit_propagation (Distrib & dist) const{
- *  int res = 0;
- *
- *  for (unsigned int val : *(this->_neg_litts)){
- *      auto current_elt = dist.find(val);
- *      if (current_elt == dist.end()){
- *          if (res != 0)
- *              return false;
- *          else
- *              res = -val;
- *      }else{
- *          if (current_elt->second == false)
- *              return false;
- *      }
- *  }
- *
- *  for (unsigned int val : *(this->_pos_litts)){
- *      auto current_elt = dist.find(val);
- *      if (current_elt == dist.end()){
- *          if (res != 0)
- *              return false;
- *          else
- *              res = val;
- *      }else{
- *          if (current_elt->second == true)
- *              return false;
- *      }
- *  }
- *
- *  if (res > 0)
- *      dist[res] = true;
- *  else if (res < 0)
- *      dist[-res] = false;
- *  else
- *      return false;
- *  return true;
- * }*/
+void Clause::assign_other_value(unsigned int val, Distrib & dist) const{
+	for (unsigned int i : *(this->_neg_litts)) {
+		if (i == val)
+			continue;
+		if (dist.find(i) == dist.end()) {
+			dist.set(i, true);
+		}
+	}
+
+	for (unsigned int i : *(this->_pos_litts)) {
+		if (i == val)
+			continue;
+		if (dist.find(i) == dist.end()) {
+			dist.set(i, false);
+		}
+	}
+}
+
+bool Clause::unit_propagation(Distrib & dist) const{
+	int res = 0;
+
+	for (unsigned int val : *(this->_neg_litts)) {
+		auto current_elt = dist.find(val);
+		if (current_elt == dist.end()) {
+			if (res != 0)
+				return false;
+
+			res = -val;
+		}
+		else {
+			if (current_elt->second == false)
+				return false;
+		}
+	}
+
+	for (unsigned int val : *(this->_pos_litts)) {
+		auto current_elt = dist.find(val);
+		if (current_elt == dist.end()) {
+			if (res != 0)
+				return false;
+
+			res = val;
+		}
+		else {
+			if (current_elt->second == true)
+				return false;
+		}
+	}
+
+	if (res > 0)
+		dist.set(res, true);
+	else if (res < 0)
+		dist.set(-res, false);
+	else
+		return false;
+
+	return true;
+} // Clause::unit_propagation
 
 Clause cut(const Clause & icl1, const Clause & icl2, unsigned int val) {
 	std::vector<unsigned int> * icl1_pos_litts;

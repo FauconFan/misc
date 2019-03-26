@@ -12,6 +12,20 @@ void Distrib::set(unsigned int k, bool v) {
 	this->_distrib[k] = v;
 }
 
+std::unordered_map<unsigned int, bool, std::hash<unsigned int>, std::equal_to<>,
+  std::allocator<std::pair<const unsigned int, bool> > >::const_iterator Distrib::find(unsigned int k) const{
+	return this->_distrib.find(k);
+}
+
+std::unordered_map<unsigned int, bool, std::hash<unsigned int>, std::equal_to<>,
+  std::allocator<std::pair<const unsigned int, bool> > >::const_iterator Distrib::end() const{
+	return this->_distrib.end();
+}
+
+/*bool Distrib::contains(unsigned int val) const {
+ *  return (this->_distrib.end() != this->_distrib.find(val));
+ * }*/
+
 std::ostream & operator<<(std::ostream & os, const Distrib & d) {
 	os << "Distrib [\n";
 

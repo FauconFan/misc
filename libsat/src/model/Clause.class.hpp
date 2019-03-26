@@ -21,7 +21,8 @@ class Clause
 		int contains_litt(int) const;
 		bool is_tautology() const;
 		Occ_list simplify_clause();
-	// bool unit_propagation(Distrib & dist) const; //On suppose que la clause est nettoyée
+		void assign_other_value(unsigned int, Distrib &) const;
+		bool unit_propagation(Distrib &) const; // On suppose que la clause est nettoyée
 
 	private:
 		std::vector<unsigned int> * _pos_litts {nullptr};
