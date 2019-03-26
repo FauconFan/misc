@@ -33,6 +33,9 @@ void                print_token(t_token * tok) {
 		case POINT:
 			printf("POINT(%d %d)\n", tok->u.point.x, tok->u.point.y);
 			break;
+		case COLOR:
+			printf("COLOR(%d %d %d)\n", tok->u.color.r, tok->u.color.g, tok->u.color.b);
+			break;
 	}
 }
 
@@ -87,5 +90,25 @@ t_token * token_point(int x, int y) {
 
 	tok->u.point.x = x;
 	tok->u.point.y = y;
+	return (tok);
+}
+
+t_token * token_color(const char * word) {
+	t_token * tok;
+	uint32_t col;
+
+	if (strlen(word) != 8 || strncmp(word, "0x", 2) != 0)
+		return (NULL);
+
+	if ((tok = token_alloc(COLOR)) == NULL)
+		return (NULL);
+
+	col = strtol(word + 2, NULL, 16);
+	tok->u.color.b = col % 256;
+	col = col >> 8;
+	tok->u.color.g = col % 256;
+	col = col >> 8;
+	tok->u.color.r = col % 256;
+	// col >> 8;
 	return (tok);
 }

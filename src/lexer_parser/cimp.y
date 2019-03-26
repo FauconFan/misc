@@ -19,6 +19,7 @@
 %token <numval> NUM_B
 %token <strval> WORD_B
 %token <strval> PATH_B
+%token <strval> COLOR_B
 
 %%
 
@@ -38,6 +39,7 @@ tok:
                 {
                     li_token_add(li_token, token_point($2, $3));
                 }
+    |   COLOR_B { li_token_add(li_token, token_color($1)); }
     ;
 
 %%

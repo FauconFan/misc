@@ -89,6 +89,9 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 			case POINT:
 				HANDLE_PARAM("point", (ARG_PT), cmd->point = tok->u.point)
 				break;
+			case COLOR:
+				HANDLE_PARAM("color", (ARG_COLOR), cmd->color[0] = tok->u.color)
+				break;
 		}
 	}
 	if (opts != 0) {
