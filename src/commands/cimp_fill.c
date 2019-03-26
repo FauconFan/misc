@@ -9,7 +9,13 @@ int cimp_fill(t_cmd * cmd) {
 		int i_max = buff_screen->w;
 		int j_max = buff_screen->h;
 
-		if (g_cimp->select != NULL) {
+		if (cmd->rect.x != -1) {
+			i_min = cmd->rect.x;
+			j_min = cmd->rect.y;
+			i_max = cmd->rect.w + i_min;
+			j_max = cmd->rect.h + j_min;
+		}
+		else if (g_cimp->select != NULL) {
 			i_min = g_cimp->select->surface.x;
 			j_min = g_cimp->select->surface.y;
 			i_max = g_cimp->select->surface.w + i_min;

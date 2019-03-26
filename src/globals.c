@@ -18,7 +18,7 @@ const t_cmd_config g_command_list[] = {
 	{"unselect",  cimp_unselect,  0,         0       },
 	{"save",      cimp_save,      0,         ARG_PATH},
 	{"update",    cimp_update,    0,         ARG_PATH},
-	{"fill",      cimp_fill,      ARG_COLOR, 0       },
+	{"fill",      cimp_fill,      ARG_COLOR, ARG_RECT},
 	{"QUIT",      NULL,           0,         0       }, // QUIT must have NULL as func_ptr
 };
 
