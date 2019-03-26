@@ -21,7 +21,8 @@ COLOR_RGB   0x{HEXDIGIT}{6}
 
 %%
 
-[()]                { return (yytext[0]);}
+[()]                { return (yytext[0]); }
+"->"                { return ARROW_B; }
 {NUMBER}            { yylval.numval = handle_num(yytext); return NUM_B; }
 {COLOR_RGB}         { yylval.strval = yytext; return COLOR_B; }
 {PATH}              { yylval.strval = yytext; return PATH_B; }

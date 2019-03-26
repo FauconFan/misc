@@ -15,7 +15,11 @@ t_cmd * cmd_alloc() {
 	cmd->rect.h  = -1;
 	cmd->point.x = -1;
 	cmd->point.y = -1;
-	memset(cmd->color, 0, sizeof(cmd->color));
+	cmd->color.r = 0;
+	cmd->color.g = 0;
+	cmd->color.b = 0;
+	cmd->color.a = 0;
+	memset(cmd->color2, 0, sizeof(cmd->color2));
 	return (cmd);
 }
 

@@ -39,18 +39,20 @@ typedef struct      s_cmd {
 	int       num;
 	SDL_Rect  rect;
 	SDL_Point point;
-	SDL_Color color[2];
+	SDL_Color color;
+	SDL_Color color2[2];
 }                   t_cmd;
 
 #define	NB_ARG_TYPE 5
 
 typedef enum        e_arg_type {
-	ARG_NAME  = 0x1,
-	ARG_NUM   = 0x2,
-	ARG_PATH  = 0x4,
-	ARG_RECT  = 0x8,
-	ARG_PT    = 0x10,
-	ARG_COLOR = 0x20,
+	ARG_NAME   = 0x1,
+	ARG_NUM    = 0x2,
+	ARG_PATH   = 0x4,
+	ARG_RECT   = 0x8,
+	ARG_PT     = 0x10,
+	ARG_COLOR  = 0x20,
+	ARG_COLOR2 = 0x40,
 }                   t_arg_type;
 
 typedef struct      s_cmd_config {

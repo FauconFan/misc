@@ -6,6 +6,7 @@
 #define	ARG_RECT_TAG "RECT"
 #define	ARG_PT_TAG   "POINT"
 #define	ARG_COL_TAG  "COLOR"
+#define	ARG_COL2_TAG "COLOR2"
 
 const char * arg_type_to_string(t_arg_type atype) {
 	switch (atype) {
@@ -26,6 +27,9 @@ const char * arg_type_to_string(t_arg_type atype) {
 
 		case ARG_COLOR:
 			return (ARG_COL_TAG);
+
+		case ARG_COLOR2:
+			return (ARG_COL2_TAG);
 	}
 	// Should never happened
 	return (NULL);

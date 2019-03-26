@@ -13,8 +13,8 @@ int cimp_fill(t_cmd * cmd) {
 
 		buff_screen = g_cimp->screen->buff_screen;
 		selection   = sdl_surface_build_good_selection(buff_screen, cmd->rect);
-		color       = SDL_MapRGB(buff_screen->format, cmd->color[0].r, cmd->color[0].g,
-				cmd->color[0].b);
+		color       = SDL_MapRGB(buff_screen->format, cmd->color.r, cmd->color.g,
+				cmd->color.b);
 
 		sdl_surface_mapp(buff_screen, selection, set_color, &color);
 	}
