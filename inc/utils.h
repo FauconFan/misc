@@ -27,4 +27,11 @@ int     save_surface_bmp(const char * file, SDL_Surface * surface);
 t_type_img              get_type_img(char * filepath);
 t_export_img_func_ptr   get_func_img(t_type_img type);
 
+// sdl_utils.c
+
+SDL_Rect    sdl_surface_build_good_selection(SDL_Surface * surf, SDL_Rect param);
+// void        sdl_surface_map(SDL_Surface * surf, SDL_Rect rect, uint32_t (* fp)(uint32_t));
+void        sdl_surface_mapp(SDL_Surface * surf, SDL_Rect rect,
+  uint32_t (* fp)(uint32_t, void *), void * v);
+
 #endif // ifndef UTILS_H

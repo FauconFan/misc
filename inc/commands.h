@@ -13,5 +13,7 @@ int cimp_unselect(t_cmd * cmd);
 int cimp_save(t_cmd * cmd);
 int cimp_update(t_cmd * cmd);
 int cimp_fill(t_cmd * cmd);
+int cimp_color_negative(t_cmd * cmd);
+int cimp_color_gray(t_cmd * cmd);
 
 #endif // ifndef COMMANDS_H

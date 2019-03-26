@@ -47,6 +47,7 @@ ENV_FILES = \
 UTILS_FILES = \
 			path_utils.c \
 			str_utils.c \
+			sdl_utils.c \
 
 FORMAT_FILES = \
 			save_surface_png.c \
@@ -66,6 +67,8 @@ COMMANDS_FILES = \
 			cimp_save.c \
 			cimp_update.c \
 			cimp_fill.c \
+			cimp_color_negative.c \
+			cimp_color_gray.c \
 
 LEX_PAR_FILES = \
 			parser.c \
