@@ -40,6 +40,25 @@ t_cmd * parser(char * line) {
 	return (res);
 }
 
+#define	HANDLE_PARAM(name_parm, arg_opt, eat_cmd) \
+	if (cmd_cf->opts & (arg_opt) && (opts & (arg_opt)) == 0) { \
+		printf("Have already a " name_parm "parameter\n"); \
+		return (FALSE); \
+	} \
+	else if (opts & (arg_opt)) { \
+		eat_cmd; \
+		opts &= ~(arg_opt); \
+	} \
+	else if (opts_opt & (arg_opt)) { \
+		eat_cmd; \
+		opts_opt &= ~(arg_opt); \
+	} \
+	else { \
+		printf("No need a " name_parm " for this command\n"); \
+		return (FALSE); \
+	}
+
+
 static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
   const t_cmd_config * cmd_cf) {
 	uint8_t opts;
@@ -56,94 +75,19 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 		tok = li_token_get_next(li_toks);
 		switch (tok->type) {
 			case WORD:
-				if (cmd->name != NULL) {
-					printf("Have already a name parameter\n");
-					return (FALSE);
-				}
-				if (opts & ARG_NAME || opts & ARG_PATH) {
-					cmd->name = dupstr(tok->u.str);
-					opts     &= ~(ARG_NAME | ARG_PATH);
-				}
-				else if (opts_opt & ARG_NAME || opts_opt & ARG_PATH) {
-					cmd->name = dupstr(tok->u.str);
-					opts_opt &= ~(ARG_NAME | ARG_PATH);
-				}
-				else {
-					printf("No need a name for this command\n");
-					return (FALSE);
-				}
+				HANDLE_PARAM("name", (ARG_NAME | ARG_PATH), cmd->name = dupstr(tok->u.str))
 				break;
 			case PATH:
-				if (cmd->name != NULL) {
-					printf("Have already a path parameter\n");
-					return (FALSE);
-				}
-				if (opts & ARG_PATH) {
-					cmd->name = dupstr(tok->u.str);
-					opts     &= ~(ARG_PATH);
-				}
-				else if (opts_opt & ARG_PATH) {
-					cmd->name = dupstr(tok->u.str);
-					opts_opt &= ~(ARG_PATH);
-				}
-				else {
-					printf("No need a path parameter\n");
-					return (FALSE);
-				}
+				HANDLE_PARAM("path", (ARG_PATH), cmd->name = dupstr(tok->u.str))
 				break;
 			case NUM:
-				if (cmd_cf->opts & ARG_NUM && (opts & ARG_NUM) == 0) {
-					printf("Have already a num parameter\n");
-					return (FALSE);
-				}
-				else if (opts & ARG_NUM) {
-					cmd->num = tok->u.num;
-					opts    &= ~(ARG_NUM);
-				}
-				else if (opts_opt & ARG_NUM) {
-					cmd->num  = tok->u.num;
-					opts_opt &= ~(ARG_NUM);
-				}
-				else {
-					printf("No need a num parameter\n");
-					return (FALSE);
-				}
+				HANDLE_PARAM("num", (ARG_NUM), cmd->num = tok->u.num)
 				break;
 			case RECT:
-				if (cmd_cf->opts & ARG_RECT && (opts & ARG_RECT) == 0) {
-					printf("Have already a rect parameter\n");
-					return (FALSE);
-				}
-				else if (opts & ARG_RECT) {
-					cmd->rect = tok->u.rect;
-					opts     &= ~(ARG_RECT);
-				}
-				else if (opts_opt & ARG_RECT) {
-					cmd->rect = tok->u.rect;
-					opts_opt &= ~(ARG_RECT);
-				}
-				else {
-					printf("No need a rect parameter\n");
-					return (FALSE);
-				}
+				HANDLE_PARAM("rect", (ARG_RECT), cmd->rect = tok->u.rect)
 				break;
 			case POINT:
-				if (cmd_cf->opts & ARG_PT && (opts & ARG_PT) == 0) {
-					printf("Have already a point paraeter\n");
-					return (FALSE);
-				}
-				else if (opts & ARG_PT) {
-					cmd->point = tok->u.point;
-					opts      &= ~(ARG_PT);
-				}
-				else if (opts_opt & ARG_PT) {
-					cmd->point = tok->u.point;
-					opts_opt  &= ~(ARG_PT);
-				}
-				else {
-					printf("No need a point parameter\n");
-					return (FALSE);
-				}
+				HANDLE_PARAM("point", (ARG_PT), cmd->point = tok->u.point)
 				break;
 		}
 	}
