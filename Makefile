@@ -44,14 +44,12 @@ LIBS_DEP = \
 			libjpeg \
 			libpng \
 
-SDL_FLAGS = $(shell sdl2-config --cflags)
-SDL_LIBS = $(shell sdl2-config --libs) -lSDL2_image
-
 RD_LIBS = -lreadline
+M_LIB = -lm
 
 CFLAGS = -g -Wall -Wextra -Werror -std=c11
 IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(shell $(PKG) $(LIBS_DEP) --cflags)
-LFLAGS = $(shell $(PKG) $(LIBS_DEP) --libs) $(RD_LIBS)
+LFLAGS = $(shell $(PKG) $(LIBS_DEP) --libs) $(RD_LIBS) $(M_LIB)
 FLAGS = $(CFLAGS) $(IFLAGS)
 
 ALL_FILES = $(SRC) $(INC)
