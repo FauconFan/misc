@@ -148,7 +148,7 @@ bool Clause::unit_propagation(Distrib & dist) const{
 	for (unsigned int val : *(this->_neg_litts)) {
 		auto current_elt = dist.find(val);
 		if (current_elt == dist.end()) {
-			if (res != 0)
+			if (res != 0) // & res != val
 				return false;
 
 			res = -val;
@@ -162,7 +162,7 @@ bool Clause::unit_propagation(Distrib & dist) const{
 	for (unsigned int val : *(this->_pos_litts)) {
 		auto current_elt = dist.find(val);
 		if (current_elt == dist.end()) {
-			if (res != 0)
+			if (res != 0) // & res != val
 				return false;
 
 			res = val;

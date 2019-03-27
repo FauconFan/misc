@@ -1,54 +1,5 @@
 #include "libsat.hpp"
 
-static void polarity_check(Fnc & fnc, Occ_list & litt_occ, Distrib & dist) {
-	std::pair<std::vector<unsigned int>, std::vector<unsigned int> > p;
-
-	while (true) {
-		p = litt_occ.getSoloPolarity();
-		auto pos = p.first;
-		auto neg = p.second;
-
-		std::cout << fnc;
-
-		std::cout << litt_occ;
-
-		if (pos.empty() && neg.empty())
-			break;
-		for (auto i : pos) {
-			dist.set(i, true);
-			litt_occ -= fnc.delete_if_contains(i);
-		}
-		for (auto i : neg) {
-			dist.set(i, false);
-			litt_occ -= fnc.delete_if_contains(i);
-		}
-	}
-}
-
-/* Simplifier (Une seule occurence de chaque littéral dans la prémisse (conclusion))
- * Enlever les tautologie (Retirer les clauses contenant a et -a)
- * Si x a toujours une polarité négative, la retirer partout et mettre x = 0
- * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
- */
-static void nettoyage(Fnc & fnc, Occ_list & litt_occ, Distrib & dist) {
-	std::cout << "clean... \nSimplify... done\n";
-
-	litt_occ -= fnc.simplify();
-	std::cout << "Delete tautologies... done\n";
-	litt_occ -= fnc.delete_tautologies();
-	std::cout << "New litt_occ " << litt_occ;
-	std::cout << fnc;
-
-	// Suppression si polarité unique
-	std::cout << "Polarity test\n";
-	polarity_check(fnc, litt_occ, dist);
-	std::cout << litt_occ << "\ndone\n";
-
-	std::cout << fnc;
-
-	std::cout << "end clean\n";
-}
-
 /*Effectue la coupure de f par rapport a val*/
 static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 	Fnc fnc_without_val;
@@ -111,7 +62,7 @@ static bool rec_cut(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	bool ret;
 	Fnc next;
 
-	nettoyage(fnc, litt_occ, dist);
+	fnc.nettoyage(litt_occ, dist);
 
 	if (litt_occ.empty()) {
 		return (fnc.empty());
@@ -144,9 +95,10 @@ bool cut_solve(const Fnc & fnc) {
 
 	bool res = rec_cut(Fnc(fnc), litt_occ, dist);
 
-	fnc.assign_other_value(0, dist);
-
-	std::cout << dist;
+	if (res){
+		fnc.assign_other_value(0, dist);
+		std::cout << dist;
+	}
 
 	return res;
 }

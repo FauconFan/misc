@@ -21,6 +21,9 @@ class Fnc{
 		Occ_list        delete_tautologies();
 		Occ_list        simplify();
 		Occ_list        delete_if_contains(int);
+		void			polarity_check (Occ_list &, Distrib &);
+		void			nettoyage (Occ_list &, Distrib &);
+
 		bool            contains(const Clause &);
 		void            assign_other_value(unsigned int, Distrib &) const;
 		void            unit_propagation(Distrib &) const;

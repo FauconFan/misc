@@ -62,6 +62,55 @@ Occ_list Fnc::simplify() {
 	return (res);
 }
 
+void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
+	std::pair<std::vector<unsigned int>, std::vector<unsigned int> > p;
+
+	while (true) {
+		p = litt_occ.getSoloPolarity();
+		auto pos = p.first;
+		auto neg = p.second;
+
+		std::cout << *this;
+
+		std::cout << litt_occ;
+
+		if (pos.empty() && neg.empty())
+			break;
+		for (auto i : pos) {
+			dist.set(i, true);
+			litt_occ -= this->delete_if_contains(i);
+		}
+		for (auto i : neg) {
+			dist.set(i, false);
+			litt_occ -= this->delete_if_contains(i);
+		}
+	}
+}
+
+/* Simplifier (Une seule occurence de chaque littéral dans la prémisse (conclusion))
+ * Enlever les tautologie (Retirer les clauses contenant a et -a)
+ * Si x a toujours une polarité négative, la retirer partout et mettre x = 0
+ * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
+ */
+void Fnc::nettoyage(Occ_list & litt_occ, Distrib & dist) {
+	std::cout << "clean... \nSimplify... done\n";
+
+	litt_occ -= this->simplify();
+	std::cout << "Delete tautologies... done\n";
+	litt_occ -= this->delete_tautologies();
+	std::cout << "New litt_occ " << litt_occ;
+	std::cout << *this;
+
+	// Suppression si polarité unique
+	std::cout << "Polarity test\n";
+	this->polarity_check(litt_occ, dist);
+	std::cout << litt_occ << "\ndone\n";
+
+	std::cout << *this;
+
+	std::cout << "end clean\n";
+}
+
 Occ_list Fnc::delete_if_contains(int val) {
 	Occ_list res;
 
