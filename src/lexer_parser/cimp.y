@@ -19,6 +19,8 @@
 %token <numval> NUM_B
 %token <strval> WORD_B
 %token <strval> PATH_B
+%token <strval> COLOR_B
+%token ARROW_B
 
 %%
 
@@ -37,6 +39,11 @@ tok:
     |   '(' NUM_B NUM_B ')'
                 {
                     li_token_add(li_token, token_point($2, $3));
+                }
+    |   COLOR_B { li_token_add(li_token, token_color($1)); }
+    |   '(' COLOR_B ARROW_B COLOR_B ')'
+                {
+                    li_token_add(li_token, token_color2($2, $4));
                 }
     ;
 
