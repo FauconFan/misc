@@ -8,6 +8,9 @@
 
 typedef unsigned char t_bool;
 
+#define	max(a, b) (a >= b ? a : b)
+#define	min(a, b) (a <= b ? a : b)
+
 /**
  * Ici sont définies les structures standards utilisées dans le programme.
  */

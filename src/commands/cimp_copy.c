@@ -49,7 +49,9 @@ int cimp_copy(t_cmd * cmd) {
 
 	Uint32 * pixels_dest, * pixels_src;
 
-	SDL_LockSurface(surface_dest);
+	if (SDL_MUSTLOCK(surface_dest))
+		SDL_LockSurface(surface_dest);
+
 	pixels_dest = (Uint32 *) surface_dest->pixels;
 	pixels_src  = (Uint32 *) surface_src->pixels;
 	for (int i = rect.x; i < rect.x + rect.w; i++) {
@@ -57,7 +59,8 @@ int cimp_copy(t_cmd * cmd) {
 			pixels_dest[(j - rect.y) * surface_dest->w
 			+ (i - rect.x)] = pixels_src[j * surface_src->w + i];
 	}
-	SDL_UnlockSurface(surface_dest);
+	if (SDL_MUSTLOCK(surface_dest))
+		SDL_UnlockSurface(surface_dest);
 
 	g_cimp->copy_buffer = surface_dest;
 
@@ -91,7 +94,8 @@ int cimp_paste(t_cmd * cmd) {
 	surface_dest = g_cimp->screen->buff_screen;
 
 	Uint32 * pixels_dest, * pixels_src;
-	SDL_LockSurface(surface_dest);
+	if (SDL_MUSTLOCK(surface_dest))
+		SDL_LockSurface(surface_dest);
 	pixels_dest = (Uint32 *) surface_dest->pixels;
 	pixels_src  = (Uint32 *) surface_src->pixels;
 	for (int i = cmd->point.x; i < min(cmd->point.x + surface_src->w, surface_dest->w); i++) {
@@ -99,7 +103,8 @@ int cimp_paste(t_cmd * cmd) {
 			pixels_dest[j * surface_dest->w
 			+ i] = pixels_src[(j - cmd->point.y) * surface_src->w + (i - cmd->point.x)];
 	}
-	SDL_UnlockSurface(surface_dest);
+	if (SDL_MUSTLOCK(surface_dest))
+		SDL_UnlockSurface(surface_dest);
 
 
 	return 0;

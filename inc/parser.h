@@ -2,7 +2,6 @@
 #define	PARSER_H
 
 #define	NO_ANGLE (-1)
-#define	NO_VALUE (-1)
 
 typedef enum    e_type_token {
 	WORD,
