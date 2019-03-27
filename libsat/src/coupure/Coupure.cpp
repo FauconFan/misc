@@ -95,7 +95,7 @@ bool cut_solve(const Fnc & fnc) {
 
 	bool res = rec_cut(Fnc(fnc), litt_occ, dist);
 
-	if (res){
+	if (res) {
 		fnc.assign_other_value(0, dist);
 		std::cout << dist;
 	}
