@@ -31,7 +31,7 @@ void handle_line() {
 void core() {
 	while (g_cimp->running) {
 		handle_line();
-		usleep(30); // 30 ms arbitrary
 		cimp_screen_update(g_cimp->screen);
+		usleep(30); // 30 ms arbitrary
 	}
 }

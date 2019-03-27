@@ -85,7 +85,7 @@ cimp>> help
  - color_negative [NAME] [? [RECT]]
  - color_gray [NAME] [? [RECT]]
  - color_white_black [NAME] [? [RECT]] [? [MARGIN]]
- - ajust_light_contrast [NAME] [???]
+ - ajust_light_contrast [NAME] [? [RECT]] [? [CONTRAST_LEVEL]]
 ```
 
 Pour les commandes après la commande list, l'action ne s'applique que sur [NAME] (dans le cas où il y a plusieurs images).
@@ -177,7 +177,7 @@ Si le représentant en variation de gris du pixel traité est plus grand (ou ég
 
 ### ajust_light_contrast
 
-À voir, se renseigner sur l'ajustement de la lumière et du contraste.
+ajust_light_contrast contrôle la luminéosité de la photo. Un contrôle de l'ajustement (coefficient compris entre -255 et 255), permet de contrôler la modification de l'image en fonction.
 
 ## To see later
 

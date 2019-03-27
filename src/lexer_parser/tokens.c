@@ -33,6 +33,13 @@ void                print_token(t_token * tok) {
 		case POINT:
 			printf("POINT(%d %d)\n", tok->u.point.x, tok->u.point.y);
 			break;
+		case COLOR:
+			printf("COLOR(%d %d %d)\n", tok->u.color.r, tok->u.color.g, tok->u.color.b);
+			break;
+		case COLOR2:
+			printf("COLOR2(%d %d %d -> %d %d %d)\n", tok->u.color2[0].r, tok->u.color2[0].g,
+			  tok->u.color2[0].b, tok->u.color2[1].r, tok->u.color2[1].g, tok->u.color2[1].b);
+			break;
 	}
 }
 
@@ -87,5 +94,53 @@ t_token * token_point(int x, int y) {
 
 	tok->u.point.x = x;
 	tok->u.point.y = y;
+	return (tok);
+}
+
+static t_bool get_color(const char * word, SDL_Color * colorp) {
+	uint32_t col;
+
+	if (strlen(word) < 8 || strncmp(word, "0x", 2) != 0)
+		return (FALSE);
+
+	col       = strtol(word + 2, NULL, 16);
+	colorp->b = col % 256;
+	col       = col >> 8;
+	colorp->g = col % 256;
+	col       = col >> 8;
+	colorp->r = col % 256;
+	// col >> 8
+	colorp->a = 0xff;
+	return (TRUE);
+}
+
+t_token * token_color(const char * word) {
+	t_token * tok;
+	SDL_Color color;
+
+	if (get_color(word, &color) == FALSE)
+		return (NULL);
+
+	if ((tok = token_alloc(COLOR)) == NULL)
+		return (NULL);
+
+	tok->u.color = color;
+	return (tok);
+}
+
+t_token * token_color2(const char * word1, const char * word2) {
+	t_token * tok;
+	SDL_Color colors[2];
+
+	if (get_color(word1, colors) == FALSE)
+		return (NULL);
+
+	if (get_color(word2, colors + 1) == FALSE)
+		return (NULL);
+
+	if ((tok = token_alloc(COLOR2)) == NULL)
+		return (NULL);
+
+	memcpy(tok->u.color2, colors, sizeof(colors));
 	return (tok);
 }
