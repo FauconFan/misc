@@ -106,9 +106,11 @@ static bool rec_cut(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 
 	fnc.nettoyage(litt_occ, dist);
 
-	if (litt_occ.empty()) {
-		return (fnc.empty());
-	}
+	if (fnc.has_empty_clause())
+		return (false);
+
+	if (fnc.empty())
+		return (true);
 
 	Fnc copy_fnc = Fnc(fnc);
 
