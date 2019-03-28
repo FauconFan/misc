@@ -57,7 +57,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 		if (libtest_viewing_enabled)
 			sc->window = win;
 		else
-			sc->window=NULL;
+			sc->window = NULL;
 		sc->buff_screen = surf;
 		sc->path        = path;
 	}
