@@ -77,6 +77,17 @@ Occ_list Clause::get_occ_list() const{
 	return res;
 }
 
+void Clause::remove_litt(int litt) {
+	if (litt > 0) {
+		this->_pos_litts->erase(std::remove(this->_pos_litts->begin(),
+				this->_pos_litts->end(), litt), this->_pos_litts->end());
+	}
+	else {
+		this->_neg_litts->erase(std::remove(this->_neg_litts->begin(),
+				this->_neg_litts->end(), -litt), this->_neg_litts->end());
+	}
+}
+
 int Clause::contains_litt(int litt) const{
 	if (litt < 0)
 		litt = -litt;
@@ -98,6 +109,10 @@ bool Clause::is_tautology() const{
 	}
 
 	return false;
+}
+
+bool Clause::is_empty_clause() const{
+	return (this->_neg_litts->empty() && this->_pos_litts->empty());
 }
 
 Occ_list Clause::remove_duplicates() {

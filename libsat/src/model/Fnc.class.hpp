@@ -16,6 +16,8 @@ class Fnc{
 		void                        add_fnc(const Fnc &);
 		std::vector<Clause>         get_implclauses();
 
+		bool            has_empty_clause() const;
+
 		Occ_list        build_occ_list() const;
 
 		void            nettoyage(Occ_list &, Distrib &); // add subsumption
@@ -23,6 +25,8 @@ class Fnc{
 		bool            contains(const Clause &); // delete later subsumption
 		void            assign_other_value(unsigned int, Distrib &) const;
 		void            unit_propagation(Distrib &) const;
+
+		Occ_list        eval(unsigned int id, bool value);
 
 		void            display(std::ostream &) const;
 

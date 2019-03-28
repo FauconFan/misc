@@ -40,14 +40,24 @@ std::vector<Clause>   Fnc::get_implclauses() {
 	return (this->_clauses);
 }
 
+bool Fnc::has_empty_clause() const{
+	for (const auto & cl : this->_clauses) {
+		if (cl.is_empty_clause())
+			return (true);
+	}
+	return (false);
+}
+
 Occ_list Fnc::remove_tautologies() {
 	Occ_list res;
 
-	for (auto it = this->_clauses.begin(); it != this->_clauses.end(); ++it) {
+	for (auto it = this->_clauses.begin(); it != this->_clauses.end();) {
 		if (it->is_tautology()) {
 			res += it->get_occ_list();
-			it--;
-			this->_clauses.erase(it + 1);
+			it   = this->_clauses.erase(it);
+		}
+		else {
+			it++;
 		}
 	}
 	return (res);
@@ -70,9 +80,9 @@ void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
 		auto pos = p.first;
 		auto neg = p.second;
 
-		std::cout << *this;
+		// std::cout << *this;
 
-		std::cout << litt_occ;
+		// std::cout << litt_occ;
 
 		if (pos.empty() && neg.empty())
 			break;
@@ -93,33 +103,35 @@ void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
 void Fnc::nettoyage(Occ_list & litt_occ, Distrib & dist) {
-	std::cout << "clean... \nSimplify... done\n";
+	// std::cout << "clean... \nSimplify... done\n";
 
 	litt_occ -= this->remove_duplicates();
-	std::cout << "Delete tautologies... done\n";
+	// std::cout << "Delete tautologies... done\n";
 	litt_occ -= this->remove_tautologies();
-	std::cout << "New litt_occ " << litt_occ;
-	std::cout << *this;
+	// std::cout << "New litt_occ " << litt_occ;
+	// std::cout << *this;
 
 	// Suppression si polarité unique
-	std::cout << "Polarity test\n";
+	// std::cout << "Polarity test\n";
 	this->polarity_check(litt_occ, dist);
-	std::cout << litt_occ << "\ndone\n";
+	// std::cout << litt_occ << "\ndone\n";
 
-	std::cout << *this;
+	// std::cout << *this;
 
-	std::cout << "end clean\n";
+	// std::cout << "end clean\n";
 }
 
 Occ_list Fnc::remove_if_contains(int val) {
 	Occ_list res;
 
-	for (auto it = this->_clauses.begin(); it != this->_clauses.end(); ++it) {
+	for (auto it = this->_clauses.begin(); it != this->_clauses.end();) {
 		int litt_side = it->contains_litt(val);
 		if (litt_side != 0) {
 			res += it->get_occ_list();
-			it--;
-			this->_clauses.erase(it + 1);
+			it   = this->_clauses.erase(it);
+		}
+		else {
+			it++;
 		}
 	}
 	return (res);
@@ -143,6 +155,33 @@ void Fnc::unit_propagation(Distrib & dist) const{
 	for (const auto & ac : this->_clauses) {
 		ac.unit_propagation(dist);
 	}
+}
+
+Occ_list Fnc::eval(unsigned int id, bool value) {
+	Occ_list res;
+	int side;
+	Pair pval;
+
+	side = (value) ? 1 : -1;
+	pval = (value) ? Pair(0, 1) : Pair(1, 0);
+	for (auto it = this->_clauses.begin(); it != this->_clauses.end();) {
+		int litt_side = it->contains_litt(id);
+		bool next     = true;
+		if (litt_side != 0) {
+			if (litt_side == side) {
+				res += it->get_occ_list();
+				it   = this->_clauses.erase(it);
+				next = false;
+			}
+			else {
+				res.addPair(id, pval);
+				it->remove_litt(static_cast<int>(id) * -side);
+			}
+		}
+		if (next)
+			it++;
+	}
+	return (res);
 }
 
 void Fnc::display(std::ostream & os) const{

@@ -13,6 +13,7 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 SRC_FOLDER = src/
 MODEL_FOLDER = src/model/
 COUPURE_FOLDER = src/coupure/
+DPLL_FOLDER = src/dpll/
 UTILS_FOLDER = src/utils/
 
 AR = ar
@@ -31,6 +32,8 @@ SRC = \
 	$(UTILS_FOLDER)Occ_list.class.cpp \
 	$(UTILS_FOLDER)Distrib.class.cpp \
 	$(COUPURE_FOLDER)Coupure.cpp \
+	$(DPLL_FOLDER)DPLL.cpp \
+	
 
 OBJ = $(SRC:%.cpp=%.o)
 

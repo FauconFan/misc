@@ -31,7 +31,6 @@
 
 prog:
     header cnf footer
-    | error cnf footer
     ;
 
 header:
@@ -71,6 +70,7 @@ zero:
 
 footer:
     | '%' endls ZERO endls
+    | '%' endls
     ;
 
 endls:

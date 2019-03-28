@@ -15,5 +15,6 @@
 #include "src/model/Fnc.class.hpp"
 
 #include "src/coupure/Coupure.hpp"
+#include "src/dpll/DPLL.hpp"
 
 #endif // ifndef LIBSAT_HPP

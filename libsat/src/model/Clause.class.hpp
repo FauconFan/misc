@@ -18,8 +18,11 @@ class Clause
 		std::vector<unsigned int> * getNegLitts() const;
 		Occ_list get_occ_list() const;
 
+		void remove_litt(int);
+
 		int contains_litt(int) const;
 		bool is_tautology() const;
+		bool is_empty_clause() const;
 		Occ_list remove_duplicates();
 		void assign_other_value(unsigned int, Distrib &) const;
 		bool unit_propagation(Distrib &) const; // On suppose que la clause est nettoyée

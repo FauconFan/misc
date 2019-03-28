@@ -1,8 +1,11 @@
 #include "libsat.hpp"
 
-Distrib::Distrib() = default;
-
+Distrib::Distrib()  = default;
 Distrib::~Distrib() = default;
+
+Distrib::Distrib(const Distrib & dist) = default;
+
+Distrib &Distrib::operator=(const Distrib & dist) = default;
 
 const std::unordered_map<unsigned int, bool> * Distrib::getDistrib() const{
 	return &(this->_distrib);

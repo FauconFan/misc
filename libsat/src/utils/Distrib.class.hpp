@@ -7,8 +7,8 @@ class Distrib
 {
 	public:
 		Distrib();
-		Distrib(const Distrib &) = delete;
-		Distrib &operator=(const Distrib &) = delete;
+		Distrib(const Distrib &);
+		Distrib &operator=(const Distrib &);
 		virtual~Distrib();
 
 		const std::unordered_map<unsigned int, bool> * getDistrib() const;
