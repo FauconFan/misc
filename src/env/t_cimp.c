@@ -18,10 +18,11 @@ int             cimp_init() {
 	if ((g_cimp = (t_cimp *) malloc(sizeof(t_cimp))) == NULL)
 		return (1);
 
-	g_cimp->screen  = NULL;
-	g_cimp->select  = NULL;
-	g_cimp->event   = init_cimp_event();
-	g_cimp->running = 1;
+	g_cimp->screen      = NULL;
+	g_cimp->select      = NULL;
+	g_cimp->event       = init_cimp_event();
+	g_cimp->running     = 1;
+	g_cimp->copy_buffer = NULL;
 	return (0);
 }
 
@@ -30,9 +31,11 @@ int             cimp_init() {
  */
 void            cimp_end() {
 	if (g_cimp) {
-		if (g_cimp->screen)
+		if (g_cimp->screen) {
 			cimp_screen_end(g_cimp->screen);
-		free_cimp_event(g_cimp->event);
+		}
+		if (g_cimp->copy_buffer)
+			SDL_FreeSurface(g_cimp->copy_buffer);
 		cimp_end_select(g_cimp->select);
 		free(g_cimp);
 		g_cimp = NULL;

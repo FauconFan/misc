@@ -8,6 +8,9 @@
 
 typedef unsigned char t_bool;
 
+#define	max(a, b) (a >= b ? a : b)
+#define	min(a, b) (a <= b ? a : b)
+
 /**
  * Ici sont définies les structures standards utilisées dans le programme.
  */
@@ -31,6 +34,7 @@ typedef struct          s_cimp {
 	int             running;
 	t_cimp_select * select;
 	t_cimp_event *  event;
+	SDL_Surface *   copy_buffer;
 }                       t_cimp;
 
 typedef struct      s_cmd {

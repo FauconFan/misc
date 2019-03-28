@@ -11,7 +11,7 @@ void treat_line(char * line) {
 		}
 		cmd_free(cmd);
 	}
-}
+} /* treat_line */
 
 void handle_line() {
 	char * line = NULL;

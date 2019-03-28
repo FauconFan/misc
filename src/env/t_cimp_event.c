@@ -56,4 +56,4 @@ void update_event(t_cimp_event * evnmt) {
 			}
 		}
 	}
-}
+} /* update_event */
