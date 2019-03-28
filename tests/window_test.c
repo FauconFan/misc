@@ -4,7 +4,8 @@
 START_TEST(test_close){
   treat_line("close");
   ck_assert(g_cimp->screen == NULL);
-  cimp_screen_init("images/untitled17.bmp");
+  g_cimp->screen=cimp_screen_init("images/untitled17.bmp");
+  ck_assert(g_cimp->screen);
   treat_line("close");
   ck_assert(g_cimp->screen == NULL );
 
