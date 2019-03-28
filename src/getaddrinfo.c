@@ -30,6 +30,7 @@ void    getSocketJuliusz(
             close(s);
             continue;
         }
+        printf("creation socket\n" );
         break ;
     }
 

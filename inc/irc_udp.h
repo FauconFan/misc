@@ -13,6 +13,10 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
+#include <sys/time.h>
+#include <sys/select.h>
+#include <fcntl.h>
+
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
