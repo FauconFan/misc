@@ -61,4 +61,5 @@ matrix:
       before_install: sudo apt-get update
       install: sudo apt-get install -y --no-install-recommends python3-venv check libsdl2-dev libsdl2-image-dev
       script:
+        - make images
         - make cimp_check

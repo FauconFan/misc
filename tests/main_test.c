@@ -1,22 +1,12 @@
-#include <check.h>
 #include "cimp.h"
-
-START_TEST(test_hello_world) {
-    char    *hello_world = "HELLO";
-
-    ck_assert_str_eq(hello_world, "HELLO");
-} END_TEST
+#include "libtest.h"
 
 Suite *sample_suite(void) {
   Suite *s;
-  TCase *tc_sample;
-
-  s = suite_create("Hello");
-  tc_sample = tcase_create("Sample");
-
-  tcase_add_test(tc_sample, test_hello_world);
-  suite_add_tcase(s, tc_sample);
-
+  s = suite_create("cimp commandes");
+  suite_add_tcase(s, modif_test());
+  suite_add_tcase(s, window_test());
+  suite_add_tcase(s,parsing_test());
   return s;
 }
 
@@ -24,10 +14,10 @@ int main(void) {
   int no_failed = 0;
   Suite *s;
   SRunner *runner;
-
+  libtest_viewing_enabled=0;
+  cimp_init();
   s = sample_suite();
   runner = srunner_create(s);
-
   srunner_run_all(runner, CK_NORMAL);
   no_failed = srunner_ntests_failed(runner);
   srunner_free(runner);

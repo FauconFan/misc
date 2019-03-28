@@ -106,4 +106,7 @@ extern const size_t g_assoc_type_img_func_size;
 extern int g_fd_readline;
 extern int g_fd_callback;
 
+// libtest globale
+extern int libtest_viewing_enabled;
+
 #endif // ifndef TYPEDEFS_H

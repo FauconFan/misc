@@ -100,6 +100,9 @@ TEST_FOLDER			= tests/
 
 TEST_FILES = \
 			main_test.c \
+			modif_test.c \
+			window_test.c \
+			parsing_test.c \
 
 TEST_SRC = \
 		$(addprefix $(TEST_FOLDER), $(TEST_FILES)) \
