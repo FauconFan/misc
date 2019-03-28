@@ -20,7 +20,7 @@ class Clause
 
 		int contains_litt(int) const;
 		bool is_tautology() const;
-		Occ_list simplify_clause();
+		Occ_list remove_duplicates();
 		void assign_other_value(unsigned int, Distrib &) const;
 		bool unit_propagation(Distrib &) const; // On suppose que la clause est nettoyée
 
@@ -28,8 +28,6 @@ class Clause
 		std::vector<unsigned int> * _pos_litts {nullptr};
 		std::vector<unsigned int> * _neg_litts {nullptr};
 };
-
-Clause cut(const Clause & icl1, const Clause & icl2, unsigned int val);
 
 std::ostream &operator<<(std::ostream & os, const Clause & icl);
 

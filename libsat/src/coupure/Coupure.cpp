@@ -1,5 +1,47 @@
 #include "libsat.hpp"
 
+static Clause cut(const Clause & icl1, const Clause & icl2, unsigned int val) {
+	std::vector<unsigned int> * icl1_pos_litts;
+	std::vector<unsigned int> * icl1_neg_litts;
+	std::vector<unsigned int> * icl2_pos_litts;
+	std::vector<unsigned int> * icl2_neg_litts;
+	Clause res_cut;
+
+	std::set<unsigned int> buff;
+
+	icl1_pos_litts = icl1.getPosLitts();
+	icl1_neg_litts = icl1.getNegLitts();
+	icl2_pos_litts = icl2.getPosLitts();
+	icl2_neg_litts = icl2.getNegLitts();
+
+	for (unsigned int i : *icl1_pos_litts) {
+		if (i != val)
+			buff.insert(i);
+	}
+
+	for (unsigned int i : *icl2_pos_litts) {
+		if (i != val)
+			buff.insert(i);
+	}
+
+	res_cut.getPosLitts()->assign(buff.begin(), buff.end());
+	buff.clear();
+
+	for (unsigned int i : *icl1_neg_litts) {
+		if (i != val)
+			buff.insert(i);
+	}
+
+	for (unsigned int i : *icl2_neg_litts) {
+		if (i != val)
+			buff.insert(i);
+	}
+
+	res_cut.getNegLitts()->assign(buff.begin(), buff.end());
+
+	return res_cut;
+} // cut
+
 /*Effectue la coupure de f par rapport a val*/
 static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 	Fnc fnc_without_val;

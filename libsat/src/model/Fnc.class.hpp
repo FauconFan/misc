@@ -18,10 +18,6 @@ class Fnc{
 
 		Occ_list        build_occ_list() const;
 
-		Occ_list        delete_tautologies();
-		Occ_list        simplify();
-		Occ_list        delete_if_contains(int);
-		void            polarity_check(Occ_list &, Distrib &);
 		void            nettoyage(Occ_list &, Distrib &);
 
 		bool            contains(const Clause &);
@@ -30,9 +26,13 @@ class Fnc{
 
 		void            display(std::ostream &) const;
 
-
 	private:
 		std::vector<Clause> _clauses {};
+
+		Occ_list        remove_duplicates();
+		Occ_list        remove_tautologies();
+		Occ_list        remove_if_contains(int);
+		void            polarity_check(Occ_list &, Distrib &);
 };
 
 std::ostream    &operator<<(std::ostream &, const Fnc &);

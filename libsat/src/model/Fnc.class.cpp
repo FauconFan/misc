@@ -40,7 +40,7 @@ std::vector<Clause>   Fnc::get_implclauses() {
 	return (this->_clauses);
 }
 
-Occ_list Fnc::delete_tautologies() {
+Occ_list Fnc::remove_tautologies() {
 	Occ_list res;
 
 	for (auto it = this->_clauses.begin(); it != this->_clauses.end(); ++it) {
@@ -53,11 +53,11 @@ Occ_list Fnc::delete_tautologies() {
 	return (res);
 }
 
-Occ_list Fnc::simplify() {
+Occ_list Fnc::remove_duplicates() {
 	Occ_list res;
 
 	for (auto & acl : this->_clauses) {
-		res += acl.simplify_clause();
+		res += acl.remove_duplicates();
 	}
 	return (res);
 }
@@ -78,11 +78,11 @@ void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
 			break;
 		for (auto i : pos) {
 			dist.set(i, true);
-			litt_occ -= this->delete_if_contains(i);
+			litt_occ -= this->remove_if_contains(i);
 		}
 		for (auto i : neg) {
 			dist.set(i, false);
-			litt_occ -= this->delete_if_contains(i);
+			litt_occ -= this->remove_if_contains(i);
 		}
 	}
 }
@@ -95,9 +95,9 @@ void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
 void Fnc::nettoyage(Occ_list & litt_occ, Distrib & dist) {
 	std::cout << "clean... \nSimplify... done\n";
 
-	litt_occ -= this->simplify();
+	litt_occ -= this->remove_duplicates();
 	std::cout << "Delete tautologies... done\n";
-	litt_occ -= this->delete_tautologies();
+	litt_occ -= this->remove_tautologies();
 	std::cout << "New litt_occ " << litt_occ;
 	std::cout << *this;
 
@@ -111,7 +111,7 @@ void Fnc::nettoyage(Occ_list & litt_occ, Distrib & dist) {
 	std::cout << "end clean\n";
 }
 
-Occ_list Fnc::delete_if_contains(int val) {
+Occ_list Fnc::remove_if_contains(int val) {
 	Occ_list res;
 
 	for (auto it = this->_clauses.begin(); it != this->_clauses.end(); ++it) {

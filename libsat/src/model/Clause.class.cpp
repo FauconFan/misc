@@ -100,7 +100,7 @@ bool Clause::is_tautology() const{
 	return false;
 }
 
-Occ_list Clause::simplify_clause() {
+Occ_list Clause::remove_duplicates() {
 	Occ_list res;
 	std::set<unsigned int> buff;
 
@@ -182,48 +182,6 @@ bool Clause::unit_propagation(Distrib & dist) const{
 
 	return true;
 } // Clause::unit_propagation
-
-Clause cut(const Clause & icl1, const Clause & icl2, unsigned int val) {
-	std::vector<unsigned int> * icl1_pos_litts;
-	std::vector<unsigned int> * icl1_neg_litts;
-	std::vector<unsigned int> * icl2_pos_litts;
-	std::vector<unsigned int> * icl2_neg_litts;
-	Clause res_cut;
-
-	std::set<unsigned int> buff;
-
-	icl1_pos_litts = icl1.getPosLitts();
-	icl1_neg_litts = icl1.getNegLitts();
-	icl2_pos_litts = icl2.getPosLitts();
-	icl2_neg_litts = icl2.getNegLitts();
-
-	for (unsigned int i : *icl1_pos_litts) {
-		if (i != val)
-			buff.insert(i);
-	}
-
-	for (unsigned int i : *icl2_pos_litts) {
-		if (i != val)
-			buff.insert(i);
-	}
-
-	res_cut.getPosLitts()->assign(buff.begin(), buff.end());
-	buff.clear();
-
-	for (unsigned int i : *icl1_neg_litts) {
-		if (i != val)
-			buff.insert(i);
-	}
-
-	for (unsigned int i : *icl2_neg_litts) {
-		if (i != val)
-			buff.insert(i);
-	}
-
-	res_cut.getNegLitts()->assign(buff.begin(), buff.end());
-
-	return res_cut;
-} // cut
 
 std::ostream & operator<<(std::ostream & os, const Clause & icl) {
 	std::vector<unsigned int> * pos_litts;
