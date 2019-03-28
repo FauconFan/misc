@@ -18,9 +18,9 @@ class Fnc{
 
 		Occ_list        build_occ_list() const;
 
-		void            nettoyage(Occ_list &, Distrib &); // TODO add subsumption
+		void            nettoyage(Occ_list &, Distrib &); // add subsumption
 
-		bool            contains(const Clause &); // TODO delete later subsumption
+		bool            contains(const Clause &); // delete later subsumption
 		void            assign_other_value(unsigned int, Distrib &) const;
 		void            unit_propagation(Distrib &) const;
 
