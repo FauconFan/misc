@@ -56,6 +56,8 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 		SDL_BlitSurface(tmp, &origin, surf, NULL);
 		if (libtest_viewing_enabled)
 			sc->window = win;
+		else
+			sc->window=NULL;
 		sc->buff_screen = surf;
 		sc->path        = path;
 	}
@@ -75,7 +77,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
  * @param  sc l'instance de t_cimp_screen
  */
 void                cimp_screen_end(t_cimp_screen * sc) {
-	if (libtest_viewing_enabled && sc->path)
+	if (sc->path)
 		free(sc->path);
 	if (sc->buff_screen)
 		SDL_FreeSurface(sc->buff_screen);

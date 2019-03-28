@@ -4,11 +4,9 @@
 START_TEST(test_close){
   treat_line("close");
   ck_assert(g_cimp->screen == NULL);
-  SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
-  g_cimp->screen=malloc(sizeof(t_cimp_screen));
-  g_cimp->screen->buff_screen=surf;
+  cimp_screen_init("images/untitled17.bmp");
   treat_line("close");
-  ck_assert(g_cimp->screen == NULL);
+  ck_assert(g_cimp->screen == NULL );
 
 
 }END_TEST
