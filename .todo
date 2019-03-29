@@ -12,7 +12,7 @@ Mandatory Part:
     Code:
         ✔ Modélisation des FNC, Clauses, Variables, etc... @done(19-03-04 20:30)
         ✔ Faire le parser DIMACS @done(19-03-04 20:30)
-        ☐ Coupures
+        ✔ Coupures @done(19-03-29 10:39)
         ☐ DPLL
         ☐ CDCL
         ☐ Benchmarks
