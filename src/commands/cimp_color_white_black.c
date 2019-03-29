@@ -14,7 +14,7 @@ static uint32_t white_black(uint32_t col, void * smwbv) {
 	SDL_GetRGB(col, smwbp->format, &r, &g, &b);
 	gray  = r + g + b;
 	gray /= 3;
-	if (gray < smwbp->margin) {
+	if (gray <= smwbp->margin) {
 		return (SDL_MapRGB(smwbp->format, 0, 0, 0));
 	}
 	return (SDL_MapRGB(smwbp->format, 255, 255, 255));
