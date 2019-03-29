@@ -1,4 +1,3 @@
-#include "cimp.h"
 #include "libtest.h"
 
 Suite *sample_suite(void) {

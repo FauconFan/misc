@@ -100,6 +100,7 @@ SRC = \
 TEST_FOLDER			= tests/
 
 TEST_FILES = \
+			util_surface.c \
 			main_test.c \
 			modif_test.c \
 			window_test.c \
