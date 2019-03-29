@@ -2,7 +2,7 @@
 #include "cimp.h"
 
 START_TEST(test_rotate45){
-  ck_assert(cimp_rotate(NULL)==1);
+  ck_assert(cimp_rotate(NULL)!=0);
   SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
   uint32_t * new = (uint32_t *) surf->pixels;
   uint32_t to_test =(uint32_t)32;
@@ -18,7 +18,7 @@ START_TEST(test_rotate45){
   }
 }END_TEST
 START_TEST(test_rotate0){
-  ck_assert(cimp_rotate(NULL)==1);
+  ck_assert(cimp_rotate(NULL)!=0);
   SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
   uint32_t * new = (uint32_t *) surf->pixels;
   uint32_t to_test =(uint32_t)32;
@@ -34,7 +34,7 @@ START_TEST(test_rotate0){
   }
 }END_TEST
 START_TEST(test_rotate720){
-  ck_assert(cimp_rotate(NULL)==1);
+  ck_assert(cimp_rotate(NULL)!=0);
   SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
   uint32_t * new = (uint32_t *) surf->pixels;
   uint32_t to_test =(uint32_t)32;
@@ -50,7 +50,7 @@ START_TEST(test_rotate720){
   }
 }END_TEST
 START_TEST(test_rotate90){
-  ck_assert(cimp_rotate(NULL)==1);
+  ck_assert(cimp_rotate(NULL)!=0);
   SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
   uint32_t * new = (uint32_t *) surf->pixels;
   uint32_t to_test =(uint32_t)32;
@@ -66,7 +66,7 @@ START_TEST(test_rotate90){
   }
 }END_TEST
 START_TEST(test_rotate180){
-  ck_assert(cimp_rotate(NULL)==1);
+  ck_assert(cimp_rotate(NULL)!=0);
   SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
   uint32_t * new = (uint32_t *) surf->pixels;
   uint32_t to_test =(uint32_t)32;
@@ -82,7 +82,7 @@ START_TEST(test_rotate180){
   }
 }END_TEST
 START_TEST(test_rotateneg90){
-  ck_assert(cimp_rotate(NULL)==1);
+  ck_assert(cimp_rotate(NULL)!=0);
   SDL_Surface *surf=SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
   uint32_t * new = (uint32_t *) surf->pixels;
   uint32_t to_test =(uint32_t)32;
