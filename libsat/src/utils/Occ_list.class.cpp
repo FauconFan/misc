@@ -30,7 +30,7 @@ Occ_list & Occ_list::operator-=(const Occ_list & ol) {
 	return *this;
 }
 
-bool Occ_list::operator==(const Occ_list & ol) const {
+bool Occ_list::operator==(const Occ_list & ol) const{
 	return this->_content == ol._content;
 }
 
