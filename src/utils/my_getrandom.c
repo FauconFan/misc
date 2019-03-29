@@ -29,3 +29,28 @@ static int		my_getrandom(void *buffer, size_t len)
 		ret = 1;
 	return (ret);
 }
+
+
+uint64_t 		gen_id()
+{
+	uint64_t 	id;
+
+	if (my_getrandom(&id, 8) != 0)
+	{
+		printf("Erreur de génération id : %s\n", strerror(errno));
+		return 0;
+	}
+	return id;
+}
+
+uint32_t		gen_nonce()
+{
+	uint32_t	nonce;
+
+	if (my_getrandom(&nonce, 4) != 0)
+	{
+		printf("Erreur de génération nonce : %s\n", strerror(errno));
+		return 0;
+	}
+	return nonce;
+}

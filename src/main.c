@@ -22,6 +22,11 @@ int main(void)
 
     // return 0;
 
+    id = gen_id();
+    printf("%lx\n", id);
+
+    
+
     t_tlv   * tlv;
 
     tlv = tlv_alloc();
