@@ -67,6 +67,8 @@ COMMANDS_FILES = \
 			cimp_save.c \
 			cimp_update.c \
 			cimp_copy.c \
+			cimp_cut.c \
+			cimp_paste.c \
 			cimp_fill.c \
 			cimp_color_replace.c \
 			cimp_color_negative.c \
