@@ -54,14 +54,14 @@ OBJ = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "Program %s... " "$(NAME)"
+	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
 	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
-	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
+	@printf "%s\\n" "$@"
 
 %.o: %.c
-	@printf "Compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t" "$(_GREEN)" "$(_END)"
 	@$(CC) $(FLAGS) -c $? -o $@
-	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
+	@printf "%s\\n" "$?"
 
 .PHONY: clean
 clean:
