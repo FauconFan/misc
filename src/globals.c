@@ -19,7 +19,7 @@ const t_cmd_config g_command_list[] = {
 	{"save",                 cimp_save,                 0,                    ARG_PATH},
 	{"update",               cimp_update,               0,                    ARG_PATH},
 	{"copy",                 cimp_copy,                 0,                    ARG_RECT},
-	{"cut",                  cimp_paste,                0,                    ARG_RECT},
+	{"cut",                  cimp_cut,                  0,                    ARG_RECT},
 	{"paste",                cimp_paste,                ARG_PT,               0       },
 	{"fill",                 cimp_fill,                 ARG_COLOR,            ARG_RECT},
 	{"color_replace",        cimp_color_replace,        ARG_COLOR2 | ARG_NUM, ARG_RECT},
