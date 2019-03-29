@@ -1,5 +1,4 @@
 #include "libtest.h"
-#include "cimp.h"
 
 START_TEST(test_quit) {
 	treat_line("QUIT");

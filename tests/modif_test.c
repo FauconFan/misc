@@ -1,5 +1,4 @@
 #include "libtest.h"
-#include "cimp.h"
 
 START_TEST(test_rotate45) {
 	ck_assert(cimp_rotate(NULL) == 1);
