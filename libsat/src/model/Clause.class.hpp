@@ -16,16 +16,17 @@ class Clause
 
 		std::vector<unsigned int> * getPosLitts() const;
 		std::vector<unsigned int> * getNegLitts() const;
-		Occ_list get_occ_list() const;
+		Occ_list                    build_occ_list() const;
 
-		void remove_litt(int);
+		void                        remove_litt(int);
+		Occ_list                    remove_duplicates();
 
-		int contains_litt(int) const;
-		bool is_tautology() const;
-		bool is_empty_clause() const;
-		Occ_list remove_duplicates();
-		void assign_other_value(unsigned int, Distrib &) const;
-		bool unit_propagation(Distrib &) const; // On suppose que la clause est nettoyée
+		bool                        is_tautology() const;
+		bool                        is_empty_clause() const;
+		int                         contains_litt(int) const;
+
+		void                        cut_assign_other_value(unsigned int, Distrib &) const;
+		bool                        cut_unit_propagation(Distrib &) const; // On suppose que la clause est nettoyée
 
 	private:
 		std::vector<unsigned int> * _pos_litts {nullptr};
