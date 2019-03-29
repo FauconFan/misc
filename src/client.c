@@ -8,7 +8,7 @@ void    client(
                 socklen_t sock_len,
                 const void *buff,
                 size_t len_buff,
-                const void *hello_long,
+                void *hello_long,
                 size_t len_hello){
     uint8_t         buff_res[1024];
     size_t          N;
@@ -32,6 +32,8 @@ void    client(
     }
     printf("\n");
 
+    memcpy(hello_long + 14, buff_res + 6, 8);
+
 
 
     rc = fcntl(sfd, F_GETFL);
@@ -44,14 +46,14 @@ void    client(
         fprintf(stderr, "echec flags non bloquants 2\n" );
     }
 
-    FD_ZERO(&readfds);
-    FD_SET(sfd, &readfds);
     tv.tv_sec = TIME;
     tv.tv_usec = 0;
     gettimeofday(&debut, NULL);
 
 
     while (1) {
+        FD_ZERO(&readfds);
+        FD_SET(sfd, &readfds);
         rc = select(sfd +1, &readfds, NULL, NULL, &tv);
         // timeout
         if (rc == 0){
@@ -80,11 +82,11 @@ void    client(
             }
             printf("\n");
             gettimeofday(&current, NULL);
-            tv.tv_sec = current.tv_sec - debut.tv_sec;
-            tv.tv_usec = current.tv_usec - debut.tv_usec;
+            tv.tv_sec = TIME - (current.tv_sec - debut.tv_sec);
+            tv.tv_usec = 0;
         }
         else {
-            fprintf(stderr, "select failed\n");
+            perror("select failed");
             exit(1);
         }
     }
