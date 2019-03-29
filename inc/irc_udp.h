@@ -44,4 +44,6 @@ void    client(
                 void *buff2,
                 size_t len_buff2);
 
+extern uint64_t     g_id;
+
 #endif

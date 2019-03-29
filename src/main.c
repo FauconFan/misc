@@ -3,6 +3,8 @@
 #define NODE    "jch.irif.fr"
 #define SERVICE "1212"
 
+uint64_t    id = 0;
+
 // uint8_t     msg[14] = {93, 2, 0, 10, 2, 8, 0, 0, 0, 0, 0, 0, 0, 0};
 
 uint8_t     msg[14] = {93, 2, 0, 10, 2, 8, 0, 0, 0, 0, 0, 0, 0, 0};
