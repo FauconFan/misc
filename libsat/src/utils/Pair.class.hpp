@@ -14,7 +14,7 @@ class Pair{
 
 		Pair & operator+=(const Pair &);
 		Pair & operator-=(const Pair &);
-		bool operator==(const Pair &);
+		bool operator==(const Pair &) const;
 
 		unsigned int getLeft() const;
 		unsigned int getRight() const;

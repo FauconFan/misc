@@ -14,8 +14,6 @@ static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	if (fnc.empty())
 		return (true);
 
-	std::cout << fnc;
-
 	copy_fnc      = Fnc(fnc);
 	copy_litt_occ = Occ_list(litt_occ);
 	copy_dist     = Distrib(dist);
@@ -27,6 +25,9 @@ static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	litt_occ -= fnc.eval(assign_value, true);
 	dist.set(assign_value, true);
 
+	// std::cout << fnc;
+	// std::cout << litt_occ;
+
 	if (dpll_recu(fnc, litt_occ, dist))
 		return (true);
 
@@ -37,6 +38,10 @@ static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	dist      = copy_dist;
 	litt_occ -= copy_fnc.eval(assign_value, false);
 	dist.set(assign_value, false);
+
+	// std::cout << copy_fnc;
+	// std::cout << litt_occ;
+
 	return (dpll_recu(copy_fnc, litt_occ, dist));
 } // dpll_recu
 

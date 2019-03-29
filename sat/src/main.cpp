@@ -13,9 +13,9 @@ int main(int argc, char ** argv) {
 				std::cout << "false\n";
 
 			// if (cut_solve(*fnc))
-			//  std::cout << "true\n";
+			// 	std::cout << "true\n";
 			// else
-			//  std::cout << "false\n";
+			// 	std::cout << "false\n";
 
 			delete fnc;
 		}

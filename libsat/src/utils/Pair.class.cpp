@@ -36,7 +36,7 @@ Pair & Pair::operator-=(const Pair & p) {
 	return *this;
 }
 
-bool Pair::operator==(const Pair & p) {
+bool Pair::operator==(const Pair & p) const {
 	return (this->_left == p._left && this->_right == p._right);
 }
 

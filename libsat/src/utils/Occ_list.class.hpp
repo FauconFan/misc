@@ -17,6 +17,8 @@ class Occ_list{
 		Occ_list & operator+=(const Occ_list &);
 		Occ_list & operator-=(const Occ_list &);
 
+		bool operator==(const Occ_list &) const;
+
 		Pair getPair(unsigned int) const;
 
 		void addPair(unsigned int, const Pair &);
