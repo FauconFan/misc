@@ -25,6 +25,7 @@ const t_cmd_config g_command_list[] = {
 	{"color_replace",        cimp_color_replace,        ARG_COLOR2 | ARG_NUM, ARG_RECT},
 	{"color_negative",       cimp_color_negative,       0,                    ARG_RECT},
 	{"color_gray",           cimp_color_gray,           0,                    ARG_RECT},
+	{"color_white_black",    cimp_color_white_black,    ARG_NUM,              ARG_RECT},
 	{"ajust_light_contrast", cimp_ajust_light_contrast, ARG_NUM,              ARG_RECT},
 	{"QUIT",                 NULL,                      0,                    0       }, // QUIT must have NULL as func_ptr
 };

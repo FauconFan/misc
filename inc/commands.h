@@ -18,6 +18,7 @@ int cimp_cut(t_cmd * cmd);
 int cimp_fill(t_cmd * cmd);
 int cimp_color_negative(t_cmd * cmd);
 int cimp_color_gray(t_cmd * cmd);
+int cimp_color_white_black(t_cmd * cmd);
 int cimp_color_replace(t_cmd * cmd);
 int cimp_ajust_light_contrast(t_cmd * cmd);
 

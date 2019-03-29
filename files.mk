@@ -71,6 +71,7 @@ COMMANDS_FILES = \
 			cimp_color_replace.c \
 			cimp_color_negative.c \
 			cimp_color_gray.c \
+			cimp_color_white_black.c \
 			cimp_ajust_light_contrast.c \
 
 LEX_PAR_FILES = \
