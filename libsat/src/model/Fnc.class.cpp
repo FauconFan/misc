@@ -19,7 +19,7 @@ Occ_list Fnc::build_occ_list() const{
 	Occ_list res;
 
 	for (const auto & acl : this->_clauses) {
-		res += acl.get_occ_list();
+		res += acl.build_occ_list();
 	}
 	return (res);
 }
@@ -53,7 +53,7 @@ Occ_list Fnc::remove_tautologies() {
 
 	for (auto it = this->_clauses.begin(); it != this->_clauses.end();) {
 		if (it->is_tautology()) {
-			res += it->get_occ_list();
+			res += it->build_occ_list();
 			it   = this->_clauses.erase(it);
 		}
 		else {
@@ -127,7 +127,7 @@ Occ_list Fnc::remove_if_contains(int val) {
 	for (auto it = this->_clauses.begin(); it != this->_clauses.end();) {
 		int litt_side = it->contains_litt(val);
 		if (litt_side != 0) {
-			res += it->get_occ_list();
+			res += it->build_occ_list();
 			it   = this->_clauses.erase(it);
 		}
 		else {
@@ -145,15 +145,15 @@ bool Fnc::contains(const Clause & acl) {
 	return (false);
 }
 
-void Fnc::assign_other_value(unsigned int val, Distrib & dist) const{
+void Fnc::cut_assign_other_value(unsigned int val, Distrib & dist) const{
 	for (const auto & ac : this->_clauses) {
-		ac.assign_other_value(val, dist);
+		ac.cut_assign_other_value(val, dist);
 	}
 }
 
-void Fnc::unit_propagation(Distrib & dist) const{
+void Fnc::cut_unit_propagation(Distrib & dist) const{
 	for (const auto & ac : this->_clauses) {
-		ac.unit_propagation(dist);
+		ac.cut_unit_propagation(dist);
 	}
 }
 
@@ -169,7 +169,7 @@ Occ_list Fnc::eval(unsigned int id, bool value) {
 		bool next     = true;
 		if (litt_side != 0) {
 			if (litt_side == side) {
-				res += it->get_occ_list();
+				res += it->build_occ_list();
 				it   = this->_clauses.erase(it);
 				next = false;
 			}

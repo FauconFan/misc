@@ -76,9 +76,9 @@ static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 
 	std::cout << "start cut...\n";
 	for (const auto & i : cls_with_val_premisse)
-		litt_occ -= i.get_occ_list();
+		litt_occ -= i.build_occ_list();
 	for (const auto & j : cls_cls_with_val_conclusion)
-		litt_occ -= j.get_occ_list();
+		litt_occ -= j.build_occ_list();
 
 	for (const auto & i : cls_with_val_premisse) {
 		for (const auto & j : cls_cls_with_val_conclusion) {
@@ -87,7 +87,7 @@ static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 			if (!res_fusion.is_tautology() && !fnc.contains(res_fusion)) {
 				std::cout << "hh\n";
 				fnc_without_val.add_clause(res_fusion);
-				litt_occ += res_fusion.get_occ_list();
+				litt_occ += res_fusion.build_occ_list();
 			}
 		}
 	}
@@ -124,8 +124,8 @@ static bool rec_cut(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 
 		std::cout << copy_fnc;
 
-		copy_fnc.assign_other_value(cut_value, dist);
-		copy_fnc.unit_propagation(dist);
+		copy_fnc.cut_assign_other_value(cut_value, dist);
+		copy_fnc.cut_unit_propagation(dist);
 	}
 
 	return ret;
@@ -140,7 +140,7 @@ bool cut_solve(const Fnc & fnc) {
 	bool res = rec_cut(Fnc(fnc), litt_occ, dist);
 
 	if (res) {
-		fnc.assign_other_value(0, dist);
+		fnc.cut_assign_other_value(0, dist);
 		std::cout << dist;
 	}
 

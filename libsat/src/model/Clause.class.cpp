@@ -63,7 +63,7 @@ std::vector<unsigned int> * Clause::getNegLitts() const{
 	return this->_neg_litts;
 }
 
-Occ_list Clause::get_occ_list() const{
+Occ_list Clause::build_occ_list() const{
 	Occ_list res;
 
 	for (unsigned int val : *(this->_pos_litts)) {
@@ -139,7 +139,7 @@ Occ_list Clause::remove_duplicates() {
 	return res;
 }
 
-void Clause::assign_other_value(unsigned int val, Distrib & dist) const{
+void Clause::cut_assign_other_value(unsigned int val, Distrib & dist) const{
 	for (unsigned int i : *(this->_neg_litts)) {
 		if (i == val)
 			continue;
@@ -157,7 +157,7 @@ void Clause::assign_other_value(unsigned int val, Distrib & dist) const{
 	}
 }
 
-bool Clause::unit_propagation(Distrib & dist) const{
+bool Clause::cut_unit_propagation(Distrib & dist) const{
 	int res = 0;
 
 	for (unsigned int val : *(this->_neg_litts)) {

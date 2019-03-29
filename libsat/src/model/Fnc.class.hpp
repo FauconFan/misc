@@ -11,24 +11,23 @@ class Fnc{
 		explicit Fnc(const std::vector<Clause> &);
 		virtual~Fnc();
 
-		bool                        empty() const;
-		void                        add_clause(const Clause &);
-		void                        add_fnc(const Fnc &);
-		std::vector<Clause>         get_implclauses();
+		std::vector<Clause>     get_implclauses();
+		Occ_list                build_occ_list() const;
 
-		bool            has_empty_clause() const;
+		bool                    empty() const;
+		bool                    has_empty_clause() const;
+		bool                    contains(const Clause &); // delete later subsumption
 
-		Occ_list        build_occ_list() const;
+		void                    add_clause(const Clause &);
+		void                    add_fnc(const Fnc &);
 
-		void            nettoyage(Occ_list &, Distrib &); // add subsumption
+		Occ_list                eval(unsigned int id, bool value);
+		void                    nettoyage(Occ_list &, Distrib &); // add subsumption
 
-		bool            contains(const Clause &); // delete later subsumption
-		void            assign_other_value(unsigned int, Distrib &) const;
-		void            unit_propagation(Distrib &) const;
+		void                    cut_assign_other_value(unsigned int, Distrib &) const;
+		void                    cut_unit_propagation(Distrib &) const;
 
-		Occ_list        eval(unsigned int id, bool value);
-
-		void            display(std::ostream &) const;
+		void                    display(std::ostream &) const;
 
 	private:
 		std::vector<Clause> _clauses {};
