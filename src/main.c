@@ -5,6 +5,9 @@
 
 // uint8_t     msg[14] = {93, 2, 0, 10, 2, 8, 0, 0, 0, 0, 0, 0, 0, 0};
 
+uint8_t     msg[14] = {93, 2, 0, 10, 2, 8, 0, 0, 0, 0, 0, 0, 0, 0};
+uint8_t     hello_long[22] = {93, 2, 0, 18, 2, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 int main(void)
 {
     // int             sfd;
@@ -16,18 +19,6 @@ int main(void)
     // client(sfd, sock_addr, sock_len, msg, sizeof(msg));
 
     // return 0;
-
-    // t_msg_hdr_builder   *msg;
-
-    // msg = mhb_alloc();
-    // mbh_set(msg, 16, "o", 1);
-    // for (size_t i = 0; i < 5; ++i)
-    //     mbh_push(msg, "coucou", 6);
-    // mbh_skip(msg);
-    // for (size_t i = 0; i < 5; ++i)
-    //     mbh_push(msg, "coucou", 6);
-    // mbh_print(msg);
-    // mbh_free(msg);
 
     t_tlv   * tlv;
 

@@ -13,6 +13,10 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
+#include <sys/time.h>
+#include <sys/select.h>
+#include <fcntl.h>
+
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
@@ -36,6 +40,8 @@ void    client(
                 struct sockaddr *sock_addr,
                 socklen_t sock_len,
                 const void * buff,
-                size_t len_buff);
+                size_t len_buff,
+                void *buff2,
+                size_t len_buff2);
 
 #endif
