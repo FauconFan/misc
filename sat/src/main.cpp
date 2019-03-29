@@ -5,7 +5,7 @@ int main(int argc, char ** argv) {
 		Fnc * fnc = getInputFNC(argv[1]);
 
 		if (fnc != nullptr) {
-			std::cout << *fnc;
+			// std::cout << *fnc;
 
 			if (dpll_solve(*fnc))
 				std::cout << "true\n";

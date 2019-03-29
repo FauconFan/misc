@@ -19,8 +19,8 @@ static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	copy_dist     = Distrib(dist);
 
 	assign_value = litt_occ.getMaxOccu();
-	std::cout << "assign value : " << assign_value << "\n";
-	std::cout << "Try true\n";
+	// std::cout << "assign value : " << assign_value << "\n";
+	// std::cout << "Try true\n";
 
 	litt_occ -= fnc.eval(assign_value, true);
 	dist.set(assign_value, true);
@@ -31,8 +31,8 @@ static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	if (dpll_recu(fnc, litt_occ, dist))
 		return (true);
 
-	std::cout << "step back (" << assign_value << ")\n";
-	std::cout << "Try false\n";
+	// std::cout << "step back (" << assign_value << ")\n";
+	// std::cout << "Try false\n";
 
 	litt_occ  = copy_litt_occ;
 	dist      = copy_dist;
@@ -49,12 +49,12 @@ bool dpll_solve(const Fnc & fnc) {
 	Occ_list litt_occ = Occ_list(fnc);
 	Distrib dist;
 
-	std::cout << litt_occ << "\n";
+	// std::cout << litt_occ << "\n";
 
 	bool res = dpll_recu(Fnc(fnc), litt_occ, dist);
 
-	std::cout << litt_occ;
-	std::cout << dist;
+	// std::cout << litt_occ;
+	// std::cout << dist;
 
 	return (res);
 }
