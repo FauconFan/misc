@@ -9,6 +9,7 @@ TCase *window_test();
 TCase *parsing_test();
 TCase *util_images_test();
 TCase *save_test();
+TCase *meta_test();
 
 t_bool compareSurfaces(SDL_Surface * surf1, SDL_Surface * surf2);
 SDL_Surface *copySurface(SDL_Surface * surf);

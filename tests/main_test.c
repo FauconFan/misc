@@ -9,6 +9,7 @@ Suite * sample_suite(void) {
 	suite_add_tcase(s, parsing_test());
 	suite_add_tcase(s, util_images_test());
 	suite_add_tcase(s, save_test());
+	suite_add_tcase(s, meta_test());
 	return s;
 }
 
@@ -24,5 +25,6 @@ int main(void) {
 	srunner_run_all(runner, CK_NORMAL);
 	no_failed = srunner_ntests_failed(runner);
 	srunner_free(runner);
+	cimp_end();
 	return (no_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
