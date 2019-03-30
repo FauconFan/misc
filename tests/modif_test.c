@@ -1,137 +1,61 @@
 #include "libtest.h"
 
-START_TEST(test_rotate45) {
+static void test_img(
+				char * line,
+				const int w,
+				const int h,
+				const int point,
+				const int w_new,
+				const int h_new,
+				const int point_new) {
+	SDL_Surface * surf;
+	uint32_t * old;
+	uint32_t * new;
+	const uint32_t value = 32;
+
 	ck_assert(cimp_rotate(NULL) == 1);
-	SDL_Surface * surf = SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
-	uint32_t * new     = (uint32_t *) surf->pixels;
-	uint32_t to_test   = (uint32_t) 32;
-	new[0]         = to_test;
-	g_cimp->screen = malloc(sizeof(t_cimp_screen));
-	g_cimp->screen->buff_screen = surf;
-	treat_line("rotate 45");
-	ck_assert(g_cimp->screen->buff_screen->w == 3 && g_cimp->screen->buff_screen->h == 2);
-	uint32_t * pixels = (uint32_t *) g_cimp->screen->buff_screen->pixels;
-	for (int i = 0; i < 6; i++) {
-		if (i == 0) ck_assert(pixels[0] == to_test); else ck_assert(pixels[i] == 0);
+	surf = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+	old = (uint32_t *) surf->pixels;
+
+	for (int i = 0; i < w * h; ++i) {
+		old[i] = 0;
 	}
-} END_TEST;
-
-START_TEST(test_rotate0) {
-	ck_assert(cimp_rotate(NULL) == 1);
-	SDL_Surface * surf = SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
-	uint32_t * new     = (uint32_t *) surf->pixels;
-	uint32_t to_test   = (uint32_t) 32;
-	new[0]         = to_test;
+	old[point] = value;
 	g_cimp->screen = malloc(sizeof(t_cimp_screen));
 	g_cimp->screen->buff_screen = surf;
-	treat_line("rotate 0");
-	ck_assert(g_cimp->screen->buff_screen->w == 3 && g_cimp->screen->buff_screen->h == 2);
-	uint32_t * pixels = (uint32_t *) g_cimp->screen->buff_screen->pixels;
-	for (int i = 0; i < 6; i++) {
-		if (i == 0) ck_assert(pixels[0] == to_test); else ck_assert(pixels[i] == 0); }
-} END_TEST;
-
-START_TEST(test_rotate720) {
-	ck_assert(cimp_rotate(NULL) == 1);
-	SDL_Surface * surf = SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
-	uint32_t * new     = (uint32_t *) surf->pixels;
-	uint32_t to_test   = (uint32_t) 32;
-	new[0]         = to_test;
-	g_cimp->screen = malloc(sizeof(t_cimp_screen));
-	g_cimp->screen->buff_screen = surf;
-	treat_line("rotate 720");
-	ck_assert(g_cimp->screen->buff_screen->w == 3 && g_cimp->screen->buff_screen->h == 2);
-	uint32_t * pixels = (uint32_t *) g_cimp->screen->buff_screen->pixels;
-	for (int i = 0; i < 6; i++) {
-		if (i == 0) ck_assert(pixels[0] == to_test); else ck_assert(pixels[i] == 0); }
-} END_TEST;
-
-START_TEST(test_rotate90) {
-	ck_assert(cimp_rotate(NULL) == 1);
-	SDL_Surface * surf = SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
-	uint32_t * new     = (uint32_t *) surf->pixels;
-	uint32_t to_test   = (uint32_t) 32;
-	new[0]         = to_test;
-	g_cimp->screen = malloc(sizeof(t_cimp_screen));
-	g_cimp->screen->buff_screen = surf;
-	treat_line("rotate 90");
-	ck_assert(g_cimp->screen->buff_screen->w == 2 && g_cimp->screen->buff_screen->h == 3);
-	uint32_t * pixels = (uint32_t *) g_cimp->screen->buff_screen->pixels;
-	for (int i = 0; i < 6; i++) {
-		if (i == 1) ck_assert(pixels[1] == to_test); else ck_assert(pixels[i] == 0); }
-} END_TEST;
-
-START_TEST(test_rotate180) {
-	ck_assert(cimp_rotate(NULL) == 1);
-	SDL_Surface * surf = SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
-	uint32_t * new     = (uint32_t *) surf->pixels;
-	uint32_t to_test   = (uint32_t) 32;
-	new[0]         = to_test;
-	g_cimp->screen = malloc(sizeof(t_cimp_screen));
-	g_cimp->screen->buff_screen = surf;
-	treat_line("rotate 180");
-	ck_assert(g_cimp->screen->buff_screen->w == 3 && g_cimp->screen->buff_screen->h == 2);
-	uint32_t * pixels = (uint32_t *) g_cimp->screen->buff_screen->pixels;
-	for (int i = 0; i < 6; i++) {
-		if (i == 5) ck_assert(pixels[5] == to_test); else ck_assert(pixels[i] == 0);
+	treat_line(line);
+	ck_assert(g_cimp->screen->buff_screen->w == w_new);
+	ck_assert(g_cimp->screen->buff_screen->h == h_new);
+	new = (uint32_t *) g_cimp->screen->buff_screen->pixels;
+	for (int i = 0; i < w * h; ++i) {
+		if (i == point_new)
+			ck_assert(new[i] == value);
+		else
+			ck_assert(new[i] == 0);
 	}
+	SDL_FreeSurface(g_cimp->screen->buff_screen);
+	free(g_cimp->screen);
+	g_cimp->screen = NULL;
+}
+
+START_TEST(test_rotate) {
+	test_img("rotate 45", 3, 2, 0, 3, 2, 0);
+	test_img("rotate 0", 3, 2, 0, 3, 2, 0);
+	test_img("rotate 720", 3, 2, 0, 3, 2, 0);
+	test_img("rotate 90", 3, 2, 0, 2, 3, 1);
+	test_img("rotate 180", 3, 2, 0, 3, 2, 5);
+	test_img("rotate -90", 3, 2, 0, 2, 3, 4);
 } END_TEST;
 
-START_TEST(test_rotateneg90) {
-	ck_assert(cimp_rotate(NULL) == 1);
-	SDL_Surface * surf = SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
-	uint32_t * new     = (uint32_t *) surf->pixels;
-	uint32_t to_test   = (uint32_t) 32;
-	new[0]         = to_test;
-	g_cimp->screen = malloc(sizeof(t_cimp_screen));
-	g_cimp->screen->buff_screen = surf;
-	treat_line("rotate -90");
-	ck_assert(g_cimp->screen->buff_screen->w == 2 && g_cimp->screen->buff_screen->h == 3);
-	uint32_t * pixels = (uint32_t *) g_cimp->screen->buff_screen->pixels;
-	for (int i = 0; i < 6; i++) {
-		if (i == 4) ck_assert(pixels[4] == to_test); else ck_assert(pixels[i] == 0); }
-} END_TEST;
-
-START_TEST(test_sym_verti) {
-	SDL_Surface * surf = SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
-	uint32_t * new     = (uint32_t *) surf->pixels;
-	uint32_t to_test   = (uint32_t) 32;
-
-	new[0]         = to_test;
-	g_cimp->screen = malloc(sizeof(t_cimp_screen));
-	g_cimp->screen->buff_screen = surf;
-	treat_line("sym_verti");
-	ck_assert(g_cimp->screen->buff_screen->w == 3 && g_cimp->screen->buff_screen->h == 2);
-	uint32_t * pixels = (uint32_t *) g_cimp->screen->buff_screen->pixels;
-	for (int i = 0; i < 6; i++) {
-		if (i == 2) ck_assert(pixels[2] == to_test); else ck_assert(pixels[i] == 0); }
-} END_TEST;
-
-START_TEST(test_sym_hori) {
-	SDL_Surface * surf = SDL_CreateRGBSurface(0, 3, 2, 32, 0, 0, 0, 0);
-	uint32_t * new     = (uint32_t *) surf->pixels;
-	uint32_t to_test   = (uint32_t) 32;
-
-	new[0]         = to_test;
-	g_cimp->screen = malloc(sizeof(t_cimp_screen));
-	g_cimp->screen->buff_screen = surf;
-	treat_line("sym_hori");
-	ck_assert(g_cimp->screen->buff_screen->w == 3 && g_cimp->screen->buff_screen->h == 2);
-	uint32_t * pixels = (uint32_t *) g_cimp->screen->buff_screen->pixels;
-	for (int i = 0; i < 6; i++) {
-		if (i == 3) ck_assert(pixels[3] == to_test); else ck_assert(pixels[i] == 0); }
+START_TEST(test_sym) {
+	test_img("sym_verti", 3, 2, 0, 3, 2, 2);
+	test_img("sym_hori", 3, 2, 0, 3, 2, 3);
 } END_TEST;
 
 TCase * modif_test() {
 	TCase * tc_modif = tcase_create("Modif images");
 
-	tcase_add_test(tc_modif, test_rotate45);
-	tcase_add_test(tc_modif, test_rotate0);
-	tcase_add_test(tc_modif, test_rotate720);
-	tcase_add_test(tc_modif, test_rotate90);
-	tcase_add_test(tc_modif, test_rotate180);
-	tcase_add_test(tc_modif, test_rotateneg90);
-	tcase_add_test(tc_modif, test_sym_verti);
-	tcase_add_test(tc_modif, test_sym_hori);
+	tcase_add_test(tc_modif, test_rotate);
+	tcase_add_test(tc_modif, test_sym);
 	return tc_modif;
 }
