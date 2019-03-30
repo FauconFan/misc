@@ -95,7 +95,7 @@ $(LEX_PAR_FOLDER)%.parser.o: $(LEX_PAR_FOLDER)%.y
 
 .PHONY: clean
 clean:
-	@rm -rf $(OBJ)
+	@rm -rf $(OBJ) $(OBJ_TEST)
 	@echo "Objects removed"
 
 .PHONY: fclean
