@@ -9,4 +9,6 @@ TCase *window_test();
 TCase *parsing_test();
 TCase *util_images_test();
 
+t_bool compareSurfaces(SDL_Surface * surf1, SDL_Surface * surf2);
+
 #endif

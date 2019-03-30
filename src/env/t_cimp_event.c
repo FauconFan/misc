@@ -43,8 +43,10 @@ void update_event(t_cimp_event * evnmt) {
 		}
 		else if (event.type == SDL_MOUSEBUTTONUP) {
 			evnmt->button_pressed = 1;
-			evnmt->selection.w    = event.button.x - evnmt->selection.x;
-			evnmt->selection.h    = event.button.y - evnmt->selection.y;
+			evnmt->selection.w    = abs(event.button.x - evnmt->selection.x);
+			evnmt->selection.h    = abs(event.button.y - evnmt->selection.y);
+			evnmt->selection.x    = min(evnmt->selection.x, event.button.x);
+			evnmt->selection.y    = min(evnmt->selection.y, event.button.y);
 			if (evnmt->selection.x >= -0 && evnmt->selection.y >= 0 && evnmt->selection.w >= 0 &&
 			  evnmt->selection.h >= 0)
 			{

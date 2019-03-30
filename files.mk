@@ -67,6 +67,8 @@ COMMANDS_FILES = \
 			cimp_save.c \
 			cimp_update.c \
 			cimp_copy.c \
+			cimp_cut.c \
+			cimp_paste.c \
 			cimp_fill.c \
 			cimp_color_replace.c \
 			cimp_color_negative.c \
@@ -100,6 +102,7 @@ SRC = \
 TEST_FOLDER			= tests/
 
 TEST_FILES = \
+			util_surface.c \
 			main_test.c \
 			modif_test.c \
 			window_test.c \
