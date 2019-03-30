@@ -11,5 +11,7 @@ TCase *util_images_test();
 TCase *save_test();
 
 t_bool compareSurfaces(SDL_Surface * surf1, SDL_Surface * surf2);
+SDL_Surface *copySurface(SDL_Surface * surf);
+SDL_Surface *genSurface(const int w, const int h);
 
 #endif

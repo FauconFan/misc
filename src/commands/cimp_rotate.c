@@ -5,11 +5,9 @@ static void real_rotate(t_cmd * cmd, int angle);
 static void real_rotate90();
 
 int cimp_rotate(t_cmd * cmd) {
-	if (cmd != NULL && g_cimp && g_cimp->screen && g_cimp->screen->buff_screen) {
+	if (cmd != NULL && g_cimp->screen != NULL)
 		real_rotate(cmd, cmd->num);
-		return (0);
-	}
-	return 1;
+	return (0);
 }
 
 static void real_rotate(t_cmd * cmd, int angle) {
