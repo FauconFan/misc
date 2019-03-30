@@ -209,53 +209,11 @@ START_TEST(test_white_black) {
 
 START_TEST(test_ajust_light_contrast) {
 	SDL_Surface * surf;
-	SDL_Surface * copy;
 	uint32_t * pixels_surf;
-	uint32_t * pixels_copy;
 
 	ck_assert(cimp_ajust_light_contrast(NULL) == 0);
 
-	// ajust light contrast 1
-	surf = genSurface(50, 50);
-	copy = copySurface(surf);
-
-	exec(&surf, (char *[]) {"ajust_light_contrast 1"}, 1);
-
-	pixels_surf = (uint32_t *) surf->pixels;
-	pixels_copy = (uint32_t *) copy->pixels;
-
-	for (int i = 0; i < 50 * 50; ++i) {
-		uint8_t rs, gs, bs, rc, gc, bc;
-
-		SDL_GetRGB(pixels_surf[i], surf->format, &rs, &gs, &bs);
-		SDL_GetRGB(pixels_copy[i], copy->format, &rc, &gc, &bc);
-
-		ck_assert(rc + gc + bc <= rs + gs + bs + 3);
-	}
-
-	SDL_FreeSurface(surf);
-	SDL_FreeSurface(copy);
-
-	// ajust light contrast -1
-	surf = genSurface(50, 50);
-	copy = copySurface(surf);
-
-	exec(&surf, (char *[]) {"ajust_light_contrast -1"}, 1);
-
-	pixels_surf = (uint32_t *) surf->pixels;
-	pixels_copy = (uint32_t *) copy->pixels;
-
-	for (int i = 0; i < 50 * 50; ++i) {
-		uint8_t rs, gs, bs, rc, gc, bc;
-
-		SDL_GetRGB(pixels_surf[i], surf->format, &rs, &gs, &bs);
-		SDL_GetRGB(pixels_copy[i], copy->format, &rc, &gc, &bc);
-
-		ck_assert(rc + gc + bc >= rs + gs + bs - 3);
-	}
-
-	SDL_FreeSurface(surf);
-	SDL_FreeSurface(copy);
+	test_idempotent((char *[]) {"ajust_light_contrast 0"}, 1);
 
 	// ajust light contrast 1000
 	surf = genSurface(50, 50);
