@@ -1,6 +1,6 @@
 #include "libtest.h"
 
-static void exec(SDL_Surface ** surf, char **lines, size_t len) {
+static void exec(SDL_Surface ** surf, char ** lines, size_t len) {
 	g_cimp->screen = malloc(sizeof(t_cimp_screen));
 	g_cimp->screen->buff_screen = *surf;
 	treat_line("unselect");
@@ -12,18 +12,18 @@ static void exec(SDL_Surface ** surf, char **lines, size_t len) {
 }
 
 static void test_img(
-				char * line,
-				const int w,
-				const int h,
-				const int point,
-				const int w_new,
-				const int h_new,
-				const int point_new) {
+  char *    line,
+  const int w,
+  const int h,
+  const int point,
+  const int w_new,
+  const int h_new,
+  const int point_new) {
 	SDL_Surface * surf;
 	uint32_t * pixels;
 	uint32_t value;
 
-	surf = genSurface(w, h);
+	surf   = genSurface(w, h);
 	pixels = (uint32_t *) surf->pixels;
 
 	value = pixels[point];
@@ -37,8 +37,8 @@ static void test_img(
 }
 
 static void test_idempotent(
-				char **lines,
-				size_t len_lines) {
+  char ** lines,
+  size_t  len_lines) {
 	SDL_Surface * surf;
 	SDL_Surface * copy;
 	const int w = 50;
@@ -56,10 +56,10 @@ static void test_idempotent(
 }
 
 static void test_same_treatment(
-				char **lines1,
-				size_t len_lines1,
-				char **lines2,
-				size_t len_lines2) {
+  char ** lines1,
+  size_t  len_lines1,
+  char ** lines2,
+  size_t  len_lines2) {
 	SDL_Surface * surf1;
 	SDL_Surface * surf2;
 	const int w = 50;
@@ -77,6 +77,37 @@ static void test_same_treatment(
 	SDL_FreeSurface(surf2);
 }
 
+static void test_expected_pixels(
+  char **     lines,
+  size_t      len_lines,
+  SDL_Color * inputs,
+  SDL_Color * outputs,
+  size_t      nb_pixels) {
+	SDL_Surface * surf;
+	SDL_Surface * expected;
+	uint32_t * pixels;
+
+	surf   = genSurface(nb_pixels, 1);
+	pixels = (uint32_t *) surf->pixels;
+
+	for (size_t i = 0; i < nb_pixels; ++i)
+		pixels[i] = SDL_MapRGBA(surf->format, inputs[i].r, inputs[i].g, inputs[i].b, inputs[i].a);
+
+	expected = genSurface(nb_pixels, 1);
+	pixels   = (uint32_t *) expected->pixels;
+
+	for (size_t i = 0; i < nb_pixels; ++i)
+		pixels[i] =
+		  SDL_MapRGBA(surf->format, outputs[i].r, outputs[i].g, outputs[i].b, outputs[i].a);
+
+	exec(&surf, lines, len_lines);
+
+	ck_assert(compareSurfaces(surf, expected));
+
+	SDL_FreeSurface(surf);
+	SDL_FreeSurface(expected);
+}
+
 START_TEST(test_rotate) {
 	ck_assert(cimp_rotate(NULL) == 0);
 
@@ -88,21 +119,20 @@ START_TEST(test_rotate) {
 	test_img("rotate 270", 3, 2, 0, 2, 3, 4);
 	test_img("rotate -90", 3, 2, 0, 2, 3, 4);
 
-	test_idempotent((char *[]){"rotate 0"}, 1);
-	test_idempotent((char *[]){"rotate 0", "rotate 0"}, 2);
-	test_idempotent((char *[]){"rotate 360"}, 1);
-	test_idempotent((char *[]){"rotate 720"}, 1);
-	test_idempotent((char *[]){"rotate -360"}, 1);
+	test_idempotent((char *[]) {"rotate 0"}, 1);
+	test_idempotent((char *[]) {"rotate 0", "rotate 0"}, 2);
+	test_idempotent((char *[]) {"rotate 360"}, 1);
+	test_idempotent((char *[]) {"rotate 720"}, 1);
+	test_idempotent((char *[]) {"rotate -360"}, 1);
 
-	test_same_treatment((char *[]){"rotate 0"}, 1,
-						(char *[]){"rotate 360"}, 1);
-	test_same_treatment((char *[]){"rotate 90"}, 1,
-						(char *[]){"rotate -270"}, 1);
-	test_same_treatment((char *[]){"rotate 180"}, 1,
-						(char *[]){"rotate -180"}, 1);
-	test_same_treatment((char *[]){"rotate 270"}, 1,
-						(char *[]){"rotate -90"}, 1);
-
+	test_same_treatment((char *[]) {"rotate 0"}, 1,
+	  (char *[]) {"rotate 360"}, 1);
+	test_same_treatment((char *[]) {"rotate 90"}, 1,
+	  (char *[]) {"rotate -270"}, 1);
+	test_same_treatment((char *[]) {"rotate 180"}, 1,
+	  (char *[]) {"rotate -180"}, 1);
+	test_same_treatment((char *[]) {"rotate 270"}, 1,
+	  (char *[]) {"rotate -90"}, 1);
 } END_TEST;
 
 START_TEST(test_sym) {
@@ -112,63 +142,158 @@ START_TEST(test_sym) {
 	test_img("sym_verti", 3, 2, 0, 3, 2, 2);
 	test_img("sym_hori", 3, 2, 0, 3, 2, 3);
 
-	test_idempotent((char *[]){"sym_verti", "sym_verti"}, 2);
-	test_idempotent((char *[]){"sym_hori", "sym_hori"}, 2);
-	test_idempotent((char *[]){"sym_hori", "sym_hori", "sym_verti", "sym_verti"}, 4);
-	test_idempotent((char *[]){"sym_hori", "sym_verti", "sym_hori", "sym_verti"}, 4);
-
+	test_idempotent((char *[]) {"sym_verti", "sym_verti"}, 2);
+	test_idempotent((char *[]) {"sym_hori", "sym_hori"}, 2);
+	test_idempotent((char *[]) {"sym_hori", "sym_hori", "sym_verti", "sym_verti"}, 4);
+	test_idempotent((char *[]) {"sym_hori", "sym_verti", "sym_hori", "sym_verti"}, 4);
 } END_TEST;
 
 START_TEST(test_fill) {
 	ck_assert(cimp_fill(NULL) == 0);
 
-	test_same_treatment((char *[]){"fill 0xFF0000", "fill 0x00FF00"}, 2,
-						(char *[]){"fill 0x00FF00"}, 1);
+	test_same_treatment((char *[]) {"fill 0xFF0000", "fill 0x00FF00"}, 2,
+	  (char *[]) {"fill 0x00FF00"}, 1);
 
-	test_same_treatment((char *[]){"select (0 0 20 20)", "fill 0xFF0000", "unselect", "fill 0x00FF00"}, 4,
-						(char *[]){"fill 0x00FF00"}, 1);
+	test_same_treatment((char *[]) {"select (0 0 20 20)", "fill 0xFF0000", "unselect",
+									"fill 0x00FF00"}, 4,
+	  (char *[]) {"fill 0x00FF00"}, 1);
 
-	test_same_treatment((char *[]){"fill 0xFF0000 (0 0 20 20)", "fill 0x00FF00"}, 2,
-						(char *[]){"fill 0x00FF00"}, 1);
+	test_same_treatment((char *[]) {"fill 0xFF0000 (0 0 20 20)", "fill 0x00FF00"}, 2,
+	  (char *[]) {"fill 0x00FF00"}, 1);
 
-	test_same_treatment((char *[]){"fill 0xFF0000 (0 0 20 20)", "fill (0 0 25 25) 0x00FF00"}, 2,
-						(char *[]){"fill 0x00FF00 (0 0 25 25)"}, 1);
+	test_same_treatment((char *[]) {"fill 0xFF0000 (0 0 20 20)", "fill (0 0 25 25) 0x00FF00"}, 2,
+	  (char *[]) {"fill 0x00FF00 (0 0 25 25)"}, 1);
 } END_TEST;
 
 START_TEST(test_gray) {
-	SDL_Surface * surf;
-	uint32_t * pixels;
-
 	ck_assert(cimp_color_gray(NULL) == 0);
 
-	surf = genSurface(3, 1);
-	pixels = (uint32_t *) surf->pixels;
-	pixels[0] = SDL_MapRGB(surf->format, 80, 100, 120); //gray = 100
-	pixels[1] = SDL_MapRGB(surf->format, 10, 15, 35); // gray = 20
-	pixels[2] = SDL_MapRGB(surf->format, 243, 250, 255); // gray = 249
+	test_expected_pixels((char *[]) {"color_gray"}, 1,
+	  (SDL_Color []) {{80, 100, 120, 0}, {10, 15, 35, 0}, {243, 250, 255, 0}},
+	  (SDL_Color []) {{100, 100, 100, 0}, {20, 20, 20, 0}, {249, 249, 249, 0}},
+	  3);
 
-	exec(&surf, (char *[]){"color_gray"}, 1);
+	test_idempotent((char *[]) {"color_negative", "color_negative"}, 2);
+} END_TEST;
 
-	pixels = (uint32_t *) surf->pixels;
-	for (size_t i = 0; i < 3; ++i) {
-		uint8_t gray, r, g, b;
+START_TEST(test_negative) {
+	ck_assert(cimp_color_negative(NULL) == 0);
 
-		if (i == 0)
-			gray = 100;
-		else if (i == 1)
-			gray = 20;
-		else
-			gray = 249;
-		SDL_GetRGB(pixels[i], surf->format, &r, &g, &b);
-		ck_assert(gray == r);
-		ck_assert(gray == g);
-		ck_assert(gray == b);
+	test_expected_pixels((char *[]) {"color_negative"}, 1,
+	  (SDL_Color []) {{100, 110, 120, 0}, {0, 255, 128, 0}},
+	  (SDL_Color []) {{155, 145, 135, 0}, {255, 0, 127, 0}},
+	  2);
+
+	test_same_treatment((char *[]) {"color_gray", "color_gray"}, 2,
+	  (char *[]) {"color_gray"}, 1);
+} END_TEST;
+
+
+START_TEST(test_replace) {
+	ck_assert(cimp_color_replace(NULL) == 0);
+
+	test_expected_pixels((char *[]) {"color_replace (0x00FFFF -> 0xFF0000) 16"}, 1,
+	  (SDL_Color []) {{16, 255, 255, 0}, {17, 255, 255, 0}},
+	  (SDL_Color []) {{255, 0, 0, 0}, {17, 255, 255, 0}},
+	  2);
+} END_TEST;
+
+START_TEST(test_white_black) {
+	ck_assert(cimp_color_white_black(NULL) == 0);
+
+	test_expected_pixels((char *[]) {"color_white_black 80"}, 1,
+	  (SDL_Color []) {{80, 100, 120, 0}, {10, 15, 35, 0}, {243, 250, 255, 0}},
+	  (SDL_Color []) {{255, 255, 255, 0}, {0, 0, 0, 0}, {255, 255, 255, 0}},
+	  3);
+} END_TEST;
+
+START_TEST(test_ajust_light_contrast) {
+	SDL_Surface * surf;
+	SDL_Surface * copy;
+	uint32_t * pixels_surf;
+	uint32_t * pixels_copy;
+
+	ck_assert(cimp_ajust_light_contrast(NULL) == 0);
+
+	// ajust light contrast 1
+	surf = genSurface(50, 50);
+	copy = copySurface(surf);
+
+	exec(&surf, (char *[]) {"ajust_light_contrast 1"}, 1);
+
+	pixels_surf = (uint32_t *) surf->pixels;
+	pixels_copy = (uint32_t *) copy->pixels;
+
+	for (int i = 0; i < 50 * 50; ++i) {
+		uint8_t rs, gs, bs, rc, gc, bc;
+
+		SDL_GetRGB(pixels_surf[i], surf->format, &rs, &gs, &bs);
+		SDL_GetRGB(pixels_copy[i], copy->format, &rc, &gc, &bc);
+
+		ck_assert(rc + gc + bc <= rs + gs + bs + 3);
+	}
+
+	SDL_FreeSurface(surf);
+	SDL_FreeSurface(copy);
+
+	// ajust light contrast -1
+	surf = genSurface(50, 50);
+	copy = copySurface(surf);
+
+	exec(&surf, (char *[]) {"ajust_light_contrast -1"}, 1);
+
+	pixels_surf = (uint32_t *) surf->pixels;
+	pixels_copy = (uint32_t *) copy->pixels;
+
+	for (int i = 0; i < 50 * 50; ++i) {
+		uint8_t rs, gs, bs, rc, gc, bc;
+
+		SDL_GetRGB(pixels_surf[i], surf->format, &rs, &gs, &bs);
+		SDL_GetRGB(pixels_copy[i], copy->format, &rc, &gc, &bc);
+
+		ck_assert(rc + gc + bc >= rs + gs + bs - 3);
+	}
+
+	SDL_FreeSurface(surf);
+	SDL_FreeSurface(copy);
+
+	// ajust light contrast 1000
+	surf = genSurface(50, 50);
+
+	exec(&surf, (char *[]) {"ajust_light_contrast 1000"}, 1);
+
+	pixels_surf = (uint32_t *) surf->pixels;
+
+	for (int i = 0; i < 50 * 50; ++i) {
+		uint8_t rs, gs, bs;
+
+		SDL_GetRGB(pixels_surf[i], surf->format, &rs, &gs, &bs);
+
+		ck_assert(rs == 255 || rs == 128 || rs == 0);
+		ck_assert(gs == 255 || gs == 128 || gs == 0);
+		ck_assert(bs == 255 || bs == 128 || bs == 0);
 	}
 
 	SDL_FreeSurface(surf);
 
-	test_same_treatment((char *[]){"color_gray", "color_gray"}, 2,
-						(char *[]){"color_gray"}, 1);
+	// ajust light contrast -1000
+	surf = genSurface(50, 50);
+
+	exec(&surf, (char *[]) {"ajust_light_contrast -1000"}, 1);
+
+	pixels_surf = (uint32_t *) surf->pixels;
+
+	for (int i = 0; i < 50 * 50; ++i) {
+		uint8_t rs, gs, bs;
+
+		SDL_GetRGB(pixels_surf[i], surf->format, &rs, &gs, &bs);
+
+		ck_assert(rs == 128);
+		ck_assert(gs == 128);
+		ck_assert(bs == 128);
+	}
+
+	SDL_FreeSurface(surf);
 } END_TEST;
 
 TCase * modif_test() {
@@ -178,5 +303,9 @@ TCase * modif_test() {
 	tcase_add_test(tc_modif, test_sym);
 	tcase_add_test(tc_modif, test_fill);
 	tcase_add_test(tc_modif, test_gray);
+	tcase_add_test(tc_modif, test_negative);
+	tcase_add_test(tc_modif, test_replace);
+	tcase_add_test(tc_modif, test_white_black);
+	tcase_add_test(tc_modif, test_ajust_light_contrast);
 	return tc_modif;
 }

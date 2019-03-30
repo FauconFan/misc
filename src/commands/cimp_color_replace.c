@@ -13,9 +13,9 @@ static uint32_t replace(uint32_t col, void * smrv) {
 
 	smrp = (struct s_meta_replace *) smrv;
 	SDL_GetRGB(col, smrp->format, &r, &g, &b);
-	if (abs(r - smrp->col1.r) < smrp->margin &&
-	  abs(g - smrp->col1.g) < smrp->margin &&
-	  abs(b - smrp->col1.b) < smrp->margin)
+	if (abs(r - smrp->col1.r) <= smrp->margin &&
+	  abs(g - smrp->col1.g) <= smrp->margin &&
+	  abs(b - smrp->col1.b) <= smrp->margin)
 	{
 		return (SDL_MapRGB(smrp->format, smrp->col2.r, smrp->col2.g, smrp->col2.b));
 	}

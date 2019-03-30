@@ -16,24 +16,24 @@ t_bool compareSurfaces(SDL_Surface * surf1, SDL_Surface * surf2) {
 	return (TRUE);
 }
 
-SDL_Surface *copySurface(SDL_Surface * surf) {
-	SDL_Surface *copy;
+SDL_Surface * copySurface(SDL_Surface * surf) {
+	SDL_Surface * copy;
 	SDL_Rect rect;
 
 	rect.x = 0;
 	rect.y = 0;
 	rect.w = surf->w;
 	rect.h = surf->h;
-	copy = SDL_CreateRGBSurface(0, surf->w, surf->h, 32, 0, 0, 0, 0);
+	copy   = SDL_CreateRGBSurface(0, surf->w, surf->h, 32, 0, 0, 0, 0);
 	SDL_BlitSurface(surf, &rect, copy, &rect);
 	return (copy);
 }
 
-SDL_Surface *genSurface(const int w, const int h) {
-	SDL_Surface *surf;
+SDL_Surface * genSurface(const int w, const int h) {
+	SDL_Surface * surf;
 	uint32_t * pixels;
 
-	surf = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+	surf   = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
 	pixels = (uint32_t *) surf->pixels;
 
 	for (int i = 0; i < w * h; ++i) {
