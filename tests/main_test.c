@@ -8,6 +8,7 @@ Suite * sample_suite(void) {
 	suite_add_tcase(s, window_test());
 	suite_add_tcase(s, parsing_test());
 	suite_add_tcase(s, util_images_test());
+	suite_add_tcase(s, save_test());
 	return s;
 }
 

@@ -108,6 +108,7 @@ TEST_FILES = \
 			window_test.c \
 			parsing_test.c \
 			util_images_test.c \
+			save_test.c \
 
 TEST_SRC = \
 		$(addprefix $(TEST_FOLDER), $(TEST_FILES)) \
