@@ -49,7 +49,7 @@ static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 	Fnc fnc_conclusion;
 	Clause res_fusion;
 
-	std::cout << "cut...\n";
+	Logger::info() << "cut...\n";
 
 	std::vector<Clause> clauses = fnc.get_implclauses();
 
@@ -67,14 +67,14 @@ static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 		}
 	}
 
-	std::cout << "FNC without val\n" << fnc_without_val;
-	std::cout << "FNC with val in premisse\n" << fnc_premisse;
-	std::cout << "FNC with val in conclusion\n" << fnc_conclusion;
+	Logger::info() << "FNC without val\n" << fnc_without_val;
+	Logger::info() << "FNC with val in premisse\n" << fnc_premisse;
+	Logger::info() << "FNC with val in conclusion\n" << fnc_conclusion;
 
 	auto cls_with_val_premisse       = fnc_premisse.get_implclauses();
 	auto cls_cls_with_val_conclusion = fnc_conclusion.get_implclauses();
 
-	std::cout << "start cut...\n";
+	Logger::info() << "start cut...\n";
 	for (const auto & i : cls_with_val_premisse)
 		litt_occ -= i.build_occ_list();
 	for (const auto & j : cls_cls_with_val_conclusion)
@@ -83,18 +83,18 @@ static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 	for (const auto & i : cls_with_val_premisse) {
 		for (const auto & j : cls_cls_with_val_conclusion) {
 			res_fusion = cut(i, j, val);
-			std::cout << "; " << i << "; " << j << "\t -> " << res_fusion;
+			Logger::info() << "; " << i << "; " << j << "\t -> " << res_fusion;
 			if (!res_fusion.is_tautology() && !fnc.contains(res_fusion)) {
-				std::cout << "hh\n";
+				Logger::info() << "hh\n";
 				fnc_without_val.add_clause(res_fusion);
 				litt_occ += res_fusion.build_occ_list();
 			}
 		}
 	}
 
-	std::cout << "fnc become : ";
-	std::cout << fnc_without_val;
-	std::cout << "New litt_occ : " << litt_occ << "\nend cut\n";
+	Logger::info() << "fnc become : ";
+	Logger::info() << fnc_without_val;
+	Logger::info() << "New litt_occ : " << litt_occ << "\nend cut\n";
 
 	fnc = fnc_without_val;
 } // apply_cut
@@ -115,14 +115,14 @@ static bool rec_cut(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	Fnc copy_fnc = Fnc(fnc);
 
 	cut_value = litt_occ.getMinOccu();
-	std::cout << "cut_value : " << cut_value << "\n";
+	Logger::info() << "cut_value : " << cut_value << "\n";
 
 	apply_cut(fnc, litt_occ, cut_value);
 
 	if ((ret = rec_cut(fnc, litt_occ, dist))) {
-		std::cout << "Reassembly... \n";
+		Logger::info() << "Reassembly... \n";
 
-		std::cout << copy_fnc;
+		Logger::info() << copy_fnc;
 
 		copy_fnc.cut_assign_other_value(cut_value, dist);
 		copy_fnc.cut_unit_propagation(dist);
@@ -135,13 +135,15 @@ bool cut_solve(const Fnc & fnc) {
 	Occ_list litt_occ = Occ_list(fnc);
 	Distrib dist;
 
-	std::cout << litt_occ << "\n";
+	Logger::info() << "Cut algorithm\n";
+	Logger::info() << fnc << "\n";
+	Logger::info() << litt_occ << "\n";
 
 	bool res = rec_cut(Fnc(fnc), litt_occ, dist);
 
 	if (res) {
 		fnc.cut_assign_other_value(0, dist);
-		std::cout << dist;
+		Logger::info() << dist;
 	}
 
 	return res;

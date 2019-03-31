@@ -80,9 +80,7 @@ void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
 		auto pos = p.first;
 		auto neg = p.second;
 
-		// std::cout << *this;
-
-		// std::cout << litt_occ;
+		Logger::info() << "FNC polarity check" << * this << litt_occ;
 
 		if (pos.empty() && neg.empty())
 			break;
@@ -103,22 +101,22 @@ void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
 void Fnc::nettoyage(Occ_list & litt_occ, Distrib & dist) {
-	// std::cout << "clean... \nSimplify... done\n";
+	Logger::info() << "clean... \nSimplify... done\n";
 
 	litt_occ -= this->remove_duplicates();
-	// std::cout << "Delete tautologies... done\n";
+	Logger::info() << "Delete tautologies... done\n";
 	litt_occ -= this->remove_tautologies();
-	// std::cout << "New litt_occ " << litt_occ;
-	// std::cout << *this;
+	Logger::info() << "New litt_occ " << litt_occ;
+	Logger::info() << * this;
 
 	// Suppression si polarité unique
-	// std::cout << "Polarity test\n";
+	Logger::info() << "Polarity test\n";
 	this->polarity_check(litt_occ, dist);
-	// std::cout << litt_occ << "\ndone\n";
+	Logger::info() << litt_occ;
 
-	// std::cout << *this;
+	Logger::info() << * this;
 
-	// std::cout << "end clean\n";
+	Logger::info() << "end clean\n";
 }
 
 Occ_list Fnc::remove_if_contains(int val) {
