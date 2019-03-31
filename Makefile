@@ -132,6 +132,7 @@ WARNS_EXCEPTS = \
 				fuchsia-overloaded-operator \
 				fuchsia-default-arguments \
 				modernize-pass-by-value \
+				cert-err58-cpp \
 
 WARNS = $(shell echo "*$(foreach warn,$(WARNS_EXCEPTS),,-$(warn))" | tr -d ' ')
 

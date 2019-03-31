@@ -7,18 +7,18 @@
 
 template <typename Ch, typename Traits = std::char_traits<Ch> >
 struct basic_nullbuf: std::basic_streambuf<Ch, Traits> {
-	typedef std::basic_streambuf<Ch, Traits> base_type;
-	typedef typename base_type::int_type int_type;
-	typedef typename base_type::traits_type traits_type;
+	using base_type   = std::basic_streambuf<Ch, Traits>;
+	using int_type    = typename base_type::int_type;
+	using traits_type = typename base_type::traits_type;
 
-	virtual int_type overflow(int_type c) {
+	int_type overflow(int_type c) override{
 		return traits_type::not_eof(c);
 	}
 };
 
 // convenient typedefs
-typedef basic_nullbuf<char> nullbuf;
-typedef basic_nullbuf<wchar_t> wnullbuf;
+using nullbuf  = basic_nullbuf<char>;
+using wnullbuf = basic_nullbuf<wchar_t>;
 
 // buffers and streams
 // in some .h

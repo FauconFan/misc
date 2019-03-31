@@ -25,7 +25,7 @@ class Logger
 		static std::string build_header_line(const std::string & tag);
 
 		bool _is_ok {true};
-		std::ostream * log_file {NULL};
+		std::ostream * log_file {nullptr};
 
 		static Logger logger;
 };

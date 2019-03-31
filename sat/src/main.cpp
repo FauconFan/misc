@@ -44,7 +44,8 @@ int main(int argc, char ** argv) {
 
 	if (cmd == "cut")
 		return (cut_run(argc, argv));
-	else if (cmd == "dpll")
+
+	if (cmd == "dpll")
 		return (dpll_run(argc, argv));
 
 	return (1);

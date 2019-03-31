@@ -8,13 +8,13 @@
 #include <ctime>
 
 Logger::Logger() {
-	this->_is_ok = this->create_log_dir();
+	this->_is_ok = Logger::create_log_dir();
 
 	if (this->_is_ok) {
 		std::string name_file;
 		std::ofstream * out_log;
 
-		name_file = LOG_FOLDER + this->build_date() + ".log";
+		name_file = LOG_FOLDER + Logger::build_date() + ".log";
 		out_log   = new std::ofstream();
 		out_log->open(name_file);
 		if (out_log->is_open() == false) {
@@ -31,7 +31,7 @@ Logger::Logger() {
 		this->log_file = &cnull;
 	}
 
-	*this->log_file << this->build_header() << std::endl;
+	*this->log_file << Logger::build_header() << std::endl;
 }
 
 Logger::~Logger() {
@@ -42,17 +42,17 @@ Logger::~Logger() {
 Logger Logger::logger;
 
 std::ostream &Logger::info() {
-	*(logger.log_file) << logger.build_header_line("INFO");
+	*(logger.log_file) << Logger::build_header_line("INFO");
 	return *(logger.log_file);
 }
 
 std::ostream &Logger::warn() {
-	*(logger.log_file) << logger.build_header_line("WARN");
+	*(logger.log_file) << Logger::build_header_line("WARN");
 	return *(logger.log_file);
 }
 
 bool Logger::create_log_dir() {
-	struct stat statbuff;
+	struct stat statbuff {};
 
 	if (stat(LOG_FOLDER, &statbuff) == 0) {
 		if (S_ISDIR(statbuff.st_mode) == 0) {
@@ -78,33 +78,33 @@ bool Logger::create_log_dir() {
 std::string Logger::build_date() {
 	std::stringstream ss;
 	time_t t;
-	struct tm * now;
+	struct tm now {};
 
-	t   = time(NULL);
-	now = localtime(&t);
+	t = time(nullptr);
+	localtime_r(&t, &now);
 
 	// Year
-	ss << (now->tm_year + 1900) << "_";
+	ss << (now.tm_year + 1900) << "_";
 
 	// Month
 	ss << std::setfill('0') << std::setw(2)
-	   << (now->tm_mon + 1) << "_";
+	   << (now.tm_mon + 1) << "_";
 
 	// Day
 	ss << std::setfill('0') << std::setw(2)
-	   << now->tm_mday << " ";
+	   << now.tm_mday << " ";
 
 	// Hour
 	ss << std::setfill('0') << std::setw(2)
-	   << now->tm_hour << ":";
+	   << now.tm_hour << ":";
 
 	// Min
 	ss << std::setfill('0') << std::setw(2)
-	   << now->tm_min << ":";
+	   << now.tm_min << ":";
 
 	// Sec
 	ss << std::setfill('0') << std::setw(2)
-	   << now->tm_sec;
+	   << now.tm_sec;
 
 	return (ss.str());
 } // Logger::build_date
