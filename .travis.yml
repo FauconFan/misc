@@ -49,4 +49,5 @@ matrix:
     - name: check sat dpll
       stage: Test
       script:
+        - make satlib_bench
         - make -C tests FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91

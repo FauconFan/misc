@@ -41,7 +41,7 @@ LINT_TASKS = [
 # Test is a stage that test the project using the ./check_sat.py
 
 TEST_TASKS = [
-    (J_TEST, "check sat dpll", [], ["make -C tests FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91"]),
+    (J_TEST, "check sat dpll", [], ["make satlib_bench", "make -C tests FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91"]),
 ]
 
 INSTALL_APT_PREFIX = "sudo apt-get install -y --no-install-recommends"
