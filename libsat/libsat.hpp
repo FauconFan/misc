@@ -6,8 +6,13 @@
 #include <set>
 #include <unordered_map>
 #include <algorithm>
+#include <exception>
+#include <sstream>
+#include <iomanip>
 
+#include "src/utils/cnull.hpp"
 #include "src/utils/Pair.class.hpp"
+#include "src/utils/Logger.class.hpp"
 
 #include "src/model/Occ_list.class.hpp"
 #include "src/model/Distrib.class.hpp"

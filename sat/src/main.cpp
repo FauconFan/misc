@@ -1,6 +1,8 @@
 #include "sat.hpp"
 
 int main(int argc, char ** argv) {
+	Logger::info() << "coucou";
+	Logger::warn() << "coucou";
 	if (argc == 2) {
 		Fnc * fnc = getInputFNC(argv[1]);
 

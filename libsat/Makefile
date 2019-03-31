@@ -32,6 +32,8 @@ SRC = \
 	$(MODEL_FOLDER)Occ_list.class.cpp \
 	$(MODEL_FOLDER)Distrib.class.cpp \
 	$(UTILS_FOLDER)Pair.class.cpp \
+	$(UTILS_FOLDER)Logger.class.cpp \
+	$(UTILS_FOLDER)cnull.cpp \
 	$(COUPURE_FOLDER)Coupure.cpp \
 	$(DPLL_FOLDER)DPLL.cpp \
 	
