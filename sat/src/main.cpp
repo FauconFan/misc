@@ -1,5 +1,25 @@
 #include "sat.hpp"
 
+static void print_result(std::pair<bool, Distrib> result) {
+	if (result.first == false) {
+		std::cout << "UNSAT" << std::endl;
+	}
+	else {
+		std::cout << "SAT" << std::endl;
+		size_t i = 0;
+
+		for (auto p : *result.second.getDistrib()) {
+			if (i != 0)
+				std::cout << " ";
+			i++;
+			if (p.second == false)
+				std::cout << "-";
+			std::cout << p.first;
+		}
+		std::cout << std::endl;
+	}
+}
+
 static int cut_run(int argc, char ** argv) {
 	if (argc != 1)
 		return (1);
@@ -7,10 +27,8 @@ static int cut_run(int argc, char ** argv) {
 	Fnc * fnc = getInputFNC(argv[0]);
 
 	if (fnc != nullptr) {
-		if (cut_solve(*fnc))
-			std::cout << "true\n";
-		else
-			std::cout << "false\n";
+		auto p = cut_solve(*fnc);
+		print_result(p);
 
 		delete fnc;
 	}
@@ -24,10 +42,8 @@ static int dpll_run(int argc, char ** argv) {
 	Fnc * fnc = getInputFNC(argv[0]);
 
 	if (fnc != nullptr) {
-		if (dpll_solve(*fnc))
-			std::cout << "true\n";
-		else
-			std::cout << "false\n";
+		auto p = dpll_solve(*fnc);
+		print_result(p);
 
 		delete fnc;
 	}

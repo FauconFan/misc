@@ -131,7 +131,7 @@ static bool rec_cut(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	return ret;
 }
 
-bool cut_solve(const Fnc & fnc) {
+std::pair<bool, Distrib> cut_solve(const Fnc & fnc) {
 	Occ_list litt_occ = Occ_list(fnc);
 	Distrib dist;
 
@@ -146,5 +146,5 @@ bool cut_solve(const Fnc & fnc) {
 		Logger::info() << dist;
 	}
 
-	return res;
+	return (std::make_pair(res, dist));
 }

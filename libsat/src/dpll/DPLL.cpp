@@ -45,7 +45,7 @@ static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	return (dpll_recu(copy_fnc, litt_occ, dist));
 } // dpll_recu
 
-bool dpll_solve(const Fnc & fnc) {
+std::pair<bool, Distrib> dpll_solve(const Fnc & fnc) {
 	Occ_list litt_occ = Occ_list(fnc);
 	Distrib dist;
 
@@ -58,5 +58,5 @@ bool dpll_solve(const Fnc & fnc) {
 	Logger::info() << litt_occ;
 	Logger::info() << dist;
 
-	return (res);
+	return (std::make_pair(res, dist));
 }

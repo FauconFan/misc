@@ -8,7 +8,8 @@ DIST = "xenial"
 
 J_BASE = "Base"
 J_LINT = "Lint"
-JOBS = [J_BASE, J_LINT]
+J_TEST = "Test"
+JOBS = [J_BASE, J_LINT, J_TEST]
 
 # There are 2 stages,
 #   - Base tests the global tests, and do some tests to prevent human errors when filling files.mk for example.
@@ -37,9 +38,15 @@ LINT_TASKS = [
     (J_LINT, "clang-tidy", ["clang-tidy-6.0", "clang-6.0"], ["travis_retry make clang_tidy_run"]),
 ]
 
+# Test is a stage that test the project using the ./check_sat.py
+
+TEST_TASKS = [
+    (J_TEST, "check sat dpll", [], ["make -C tests FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91"]),
+]
+
 INSTALL_APT_PREFIX = "sudo apt-get install -y --no-install-recommends"
 
-TASKS = BASE_TASKS + LINT_TASKS
+TASKS = BASE_TASKS + LINT_TASKS + TEST_TASKS
 
 def print_header():
     print("language:", LANG)

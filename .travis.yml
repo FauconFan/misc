@@ -4,6 +4,7 @@ dist: xenial
 stages:
   - Base
   - Lint
+  - Test
 
 matrix:
   include:
@@ -45,3 +46,7 @@ matrix:
         - sudo apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0
       script:
         - travis_retry make clang_tidy_run
+    - name: check sat dpll
+      stage: Test
+      script:
+        - make -C tests FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91

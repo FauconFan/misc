@@ -3,6 +3,6 @@
 
 #include "libsat.hpp"
 
-bool cut_solve(const Fnc &);
+std::pair<bool, Distrib> cut_solve(const Fnc &);
 
 #endif // ifndef COUPURE_HPP
