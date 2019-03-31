@@ -14,6 +14,8 @@ class Logger
 		static std::ostream &info();
 		static std::ostream &warn();
 
+		static void disable();
+
 	private:
 		Logger();
 		virtual~Logger();

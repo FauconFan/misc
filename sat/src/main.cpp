@@ -51,12 +51,27 @@ static int dpll_run(int argc, char ** argv) {
 }
 
 int main(int argc, char ** argv) {
-	if (argc <= 1)
+	if (argc <= 0)
 		return (1);
 
-	std::string cmd = argv[1];
-	argc -= 2;
-	argv += 2;
+	argc--;
+	argv++;
+
+	if (argc == 0)
+		return (1);
+
+	if (std::string(argv[0]) == "--no-logs") {
+		Logger::disable();
+		argv++;
+		argc--;
+	}
+
+	if (argc == 0)
+		return (1);
+
+	std::string cmd = argv[0];
+	argc--;
+	argv++;
 
 	if (cmd == "cut")
 		return (cut_run(argc, argv));

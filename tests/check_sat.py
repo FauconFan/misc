@@ -26,7 +26,6 @@ def read_input(input_file):
             clause.append(integer)
     if len(clause) is not 0:
         fnc.append(clause)
-    print(fnc)
     return fnc
 
 def read_output(output_file):
@@ -39,12 +38,23 @@ def read_output(output_file):
     distrib = [int(num) for num in lines[1].split(" ")]
     return (distrib)
 
+def set_from_fnc(fnc):
+    s = set()
+    for clause in fnc:
+        for value in clause:
+            s.add(abs(value))
+    return (s)
+
+def set_from_distrib(distrib):
+    s = set()
+    for i in distrib:
+        s.add(abs(i))
+    return (s);
+
 def verify_distrib(fnc, distrib):
     for clause in fnc:
-        # print(clause)
         b = False
         for value in distrib:
-            # print(value)
             if value in clause:
                 b = True
                 break
@@ -55,7 +65,7 @@ def verify_distrib(fnc, distrib):
 def main():
     if (len(sys.argv)) is not 3:
         print("Run this program with a input file and an output file")
-        print("./check_sat.py sample1.cnf <(./sat sample1.cnf)")
+        print("./check_sat.py sample1.cnf <(./sat dpll sample1.cnf)")
         sys.exit(1)
     
     input_file = sys.argv[1]
@@ -63,6 +73,12 @@ def main():
 
     fnc = read_input(input_file)
     distrib = read_output(output_file)
+
+    s_fnc = set_from_fnc(fnc)
+    s_dist = set_from_distrib(distrib)
+
+    if (s_fnc != s_dist):
+        sys.exit(1)
 
     b = verify_distrib(fnc, distrib)
     print(b)

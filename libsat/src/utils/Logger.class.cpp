@@ -51,6 +51,13 @@ std::ostream &Logger::warn() {
 	return *(logger.log_file);
 }
 
+void Logger::disable() {
+	*(logger.log_file) << "  Logger disabled\n";
+	logger._is_ok = false;
+	dynamic_cast<std::ofstream *>(logger.log_file)->close();
+	logger.log_file = &cnull;
+}
+
 bool Logger::create_log_dir() {
 	struct stat statbuff {};
 
