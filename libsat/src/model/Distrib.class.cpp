@@ -11,6 +11,10 @@ const std::unordered_map<unsigned int, bool> * Distrib::getDistrib() const{
 	return &(this->_distrib);
 }
 
+bool Distrib::get(unsigned int k) const{
+	return this->_distrib.at(k);
+}
+
 void Distrib::set(unsigned int k, bool v) {
 	this->_distrib[k] = v;
 }

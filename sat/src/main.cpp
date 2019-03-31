@@ -79,5 +79,10 @@ int main(int argc, char ** argv) {
 	if (cmd == "dpll")
 		return (dpll_run(argc, argv));
 
+	if (cmd == "queens") {
+		queens_problems();
+		return (0);
+	}
+
 	return (1);
-}
+} // main

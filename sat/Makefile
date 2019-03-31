@@ -13,6 +13,7 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 SRC_FOLDER = src/
 LEXER_PARSER_FOLDER = src/lexer_parser/
 FLEX_BISON_FOLDER = src/lexer_parser/flex_bison/
+PROBLEMS_FOLDER = src/problems/
 
 LIBA = ../libsat/libsat.a
 LIB_FLAGS = -L../libsat/ -lsat
@@ -30,6 +31,7 @@ SRC = \
 		$(SRC_FOLDER)main.cpp \
 		$(LEXER_PARSER_FOLDER)FNC_builder.class.cpp \
 		$(LEXER_PARSER_FOLDER)getinput.cpp \
+		$(PROBLEMS_FOLDER)queens.cpp \
 
 SRC_FLEX = $(FLEX_BISON_FOLDER)dimacs.l
 SRC_BISON = $(FLEX_BISON_FOLDER)dimacs.y
