@@ -8,11 +8,12 @@
 #include <algorithm>
 
 #include "src/utils/Pair.class.hpp"
-#include "src/utils/Occ_list.class.hpp"
-#include "src/utils/Distrib.class.hpp"
 
-#include "src/model/Clause.class.hpp"
-#include "src/model/Fnc.class.hpp"
+#include "src/model/Occ_list.class.hpp"
+#include "src/model/Distrib.class.hpp"
+
+#include "src/model/core/Clause.class.hpp"
+#include "src/model/core/Fnc.class.hpp"
 
 #include "src/coupure/Coupure.hpp"
 #include "src/dpll/DPLL.hpp"

@@ -10,11 +10,12 @@ _CYAN=$(shell tput setaf 6 2> /dev/null || echo "")
 _WHITE=$(shell tput setaf 7 2> /dev/null || echo "")
 _END=$(shell tput sgr0 2> /dev/null || echo "")
 
-SRC_FOLDER = src/
-MODEL_FOLDER = src/model/
-COUPURE_FOLDER = src/coupure/
-DPLL_FOLDER = src/dpll/
-UTILS_FOLDER = src/utils/
+SRC_FOLDER       = src/
+MODEL_FOLDER     = src/model/
+CORE_FOLDER      = src/model/core/
+COUPURE_FOLDER   = src/coupure/
+DPLL_FOLDER      = src/dpll/
+UTILS_FOLDER     = src/utils/
 
 AR = ar
 CXX = clang++
@@ -26,11 +27,11 @@ INC_FLAGS = -I ./
 FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 
 SRC = \
-	$(MODEL_FOLDER)Clause.class.cpp \
-	$(MODEL_FOLDER)Fnc.class.cpp \
+	$(CORE_FOLDER)Clause.class.cpp \
+	$(CORE_FOLDER)Fnc.class.cpp \
+	$(MODEL_FOLDER)Occ_list.class.cpp \
+	$(MODEL_FOLDER)Distrib.class.cpp \
 	$(UTILS_FOLDER)Pair.class.cpp \
-	$(UTILS_FOLDER)Occ_list.class.cpp \
-	$(UTILS_FOLDER)Distrib.class.cpp \
 	$(COUPURE_FOLDER)Coupure.cpp \
 	$(DPLL_FOLDER)DPLL.cpp \
 	
