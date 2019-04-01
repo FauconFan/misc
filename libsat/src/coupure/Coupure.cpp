@@ -1,10 +1,10 @@
 #include "libsat.hpp"
 
 static Clause cut(const Clause & icl1, const Clause & icl2, unsigned int val) {
-	std::vector<unsigned int> * icl1_pos_litts;
-	std::vector<unsigned int> * icl1_neg_litts;
-	std::vector<unsigned int> * icl2_pos_litts;
-	std::vector<unsigned int> * icl2_neg_litts;
+	std::set<unsigned int> * icl1_pos_litts;
+	std::set<unsigned int> * icl1_neg_litts;
+	std::set<unsigned int> * icl2_pos_litts;
+	std::set<unsigned int> * icl2_neg_litts;
 	Clause res_cut;
 
 	std::set<unsigned int> buff;
@@ -24,7 +24,7 @@ static Clause cut(const Clause & icl1, const Clause & icl2, unsigned int val) {
 			buff.insert(i);
 	}
 
-	res_cut.getPosLitts()->assign(buff.begin(), buff.end());
+	*res_cut.getPosLitts() = buff;
 	buff.clear();
 
 	for (unsigned int i : *icl1_neg_litts) {
@@ -37,7 +37,7 @@ static Clause cut(const Clause & icl1, const Clause & icl2, unsigned int val) {
 			buff.insert(i);
 	}
 
-	res_cut.getNegLitts()->assign(buff.begin(), buff.end());
+	*res_cut.getNegLitts() = buff;
 
 	return res_cut;
 } // cut
@@ -58,9 +58,11 @@ static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 		int litt_side = implc.contains_litt(val);
 		if (litt_side == -1) {
 			fnc_premisse.add_clause(implc);
+			litt_occ -= implc.build_occ_list();
 		}
 		else if (litt_side == 1) {
 			fnc_conclusion.add_clause(implc);
+			litt_occ -= implc.build_occ_list();
 		}
 		else {
 			fnc_without_val.add_clause(implc);
@@ -75,10 +77,11 @@ static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 	auto cls_cls_with_val_conclusion = fnc_conclusion.get_implclauses();
 
 	Logger::info() << "start cut...\n";
-	for (const auto & i : cls_with_val_premisse)
-		litt_occ -= i.build_occ_list();
-	for (const auto & j : cls_cls_with_val_conclusion)
-		litt_occ -= j.build_occ_list();
+
+	/*for (const auto & i : cls_with_val_premisse)
+	 *  litt_occ -= i.build_occ_list();
+	 * for (const auto & j : cls_cls_with_val_conclusion)
+	 *  litt_occ -= j.build_occ_list();*/
 
 	for (const auto & i : cls_with_val_premisse) {
 		for (const auto & j : cls_cls_with_val_conclusion) {

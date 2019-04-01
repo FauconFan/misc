@@ -14,12 +14,11 @@ class Clause
 		Clause &operator=(const Clause & icl);
 		bool operator==(const Clause & rhs) const;
 
-		std::vector<unsigned int> * getPosLitts() const;
-		std::vector<unsigned int> * getNegLitts() const;
+		std::set<unsigned int> * getPosLitts() const;
+		std::set<unsigned int> * getNegLitts() const;
 		Occ_list                    build_occ_list() const;
 
 		void                        remove_litt(int);
-		Occ_list                    remove_duplicates();
 
 		bool                        is_tautology() const;
 		bool                        is_empty_clause() const;
@@ -29,8 +28,8 @@ class Clause
 		bool                        cut_unit_propagation(Distrib &) const; // On suppose que la clause est nettoyée
 
 	private:
-		std::vector<unsigned int> * _pos_litts {nullptr};
-		std::vector<unsigned int> * _neg_litts {nullptr};
+		std::set<unsigned int> * _pos_litts {nullptr};
+		std::set<unsigned int> * _neg_litts {nullptr};
 };
 
 std::ostream &operator<<(std::ostream & os, const Clause & icl);

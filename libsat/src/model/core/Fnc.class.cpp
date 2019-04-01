@@ -63,15 +63,6 @@ Occ_list Fnc::remove_tautologies() {
 	return (res);
 }
 
-Occ_list Fnc::remove_duplicates() {
-	Occ_list res;
-
-	for (auto & acl : this->_clauses) {
-		res += acl.remove_duplicates();
-	}
-	return (res);
-}
-
 void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
 	std::pair<std::vector<unsigned int>, std::vector<unsigned int> > p;
 
@@ -103,7 +94,6 @@ void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
 void Fnc::nettoyage(Occ_list & litt_occ, Distrib & dist) {
 	Logger::info() << "clean... \nSimplify... done\n";
 
-	litt_occ -= this->remove_duplicates();
 	Logger::info() << "Delete tautologies... done\n";
 	litt_occ -= this->remove_tautologies();
 	Logger::info() << "New litt_occ " << litt_occ;

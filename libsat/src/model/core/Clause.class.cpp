@@ -1,8 +1,8 @@
 #include "libsat.hpp"
 
 Clause::Clause () {
-	this->_pos_litts = new std::vector<unsigned int> ();
-	this->_neg_litts = new std::vector<unsigned int> ();
+	this->_pos_litts = new std::set<unsigned int> ();
+	this->_neg_litts = new std::set<unsigned int> ();
 }
 
 Clause::Clause (const Clause & icl) {
@@ -10,14 +10,14 @@ Clause::Clause (const Clause & icl) {
 }
 
 Clause::Clause (const std::vector<int> & litts) {
-	this->_pos_litts = new std::vector<unsigned int> ();
-	this->_neg_litts = new std::vector<unsigned int> ();
+	this->_pos_litts = new std::set<unsigned int> ();
+	this->_neg_litts = new std::set<unsigned int> ();
 
 	for (int current_elt : litts) {
 		if (current_elt > 0)
-			this->_pos_litts->push_back(current_elt);
+			this->_pos_litts->insert(current_elt);
 		else
-			this->_neg_litts->push_back(-current_elt);
+			this->_neg_litts->insert(-current_elt);
 	}
 }
 
@@ -28,8 +28,8 @@ Clause & Clause::operator=(const Clause & icl) {
 		if (this->_neg_litts != nullptr)
 			delete this->_neg_litts;
 
-		this->_pos_litts = new std::vector<unsigned int>(*(icl.getPosLitts()));
-		this->_neg_litts = new std::vector<unsigned int>(*(icl.getNegLitts()));
+		this->_pos_litts = new std::set<unsigned int>(*(icl.getPosLitts()));
+		this->_neg_litts = new std::set<unsigned int>(*(icl.getNegLitts()));
 	}
 	return *this;
 }
@@ -55,11 +55,11 @@ Clause::~Clause () {
 		delete this->_neg_litts;
 }
 
-std::vector<unsigned int> * Clause::getPosLitts() const{
+std::set<unsigned int> * Clause::getPosLitts() const{
 	return this->_pos_litts;
 }
 
-std::vector<unsigned int> * Clause::getNegLitts() const{
+std::set<unsigned int> * Clause::getNegLitts() const{
 	return this->_neg_litts;
 }
 
@@ -78,14 +78,10 @@ Occ_list Clause::build_occ_list() const{
 }
 
 void Clause::remove_litt(int litt) {
-	if (litt > 0) {
-		this->_pos_litts->erase(std::remove(this->_pos_litts->begin(),
-				this->_pos_litts->end(), litt), this->_pos_litts->end());
-	}
-	else {
-		this->_neg_litts->erase(std::remove(this->_neg_litts->begin(),
-				this->_neg_litts->end(), -litt), this->_neg_litts->end());
-	}
+	if (litt > 0)
+		this->_pos_litts->erase(litt);
+	else
+		this->_neg_litts->erase(-litt);
 }
 
 int Clause::contains_litt(int litt) const{
@@ -113,30 +109,6 @@ bool Clause::is_tautology() const{
 
 bool Clause::is_empty_clause() const{
 	return (this->_neg_litts->empty() && this->_pos_litts->empty());
-}
-
-Occ_list Clause::remove_duplicates() {
-	Occ_list res;
-	std::set<unsigned int> buff;
-
-	for (unsigned int val : *(this->_neg_litts)) {
-		if (!buff.insert(val).second)
-			res.addPair(val, Pair(0, 1));
-	}
-
-	this->_neg_litts->clear();
-	this->_neg_litts->assign(buff.begin(), buff.end());
-	buff.clear();
-
-	for (unsigned int val : *(this->_pos_litts)) {
-		if (!buff.insert(val).second)
-			res.addPair(val, Pair(1, 0));
-	}
-
-	this->_pos_litts->clear();
-	this->_pos_litts->assign(buff.begin(), buff.end());
-
-	return res;
 }
 
 void Clause::cut_assign_other_value(unsigned int val, Distrib & dist) const{
@@ -199,27 +171,26 @@ bool Clause::cut_unit_propagation(Distrib & dist) const{
 } // Clause::unit_propagation
 
 std::ostream & operator<<(std::ostream & os, const Clause & icl) {
-	std::vector<unsigned int> * pos_litts;
-	std::vector<unsigned int> * neg_litts;
-	unsigned int i, j;
+	std::set<unsigned int> * pos_litts;
+	std::set<unsigned int> * neg_litts;
 
 	pos_litts = icl.getPosLitts();
 	neg_litts = icl.getNegLitts();
 
 	os << "Impl [";
 
-	for (j = 0; j < neg_litts->size(); j++) {
-		if (j != 0)
+	for (auto j = neg_litts->cbegin(); j != neg_litts->cend(); j++) {
+		if (j != neg_litts->cbegin())
 			os << " & ";
-		os << neg_litts->at(j);
+		os << *j;
 	}
 
 	os << " -> ";
 
-	for (i = 0; i < pos_litts->size(); i++) {
-		if (i != 0)
+	for (auto i = pos_litts->cbegin(); i != pos_litts->cend(); i++) {
+		if (i != pos_litts->cbegin())
 			os << " | ";
-		os << pos_litts->at(i);
+		os << *i;
 	}
 
 	return (os << "]\n");
