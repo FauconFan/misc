@@ -38,24 +38,28 @@ START_TEST(nb_digit_test0) {
 
 START_TEST(itoa_testpos) {
 	char * a = itoa(254);
+
 	ck_assert_str_eq(a, "254");
 	free(a);
 } END_TEST;
 
 START_TEST(itoa_test0pos) {
 	char * a = itoa(0);
+
 	ck_assert_str_eq(a, "0");
 	free(a);
 } END_TEST;
 
 START_TEST(itoa_test0neg) {
 	char * a = itoa(-0);
+
 	ck_assert_str_eq(a, "0");
 	free(a);
 } END_TEST;
 
 START_TEST(itoa_testneg) {
 	char * a = itoa(-18948);
+
 	ck_assert_str_eq(a, "-18948");
 	free(a);
 } END_TEST;
