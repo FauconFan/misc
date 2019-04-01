@@ -110,6 +110,7 @@ TEST_FILES = \
 			util_images_test.c \
 			save_test.c \
 			meta_test.c \
+			utils_test.c \
 
 TEST_SRC = \
 		$(addprefix $(TEST_FOLDER), $(TEST_FILES)) \
