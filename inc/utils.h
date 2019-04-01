@@ -15,7 +15,7 @@ char * strjoin_c(const char * dir, const char * file, char joiner);
 
 char * dupstr(const char * s);
 int nb_digit(int i);
-char * itoa(int i, char * b);
+char * itoa(int i);
 t_bool safe_strtol10(const char * word, char ** next, int * nump);
 
 // format/*.c
