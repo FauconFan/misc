@@ -19,6 +19,7 @@ START_TEST(nb_digit_test1000) {
 START_TEST(nb_digit_test999) {
 	ck_assert(nb_digit(999) == 3);
 } END_TEST;
+
 START_TEST(nb_digit_test1000000000) {
 	ck_assert(nb_digit(1000000000) == 10);
 } END_TEST;
@@ -36,19 +37,27 @@ START_TEST(nb_digit_test0) {
 } END_TEST;
 
 START_TEST(itoa_testpos) {
-	ck_assert_str_eq(itoa(254), "254");
+	char * a = itoa(254);
+	ck_assert_str_eq(a, "254");
+	free(a);
 } END_TEST;
 
 START_TEST(itoa_test0pos) {
-	ck_assert_str_eq(itoa(0), "0");
+	char * a = itoa(0);
+	ck_assert_str_eq(a, "0");
+	free(a);
 } END_TEST;
 
 START_TEST(itoa_test0neg) {
-	ck_assert_str_eq(itoa(-0), "0");
+	char * a = itoa(-0);
+	ck_assert_str_eq(a, "0");
+	free(a);
 } END_TEST;
 
 START_TEST(itoa_testneg) {
-	ck_assert_str_eq(itoa(-18948), "-18948");
+	char * a = itoa(-18948);
+	ck_assert_str_eq(a, "-18948");
+	free(a);
 } END_TEST;
 
 START_TEST(dupstr_test_null) {
