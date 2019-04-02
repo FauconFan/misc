@@ -86,7 +86,9 @@ void    queens_problems() {
 	Fnc fnc;
 	int size_tab;
 
-	std::cout << "size of the grid : ";
+	Logger::disable();
+
+	std::cout << "size of the grid :\n";
 	std::cin >> size_tab;
 
 	for (int i = 0; i < size_tab; ++i) {
@@ -136,7 +138,7 @@ void    queens_problems() {
 		fnc.add_fnc(most_kb(vec, 1, true));
 	}
 
-	std::cout << fnc;
+	// std::cout << fnc;
 
 	auto p = dpll_solve(fnc);
 

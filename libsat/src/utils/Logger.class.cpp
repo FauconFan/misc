@@ -52,10 +52,12 @@ std::ostream &Logger::warn() {
 }
 
 void Logger::disable() {
-	*(logger.log_file) << "  Logger disabled\n";
-	logger._is_ok = false;
-	dynamic_cast<std::ofstream *>(logger.log_file)->close();
-	logger.log_file = &cnull;
+	if (logger.log_file != &cnull) {
+		*(logger.log_file) << "  Logger disabled\n";
+		logger._is_ok = false;
+		dynamic_cast<std::ofstream *>(logger.log_file)->close();
+		logger.log_file = &cnull;
+	}
 }
 
 bool Logger::create_log_dir() {

@@ -5,6 +5,7 @@ stages:
   - Base
   - Lint
   - Test
+  - Benchmark
 
 matrix:
   include:
@@ -51,3 +52,19 @@ matrix:
       script:
         - make satlib_bench
         - make -C tests FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91
+    - name: queens
+      stage: Benchmark
+      script:
+        - make -C sat sat
+        - time (echo 1 | sat/sat queens)
+        - time (echo 2 | sat/sat queens)
+        - time (echo 3 | sat/sat queens)
+        - time (echo 4 | sat/sat queens)
+        - time (echo 5 | sat/sat queens)
+        - time (echo 6 | sat/sat queens)
+        - time (echo 7 | sat/sat queens)
+        - time (echo 8 | sat/sat queens)
+        - time (echo 9 | sat/sat queens)
+        - time (echo 10 | sat/sat queens)
+        - time (echo 11 | sat/sat queens)
+        - time (echo 12 | sat/sat queens)

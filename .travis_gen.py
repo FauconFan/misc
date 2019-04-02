@@ -9,7 +9,8 @@ DIST = "xenial"
 J_BASE = "Base"
 J_LINT = "Lint"
 J_TEST = "Test"
-JOBS = [J_BASE, J_LINT, J_TEST]
+J_BENCH = "Benchmark"
+JOBS = [J_BASE, J_LINT, J_TEST, J_BENCH]
 
 # There are 2 stages,
 #   - Base tests the global tests, and do some tests to prevent human errors when filling files.mk for example.
@@ -44,9 +45,20 @@ TEST_TASKS = [
     (J_TEST, "check sat dpll", [], ["make satlib_bench", "make -C tests FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91"]),
 ]
 
+# Bench is a stage when we run bench with examples, without verifying
+
+CMDS_QUEENS = ["make -C sat sat"]
+
+for i in range(1, 12 + 1):
+    CMDS_QUEENS.append("time (echo " + str(i) + " | sat/sat queens)")
+
+BENCH_TASKS = [
+    (J_BENCH, "queens", [], CMDS_QUEENS)
+]
+
 INSTALL_APT_PREFIX = "sudo apt-get install -y --no-install-recommends"
 
-TASKS = BASE_TASKS + LINT_TASKS + TEST_TASKS
+TASKS = BASE_TASKS + LINT_TASKS + TEST_TASKS + BENCH_TASKS
 
 def print_header():
     print("language:", LANG)
