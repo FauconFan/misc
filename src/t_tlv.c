@@ -7,19 +7,19 @@ t_tlv   *tlv_alloc(void) {
     if ((tlv = (t_tlv *)malloc(sizeof(t_tlv))) == NULL) {
         return (NULL);
     }
-    if ((tlv->msg = mhb_alloc()) == NULL) {
+    if ((tlv->msg = iovb_alloc()) == NULL) {
         free(tlv);
         return (NULL);
     }
-    if (mbh_push(tlv->msg, header, 2) == FALSE) {
-        mbh_free(tlv->msg);
+    if (iovb_push(tlv->msg, header, 2) == FALSE) {
+        iovb_free(tlv->msg);
         free(tlv);
         return (NULL);
     }
     tlv->len_body = 0;
-    tlv->index_len_body = mbh_get_index(tlv->msg);
+    tlv->index_len_body = iovb_get_index(tlv->msg);
     tlv->ready = FALSE;
-    mbh_skip(tlv->msg);
+    iovb_skip(tlv->msg);
     return (tlv);
 }
 
@@ -28,7 +28,7 @@ t_bool      tlv_finish(t_tlv *tlv) {
         return (FALSE);
     
     uint16_t    len = htons(tlv->len_body);
-    mbh_set(tlv->msg, tlv->index_len_body, &len, 2);
+    iovb_set(tlv->msg, tlv->index_len_body, &len, 2);
     tlv->ready = TRUE;
     return (TRUE);
 }
@@ -36,7 +36,7 @@ t_bool      tlv_finish(t_tlv *tlv) {
 void        tlv_free(t_tlv *tlv) {
     if (tlv == NULL)
         return ;
-    mbh_free(tlv->msg);
+    iovb_free(tlv->msg);
     free(tlv);
 }
 
@@ -44,16 +44,16 @@ static t_bool   tlv_add_type(t_tlv *tlv, t_tlv_type t) {
     uint8_t   type[1] = { t };
 
     tlv->len_body++;
-    return (mbh_push(tlv->msg, type, 1));
+    return (iovb_push(tlv->msg, type, 1));
 }
 
 static t_bool   tlv_add_value(t_tlv *tlv, const void *v, size_t l) {
     uint8_t   length[1] = { l };
 
-    if (mbh_push(tlv->msg, length, 1) == FALSE)
+    if (iovb_push(tlv->msg, length, 1) == FALSE)
         return (FALSE);
     tlv->len_body += l + 1;
-    return (mbh_push(tlv->msg, v, l));
+    return (iovb_push(tlv->msg, v, l));
 }
 
 t_bool      tlv_add_pad1(t_tlv *tlv) {

@@ -1,13 +1,13 @@
 #include "irc_udp.h"
 
-t_msg_hdr_builder   *mhb_alloc(void) {
-    t_msg_hdr_builder   *msg;
+t_iovec_builder     *iovb_alloc(void) {
+    t_iovec_builder   *msg;
     size_t              len_tab;
 
-    if ((msg = (t_msg_hdr_builder *)malloc(sizeof(t_msg_hdr_builder))) == NULL)
+    if ((msg = (t_iovec_builder *)malloc(sizeof(t_iovec_builder))) == NULL)
         return (NULL);
     
-    len_tab = MSG_HDR_DEFAULT_SIZE * sizeof(struct iovec);
+    len_tab = IOVEC_DEFAULT_SIZE * sizeof(struct iovec);
     if ((msg->msg_iov = malloc(len_tab)) == NULL) {
         free(msg);
         return (NULL);
@@ -16,11 +16,11 @@ t_msg_hdr_builder   *mhb_alloc(void) {
     memset(msg->msg_iov, 0, len_tab);
 
     msg->len_used = 0;
-    msg->len_max = MSG_HDR_DEFAULT_SIZE;
+    msg->len_max = IOVEC_DEFAULT_SIZE;
     return (msg);
 }
 
-static t_bool       mbh_extend(t_msg_hdr_builder * msg) {
+static t_bool       iovb_extend(t_iovec_builder * msg) {
     void    *v;
     size_t  len_tab;
 
@@ -38,17 +38,17 @@ static t_bool       mbh_extend(t_msg_hdr_builder * msg) {
     return (TRUE);
 }
 
-static t_bool       mbh_extend_if_necessary(t_msg_hdr_builder * msg) {
+static t_bool       iovb_extend_if_necessary(t_iovec_builder * msg) {
     if (msg == NULL)
         return (FALSE);
 
     if (msg->len_used == msg->len_max) {
-        mbh_extend(msg);
+        iovb_extend(msg);
     }
     return (TRUE);
 }
 
-void                mbh_free(t_msg_hdr_builder *msg) {
+void                iovb_free(t_iovec_builder *msg) {
     if (msg == NULL)
         return ;
     for (size_t i = 0; i < msg->len_max; ++i) {
@@ -59,11 +59,11 @@ void                mbh_free(t_msg_hdr_builder *msg) {
     free(msg);
 }
 
-t_bool              mbh_push(t_msg_hdr_builder *msg, const void *v, size_t l) {
+t_bool              iovb_push(t_iovec_builder *msg, const void *v, size_t l) {
     if (msg == NULL || v == NULL)
         return (FALSE);
     while (1) {
-        if (mbh_extend_if_necessary(msg) == FALSE)
+        if (iovb_extend_if_necessary(msg) == FALSE)
             return (FALSE);
         if (msg->msg_iov[msg->len_used].iov_base == NULL)
             break ;
@@ -79,11 +79,11 @@ t_bool              mbh_push(t_msg_hdr_builder *msg, const void *v, size_t l) {
     return (TRUE);
 }
 
-t_bool              mbh_set(t_msg_hdr_builder *msg, size_t rk, const void * v, size_t l) {
+t_bool              iovb_set(t_iovec_builder *msg, size_t rk, const void * v, size_t l) {
     if (msg == NULL || v == NULL)
         return (FALSE);
     while (rk >= msg->len_max)
-        mbh_extend(msg);
+        iovb_extend(msg);
     if (msg->msg_iov[rk].iov_base != NULL)
         return (FALSE);
     if ((msg->msg_iov[rk].iov_base = malloc(l)) == NULL) {
@@ -94,22 +94,22 @@ t_bool              mbh_set(t_msg_hdr_builder *msg, size_t rk, const void * v, s
     return (TRUE);
 }
 
-t_bool              mbh_skip(t_msg_hdr_builder *msg) {
+t_bool              iovb_skip(t_iovec_builder *msg) {
     if (msg == NULL)
         return (FALSE);
-    if (mbh_extend_if_necessary(msg) == FALSE)
+    if (iovb_extend_if_necessary(msg) == FALSE)
         return (FALSE);
     msg->len_used++;
     return (TRUE);
 }
 
-size_t              mbh_get_index(t_msg_hdr_builder *msg) {
+size_t              iovb_get_index(t_iovec_builder *msg) {
     if (msg == NULL)
         return (-1);
     return (msg->len_used);
 }
 
-void                mbh_print(t_msg_hdr_builder *msg) {
+void                iovb_print(t_iovec_builder *msg) {
     printf("{ msg printing\n");
     printf("\tlen_used %lu\n", msg->len_used);
     printf("\tlen_max %lu\n", msg->len_max);
@@ -130,7 +130,7 @@ void                mbh_print(t_msg_hdr_builder *msg) {
     printf("}\n");
 }
 
-t_bool              mbh_get_iovec(t_msg_hdr_builder *msg, struct iovec ** iovec, size_t *iovec_len) {
+t_bool              iovb_get_iovec(t_iovec_builder *msg, struct iovec ** iovec, size_t *iovec_len) {
     if (msg == NULL || iovec == NULL || iovec_len == NULL)
         return (FALSE);
     for (size_t i = 0; i < msg->len_used; ++i) {

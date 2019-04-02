@@ -33,6 +33,6 @@ int main(void)
     tlv_add_pad1(tlv);
     tlv_add_padN(tlv, 20);
     tlv_finish(tlv);
-    mbh_print(tlv->msg);
+    iovb_print(tlv->msg);
     tlv_free(tlv);
 }

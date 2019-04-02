@@ -12,7 +12,7 @@ typedef enum    e_tlv_type {
 }               t_tlv_type;
 
 typedef struct  s_tlv {
-    t_msg_hdr_builder   *msg;
+    t_iovec_builder     *msg;
     uint16_t            len_body;
     size_t              index_len_body;
     t_bool              ready;
