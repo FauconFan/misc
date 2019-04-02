@@ -12,27 +12,25 @@ uint8_t     hello_long[22] = {93, 2, 0, 18, 2, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 int main(void)
 {
+    id = gen_id();
+    printf("%lx\n", id);
+
     // int             sfd;
     // struct sockaddr *sock_addr;
     // socklen_t       sock_len;
 
     // getSocketJuliusz(NODE, SERVICE, &sfd, &sock_addr, &sock_len);
 
-    // client(sfd, sock_addr, sock_len, msg, sizeof(msg));
+    // client(sfd, sock_addr, sock_len, msg, sizeof(msg), hello_long, sizeof(hello_long));
 
-    // return 0;
+    t_tlv_builder   * tlvb;
 
-    id = gen_id();
-    printf("%lx\n", id);
+    tlvb = tlvb_alloc();
+    tlvb_add_pad1(tlvb);
+    tlvb_add_padN(tlvb, 20);
+    tlvb_finish(tlvb);
+    iovb_print(tlvb->msg);
+    tlvb_free(tlvb);
 
-    
-
-    t_tlv   * tlv;
-
-    tlv = tlv_alloc();
-    tlv_add_pad1(tlv);
-    tlv_add_padN(tlv, 20);
-    tlv_finish(tlv);
-    iovb_print(tlv->msg);
-    tlv_free(tlv);
+    return 0;
 }

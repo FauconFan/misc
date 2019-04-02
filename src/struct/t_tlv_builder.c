@@ -1,10 +1,10 @@
-#include "t_tlv.h"
+#include "irc_udp.h"
 
-t_tlv   *tlv_alloc(void) {
-    t_tlv   *tlv;
+t_tlv_builder   *tlvb_alloc(void) {
+    t_tlv_builder   *tlv;
     const uint8_t  header[2] = { MAGIC_NUMBER, VERSION };
 
-    if ((tlv = (t_tlv *)malloc(sizeof(t_tlv))) == NULL) {
+    if ((tlv = (t_tlv_builder *)malloc(sizeof(t_tlv_builder))) == NULL) {
         return (NULL);
     }
     if ((tlv->msg = iovb_alloc()) == NULL) {
@@ -23,7 +23,7 @@ t_tlv   *tlv_alloc(void) {
     return (tlv);
 }
 
-t_bool      tlv_finish(t_tlv *tlv) {
+t_bool      tlvb_finish(t_tlv_builder *tlv) {
     if (tlv == NULL || tlv->ready)
         return (FALSE);
     
@@ -33,21 +33,21 @@ t_bool      tlv_finish(t_tlv *tlv) {
     return (TRUE);
 }
 
-void        tlv_free(t_tlv *tlv) {
+void        tlvb_free(t_tlv_builder *tlv) {
     if (tlv == NULL)
         return ;
     iovb_free(tlv->msg);
     free(tlv);
 }
 
-static t_bool   tlv_add_type(t_tlv *tlv, t_tlv_type t) {
+static t_bool   tlvb_add_type(t_tlv_builder *tlv, t_tlv_type t) {
     uint8_t   type[1] = { t };
 
     tlv->len_body++;
     return (iovb_push(tlv->msg, type, 1));
 }
 
-static t_bool   tlv_add_value(t_tlv *tlv, const void *v, size_t l) {
+static t_bool   tlvb_add_value(t_tlv_builder *tlv, const void *v, size_t l) {
     uint8_t   length[1] = { l };
 
     if (iovb_push(tlv->msg, length, 1) == FALSE)
@@ -56,20 +56,20 @@ static t_bool   tlv_add_value(t_tlv *tlv, const void *v, size_t l) {
     return (iovb_push(tlv->msg, v, l));
 }
 
-t_bool      tlv_add_pad1(t_tlv *tlv) {
+t_bool      tlvb_add_pad1(t_tlv_builder *tlv) {
     if (tlv == NULL || tlv->ready)
         return (FALSE);
-    if (tlv_add_type(tlv, PAD1) == FALSE)
+    if (tlvb_add_type(tlv, PAD1) == FALSE)
         return (FALSE);
     return (TRUE);
 }
 
-t_bool      tlv_add_padN(t_tlv *tlv, size_t l) {
+t_bool      tlvb_add_padN(t_tlv_builder *tlv, size_t l) {
     const uint8_t zeros[4096] = { 0 };
 
     if (tlv == NULL || tlv->ready || l >= 4096)
         return (FALSE);
-    if (tlv_add_type(tlv, PADN) == FALSE)
+    if (tlvb_add_type(tlv, PADN) == FALSE)
         return (FALSE);
-    return (tlv_add_value(tlv, zeros, l));
+    return (tlvb_add_value(tlv, zeros, l));
 }

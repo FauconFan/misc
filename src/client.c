@@ -55,6 +55,7 @@ void    client(
         FD_ZERO(&readfds);
         FD_SET(sfd, &readfds);
         rc = select(sfd +1, &readfds, NULL, NULL, &tv);
+
         // timeout
         if (rc == 0){
             printf("timeout\n");

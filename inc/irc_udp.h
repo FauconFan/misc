@@ -20,13 +20,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#define TRUE        1
-#define FALSE       0
-
-typedef uint8_t     t_bool;
-
-#include "t_iovec_builder.h"
-#include "t_tlv.h"
+#include "typedefs.h"
 
 void    getSocketJuliusz(
                 const char * node,
