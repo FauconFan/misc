@@ -38,6 +38,8 @@ void    client(
                 void *buff2,
                 size_t len_buff2);
 
+void    parse_datagram(uint8_t *tlv, size_t len);
+
 uint64_t gen_id();
 
 extern uint64_t     g_id;

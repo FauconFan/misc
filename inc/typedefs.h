@@ -31,6 +31,5 @@ typedef enum    e_tlv_type {
 
 #include "t_iovec_builder.h"
 #include "t_tlv_builder.h"
-#include "t_tlv_scanner.h"
 
 #endif
