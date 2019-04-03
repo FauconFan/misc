@@ -92,7 +92,7 @@ void Fnc::polarity_check(Occ_list & litt_occ, Distrib & dist) {
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
 void Fnc::nettoyage(Occ_list & litt_occ, Distrib & dist) {
-	Logger::info() << "clean... \nSimplify... done\n";
+	Logger::info() << "clean... \n";
 
 	Logger::info() << "Delete tautologies... done\n";
 	litt_occ -= this->remove_tautologies();
@@ -139,9 +139,41 @@ void Fnc::cut_assign_other_value(unsigned int val, Distrib & dist) const{
 	}
 }
 
-void Fnc::cut_unit_propagation(Distrib & dist) const{
+void Fnc::deduce_unit_propagation(Distrib & dist) const{
 	for (const auto & ac : this->_clauses) {
-		ac.cut_unit_propagation(dist);
+		ac.deduce_unit_propagation(dist);
+	}
+}
+
+bool Fnc::elim_unit_propagation(Distrib & dist, Occ_list & litt_occ) {
+	std::set<int> unit_litteraux;
+	int current_unit_litteral;
+
+	while (true) {
+		for (const auto & ac : this->_clauses) {
+			current_unit_litteral = ac.is_unit_clause();
+			if (current_unit_litteral == 0)
+				continue;
+			if (unit_litteraux.count(-current_unit_litteral) == 1)
+				return false;
+
+			unit_litteraux.insert(current_unit_litteral);
+			Logger::info() << "Detect new unit clause : " << current_unit_litteral << "\n";
+		}
+
+		if (unit_litteraux.empty())
+			return true;
+
+		for (int litt : unit_litteraux) {
+			if (litt > 0) {
+				dist.set(litt, true);
+				litt_occ -= this->eval(litt, true);
+			}
+			else if (litt < 0) {
+				dist.set(-litt, false);
+				litt_occ -= this->eval(-litt, false);
+			}
+		}
 	}
 }
 

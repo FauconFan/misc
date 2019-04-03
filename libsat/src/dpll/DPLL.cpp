@@ -8,7 +8,7 @@ static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 
 	fnc.nettoyage(litt_occ, dist);
 
-	if (fnc.has_empty_clause())
+	if (fnc.has_empty_clause() || !fnc.elim_unit_propagation(dist, litt_occ))
 		return (false);
 
 	if (fnc.empty())
@@ -24,6 +24,7 @@ static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 
 	litt_occ -= fnc.eval(assign_value, true);
 	dist.set(assign_value, true);
+
 
 	Logger::info() << fnc;
 	Logger::info() << litt_occ;

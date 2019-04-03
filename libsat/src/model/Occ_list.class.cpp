@@ -42,6 +42,10 @@ void Occ_list::addPair(unsigned int key, const Pair & p) {
 	this->_content[key] += p;
 }
 
+void Occ_list::subPair(unsigned int key, const Pair & p) {
+	this->_content[key] -= p;
+}
+
 bool Occ_list::empty() const{
 	return _content.empty();
 }

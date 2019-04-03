@@ -22,6 +22,7 @@ class Occ_list{
 		Pair getPair(unsigned int) const;
 
 		void addPair(unsigned int, const Pair &);
+		void subPair(unsigned int, const Pair &);
 		bool empty() const;
 
 		unsigned int getMinOccu() const;

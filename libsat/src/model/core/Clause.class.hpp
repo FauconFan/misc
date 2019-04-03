@@ -22,10 +22,12 @@ class Clause
 
 		bool                        is_tautology() const;
 		bool                        is_empty_clause() const;
+		int                         is_unit_clause() const;
 		int                         contains_litt(int) const;
+		bool                        contains_least_one_litt_and_delete_neg(std::set<int>, Occ_list &);
 
 		void                        cut_assign_other_value(unsigned int, Distrib &) const;
-		bool                        cut_unit_propagation(Distrib &) const; // On suppose que la clause est nettoyée
+		bool                        deduce_unit_propagation(Distrib &) const;
 
 	private:
 		std::set<unsigned int> * _pos_litts {nullptr};

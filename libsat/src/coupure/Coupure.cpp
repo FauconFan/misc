@@ -78,11 +78,6 @@ static void apply_cut(Fnc & fnc, Occ_list & litt_occ, unsigned int val) {
 
 	Logger::info() << "start cut...\n";
 
-	/*for (const auto & i : cls_with_val_premisse)
-	 *  litt_occ -= i.build_occ_list();
-	 * for (const auto & j : cls_cls_with_val_conclusion)
-	 *  litt_occ -= j.build_occ_list();*/
-
 	for (const auto & i : cls_with_val_premisse) {
 		for (const auto & j : cls_cls_with_val_conclusion) {
 			res_fusion = cut(i, j, val);
@@ -128,7 +123,7 @@ static bool rec_cut(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 		Logger::info() << copy_fnc;
 
 		copy_fnc.cut_assign_other_value(cut_value, dist);
-		copy_fnc.cut_unit_propagation(dist);
+		copy_fnc.deduce_unit_propagation(dist);
 	}
 
 	return ret;

@@ -25,7 +25,8 @@ class Fnc{
 		void                    nettoyage(Occ_list &, Distrib &); // add subsumption
 
 		void                    cut_assign_other_value(unsigned int, Distrib &) const;
-		void                    cut_unit_propagation(Distrib &) const;
+		void                    deduce_unit_propagation(Distrib &) const;
+		bool                    elim_unit_propagation(Distrib &, Occ_list &);
 
 		void                    display(std::ostream &) const;
 

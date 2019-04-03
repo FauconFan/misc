@@ -111,6 +111,27 @@ bool Clause::is_empty_clause() const{
 	return (this->_neg_litts->empty() && this->_pos_litts->empty());
 }
 
+int Clause::is_unit_clause() const{
+	int res;
+
+	res = 0;
+	for (unsigned int val : *this->_pos_litts) {
+		if (res != 0)
+			return 0;
+
+		res = val;
+	}
+
+	for (unsigned int val : *this->_neg_litts) {
+		if (res != 0)
+			return 0;
+
+		res = -val;
+	}
+
+	return res;
+}
+
 void Clause::cut_assign_other_value(unsigned int val, Distrib & dist) const{
 	for (unsigned int i : *(this->_neg_litts)) {
 		if (i == val)
@@ -129,13 +150,13 @@ void Clause::cut_assign_other_value(unsigned int val, Distrib & dist) const{
 	}
 }
 
-bool Clause::cut_unit_propagation(Distrib & dist) const{
+bool Clause::deduce_unit_propagation(Distrib & dist) const{
 	int res = 0;
 
 	for (unsigned int val : *(this->_neg_litts)) {
 		auto current_elt = dist.find(val);
 		if (current_elt == dist.end()) {
-			if (res != 0) // & res != val
+			if (res != 0)
 				return false;
 
 			res = -val;
@@ -149,7 +170,7 @@ bool Clause::cut_unit_propagation(Distrib & dist) const{
 	for (unsigned int val : *(this->_pos_litts)) {
 		auto current_elt = dist.find(val);
 		if (current_elt == dist.end()) {
-			if (res != 0) // & res != val
+			if (res != 0)
 				return false;
 
 			res = val;
