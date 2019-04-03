@@ -131,13 +131,15 @@ static bool rec_cut(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 
 std::pair<bool, Distrib> cut_solve(const Fnc & fnc) {
 	Occ_list litt_occ = Occ_list(fnc);
-	Distrib dist;
+	Distrib dist(litt_occ);
 
 	Logger::info() << "Cut algorithm\n";
 	Logger::info() << fnc << "\n";
 	Logger::info() << litt_occ << "\n";
 
 	bool res = rec_cut(Fnc(fnc), litt_occ, dist);
+
+	dist.finish();
 
 	if (res) {
 		fnc.cut_assign_other_value(0, dist);

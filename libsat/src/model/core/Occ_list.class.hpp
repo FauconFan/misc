@@ -25,6 +25,8 @@ class Occ_list{
 		void subPair(unsigned int, const Pair &);
 		bool empty() const;
 
+		std::set<unsigned int> buildPresentVariables() const;
+
 		unsigned int getMinOccu() const;
 		unsigned int getMaxOccu() const;
 

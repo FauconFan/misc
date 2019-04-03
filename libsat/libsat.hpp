@@ -15,12 +15,12 @@
 #include "src/utils/Logger.class.hpp"
 #include "src/utils/combinatorics.ns.hpp"
 
-#include "src/model/Occ_list.class.hpp"
-#include "src/model/Distrib.class.hpp"
-#include "src/model/model_builder/modelbuilder.ns.hpp"
-
+#include "src/model/core/Occ_list.class.hpp"
+#include "src/model/core/Distrib.class.hpp"
 #include "src/model/core/Clause.class.hpp"
 #include "src/model/core/Fnc.class.hpp"
+
+#include "src/model/model_builder/modelbuilder.ns.hpp"
 
 #include "src/coupure/Coupure.hpp"
 #include "src/dpll/DPLL.hpp"

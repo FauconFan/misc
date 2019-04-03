@@ -50,6 +50,15 @@ bool Occ_list::empty() const{
 	return _content.empty();
 }
 
+std::set<unsigned int> Occ_list::buildPresentVariables() const{
+	std::set<unsigned int> res;
+
+	for (const auto & p : this->_content) {
+		res.insert(p.first);
+	}
+	return (res);
+}
+
 unsigned int Occ_list::getMinOccu() const{
 	unsigned int res;
 	unsigned int nb;

@@ -30,8 +30,8 @@ FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 SRC = \
 	$(CORE_FOLDER)Clause.class.cpp \
 	$(CORE_FOLDER)Fnc.class.cpp \
-	$(MODEL_FOLDER)Occ_list.class.cpp \
-	$(MODEL_FOLDER)Distrib.class.cpp \
+	$(CORE_FOLDER)Occ_list.class.cpp \
+	$(CORE_FOLDER)Distrib.class.cpp \
 	$(MODEL_BD_FOLDER)modelbuilder.ns.cpp \
 	$(UTILS_FOLDER)Pair.class.cpp \
 	$(UTILS_FOLDER)Logger.class.cpp \

@@ -3,6 +3,10 @@
 Distrib::Distrib()  = default;
 Distrib::~Distrib() = default;
 
+Distrib::Distrib(const Occ_list & occ_list)
+	: _present_variables(occ_list.buildPresentVariables())
+{}
+
 Distrib::Distrib(const Distrib & dist) = default;
 
 Distrib &Distrib::operator=(const Distrib & dist) = default;
@@ -29,9 +33,13 @@ std::unordered_map<unsigned int, bool, std::hash<unsigned int>, std::equal_to<>,
 	return this->_distrib.end();
 }
 
-/*bool Distrib::contains(unsigned int val) const {
- *  return (this->_distrib.end() != this->_distrib.find(val));
- * }*/
+void Distrib::finish() {
+	for (const auto & ui : this->_present_variables) {
+		if (this->_distrib.find(ui) == this->_distrib.end()) {
+			this->_distrib[ui] = false;
+		}
+	}
+}
 
 std::ostream & operator<<(std::ostream & os, const Distrib & d) {
 	os << "Distrib [\n";

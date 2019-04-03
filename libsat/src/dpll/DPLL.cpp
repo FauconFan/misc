@@ -48,13 +48,15 @@ static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 
 std::pair<bool, Distrib> dpll_solve(const Fnc & fnc) {
 	Occ_list litt_occ = Occ_list(fnc);
-	Distrib dist;
+	Distrib dist(litt_occ);
 
 	Logger::info() << "DPLL algorithm\n";
 	Logger::info() << fnc << "\n";
 	Logger::info() << litt_occ << "\n";
 
 	bool res = dpll_recu(Fnc(fnc), litt_occ, dist);
+
+	dist.finish();
 
 	Logger::info() << litt_occ;
 	Logger::info() << dist;
