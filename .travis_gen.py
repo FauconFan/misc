@@ -49,7 +49,7 @@ TEST_TASKS = [
 
 CMDS_QUEENS = ["make -C sat sat"]
 
-for i in range(1, 13 + 1):
+for i in range(1, 18 + 1):
     CMDS_QUEENS.append("time (echo " + str(i) + " | sat/sat queens)")
 
 BENCH_TASKS = [

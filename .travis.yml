@@ -69,3 +69,8 @@ matrix:
         - time (echo 11 | sat/sat queens)
         - time (echo 12 | sat/sat queens)
         - time (echo 13 | sat/sat queens)
+        - time (echo 14 | sat/sat queens)
+        - time (echo 15 | sat/sat queens)
+        - time (echo 16 | sat/sat queens)
+        - time (echo 17 | sat/sat queens)
+        - time (echo 18 | sat/sat queens)
