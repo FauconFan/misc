@@ -13,6 +13,7 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 SRC_FOLDER       = src/
 MODEL_FOLDER     = src/model/
 CORE_FOLDER      = src/model/core/
+MODEL_BD_FOLDER  = src/model/model_builder/
 COUPURE_FOLDER   = src/coupure/
 DPLL_FOLDER      = src/dpll/
 UTILS_FOLDER     = src/utils/
@@ -31,9 +32,11 @@ SRC = \
 	$(CORE_FOLDER)Fnc.class.cpp \
 	$(MODEL_FOLDER)Occ_list.class.cpp \
 	$(MODEL_FOLDER)Distrib.class.cpp \
+	$(MODEL_BD_FOLDER)modelbuilder.ns.cpp \
 	$(UTILS_FOLDER)Pair.class.cpp \
 	$(UTILS_FOLDER)Logger.class.cpp \
 	$(UTILS_FOLDER)cnull.cpp \
+	$(UTILS_FOLDER)combinatorics.ns.cpp \
 	$(COUPURE_FOLDER)Coupure.cpp \
 	$(DPLL_FOLDER)DPLL.cpp \
 	
