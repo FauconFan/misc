@@ -174,6 +174,7 @@ bool Fnc::elim_unit_propagation(Distrib & dist, Occ_list & litt_occ) {
 				litt_occ -= this->eval(-litt, false);
 			}
 		}
+		unit_litteraux.clear();
 	}
 }
 
