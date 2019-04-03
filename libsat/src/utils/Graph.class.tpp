@@ -138,30 +138,30 @@ void Graph<T>::CFC_PP2(const T & s, std::unordered_map<T, bool> &colors, std::se
 }
 
 template <typename T>
-std::stack<T> Graph<T>::getTriTopo() const{
-	std::stack<T> stk;
+std::list<T> Graph<T>::getTriTopo() const{
+	std::list<T> lst;
 	std::unordered_map<T, bool> colors;
 
 	for (const T & u : this->_li_vertices)
 		colors[u] = true;
 	for (const T & u : this->_li_vertices) {
 		if (colors[u] == true)
-			this->TriT_PP(u, colors, stk);
+			this->TriT_PP(u, colors, lst);
 	}
-	return (stk);
+	return (lst);
 }
 
 template <typename T>
-void Graph<T>::TriT_PP(const T & s, std::unordered_map<T, bool> &colors, std::stack<T> &stk) const{
+void Graph<T>::TriT_PP(const T & s, std::unordered_map<T, bool> &colors, std::list<T> &lst) const{
 	std::set<T> vert_actu;
 
 	colors[s] = false;
 	vert_actu = this->_li_edges.at(s);
 	for (const T & u : vert_actu) {
 		if (colors[u] == true)
-			this->TriT_PP(u, colors, stk);
+			this->TriT_PP(u, colors, lst);
 	}
-	stk.push(s);
+	lst.push_front(s);
 }
 
 template <typename T>

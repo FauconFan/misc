@@ -23,16 +23,15 @@ class Graph
 		std::set<std::set<T> > getCFC() const;
 		Graph<std::set<T> > getCFC_DAG(std::set<std::set<T> > * p_cfc = NULL) const;
 
-		std::stack<T> getTriTopo() const;
+		std::list<T> getTriTopo() const;
 	private:
 		std::unordered_map<T, std::set<T> > _li_edges;
 		std::set<T> _li_vertices;
 
-
 		void CFC_PP1(const T & s, std::unordered_map<T, bool> & colors, std::stack<T> & pile) const;
 		void CFC_PP2(const T & s, std::unordered_map<T, bool> & colors, std::set<T> & C) const;
 
-		void TriT_PP(const T & s, std::unordered_map<T, bool> & colors, std::stack<T> & stk) const;
+		void TriT_PP(const T & s, std::unordered_map<T, bool> & colors, std::list<T> & lst) const;
 };
 
 template <typename T>
