@@ -10,13 +10,13 @@ template <typename T>
 Graph<T> &Graph<T>::operator=(const Graph<T> &rhs) = default;
 
 template <typename T>
-void Graph<T>::addVertex(T u) {
+void Graph<T>::addVertex(const T & u) {
 	this->_li_vertices.insert(u);
 	this->_li_edges[u];
 }
 
 template <typename T>
-void Graph<T>::addEdge(T u, T v) {
+void Graph<T>::addEdge(const T & u, const T & v) {
 	this->addVertex(u);
 	this->addVertex(v);
 	this->_li_edges[u].insert(v);

@@ -12,8 +12,8 @@ class Graph
 		Graph &operator=(const Graph & rhs);
 		virtual~Graph ();
 
-		void addVertex(T u);
-		void addEdge(T u, T v);
+		void addVertex(const T & u);
+		void addEdge(const T & u, const T & v);
 
 		const std::set<T> &getVertices() const;
 		const std::unordered_map<T, std::set<T> > &getEdges() const;
