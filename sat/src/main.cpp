@@ -51,6 +51,31 @@ static int dpll_run(int argc, char ** argv) {
 }
 
 int main(int argc, char ** argv) {
+	Graph<int> gst;
+	std::set<std::set<int> > cfc;
+
+	gst.addEdge(0, 1);
+	gst.addEdge(1, 3);
+	gst.addEdge(0, 2);
+	gst.addEdge(2, 3);
+	gst.addEdge(2, 0);
+
+	std::cout << gst;
+	cfc = gst.getCFC();
+	int c = 0;
+	for (const auto & it : cfc) {
+		std::cout << "CFC n°" << c << std::endl;
+		for (auto itt = it.begin(); itt != it.end(); ++itt) {
+			if (itt != it.begin())
+				std::cout << ", ";
+			std::cout << *itt;
+		}
+		std::cout << std::endl;
+		c++;
+	}
+	return (0);
+
+
 	if (argc <= 0)
 		return (1);
 

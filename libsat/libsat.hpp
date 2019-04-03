@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <set>
 #include <unordered_map>
 #include <algorithm>
@@ -14,6 +15,7 @@
 #include "src/utils/Pair.class.hpp"
 #include "src/utils/Logger.class.hpp"
 #include "src/utils/combinatorics.ns.hpp"
+#include "src/utils/Graph.class.hpp"
 
 #include "src/model/core/Occ_list.class.hpp"
 #include "src/model/core/Distrib.class.hpp"

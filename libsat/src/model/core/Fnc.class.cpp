@@ -36,7 +36,7 @@ void Fnc::add_fnc(const Fnc & fnc) {
 	this->_clauses.insert(this->_clauses.end(), fnc._clauses.begin(), fnc._clauses.end());
 }
 
-std::vector<Clause>   Fnc::get_implclauses() {
+std::vector<Clause> Fnc::get_implclauses() {
 	return (this->_clauses);
 }
 
