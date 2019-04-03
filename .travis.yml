@@ -47,11 +47,26 @@ matrix:
         - sudo apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0
       script:
         - travis_retry make clang_tidy_run
-    - name: check sat dpll
+    - name: check sat dpll _01_RND3SAT__uf20-91
       stage: Test
       script:
         - make satlib_bench
         - make -C tests FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91
+    - name: check sat dpll _02_RND3SAT__uf50-218
+      stage: Test
+      script:
+        - make satlib_bench
+        - make -C tests FOLDER_CNFS=../input_files/satlib/_02_RND3SAT__uf50-218
+    - name: check sat dpll _04_RND3SAT__uf75-325
+      stage: Test
+      script:
+        - make satlib_bench
+        - make -C tests FOLDER_CNFS=../input_files/satlib/_04_RND3SAT__uf75-325
+    - name: check sat dpll _06_RND3SAT__uf100-430
+      stage: Test
+      script:
+        - make satlib_bench
+        - make -C tests FOLDER_CNFS=../input_files/satlib/_06_RND3SAT__uf100-430
     - name: queens
       stage: Benchmark
       script:

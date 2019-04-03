@@ -41,9 +41,17 @@ LINT_TASKS = [
 
 # Test is a stage that test the project using the ./check_sat.py
 
-TEST_TASKS = [
-    (J_TEST, "check sat dpll", [], ["make satlib_bench", "make -C tests FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91"]),
-]
+TEST_TASKS = []
+
+FOLDERS_SAT_DPLL = ["_01_RND3SAT__uf20-91",
+                    "_02_RND3SAT__uf50-218",
+                    "_04_RND3SAT__uf75-325",
+                    "_06_RND3SAT__uf100-430"]
+
+for folder in FOLDERS_SAT_DPLL:
+    name = "check sat dpll " + folder
+
+    TEST_TASKS.append((J_TEST, name, [], ["make satlib_bench", "make -C tests FOLDER_CNFS=../input_files/satlib/" + folder]))
 
 # Bench is a stage when we run bench with examples, without verifying
 
