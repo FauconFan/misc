@@ -52,7 +52,10 @@ $(NAME): $(LIBA) $(OBJ)
 
 .PHONY: libsat
 libsat:
-	@make -C ../libsat/
+	@make -C $(LIBSAT_DIR)
+
+%.a:
+	@make -C $(dir $@)
 
 %.o: %.cpp
 	@printf "Compiling %s... " "$?"
