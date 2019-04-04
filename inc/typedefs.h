@@ -13,9 +13,18 @@ typedef uint8_t     t_bool;
 #define MAGIC_NUMBER    93
 #define VERSION         2
 
+#define RANGE_MIN_TLV_TYPE  0
+#define RANGE_MAX_TLV_TYPE  7
+
 typedef enum    e_tlv_type {
     PAD1 = 0,
-    PADN,
+    PADN = 1,
+    HELLO = 2,
+    NEIGHBOR = 3,
+    DATA = 4,
+    ACK = 5,
+    GOAWAY = 6,
+    WARNING = 7,
 }               t_tlv_type;
 
 // Struct declarations

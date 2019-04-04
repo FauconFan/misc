@@ -32,6 +32,8 @@ void    client(
     }
     printf("\n");
 
+    parse_datagram(buff_res, N);
+
     memcpy(hello_long + 14, buff_res + 6, 8);
 
 
@@ -82,6 +84,7 @@ void    client(
                 printf("%.2d ", buff_res[i]);
             }
             printf("\n");
+            parse_datagram(buff_res, N); // Pretty parser
             gettimeofday(&current, NULL);
             tv.tv_sec = TIME - (current.tv_sec - debut.tv_sec);
             tv.tv_usec = 0;
