@@ -6,6 +6,7 @@
 #include <stack>
 #include <list>
 #include <set>
+#include <map>
 #include <unordered_map>
 #include <algorithm>
 #include <exception>
@@ -27,5 +28,6 @@
 
 #include "src/coupure/Coupure.hpp"
 #include "src/dpll/DPLL.hpp"
+#include "src/2sat/2Sat.hpp"
 
 #endif // ifndef LIBSAT_HPP

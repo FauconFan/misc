@@ -28,7 +28,7 @@ const std::set<T> &Graph<T>::getVertices() const{
 }
 
 template <typename T>
-const std::unordered_map<T, std::set<T> > &Graph<T>::getEdges() const{
+const std::map<T, std::set<T> > &Graph<T>::getEdges() const{
 	return this->_li_edges;
 }
 
@@ -51,7 +51,7 @@ template <typename T>
 std::set<std::set<T> > Graph<T>::getCFC() const{
 	Graph gstt;
 	std::set<std::set<T> > CFC;
-	std::unordered_map<T, bool> colors;
+	std::map<T, bool> colors;
 	std::stack<T> pile;
 
 	for (const T & vert : this->_li_vertices)
@@ -80,8 +80,8 @@ std::set<std::set<T> > Graph<T>::getCFC() const{
 template <typename T>
 Graph<std::set<T> > Graph<T>::getCFC_DAG(std::set<std::set<T> > * p_cfc) const{
 	Graph<std::set<T> > gst;
-	std::unordered_map<T, int> m_v_id;
-	std::unordered_map<int, std::set<T> > m_id_c;
+	std::map<T, int> m_v_id;
+	std::map<int, std::set<T> > m_id_c;
 	int id_cfc;
 	std::set<std::set<T> > cfc;
 
@@ -93,7 +93,7 @@ Graph<std::set<T> > Graph<T>::getCFC_DAG(std::set<std::set<T> > * p_cfc) const{
 	for (const auto & cc : cfc) {
 		gst.addVertex(cc);
 		for (const auto & elem : cc) {
-			m_v_id[cc] = id_cfc;
+			m_v_id[elem] = id_cfc;
 		}
 		m_id_c[id_cfc] = cc;
 		++id_cfc;
@@ -112,7 +112,7 @@ Graph<std::set<T> > Graph<T>::getCFC_DAG(std::set<std::set<T> > * p_cfc) const{
 }
 
 template <typename T>
-void Graph<T>::CFC_PP1(const T & s, std::unordered_map<T, bool> &colors, std::stack<T> &pile) const{
+void Graph<T>::CFC_PP1(const T & s, std::map<T, bool> &colors, std::stack<T> &pile) const{
 	std::set<T> vert_actu;
 
 	colors[s] = false;
@@ -125,7 +125,7 @@ void Graph<T>::CFC_PP1(const T & s, std::unordered_map<T, bool> &colors, std::st
 }
 
 template <typename T>
-void Graph<T>::CFC_PP2(const T & s, std::unordered_map<T, bool> &colors, std::set<T> &C) const{
+void Graph<T>::CFC_PP2(const T & s, std::map<T, bool> &colors, std::set<T> &C) const{
 	std::set<T> vert_actu;
 
 	colors[s] = false;
@@ -140,7 +140,7 @@ void Graph<T>::CFC_PP2(const T & s, std::unordered_map<T, bool> &colors, std::se
 template <typename T>
 std::list<T> Graph<T>::getTriTopo() const{
 	std::list<T> lst;
-	std::unordered_map<T, bool> colors;
+	std::map<T, bool> colors;
 
 	for (const T & u : this->_li_vertices)
 		colors[u] = true;
@@ -152,7 +152,7 @@ std::list<T> Graph<T>::getTriTopo() const{
 }
 
 template <typename T>
-void Graph<T>::TriT_PP(const T & s, std::unordered_map<T, bool> &colors, std::list<T> &lst) const{
+void Graph<T>::TriT_PP(const T & s, std::map<T, bool> &colors, std::list<T> &lst) const{
 	std::set<T> vert_actu;
 
 	colors[s] = false;

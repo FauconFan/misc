@@ -16,7 +16,7 @@ class Graph
 		void addEdge(const T & u, const T & v);
 
 		const std::set<T> &getVertices() const;
-		const std::unordered_map<T, std::set<T> > &getEdges() const;
+		const std::map<T, std::set<T> > &getEdges() const;
 
 		Graph transpose() const;
 
@@ -25,13 +25,13 @@ class Graph
 
 		std::list<T> getTriTopo() const;
 	private:
-		std::unordered_map<T, std::set<T> > _li_edges;
+		std::map<T, std::set<T> > _li_edges;
 		std::set<T> _li_vertices;
 
-		void CFC_PP1(const T & s, std::unordered_map<T, bool> & colors, std::stack<T> & pile) const;
-		void CFC_PP2(const T & s, std::unordered_map<T, bool> & colors, std::set<T> & C) const;
+		void CFC_PP1(const T & s, std::map<T, bool> & colors, std::stack<T> & pile) const;
+		void CFC_PP2(const T & s, std::map<T, bool> & colors, std::set<T> & C) const;
 
-		void TriT_PP(const T & s, std::unordered_map<T, bool> & colors, std::list<T> & lst) const;
+		void TriT_PP(const T & s, std::map<T, bool> & colors, std::list<T> & lst) const;
 };
 
 template <typename T>

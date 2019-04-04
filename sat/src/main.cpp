@@ -50,32 +50,22 @@ static int dpll_run(int argc, char ** argv) {
 	return (0);
 }
 
-int main(int argc, char ** argv) {
-	Graph<int> gst;
-	std::set<std::set<int> > cfc;
+static int twosat_run(int argc, char ** argv) {
+	if (argc != 1)
+		return (1);
 
-	gst.addEdge(0, 1);
-	gst.addEdge(1, 3);
-	gst.addEdge(0, 2);
-	gst.addEdge(2, 3);
-	gst.addEdge(2, 0);
+	Fnc * fnc = getInputFNC(argv[0]);
 
-	std::cout << gst;
-	cfc = gst.getCFC();
-	int c = 0;
-	for (const auto & it : cfc) {
-		std::cout << "CFC n°" << c << std::endl;
-		for (auto itt = it.begin(); itt != it.end(); ++itt) {
-			if (itt != it.begin())
-				std::cout << ", ";
-			std::cout << *itt;
-		}
-		std::cout << std::endl;
-		c++;
+	if (fnc != nullptr) {
+		auto p = twosat_solve(*fnc);
+		print_result(p);
+
+		delete fnc;
 	}
 	return (0);
+}
 
-
+int main(int argc, char ** argv) {
 	if (argc <= 0)
 		return (1);
 
@@ -104,10 +94,15 @@ int main(int argc, char ** argv) {
 	if (cmd == "dpll")
 		return (dpll_run(argc, argv));
 
+	if (cmd == "2sat")
+		return (twosat_run(argc, argv));
+
 	if (cmd == "queens") {
 		queens_problems();
 		return (0);
 	}
+
+	std::cout << "The command is not recognised : " << cmd << "\n";
 
 	return (1);
 } // main
