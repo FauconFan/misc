@@ -1,9 +1,9 @@
 #include "cimp.h"
 
-int cimp_open(char * path, char ** errno_str) {
-	if (g_cimp->screen == NULL) {// condition à modifier quand nous aurons plusieurs écrans à gérer
-		g_cimp->screen = cimp_init_screen(path, errno_str);
-		return 0;// for now we'll check conditions after if everithing gone right or no.
+t_rc_cmd cimp_open(t_cmd * cmd) {
+	if (g_cimp->screen == NULL && cmd != NULL) {
+		g_cimp->screen = cimp_screen_init(cmd->name);
+		return (g_cimp->screen == NULL);
 	}
-	return -1;
+	return OK;
 }

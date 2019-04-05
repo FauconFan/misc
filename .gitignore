@@ -62,3 +62,4 @@ gcovr/
 cimp_check
 *.gcda
 *.gcno
+src/lexer_parser/cimp.parser.h

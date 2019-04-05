@@ -39,18 +39,18 @@ LINT_TASKS = [
     (J_LINT, "uncrustify", None, ["make uncrustify_check"]),
     (J_LINT, "cpplint", (["python3-venv"], False), ["make cpplint_run"]),
     (J_LINT, "cppcheck", (["cppcheck"], False), ["make cppcheck_run"]),
-    (J_LINT, "clang-tidy", (["clang-tidy-6.0", "clang-6.0"], False), ["make clang_tidy_run"]),
+    (J_LINT, "clang-tidy", (["clang-tidy-6.0", "clang-6.0"], True), ["make clang_tidy_run"]),
     (J_LINT, "infer", (None, True), ["sudo make /usr/local/bin/infer", "make infer_run"]),
 ]
 
 # Test is a stage that test if the project runs the unit tests, used by libcheck
 
 TEST_TASKS = [
-    (J_TEST, "libcheck", (["python3-venv", "check"], True), ["make cimp_check"]),
+    (J_TEST, "libcheck", (["python3-venv", "check"], True), ["make images","make cimp_check"]),
 ]
 
-INSTALL_SDL = "travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz; cd SDL2-2.0.9; ./configure; make; sudo make install; cd ..; rm -rf SDL2-2.0.9"
 INSTALL_APT_PREFIX = "sudo apt-get install -y --no-install-recommends"
+INSTALL_SDL = ["libsdl2-dev", "libsdl2-image-dev"]
 
 TASKS = BASE_TASKS + LINT_TASKS + TEST_TASKS
 
@@ -63,22 +63,19 @@ def print_header():
         print("  -", job)
     print()
 
-def build_install_apt(li_apt_deps):
-    if li_apt_deps is None:
-        return None
-    return (INSTALL_APT_PREFIX + " " + " ".join(li_apt_deps))
+def build_install_apt(li_apt_deps, b_install_sdl):
+    li = []
+    if li_apt_deps is not None:
+        li.extend(li_apt_deps)
+    if b_install_sdl:
+        li.extend(INSTALL_SDL)
+    return (INSTALL_APT_PREFIX + " " + " ".join(li))
 
 def print_dep(dep):
     (apt_deps, b_install_sdl) = dep
-    install_apt_cmd = build_install_apt(apt_deps)
-    if apt_deps:
-        print("      before_install: sudo apt-get update")
-    if install_apt_cmd is not None or b_install_sdl:
-            print("      install:")
-            if install_apt_cmd is not None:
-                print("        -", install_apt_cmd)
-            if b_install_sdl:
-                print("        -", INSTALL_SDL)
+    install_apt_cmd = build_install_apt(apt_deps, b_install_sdl)
+    print("      before_install: sudo apt-get update")
+    print("      install:", install_apt_cmd)
 
 def print_task(task):
     (stage, name, dep, cmds) = task

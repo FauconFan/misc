@@ -97,15 +97,22 @@ int nb_digit(int i) {
 }
 
 /**La fonction itoa : convertit un int en chaine de caractere **/
-char * itoa(int i, char b[]) {
+char * itoa(int i) {
 	char const digit[] = "0123456789";
-	char * p = b;
+	int num_digit      = nb_digit(i);
+	char * p;
+	char * b;
 
 	if (i < 0) {
+		p    = malloc(sizeof(char) * (num_digit + 2));
+		b    = p;
 		*p++ = '-';
 		i   *= -1;
 	}
-	int num_digit = nb_digit(i);
+	else {
+		p = malloc(sizeof(char) * (num_digit + 1));
+		b = p;
+	}
 	p  = p + num_digit;
 	*p = '\0';
 	do {
@@ -113,4 +120,17 @@ char * itoa(int i, char b[]) {
 		i    = i / 10;
 	} while (i);
 	return b;
+}
+
+t_bool safe_strtol10(const char * word, char ** next, int * nump) {
+	if (word == NULL || nump == NULL)
+		return (FALSE);
+
+	errno = 0;
+	*nump = strtol(word, next, 10);
+	if (errno == EINVAL || errno == ERANGE) {
+		*nump = -1;
+		return (FALSE);
+	}
+	return (TRUE);
 }

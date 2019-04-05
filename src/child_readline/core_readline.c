@@ -32,7 +32,7 @@ void initialisation_tab_completion() {
 int initialize_readline() {
 	initialisation_tab_completion();
 	using_history();// initialisation de l'utilisation de la librairie history de readline
-	rl_readline_name = "mon prompt>>";
+	rl_readline_name = ">>";
 
 	/* explicite la complétion souhaitée */
 	rl_attempted_completion_function = fileman_completion;

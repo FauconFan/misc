@@ -1,23 +1,25 @@
 #ifndef COMMANDS_H
 #define	COMMANDS_H
 
-// cimp_open.c:
-int cimp_open(char * path, char ** errno_str);
-
-// cimp_close.c:
-int cimp_close();
-
-// cimp_help.c:
-void cimp_help();
-
-// cimp_list.c:
-void cimp_list();
-
-// cimp_sym.c:
-void cimp_sym_verti();
-void cimp_sym_hori();
-
-// cimp_rotate.c:
-void cimp_rotate(int angle);
+t_rc_cmd cimp_open(t_cmd * cmd);
+t_rc_cmd cimp_close(t_cmd * cmd);
+t_rc_cmd cimp_help(t_cmd * cmd);
+t_rc_cmd cimp_list(t_cmd * cmd);
+t_rc_cmd cimp_sym_verti(t_cmd * cmd);
+t_rc_cmd cimp_sym_hori(t_cmd * cmd);
+t_rc_cmd cimp_rotate(t_cmd * cmd);
+t_rc_cmd cimp_select(t_cmd * cmd);
+t_rc_cmd cimp_unselect(t_cmd * cmd);
+t_rc_cmd cimp_save(t_cmd * cmd);
+t_rc_cmd cimp_update(t_cmd * cmd);
+t_rc_cmd cimp_copy(t_cmd * cmd);
+t_rc_cmd cimp_paste(t_cmd * cmd);
+t_rc_cmd cimp_cut(t_cmd * cmd);
+t_rc_cmd cimp_fill(t_cmd * cmd);
+t_rc_cmd cimp_color_negative(t_cmd * cmd);
+t_rc_cmd cimp_color_gray(t_cmd * cmd);
+t_rc_cmd cimp_color_white_black(t_cmd * cmd);
+t_rc_cmd cimp_color_replace(t_cmd * cmd);
+t_rc_cmd cimp_ajust_light_contrast(t_cmd * cmd);
 
 #endif // ifndef COMMANDS_H

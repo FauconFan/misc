@@ -1,38 +1,62 @@
 #include "cimp.h"
 
 // Local to cimp_rotate.c
-static void cimp_rotate90();
+static t_rc_cmd real_rotate(t_cmd * cmd, int angle);
+static t_rc_cmd real_rotate90();
 
-void cimp_rotate(int angle) {
+t_rc_cmd cimp_rotate(t_cmd * cmd) {
+	if (cmd != NULL && g_cimp->screen != NULL)
+		return (real_rotate(cmd, cmd->num));
+
+	return (OK);
+}
+
+static t_rc_cmd real_rotate(t_cmd * cmd, int angle) {
+	t_rc_cmd rc;
+
 	while (angle < 0)
 		angle += 360;
 	switch (angle % 360) {
 		case 0:
 			break;
 		case 90:
-			cimp_rotate90();
+			return (real_rotate90());
+
 			break;
 		case 180:
-			cimp_sym_hori();
-			cimp_sym_verti();
+			rc = cimp_sym_hori(cmd);
+			if (rc != OK)
+				return (rc);
+
+			return (cimp_sym_verti(cmd));
+
 			break;
 		case 270:
-			cimp_rotate(180);
-			cimp_rotate(90);
+			rc = real_rotate(cmd, 180);
+			if (rc != OK)
+				return (rc);
+
+			return (real_rotate(cmd, 90));
+
 			break;
 		default:
 			printf("Nothing to do for now, invalid angle value, choose a multiple of 90°\n");
 	}
-}
+	return (OK);
+} /* real_rotate */
 
-static void cimp_rotate90() {
-	int new_width;
-	int new_height;
+static t_rc_cmd real_rotate90() {
+	int new_width  = g_cimp->screen->buff_screen->h;
+	int new_height = g_cimp->screen->buff_screen->w;
 
-	SDL_GetWindowSize(g_cimp->screen->window, &new_height, &new_width);
 	SDL_Surface * surf = SDL_CreateRGBSurface(0, new_width, new_height, 32, 0, 0, 0, 0);
-	uint32_t * old     = (uint32_t *) g_cimp->screen->buff_screen->pixels;
-	uint32_t * new     = (uint32_t *) surf->pixels;
+
+	if (surf == NULL)
+		return (ABORT);
+
+	uint32_t * old = (uint32_t *) g_cimp->screen->buff_screen->pixels;
+	uint32_t * new = (uint32_t *) surf->pixels;
+
 	for (int i = 0; i < new_height; i++) {
 		for (int j = 0; j < new_width; j++) {
 			new[new_width - 1 - j + i * new_width] = old[i + j * new_height];
@@ -40,5 +64,5 @@ static void cimp_rotate90() {
 	}
 	SDL_FreeSurface(g_cimp->screen->buff_screen);
 	g_cimp->screen->buff_screen = surf;
-	SDL_SetWindowSize(g_cimp->screen->window, new_width, new_height);
+	return (OK);
 }

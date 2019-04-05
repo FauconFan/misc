@@ -30,26 +30,35 @@ _WHITE=$(shell tput setaf 7 2> /dev/null || echo "")
 _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 CC = gcc
-
-SDL_FLAGS = $(shell sdl2-config --cflags)
-SDL_LIBS = $(shell sdl2-config --libs)
-
-INC_FOLDER = inc/
-
-CFLAGS = -g -Wall -Wextra -Werror -std=c11 $(SDL_FLAGS)
-IFLAGS = -I $(INC_FOLDER)
-LFLAGS = $(SDL_LIBS) -lreadline
-FLAGS = $(CFLAGS) $(IFLAGS)
+FL = flex
+BS = bison
+PKG = pkg-config
 
 SRC := ""
 INC := ""
 include files.mk # On charge la liste des fichiers depuis le fichier files.mk
 
+LIBS_DEP = \
+			sdl2 \
+			SDL2_image \
+			libjpeg \
+			libpng \
+
+RD_LIBS = -lreadline
+M_LIB = -lm
+
+CFLAGS = -g -Wall -Wextra -Werror -std=c11
+IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(shell $(PKG) $(LIBS_DEP) --cflags)
+LFLAGS = $(shell $(PKG) $(LIBS_DEP) --libs) $(RD_LIBS) $(M_LIB)
+FLAGS = $(CFLAGS) $(IFLAGS)
+
 ALL_FILES = $(SRC) $(INC)
 
-OBJ = $(SRC:%.c=%.o)
 OBJ_NO_MAIN = $(SRC_NO_MAIN:%.c=%.o)
 OBJ_TEST = $(TEST_SRC:%.c=%.o)
+OBJ_SRC = $(SRC:%.c=%.o)
+OBJ_LEX_PAR = $(PAR_FILE:%.y=%.parser.o) $(LEX_FILE:%.l=%.lexer.o)
+OBJ = $(OBJ_SRC) $(OBJ_LEX_PAR)
 
 #################################### COMPILATION ###############################
 
@@ -57,18 +66,36 @@ OBJ_TEST = $(TEST_SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "Program %s... " "$(NAME)"
+	@printf "\\t%sLD%s\\t" "$(_GREEN)" "$(_END)"
 	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
-	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
+	@printf "%s\\n" "$@"
 
 %.o: %.c
-	@printf "Compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
 	@$(CC) $(FLAGS) -c $? -o $@
-	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
+	@printf "%s\\n" "$?"
+
+$(LEX_PAR_FOLDER)%.lexer.o: $(LEX_PAR_FOLDER)%.l
+	@printf "\\t%sFL%s\\t" "$(_YELLOW)" "$(_END)"
+	@$(FL) -o $(@:.o=.c) $?
+	@printf "%s\\n" "$?"
+	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
+	@$(CC) $(IFLAGS) -c $(@:.o=.c) -o $@
+	@printf "%s\\n" "$(@:.o=.c)"
+	@rm -f $(@:.o=.c)
+
+$(LEX_PAR_FOLDER)%.parser.o: $(LEX_PAR_FOLDER)%.y
+	@printf "\\t%sBS%s\\t" "$(_PURPLE)" "$(_END)"
+	@$(BS) -d -o $(@:.o=.c) $?
+	@printf "%s\\n" "$?"
+	@printf "\\t%sCC%s\\t" "$(_CYAN)" "$(_END)"
+	@$(CC) $(IFLAGS) -c $(@:.o=.c) -o $@
+	@printf "%s\\n" "$(@:.o=.c)"
+	@rm -f $(@:.o=.c)
 
 .PHONY: clean
 clean:
-	@rm -rf $(OBJ)
+	@rm -rf $(OBJ) $(OBJ_TEST)
 	@echo "Objects removed"
 
 .PHONY: fclean
@@ -87,6 +114,7 @@ ffclean: fclean
 	@find . -name "*.o" -delete
 	@find . -name "*.gcda" -delete
 	@find . -name "*.gcno" -delete
+	@rm -f $(LEX_PAR_FOLDER)cimp.parser.h
 	@echo "Projecl all cleaned"
 
 .PHONY: re
@@ -105,6 +133,13 @@ BMP_IMAGES_REMOTE = \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled17.bmp \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled5.bmp \
 			https://neptun.weebly.com/uploads/3/1/3/1/3131773/untitled3.bmp \
+			https://upload.wikimedia.org/wikipedia/commons/6/6e/Fruits.png \
+			https://upload.wikimedia.org/wikipedia/commons/a/ae/Graphe.jpg \
+			https://cdn.pixabay.com/photo/2016/11/23/00/38/abbey-1851493_960_720.jpg \
+			https://cdn.pixabay.com/photo/2014/02/27/16/08/splashing-275950_960_720.jpg \
+			https://cdn.pixabay.com/photo/2017/09/22/19/05/casserole-dish-2776735_960_720.jpg \
+			https://cdn.pixabay.com/photo/2013/06/06/15/36/world-117174_960_720.png \
+			https://cdn.pixabay.com/photo/2016/06/13/10/45/polar-1453993_960_720.png \
 
 images:
 	mkdir -p $@
@@ -149,8 +184,8 @@ lint_check: uncrustify_check cpplint_run cppcheck_run clang_tidy_run infer_run
 CIMP_CHECK = cimp_check
 GCOV_LIBS = -lcheck -lm -lpthread -lrt -lsubunit -lgcov -coverage
 
-$(CIMP_CHECK): fclean venv recompile_with_profile_args $(OBJ_TEST)
-	@$(CC) $(OBJ_NO_MAIN) $(OBJ_TEST) $(GCOV_LIBS) $(LFLAGS) -o $@
+$(CIMP_CHECK): fclean venv images recompile_with_profile_args $(OBJ_TEST) $(OBJ_LEX_PAR)
+	@$(CC) $(OBJ_NO_MAIN) $(OBJ_TEST) $(OBJ_LEX_PAR) $(GCOV_LIBS) $(LFLAGS) -o $@
 	./$@
 	mkdir -p gcovr
 	$(GCOVR) -r . --html --html-details -o gcovr/index.html
@@ -170,11 +205,11 @@ $(UNCRUSTIFY): submodule
 
 .PHONY: uncrustify_apply
 uncrustify_apply: $(UNCRUSTIFY)
-	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --replace --no-backup --mtime $(ALL_FILES)
+	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --replace --no-backup --mtime $(ALL_FILES) $(TEST_SRC)
 
 .PHONY: uncrustify_check
 uncrustify_check: $(UNCRUSTIFY)
-	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --check $(ALL_FILES)
+	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --check $(ALL_FILES) $(TEST_SRC)
 
 ###################################### CPPLINT #################################
 
@@ -193,18 +228,17 @@ cppcheck_run:
 .PHONY: clang_tidy_run
 clang_tidy_run:
 	$(CLANG_TIDY) \
-		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-readability-braces-around-statements" \
-		-header-filter=".*" \
+		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-hicpp-signed-bitwise,-readability-braces-around-statements" \
 		-warnings-as-errors="*" \
-		$(SRC) -- -I inc \
+		$(SRC) -- $(IFLAGS) \
 
 .PHONY: clang_tidy_fix
 clang_tidy_fix:
 	$(CLANG_TIDY) \
-		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-readability-braces-around-statements" \
+		-checks="*,-llvm-header-guard,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-hicpp-signed-bitwise,-readability-braces-around-statements" \
 		-header-filter=".*" \
 		-fix-errors \
-		$(SRC) -- -I inc \
+		$(SRC) -- $(IFLAGS) \
 
 ###################################### INFER ##################################
 
@@ -224,5 +258,7 @@ $(INFER_TAR):
 	echo "$(SHASUM_INFER)  $@" | shasum -a 256 -c -
 
 .PHONY: infer_run
-infer_run: $(INFER)
+infer_run: $(INFER) fclean
+	make CC="$(INFER) run --fail-on-issue -- $(CC)" $(OBJ_SRC)
+	make $(OBJ_LEX_PAR)
 	make CC="$(INFER) run --fail-on-issue -- $(CC)" all

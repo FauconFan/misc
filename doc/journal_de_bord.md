@@ -1,5 +1,30 @@
 # Journal de Bord
 
+## Semaine 18 - 24 Mars 2019
+
+- Rework parser, lexer bison + parser local
+- Finir l'export images + commande save / update
+- Travail sur les tests unitaires
+- Fin de cut/copy/paste
+
+## Semaine 11 - 17 Mars 2019
+
+- Travail sur l'export en jpeg, png
+- Rework parser, lexer bison (mauvaise idée, abandon)
+- Sélection ok
+- Commencement du cut/copy/paste
+- Travail sur les tests unitaires
+- Bug fixing (intégration continue, fork child)
+
+## Semaine 4 - 10 Mars 2019
+
+- Mise en place de la phase 2 : Moon (Spécification)
+- Readline dans un processus fork pour permettre une "game loop"
+- Gestion des events SDL (fermeture fenêtre)
+- Commencement des commandes select, unselect
+- Restructuration du code
+- Mise en place des tests unitaires
+
 ## Semaine 25 Février - 3 Mars 2019
 
 - Mise en place du journal de bord, simulation des semaines précédentes depuis l'historique git
