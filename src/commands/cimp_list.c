@@ -1,6 +1,6 @@
 #include "cimp.h"
 
-int cimp_list(t_cmd * cmd) {
+t_rc_cmd cimp_list(t_cmd * cmd) {
 	(void) *cmd;
 	if (g_cimp->screen) {
 		int max_name, max_ID, max_taille, max_path, w, h;
@@ -48,5 +48,5 @@ int cimp_list(t_cmd * cmd) {
 		free(width);
 		free(height);
 	}
-	return (0);
+	return (OK);
 } /* cimp_list */

@@ -4,10 +4,10 @@
  * par l'argument rect passe a la commande.
  *  Dans le cas ou le rectangle sors de l'image on selectionne le plus grand rectangle possible dans l'image
  * Renvoie 0 en cas de succes et en cas d'echec ou si aucune image n'es ouverte renvoie -1**/
-int cimp_copy(t_cmd * cmd) {
+t_rc_cmd cimp_copy(t_cmd * cmd) {
 	if (!g_cimp->screen) {
 		printf("Pas d'image ouverte : la copie est impossible\n");
-		return -1;
+		return FAIL;
 	}
 
 	SDL_Rect rect;
@@ -20,7 +20,7 @@ int cimp_copy(t_cmd * cmd) {
 	else {
 		if (g_cimp->select == NULL) {
 			printf("Pas de zone selectionnee : copie impossible \n");
-			return -1;
+			return FAIL;
 		}
 		rect = g_cimp->select->surface;
 	}
@@ -34,7 +34,7 @@ int cimp_copy(t_cmd * cmd) {
 	  rect.h + rect.y > surface_src->h)
 	{
 		printf("La zone a copiee est hors de l'image\n");
-		return -1;
+		return FAIL;
 	}
 
 	// Si un copy_buffer est deja present on le libere pour un en creer un nouveau
@@ -45,7 +45,7 @@ int cimp_copy(t_cmd * cmd) {
 
 	// On cree notre nouvelle surface puis on la remplit
 	if ( (surface_dest = SDL_CreateRGBSurface(0, rect.w, rect.h, 32, 0, 0, 0, 0)) == NULL)
-		return -1;
+		return ABORT;
 
 	Uint32 * pixels_dest, * pixels_src;
 
@@ -64,5 +64,5 @@ int cimp_copy(t_cmd * cmd) {
 
 	g_cimp->copy_buffer = surface_dest;
 
-	return 0;
+	return OK;
 } /* cimp_copy */

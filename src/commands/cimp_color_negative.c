@@ -9,7 +9,7 @@ static uint32_t to_negative(uint32_t col, void * format_pixel) {
 	return SDL_MapRGB(format, 255 - r, 255 - g, 255 - b);
 }
 
-int cimp_color_negative(t_cmd * cmd) {
+t_rc_cmd cimp_color_negative(t_cmd * cmd) {
 	if (g_cimp->screen) {
 		SDL_Surface * buff_screen;
 		SDL_Rect selection;
@@ -19,5 +19,5 @@ int cimp_color_negative(t_cmd * cmd) {
 
 		sdl_surface_mapp(buff_screen, selection, to_negative, buff_screen->format);
 	}
-	return (0);
+	return (OK);
 } /* cimp_fill */

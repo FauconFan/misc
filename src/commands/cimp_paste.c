@@ -3,14 +3,14 @@
 /**Une fonction qui colle la surface stockee dans copy_buffer a partir des coordonnes x0 y0
  * passees en arguments.
  * Renvoie 0 en cas de succes et -1 sinon en affichant un message d'erreur. **/
-int cimp_paste(t_cmd * cmd) {
+t_rc_cmd cimp_paste(t_cmd * cmd) {
 	if (!g_cimp->screen) {
 		printf("Pas d'image ouverte : le collage est impossible\n");
-		return -1;
+		return FAIL;
 	}
 	if (!g_cimp->copy_buffer) {
 		printf("Rien n'a ete copie : le collage est impossible\n");
-		return -1;
+		return FAIL;
 	}
 
 	// Si les coordonnes sont hors de l'ecran on echoue
@@ -19,7 +19,7 @@ int cimp_paste(t_cmd * cmd) {
 	  cmd->point.y > g_cimp->screen->buff_screen->h)
 	{
 		printf("Coordonees en dehors de l'image : collage impossible\n");
-		return -1;
+		return FAIL;
 	}
 
 	SDL_Surface * surface_src, * surface_dest;
@@ -40,5 +40,5 @@ int cimp_paste(t_cmd * cmd) {
 		SDL_UnlockSurface(surface_dest);
 
 
-	return 0;
+	return OK;
 } /* cimp_paste */

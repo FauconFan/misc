@@ -47,6 +47,12 @@ typedef struct      s_cmd {
 	SDL_Color color2[2];
 }                   t_cmd;
 
+typedef enum        s_rc_cmd {
+	OK,
+	FAIL,
+	ABORT,
+}                   t_rc_cmd;
+
 #define	NB_ARG_TYPE 5
 
 typedef enum        e_arg_type {
@@ -61,7 +67,7 @@ typedef enum        e_arg_type {
 
 typedef struct      s_cmd_config {
 	char *  name;
-	int (* func_cmd_ptr)(t_cmd *);
+	t_rc_cmd (* func_cmd_ptr)(t_cmd *);
 	uint8_t opts;     // Necessary opts
 	uint8_t opts_opt; // Optionnal opts
 } t_cmd_config;

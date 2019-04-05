@@ -15,7 +15,7 @@ static void print_command_config(int max_name, const t_cmd_config * cmd_cf) {
 	printf("\n");
 }
 
-int cimp_help(t_cmd * cmd) {
+t_rc_cmd cimp_help(t_cmd * cmd) {
 	int max_name;
 
 	(void) cmd;
@@ -29,5 +29,5 @@ int cimp_help(t_cmd * cmd) {
 	for (size_t i = 0; i < g_command_list_size; i++) {
 		print_command_config(max_name, g_command_list + i);
 	}
-	return (0);
+	return (OK);
 }

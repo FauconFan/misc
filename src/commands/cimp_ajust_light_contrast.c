@@ -34,7 +34,7 @@ static uint32_t ajust(uint32_t col, void * metav) {
 	return SDL_MapRGB(meta->format, r, g, b);
 }
 
-int cimp_ajust_light_contrast(t_cmd * cmd) {
+t_rc_cmd cimp_ajust_light_contrast(t_cmd * cmd) {
 	if (g_cimp->screen) {
 		SDL_Surface * buff_screen;
 		SDL_Rect selection;
@@ -54,5 +54,5 @@ int cimp_ajust_light_contrast(t_cmd * cmd) {
 
 		sdl_surface_mapp(buff_screen, selection, ajust, &meta);
 	}
-	return (0);
+	return (OK);
 } /* cimp_fill */
