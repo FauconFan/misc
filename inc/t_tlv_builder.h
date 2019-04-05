@@ -16,5 +16,6 @@ void            tlvb_free(t_tlv_builder *tlv);
 
 t_bool          tlvb_add_pad1(t_tlv_builder * tlv);
 t_bool          tlvb_add_padN(t_tlv_builder * tlv, size_t l);
+t_bool          tlvb_add_hello(t_tlv_builder *tlv, uint64_t id1, const void *id2);
 
 #endif

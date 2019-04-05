@@ -6,7 +6,7 @@ t_iovec_builder     *iovb_alloc(void) {
 
     if ((msg = (t_iovec_builder *)malloc(sizeof(t_iovec_builder))) == NULL)
         return (NULL);
-    
+
     len_tab = IOVEC_DEFAULT_SIZE * sizeof(struct iovec);
     if ((msg->msg_iov = malloc(len_tab)) == NULL) {
         free(msg);
@@ -26,7 +26,7 @@ static t_bool       iovb_extend(t_iovec_builder * msg) {
 
     if (msg == NULL)
         return (FALSE);
-    
+
     len_tab = msg->len_max * sizeof(struct iovec);
     if ((v = malloc(2 * len_tab)) == NULL)
         return (FALSE);
@@ -116,11 +116,11 @@ void                iovb_print(t_iovec_builder *msg) {
     for (size_t i = 0; i < msg->len_max; ++i) {
         printf("\t[%lu] -> len : %lu\n", i, msg->msg_iov[i].iov_len);
         printf("\t         ");
-        
-        char        *vp = (char *)msg->msg_iov[i].iov_base;
+
+        uint8_t        *vp = (uint8_t *)msg->msg_iov[i].iov_base;
 
         for (size_t j = 0; j < msg->msg_iov[i].iov_len; ++j) {
-            printf("%.2x ", vp[j]);
+            printf("%.2d ", vp[j]);
         }
         if (msg->msg_iov[i].iov_base == NULL) {
             printf("(NULL)");

@@ -26,7 +26,7 @@ t_tlv_builder   *tlvb_alloc(void) {
 t_bool      tlvb_finish(t_tlv_builder *tlv) {
     if (tlv == NULL || tlv->ready)
         return (FALSE);
-    
+
     uint16_t    len = htons(tlv->len_body);
     iovb_set(tlv->msg, tlv->index_len_body, &len, 2);
     tlv->ready = TRUE;
@@ -72,4 +72,22 @@ t_bool      tlvb_add_padN(t_tlv_builder *tlv, size_t l) {
     if (tlvb_add_type(tlv, PADN) == FALSE)
         return (FALSE);
     return (tlvb_add_value(tlv, zeros, l));
+}
+
+
+t_bool      tlvb_add_hello(t_tlv_builder *tlv, uint64_t id1, const void *id2) {
+    uint8_t id[16];
+    size_t taille = 8;
+    memcpy(id, ((uint8_t *)&id1), 8);
+
+    if (id2 != NULL){
+        taille = 16;
+        memcpy(id +8, id2, 8);
+    }
+
+    if(tlv== NULL || tlv->ready)
+        return(FALSE);
+    if (tlvb_add_type(tlv, HELLO) == FALSE)
+        return (FALSE);
+    return (tlvb_add_value(tlv, id, taille));
 }
