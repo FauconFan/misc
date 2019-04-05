@@ -77,7 +77,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
  * @param  sc l'instance de t_cimp_screen
  */
 void                cimp_screen_end(t_cimp_screen * sc) {
-	if(sc){
+	if (sc) {
 		if (sc->path)
 			free(sc->path);
 		if (sc->buff_screen)
