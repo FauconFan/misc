@@ -84,6 +84,7 @@ void                cimp_screen_end(t_cimp_screen * sc) {
 			SDL_FreeSurface(sc->buff_screen);
 		if (g_viewing_enabled && sc->window)
 			SDL_DestroyWindow(sc->window);
+		free(sc);
 	}
 }
 
