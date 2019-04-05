@@ -167,12 +167,12 @@ static uint16_t parse_tlv(uint8_t * tlv) {
         case PAD1: return (parse_pad1(tlv));
         case PADN: return (parse_padN(tlv));
         case HELLO: return (parse_hello(tlv));
-        case NEIGHBOR: return (parse_neighbor(tlv));
+        case NEIGHBOUR: return (parse_neighbor(tlv));
         case DATA: return (parse_data(tlv));
         case ACK: return (parse_ack(tlv));
         case GOAWAY: return (parse_goaway(tlv));
         case WARNING: return (parse_warning(tlv));
-        
+
         default:
             printf("unrecognised tlv\n");
             // On suppose que la longueur existe.

@@ -29,7 +29,7 @@ int main(void)
     client(sfd, sock_addr, sock_len, msg, sizeof(msg), hello_long, sizeof(hello_long));
     */
 
-    
+
     /* TEST PAD1/ PADN
     t_tlv_builder   * tlvb;
 
@@ -46,7 +46,7 @@ int main(void)
     uint8_t test[8] = {42, 42, 42, 42, 42, 42, 42, 42};
 
     hello = tlvb_alloc();
-    tlvb_add_hello(hello, id, NULL);
+    tlvb_add_hello(hello, id, 0);
     tlvb_finish(hello);
     iovb_print(hello->msg);
     tlvb_free(hello);

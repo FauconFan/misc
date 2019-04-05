@@ -75,19 +75,31 @@ t_bool      tlvb_add_padN(t_tlv_builder *tlv, size_t l) {
 }
 
 
-t_bool      tlvb_add_hello(t_tlv_builder *tlv, uint64_t id1, const void *id2) {
+t_bool      tlvb_add_hello(t_tlv_builder *tlv, uint64_t id1, uint64_t id2) {
+    if (tlv== NULL || tlv->ready)
+        return (FALSE);
+    if (tlvb_add_type(tlv, HELLO) == FALSE)
+        return (FALSE);
+
     uint8_t id[16];
     size_t taille = 8;
     memcpy(id, ((uint8_t *)&id1), 8);
 
-    if (id2 != NULL){
+    if (id2 != 0){
         taille = 16;
-        memcpy(id +8, id2, 8);
+        memcpy(id +8, ((uint8_t *)&id2), 8);
     }
 
-    if(tlv== NULL || tlv->ready)
-        return(FALSE);
-    if (tlvb_add_type(tlv, HELLO) == FALSE)
-        return (FALSE);
     return (tlvb_add_value(tlv, id, taille));
+}
+
+t_bool      tlvb_add_neighbour(t_tlv_builder *tlv, uint8_t ip[16], uint16_t port) {
+    if (tlv == NULL || tlv->ready || ip == NULL)
+        return (FALSE);
+    if (tlvb_add_type(tlv, NEIGHBOUR) == FALSE)
+        return (FALSE);
+    uint8_t msg[18];
+    memcpy(msg, ip, 16);
+    memcpy(msg+16, (uint8_t *)&port), 2);
+    return (tlvb_add_value(tlv, msg, 18));
 }

@@ -20,7 +20,7 @@ typedef enum    e_tlv_type {
     PAD1 = 0,
     PADN = 1,
     HELLO = 2,
-    NEIGHBOR = 3,
+    NEIGHBOUR = 3,
     DATA = 4,
     ACK = 5,
     GOAWAY = 6,
