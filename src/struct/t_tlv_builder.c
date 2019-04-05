@@ -98,8 +98,60 @@ t_bool      tlvb_add_neighbour(t_tlv_builder *tlv, uint8_t ip[16], uint16_t port
         return (FALSE);
     if (tlvb_add_type(tlv, NEIGHBOUR) == FALSE)
         return (FALSE);
+
     uint8_t msg[18];
     memcpy(msg, ip, 16);
-    memcpy(msg+16, (uint8_t *)&port), 2);
+    memcpy(msg+16, ((uint8_t *)&port), 2);
     return (tlvb_add_value(tlv, msg, 18));
+}
+
+t_bool      tlvb_add_data(t_tlv_builder *tlv, uint64_t id, uint32_t nonce, uint8_t type, uint8_t *data, size_t taille) {
+    if (tlv == NULL || tlv->ready || data == NULL)
+        return (FALSE);
+    if (tlvb_add_type(tlv, DATA) == FALSE)
+        return (FALSE);
+
+    uint8_t *msg = (uint8_t *)malloc((13+taille));
+    memcpy(msg, ((uint8_t *)&id), 8);
+    memcpy(msg+8, ((uint8_t *)&nonce), 4);
+    memcpy(msg+12, &type, 1);
+    memcpy(msg+13, data, taille);
+    t_bool rc = tlvb_add_value(tlv, msg, 13+taille);
+    free(msg);
+    return rc;
+}
+
+t_bool      tlvb_add_ack(t_tlv_builder *tlv, uint64_t id, uint32_t nonce) {
+    if (tlv == NULL || tlv->ready)
+        return (FALSE);
+    if (tlvb_add_type(tlv, ACK) == FALSE)
+        return (FALSE);
+
+    uint8_t msg[12];
+    memcpy(msg, ((uint8_t *)&id), 8);
+    memcpy(msg, ((uint8_t *)&nonce), 4);
+    return (tlvb_add_value(tlv, msg, 12));
+}
+
+t_bool      tlvb_add_goaway(t_tlv_builder *tlv, uint8_t code, uint8_t *message, size_t taille) {
+    if (tlv == NULL || tlv->ready || message == NULL)
+        return (FALSE);
+    if (tlvb_add_type(tlv, GOAWAY) == FALSE)
+        return (FALSE);
+
+    uint8_t *msg = (uint8_t *)malloc(taille);
+    memcpy(msg, &code, 1);
+    memcpy(msg +1, message, taille);
+    t_bool rc = tlvb_add_value(tlv, msg, taille +1);
+    free(msg);
+    return rc;
+}
+
+t_bool      tlvb_add_warning(t_tlv_builder *tlv, uint8_t *message, size_t taille) {
+    if (tlv == NULL || tlv->ready || message == NULL)
+        return (FALSE);
+    if (tlvb_add_type(tlv, WARNING) == FALSE)
+        return (FALSE);
+
+    return (tlvb_add_value(tlv, message, taille));
 }
