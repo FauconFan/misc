@@ -2,9 +2,11 @@
 
 /**Une fonction qui copie la partie de l'image selectionnee et la remplace par du noir.
  * Renvoie 0 en cas de succes et -1 sinon. **/
-int cimp_cut(t_cmd * cmd) {
-	if (cimp_copy(cmd) < 0)
-		return -1;
+t_rc_cmd cimp_cut(t_cmd * cmd) {
+	t_rc_cmd ret_copy;
+
+	if ((ret_copy = cimp_copy(cmd)) != OK)
+		return (ret_copy);
 
 	SDL_Rect rect;
 	if (cmd->rect.x != -1 && cmd->rect.y != -1 && cmd->rect.w != -1 && cmd->rect.h != -1) {
@@ -13,7 +15,7 @@ int cimp_cut(t_cmd * cmd) {
 	else {
 		if (g_cimp->select == NULL) {
 			printf("Pas de zone selectionnee : copie impossible \n");
-			return -1;
+			return FAIL;
 		}
 		rect = g_cimp->select->surface;
 	}
@@ -21,7 +23,7 @@ int cimp_cut(t_cmd * cmd) {
 	surface = g_cimp->screen->buff_screen;
 	Uint32 color = SDL_MapRGBA(surface->format, 0, 0, 0, 0);
 	if (SDL_FillRect(surface, &rect, color) < 0)
-		return -1;
+		return ABORT;
 
-	return 0;
+	return OK;
 }

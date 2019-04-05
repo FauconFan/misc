@@ -13,16 +13,16 @@ static uint32_t replace(uint32_t col, void * smrv) {
 
 	smrp = (struct s_meta_replace *) smrv;
 	SDL_GetRGB(col, smrp->format, &r, &g, &b);
-	if (abs(r - smrp->col1.r) < smrp->margin &&
-	  abs(g - smrp->col1.g) < smrp->margin &&
-	  abs(b - smrp->col1.b) < smrp->margin)
+	if (abs(r - smrp->col1.r) <= smrp->margin &&
+	  abs(g - smrp->col1.g) <= smrp->margin &&
+	  abs(b - smrp->col1.b) <= smrp->margin)
 	{
 		return (SDL_MapRGB(smrp->format, smrp->col2.r, smrp->col2.g, smrp->col2.b));
 	}
 	return col;
 }
 
-int cimp_color_replace(t_cmd * cmd) {
+t_rc_cmd cimp_color_replace(t_cmd * cmd) {
 	if (g_cimp->screen) {
 		SDL_Surface * buff_screen;
 		SDL_Rect selection;
@@ -37,5 +37,5 @@ int cimp_color_replace(t_cmd * cmd) {
 
 		sdl_surface_mapp(buff_screen, selection, replace, &smr);
 	}
-	return (0);
+	return (OK);
 } /* cimp_fill */

@@ -1,6 +1,6 @@
 #include "cimp.h"
 
-int cimp_list(t_cmd * cmd) {
+t_rc_cmd cimp_list(t_cmd * cmd) {
 	(void) *cmd;
 	if (g_cimp->screen) {
 		int max_name, max_ID, max_taille, max_path, w, h;
@@ -18,9 +18,11 @@ int cimp_list(t_cmd * cmd) {
 		max_taille = w_len + h_len + 1 + space_default;
 		max_path   = strlen(g_cimp->screen->path);
 
-		char * width  = malloc(sizeof(char) * (w_len + 1));
-		char * height = malloc(sizeof(char) * (h_len + 1));
+		char * width;
+		char * height;
 		char * taille = malloc(sizeof(char) * (w_len + h_len + 2));
+		width  = itoa(w);
+		height = itoa(h);
 
 		if (width == NULL || height == NULL || taille == NULL) {
 			if (taille)
@@ -31,9 +33,6 @@ int cimp_list(t_cmd * cmd) {
 				free(height);
 			return (1);
 		}
-
-		itoa(w, width);
-		itoa(h, height);
 
 		strncpy(taille, width, w_len + 1);
 		strncpy(taille + w_len, "x", 2);
@@ -49,5 +48,5 @@ int cimp_list(t_cmd * cmd) {
 		free(width);
 		free(height);
 	}
-	return (0);
+	return (OK);
 } /* cimp_list */

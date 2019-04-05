@@ -20,7 +20,7 @@ static uint32_t white_black(uint32_t col, void * smwbv) {
 	return (SDL_MapRGB(smwbp->format, 255, 255, 255));
 }
 
-int cimp_color_white_black(t_cmd * cmd) {
+t_rc_cmd cimp_color_white_black(t_cmd * cmd) {
 	if (g_cimp->screen) {
 		SDL_Surface * buff_screen;
 		SDL_Rect selection;
@@ -38,5 +38,5 @@ int cimp_color_white_black(t_cmd * cmd) {
 
 		sdl_surface_mapp(buff_screen, selection, white_black, &smwb);
 	}
-	return (0);
+	return (OK);
 } /* cimp_fill */

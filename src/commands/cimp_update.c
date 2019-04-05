@@ -1,6 +1,6 @@
 #include "cimp.h"
 
-int cimp_update(t_cmd * cmd) {
+t_rc_cmd cimp_update(t_cmd * cmd) {
 	if (g_cimp->screen) {
 		char * name;
 		int ret;
@@ -14,5 +14,5 @@ int cimp_update(t_cmd * cmd) {
 			ret = (cimp_screen_set_path(g_cimp->screen, name) == FALSE);
 		return (ret);
 	}
-	return (0);
+	return (OK);
 }
