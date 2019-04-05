@@ -254,6 +254,34 @@ START_TEST(test_ajust_light_contrast) {
 	SDL_FreeSurface(surf);
 } END_TEST;
 
+START_TEST(test_cut_copy_paste) {
+	ck_assert(cimp_cut(NULL) != 0);
+	ck_assert(cimp_copy(NULL) != 0);
+	ck_assert(cimp_paste(NULL) != 0);
+
+	test_idempotent((char *[]) {"cut (0 0 25 25)", "paste (0 0)"}, 2);
+	test_idempotent((char *[]) {"copy (20 20 15 27)", "paste (20 20)"}, 2);
+	test_idempotent((char * []) {"cut (10 29 15 14)", "paste (10 29)"}, 2);
+	test_idempotent((char * []) {"copy (47 35 3 15)", "paste (47 35)"}, 2);
+
+	test_same_treatment((char *[]) {"copy (15 16 22 15)", "paste (14 12)"}, 2,
+	  (char *[]) {"select (15 16 22 15)", "copy", "paste (14 12)"}, 3);
+	test_same_treatment((char *[]) {"cut (5 2 17 28)", "paste (4 32)"}, 2,
+	  (char *[]) {"select (5 2 17 28)", "cut", "paste (4 32)"}, 3);
+
+	test_same_treatment((char *[]) {"cut (0 0 10 10)", "paste (0 0)"}, 2,
+	  (char *[]) {"cut (10 10 10 10)", "paste (10 10)"}, 2);
+	test_same_treatment((char * []) {"copy (0 0 10 10)", "paste (10 10)"}, 2,
+	  (char * []) {"cut (0 0 10 10)", "paste (0 0)", "paste (10 10)"}, 3);
+	test_same_treatment((char * []) {"copy (0 0 10 10)", "paste (48 48)"}, 2,
+	  (char * []) {"cut (0 0 10 10)", "paste (0 0)", "paste (48 48)"}, 3);
+
+	test_same_treatment((char *[]) {"cut (3 5 7 22)"}, 1,
+	  (char *[]) {"fill 0x000000 (3 5 7 22)"}, 1);
+	test_same_treatment((char *[]) {"cut (42 14 8 22)"}, 1,
+	  (char *[]) {"fill 0x000000 (42 14 8 22)"}, 1);
+} END_TEST;
+
 TCase * modif_test() {
 	TCase * tc_modif = tcase_create("Modif images");
 
@@ -265,5 +293,6 @@ TCase * modif_test() {
 	tcase_add_test(tc_modif, test_replace);
 	tcase_add_test(tc_modif, test_white_black);
 	tcase_add_test(tc_modif, test_ajust_light_contrast);
+	tcase_add_test(tc_modif, test_cut_copy_paste);
 	return tc_modif;
 }
