@@ -19,7 +19,7 @@ int main(void) {
 	Suite * s;
 	SRunner * runner;
 
-	libtest_viewing_enabled = 0;
+	g_viewing_enabled = 0;
 	cimp_init();
 	s      = sample_suite();
 	runner = srunner_create(s);

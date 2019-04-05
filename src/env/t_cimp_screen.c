@@ -36,7 +36,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 	else if ((surf = SDL_CreateRGBSurface(0, tmp->w, tmp->h, 32, 0, 0, 0, 0)) == NULL) {
 		printf("%s\n", SDL_GetError());
 	}
-	else if (libtest_viewing_enabled && (win = SDL_CreateWindow(basename(path),
+	else if (g_viewing_enabled && (win = SDL_CreateWindow(basename(path),
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
 			tmp->w,
@@ -54,7 +54,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 		origin.w = tmp->w;
 		origin.h = tmp->h;
 		SDL_BlitSurface(tmp, &origin, surf, NULL);
-		if (libtest_viewing_enabled)
+		if (g_viewing_enabled)
 			sc->window = win;
 		else
 			sc->window = NULL;
@@ -81,7 +81,7 @@ void                cimp_screen_end(t_cimp_screen * sc) {
 		free(sc->path);
 	if (sc->buff_screen)
 		SDL_FreeSurface(sc->buff_screen);
-	if (libtest_viewing_enabled && sc->window)
+	if (g_viewing_enabled && sc->window)
 		SDL_DestroyWindow(sc->window);
 	if (sc)
 		free(sc);
