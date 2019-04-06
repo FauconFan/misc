@@ -3,8 +3,9 @@
 
 #include "cimp.h"
 
-#define	TRUE  1
-#define	FALSE 0
+#define	TRUE       1
+#define	FALSE      0
+#define	NB_SCREENS 4
 
 typedef unsigned char t_bool;
 
@@ -30,8 +31,9 @@ typedef struct      s_cimp_event {
 } t_cimp_event;
 
 typedef struct          s_cimp {
-	t_cimp_screen * screen;
+	t_cimp_screen   screen[NB_SCREENS];
 	int             running;
+	int             focus;
 	t_cimp_select * select;
 	t_cimp_event *  event;
 	SDL_Surface *   copy_buffer;

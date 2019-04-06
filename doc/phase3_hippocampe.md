@@ -20,15 +20,15 @@ typedef struct      s_cimp
 
 Valeur par défaut de focus : -1
 
-Le focus est changé automatiquement sur un appel de open. Sur un appel explicit de fonction sur une image ou sur un clic d'une fenêtre.
+Le focus est changé automatiquement sur un appel de open, sur un appel explicite de fonction sur une image ou sur un clic d'une fenêtre.
 
-Si on close une fenêtre dont c'est le focus. Le focus devient -1.
+Si on close une fenêtre sur laquelle était le focus, le focus devient -1.
 
-Si une commande nécessite le focus et le focus vaut -1. La commande échoue.
+Si une commande a besoin du focus que celui ci vaut -1. La commande échoue.
 
 ## Modification parser
 
-Pouvoir expliciter la sélection de focus au sein de n'importe quelle commande qui en nécessite.
+Pouvoir expliciter la sélection de focus au sein de n'importe quelle commande qui en a besoin .
 
 ## Modication commandes actuelles
 
