@@ -5,6 +5,7 @@ t_rc_cmd cimp_open(t_cmd * cmd) {
 		g_cimp->screen = cimp_screen_init(cmd->name);
 		if (g_cimp->screen == NULL)
 			return (ABORT);
+
 		return (OK);
 	}
 	return (FAIL);
