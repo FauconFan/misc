@@ -20,11 +20,14 @@ int             cimp_init() {
 	if ((g_cimp = (t_cimp *) malloc(sizeof(t_cimp))) == NULL)
 		return (1);
 
-	g_cimp->screen      = NULL;
+	for (int i = 0; i < NB_SCREENS; i++) {
+		g_cimp->screen[i] = NULL;
+	}
 	g_cimp->select      = NULL;
 	g_cimp->event       = init_cimp_event();
 	g_cimp->running     = 1;
 	g_cimp->copy_buffer = NULL;
+	g_cimp->focus       = -1;
 	return (0);
 }
 

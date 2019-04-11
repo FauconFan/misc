@@ -26,6 +26,24 @@ Si on close une fenêtre sur laquelle était le focus, le focus devient -1.
 
 Si une commande a besoin du focus que celui ci vaut -1. La commande échoue.
 
+On rajoute un champ id dans
+```
+typedef struct          s_cimp_screen {
+	int id;
+	SDL_Window *  window;
+	SDL_Surface * buff_screen;
+	char *        path;
+}                       t_cimp_screen;
+```
+
+Lorsque l'on ferme une fenêtre, on met à jour le tableau screen de g_cimp par exemple si on a 4 fenêtre ouvertes :
+|1|2|3|4|
+et que l'on ferme la 3 ème on a :
+|1|2|4|NULL|
+Il faut alors bien distinguer l'id de la fenêtre de sa position dans le tableau screen -> créer une fonction qui renvoie la position dans le tableau en fonction de l'id.
+La numérotation se fait de 1 à NB_SCREENS, dans notre exemple l'ouverture d'une nouvelle fenêtre donnera donc :
+|1|2|4|3|.
+
 ## Modification parser
 
 Pouvoir expliciter la sélection de focus au sein de n'importe quelle commande qui en a besoin .
