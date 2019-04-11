@@ -4,7 +4,7 @@
  * passees en arguments.
  * Renvoie 0 en cas de succes et -1 sinon en affichant un message d'erreur. **/
 t_rc_cmd cimp_paste(t_cmd * cmd) {
-	if (!g_cimp->screen) {
+	if (!g_cimp->screen[g_cimp->focus]) {
 		printf("Pas d'image ouverte : le collage est impossible\n");
 		return FAIL;
 	}
@@ -15,8 +15,8 @@ t_rc_cmd cimp_paste(t_cmd * cmd) {
 
 	// Si les coordonnes sont hors de l'ecran on echoue
 	if (cmd->point.x < 0 || cmd->point.y < 0 ||
-	  cmd->point.x > g_cimp->screen->buff_screen->w ||
-	  cmd->point.y > g_cimp->screen->buff_screen->h)
+	  cmd->point.x > g_cimp->screen[g_cimp->focus]->buff_screen->w ||
+	  cmd->point.y > g_cimp->screen[g_cimp->focus]->buff_screen->h)
 	{
 		printf("Coordonees en dehors de l'image : collage impossible\n");
 		return FAIL;
@@ -24,7 +24,7 @@ t_rc_cmd cimp_paste(t_cmd * cmd) {
 
 	SDL_Surface * surface_src, * surface_dest;
 	surface_src  = g_cimp->copy_buffer;
-	surface_dest = g_cimp->screen->buff_screen;
+	surface_dest = g_cimp->screen[g_cimp->focus]->buff_screen;
 
 	Uint32 * pixels_dest, * pixels_src;
 	if (SDL_MUSTLOCK(surface_dest))

@@ -20,7 +20,7 @@ t_rc_cmd cimp_cut(t_cmd * cmd) {
 		rect = g_cimp->select->surface;
 	}
 	SDL_Surface * surface;
-	surface = g_cimp->screen->buff_screen;
+	surface = g_cimp->screen[g_cimp->focus]->buff_screen;
 	Uint32 color = SDL_MapRGBA(surface->format, 0, 0, 0, 0);
 	if (SDL_FillRect(surface, &rect, color) < 0)
 		return ABORT;
