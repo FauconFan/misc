@@ -39,10 +39,9 @@ typedef struct          s_cimp_screen {
 Lorsque l'on ferme une fenêtre, on met à jour le tableau screen de g_cimp par exemple si on a 4 fenêtre ouvertes :
 |1|2|3|4|
 et que l'on ferme la 3 ème on a :
-|1|2|4|NULL|
-Il faut alors bien distinguer l'id de la fenêtre de sa position dans le tableau screen -> créer une fonction qui renvoie la position dans le tableau en fonction de l'id.
-La numérotation se fait de 1 à NB_SCREENS, dans notre exemple l'ouverture d'une nouvelle fenêtre donnera donc :
-|1|2|4|3|.
+|1|2|NULL|4|
+L'id de la fenêtre correspond donc a sa position dans le tableau screen + 1.
+Lorsque l'on ouvre une nouvelle fenetre on remplit la case vide la plus "petite" lorsque c'est possible.
 
 ## Modification parser
 

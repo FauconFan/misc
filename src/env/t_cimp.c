@@ -23,6 +23,7 @@ int             cimp_init() {
 	for (int i = 0; i < NB_SCREENS; i++) {
 		g_cimp->screen[i] = NULL;
 	}
+
 	g_cimp->select      = NULL;
 	g_cimp->event       = init_cimp_event();
 	g_cimp->running     = 1;
@@ -36,9 +37,11 @@ int             cimp_init() {
  */
 void            cimp_end() {
 	if (g_cimp) {
-		if (g_cimp->screen) {
-			cimp_screen_end(g_cimp->screen);
+		for (int i = 0; i < NB_SCREENS; i++) {
+			if (g_cimp->screen[i] != NULL)
+				cimp_screen_end(g_cimp->screen);
 		}
+
 		if (g_cimp->copy_buffer)
 			SDL_FreeSurface(g_cimp->copy_buffer);
 		cimp_end_select(g_cimp->select);
@@ -47,4 +50,17 @@ void            cimp_end() {
 		IMG_Quit();
 		SDL_Quit();
 	}
+}
+
+/**Une fonction qui renvoie le plus petit id disponible ou -1 lorsqu'il n'y a plus d'emplacement libre **/
+int get_id() {
+	int i = 0;
+
+	while (i < NB_SCREENS && g_cimp->screen[i] != NULL) {
+		i++;
+	}
+	if (i + 1 > NB_SCREENS)
+		return -1;
+
+	return i + 1;
 }

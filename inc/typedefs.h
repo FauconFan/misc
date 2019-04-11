@@ -32,7 +32,7 @@ typedef struct      s_cimp_event {
 } t_cimp_event;
 
 typedef struct          s_cimp {
-	t_cimp_screen   screen[NB_SCREENS];
+	t_cimp_screen * screen[NB_SCREENS];
 	int             running;
 	int             focus;
 	t_cimp_select * select;
