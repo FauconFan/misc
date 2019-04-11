@@ -39,7 +39,7 @@ void            cimp_end() {
 	if (g_cimp) {
 		for (int i = 0; i < NB_SCREENS; i++) {
 			if (g_cimp->screen[i] != NULL)
-				cimp_screen_end(g_cimp->screen);
+				cimp_screen_end(g_cimp->screen[i]);
 		}
 
 		if (g_cimp->copy_buffer)

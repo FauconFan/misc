@@ -4,7 +4,7 @@
 #define	NOT_A_PATH  "The given path is not a regular Unix path"
 #define	MALLOC_FAIL "A malloc has failed"
 #define	TOO_MUCH_SCREENS \
-					"You have already opened the maximal number of screens! \n Close one to open an other one."
+	"You have already opened the maximal number of screens! \n Close one to open an other one."
 
 // path_utils
 

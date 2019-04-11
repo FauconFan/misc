@@ -38,7 +38,10 @@ void handle_line() {
 void core() {
 	while (g_cimp->running) {
 		handle_line();
-		cimp_screen_update(g_cimp->screen);
+		for (int i = 0; i < NB_SCREENS; i++) {
+			if (g_cimp->screen[i])
+				cimp_screen_update(g_cimp->screen[i]);
+		}
 		usleep(30); // 30 ms arbitrary
 	}
 }
