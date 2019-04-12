@@ -85,6 +85,7 @@ static t_bool   run_parser_with_config(t_cmd * cmd, t_li_token * li_toks,
 				break;
 			case FOCUS:
 				HANDLE_PARAM("focus", (ARG_FOCUS), cmd->focus = tok->u.num)
+				break;
 			case RECT:
 				HANDLE_PARAM("rect", (ARG_RECT), cmd->rect = tok->u.rect)
 				break;
