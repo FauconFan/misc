@@ -9,6 +9,7 @@ t_cmd * cmd_alloc() {
 	cmd->cmd     = NULL;
 	cmd->name    = NULL;
 	cmd->num     = 0;
+	cmd->focus   = -1;
 	cmd->rect.x  = -1;
 	cmd->rect.y  = -1;
 	cmd->rect.w  = -1;
