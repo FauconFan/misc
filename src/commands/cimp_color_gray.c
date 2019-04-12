@@ -13,7 +13,6 @@ static uint32_t to_gray(uint32_t col, void * format_pixel) {
 }
 
 t_rc_cmd cimp_color_gray(t_cmd * cmd) {
-	if (g_cimp->screen[g_cimp->focus]) {
 		SDL_Surface * buff_screen;
 		SDL_Rect selection;
 
@@ -21,6 +20,5 @@ t_rc_cmd cimp_color_gray(t_cmd * cmd) {
 		selection   = sdl_surface_build_good_selection(buff_screen, cmd->rect);
 
 		sdl_surface_mapp(buff_screen, selection, to_gray, buff_screen->format);
-	}
 	return (OK);
 } /* cimp_fill */

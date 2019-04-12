@@ -4,10 +4,6 @@
  * passees en arguments.
  * Renvoie 0 en cas de succes et -1 sinon en affichant un message d'erreur. **/
 t_rc_cmd cimp_paste(t_cmd * cmd) {
-	if (!g_cimp->screen[g_cimp->focus]) {
-		printf("Pas d'image ouverte : le collage est impossible\n");
-		return FAIL;
-	}
 	if (!g_cimp->copy_buffer) {
 		printf("Rien n'a ete copie : le collage est impossible\n");
 		return FAIL;

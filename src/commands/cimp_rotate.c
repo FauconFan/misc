@@ -5,7 +5,6 @@ static t_rc_cmd real_rotate(t_cmd * cmd, int angle);
 static t_rc_cmd real_rotate90();
 
 t_rc_cmd cimp_rotate(t_cmd * cmd) {
-	if (cmd != NULL && g_cimp->screen[g_cimp->focus] != NULL)
 		return (real_rotate(cmd, cmd->num));
 
 	return (OK);

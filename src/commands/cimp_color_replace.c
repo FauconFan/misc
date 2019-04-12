@@ -23,7 +23,6 @@ static uint32_t replace(uint32_t col, void * smrv) {
 }
 
 t_rc_cmd cimp_color_replace(t_cmd * cmd) {
-	if (g_cimp->screen[g_cimp->focus]) {
 		SDL_Surface * buff_screen;
 		SDL_Rect selection;
 		struct s_meta_replace smr;
@@ -36,6 +35,5 @@ t_rc_cmd cimp_color_replace(t_cmd * cmd) {
 		smr.margin  = cmd->num;
 
 		sdl_surface_mapp(buff_screen, selection, replace, &smr);
-	}
 	return (OK);
 } /* cimp_fill */

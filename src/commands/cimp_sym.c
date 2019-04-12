@@ -2,7 +2,6 @@
 
 t_rc_cmd cimp_sym_verti(t_cmd * cmd) {
 	(void) cmd;
-	if (g_cimp->screen[g_cimp->focus]) {
 		SDL_Surface * buff_screen = g_cimp->screen[g_cimp->focus]->buff_screen;
 		if (SDL_MUSTLOCK(buff_screen))
 			SDL_LockSurface(buff_screen);
@@ -21,13 +20,11 @@ t_rc_cmd cimp_sym_verti(t_cmd * cmd) {
 
 		if (SDL_MUSTLOCK(buff_screen))
 			SDL_UnlockSurface(buff_screen);
-	}
 	return (OK);
 }
 
 t_rc_cmd cimp_sym_hori(t_cmd * cmd) {
 	(void) cmd;
-	if (g_cimp->screen[g_cimp->focus]) {
 		SDL_Surface * buff_screen = g_cimp->screen[g_cimp->focus]->buff_screen;
 		if (SDL_MUSTLOCK(buff_screen))
 			SDL_LockSurface(buff_screen);
@@ -45,6 +42,5 @@ t_rc_cmd cimp_sym_hori(t_cmd * cmd) {
 		}
 		if (SDL_MUSTLOCK(buff_screen))
 			SDL_UnlockSurface(buff_screen);
-	}
 	return (OK);
 }

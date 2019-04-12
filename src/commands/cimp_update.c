@@ -1,7 +1,6 @@
 #include "cimp.h"
 
 t_rc_cmd cimp_update(t_cmd * cmd) {
-	if (g_cimp->screen[g_cimp->focus]) {
 		char * name;
 		int ret;
 
@@ -13,6 +12,5 @@ t_rc_cmd cimp_update(t_cmd * cmd) {
 		if (ret == 0 && cmd->name != NULL)
 			ret = (cimp_screen_set_path(g_cimp->screen[g_cimp->focus], name) == FALSE);
 		return (ret);
-	}
 	return (OK);
 }

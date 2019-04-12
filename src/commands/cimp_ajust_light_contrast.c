@@ -35,7 +35,6 @@ static uint32_t ajust(uint32_t col, void * metav) {
 }
 
 t_rc_cmd cimp_ajust_light_contrast(t_cmd * cmd) {
-	if (g_cimp->screen[g_cimp->focus]) {
 		SDL_Surface * buff_screen;
 		SDL_Rect selection;
 		struct s_meta_ajust meta;
@@ -53,6 +52,5 @@ t_rc_cmd cimp_ajust_light_contrast(t_cmd * cmd) {
 		meta.factor = (float) (259 * (num + 255)) / (float) (255 * (259 - num));
 
 		sdl_surface_mapp(buff_screen, selection, ajust, &meta);
-	}
 	return (OK);
 } /* cimp_fill */

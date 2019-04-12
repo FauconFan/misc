@@ -1,7 +1,6 @@
 #include "cimp.h"
 
 t_rc_cmd cimp_save(t_cmd * cmd) {
-	if (g_cimp->screen[g_cimp->focus]) {
 		t_type_img timg;
 		t_export_img_func_ptr fptr;
 		char * namefile;
@@ -20,6 +19,5 @@ t_rc_cmd cimp_save(t_cmd * cmd) {
 		if (ret == 0 && cmd->name != NULL)
 			ret = (cimp_screen_set_path(g_cimp->screen[g_cimp->focus], namefile) == FALSE);
 		return (ret);
-	}
 	return (OK);
 }

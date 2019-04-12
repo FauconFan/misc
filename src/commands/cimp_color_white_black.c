@@ -21,7 +21,6 @@ static uint32_t white_black(uint32_t col, void * smwbv) {
 }
 
 t_rc_cmd cimp_color_white_black(t_cmd * cmd) {
-	if (g_cimp->screen[g_cimp->focus]) {
 		SDL_Surface * buff_screen;
 		SDL_Rect selection;
 		struct s_meta_white_black smwb;
@@ -37,6 +36,5 @@ t_rc_cmd cimp_color_white_black(t_cmd * cmd) {
 			smwb.margin = 0;
 
 		sdl_surface_mapp(buff_screen, selection, white_black, &smwb);
-	}
 	return (OK);
 } /* cimp_fill */
