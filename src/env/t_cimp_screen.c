@@ -27,7 +27,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 	tmp  = NULL;
 	path = NULL;
 
-	if (get_id() == -1) {
+	if (get_available_id() == -1) {
 		printf("%s\n", TOO_MUCH_SCREENS);
 	}
 	else if ((path = normalize_path(path_img)) == NULL) {
@@ -63,7 +63,6 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 			sc->window = NULL;
 		sc->buff_screen = surf;
 		sc->path        = path;
-		sc->id = get_id();
 	}
 
 	if (tmp != NULL) SDL_FreeSurface(tmp);
@@ -88,7 +87,6 @@ void                cimp_screen_end(t_cimp_screen * sc) {
 			SDL_FreeSurface(sc->buff_screen);
 		if (g_viewing_enabled && sc->window)
 			SDL_DestroyWindow(sc->window);
-		g_cimp->screen[sc->id - 1] = NULL;
 		free(sc);
 	}
 }

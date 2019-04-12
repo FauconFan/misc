@@ -20,7 +20,6 @@ typedef struct s_cimp_select {
 } t_cimp_select;
 
 typedef struct          s_cimp_screen {
-	int           id;
 	SDL_Window *  window;
 	SDL_Surface * buff_screen;
 	char *        path;
