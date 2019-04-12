@@ -29,6 +29,7 @@ typedef enum    e_tlv_type {
 
 // Struct declarations
 
+#include "t_list.h"
 #include "t_iovec_builder.h"
 #include "t_tlv_builder.h"
 
