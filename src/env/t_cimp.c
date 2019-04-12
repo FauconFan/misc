@@ -62,5 +62,13 @@ int get_available_id() {
 	if (i + 1 > NB_SCREENS)
 		return -1;
 
-	return i + 1;
+	return i;
+}
+
+int get_next_focus(int a){
+	for(int i=(a+1)%NB_SCREENS;i!=a;i++){
+		if(g_cimp->screen[i])
+			return i;
+	}
+	return -1;
 }

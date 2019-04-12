@@ -27,7 +27,7 @@ t_rc_cmd cimp_color_replace(t_cmd * cmd) {
 	SDL_Rect selection;
 	struct s_meta_replace smr;
 
-	buff_screen = g_cimp->screen[g_cimp->focus]->buff_screen;
+	buff_screen = g_cimp->screen[cmd->focus]->buff_screen;
 	selection   = sdl_surface_build_good_selection(buff_screen, cmd->rect);
 	smr.format  = buff_screen->format;
 	smr.col1    = cmd->color2[0];

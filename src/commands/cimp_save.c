@@ -7,7 +7,7 @@ t_rc_cmd cimp_save(t_cmd * cmd) {
 	int ret;
 
 	if (cmd->name == NULL)
-		namefile = g_cimp->screen[g_cimp->focus]->path;
+		namefile = g_cimp->screen[cmd->focus]->path;
 	else
 		namefile = cmd->name;
 
@@ -15,9 +15,9 @@ t_rc_cmd cimp_save(t_cmd * cmd) {
 	  (fptr = get_func_img(timg)) == NULL)
 		return (ABORT);
 
-	ret = fptr(namefile, g_cimp->screen[g_cimp->focus]->buff_screen);
+	ret = fptr(namefile, g_cimp->screen[cmd->focus]->buff_screen);
 	if (ret == 0 && cmd->name != NULL)
-		ret = (cimp_screen_set_path(g_cimp->screen[g_cimp->focus], namefile) == FALSE);
+		ret = (cimp_screen_set_path(g_cimp->screen[cmd->focus], namefile) == FALSE);
 	return (ret);
 
 	return (OK);
