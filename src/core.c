@@ -6,6 +6,7 @@ void treat_line(char * line) {
 	cmd = parser(line);
 	if (cmd != NULL) {
 		if (cmd->focus != -1) {
+			cmd->focus --;
 			if (cmd->focus < 0 || cmd->focus >= NB_SCREENS) {
 				printf("Ce focus est inexistant\n");
 				cmd_free(cmd);
