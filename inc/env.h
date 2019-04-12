@@ -5,6 +5,7 @@
 int             cimp_init();
 void            cimp_end();
 int get_available_id();
+int get_next_focus(int a);
 // t_cimp_screen.c
 t_cimp_screen * cimp_screen_init(char * path_img);
 void cimp_screen_update(t_cimp_screen * screen, int id);

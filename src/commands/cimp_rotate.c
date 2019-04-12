@@ -19,7 +19,7 @@ static t_rc_cmd real_rotate(t_cmd * cmd, int angle) {
 		case 0:
 			break;
 		case 90:
-			return (real_rotate90());
+			return (real_rotate90(cmd->focus));
 
 			break;
 		case 180:
@@ -44,16 +44,16 @@ static t_rc_cmd real_rotate(t_cmd * cmd, int angle) {
 	return (OK);
 } /* real_rotate */
 
-static t_rc_cmd real_rotate90() {
-	int new_width  = g_cimp->screen[cmd->focus]->buff_screen->h;
-	int new_height = g_cimp->screen[cmd->focus]->buff_screen->w;
+static t_rc_cmd real_rotate90(int focus) {
+	int new_width  = g_cimp->screen[focus]->buff_screen->h;
+	int new_height = g_cimp->screen[focus]->buff_screen->w;
 
 	SDL_Surface * surf = SDL_CreateRGBSurface(0, new_width, new_height, 32, 0, 0, 0, 0);
 
 	if (surf == NULL)
 		return (ABORT);
 
-	uint32_t * old = (uint32_t *) g_cimp->screen[cmd->focus]->buff_screen->pixels;
+	uint32_t * old = (uint32_t *) g_cimp->screen[focus]->buff_screen->pixels;
 	uint32_t * new = (uint32_t *) surf->pixels;
 
 	for (int i = 0; i < new_height; i++) {
@@ -61,7 +61,7 @@ static t_rc_cmd real_rotate90() {
 			new[new_width - 1 - j + i * new_width] = old[i + j * new_height];
 		}
 	}
-	SDL_FreeSurface(g_cimp->screen[cmd->focus]->buff_screen);
-	g_cimp->screen[cmd->focus]->buff_screen = surf;
+	SDL_FreeSurface(g_cimp->screen[focus]->buff_screen);
+	g_cimp->screen[focus]->buff_screen = surf;
 	return (OK);
 }
