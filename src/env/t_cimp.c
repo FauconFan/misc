@@ -65,10 +65,14 @@ int get_available_id() {
 	return i;
 }
 
-int get_next_focus(int a){
-	for(int i=(a+1)%NB_SCREENS;i!=a;i++){
-		if(g_cimp->screen[i])
+int get_next_focus(int a) {
+	int i = (a + 1) % NB_SCREENS;
+
+	while (i != a) {
+		if (g_cimp->screen[i])
 			return i;
+
+		i = (i + 1) % NB_SCREENS;
 	}
 	return -1;
 }
