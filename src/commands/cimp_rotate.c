@@ -5,7 +5,7 @@ static t_rc_cmd real_rotate(t_cmd * cmd, int angle);
 static t_rc_cmd real_rotate90();
 
 t_rc_cmd cimp_rotate(t_cmd * cmd) {
-		return (real_rotate(cmd, cmd->num));
+	return (real_rotate(cmd, cmd->num));
 
 	return (OK);
 }

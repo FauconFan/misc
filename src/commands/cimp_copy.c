@@ -7,6 +7,7 @@
 t_rc_cmd cimp_copy(t_cmd * cmd) {
 	SDL_Rect rect;
 	SDL_Surface * surface_src, * surface_dest;
+
 	surface_src = g_cimp->screen[g_cimp->focus]->buff_screen;
 	if (cmd->rect.x != -1 && cmd->rect.y != -1 && cmd->rect.w != -1 && cmd->rect.h != -1) {
 		rect = cmd->rect;
