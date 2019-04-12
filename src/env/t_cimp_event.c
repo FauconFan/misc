@@ -27,7 +27,7 @@ void free_cimp_event(t_cimp_event * evnmt) {
 
 /**Une fonction qui mets a jour les champs de event en fonction des SDL_Event produits.
  * Appelle les fonctions necessaires apres avoir mis a jour les differents champs **/
-void update_event(t_cimp_event * evnmt) {
+void update_event(t_cimp_event * evnmt, int id) {
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event) == 1) {
@@ -40,8 +40,9 @@ void update_event(t_cimp_event * evnmt) {
 			evnmt->button_pressed = 0;
 			evnmt->selection.x    = event.button.x;
 			evnmt->selection.y    = event.button.y;
+			g_cimp->focus = id;
 		}
-		else if (event.type == SDL_MOUSEBUTTONUP) {
+		else if (event.type == SDL_MOUSEBUTTONUP && g_cimp->focus == id) {
 			evnmt->button_pressed = 1;
 			evnmt->selection.w    = abs(event.button.x - evnmt->selection.x);
 			evnmt->selection.h    = abs(event.button.y - evnmt->selection.y);

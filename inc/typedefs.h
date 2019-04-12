@@ -56,7 +56,7 @@ typedef enum        s_rc_cmd {
 	ABORT,
 }                   t_rc_cmd;
 
-#define	NB_ARG_TYPE 5
+#define	NB_ARG_TYPE 7
 
 typedef enum        e_arg_type {
 	ARG_NAME   = 0x1,
