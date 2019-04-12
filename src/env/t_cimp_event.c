@@ -40,7 +40,7 @@ void update_event(t_cimp_event * evnmt, int id) {
 			evnmt->button_pressed = 0;
 			evnmt->selection.x    = event.button.x;
 			evnmt->selection.y    = event.button.y;
-			g_cimp->focus = id;
+			g_cimp->focus         = id;
 		}
 		else if (event.type == SDL_MOUSEBUTTONUP && g_cimp->focus == id) {
 			evnmt->button_pressed = 1;

@@ -5,6 +5,19 @@ void treat_line(char * line) {
 
 	cmd = parser(line);
 	if (cmd != NULL) {
+		if (cmd->focus != -1) {
+			if (cmd->focus < 0 || cmd->focus >= NB_SCREENS) {
+				printf("Ce focus est inexistant\n");
+				cmd_free(cmd);
+				return;
+			}
+			else if (g_cimp->screen[cmd->focus] == NULL) {
+				cmd->focus = -1;
+			}
+		}
+		else {
+			cmd->focus = g_cimp->focus;
+		}
 		switch (cimp_exe(cmd)) {
 			case OK:
 				break;
@@ -40,7 +53,7 @@ void core() {
 		handle_line();
 		for (int i = 0; i < NB_SCREENS; i++) {
 			if (g_cimp->screen[i])
-				cimp_screen_update(g_cimp->screen[i], i+1);
+				cimp_screen_update(g_cimp->screen[i], i + 1);
 		}
 		usleep(30); // 30 ms arbitrary
 	}
