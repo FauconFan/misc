@@ -43,6 +43,7 @@ typedef struct      s_cmd {
 	char *    cmd;
 	char *    name;
 	int       num;
+	int       focus;
 	SDL_Rect  rect;
 	SDL_Point point;
 	SDL_Color color;
@@ -55,7 +56,7 @@ typedef enum        s_rc_cmd {
 	ABORT,
 }                   t_rc_cmd;
 
-#define	NB_ARG_TYPE 7
+#define	NB_ARG_TYPE 8
 
 typedef enum        e_arg_type {
 	ARG_NAME   = 0x1,
@@ -65,7 +66,10 @@ typedef enum        e_arg_type {
 	ARG_PT     = 0x10,
 	ARG_COLOR  = 0x20,
 	ARG_COLOR2 = 0x40,
+	ARG_FOCUS  = 0x80,
 }                   t_arg_type;
+// Change NB_ARG_TYPE if you add an argument.
+// Increase size of opts et opts_opt if no enough bits
 
 typedef struct      s_cmd_config {
 	char *  name;
