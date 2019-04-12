@@ -6,7 +6,7 @@ void treat_line(char * line) {
 	cmd = parser(line);
 	if (cmd != NULL) {
 		if (cmd->focus != -1) {
-			cmd->focus --;
+			cmd->focus--;
 			if (cmd->focus < 0 || cmd->focus >= NB_SCREENS) {
 				printf("Ce focus est inexistant\n");
 				cmd_free(cmd);
@@ -54,8 +54,10 @@ void core() {
 		handle_line();
 		for (int i = 0; i < NB_SCREENS; i++) {
 			if (g_cimp->screen[i])
-				cimp_screen_update(g_cimp->screen[i], i + 1);
+				cimp_screen_update(g_cimp->screen[i]);
 		}
+		// Update events (if any)
+		update_event(g_cimp->event);
 		usleep(30); // 30 ms arbitrary
 	}
 }

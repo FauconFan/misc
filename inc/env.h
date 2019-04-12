@@ -8,7 +8,7 @@ int get_available_id();
 int get_next_focus(int a);
 // t_cimp_screen.c
 t_cimp_screen * cimp_screen_init(char * path_img);
-void cimp_screen_update(t_cimp_screen * screen, int id);
+void cimp_screen_update(t_cimp_screen * screen);
 void cimp_screen_end(t_cimp_screen * sc);
 t_bool cimp_screen_set_surface(t_cimp_screen * screen, char * path);
 
@@ -19,7 +19,7 @@ void cimp_end_select(t_cimp_select * selection);
 // t_cimp_event.c
 t_cimp_event * init_cimp_event();
 void free_cimp_event(t_cimp_event * evnmt);
-void update_event(t_cimp_event * evnmt, int id);
+void update_event(t_cimp_event * evnmt);
 t_bool cimp_screen_set_path(t_cimp_screen * screen, char * path);
 
 // t_cmd.c

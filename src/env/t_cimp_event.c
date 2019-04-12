@@ -27,22 +27,35 @@ void free_cimp_event(t_cimp_event * evnmt) {
 
 /**Une fonction qui mets a jour les champs de event en fonction des SDL_Event produits.
  * Appelle les fonctions necessaires apres avoir mis a jour les differents champs **/
-void update_event(t_cimp_event * evnmt, int id) {
+void update_event(t_cimp_event * evnmt) {
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event) == 1) {
 		if (event.type == SDL_QUIT ||
 		  (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE))
 		{
-			cimp_close(NULL);
+			for (int i = 0; i < NB_SCREENS; i++) {
+				if (g_cimp->screen[i] &&
+				  SDL_GetWindowID(g_cimp->screen[i]->window) == event.window.windowID)
+				{
+					g_cimp->focus = i;
+					cimp_close(NULL);
+				}
+			}
 		}
 		else if (event.type == SDL_MOUSEBUTTONDOWN) {
-			evnmt->button_pressed = 0;
-			evnmt->selection.x    = event.button.x;
-			evnmt->selection.y    = event.button.y;
-			g_cimp->focus         = id;
+			for (int i = 0; i < NB_SCREENS; i++) {
+				if (g_cimp->screen[i] &&
+				  SDL_GetWindowID(g_cimp->screen[i]->window) == event.window.windowID)
+				{
+					g_cimp->focus         = i;
+					evnmt->button_pressed = 0;
+					evnmt->selection.x    = event.button.x;
+					evnmt->selection.y    = event.button.y;
+				}
+			}
 		}
-		else if (event.type == SDL_MOUSEBUTTONUP && g_cimp->focus == id) {
+		else if (event.type == SDL_MOUSEBUTTONUP) {
 			evnmt->button_pressed = 1;
 			evnmt->selection.w    = abs(event.button.x - evnmt->selection.x);
 			evnmt->selection.h    = abs(event.button.y - evnmt->selection.y);
