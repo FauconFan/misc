@@ -35,24 +35,22 @@ static uint32_t ajust(uint32_t col, void * metav) {
 }
 
 t_rc_cmd cimp_ajust_light_contrast(t_cmd * cmd) {
-	if (g_cimp->screen[g_cimp->focus]) {
-		SDL_Surface * buff_screen;
-		SDL_Rect selection;
-		struct s_meta_ajust meta;
-		int num;
+	SDL_Surface * buff_screen;
+	SDL_Rect selection;
+	struct s_meta_ajust meta;
+	int num;
 
-		buff_screen = g_cimp->screen[g_cimp->focus]->buff_screen;
-		selection   = sdl_surface_build_good_selection(buff_screen, cmd->rect);
+	buff_screen = g_cimp->screen[g_cimp->focus]->buff_screen;
+	selection   = sdl_surface_build_good_selection(buff_screen, cmd->rect);
 
-		num = cmd->num;
-		if (num > 255)
-			num = 255;
-		else if (num < -255)
-			num = -255;
-		meta.format = buff_screen->format;
-		meta.factor = (float) (259 * (num + 255)) / (float) (255 * (259 - num));
+	num = cmd->num;
+	if (num > 255)
+		num = 255;
+	else if (num < -255)
+		num = -255;
+	meta.format = buff_screen->format;
+	meta.factor = (float) (259 * (num + 255)) / (float) (255 * (259 - num));
 
-		sdl_surface_mapp(buff_screen, selection, ajust, &meta);
-	}
+	sdl_surface_mapp(buff_screen, selection, ajust, &meta);
 	return (OK);
 } /* cimp_fill */

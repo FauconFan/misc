@@ -53,7 +53,7 @@ void            cimp_end() {
 }
 
 /**Une fonction qui renvoie le plus petit id disponible ou -1 lorsqu'il n'y a plus d'emplacement libre **/
-int get_id() {
+int get_available_id() {
 	int i = 0;
 
 	while (i < NB_SCREENS && g_cimp->screen[i] != NULL) {

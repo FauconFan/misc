@@ -4,10 +4,6 @@
 /**Une fonction qui cree la zone de selection associee au rectangle rect.
 * Si une selectionexiste deja on met a jour les donnees du rectangle  **/
 t_rc_cmd cimp_select(t_cmd * cmd) {
-	if (g_cimp->screen[g_cimp->focus] == NULL) {
-		printf("Pas d'ecran ouvert donc pas de selection possible \n");
-		return FAIL;
-	}
 	if (g_cimp->select != NULL) {
 		g_cimp->select->surface = cmd->rect;
 		return OK;
