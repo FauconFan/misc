@@ -10,7 +10,7 @@ int cimp_exe(t_cmd * cmd) {
 			if ((g_command_list[i].opts_opt & ARG_FOCUS || g_command_list[i].opts & ARG_FOCUS) &&
 			  cmd->focus == -1)
 			{
-				printf("Erreur : aucun focus specifie\n");
+				printf("Erreur : aucun focus specifie ou fenetre inexistante\n");
 				return (-1);
 			}
 			return (g_command_list[i].func_cmd_ptr(cmd));
