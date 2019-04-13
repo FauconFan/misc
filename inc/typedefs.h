@@ -16,6 +16,7 @@ typedef unsigned char t_bool;
  * Ici sont définies les structures standards utilisées dans le programme.
  */
 typedef struct s_cimp_select {
+	int      id;
 	SDL_Rect surface;
 } t_cimp_select;
 

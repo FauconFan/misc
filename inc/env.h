@@ -13,7 +13,7 @@ void cimp_screen_end(t_cimp_screen * sc);
 t_bool cimp_screen_set_surface(t_cimp_screen * screen, char * path);
 
 // t_cimp_select.c
-t_cimp_select * cimp_init_select(SDL_Rect rectangle);
+t_cimp_select * cimp_init_select(SDL_Rect rectangle, int id);
 void cimp_end_select(t_cimp_select * selection);
 
 // t_cimp_event.c

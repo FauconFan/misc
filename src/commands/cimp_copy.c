@@ -17,7 +17,12 @@ t_rc_cmd cimp_copy(t_cmd * cmd) {
 			printf("Pas de zone selectionnee : copie impossible \n");
 			return FAIL;
 		}
-		rect = g_cimp->select->surface;
+		else if (g_cimp->screen[g_cimp->select->id] == NULL) {
+			printf("La zone selectionnee n'est plus accessible \n");
+			return FAIL;
+		}
+		rect        = g_cimp->select->surface;
+		surface_src = g_cimp->screen[g_cimp->select->id]->buff_screen;
 	}
 
 	// Si les coordonnes initiales du rectangles sont hors de l'image on echoue

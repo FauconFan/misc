@@ -9,7 +9,7 @@ t_rc_cmd cimp_select(t_cmd * cmd) {
 		return OK;
 	}
 
-	t_cimp_select * selection = cimp_init_select(cmd->rect);
+	t_cimp_select * selection = cimp_init_select(cmd->rect, cmd->focus);
 
 	if (selection == NULL) {
 		return FAIL;
