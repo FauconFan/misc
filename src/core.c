@@ -12,7 +12,7 @@ void treat_line(char * line) {
 				cmd_free(cmd);
 				return;
 			}
-			else if (g_cimp->screen[cmd->focus] == NULL) {
+			if (g_cimp->screen[cmd->focus] == NULL) {
 				cmd->focus = -1;
 			}
 		}
