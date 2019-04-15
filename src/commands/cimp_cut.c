@@ -20,7 +20,7 @@ t_rc_cmd cimp_cut(t_cmd * cmd) {
 			printf("Pas de zone selectionnee : copie impossible \n");
 			return FAIL;
 		}
-		else if (g_cimp->screen[g_cimp->select->id] == NULL) {
+		if (g_cimp->screen[g_cimp->select->id] == NULL) {
 			printf("La zone selectionnee n'est plus accessible \n");
 			return FAIL;
 		}
