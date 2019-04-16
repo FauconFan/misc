@@ -112,6 +112,7 @@ TEST_FILES = \
 			save_test.c \
 			meta_test.c \
 			utils_test.c \
+			core_test.c \
 
 TEST_SRC = \
 		$(addprefix $(TEST_FOLDER), $(TEST_FILES)) \
