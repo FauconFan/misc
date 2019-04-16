@@ -110,8 +110,6 @@ static void test_expected_pixels(
 }
 
 START_TEST(test_rotate) {
-	//ck_assert(cimp_rotate(NULL) == 0);
-
 	test_img("rotate 45", 3, 2, 0, 3, 2, 0);
 	test_img("rotate 0", 3, 2, 0, 3, 2, 0);
 	test_img("rotate 720", 3, 2, 0, 3, 2, 0);
@@ -137,9 +135,6 @@ START_TEST(test_rotate) {
 } END_TEST;
 
 START_TEST(test_sym) {
-	//ck_assert(cimp_sym_hori(NULL) == 0);
-	//ck_assert(cimp_sym_verti(NULL) == 0);
-
 	test_img("sym_verti", 3, 2, 0, 3, 2, 2);
 	test_img("sym_hori", 3, 2, 0, 3, 2, 3);
 
@@ -150,8 +145,6 @@ START_TEST(test_sym) {
 } END_TEST;
 
 START_TEST(test_fill) {
-	//ck_assert(cimp_fill(NULL) == 0);
-
 	test_same_treatment((char *[]) {"fill 0xFF0000", "fill 0x00FF00"}, 2,
 	  (char *[]) {"fill 0x00FF00"}, 1);
 
@@ -167,8 +160,6 @@ START_TEST(test_fill) {
 } END_TEST;
 
 START_TEST(test_gray) {
-	//ck_assert(cimp_color_gray(NULL) == 0);
-
 	test_expected_pixels((char *[]) {"color_gray"}, 1,
 	  (SDL_Color []) {{80, 100, 120, 0}, {10, 15, 35, 0}, {243, 250, 255, 0}},
 	  (SDL_Color []) {{100, 100, 100, 0}, {20, 20, 20, 0}, {249, 249, 249, 0}},
@@ -178,8 +169,6 @@ START_TEST(test_gray) {
 } END_TEST;
 
 START_TEST(test_negative) {
-	//ck_assert(cimp_color_negative(NULL) == 0);
-
 	test_expected_pixels((char *[]) {"color_negative"}, 1,
 	  (SDL_Color []) {{100, 110, 120, 0}, {0, 255, 128, 0}},
 	  (SDL_Color []) {{155, 145, 135, 0}, {255, 0, 127, 0}},
@@ -191,8 +180,6 @@ START_TEST(test_negative) {
 
 
 START_TEST(test_replace) {
-	//ck_assert(cimp_color_replace(NULL) == 0);
-
 	test_expected_pixels((char *[]) {"color_replace (0x00FFFF -> 0xFF0000) 16"}, 1,
 	  (SDL_Color []) {{16, 255, 255, 0}, {17, 255, 255, 0}},
 	  (SDL_Color []) {{255, 0, 0, 0}, {17, 255, 255, 0}},
@@ -200,8 +187,6 @@ START_TEST(test_replace) {
 } END_TEST;
 
 START_TEST(test_white_black) {
-	//ck_assert(cimp_color_white_black(NULL) == 0);
-
 	test_expected_pixels((char *[]) {"color_white_black 80"}, 1,
 	  (SDL_Color []) {{80, 100, 120, 0}, {10, 15, 35, 0}, {243, 250, 255, 0}},
 	  (SDL_Color []) {{255, 255, 255, 0}, {0, 0, 0, 0}, {255, 255, 255, 0}},
@@ -211,8 +196,6 @@ START_TEST(test_white_black) {
 START_TEST(test_ajust_light_contrast) {
 	SDL_Surface * surf;
 	uint32_t * pixels_surf;
-
-	//ck_assert(cimp_ajust_light_contrast(NULL) == 0);
 
 	test_idempotent((char *[]) {"ajust_light_contrast 0"}, 1);
 
@@ -256,10 +239,6 @@ START_TEST(test_ajust_light_contrast) {
 } END_TEST;
 
 START_TEST(test_cut_copy_paste) {
-	//ck_assert(cimp_cut(NULL) != 0);
-	//ck_assert(cimp_copy(NULL) != 0);
-	//ck_assert(cimp_paste(NULL) != 0);
-
 	test_idempotent((char *[]) {"cut (0 0 25 25)", "paste (0 0)"}, 2);
 	test_idempotent((char *[]) {"copy (20 20 15 27)", "paste (20 20)"}, 2);
 	test_idempotent((char * []) {"cut (10 29 15 14)", "paste (10 29)"}, 2);

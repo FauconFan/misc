@@ -36,4 +36,4 @@ t_rc_cmd cimp_color_replace(t_cmd * cmd) {
 
 	sdl_surface_mapp(buff_screen, selection, replace, &smr);
 	return (OK);
-} /* cimp_fill */
+} /* cimp_color_replace */

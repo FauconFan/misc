@@ -37,4 +37,4 @@ t_rc_cmd cimp_color_white_black(t_cmd * cmd) {
 
 	sdl_surface_mapp(buff_screen, selection, white_black, &smwb);
 	return (OK);
-} /* cimp_fill */
+} /* cimp_color_white_black */

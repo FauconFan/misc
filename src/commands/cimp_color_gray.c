@@ -21,4 +21,4 @@ t_rc_cmd cimp_color_gray(t_cmd * cmd) {
 
 	sdl_surface_mapp(buff_screen, selection, to_gray, buff_screen->format);
 	return (OK);
-} /* cimp_fill */
+} /* cimp_color_gray */

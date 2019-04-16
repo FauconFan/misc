@@ -2,13 +2,13 @@
 
 START_TEST(test_close) {
 	g_cimp->screen[0] = cimp_screen_init("images/untitled17.bmp");
-	g_cimp->focus = 0;
+	g_cimp->focus     = 0;
 	ck_assert(g_cimp->screen[0]);
 	treat_line("close");
 	ck_assert(g_cimp->screen[0] == NULL);
 	g_cimp->screen[0] = cimp_screen_init("images/untitled17.bmp");
 	g_cimp->screen[1] = cimp_screen_init("images/untitled5.bmp");
-	g_cimp->focus = 1;
+	g_cimp->focus     = 1;
 	ck_assert(g_cimp->screen[0]);
 	ck_assert(g_cimp->screen[1]);
 	treat_line("close [1]");
@@ -18,13 +18,13 @@ START_TEST(test_close) {
 } END_TEST;
 
 START_TEST(test_open) {
-	//ck_assert(cimp_open(NULL) == 0);
+	ck_assert(cimp_open(NULL) == FAIL);
 	treat_line("open images/untitled17.bmp");
 	ck_assert(g_cimp->screen[0] != NULL && g_cimp->screen[0]->buff_screen != NULL &&
 	  strcmp("images/untitled17.bmp", g_cimp->screen[0]->path) && g_cimp->focus == 0);
 	treat_line("open images/untitled5.bmp");
 	ck_assert(strcmp("images/untitled17.bmp", g_cimp->screen[0]->path));
-	ck_assert(g_cimp->screen[1]!= NULL && g_cimp->focus == 1);
+	ck_assert(g_cimp->screen[1] != NULL && g_cimp->focus == 1);
 } END_TEST;
 
 TCase * window_test() {

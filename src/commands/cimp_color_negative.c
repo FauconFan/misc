@@ -18,4 +18,4 @@ t_rc_cmd cimp_color_negative(t_cmd * cmd) {
 
 	sdl_surface_mapp(buff_screen, selection, to_negative, buff_screen->format);
 	return (OK);
-} /* cimp_fill */
+} /* cimp_color_negative */
