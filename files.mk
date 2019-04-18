@@ -12,3 +12,4 @@ SRC = \
 		$(SRC_STRUCT_FOLDER)t_iovec_builder.c \
 		$(SRC_STRUCT_FOLDER)t_tlv_builder.c \
 		$(SRC_UTILS_FOLDER)my_getrandom.c \
+		$(SRC_UTILS_FOLDER)my_time.c \
