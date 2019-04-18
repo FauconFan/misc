@@ -34,6 +34,7 @@ t_list  *lst_alloc(void (*freef)(void *)) {
         return (NULL);
     res->len = 0;
     res->head = NULL;
+    res->freef = freef;
     return (res);
 }
 
@@ -95,7 +96,7 @@ t_bool  lst_add(t_list * lst, void * data) {
     node->next = lst->head;
     lst->head = node;
     lst->len = lst->len + 1;
-    return (TRUE);    
+    return (TRUE);
 }
 
 t_bool lst_pop(t_list * lst) {
@@ -126,7 +127,7 @@ t_bool lst_pop(t_list * lst) {
  *  The following 4 macros defines the four main applications of our structures.
  *  Because of details of implementation between lst_find and lst_findp
  *  for example. We have abstracted all of the implementation.
- *  We then let the compiler optimize the code. 
+ *  We then let the compiler optimize the code.
  */
 
 #define REMOVE_ABSTRACT_CODE(lst, all, COND) \
