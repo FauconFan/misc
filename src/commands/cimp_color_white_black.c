@@ -34,6 +34,9 @@ t_rc_cmd cimp_color_white_black(t_cmd * cmd) {
 		smwb.margin = 255;
 	else if (smwb.margin < 0)
 		smwb.margin = 0;
+	else if (smwb.margin == 0)
+		smwb.margin = 128;
+
 
 	sdl_surface_mapp(buff_screen, selection, white_black, &smwb);
 	return (OK);
