@@ -65,6 +65,21 @@ static int twosat_run(int argc, char ** argv) {
 	return (0);
 }
 
+static int bruteforce_run(int argc, char ** argv) {
+	if (argc != 1)
+		return (1);
+
+	Fnc * fnc = getInputFNC(argv[0]);
+
+	if (fnc != nullptr) {
+		auto p = bruteforcing_solve(*fnc);
+		print_result(p);
+
+		delete fnc;
+	}
+	return (0);
+}
+
 int main(int argc, char ** argv) {
 	if (argc <= 0)
 		return (1);
@@ -93,6 +108,9 @@ int main(int argc, char ** argv) {
 
 	if (cmd == "dpll")
 		return (dpll_run(argc, argv));
+
+	if (cmd == "bruteforce")
+		return (bruteforce_run(argc, argv));
 
 	if (cmd == "2sat")
 		return (twosat_run(argc, argv));
