@@ -1,5 +1,14 @@
 #include "cimp.h"
 
+static void sdl_bound_result_in_surface(SDL_Surface * surf, SDL_Rect * res) {
+	res->x = max(0, res->x);
+	res->y = max(0, res->y);
+	res->x = min(surf->w, res->x);
+	res->y = min(surf->h, res->y);
+	res->w = min(surf->w, res->x + res->w) - res->x;
+	res->h = min(surf->h, res->y + res->h) - res->y;
+}
+
 SDL_Rect    sdl_surface_build_good_selection(SDL_Surface * surf, SDL_Rect param) {
 	SDL_Rect res;
 
@@ -15,6 +24,7 @@ SDL_Rect    sdl_surface_build_good_selection(SDL_Surface * surf, SDL_Rect param)
 		res.w = surf->w;
 		res.h = surf->h;
 	}
+	sdl_bound_result_in_surface(surf, &res);
 	return (res);
 }
 
