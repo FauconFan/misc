@@ -65,7 +65,8 @@ void update_event(t_cimp_event * evnmt) {
 			  evnmt->selection.h >= 0)
 			{
 				t_cmd * cmd = cmd_alloc();
-				cmd->rect = evnmt->selection;
+				cmd->rect  = evnmt->selection;
+				cmd->focus = g_cimp->focus;
 				if (cimp_select(cmd) < 0)
 					printf("Terrible erreur\n");
 				cmd_free(cmd);
