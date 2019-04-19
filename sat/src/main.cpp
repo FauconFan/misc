@@ -50,6 +50,21 @@ static int dpll_run(int argc, char ** argv) {
 	return (0);
 }
 
+static int twosat_run(int argc, char ** argv) {
+	if (argc != 1)
+		return (1);
+
+	Fnc * fnc = getInputFNC(argv[0]);
+
+	if (fnc != nullptr) {
+		auto p = twosat_solve(*fnc);
+		print_result(p);
+
+		delete fnc;
+	}
+	return (0);
+}
+
 static int bruteforce_run(int argc, char ** argv) {
 	if (argc != 1)
 		return (1);
@@ -97,10 +112,15 @@ int main(int argc, char ** argv) {
 	if (cmd == "bruteforce")
 		return (bruteforce_run(argc, argv));
 
+	if (cmd == "2sat")
+		return (twosat_run(argc, argv));
+
 	if (cmd == "queens") {
 		queens_problems();
 		return (0);
 	}
+
+	std::cout << "The command is not recognised : " << cmd << "\n";
 
 	return (1);
 } // main

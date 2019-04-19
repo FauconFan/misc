@@ -16,12 +16,14 @@ class Clause
 
 		std::set<unsigned int> * getPosLitts() const;
 		std::set<unsigned int> * getNegLitts() const;
+		std::list<int>              buildLitts() const;
 		Occ_list                    build_occ_list() const;
 
 		void                        remove_litt(int);
 
 		bool                        is_tautology() const;
 		bool                        is_empty_clause() const;
+		bool                        is_two_clause() const;
 		int                         is_unit_clause() const;
 		int                         contains_litt(int) const;
 		bool                        contains_least_one_litt_and_delete_neg(std::set<int>, Occ_list &);

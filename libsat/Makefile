@@ -17,6 +17,7 @@ MODEL_BD_FOLDER  = src/model/model_builder/
 COUPURE_FOLDER   = src/coupure/
 DPLL_FOLDER      = src/dpll/
 BRUTE_FOLDER     = src/bruteforcing/
+2SAT_FOLDER      = src/2sat/
 UTILS_FOLDER     = src/utils/
 
 AR = ar
@@ -41,6 +42,7 @@ SRC = \
 	$(COUPURE_FOLDER)Coupure.cpp \
 	$(DPLL_FOLDER)DPLL.cpp \
 	$(BRUTE_FOLDER)bruteforcing.cpp \
+	$(2SAT_FOLDER)2Sat.cpp \
 	
 
 OBJ = $(SRC:%.cpp=%.o)

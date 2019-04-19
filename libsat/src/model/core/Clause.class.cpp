@@ -63,6 +63,18 @@ std::set<unsigned int> * Clause::getNegLitts() const{
 	return this->_neg_litts;
 }
 
+std::list<int>           Clause::buildLitts() const{
+	std::list<int> res;
+
+	for (unsigned int neg : *this->_neg_litts) {
+		res.push_back(static_cast<int>(neg) * -1);
+	}
+	for (unsigned int pos : *this->_pos_litts) {
+		res.push_back(static_cast<int>(pos));
+	}
+	return (res);
+}
+
 Occ_list Clause::build_occ_list() const{
 	Occ_list res;
 
@@ -109,6 +121,10 @@ bool Clause::is_tautology() const{
 
 bool Clause::is_empty_clause() const{
 	return (this->_neg_litts->empty() && this->_pos_litts->empty());
+}
+
+bool Clause::is_two_clause() const{
+	return (this->_neg_litts->size() + this->_pos_litts->size() == 2);
 }
 
 int Clause::is_unit_clause() const{

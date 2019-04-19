@@ -64,7 +64,7 @@ submodule:
 ## This part is for continuous integration, testing, linting, etc...
 
 SRC_FILES = $(shell find sat libsat -name "*.cpp")
-ALL_FILES = $(shell find sat libsat -name "*.hpp") $(SRC_FILES)
+ALL_FILES = $(shell find sat libsat -name "*.hpp" -o -name "*.tpp") $(SRC_FILES)
 IFLAGS = -I sat -I libsat
 
 UNCRUSTIFY = uncrustify/build/uncrustify
@@ -90,11 +90,11 @@ $(UNCRUSTIFY): submodule
 
 .PHONY: uncrustify_apply
 uncrustify_apply: $(UNCRUSTIFY)
-	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --replace --no-backup --mtime $(ALL_FILES)
+	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) -l CPP --replace --no-backup --mtime $(ALL_FILES)
 
 .PHONY: uncrustify_check
 uncrustify_check: $(UNCRUSTIFY)
-	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --check $(ALL_FILES)
+	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) -l CPP --check $(ALL_FILES)
 
 ###################################### CPPLINT #################################
 
@@ -135,9 +135,6 @@ WARNS_EXCEPTS = \
 				cert-err58-cpp \
 
 WARNS = $(shell echo "*$(foreach warn,$(WARNS_EXCEPTS),,-$(warn))" | tr -d ' ')
-
-tete:
-	@echo $(WARNS)
 
 .PHONY: clang_tidy_run
 clang_tidy_run:

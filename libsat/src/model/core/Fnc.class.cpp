@@ -36,7 +36,7 @@ void Fnc::add_fnc(const Fnc & fnc) {
 	this->_clauses.insert(this->_clauses.end(), fnc._clauses.begin(), fnc._clauses.end());
 }
 
-std::vector<Clause>   Fnc::get_implclauses() {
+const std::vector<Clause> &Fnc::get_implclauses() const{
 	return (this->_clauses);
 }
 
@@ -46,6 +46,14 @@ bool Fnc::has_empty_clause() const{
 			return (true);
 	}
 	return (false);
+}
+
+bool Fnc::is_two_fnc() const{
+	for (const auto & cl : this->_clauses) {
+		if (cl.is_two_clause() == false)
+			return (false);
+	}
+	return (true);
 }
 
 Occ_list Fnc::remove_tautologies() {
