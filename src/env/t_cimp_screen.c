@@ -27,10 +27,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 	tmp  = NULL;
 	path = NULL;
 
-	if (get_available_id() == -1) {
-		printf("%s\n", TOO_MUCH_SCREENS);
-	}
-	else if ((path = normalize_path(path_img)) == NULL) {
+	if ((path = normalize_path(path_img)) == NULL) {
 		printf("%s\n", NOT_A_PATH);
 	}
 	else if ((tmp = IMG_Load(path)) == NULL) {
