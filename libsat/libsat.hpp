@@ -24,5 +24,6 @@
 
 #include "src/coupure/Coupure.hpp"
 #include "src/dpll/DPLL.hpp"
+#include "src/bruteforcing/bruteforcing.hpp"
 
 #endif // ifndef LIBSAT_HPP

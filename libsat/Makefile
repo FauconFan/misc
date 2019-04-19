@@ -16,6 +16,7 @@ CORE_FOLDER      = src/model/core/
 MODEL_BD_FOLDER  = src/model/model_builder/
 COUPURE_FOLDER   = src/coupure/
 DPLL_FOLDER      = src/dpll/
+BRUTE_FOLDER     = src/bruteforcing/
 UTILS_FOLDER     = src/utils/
 
 AR = ar
@@ -39,6 +40,7 @@ SRC = \
 	$(UTILS_FOLDER)combinatorics.ns.cpp \
 	$(COUPURE_FOLDER)Coupure.cpp \
 	$(DPLL_FOLDER)DPLL.cpp \
+	$(BRUTE_FOLDER)bruteforcing.cpp \
 	
 
 OBJ = $(SRC:%.cpp=%.o)
