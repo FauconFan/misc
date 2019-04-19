@@ -11,29 +11,29 @@ class Fnc{
 		explicit Fnc(const std::vector<Clause> &);
 		virtual~Fnc();
 
-		std::vector<Clause>     get_implclauses();
-		Occ_list                build_occ_list() const;
+		const std::vector<Clause> & get_implclauses() const;
+		Occ_list                    build_occ_list() const;
 
-		bool                    empty() const;
-		bool                    has_empty_clause() const;
-		bool                    contains(const Clause &); // delete later subsumption
+		bool                        empty() const;
+		bool                        has_empty_clause() const;
+		bool                        is_two_fnc() const;
+		bool                        contains(const Clause &); // delete later subsumption
 
-		void                    add_clause(const Clause &);
-		void                    add_fnc(const Fnc &);
+		void                        add_clause(const Clause &);
+		void                        add_fnc(const Fnc &);
 
-		Occ_list                eval(unsigned int id, bool value);
-		void                    nettoyage(Occ_list &, Distrib &); // add subsumption
+		Occ_list                    eval(unsigned int id, bool value);
+		void                        nettoyage(Occ_list &, Distrib &); // add subsumption
 
-		void                    cut_assign_other_value(unsigned int, Distrib &) const;
-		void                    deduce_unit_propagation(Distrib &) const;
-		bool                    elim_unit_propagation(Distrib &, Occ_list &);
+		void                        cut_assign_other_value(unsigned int, Distrib &) const;
+		void                        deduce_unit_propagation(Distrib &) const;
+		bool                        elim_unit_propagation(Distrib &, Occ_list &);
 
-		void                    display(std::ostream &) const;
+		void                        display(std::ostream &) const;
 
 	private:
 		std::vector<Clause> _clauses {};
 
-		Occ_list        remove_duplicates();
 		Occ_list        remove_tautologies();
 		Occ_list        remove_if_contains(int);
 		void            polarity_check(Occ_list &, Distrib &);
