@@ -42,7 +42,7 @@ static bool brutefocing_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	Logger::info() << litt_occ;
 
 	return (brutefocing_recu(copy_fnc, litt_occ, dist));
-}
+} // brutefocing_recu
 
 std::pair<bool, Distrib> bruteforcing_solve(const Fnc & fnc) {
 	Occ_list litt_occ = Occ_list(fnc);
