@@ -17,7 +17,10 @@ void treat_line(char * line) {
 			}
 		}
 		else {
-			cmd->focus = g_cimp->focus;
+			if (g_cimp->select != NULL)
+				cmd->focus = g_cimp->select->id;
+			else
+				cmd->focus = g_cimp->focus;
 		}
 		switch (cimp_exe(cmd)) {
 			case OK:
