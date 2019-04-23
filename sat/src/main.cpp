@@ -120,6 +120,11 @@ int main(int argc, char ** argv) {
 		return (0);
 	}
 
+	if (cmd == "einstein") {
+		einstein_problem();
+		return (0);
+	}
+
 	std::cout << "The command is not recognised : " << cmd << "\n";
 
 	return (1);

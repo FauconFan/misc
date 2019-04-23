@@ -116,6 +116,7 @@ WARNS_EXCEPTS = \
 				cppcoreguidelines-special-member-functions \
 				cppcoreguidelines-pro-bounds-pointer-arithmetic \
 				cppcoreguidelines-pro-bounds-array-to-pointer-decay \
+				cppcoreguidelines-pro-bounds-constant-array-index \
 				llvm-header-guard \
 				llvm-include-order \
 				google-readability-braces-around-statements \
@@ -125,6 +126,7 @@ WARNS_EXCEPTS = \
 				hicpp-signed-bitwise \
 				hicpp-special-member-functions \
 				hicpp-no-array-decay \
+				hicpp-use-emplace \
 				readability-braces-around-statements \
 				readability-named-parameter \
 				readability-delete-null-pointer \
@@ -132,6 +134,7 @@ WARNS_EXCEPTS = \
 				fuchsia-overloaded-operator \
 				fuchsia-default-arguments \
 				modernize-pass-by-value \
+				modernize-use-emplace \
 				cert-err58-cpp \
 
 WARNS = $(shell echo "*$(foreach warn,$(WARNS_EXCEPTS),,-$(warn))" | tr -d ' ')

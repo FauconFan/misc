@@ -8,6 +8,7 @@
 #include "libsat.hpp"
 #include "src/lexer_parser/FNC_builder.class.hpp"
 #include "src/problems/queens.hpp"
+#include "src/problems/einstein.hpp"
 
 Fnc * getInputFNC(const char * path);
 
