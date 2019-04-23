@@ -184,15 +184,19 @@ lint_check: uncrustify_check cpplint_run cppcheck_run clang_tidy_run infer_run
 CIMP_CHECK = cimp_check
 GCOV_LIBS = -lcheck -lm -lpthread -lrt -lsubunit -lgcov -coverage
 
-$(CIMP_CHECK): fclean venv images recompile_with_profile_args $(OBJ_TEST) $(OBJ_LEX_PAR)
+$(CIMP_CHECK): venv images recompile_with_profile_args $(OBJ_TEST) $(OBJ_LEX_PAR)
 	@$(CC) $(OBJ_NO_MAIN) $(OBJ_TEST) $(OBJ_LEX_PAR) $(GCOV_LIBS) $(LFLAGS) -o $@
 	./$@
-	mkdir -p gcovr
-	$(GCOVR) -r . --html --html-details -o gcovr/index.html
+	make LFLAGS="$(GCOV_LIBS) $(LFLAGS)"
+	make gcovr
 
 .PHONY: recompile_with_profile_args
-recompile_with_profile_args:
-	make CFLAGS="$(CFLAGS) -fprofile-arcs -ftest-coverage" $(OBJ_NO_MAIN)
+recompile_with_profile_args: fclean
+	make CFLAGS="$(CFLAGS) -fprofile-arcs -ftest-coverage" $(OBJ)
+
+gcovr:
+	mkdir -p gcovr
+	$(GCOVR) -r . --html --html-details -o gcovr/index.html
 
 ###################################### UNCRUSTIFY ##############################
 

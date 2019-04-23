@@ -34,12 +34,26 @@ void update_event(t_cimp_event * evnmt) {
 		if (event.type == SDL_QUIT ||
 		  (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE))
 		{
-			cimp_close(NULL);
+			for (int i = 0; i < NB_SCREENS; i++) {
+				if (g_cimp->screen[i] &&
+				  SDL_GetWindowID(g_cimp->screen[i]->window) == event.window.windowID)
+				{
+					g_cimp->focus = i;
+					cimp_close(NULL);
+				}
+			}
 		}
 		else if (event.type == SDL_MOUSEBUTTONDOWN) {
-			evnmt->button_pressed = 0;
-			evnmt->selection.x    = event.button.x;
-			evnmt->selection.y    = event.button.y;
+			for (int i = 0; i < NB_SCREENS; i++) {
+				if (g_cimp->screen[i] &&
+				  SDL_GetWindowID(g_cimp->screen[i]->window) == event.window.windowID)
+				{
+					g_cimp->focus         = i;
+					evnmt->button_pressed = 0;
+					evnmt->selection.x    = event.button.x;
+					evnmt->selection.y    = event.button.y;
+				}
+			}
 		}
 		else if (event.type == SDL_MOUSEBUTTONUP) {
 			evnmt->button_pressed = 1;
@@ -51,7 +65,8 @@ void update_event(t_cimp_event * evnmt) {
 			  evnmt->selection.h >= 0)
 			{
 				t_cmd * cmd = cmd_alloc();
-				cmd->rect = evnmt->selection;
+				cmd->rect  = evnmt->selection;
+				cmd->focus = g_cimp->focus;
 				if (cimp_select(cmd) < 0)
 					printf("Terrible erreur\n");
 				cmd_free(cmd);

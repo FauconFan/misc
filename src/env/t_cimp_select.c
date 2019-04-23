@@ -2,7 +2,7 @@
 
 /** Une fontion qui alloue la memoire necessaire et cree un t_cimp_select correspondant
  * au SDL_Rect passe en argument**/
-t_cimp_select * cimp_init_select(SDL_Rect rectangle) {
+t_cimp_select * cimp_init_select(SDL_Rect rectangle, int id) {
 	t_cimp_select * res = malloc(sizeof(t_cimp_select));
 
 	if (res == NULL) {
@@ -11,6 +11,7 @@ t_cimp_select * cimp_init_select(SDL_Rect rectangle) {
 	}
 
 	res->surface = rectangle;
+	res->id      = id;
 	return res;
 }
 

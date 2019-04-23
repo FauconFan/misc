@@ -32,6 +32,7 @@ tok:
         WORD_B  { li_token_add(li_token, token_word($1)); }
     |   PATH_B  { li_token_add(li_token, token_path($1)); }
     |   NUM_B   { li_token_add(li_token, token_num($1)); }
+    |   '[' NUM_B ']' { li_token_add(li_token, token_focus($2)); }
     |   '(' NUM_B NUM_B NUM_B NUM_B ')'
                 {
                     li_token_add(li_token, token_rect($2, $3, $4, $5));

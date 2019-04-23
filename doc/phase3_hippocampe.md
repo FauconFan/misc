@@ -20,15 +20,31 @@ typedef struct      s_cimp
 
 Valeur par défaut de focus : -1
 
-Le focus est changé automatiquement sur un appel de open. Sur un appel explicit de fonction sur une image ou sur un clic d'une fenêtre.
+Le focus est changé automatiquement sur un appel de open, sur un appel explicite de fonction sur une image ou sur un clic d'une fenêtre.
 
-Si on close une fenêtre dont c'est le focus. Le focus devient -1.
+Si on close une fenêtre sur laquelle était le focus, le focus devient -1.
 
-Si une commande nécessite le focus et le focus vaut -1. La commande échoue.
+Si une commande a besoin du focus que celui ci vaut -1. La commande échoue.
+
+Lorsque l'on ferme une fenêtre, on met à jour le tableau screen de g_cimp par exemple si on a 4 fenêtre ouvertes :
+|1|2|3|4|
+et que l'on ferme la 3 ème on a :
+|1|2|NULL|4|
+L'id de la fenêtre correspond donc a sa position dans le tableau screen + 1.
+Lorsque l'on ouvre une nouvelle fenetre on remplit la case vide la plus "petite" lorsque c'est possible.
+
+La structure
+```
+typedef struct s_cimp_select {
+	int      id;
+	SDL_Rect surface;
+} t_cimp_select;
+```
+gagne un champs id pour retenir sur quelle fenetre la selection ete effectuee.
 
 ## Modification parser
 
-Pouvoir expliciter la sélection de focus au sein de n'importe quelle commande qui en nécessite.
+Pouvoir expliciter la sélection de focus au sein de n'importe quelle commande qui en a besoin .
 
 ## Modication commandes actuelles
 

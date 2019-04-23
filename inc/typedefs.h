@@ -3,8 +3,9 @@
 
 #include "cimp.h"
 
-#define	TRUE  1
-#define	FALSE 0
+#define	TRUE       1
+#define	FALSE      0
+#define	NB_SCREENS 4
 
 typedef unsigned char t_bool;
 
@@ -15,6 +16,7 @@ typedef unsigned char t_bool;
  * Ici sont définies les structures standards utilisées dans le programme.
  */
 typedef struct s_cimp_select {
+	int      id;
 	SDL_Rect surface;
 } t_cimp_select;
 
@@ -30,8 +32,9 @@ typedef struct      s_cimp_event {
 } t_cimp_event;
 
 typedef struct          s_cimp {
-	t_cimp_screen * screen;
+	t_cimp_screen * screen[NB_SCREENS];
 	int             running;
+	int             focus;
 	t_cimp_select * select;
 	t_cimp_event *  event;
 	SDL_Surface *   copy_buffer;
@@ -41,6 +44,7 @@ typedef struct      s_cmd {
 	char *    cmd;
 	char *    name;
 	int       num;
+	int       focus;
 	SDL_Rect  rect;
 	SDL_Point point;
 	SDL_Color color;
@@ -53,7 +57,7 @@ typedef enum        s_rc_cmd {
 	ABORT,
 }                   t_rc_cmd;
 
-#define	NB_ARG_TYPE 7
+#define	NB_ARG_TYPE 8
 
 typedef enum        e_arg_type {
 	ARG_NAME   = 0x1,
@@ -63,7 +67,10 @@ typedef enum        e_arg_type {
 	ARG_PT     = 0x10,
 	ARG_COLOR  = 0x20,
 	ARG_COLOR2 = 0x40,
+	ARG_FOCUS  = 0x80,
 }                   t_arg_type;
+// Change NB_ARG_TYPE if you add an argument.
+// Increase size of opts et opts_opt if no enough bits
 
 typedef struct      s_cmd_config {
 	char *  name;

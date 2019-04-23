@@ -23,19 +23,17 @@ static uint32_t replace(uint32_t col, void * smrv) {
 }
 
 t_rc_cmd cimp_color_replace(t_cmd * cmd) {
-	if (g_cimp->screen) {
-		SDL_Surface * buff_screen;
-		SDL_Rect selection;
-		struct s_meta_replace smr;
+	SDL_Surface * buff_screen;
+	SDL_Rect selection;
+	struct s_meta_replace smr;
 
-		buff_screen = g_cimp->screen->buff_screen;
-		selection   = sdl_surface_build_good_selection(buff_screen, cmd->rect);
-		smr.format  = buff_screen->format;
-		smr.col1    = cmd->color2[0];
-		smr.col2    = cmd->color2[1];
-		smr.margin  = cmd->num;
+	buff_screen = g_cimp->screen[cmd->focus]->buff_screen;
+	selection   = sdl_surface_build_good_selection(buff_screen, cmd->rect);
+	smr.format  = buff_screen->format;
+	smr.col1    = cmd->color2[0];
+	smr.col2    = cmd->color2[1];
+	smr.margin  = cmd->num;
 
-		sdl_surface_mapp(buff_screen, selection, replace, &smr);
-	}
+	sdl_surface_mapp(buff_screen, selection, replace, &smr);
 	return (OK);
-} /* cimp_fill */
+} /* cimp_color_replace */

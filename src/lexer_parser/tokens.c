@@ -23,6 +23,9 @@ void                print_token(t_token * tok) {
 		case WORD:
 			printf("WORD(%s)\n", tok->u.str);
 			break;
+		case FOCUS:
+			printf("FOCUS(%ld)\n", tok->u.num);
+			break;
 		case PATH:
 			printf("PATH(%s)\n", tok->u.str);
 			break;
@@ -41,7 +44,7 @@ void                print_token(t_token * tok) {
 			  tok->u.color2[0].b, tok->u.color2[1].r, tok->u.color2[1].g, tok->u.color2[1].b);
 			break;
 	}
-}
+} /* print_token */
 
 t_token * token_word(const char * word) {
 	t_token * tok;
@@ -67,6 +70,16 @@ t_token * token_num(int num) {
 	t_token * tok;
 
 	if ((tok = token_alloc(NUM)) == NULL)
+		return (NULL);
+
+	tok->u.num = num;
+	return (tok);
+}
+
+t_token * token_focus(int num) {
+	t_token * tok;
+
+	if ((tok = token_alloc(FOCUS)) == NULL)
 		return (NULL);
 
 	tok->u.num = num;

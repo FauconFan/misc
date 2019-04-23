@@ -8,6 +8,7 @@ typedef enum    e_type_token {
 	PATH,
 	NUM,
 	RECT,
+	FOCUS,
 	POINT,
 	COLOR,
 	COLOR2,
@@ -41,6 +42,7 @@ void print_token(t_token * tok);
 t_token * token_word(const char * word);
 t_token * token_path(const char * word);
 t_token * token_num(int num);
+t_token * token_focus(int num);
 t_token * token_rect(int x, int y, int w, int h);
 t_token * token_point(int x, int y);
 t_token * token_color(const char * word);
