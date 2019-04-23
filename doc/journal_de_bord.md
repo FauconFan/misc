@@ -1,5 +1,30 @@
 # Journal de Bord
 
+## Semaine 15 - 21 Avril 2019
+
+- Bug fixing
+- Correction de check
+- Mise en place de cimp pour les tests black box (coverage)
+- Formalisation du focus + unification.
+
+## Semaine 8 - 14 Avril 2019
+
+- Hotfixes
+- Start multi screen and focus
+- Rework list + doc
+
+## Semaine 1 - 7 Avril 2019
+
+- Test cut copy paste
+- Finalisation p2
+- Docker save travis
+- Début phase hyppocampe (p3)
+
+## Semaine 25 - 31 Mars 2019
+
+- Color white black
+- Ajout libtest
+
 ## Semaine 18 - 24 Mars 2019
 
 - Rework parser, lexer bison + parser local
