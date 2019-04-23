@@ -12,22 +12,22 @@ class Occ_list{
 		Occ_list (const Occ_list &);
 		Occ_list & operator=(const Occ_list &);
 
-        // Getters
+		// Getters
 		Pair get_pair(unsigned int) const;
 
-        // Builders
+		// Builders
 		std::pair<std::vector<unsigned int>, std::vector<unsigned int> > build_solo_polarity() const;
 		std::set<unsigned int> build_present_variables() const;
 
-        // Setters
-        void set_content(const std::vector<Clause> & clauses);
+		// Setters
+		void set_content(const std::vector<Clause> & clauses);
 		void add_pair(unsigned int, const Pair &);
 		void sub_pair(unsigned int, const Pair &);
 
-        // Predicates
+		// Predicates
 		bool empty() const;
 
-        // Other
+		// Other
 		Occ_list & operator+=(const Occ_list &);
 		Occ_list & operator-=(const Occ_list &);
 

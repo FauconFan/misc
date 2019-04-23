@@ -1,6 +1,6 @@
 #include "libsat.hpp"
 
-Occ_list::Occ_list () = default;
+Occ_list::Occ_list ()  = default;
 Occ_list::~Occ_list () = default;
 
 Occ_list::Occ_list (const Occ_list & ol) = default;
@@ -22,11 +22,11 @@ void Occ_list::sub_pair(unsigned int key, const Pair & p) {
 }
 
 void Occ_list::set_content(const std::vector<Clause> & clauses) {
-    this->_content = std::unordered_map<unsigned int, Pair>();
+	this->_content = std::unordered_map<unsigned int, Pair>();
 
-    for (const auto & cl : clauses) {
-        *this += cl.build_occ_list();
-    }
+	for (const auto & cl : clauses) {
+		*this += cl.build_occ_list();
+	}
 }
 
 std::pair<std::vector<unsigned int>, std::vector<unsigned int> > Occ_list::build_solo_polarity() const{

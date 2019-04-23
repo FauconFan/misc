@@ -1,47 +1,47 @@
 #include "libsat.hpp"
 
-Fnc::Fnc() = default;
+Fnc::Fnc()  = default;
 Fnc::~Fnc() = default;
 
 Fnc::Fnc(const std::vector<Clause> & vec) {
-    for (const auto & cl : vec) {
-        this->add_clause(cl);
-    }
+	for (const auto & cl : vec) {
+		this->add_clause(cl);
+	}
 }
 
 const std::vector<Clause> &Fnc::get_clauses() const{
 	return (this->_clauses);
 }
 
-const Distrib & Fnc::get_distrib() const {
+const Distrib & Fnc::get_distrib() const{
 	return (this->_distrib);
 }
 
-const Occ_list & Fnc::get_occ_list() const {
+const Occ_list & Fnc::get_occ_list() const{
 	return (this->_occ_list);
 }
 
 void Fnc::add_clause(const Clause & acl) {
-    if (this->ready) {
-        std::cerr << "Not yet...\n";
-        return;
-    }
+	if (this->ready) {
+		std::cerr << "Not yet...\n";
+		return;
+	}
 	this->_clauses.push_back(acl);
 }
 
 void Fnc::add_fnc(const Fnc & fnc) {
-    if (this->ready) {
-        std::cerr << "Not yet...\n";
-        return;
-    }
+	if (this->ready) {
+		std::cerr << "Not yet...\n";
+		return;
+	}
 	this->_clauses.insert(this->_clauses.end(), fnc._clauses.begin(), fnc._clauses.end());
 }
 
 bool Fnc::empty() const{
-    for (const Clause & cl : this->_clauses) {
-        if (cl.is_satisfied() == false)
-            return (false);
-    }
+	for (const Clause & cl : this->_clauses) {
+		if (cl.is_satisfied() == false)
+			return (false);
+	}
 	return (true);
 }
 
@@ -73,8 +73,7 @@ void Fnc::set_distrib_as_finished() {
 	this->_distrib.finalize();
 }
 
-
-void Fnc::polarity_check(void) {
+void Fnc::polarity_check() {
 	std::pair<std::vector<unsigned int>, std::vector<unsigned int> > p;
 
 	while (true) {
@@ -88,12 +87,12 @@ void Fnc::polarity_check(void) {
 			break;
 		for (auto i : pos) {
 			this->_distrib.set(i, true);
-            this->add_sub_decision(SubDecision::decision_assign(i, true));
+			this->add_sub_decision(SubDecision::decision_assign(i, true));
 			this->set_satisfy_if_contains(i);
 		}
 		for (auto i : neg) {
 			this->_distrib.set(i, false);
-            this->add_sub_decision(SubDecision::decision_assign(i, false));
+			this->add_sub_decision(SubDecision::decision_assign(i, false));
 			this->set_satisfy_if_contains(i);
 		}
 	}
@@ -118,16 +117,17 @@ void Fnc::simplify() {
 }
 
 void Fnc::set_satisfy_if_contains(int val) {
-    unsigned int id = -1;
+	unsigned int id = -1;
+
 	for (auto it = this->_clauses.begin(); it != this->_clauses.end(); it++) {
-        id++;
+		id++;
 		if (it->is_satisfied())
-			continue ;
+			continue;
 		int litt_side = it->presence_litt(val);
 		if (litt_side != 0) {
 			this->_occ_list -= it->build_occ_list();
-            it->set_satisfied(true);
-            this->add_sub_decision(SubDecision::decision_rm_clause(id));
+			it->set_satisfied(true);
+			this->add_sub_decision(SubDecision::decision_rm_clause(id));
 		}
 	}
 }
@@ -138,8 +138,8 @@ bool Fnc::unit_propagation() {
 
 	while (true) {
 		for (const auto & ac : this->_clauses) {
-            if (ac.is_satisfied())
-                continue ;
+			if (ac.is_satisfied())
+				continue;
 			current_unit_litteral = ac.is_unit_clause();
 			if (current_unit_litteral == 0)
 				continue;
@@ -167,75 +167,77 @@ bool Fnc::unit_propagation() {
 		}
 		unit_litteraux.clear();
 	}
-}
+} // Fnc::unit_propagation
 
 void Fnc::assign(unsigned int id, bool value) {
-    this->_decisions.push_front(Decision(id, value));
-    this->assign_simplify(id, value);
+	this->_decisions.push_front(Decision(id, value));
+	this->assign_simplify(id, value);
 }
 
 void Fnc::assign_simplify(unsigned int id, bool value) {
 	int side;
 	Pair pval;
-    unsigned int id_clause;
+	unsigned int id_clause;
 
-	side = (value) ? 1 : -1;
-	pval = (value) ? Pair(0, 1) : Pair(1, 0);
-    id_clause = -1;
+	side      = (value) ? 1 : -1;
+	pval      = (value) ? Pair(0, 1) : Pair(1, 0);
+	id_clause = -1;
 	for (auto it = this->_clauses.begin(); it != this->_clauses.end(); ++it) {
-        id_clause++;
-        if (it->is_satisfied())
-            continue ;
+		id_clause++;
+		if (it->is_satisfied())
+			continue;
 		int litt_side = it->presence_litt(id);
 		if (litt_side != 0) {
 			if (litt_side == side) {
 				this->_occ_list -= it->build_occ_list();
-                it->set_satisfied(true);
-                this->add_sub_decision(SubDecision::decision_rm_clause(id_clause));
+				it->set_satisfied(true);
+				this->add_sub_decision(SubDecision::decision_rm_clause(id_clause));
 			}
 			else {
-                int val = static_cast<int>(id) * -side;
+				int val = static_cast<int>(id) * -side;
 				this->_occ_list.sub_pair(id, pval);
 				it->remove_litt(val);
-                this->add_sub_decision(SubDecision::decision_rm_litt(id_clause, val));
+				this->add_sub_decision(SubDecision::decision_rm_litt(id_clause, val));
 			}
 		}
 	}
 }
 
 void Fnc::unassign() {
-    if (this->_decisions.empty())
-        return ;
-    Decision last = this->_decisions.front();
-    this->_decisions.pop_front();
+	if (this->_decisions.empty())
+		return;
 
-    for (const SubDecision & sd : last.get_consequences()) {
-        switch (sd.get_type()) {
-            case ASSIGN:
-                this->_distrib.remove(sd.u.assign.litt_id);
-                break;
-            case RM_CLAUSE:
-                this->_clauses[sd.u.rm_clause.clause_id].set_satisfied(false);
+	Decision last = this->_decisions.front();
+	this->_decisions.pop_front();
+
+	for (const SubDecision & sd : last.get_consequences()) {
+		switch (sd.get_type()) {
+			case ASSIGN:
+				this->_distrib.remove(sd.u.assign.litt_id);
+				break;
+			case RM_CLAUSE:
+				this->_clauses[sd.u.rm_clause.clause_id].set_satisfied(false);
 				this->_occ_list += this->_clauses[sd.u.rm_clause.clause_id].build_occ_list();
-                break;
-            case RM_LITT:
-                this->_clauses[sd.u.rm_litt.clause_id].add_litt(sd.u.rm_litt.litt);
+				break;
+			case RM_LITT:
+				this->_clauses[sd.u.rm_litt.clause_id].add_litt(sd.u.rm_litt.litt);
 				Pair p;
 				if (sd.u.rm_litt.litt > 0)
 					p = Pair(1, 0);
 				else
 					p = Pair(0, 1);
 				this->_occ_list.add_pair(abs(sd.u.rm_litt.litt), p);
-                break;         
-        }
-    }
-    this->_distrib.remove(last.get_variable_id());
+				break;
+		}
+	}
+	this->_distrib.remove(last.get_variable_id());
 }
 
 void Fnc::add_sub_decision(const SubDecision & sd) {
-    if (this->_decisions.empty())
-        return ;
-    this->_decisions.front().add_subdecision(sd);
+	if (this->_decisions.empty())
+		return;
+
+	this->_decisions.front().add_subdecision(sd);
 }
 
 void Fnc::display(std::ostream & os) const{

@@ -14,22 +14,22 @@ class Clause
 		Clause (const Clause & icl);
 		Clause &operator=(const Clause & icl);
 
-        // Getters
+		// Getters
 		const std::set<unsigned int> &  get_pos_litts() const;
 		const std::set<unsigned int> &  get_neg_litts() const;
-		bool							is_satisfied() const;
+		bool                            is_satisfied() const;
 
-        // Setters
+		// Setters
 		void                            remove_litt(int);
-        void                            add_litt(int);
-		void							set_satisfied(bool b);
+		void                            add_litt(int);
+		void                            set_satisfied(bool b);
 
-        // Builders
+		// Builders
 		std::set<unsigned int>          build_presence_set() const;
 		Occ_list                        build_occ_list() const;
-		std::list<int>					build_litts() const;
+		std::list<int>                  build_litts() const;
 
-        // Predicates
+		// Predicates
 		bool                            is_empty_clause() const;
 		bool                            is_two_clause() const;
 		int                             is_unit_clause() const;
@@ -38,7 +38,7 @@ class Clause
 	private:
 		std::set<unsigned int> _pos_litts {};
 		std::set<unsigned int> _neg_litts {};
-        bool satisfied {false};
+		bool satisfied {false};
 };
 
 std::ostream &operator<<(std::ostream & os, const Clause & icl);

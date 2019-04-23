@@ -1,7 +1,8 @@
 #include "libsat.hpp"
 
-Clause::Clause () {}
-Clause::~Clause () {}
+Clause::Clause () = default;
+
+Clause::~Clause () = default;
 
 Clause::Clause (const Clause & icl) {
 	*this = icl;
@@ -20,7 +21,7 @@ Clause & Clause::operator=(const Clause & icl) {
 	if (this != &icl) {
 		this->_pos_litts = icl.get_pos_litts();
 		this->_neg_litts = icl.get_neg_litts();
-		this->satisfied = icl.is_satisfied();
+		this->satisfied  = icl.is_satisfied();
 	}
 	return *this;
 }
@@ -33,7 +34,7 @@ const std::set<unsigned int> & Clause::get_neg_litts() const{
 	return this->_neg_litts;
 }
 
-bool Clause::is_satisfied() const {
+bool Clause::is_satisfied() const{
 	return this->satisfied;
 }
 
@@ -45,10 +46,10 @@ void Clause::remove_litt(int litt) {
 }
 
 void Clause::add_litt(int litt) {
-    if (litt > 0)
-        this->_pos_litts.insert(litt);
-    else
-        this->_neg_litts.insert(-litt);
+	if (litt > 0)
+		this->_pos_litts.insert(litt);
+	else
+		this->_neg_litts.insert(-litt);
 }
 
 void Clause::set_satisfied(bool b) {
@@ -77,8 +78,8 @@ Occ_list Clause::build_occ_list() const{
 	return res;
 }
 
-std::list<int> Clause::build_litts() const {
-	std::list<int>	res;
+std::list<int> Clause::build_litts() const{
+	std::list<int> res;
 
 	for (unsigned int val : this->_pos_litts)
 		res.push_back(val);
