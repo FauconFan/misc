@@ -3,37 +3,42 @@
 
 #include "libsat.hpp"
 
+class Occ_list;
+
 class Clause
 {
 	public:
 		Clause ();
-		Clause (const Clause & icl);
-		explicit Clause (const std::vector<int> & litts);
 		virtual~Clause();
-
+		explicit Clause (const std::vector<int> & litts);
+		Clause (const Clause & icl);
 		Clause &operator=(const Clause & icl);
-		bool operator==(const Clause & rhs) const;
 
-		std::set<unsigned int> * getPosLitts() const;
-		std::set<unsigned int> * getNegLitts() const;
-		std::list<int>              buildLitts() const;
-		Occ_list                    build_occ_list() const;
+        // Getters
+		const std::set<unsigned int> &  get_pos_litts() const;
+		const std::set<unsigned int> &  get_neg_litts() const;
+		bool							is_satisfied() const;
 
-		void                        remove_litt(int);
+        // Setters
+		void                            remove_litt(int);
+        void                            add_litt(int);
+		void							set_satisfied(bool b);
 
-		bool                        is_tautology() const;
-		bool                        is_empty_clause() const;
-		bool                        is_two_clause() const;
-		int                         is_unit_clause() const;
-		int                         contains_litt(int) const;
-		bool                        contains_least_one_litt_and_delete_neg(std::set<int>, Occ_list &);
+        // Builders
+		std::set<unsigned int>          build_presence_set() const;
+		Occ_list                        build_occ_list() const;
+		std::list<int>					build_litts() const;
 
-		void                        cut_assign_other_value(unsigned int, Distrib &) const;
-		bool                        deduce_unit_propagation(Distrib &) const;
+        // Predicates
+		bool                            is_empty_clause() const;
+		bool                            is_two_clause() const;
+		int                             is_unit_clause() const;
+		int                             presence_litt(int) const;
 
 	private:
-		std::set<unsigned int> * _pos_litts {nullptr};
-		std::set<unsigned int> * _neg_litts {nullptr};
+		std::set<unsigned int> _pos_litts {};
+		std::set<unsigned int> _neg_litts {};
+        bool satisfied {false};
 };
 
 std::ostream &operator<<(std::ostream & os, const Clause & icl);

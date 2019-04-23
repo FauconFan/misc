@@ -8,29 +8,31 @@ class Fnc;
 class Occ_list{
 	public:
 		Occ_list ();
-		Occ_list (const Occ_list &);
-		explicit Occ_list (const Fnc &);
 		virtual~Occ_list();
-
+		Occ_list (const Occ_list &);
 		Occ_list & operator=(const Occ_list &);
 
+        // Getters
+		Pair get_pair(unsigned int) const;
+
+        // Builders
+		std::pair<std::vector<unsigned int>, std::vector<unsigned int> > build_solo_polarity() const;
+		std::set<unsigned int> build_present_variables() const;
+
+        // Setters
+        void set_content(const std::vector<Clause> & clauses);
+		void add_pair(unsigned int, const Pair &);
+		void sub_pair(unsigned int, const Pair &);
+
+        // Predicates
+		bool empty() const;
+
+        // Other
 		Occ_list & operator+=(const Occ_list &);
 		Occ_list & operator-=(const Occ_list &);
 
-		bool operator==(const Occ_list &) const;
-
-		Pair getPair(unsigned int) const;
-
-		void addPair(unsigned int, const Pair &);
-		void subPair(unsigned int, const Pair &);
-		bool empty() const;
-
-		std::set<unsigned int> buildPresentVariables() const;
-
-		unsigned int getMinOccu() const;
-		unsigned int getMaxOccu() const;
-
-		std::pair<std::vector<unsigned int>, std::vector<unsigned int> > getSoloPolarity() const;
+		unsigned int stat_min_occu() const;
+		unsigned int stat_max_occu() const;
 
 		void display(std::ostream & os) const;
 

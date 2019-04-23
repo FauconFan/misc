@@ -14,7 +14,6 @@ SRC_FOLDER       = src/
 MODEL_FOLDER     = src/model/
 CORE_FOLDER      = src/model/core/
 MODEL_BD_FOLDER  = src/model/model_builder/
-COUPURE_FOLDER   = src/coupure/
 DPLL_FOLDER      = src/dpll/
 BRUTE_FOLDER     = src/bruteforcing/
 2SAT_FOLDER      = src/2sat/
@@ -32,6 +31,7 @@ FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 SRC = \
 	$(CORE_FOLDER)Clause.class.cpp \
 	$(CORE_FOLDER)Fnc.class.cpp \
+	$(CORE_FOLDER)Decision.class.cpp \
 	$(CORE_FOLDER)Occ_list.class.cpp \
 	$(CORE_FOLDER)Distrib.class.cpp \
 	$(MODEL_BD_FOLDER)modelbuilder.ns.cpp \
@@ -39,7 +39,6 @@ SRC = \
 	$(UTILS_FOLDER)Logger.class.cpp \
 	$(UTILS_FOLDER)cnull.cpp \
 	$(UTILS_FOLDER)combinatorics.ns.cpp \
-	$(COUPURE_FOLDER)Coupure.cpp \
 	$(DPLL_FOLDER)DPLL.cpp \
 	$(BRUTE_FOLDER)bruteforcing.cpp \
 	$(2SAT_FOLDER)2Sat.cpp \

@@ -3,8 +3,8 @@
 static Graph<int>   buildGraph2SAT(const Fnc & fnc) {
 	Graph<int> res;
 
-	for (const auto & cl : fnc.get_implclauses()) {
-		const auto & litts = cl.buildLitts();
+	for (const auto & cl : fnc.get_clauses()) {
+		const auto & litts = cl.build_litts();
 
 		res.addEdge(-litts.front(), litts.back());
 		res.addEdge(-litts.back(), litts.front());

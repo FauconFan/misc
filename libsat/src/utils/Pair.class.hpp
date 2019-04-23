@@ -6,18 +6,21 @@
 class Pair{
 	public:
 		Pair ();
-		Pair (const Pair &);
-		Pair (unsigned int, unsigned int);
 		virtual~Pair ();
-
+		Pair (const Pair &);
 		Pair & operator=(const Pair &);
+		Pair (unsigned int, unsigned int);
 
+		// Getters
+		unsigned int get_left() const;
+		unsigned int get_right() const;
+
+		// Setters
 		Pair & operator+=(const Pair &);
 		Pair & operator-=(const Pair &);
-		bool operator==(const Pair &) const;
 
-		unsigned int getLeft() const;
-		unsigned int getRight() const;
+		// Predicates
+		bool operator==(const Pair &) const;
 
 	private:
 		unsigned int _left {0};

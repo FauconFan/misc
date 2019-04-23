@@ -9,16 +9,16 @@ Pair::Pair (unsigned int l, unsigned int r) : _left(l), _right(r) {}
 Pair::~Pair () = default;
 
 Pair    &Pair::operator=(Pair const & rhs) {
-	this->_left  = rhs.getLeft();
-	this->_right = rhs.getRight();
+	this->_left  = rhs.get_left();
+	this->_right = rhs.get_right();
 	return (*this);
 }
 
-unsigned int Pair::getLeft() const{
+unsigned int Pair::get_left() const{
 	return this->_left;
 }
 
-unsigned int Pair::getRight() const{
+unsigned int Pair::get_right() const{
 	return this->_right;
 }
 
@@ -41,5 +41,5 @@ bool Pair::operator==(const Pair & p) const{
 }
 
 std::ostream & operator<<(std::ostream & os, const Pair & p) {
-	return os << "(" << p.getLeft() << ", " << p.getRight() << ")";
+	return os << "(" << p.get_left() << ", " << p.get_right() << ")";
 }

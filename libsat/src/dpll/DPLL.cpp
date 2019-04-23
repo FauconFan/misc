@@ -1,65 +1,46 @@
 #include "libsat.hpp"
 
-static bool dpll_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
-	Fnc copy_fnc;
-	Occ_list copy_litt_occ;
-	Distrib copy_dist;
+static bool dpll_recu(Fnc & fnc) {
 	unsigned int assign_value;
 
-	fnc.nettoyage(litt_occ, dist);
+	fnc.simplify();
 
-	if (fnc.has_empty_clause() || !fnc.elim_unit_propagation(dist, litt_occ))
+	if (fnc.has_empty_clause() || !fnc.unit_propagation())
 		return (false);
 
 	if (fnc.empty())
 		return (true);
 
-	copy_fnc      = Fnc(fnc);
-	copy_litt_occ = Occ_list(litt_occ);
-	copy_dist     = Distrib(dist);
-
-	assign_value = litt_occ.getMaxOccu();
+	assign_value = fnc.get_occ_list().stat_max_occu();
 	Logger::info() << "assign value : " << assign_value << "\n";
 	Logger::info() << "Try true\n";
 
-	litt_occ -= fnc.eval(assign_value, true);
-	dist.set(assign_value, true);
-
+	fnc.assign(assign_value, true);
 
 	Logger::info() << fnc;
-	Logger::info() << litt_occ;
 
-	if (dpll_recu(fnc, litt_occ, dist))
+	if (dpll_recu(fnc))
 		return (true);
 
 	Logger::info() << "step back (" << assign_value << ")\n";
 	Logger::info() << "Try false\n";
 
-	litt_occ  = copy_litt_occ;
-	dist      = copy_dist;
-	litt_occ -= copy_fnc.eval(assign_value, false);
-	dist.set(assign_value, false);
+	fnc.unassign();
 
-	Logger::info() << copy_fnc;
-	Logger::info() << litt_occ;
+	fnc.assign(assign_value, false);
+	Logger::info() << fnc;
 
-	return (dpll_recu(copy_fnc, litt_occ, dist));
+	return (dpll_recu(fnc));
 } // dpll_recu
 
-std::pair<bool, Distrib> dpll_solve(const Fnc & fnc) {
-	Occ_list litt_occ = Occ_list(fnc);
-	Distrib dist(litt_occ);
-
+std::pair<bool, Distrib> dpll_solve(Fnc & fnc) {
 	Logger::info() << "DPLL algorithm\n";
+
+	fnc.set_as_ready();
 	Logger::info() << fnc << "\n";
-	Logger::info() << litt_occ << "\n";
 
-	bool res = dpll_recu(Fnc(fnc), litt_occ, dist);
+	bool res = dpll_recu(fnc);
 
-	dist.finish();
-
-	Logger::info() << litt_occ;
-	Logger::info() << dist;
-
-	return (std::make_pair(res, dist));
+	fnc.set_distrib_as_finished();
+	return (std::make_pair(res, fnc.get_distrib()));
 }
