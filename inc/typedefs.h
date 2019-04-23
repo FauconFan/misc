@@ -32,5 +32,10 @@ typedef enum    e_tlv_type {
 #include "t_list.h"
 #include "t_iovec_builder.h"
 #include "t_tlv_builder.h"
+#include "my_header.h"
+#include "t_acquit_message.h"
+#include "t_neighbour.h"
+#include "t_potential_neighbour.h"
+#include "t_received_message.h"
 
 #endif

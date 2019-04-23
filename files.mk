@@ -13,3 +13,7 @@ SRC = \
 		$(SRC_STRUCT_FOLDER)t_tlv_builder.c \
 		$(SRC_UTILS_FOLDER)my_getrandom.c \
 		$(SRC_UTILS_FOLDER)my_time.c \
+		$(SRC_STRUCT_FOLDER)t_neighbour.c \
+		$(SRC_STRUCT_FOLDER)t_potential_neighbour.c \
+		$(SRC_STRUCT_FOLDER)t_received_message.c \
+		$(SRC_STRUCT_FOLDER)t_acquit_message.c \

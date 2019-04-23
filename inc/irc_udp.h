@@ -40,11 +40,7 @@ void    client(
 
 void    parse_datagram(uint8_t *tlv, size_t len);
 
-uint64_t gen_id();
 
 extern uint64_t     g_id;
-// my_time.c
-struct timeval      add(struct timeval *t1, struct timeval *t2);
-struct timeval      raise(uint8_t n);
 
 #endif

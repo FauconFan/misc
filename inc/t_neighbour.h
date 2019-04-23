@@ -9,7 +9,6 @@ typedef struct       s_neighbour {
     uint8_t         ip[16];
     struct timeval  last_hello; // le dernier hello qu'on a reçu
     struct timeval  last_hello_long; // le dernier hello long qu'on a reçu
-    // revoir ce nom, parce qu'il est pas terrible
     struct timeval  our_last_hello;
 }                   t_neighbour;
 

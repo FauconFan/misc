@@ -3,7 +3,7 @@
 // Le nom est a revoir sans doute, je savais pas comment l'appeler
 
 // je vois pas si on doit rajouter des choses dans la struct
-// parce que le tlv 3 ne donne pas plus d'info 
+// parce que le tlv 3 ne donne pas plus d'info
 
 #ifndef T_POTENTIAL_NEIGHBOUR_H
 #define T_POTENTIAL_NEIGHBOUR_H
@@ -20,7 +20,7 @@ t_potential_neighbour       *pot_nei_alloc(uint8_t ip[16], uint16_t port);
 void                        pot_nie_free(t_potential_neighbour *pot_nei);
 
 // prédicat d'égalité
-t_bool                      pot_nei_is_id(t_potential_neighbour *pot_nei, uint8_t ip[16]);
+t_bool                      pot_nei_is_id(t_potential_neighbour *pot_nei, uint8_t ip[16], uint16_t port);
 
 
 
