@@ -1,12 +1,13 @@
 #include "cimp.h"
 
-#define	ARG_NAME_TAG "NAME"
-#define	ARG_NUM_TAG  "NUM"
-#define	ARG_PATH_TAG "PATH"
-#define	ARG_RECT_TAG "RECT"
-#define	ARG_PT_TAG   "POINT"
-#define	ARG_COL_TAG  "COLOR"
-#define	ARG_COL2_TAG "COLOR2"
+#define	ARG_NAME_TAG  "NAME"
+#define	ARG_NUM_TAG   "NUM"
+#define	ARG_FOCUS_TAG "FOCUS"
+#define	ARG_PATH_TAG  "PATH"
+#define	ARG_RECT_TAG  "RECT"
+#define	ARG_PT_TAG    "POINT"
+#define	ARG_COL_TAG   "COLOR"
+#define	ARG_COL2_TAG  "COLOR2"
 
 const char * arg_type_to_string(t_arg_type atype) {
 	switch (atype) {
@@ -15,6 +16,9 @@ const char * arg_type_to_string(t_arg_type atype) {
 
 		case ARG_NUM:
 			return (ARG_NUM_TAG);
+
+		case ARG_FOCUS:
+			return (ARG_FOCUS_TAG);
 
 		case ARG_PATH:
 			return (ARG_PATH_TAG);

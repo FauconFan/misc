@@ -5,15 +5,10 @@
  *  Dans le cas ou le rectangle sors de l'image on selectionne le plus grand rectangle possible dans l'image
  * Renvoie 0 en cas de succes et en cas d'echec ou si aucune image n'es ouverte renvoie -1**/
 t_rc_cmd cimp_copy(t_cmd * cmd) {
-	if (!g_cimp->screen) {
-		printf("Pas d'image ouverte : la copie est impossible\n");
-		return FAIL;
-	}
-
 	SDL_Rect rect;
 	SDL_Surface * surface_src, * surface_dest;
-	surface_src = g_cimp->screen->buff_screen;
 
+	surface_src = g_cimp->screen[cmd->focus]->buff_screen;
 	if (cmd->rect.x != -1 && cmd->rect.y != -1 && cmd->rect.w != -1 && cmd->rect.h != -1) {
 		rect = cmd->rect;
 	}
@@ -22,7 +17,12 @@ t_rc_cmd cimp_copy(t_cmd * cmd) {
 			printf("Pas de zone selectionnee : copie impossible \n");
 			return FAIL;
 		}
-		rect = g_cimp->select->surface;
+		if (g_cimp->screen[g_cimp->select->id] == NULL) {
+			printf("La zone selectionnee n'est plus accessible \n");
+			return FAIL;
+		}
+		rect        = g_cimp->select->surface;
+		surface_src = g_cimp->screen[g_cimp->select->id]->buff_screen;
 	}
 
 	// Si les coordonnes initiales du rectangles sont hors de l'image on echoue

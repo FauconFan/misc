@@ -9,6 +9,9 @@ t_rc_cmd cimp_cut(t_cmd * cmd) {
 		return (ret_copy);
 
 	SDL_Rect rect;
+	SDL_Surface * surface;
+	surface = g_cimp->screen[cmd->focus]->buff_screen;
+
 	if (cmd->rect.x != -1 && cmd->rect.y != -1 && cmd->rect.w != -1 && cmd->rect.h != -1) {
 		rect = cmd->rect;
 	}
@@ -17,10 +20,14 @@ t_rc_cmd cimp_cut(t_cmd * cmd) {
 			printf("Pas de zone selectionnee : copie impossible \n");
 			return FAIL;
 		}
-		rect = g_cimp->select->surface;
+		if (g_cimp->screen[g_cimp->select->id] == NULL) {
+			printf("La zone selectionnee n'est plus accessible \n");
+			return FAIL;
+		}
+		rect    = g_cimp->select->surface;
+		surface = g_cimp->screen[g_cimp->select->id]->buff_screen;
 	}
-	SDL_Surface * surface;
-	surface = g_cimp->screen->buff_screen;
+
 	Uint32 color = SDL_MapRGBA(surface->format, 0, 0, 0, 0);
 	if (SDL_FillRect(surface, &rect, color) < 0)
 		return ABORT;

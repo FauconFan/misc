@@ -121,9 +121,6 @@ void                cimp_screen_update(t_cimp_screen * screen) {
 	full_rect.h = screen->buff_screen->h;
 	SDL_BlitSurface(screen->buff_screen, &full_rect, SDL_GetWindowSurface(screen->window), NULL);
 	SDL_UpdateWindowSurface(screen->window);
-
-	// Update events (if any)
-	update_event(g_cimp->event);
 }
 
 t_bool              cimp_screen_set_path(t_cimp_screen * screen, char * path) {

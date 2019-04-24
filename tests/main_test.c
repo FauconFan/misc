@@ -11,6 +11,7 @@ Suite * sample_suite(void) {
 	suite_add_tcase(s, save_test());
 	suite_add_tcase(s, meta_test());
 	suite_add_tcase(s, utils_test());
+	suite_add_tcase(s, core_test());
 	return s;
 }
 

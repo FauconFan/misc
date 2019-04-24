@@ -10,14 +10,12 @@ static uint32_t to_negative(uint32_t col, void * format_pixel) {
 }
 
 t_rc_cmd cimp_color_negative(t_cmd * cmd) {
-	if (g_cimp->screen) {
-		SDL_Surface * buff_screen;
-		SDL_Rect selection;
+	SDL_Surface * buff_screen;
+	SDL_Rect selection;
 
-		buff_screen = g_cimp->screen->buff_screen;
-		selection   = sdl_surface_build_good_selection(buff_screen, cmd->rect);
+	buff_screen = g_cimp->screen[cmd->focus]->buff_screen;
+	selection   = sdl_surface_build_good_selection(buff_screen, cmd->rect);
 
-		sdl_surface_mapp(buff_screen, selection, to_negative, buff_screen->format);
-	}
+	sdl_surface_mapp(buff_screen, selection, to_negative, buff_screen->format);
 	return (OK);
-} /* cimp_fill */
+} /* cimp_color_negative */
