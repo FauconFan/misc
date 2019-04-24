@@ -34,18 +34,29 @@ const std::set<unsigned int> & Clause::get_neg_litts() const{
 	return this->_neg_litts;
 }
 
+const std::set<int> & Clause::get_absent_litts() const{
+	return this->_absent_litts;
+}
+
 bool Clause::is_satisfied() const{
 	return this->satisfied;
 }
 
 void Clause::remove_litt(int litt) {
+	bool add_to_absent = true;
+
 	if (litt > 0)
-		this->_pos_litts.erase(litt);
+		add_to_absent = (this->_pos_litts.erase(litt) != 0);
 	else
-		this->_neg_litts.erase(-litt);
+		add_to_absent = (this->_neg_litts.erase(-litt) != 0);
+	if (add_to_absent)
+		this->_absent_litts.insert(litt);
 }
 
 void Clause::add_litt(int litt) {
+	if (this->_absent_litts.erase(litt) == 0)
+		return;
+
 	if (litt > 0)
 		this->_pos_litts.insert(litt);
 	else

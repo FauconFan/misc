@@ -5,7 +5,7 @@ static bool dpll_recu(Fnc & fnc) {
 
 	fnc.simplify();
 
-	if (fnc.has_empty_clause() || !fnc.unit_propagation())
+	if (fnc.has_empty_clause() || fnc.unit_propagation().first == false)
 		return (false);
 
 	if (fnc.empty())

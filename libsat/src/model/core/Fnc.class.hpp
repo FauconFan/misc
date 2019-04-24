@@ -33,7 +33,7 @@ class Fnc
 		void unassign();
 		void simplify();
 
-		bool unit_propagation();
+		std::pair<bool, std::list<std::pair<int, std::set<int> > > > unit_propagation();
 
 		void display(std::ostream &) const;
 

@@ -17,6 +17,7 @@ class Clause
 		// Getters
 		const std::set<unsigned int> &  get_pos_litts() const;
 		const std::set<unsigned int> &  get_neg_litts() const;
+		const std::set<int> &           get_absent_litts() const;
 		bool                            is_satisfied() const;
 
 		// Setters
@@ -37,6 +38,7 @@ class Clause
 	private:
 		std::set<unsigned int> _pos_litts {};
 		std::set<unsigned int> _neg_litts {};
+		std::set<int> _absent_litts {};
 		bool satisfied {false};
 };
 
