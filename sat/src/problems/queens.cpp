@@ -21,7 +21,7 @@ void    queens_problems() {
 	int size_tab;
 	std::vector<unsigned int> vec;
 
-	Logger::disable();
+	// Logger::disable();
 
 	std::cout << "size of the grid :\n";
 	std::cin >> size_tab;

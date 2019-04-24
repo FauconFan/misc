@@ -7,10 +7,18 @@ Occ_list::Occ_list (const Occ_list & ol) = default;
 
 Occ_list & Occ_list::operator=(const Occ_list & ol) = default;
 
-Pair Occ_list::get_pair(unsigned int key) const{
+const Pair Occ_list::get_count(unsigned int key) const{
 	const auto & pset = this->_content.at(key);
 
 	return Pair(pset.first.size(), pset.second.size());
+}
+
+const std::set<unsigned int> &Occ_list::get_pos_occu(unsigned int key) const {
+	return (this->_content.at(key).first);
+}
+
+const std::set<unsigned int> &Occ_list::get_neg_occu(unsigned int key) const {
+	return (this->_content.at(key).second);
 }
 
 std::pair<std::vector<unsigned int>, std::vector<unsigned int> > Occ_list::build_solo_polarity() const{

@@ -71,6 +71,7 @@ def main():
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
+    print(input_file)
     fnc = read_input(input_file)
     distrib = read_output(output_file)
 

@@ -47,6 +47,8 @@ bool Fnc::empty() const{
 
 bool Fnc::has_empty_clause() const{
 	for (const auto & cl : this->_clauses) {
+		if (cl.is_satisfied())
+			continue ;
 		if (cl.is_empty_clause())
 			return (true);
 	}
@@ -55,6 +57,8 @@ bool Fnc::has_empty_clause() const{
 
 bool Fnc::is_two_fnc() const{
 	for (const auto & cl : this->_clauses) {
+		if (cl.is_satisfied())
+			continue ;
 		if (cl.is_two_clause() == false)
 			return (false);
 	}
@@ -155,7 +159,7 @@ bool Fnc::unit_propagation() {
 		}
 
 		if (unit_litteraux.empty())
-			return (true);
+			return (this->has_empty_clause() == false);
 
 		for (int litt : unit_litteraux) {
 			if (litt > 0) {
@@ -180,29 +184,27 @@ void Fnc::assign(unsigned int id, bool value) {
 }
 
 void Fnc::assign_simplify(unsigned int id_litt, bool value) {
-	int side;
-	unsigned int id_clause;
+	const std::set<unsigned int> & rm_clauses_cid = value
+		? this->_occ_list.get_pos_occu(id_litt)
+		: this->_occ_list.get_neg_occu(id_litt);
+	const std::set<unsigned int> & rm_litt_cid = value
+		? this->_occ_list.get_neg_occu(id_litt)
+		: this->_occ_list.get_pos_occu(id_litt);
+	int side = (value) ? 1 : -1;
 
-	side      = (value) ? 1 : -1;
-	id_clause = -1;
-	for (Clause & cl : this->_clauses) {
-		id_clause++;
-		if (cl.is_satisfied())
-			continue;
-		int litt_side = cl.presence_litt(id_litt);
-		if (litt_side != 0) {
-			if (litt_side == side) {
-				this->_occ_list.remove_clause_id(cl.build_litts(), id_clause);
-				cl.set_satisfied(true);
-				this->add_sub_decision(SubDecision::decision_rm_clause(id_clause));
-			}
-			else {
-				int val = static_cast<int>(id_litt) * -side;
-				this->_occ_list.remove_clause_id(id_litt, id_clause, !value);
-				cl.remove_litt(val);
-				this->add_sub_decision(SubDecision::decision_rm_litt(id_clause, val));
-			}
-		}
+	for (unsigned int id_clause : rm_clauses_cid) {
+		Clause & cl = this->_clauses[id_clause];
+		this->_occ_list.remove_clause_id(cl.build_litts(), id_clause);
+		cl.set_satisfied(true);
+		this->add_sub_decision(SubDecision::decision_rm_clause(id_clause));
+	}
+
+	for (unsigned int id_clause : rm_litt_cid) {
+		Clause & cl = this->_clauses[id_clause];
+		int val = static_cast<int>(id_litt) * -side;
+		this->_occ_list.remove_clause_id(id_litt, id_clause, !value);
+		cl.remove_litt(val);
+		this->add_sub_decision(SubDecision::decision_rm_litt(id_clause, val));
 	}
 }
 
@@ -248,9 +250,11 @@ void Fnc::add_sub_decision(const SubDecision & sd) {
 void Fnc::display(std::ostream & os) const{
 	os << "FNC [\n";
 
+	unsigned int clause_id = 0;
 	for (const auto & acl : this->_clauses) {
 		if (acl.is_satisfied() == false)
-			os << "\t" << acl;
+			os << "\t" << clause_id << ":" << acl;
+		clause_id++;
 	}
 	os << this->_distrib;
 	os << this->_occ_list;

@@ -11,7 +11,9 @@ class Occ_list{
 		Occ_list & operator=(const Occ_list &);
 
 		// Getters
-		Pair get_pair(unsigned int) const;
+		const Pair get_count(unsigned int) const;
+		const std::set<unsigned int> &get_pos_occu(unsigned int) const;
+		const std::set<unsigned int> &get_neg_occu(unsigned int) const;
 
 		// Builders
 		std::pair<std::vector<unsigned int>, std::vector<unsigned int> > build_solo_polarity() const;
