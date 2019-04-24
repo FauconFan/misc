@@ -11,7 +11,7 @@ class Occ_list{
 		Occ_list & operator=(const Occ_list &);
 
 		// Getters
-		const Pair get_count(unsigned int) const;
+		const IPair get_count(unsigned int) const;
 		const std::set<unsigned int> &get_pos_occu(unsigned int) const;
 		const std::set<unsigned int> &get_neg_occu(unsigned int) const;
 
