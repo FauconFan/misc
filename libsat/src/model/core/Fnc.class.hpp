@@ -32,6 +32,7 @@ class Fnc
 		// Other
 		void assign(unsigned int id, bool value);
 		void unassign();
+		void backjump(unsigned int level);
 		void simplify();
 
 		std::pair<bool, std::list<std::pair<int, std::set<int> > > > unit_propagation();

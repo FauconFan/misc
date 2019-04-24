@@ -290,6 +290,12 @@ void Fnc::unassign() {
 	this->_map_litt_level_decision.erase(val);
 } // Fnc::unassign
 
+void Fnc::backjump(unsigned int level) {
+	while (this->_decisions.size() > level) {
+		this->unassign();
+	}
+}
+
 void Fnc::add_sub_decision(const SubDecision & sd) {
 	if (this->_decisions.empty())
 		return;
