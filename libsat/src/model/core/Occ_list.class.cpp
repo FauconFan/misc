@@ -13,11 +13,11 @@ const Pair Occ_list::get_count(unsigned int key) const{
 	return Pair(pset.first.size(), pset.second.size());
 }
 
-const std::set<unsigned int> &Occ_list::get_pos_occu(unsigned int key) const {
+const std::set<unsigned int> &Occ_list::get_pos_occu(unsigned int key) const{
 	return (this->_content.at(key).first);
 }
 
-const std::set<unsigned int> &Occ_list::get_neg_occu(unsigned int key) const {
+const std::set<unsigned int> &Occ_list::get_neg_occu(unsigned int key) const{
 	return (this->_content.at(key).second);
 }
 

@@ -71,7 +71,6 @@ def main():
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
-    print(input_file)
     fnc = read_input(input_file)
     distrib = read_output(output_file)
 
@@ -82,7 +81,7 @@ def main():
         sys.exit(1)
 
     b = verify_distrib(fnc, distrib)
-    print(b)
+    print(b, input_file)
     if b is False:
         sys.exit(1)
     sys.exit(0)
