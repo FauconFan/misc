@@ -158,10 +158,12 @@ bool Fnc::unit_propagation() {
 		for (int litt : unit_litteraux) {
 			if (litt > 0) {
 				this->_distrib.set(litt, true);
+				this->add_sub_decision(SubDecision::decision_assign(abs(litt), true));
 				this->assign_simplify(litt, true);
 			}
 			else if (litt < 0) {
 				this->_distrib.set(-litt, false);
+				this->add_sub_decision(SubDecision::decision_assign(abs(litt), false));
 				this->assign_simplify(-litt, false);
 			}
 		}

@@ -2,7 +2,6 @@
 
 static bool dpll_recu(Fnc & fnc) {
 	unsigned int assign_value;
-	bool res;
 
 	fnc.simplify();
 
@@ -31,9 +30,11 @@ static bool dpll_recu(Fnc & fnc) {
 	fnc.assign(assign_value, false);
 	Logger::info() << fnc;
 
-	res = dpll_recu(fnc);
+	if (dpll_recu(fnc))
+		return (true);
+
 	fnc.unassign();
-	return (res);
+	return (false);
 } // dpll_recu
 
 std::pair<bool, Distrib> dpll_solve(Fnc & fnc) {
