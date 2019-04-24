@@ -43,20 +43,15 @@ bool Clause::is_satisfied() const{
 }
 
 void Clause::remove_litt(int litt) {
-	bool add_to_absent = true;
-
 	if (litt > 0)
-		add_to_absent = (this->_pos_litts.erase(litt) != 0);
+		this->_pos_litts.erase(litt);
 	else
-		add_to_absent = (this->_neg_litts.erase(-litt) != 0);
-	if (add_to_absent)
-		this->_absent_litts.insert(litt);
+		this->_neg_litts.erase(-litt);
+	this->_absent_litts.insert(litt);
 }
 
 void Clause::add_litt(int litt) {
-	if (this->_absent_litts.erase(litt) == 0)
-		return;
-
+	this->_absent_litts.erase(litt);
 	if (litt > 0)
 		this->_pos_litts.insert(litt);
 	else
