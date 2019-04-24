@@ -23,18 +23,52 @@ const Occ_list & Fnc::get_occ_list() const{
 
 void Fnc::add_clause(const Clause & acl) {
 	if (this->ready) {
-		std::cerr << "Not yet...\n";
-		return;
+		Logger::warn() << "Try adding clause after setting as ready\n";
 	}
 	this->_clauses.push_back(acl);
 }
 
 void Fnc::add_fnc(const Fnc & fnc) {
 	if (this->ready) {
-		std::cerr << "Not yet...\n";
+		Logger::warn() << "Try adding fnc after setting as ready\n";
 		return;
 	}
 	this->_clauses.insert(this->_clauses.end(), fnc._clauses.begin(), fnc._clauses.end());
+}
+
+// We suppose that the clause given is not satisified by the actual distribution, and is not reductible to an unit clause.
+// Usefull in CDCL.
+void Fnc::add_falsy_clause(Clause cl) {
+	static const auto & func_comp = [](
+		std::pair<int, unsigned int> p1,
+		std::pair<int, unsigned int> p2) -> bool{
+		  return (p1.second < p2.second);
+	  };
+
+	if (this->ready == false) {
+		Logger::warn() << "Try adding falsy clause before setting as ready\n";
+	}
+	unsigned int clause_id = this->_clauses.size();
+	std::vector<std::pair<int, unsigned int> > vec;
+
+	for (int litt : cl.build_litts()) {
+		unsigned int m = -1;
+
+		auto it = this->_map_litt_level_decision.find(-litt);
+		if (it != this->_map_litt_level_decision.end())
+			m = it->second;
+		vec.push_back(std::make_pair(litt, m));
+	}
+
+	std::sort(vec.begin(), vec.end(), func_comp);
+
+	for (const auto & p : vec) {
+		if (p.second >= this->_decisions.size())
+			break;
+		cl.remove_litt(p.first);
+		this->_decisions[p.second].add_subdecision(SubDecision::decision_rm_litt(clause_id, p.first));
+	}
+	this->_occ_list.add_clause_id(cl.build_litts(), clause_id);
 }
 
 bool Fnc::empty() const{
@@ -188,7 +222,10 @@ std::pair<bool, std::list<std::pair<int, std::set<int> > > > Fnc::unit_propagati
 } // Fnc::unit_propagation
 
 void Fnc::assign(unsigned int id, bool value) {
-	this->_decisions.push_front(Decision(id, value));
+	int val = static_cast<int>(id) * (value ? 1 : -1);
+
+	this->_map_litt_level_decision[val] = this->_decisions.size();
+	this->_decisions.push_back(Decision(id, value));
 	this->_distrib.set(id, value);
 	this->assign_simplify(id, value);
 }
@@ -221,14 +258,16 @@ void Fnc::unassign() {
 	if (this->_decisions.empty())
 		return;
 
-	Decision last = this->_decisions.front();
-	this->_decisions.pop_front();
+	Decision last = this->_decisions.back();
+	this->_decisions.pop_back();
 
 	for (const SubDecision & sd : last.get_consequences()) {
 		switch (sd.get_type()) {
 			case ASSIGN: {
-				auto litt = sd.assign_get_litt();
+				unsigned int litt = sd.assign_get_litt();
+				int val = static_cast<int>(litt) * (sd.assign_get_value() ? 1 : -1);
 				this->_distrib.remove(litt);
+				this->_map_litt_level_decision.erase(val);
 				break;
 			}
 			case RM_CLAUSE: {
@@ -246,14 +285,20 @@ void Fnc::unassign() {
 			}
 		}
 	}
+	int val = static_cast<int>(last.get_variable_id()) * (last.get_value() ? 1 : -1);
 	this->_distrib.remove(last.get_variable_id());
-}
+	this->_map_litt_level_decision.erase(val);
+} // Fnc::unassign
 
 void Fnc::add_sub_decision(const SubDecision & sd) {
 	if (this->_decisions.empty())
 		return;
 
-	this->_decisions.front().add_subdecision(sd);
+	if (sd.get_type() == ASSIGN) {
+		int val = static_cast<int>(sd.assign_get_litt()) * (sd.assign_get_value() ? 1 : -1);
+		this->_map_litt_level_decision[val] = this->_decisions.size() - 1;
+	}
+	this->_decisions.back().add_subdecision(sd);
 }
 
 void Fnc::display(std::ostream & os) const{
@@ -269,6 +314,9 @@ void Fnc::display(std::ostream & os) const{
 	os << this->_occ_list;
 	for (const Decision & dec : this->_decisions) {
 		os << dec << "\n";
+	}
+	for (const auto & p : this->_map_litt_level_decision) {
+		os << "variable : " << p.first << " level : " << p.second << "\n";
 	}
 	os << "]\n";
 }

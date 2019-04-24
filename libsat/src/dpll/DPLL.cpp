@@ -45,6 +45,8 @@ std::pair<bool, Distrib> dpll_solve(Fnc & fnc) {
 
 	bool res = dpll_recu(fnc);
 
+	Logger::info() << "Finale fnc\n" << fnc << "\n";
+
 	fnc.set_distrib_as_finished();
 	return (std::make_pair(res, fnc.get_distrib()));
 }

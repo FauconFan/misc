@@ -34,7 +34,7 @@ class SubDecision{
 		union {
 			struct {
 				unsigned int litt_id;
-				bool         value; // Maybe delete this
+				bool         value;
 			} assign;
 			struct {
 				unsigned int clause_id;
@@ -69,12 +69,13 @@ class Decision{
 		void add_subdecision(const SubDecision &);
 
 		unsigned int get_variable_id() const;
+		bool get_value() const;
 
 	private:
 		unsigned int _variable_id {0};
-		bool _value {true}; // delete this maybe ?
+		bool _value {true};
 		// consequences will never be the same !
-		std::list<SubDecision> _consequences;
+		std::list<SubDecision> _consequences {};
 };
 
 std::ostream &operator<<(std::ostream &, const Decision &);

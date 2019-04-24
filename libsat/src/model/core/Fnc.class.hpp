@@ -19,6 +19,7 @@ class Fnc
 
 		// Setters
 		void add_clause(const Clause &);
+		void add_falsy_clause(Clause);
 		void add_fnc(const Fnc &);
 		void set_as_ready();
 		void set_distrib_as_finished();
@@ -46,8 +47,9 @@ class Fnc
 		// list of occurences (variables)
 		Occ_list _occ_list;
 
-		// List of actions
-		std::list<Decision> _decisions {};
+		// List of decisions
+		std::unordered_map<int, unsigned int> _map_litt_level_decision;
+		std::vector<Decision> _decisions {};
 
 		// Simplification
 		void set_satisfy_if_contains(int);
