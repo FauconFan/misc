@@ -117,6 +117,7 @@ WARNS_EXCEPTS = \
 				cppcoreguidelines-pro-bounds-pointer-arithmetic \
 				cppcoreguidelines-pro-bounds-array-to-pointer-decay \
 				cppcoreguidelines-pro-bounds-constant-array-index \
+				cppcoreguidelines-pro-type-union-access \
 				llvm-header-guard \
 				llvm-include-order \
 				google-readability-braces-around-statements \

@@ -5,9 +5,12 @@ static Graph<int>   buildGraph2SAT(const Fnc & fnc) {
 
 	for (const auto & cl : fnc.get_clauses()) {
 		const auto & litts = cl.build_litts();
+		const auto val1    = *litts.cbegin();
+		const auto val2    = *(litts.cbegin()++);
 
-		res.addEdge(-litts.front(), litts.back());
-		res.addEdge(-litts.back(), litts.front());
+
+		res.addEdge(-val1, val2);
+		res.addEdge(-val2, val1);
 	}
 	return (res);
 }

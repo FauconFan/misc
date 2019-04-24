@@ -26,8 +26,7 @@ class Clause
 
 		// Builders
 		std::set<unsigned int>          build_presence_set() const;
-		Occ_list                        build_occ_list() const;
-		std::list<int>                  build_litts() const;
+		std::set<int>                   build_litts() const;
 
 		// Predicates
 		bool                            is_empty_clause() const;

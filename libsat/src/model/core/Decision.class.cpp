@@ -50,6 +50,26 @@ e_sub_decision_type SubDecision::get_type() const{
 	return (this->type);
 }
 
+unsigned int SubDecision::assign_get_litt() const{
+	return (this->u.assign.litt_id);
+}
+
+bool SubDecision::assign_get_value() const{
+	return (this->u.assign.value);
+}
+
+unsigned int SubDecision::rm_clause_get_clause_id() const{
+	return (this->u.rm_clause.clause_id);
+}
+
+unsigned int SubDecision::rm_litt_get_clause_id() const{
+	return (this->u.rm_litt.clause_id);
+}
+
+int SubDecision::rm_litt_get_litt() const{
+	return (this->u.rm_litt.litt);
+}
+
 SubDecision SubDecision::decision_assign(unsigned int litt_id, bool value) {
 	return (SubDecision(litt_id, value));
 }
@@ -66,13 +86,13 @@ std::ostream &operator<<(std::ostream & os, const SubDecision & sd) {
 	os << "Subdecision:";
 	switch (sd.get_type()) {
 		case ASSIGN:
-			os << "Assign " << sd.u.assign.litt_id << "\n";
+			os << "Assign " << sd.assign_get_litt() << "\n";
 			break;
 		case RM_CLAUSE:
-			os << "Rm clause " << sd.u.rm_clause.clause_id << "\n";
+			os << "Rm clause " << sd.rm_clause_get_clause_id() << "\n";
 			break;
 		case RM_LITT:
-			os << "Rm litt " << sd.u.rm_litt.clause_id << " " << sd.u.rm_litt.litt << "\n";
+			os << "Rm litt " << sd.rm_litt_get_clause_id() << " " << sd.rm_litt_get_litt() << "\n";
 			break;
 	}
 	return os;

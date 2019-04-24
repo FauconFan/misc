@@ -22,7 +22,15 @@ class SubDecision{
 		static SubDecision decision_rm_clause(unsigned int clause_id);
 		static SubDecision decision_rm_litt(unsigned int clause_id, int litt);
 
-		e_sub_decision_type type;
+		unsigned int        assign_get_litt() const;
+		bool                assign_get_value() const;
+
+		unsigned int        rm_clause_get_clause_id() const;
+
+		unsigned int        rm_litt_get_clause_id() const;
+		int                 rm_litt_get_litt() const;
+	private:
+		e_sub_decision_type type {};
 		union {
 			struct {
 				unsigned int litt_id;
@@ -35,8 +43,8 @@ class SubDecision{
 				unsigned int clause_id;
 				int          litt;
 			} rm_litt;
-		} u;
-	private:
+		} u {};
+
 		// assign
 		SubDecision(unsigned int litt_id, bool value);
 		// rm_clause
@@ -63,8 +71,8 @@ class Decision{
 		unsigned int get_variable_id() const;
 
 	private:
-		unsigned int _variable_id;
-		bool _value; // delete this maybe ?
+		unsigned int _variable_id {0};
+		bool _value {true}; // delete this maybe ?
 		// consequences will never be the same !
 		std::list<SubDecision> _consequences;
 };

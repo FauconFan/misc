@@ -49,7 +49,7 @@ def set_from_distrib(distrib):
     s = set()
     for i in distrib:
         s.add(abs(i))
-    return (s);
+    return (s)
 
 def verify_distrib(fnc, distrib):
     for clause in fnc:

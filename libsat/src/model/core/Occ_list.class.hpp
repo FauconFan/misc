@@ -3,8 +3,6 @@
 
 #include "libsat.hpp"
 
-class Fnc;
-
 class Occ_list{
 	public:
 		Occ_list ();
@@ -21,15 +19,13 @@ class Occ_list{
 
 		// Setters
 		void set_content(const std::vector<Clause> & clauses);
-		void add_pair(unsigned int, const Pair &);
-		void sub_pair(unsigned int, const Pair &);
+		void add_clause_id(unsigned int litt_id, unsigned int clause_id, bool side);
+		void add_clause_id(const std::set<int> & sint, unsigned int clause_id);
+		void remove_clause_id(unsigned int litt_id, unsigned int clause_id, bool side);
+		void remove_clause_id(const std::set<int> & sint, unsigned int clause_id);
 
 		// Predicates
 		bool empty() const;
-
-		// Other
-		Occ_list & operator+=(const Occ_list &);
-		Occ_list & operator-=(const Occ_list &);
 
 		unsigned int stat_min_occu() const;
 		unsigned int stat_max_occu() const;
@@ -37,7 +33,12 @@ class Occ_list{
 		void display(std::ostream & os) const;
 
 	private:
-		std::unordered_map<unsigned int, Pair> _content {};
+		std::unordered_map<unsigned int,
+		  std::pair<
+			  std::set<unsigned int>,
+			  std::set<unsigned int>
+		  >
+		> _content {};
 };
 
 std::ostream & operator<<(std::ostream & os, const Occ_list & ol);

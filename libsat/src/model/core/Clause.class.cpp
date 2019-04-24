@@ -64,27 +64,13 @@ std::set<unsigned int> Clause::build_presence_set() const{
 	return (res);
 }
 
-Occ_list Clause::build_occ_list() const{
-	Occ_list res;
-
-	for (unsigned int val : (this->_pos_litts)) {
-		res.add_pair(val, Pair(1, 0));
-	}
-
-	for (unsigned int val : (this->_neg_litts)) {
-		res.add_pair(val, Pair(0, 1));
-	}
-
-	return res;
-}
-
-std::list<int> Clause::build_litts() const{
-	std::list<int> res;
+std::set<int> Clause::build_litts() const{
+	std::set<int> res;
 
 	for (unsigned int val : this->_pos_litts)
-		res.push_back(val);
+		res.insert(val);
 	for (unsigned int val : this->_neg_litts)
-		res.push_back(-static_cast<int>(val));
+		res.insert(-static_cast<int>(val));
 	return (res);
 }
 

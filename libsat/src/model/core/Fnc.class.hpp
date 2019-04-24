@@ -41,8 +41,6 @@ class Fnc
 		bool ready {false};
 		// List of clauses
 		std::vector<Clause> _clauses {};
-		// index of variables
-		std::unordered_map<unsigned int, std::set<unsigned int> > _index_variables;
 		// variable distribution
 		Distrib _distrib;
 		// list of occurences (variables)
@@ -54,7 +52,7 @@ class Fnc
 		// Simplification
 		void set_satisfy_if_contains(int);
 		void polarity_check();
-		void assign_simplify(unsigned int id, bool value);
+		void assign_simplify(unsigned int id_litt, bool value);
 
 		// Decisions utils
 		void add_sub_decision(const SubDecision & sd);
