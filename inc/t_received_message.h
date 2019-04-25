@@ -13,7 +13,6 @@ typedef struct      s_received_message{
     uint64_t        sender_id;
     uint32_t        nonce;
     uint8_t         type;
-    // le contenu du message, on a la taille grace à (length - 13)
     uint8_t         *text;
     uint8_t         length;
 }                   t_received_message;
