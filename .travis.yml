@@ -74,7 +74,7 @@ matrix:
         - make satlib_bench
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_20_BMS__RTI_k3_n100_m429
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_21_BMS__BMS_k3_n100_m429
-    - name: sat dpll CBS 22 - 61
+    - name: sat dpll CBS 22 - 31
       stage: Test
       script:
         - make satlib_bench
@@ -88,6 +88,10 @@ matrix:
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_29_CBS__CBS_k3_n100_m411_b50
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_30_CBS__CBS_k3_n100_m411_b70
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_31_CBS__CBS_k3_n100_m411_b90
+    - name: sat dpll CBS 32 - 41
+      stage: Test
+      script:
+        - make satlib_bench
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_32_CBS__CBS_k3_n100_m418_b10
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_33_CBS__CBS_k3_n100_m418_b30
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_34_CBS__CBS_k3_n100_m418_b50
@@ -98,6 +102,10 @@ matrix:
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_39_CBS__CBS_k3_n100_m423_b50
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_40_CBS__CBS_k3_n100_m423_b70
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_41_CBS__CBS_k3_n100_m423_b90
+    - name: sat dpll CBS 42 - 51
+      stage: Test
+      script:
+        - make satlib_bench
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_42_CBS__CBS_k3_n100_m429_b10
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_43_CBS__CBS_k3_n100_m429_b30
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_44_CBS__CBS_k3_n100_m429_b50
@@ -108,6 +116,10 @@ matrix:
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_49_CBS__CBS_k3_n100_m435_b50
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_50_CBS__CBS_k3_n100_m435_b70
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_51_CBS__CBS_k3_n100_m435_b90
+    - name: sat dpll CBS 52 - 61
+      stage: Test
+      script:
+        - make satlib_bench
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_52_CBS__CBS_k3_n100_m441_b10
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_53_CBS__CBS_k3_n100_m441_b30
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_54_CBS__CBS_k3_n100_m441_b50

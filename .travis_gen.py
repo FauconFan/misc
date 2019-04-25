@@ -74,7 +74,7 @@ SAT_DPLL =[
                     ("_20_BMS__RTI_k3_n100_m429", SAT),
                     ("_21_BMS__BMS_k3_n100_m429", SAT),
                 ]),
-                ("CBS 22 - 61", [
+                ("CBS 22 - 31", [
                     ("_22_CBS__CBS_k3_n100_m403_b10", SAT),
                     ("_23_CBS__CBS_k3_n100_m403_b30", SAT),
                     ("_24_CBS__CBS_k3_n100_m403_b50", SAT),
@@ -85,6 +85,8 @@ SAT_DPLL =[
                     ("_29_CBS__CBS_k3_n100_m411_b50", SAT),
                     ("_30_CBS__CBS_k3_n100_m411_b70", SAT),
                     ("_31_CBS__CBS_k3_n100_m411_b90", SAT),
+                ]),
+                ("CBS 32 - 41", [
                     ("_32_CBS__CBS_k3_n100_m418_b10", SAT),
                     ("_33_CBS__CBS_k3_n100_m418_b30", SAT),
                     ("_34_CBS__CBS_k3_n100_m418_b50", SAT),
@@ -95,6 +97,8 @@ SAT_DPLL =[
                     ("_39_CBS__CBS_k3_n100_m423_b50", SAT),
                     ("_40_CBS__CBS_k3_n100_m423_b70", SAT),
                     ("_41_CBS__CBS_k3_n100_m423_b90", SAT),
+                ]),
+                ("CBS 42 - 51", [
                     ("_42_CBS__CBS_k3_n100_m429_b10", SAT),
                     ("_43_CBS__CBS_k3_n100_m429_b30", SAT),
                     ("_44_CBS__CBS_k3_n100_m429_b50", SAT),
@@ -105,6 +109,8 @@ SAT_DPLL =[
                     ("_49_CBS__CBS_k3_n100_m435_b50", SAT),
                     ("_50_CBS__CBS_k3_n100_m435_b70", SAT),
                     ("_51_CBS__CBS_k3_n100_m435_b90", SAT),
+                ]),
+                ("CBS 52 - 61", [
                     ("_52_CBS__CBS_k3_n100_m441_b10", SAT),
                     ("_53_CBS__CBS_k3_n100_m441_b30", SAT),
                     ("_54_CBS__CBS_k3_n100_m441_b50", SAT),
