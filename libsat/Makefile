@@ -24,9 +24,10 @@ CXX = clang++
 CXX_FLAGS = -g -O2 -Wall -Wextra -Werror \
 			-Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align \
 			-Wunused -Woverloaded-virtual -pedantic
+CXX_ADDITIONAL_FLAGS = ""
 CXX_STD = -std=c++14
 INC_FLAGS = -I ./
-FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
+FLAGS = $(CXX_FLAGS) $(CXX_ADDITIONAL_FLAGS) $(CXX_STD) $(INC_FLAGS)
 
 SRC = \
 	$(CORE_FOLDER)Clause.class.cpp \
@@ -53,6 +54,10 @@ $(NAME): $(OBJ)
 	@printf "Library %s... " "$(NAME)"
 	@$(AR) rc $(NAME) $(OBJ)
 	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
+
+.PHONY: fast
+fast:
+	make all CXX_ADDITIONAL_FLAGS="-DFAST"
 
 %.o: %.cpp
 	@printf "Compiling %s... " "$?"

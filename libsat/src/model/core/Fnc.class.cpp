@@ -23,14 +23,14 @@ const Occ_list & Fnc::get_occ_list() const{
 
 void Fnc::add_clause(const Clause & acl) {
 	if (this->ready) {
-		Logger::warn() << "Try adding clause after setting as ready\n";
+		WARN("Try adding clause after setting as ready")
 	}
 	this->_clauses.push_back(acl);
 }
 
 void Fnc::add_fnc(const Fnc & fnc) {
 	if (this->ready) {
-		Logger::warn() << "Try adding fnc after setting as ready\n";
+		WARN("Try adding fnc after setting as ready")
 		return;
 	}
 	this->_clauses.insert(this->_clauses.end(), fnc._clauses.begin(), fnc._clauses.end());
@@ -46,7 +46,7 @@ void Fnc::add_falsy_clause(Clause cl) {
 	  };
 
 	if (this->ready == false) {
-		Logger::warn() << "Try adding falsy clause before setting as ready\n";
+		WARN("Try adding falsy clause before setting as ready")
 	}
 	unsigned int clause_id = this->_clauses.size();
 	std::vector<std::pair<int, unsigned int> > vec;
@@ -119,18 +119,18 @@ void Fnc::polarity_check() {
 		auto pos = p.first;
 		auto neg = p.second;
 
-		Logger::info() << "FNC polarity check" << * this << this->_occ_list;
+		INFO("FNC polarity check", *this, this->_occ_list)
 
 		if (pos.empty() && neg.empty())
 			break;
 		for (auto i : pos) {
-			Logger::info() << "Polarity positive only : " << i << "\n";
+			INFO("Polarity positive only : ", i)
 			this->_distrib.set(i, true);
 			this->add_sub_decision(SubDecision::decision_assign(i, true));
 			this->set_satisfy_if_contains(i);
 		}
 		for (auto i : neg) {
-			Logger::info() << "Polarity negative only : " << i << "\n";
+			INFO("Polarity negative only : ", i)
 			this->_distrib.set(i, false);
 			this->add_sub_decision(SubDecision::decision_assign(i, false));
 			this->set_satisfy_if_contains(i);
@@ -144,16 +144,16 @@ void Fnc::polarity_check() {
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
 void Fnc::simplify() {
-	Logger::info() << "simplify... \n";
+	INFO("simplify")
 
 	// Suppression si polarité unique
-	Logger::info() << "Polarity test\n";
+	INFO("Polarity test")
 	this->polarity_check();
-	Logger::info() << this->_occ_list;
+	INFO(this->_occ_list)
 
-	Logger::info() << * this;
+	INFO(*this)
 
-	Logger::info() << "end clean\n";
+	INFO("end clean")
 }
 
 void Fnc::set_satisfy_if_contains(int val) {
@@ -188,13 +188,13 @@ std::pair<bool, std::list<std::pair<int, std::set<int> > > > Fnc::unit_propagati
 			if (current_unit_litteral == 0)
 				continue;
 			if (unit_litteraux.find(-current_unit_litteral) != unit_litteraux.end()) {
-				Logger::info() << "2 opposites unit clauses are presents : " << current_unit_litteral << "\n";
+				INFO("2 opposites unit clauses are presents : ", current_unit_litteral)
 				return (UP_FALSE);
 			}
 
 			unit_litteraux.insert(current_unit_litteral);
 			list_impli.push_back(std::make_pair(current_unit_litteral, ac.get_absent_litts()));
-			Logger::info() << "Detect new unit clause : " << current_unit_litteral << "\n";
+			INFO("Detect new unit clause : ", current_unit_litteral)
 		}
 
 		if (unit_litteraux.empty()) {

@@ -12,5 +12,4 @@ test_run: $(SAT)
 	$(foreach file, $(FILES), bash -c "$(CHECK_SAT) $(file) <($(SAT) --no-logs $(ALGO) $(file))";)
 
 $(SAT):
-	make -C $(dir $(SAT)) $(notdir $(SAT))
-
+	make -C $(dir $(SAT)) fast
