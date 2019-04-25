@@ -18,10 +18,18 @@ matrix:
       stage: Base
       script:
         - make -C libsat
+    - name: compile libsat fast
+      stage: Base
+      script:
+        - make -C libsat fast
     - name: compile sat
       stage: Base
       script:
         - make -C sat
+    - name: compile sat fast
+      stage: Base
+      script:
+        - make -C sat fast
     - name: uncrustify
       stage: Lint
       script:
@@ -70,7 +78,7 @@ matrix:
     - name: queens
       stage: Benchmark
       script:
-        - make -C sat sat
+        - make -C sat fast
         - time (echo 1 | sat/sat queens)
         - time (echo 2 | sat/sat queens)
         - time (echo 3 | sat/sat queens)
@@ -89,3 +97,6 @@ matrix:
         - time (echo 16 | sat/sat queens)
         - time (echo 17 | sat/sat queens)
         - time (echo 18 | sat/sat queens)
+        - time (echo 19 | sat/sat queens)
+        - time (echo 20 | sat/sat queens)
+        - time (echo 21 | sat/sat queens)

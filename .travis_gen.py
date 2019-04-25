@@ -25,7 +25,9 @@ JOBS = [J_BASE, J_LINT, J_TEST, J_BENCH]
 BASE_TASKS = [
     (J_BASE, "verifying travis.yml file", [], ["python3 .travis_gen.py > expected.out", "diff .travis.yml expected.out"]),
     (J_BASE, "compile libsat", [], ["make -C libsat"]),
+    (J_BASE, "compile libsat fast", [], ["make -C libsat fast"]),
     (J_BASE, "compile sat", [], ["make -C sat"]),
+    (J_BASE, "compile sat fast", [], ["make -C sat fast"]),
 ]
 
 # Lint is a stage that test the project using some external tools
@@ -55,9 +57,9 @@ for folder in FOLDERS_SAT_DPLL:
 
 # Bench is a stage when we run bench with examples, without verifying
 
-CMDS_QUEENS = ["make -C sat sat"]
+CMDS_QUEENS = ["make -C sat fast"]
 
-for i in range(1, 18 + 1):
+for i in range(1, 21 + 1):
     CMDS_QUEENS.append("time (echo " + str(i) + " | sat/sat queens)")
 
 BENCH_TASKS = [
