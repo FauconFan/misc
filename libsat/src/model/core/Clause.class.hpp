@@ -15,8 +15,7 @@ class Clause
 		Clause &operator=(const Clause & icl);
 
 		// Getters
-		const std::set<unsigned int> &  get_pos_litts() const;
-		const std::set<unsigned int> &  get_neg_litts() const;
+		const std::set<int> &           get_litts() const;
 		const std::set<int> &           get_absent_litts() const;
 		bool                            is_satisfied() const;
 
@@ -27,7 +26,6 @@ class Clause
 
 		// Builders
 		std::set<unsigned int>          build_presence_set() const;
-		std::set<int>                   build_litts() const;
 
 		// Predicates
 		bool                            is_empty_clause() const;
@@ -36,8 +34,7 @@ class Clause
 		int                             presence_litt(int) const;
 
 	private:
-		std::set<unsigned int> _pos_litts {};
-		std::set<unsigned int> _neg_litts {};
+		std::set<int> _litts;
 		std::set<int> _absent_litts {};
 		bool satisfied {false};
 };

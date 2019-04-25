@@ -48,7 +48,7 @@ void Occ_list::set_content(const std::vector<Clause> & clauses) {
 
 	this->_content.clear();
 	for (const auto & cl : clauses) {
-		this->add_clause_id(cl.build_litts(), clause_id);
+		this->add_clause_id(cl.get_litts(), clause_id);
 		clause_id++;
 	}
 }

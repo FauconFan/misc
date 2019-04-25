@@ -4,7 +4,7 @@ static Graph<int>   buildGraph2SAT(const Fnc & fnc) {
 	Graph<int> res;
 
 	for (const auto & cl : fnc.get_clauses()) {
-		const auto & litts = cl.build_litts();
+		const auto & litts = cl.get_litts();
 		const auto val1    = *litts.cbegin();
 		const auto val2    = *(litts.cbegin()++);
 

@@ -3,7 +3,11 @@
 static bool dpll_recu(Fnc & fnc) {
 	unsigned int assign_value;
 
+	INFO(fnc)
+
 	fnc.simplify();
+
+	INFO(fnc)
 
 	if (fnc.has_empty_clause() || fnc.unit_propagation().first == false)
 		return (false);
