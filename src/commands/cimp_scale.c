@@ -1,9 +1,8 @@
 #include "cimp.h"
 
-t_rc_cmd cimp_scale(t_cmd * cmd) {
-	SDL_Surface * source = g_cimp->screen[cmd->focus]->buff_screen;
-	SDL_Surface * copy   = SDL_CreateRGBSurface(0, cmd->point.x,
-			cmd->point.y, source->format->BitsPerPixel, source->format->Rmask,
+SDL_Surface * scale_util(SDL_Surface * source, SDL_Rect rectangle) {
+	SDL_Surface * copy = SDL_CreateRGBSurface(0, rectangle.w,
+			rectangle.h, source->format->BitsPerPixel, source->format->Rmask,
 			source->format->Gmask, source->format->Bmask, source->format->Amask);
 
 	SDL_BlendMode oldBlendMode;
@@ -12,21 +11,54 @@ t_rc_cmd cimp_scale(t_cmd * cmd) {
 
 	SDL_SetSurfaceBlendMode(source, SDL_BLENDMODE_NONE);
 
+
+	if (SDL_BlitScaled(source, NULL, copy, &rectangle) != 0) {
+		SDL_FreeSurface(copy);
+		SDL_SetSurfaceBlendMode(source, oldBlendMode);
+		return NULL;
+	}
+
+	SDL_SetSurfaceBlendMode(source, oldBlendMode);
+
+	return copy;
+}
+
+t_rc_cmd cimp_scale_rect(t_cmd * cmd) {
+	SDL_Surface * source = g_cimp->screen[cmd->focus]->buff_screen;
+
 	SDL_Rect rectangle;
+
 	rectangle.x = 0;
 	rectangle.y = 0;
 	rectangle.w = cmd->point.x;
 	rectangle.h = cmd->point.y;
 
-	if (SDL_BlitScaled(source, NULL, copy, &rectangle) != 0) {
-		SDL_FreeSurface(copy);
-		SDL_SetSurfaceBlendMode(source, oldBlendMode);
+	SDL_Surface * copy = scale_util(source, rectangle);
+
+	if (copy == NULL)
 		return (FAIL);
-	}
 
 	SDL_FreeSurface(source);
 	g_cimp->screen[cmd->focus]->buff_screen = copy;
-	SDL_SetSurfaceBlendMode(source, oldBlendMode);
+	return (OK);
+}
 
+t_rc_cmd cimp_scale_ratio(t_cmd * cmd) {
+	SDL_Surface * source = g_cimp->screen[cmd->focus]->buff_screen;
+
+	SDL_Rect rectangle;
+
+	rectangle.x = 0;
+	rectangle.y = 0;
+	rectangle.w = source->w * cmd->num;
+	rectangle.h = source->h * cmd->num;
+
+	SDL_Surface * copy = scale_util(source, rectangle);
+
+	if (copy == NULL)
+		return (FAIL);
+
+	SDL_FreeSurface(source);
+	g_cimp->screen[cmd->focus]->buff_screen = copy;
 	return (OK);
 }
