@@ -130,28 +130,6 @@ matrix:
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_59_CBS__CBS_k3_n100_m449_b50
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_60_CBS__CBS_k3_n100_m449_b70
         - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_61_CBS__CBS_k3_n100_m449_b90
-    - name: sat dpll GCP 62 - 69
-      stage: Test
-      script:
-        - make satlib_bench
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_62_GCP__flat30-60
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_63_GCP__flat50-115
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_64_GCP__flat75-180
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_65_GCP__flat100-239
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_66_GCP__flat125-301
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_67_GCP__flat150-360
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_68_GCP__flat175-417
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_69_GCP__flat200-479
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_70_SW-GCP__sw100-8-lp0-c5
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_71_SW-GCP__sw100-8-lp1-c5
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_72_SW-GCP__sw100-8-lp2-c5
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_73_SW-GCP__sw100-8-lp3-c5
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_74_SW-GCP__sw100-8-lp4-c5
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_75_SW-GCP__sw100-8-lp5-c5
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_76_SW-GCP__sw100-8-lp6-c5
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_77_SW-GCP__sw100-8-lp7-c5
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_78_SW-GCP__sw100-8-lp8-c5
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_79_SW-GCP__sw100-8-p0-c5
     - name: queens
       stage: Benchmark
       script:
