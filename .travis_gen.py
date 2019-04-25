@@ -45,15 +45,39 @@ LINT_TASKS = [
 
 TEST_TASKS = []
 
-FOLDERS_SAT_DPLL = ["_01_RND3SAT__uf20-91",
-                    "_02_RND3SAT__uf50-218",
-                    "_04_RND3SAT__uf75-325",
-                    "_06_RND3SAT__uf100-430"]
+SAT = 0
+UNSAT = 1
 
-for folder in FOLDERS_SAT_DPLL:
-    name = "check sat dpll " + folder
+SAT_DPLL =[
+                ("RND3SAT 01 - 09", [
+                    ("_01_RND3SAT__uf20-91", SAT),
+                    ("_02_RND3SAT__uf50-218", SAT),
+                    ("_03_RND3SAT__uuf50-218", UNSAT),
+                    ("_04_RND3SAT__uf75-325", SAT),
+                    ("_05_RND3SAT__uuf75-325", UNSAT),
+                    ("_06_RND3SAT__uf100-430", SAT),
+                    ("_07_RND3SAT__uuf100-430", UNSAT),
+                    ("_08_RND3SAT__uf125-538", SAT),
+                    ("_09_RND3SAT__uuf125-538", UNSAT),
+                ]),
+            ]
 
-    TEST_TASKS.append((J_TEST, name, [], ["make satlib_bench", "make -C tests FOLDER_CNFS=../input_files/satlib/" + folder]))
+# FOLDERS_SAT_DPLL = ["_01_RND3SAT__uf20-91",
+#                     "_02_RND3SAT__uf50-218",
+#                     "_04_RND3SAT__uf75-325",
+#                     "_06_RND3SAT__uf100-430"]
+
+def build_command(is_sat, folder):
+    rule = "test_sat" if is_sat == SAT else "test_unsat"
+    return ("make -C tests " + rule + " FOLDER_CNFS=../input_files/satlib/" + folder)
+
+for (name, li) in SAT_DPLL:
+    name = "sat dpll " + name
+    li_tasks = ["make satlib_bench"]
+    for (folder, is_sat) in li:
+        li_tasks.append(build_command(is_sat, folder))
+
+    TEST_TASKS.append((J_TEST, name, [], li_tasks))
 
 # Bench is a stage when we run bench with examples, without verifying
 
