@@ -1,6 +1,6 @@
 #include "cimp.h"
 
-SDL_Surface * scale_util(SDL_Surface * source, SDL_Rect rectangle) {
+static SDL_Surface * scale_util(SDL_Surface * source, SDL_Rect rectangle) {
 	SDL_Surface * copy = SDL_CreateRGBSurface(0, rectangle.w,
 			rectangle.h, source->format->BitsPerPixel, source->format->Rmask,
 			source->format->Gmask, source->format->Bmask, source->format->Amask);
