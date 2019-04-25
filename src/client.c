@@ -43,7 +43,7 @@ void    client(
         fprintf(stderr, "echec flags non bloquants 1\n");
         exit(1);
     }
-    rc = fcntl(sfd, F_SETFL, rc|O_NONBLOCK);
+    rc = fcntl(sfd, F_SETFL, rc | O_NONBLOCK);
     if (rc < 0) {
         fprintf(stderr, "echec flags non bloquants 2\n" );
     }
@@ -64,7 +64,7 @@ void    client(
             N = sendto(sfd, hello_long, len_hello, 0, sock_addr, sock_len);
 
             printf(">> ");
-            for (size_t i=0; i < N; i++){
+            for (size_t i = 0; i < N; i++){
                 printf("%.2d ",((uint8_t *)hello_long)[i]);
             }
             printf("\n");

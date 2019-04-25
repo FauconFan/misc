@@ -13,8 +13,7 @@ typedef uint8_t     t_bool;
 #define MAGIC_NUMBER    93
 #define VERSION         2
 
-#define RANGE_MIN_TLV_TYPE  0
-#define RANGE_MAX_TLV_TYPE  7
+#define FREE_PTR(ptr)   ((void (*)(void *))(ptr))
 
 typedef enum    e_tlv_type {
     PAD1 = 0,
@@ -29,13 +28,15 @@ typedef enum    e_tlv_type {
 
 // Struct declarations
 
-#include "t_list.h"
-#include "t_iovec_builder.h"
-#include "t_tlv_builder.h"
-#include "my_header.h"
-#include "t_acquit_message.h"
-#include "t_neighbour.h"
-#include "t_potential_neighbour.h"
-#include "t_received_message.h"
+#include "utils.h"
+
+#include "struct/t_list.h"
+#include "struct/t_iovec_builder.h"
+#include "struct/t_tlv_builder.h"
+#include "struct/t_acquit_message.h"
+#include "struct/t_neighbour.h"
+#include "struct/t_potential_neighbour.h"
+#include "struct/t_received_message.h"
+#include "struct/t_env.h"
 
 #endif

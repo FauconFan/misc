@@ -12,15 +12,10 @@ typedef struct       s_neighbour {
     struct timeval  our_last_hello;
 }                   t_neighbour;
 
-
-t_neighbour     *nei_alloc(uint64_t id, uint16_t port, uint8_t ip[16]);
+t_neighbour     *nei_alloc(uint64_t id, uint8_t ip[16], uint16_t port);
 void            nei_free(t_neighbour *nei);
 
 // prédicat d'égalité
 t_bool          nei_is_id(t_neighbour *nei, uint64_t id);
-
-
-
-
 
 #endif

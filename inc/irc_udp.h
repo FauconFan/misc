@@ -22,6 +22,9 @@
 
 #include "typedefs.h"
 
+#define JCH_NODE    "jch.irif.fr"
+#define JCH_SERVICE "1212"
+
 void    getSocketJuliusz(
                 const char * node,
                 const char * service,
@@ -40,7 +43,6 @@ void    client(
 
 void    parse_datagram(uint8_t *tlv, size_t len);
 
-
-extern uint64_t     g_id;
+extern t_env        *g_env;
 
 #endif
