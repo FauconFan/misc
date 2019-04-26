@@ -16,12 +16,14 @@ t_rc_cmd cimp_crop_reduce(t_cmd * cmd) {
 
 	SDL_Surface * source = g_cimp->screen[cmd->focus]->buff_screen;
 
-    if(rectangle.w > source->w || rectangle.h > source->h){
-        printf("Le rectangle est plus grand que l'image : pour agrandir l'image utilisez la fonction crop_extend\n");
-        return (FAIL);
-    }
+	if (rectangle.w + rectangle.x > source->w || rectangle.x > source->w ||
+	  rectangle.h + rectangle.y > source->h || rectangle.y > source->h)
+	{
+		printf("Le rectangle est plus grand que l'image : pour agrandir l'image utilisez la fonction crop_extend\n");
+		return (FAIL);
+	}
 
-    SDL_Surface * copy   = SDL_CreateRGBSurface(0, rectangle.w,
+	SDL_Surface * copy = SDL_CreateRGBSurface(0, rectangle.w,
 			rectangle.h, source->format->BitsPerPixel, source->format->Rmask,
 			source->format->Gmask, source->format->Bmask, source->format->Amask);
 
@@ -34,4 +36,4 @@ t_rc_cmd cimp_crop_reduce(t_cmd * cmd) {
 	g_cimp->screen[cmd->focus]->buff_screen = copy;
 
 	return (OK);
-}
+} /* cimp_crop_reduce */

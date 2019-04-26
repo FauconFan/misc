@@ -78,8 +78,9 @@ cimp>> help
  - sym_hori [NAME] [? [RECT]]
  - rotate [NAME] [ANGLE]
  - crop_reduce [NAME] [? [RECT]]
- - crop_extend [NAME] [? [COORD]]
- - scale [NAME] [xN|[W] [H]]
+ - crop_extend [NAME] [? [RECT] [? COLOR]]
+ - scale_rect [NAME] [[W] [H]]
+ - scale_ratio [NAME] [xN]
  - fill [NAME] [? [RECT]] [COLOR]
  - color_replace [NAME] [? [RECT]] [COLOR] [COLOR] [MARGIN]
  - color_negative [NAME] [? [RECT]]
@@ -144,12 +145,12 @@ rotate est une commande qui prend un angle en argument (multiple de 90) et qui t
 
 Ces commandes correspondent à la modification de l'espace de travail.  
 crop_reduce réduit l'image a l'aide d'un découpage rectangulaire.  
-crop_extend agrandit l'espace de travail (avec des pixels blancs)
+crop_extend agrandit l'espace de travail (avec des pixels noirs si on ne passe pas de couleur en argument)
 
-### scale
+### scale_rect/scale_ratio
 
 scale est une commande qui agrandit/réduit l'espace de travail ainsi que la taille de l'image.
-Les arguments sont  soit un facteur multiplicatif (e.g: scale x1.2), soit une nouvelle taille.
+Les arguments sont  soit un facteur multiplicatif pour scale_ratio(e.g: scale x1.2), soit une nouvelle taille pour scale_rect.
 
 ### fill
 

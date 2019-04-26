@@ -78,6 +78,7 @@ COMMANDS_FILES = \
 			cimp_focus.c \
 			cimp_scale.c \
 			cimp_crop_reduce.c \
+			cimp_crop_extend.c \
 
 LEX_PAR_FILES = \
 			parser.c \
