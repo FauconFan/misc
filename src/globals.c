@@ -28,6 +28,8 @@ const t_cmd_config g_command_list[] = {
 	{"color_white_black",    cimp_color_white_black,    0,                    ARG_RECT | ARG_FOCUS | ARG_NUM},
 	{"ajust_light_contrast", cimp_ajust_light_contrast, ARG_NUM,              ARG_RECT | ARG_FOCUS          },
 	{"focus",                cimp_focus,                0,                    ARG_FOCUS                     },
+	{"scale_rect",           cimp_scale_rect,           ARG_PT,               ARG_FOCUS                     },
+	{"scale_ratio",          cimp_scale_ratio,          ARG_NUM,              ARG_FOCUS                     },
 	{"QUIT",                 NULL,                      0,                    0                             }, // QUIT must have NULL as func_ptr
 };
 
