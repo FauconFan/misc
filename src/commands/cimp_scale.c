@@ -24,6 +24,10 @@ static SDL_Surface * scale_util(SDL_Surface * source, SDL_Rect rectangle) {
 }
 
 t_rc_cmd cimp_scale_rect(t_cmd * cmd) {
+	if (cmd->point.x < 0 || cmd->point.y < 0) {
+		printf("On ne peut pas avoir une image avec des dimensions negatives \n");
+		return (FAIL);
+	}
 	SDL_Surface * source = g_cimp->screen[cmd->focus]->buff_screen;
 
 	SDL_Rect rectangle;
@@ -44,6 +48,10 @@ t_rc_cmd cimp_scale_rect(t_cmd * cmd) {
 }
 
 t_rc_cmd cimp_scale_ratio(t_cmd * cmd) {
+	if (cmd->num < 0) {
+		printf("On ne peut pas avoir une image avec des dimensions negatives \n");
+		return (FAIL);
+	}
 	SDL_Surface * source = g_cimp->screen[cmd->focus]->buff_screen;
 
 	SDL_Rect rectangle;
