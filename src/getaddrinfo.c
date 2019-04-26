@@ -1,9 +1,14 @@
 #include "irc_udp.h"
 
-void    getSocketJuliusz(
+t_bool      get_sockaddr_juliusz(
+                struct sockaddr ** sock_addr,
+                socklen_t * sock_len) {
+    return (get_sockaddr(JCH_NODE, JCH_SERVICE, sock_addr, sock_len));
+}
+
+t_bool      get_sockaddr(
                 const char * node,
                 const char * service,
-                int * sfd,
                 struct sockaddr ** sock_addr,
                 socklen_t * sock_len) {
     struct addrinfo     hints;
@@ -13,15 +18,15 @@ void    getSocketJuliusz(
     int                 s;
 
     memset(&hints, 0, sizeof(hints));
-    hints.ai_family = AF_INET6;
-    hints.ai_socktype = SOCK_DGRAM;
-    hints.ai_protocol = 0;
-    hints.ai_flags = (AI_V4MAPPED | AI_ALL);
+    hints.ai_family = ENV_FAMILY;
+    hints.ai_socktype = ENV_SOCKTYPE;
+    hints.ai_protocol = ENV_PROTOCOL;
+    hints.ai_flags = ENV_FLAGS;
 
     rc = getaddrinfo(node, service, &hints, &res);
     if(rc != 0) {
         fprintf(stderr, "Échec cinglant : %s\n", gai_strerror(rc));
-        exit(1);
+        return (FALSE);
     }
 
     for (p = res; p != NULL; p = p->ai_next) {
@@ -30,17 +35,17 @@ void    getSocketJuliusz(
             close(s);
             continue;
         }
-        printf("creation socket\n" );
+        close(s);
         break ;
     }
 
     if (p == NULL) {
         fprintf(stderr, "La connection a échoué.\n");
-        exit(1);
+        freeaddrinfo(res);
+        return (FALSE);
     }
-    *sfd = s;
     *sock_addr = p->ai_addr;
     *sock_len = p->ai_addrlen;
     freeaddrinfo(res);
-
+    return (TRUE);
 }

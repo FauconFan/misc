@@ -3,6 +3,7 @@
 
 #include "irc_udp.h"
 
+void                print_time_val(struct timeval t);
 //my_time
 struct timeval      add(struct timeval *t1, struct timeval *t2);
 // fonction qui renvoie une struct timeval egale à maintenant+ 2^n secondes

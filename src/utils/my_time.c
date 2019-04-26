@@ -1,5 +1,8 @@
 #include "irc_udp.h"
 
+void                print_time_val(struct timeval t) {
+    printf("tv { sec : %ld, ms : %ld }", t.tv_sec, t.tv_usec);
+}
 
 struct timeval      add(struct timeval *t1, struct timeval *t2){
     struct timeval time;

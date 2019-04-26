@@ -25,21 +25,30 @@
 #define JCH_NODE    "jch.irif.fr"
 #define JCH_SERVICE "1212"
 
-void    getSocketJuliusz(
+#define ENV_FAMILY   AF_INET6
+#define ENV_SOCKTYPE SOCK_DGRAM
+#define ENV_PROTOCOL 0
+#define ENV_FLAGS    (AI_V4MAPPED | AI_ALL)
+
+t_bool      get_sockaddr_juliusz(
+                struct sockaddr ** sock_addr,
+                socklen_t * sock_len);
+
+t_bool      get_sockaddr(
                 const char * node,
                 const char * service,
-                int * sfd,
                 struct sockaddr ** sock_addr,
                 socklen_t * sock_len);
 
 void    client(
-                int sfd,
                 struct sockaddr *sock_addr,
                 socklen_t sock_len,
                 const void * buff,
                 size_t len_buff,
                 void *buff2,
                 size_t len_buff2);
+
+int     build_socket(void);
 
 void    parse_datagram(uint8_t *tlv, size_t len);
 

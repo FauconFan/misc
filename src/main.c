@@ -8,19 +8,36 @@ uint8_t     hello_long[22] = {93, 2, 0, 18, 2, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 int main(void)
 {
     g_env = env_alloc();
+    if (g_env == NULL)
+        return (1);
 
-    memcpy(msg + 6, (char *)&g_env->id, 8);
-    memcpy(hello_long + 6, (char *)&g_env->id, 8);
+    uint8_t ip[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    lst_add(g_env->li_neighbours, nei_alloc(gen_id(), ip, 1234));
+    lst_add(g_env->li_neighbours, nei_alloc(gen_id(), ip, 1234));
 
+    lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip, 4321));
+    lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip, 4321));
 
-    int             sfd;
-    struct sockaddr *sock_addr;
-    socklen_t       sock_len;
+    lst_add(g_env->li_messages, message_alloc(gen_id(), gen_nonce(), 0, 6, (uint8_t *)"coucou"));
+    lst_add(g_env->li_messages, message_alloc(gen_id(), gen_nonce(), 0, 6, (uint8_t *)"coucou"));
 
-    getSocketJuliusz(JCH_NODE, JCH_SERVICE, &sfd, &sock_addr, &sock_len);
+    lst_add(g_env->li_acquit, acquit_alloc(gen_id(), gen_nonce()));
+    lst_add(g_env->li_acquit, acquit_alloc(gen_id(), gen_nonce()));
+    lst_add(g_env->li_acquit, acquit_alloc(gen_id(), gen_nonce()));
+    lst_add(g_env->li_acquit, acquit_alloc(gen_id(), gen_nonce()));
 
-    client(sfd, sock_addr, sock_len, msg, sizeof(msg), hello_long, sizeof(hello_long));
+    env_print(g_env);
+
+    // memcpy(msg + 6, (char *)&g_env->id, 8);
+    // memcpy(hello_long + 6, (char *)&g_env->id, 8);
+
+    // struct sockaddr *sock_addr;
+    // socklen_t       sock_len;
+
+    // get_sockaddr_juliusz(&sock_addr, &sock_len);
+
+    // client(sock_addr, sock_len, msg, sizeof(msg), hello_long, sizeof(hello_long));
 
     env_free(g_env);
-    return 0;
+    return (0);
 }

@@ -25,16 +25,17 @@ static t_bool _lst_free_next_then_connect(
     return (TRUE);
 }
 
-t_list  *lst_alloc(void (*freef)(void *)) {
+t_list  *lst_alloc(void (*freefptr)(void *), void (*printfptr)(void *)) {
     t_list  *res;
 
-    if (freef == NULL)
+    if (freefptr == NULL)
         return (NULL);
     if ((res = (t_list *)malloc(sizeof(t_list))) == NULL)
         return (NULL);
     res->len = 0;
     res->head = NULL;
-    res->freef = freef;
+    res->freefptr = freefptr;
+    res->printfptr = printfptr;
     return (res);
 }
 
@@ -47,8 +48,8 @@ void    lst_free(t_list * lst) {
     actu = lst->head;
     while (actu) {
         next = actu->next;
-        if (lst->freef != NULL)
-            (lst->freef)(actu->data);
+        if (lst->freefptr != NULL)
+            (lst->freefptr)(actu->data);
         free(actu);
         actu = next;
     }
@@ -84,6 +85,27 @@ t_bool  lst_isempty(t_list * lst) {
     return (lst->len == 0);
 }
 
+static void pretty_print_list(void *v, void *fptrv) {
+    void    (*fptr)(void *);
+
+    fptr = PRINT_PTR(fptrv);
+    printf("\t");
+    fptr(v);
+    printf(",\n");
+}
+
+void    lst_print(t_list * lst) {
+    if (lst == NULL || lst->printfptr == NULL)
+        return ;
+    if (lst_isempty(lst)) {
+        printf("[]\n");
+        return ;
+    }
+    printf("[\n");
+    lst_iterp(lst, pretty_print_list, lst->printfptr);
+    printf("]\n");
+}
+
 t_bool  lst_add(t_list * lst, void * data) {
     t_list_node *node;
 
@@ -105,8 +127,8 @@ t_bool lst_pop(t_list * lst) {
     if (lst == NULL || lst->head == NULL)
         return (FALSE);
     tmp = lst->head->next;
-    if (lst->freef != NULL)
-        (lst->freef)(lst->head->data);
+    if (lst->freefptr != NULL)
+        (lst->freefptr)(lst->head->data);
     free(lst->head);
     lst->head = tmp;
     lst->len = lst->len - 1;
@@ -146,7 +168,7 @@ t_bool lst_pop(t_list * lst) {
         while (prev->next) { \
             if (COND(prev->next)) { \
                 lst->len = lst->len - 1; \
-                if (_lst_free_next_then_connect(prev, (lst)->freef) == FALSE) \
+                if (_lst_free_next_then_connect(prev, (lst)->freefptr) == FALSE) \
                     return (FALSE); \
                 else if (all == FALSE) \
                     return (TRUE); \
@@ -176,7 +198,7 @@ t_bool lst_pop(t_list * lst) {
         t_list_node *actu; \
         void        **res; \
         \
-        buff = lst_alloc(NULL); \
+        buff = lst_alloc(NULL, lst->printfptr); \
         actu = lst->head; \
         while (actu) { \
             if (COND(actu->data)) \
@@ -198,7 +220,6 @@ t_bool lst_pop(t_list * lst) {
             actu = actu->next; \
         } \
     }
-
 
 t_bool  lst_remove_if(t_list * lst, t_predf predf) {
     if (lst == NULL || predf == NULL)

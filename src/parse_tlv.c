@@ -2,7 +2,7 @@
 
 static uint16_t parse_pad1(uint8_t * tlv) {
     (void)tlv;
-    printf("RECEIVE PAD1 msg\n");
+    printf("PAD1\n");
     return (1);
 }
 
@@ -10,7 +10,7 @@ static uint16_t parse_padN(uint8_t * tlv) {
     uint16_t len;
     t_bool   filled_with_zero;
 
-    printf("RECEIVE PADN msg\n");
+    printf("PADN\n");
     len = tlv[1];
     filled_with_zero = TRUE;
     for (size_t i = 0; i < len; ++i) {
@@ -30,47 +30,42 @@ static uint16_t parse_hello(uint8_t * tlv) {
     uint64_t source_id;
     uint64_t dest_id;
 
-    printf("RECEIVE HELLO msg\n");
     len = tlv[1];
     if (len != 8 && len != 16) {
         printf("Inconsistent hello message\n");
         printf("Wrong len %d\n", len);
     }
     else if (len == 8) {
-        printf("Short hello\n");
         source_id = *(uint64_t *)(tlv + 2);
-        printf("From %lx\n", source_id);
+        printf("HELLO SHORT Source-id: %016lx\n", source_id);
     }
     else if (len == 16) {
-        printf("Long hello\n");
         source_id = *(uint64_t *)(tlv + 2);
         dest_id = *(uint64_t *)(tlv + 10);
-        printf("From %lx\n", source_id);
-        printf("To   %lx\n", dest_id);
+        printf("HELLO LONG Source-id: %016lx, Dest-id: %016lx\n", source_id, dest_id);
     }
     return (len + 2);
 }
 
-static uint16_t parse_neighbor(uint8_t * tlv) {
+static uint16_t parse_neighbour(uint8_t * tlv) {
     uint16_t len;
     uint8_t  *ip;
     uint16_t port;
 
-    printf("RECEIVE NEIGHBOR MSG\n");
     len = tlv[1];
     if (len != 18) {
-        printf("Inconsistent neighbor message\n");
+        printf("Inconsistent neighbour message\n");
         printf("Wrong len %d\n", len);
     }
     else {
         ip = tlv + 2;
         port = *(uint16_t *)(tlv + 18);
-        printf("New neighbor\n");
+        printf("NEIGHBOUR ");
         printf("IP : ");
         for (size_t i = 0; i < 16; ++i) {
             printf("%.2x ", ip[i]);
         }
-        printf("\nPort : %d\n", port);
+        printf("Port : %d\n", ntohs(port));
     }
     return (len + 2);
 }
@@ -82,7 +77,6 @@ static uint16_t parse_data(uint8_t * tlv) {
     uint8_t type;
     uint8_t *msg;
 
-    printf("RECEIVE DATA MSG\n");
     len = tlv[1];
     if (len < 13) {
         printf("Inconsistent data message\n");
@@ -93,13 +87,12 @@ static uint16_t parse_data(uint8_t * tlv) {
         nounce = *(uint32_t *)(tlv + 10);
         type = *(uint8_t *)(tlv + 14);
         msg = tlv + 15;
-        printf("sender id : %lx\n", sender_id);
-        printf("nounce : %d\n", nounce);
-        printf("type : %d\n", type);
+        printf("DATA ");
+        printf("sender id : %016lx, nounce : %d, type : %d, msg : ", sender_id, nounce, type);
         if (type != 0)
             printf("No printable message\n");
         else
-            printf("msg : %.*s", len - 13, msg);
+            printf("\"%.*s\"", len - 13, msg);
     }
     return (len + 2);
 }
@@ -109,7 +102,6 @@ static uint16_t parse_ack(uint8_t * tlv) {
     uint64_t sender_id;
     uint32_t nounce;
 
-    printf("RECEIVE ACK MSG\n");
     len = tlv[1];
     if (len != 12) {
         printf("Inconsistent ack message\n");
@@ -118,8 +110,7 @@ static uint16_t parse_ack(uint8_t * tlv) {
     else {
         sender_id = *(uint64_t *)(tlv + 2);
         nounce = *(uint32_t *)(tlv + 10);
-        printf("sender id : %lx\n", sender_id);
-        printf("nounce : %d\n", nounce);
+        printf("ACK sender id : %016lx, nounce : %d\n", sender_id, nounce);
     }
     return (len + 2);
 }
@@ -129,7 +120,6 @@ static uint16_t parse_goaway(uint8_t * tlv) {
     uint8_t code;
     uint8_t *msg;
 
-    printf("RECEIVE GOAWAY MSG\n");
     len = tlv[1];
     if (len < 1) {
         printf("Inconsistent goaway msg\n");
@@ -137,16 +127,17 @@ static uint16_t parse_goaway(uint8_t * tlv) {
     }
     else {
         code = tlv[2];
-        printf("code %d\n", code);
+        printf("GOAWAY code %d, meaning : ", code);
         switch (code) {
-            case 0: printf("unknown reason\n"); break;
-            case 1: printf("sender quit the system\n"); break;
-            case 2: printf("hello message missing for too long\n"); break;
-            case 3: printf("sender didn't respect the protocol\n"); break;
-            default: printf("unknown code\n"); break;
+            case 0: printf("unknown reason"); break;
+            case 1: printf("sender quit the system"); break;
+            case 2: printf("hello message missing for too long"); break;
+            case 3: printf("sender didn't respect the protocol"); break;
+            case 4: printf("sender has too many neighbours"); break;
+            default: printf("unknown code"); break;
         }
         msg = tlv + 3;
-        printf("msg : %.*s\n", len - 1, msg);
+        printf(", msg : %.*s\n", len - 1, msg);
     }
     return (len + 2);
 }
@@ -155,10 +146,9 @@ static uint16_t parse_warning(uint8_t * tlv) {
     uint8_t len;
     uint8_t * msg;
 
-    printf("RECEIVE Warning MSG\n");
     len = tlv[1];
     msg = tlv + 3;
-    printf("msg : %.*s\n", len, msg);
+    printf("WARNING msg : %.*s\n", len, msg);
     return (len + 2);
 }
 
@@ -167,7 +157,7 @@ static uint16_t parse_tlv(uint8_t * tlv) {
         case PAD1: return (parse_pad1(tlv));
         case PADN: return (parse_padN(tlv));
         case HELLO: return (parse_hello(tlv));
-        case NEIGHBOUR: return (parse_neighbor(tlv));
+        case NEIGHBOUR: return (parse_neighbour(tlv));
         case DATA: return (parse_data(tlv));
         case ACK: return (parse_ack(tlv));
         case GOAWAY: return (parse_goaway(tlv));
@@ -211,9 +201,7 @@ void            parse_datagram(uint8_t *tlv, size_t len) {
 
     len_actu = 4;
     while (len_actu < len) {
-        printf("====================\n");
+        printf("=== ");
         len_actu += parse_tlv(tlv + len_actu);
-        printf("====================\n");
     }
-    printf("all good\n");
 }
