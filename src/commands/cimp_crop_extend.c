@@ -15,6 +15,10 @@ t_rc_cmd cimp_crop_extend(t_cmd * cmd) {
 		printf("Le rectangle est en dehors de l'image, c'est donc impossible de l'aggrandir\n");
 		return (FAIL);
 	}
+	if(rectangle.x < 0 || rectangle.y < 0 || rectangle.w < 0 || rectangle.h < 0){
+        printf("Des coordonnées negatives, quelle idee ?\n");
+        return (FAIL);
+    }
 	if (rectangle.w - rectangle.x < source->w && rectangle.h - rectangle.y < source->h) {
 		printf("Le rectangle est plus petit que l'image : pour rogner l'image utilisez la fonction crop_reduire\n");
 		return (FAIL);

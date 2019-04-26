@@ -15,7 +15,10 @@ t_rc_cmd cimp_crop_reduce(t_cmd * cmd) {
 	}
 
 	SDL_Surface * source = g_cimp->screen[cmd->focus]->buff_screen;
-
+    if(rectangle.x < 0 || rectangle.y < 0 || rectangle.w < 0 || rectangle.h < 0){
+        printf("Des coordonnées negatives, quelle idee ?\n");
+        return (FAIL);
+    }
 	if (rectangle.w + rectangle.x > source->w || rectangle.x > source->w ||
 	  rectangle.h + rectangle.y > source->h || rectangle.y > source->h)
 	{
