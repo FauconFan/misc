@@ -24,5 +24,6 @@ t_rc_cmd cimp_ajust_light_contrast(t_cmd * cmd);
 t_rc_cmd cimp_focus(t_cmd * cmd);
 t_rc_cmd cimp_scale_rect(t_cmd * cmd);
 t_rc_cmd cimp_scale_ratio(t_cmd * cmd);
+t_rc_cmd cimp_crop_reduce(t_cmd * cmd);
 
 #endif // ifndef COMMANDS_H

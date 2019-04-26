@@ -77,7 +77,7 @@ cimp>> help
  - sym_verti [NAME] [? [RECT]]
  - sym_hori [NAME] [? [RECT]]
  - rotate [NAME] [ANGLE]
- - crop_reduce [NAME] [? [COORD]]
+ - crop_reduce [NAME] [? [RECT]]
  - crop_extend [NAME] [? [COORD]]
  - scale [NAME] [xN|[W] [H]]
  - fill [NAME] [? [RECT]] [COLOR]
