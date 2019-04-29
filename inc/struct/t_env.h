@@ -18,4 +18,6 @@ void                env_free(t_env * env);
 
 void                env_print(t_env * env);
 
+struct timeval      env_min_time(t_env * env);
+
 #endif

@@ -33,3 +33,17 @@ void                    acquit_no_response(t_acquit *acquit){
 t_bool                  is_acquit(t_acquit *acquit, uint64_t id, uint32_t nonce){
     return (acquit->sender_id == id && acquit->nonce == nonce);
 }
+
+
+static void     parcours_acq(t_acquit *acq, struct timeval * tv) {
+    struct timeval  *tmp;
+    tmp = min_time(*tv, acq->next_time);
+    time_assign(tv, tmp);
+}
+
+struct timeval         acquit_get_min_time(t_list *li_acquit) {
+    struct timeval tv = ((t_acquit *)lst_top(li_acquit))->next_time;
+
+    lst_iterp(li_acquit, (void (*)(void *, void *))parcours_acq, &tv);
+    return tv;
+}

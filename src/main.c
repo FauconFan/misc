@@ -27,7 +27,8 @@ int main(void)
     lst_add(g_env->li_acquit, acquit_alloc(gen_id(), gen_nonce()));
 
     env_print(g_env);
-
+    print_time_val(env_min_time(g_env));
+    printf("\n");
     // memcpy(msg + 6, (char *)&g_env->id, 8);
     // memcpy(hello_long + 6, (char *)&g_env->id, 8);
 

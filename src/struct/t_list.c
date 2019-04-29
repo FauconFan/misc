@@ -85,6 +85,12 @@ t_bool  lst_isempty(t_list * lst) {
     return (lst->len == 0);
 }
 
+void    *lst_top(t_list * lst) {
+    if (lst == NULL || lst->head == NULL)
+        return (NULL);
+    return (lst->head->data);
+}
+
 static void pretty_print_list(void *v, void *fptrv) {
     void    (*fptr)(void *);
 

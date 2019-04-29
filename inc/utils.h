@@ -9,6 +9,10 @@ struct timeval      add(struct timeval *t1, struct timeval *t2);
 // fonction qui renvoie une struct timeval egale à maintenant+ 2^n secondes
 struct timeval      raise(uint8_t n);
 
+struct timeval      *min_time(struct timeval t1, struct timeval t2);
+
+void                time_assign(struct timeval *t1, struct timeval *t2);
+
 
 // my_getrandom
 uint64_t 		gen_id();

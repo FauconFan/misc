@@ -15,7 +15,7 @@ t_env               *env_alloc(void) {
         || (res->li_potential_neighbours = lst_alloc(FREE_PTR(pot_nei_free), PRINT_PTR(pot_nei_print))) == NULL
         || (res->li_messages = lst_alloc(FREE_PTR(message_free), PRINT_PTR(message_print))) == NULL
         || (res->li_acquit = lst_alloc(FREE_PTR(acquit_free), PRINT_PTR(acquit_print))) == NULL) {
-        
+
         if (res->li_neighbours)
             lst_free(res->li_neighbours);
         if (res->li_potential_neighbours)
@@ -52,4 +52,13 @@ void                env_print(t_env * env) {
     printf("\tli_acquit : ");
     lst_print(env->li_acquit);
     printf("}\n");
+}
+
+
+struct timeval      env_min_time(t_env * env){
+    struct timeval min_hello = nei_get_min_time(env->li_neighbours);
+    struct timeval min_acquit = acquit_get_min_time(env->li_acquit);
+
+    struct timeval *next = min_time(min_hello, min_acquit);
+    return *next;
 }

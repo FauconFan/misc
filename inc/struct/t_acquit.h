@@ -28,4 +28,6 @@ void                    acquit_no_response(t_acquit *acquit);
 // prédicat d'égalité
 t_bool                  is_acquit(t_acquit *acquit, uint64_t id, uint32_t nonce);
 
+struct timeval          acquit_get_min_time(t_list *li_acquit);
+
 #endif

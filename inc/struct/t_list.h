@@ -5,11 +5,11 @@
 
 /**
  *  t_list is a simple linked list that contains abstract data (void *)
- *  there are a lot of functions related to it to provide a high api. 
+ *  there are a lot of functions related to it to provide a high api.
  */
 
 /**
- *  Internal structure that represents a simple node in the list. 
+ *  Internal structure that represents a simple node in the list.
  */
 typedef struct  s_list_node {
     void                *data; // The given data
@@ -17,7 +17,7 @@ typedef struct  s_list_node {
 }               t_list_node;
 
 /**
- *  The main structure. 
+ *  The main structure.
  *  The freef function is the function to free resources allocated for data in node.
  */
 typedef struct  s_list {
@@ -33,7 +33,7 @@ typedef struct  s_list {
  *  - a predicate t_predpf that takes a data plus an extra parameter.
  *  - a function t_iterf that takes a data.
  *  - a function t_iterpf that takes a data plus an extra parameter.
- * 
+ *
  *  the iterf function receive the real data (not a copy).
  *  so you can modify the data in the function given.
  */
@@ -66,6 +66,9 @@ t_bool  lst_isempty(t_list * lst);
 
 // Print the list
 void    lst_print(t_list * lst);
+
+// Return a pointer to the first element in the list.
+void    *lst_top(t_list * lst);
 
 // Adding an element on top of the list.
 t_bool  lst_add(t_list * lst, void * data);

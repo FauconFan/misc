@@ -21,3 +21,14 @@ struct timeval      raise(uint8_t n){
     time.tv_sec = time.tv_sec + sec;
     return time;
 }
+
+struct timeval      *min_time(struct timeval t1, struct timeval t2){
+    if(t1.tv_sec == t2.tv_sec)
+        return ((t1.tv_usec < t2.tv_usec)? &t1 : &t2);
+    return ((t1.tv_sec < t2.tv_sec)? &t1 : &t2);
+}
+
+void                time_assign(struct timeval *t1, struct timeval *t2){
+    t1->tv_sec = t2->tv_sec;
+    t1->tv_usec = t2->tv_usec;
+}
