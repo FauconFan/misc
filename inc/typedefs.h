@@ -1,30 +1,30 @@
 #ifndef TYPEDEFS_H
-#define TYPEDEFS_H
+#define	TYPEDEFS_H
 
 // Globals defines
 
-#define TRUE        1
-#define FALSE       0
+#define	TRUE  1
+#define	FALSE 0
 
-typedef uint8_t     t_bool;
+typedef uint8_t t_bool;
 
 // Project defines
 
-#define MAGIC_NUMBER    93
-#define VERSION         2
+#define	MAGIC_NUMBER 93
+#define	VERSION      2
 
-#define FREE_PTR(ptr)   ((void (*)(void *))(ptr))
-#define PRINT_PTR(ptr)  ((void (*)(void *, int))(ptr))
+#define	FREE_PTR(ptr)  ((void(*)(void *))(ptr))
+#define	PRINT_PTR(ptr) ((void(*)(void *, int))(ptr))
 
-typedef enum    e_tlv_type {
-    PAD1 = 0,
-    PADN = 1,
-    HELLO = 2,
-    NEIGHBOUR = 3,
-    DATA = 4,
-    ACK = 5,
-    GOAWAY = 6,
-    WARNING = 7,
+typedef enum    e_tlv_type{
+	PAD1      = 0,
+	PADN      = 1,
+	HELLO     = 2,
+	NEIGHBOUR = 3,
+	DATA      = 4,
+	ACK       = 5,
+	GOAWAY    = 6,
+	WARNING   = 7,
 }               t_tlv_type;
 
 // Struct declarations
@@ -39,4 +39,4 @@ typedef enum    e_tlv_type {
 #include "struct/protocol/t_message.h"
 #include "struct/t_env.h"
 
-#endif
+#endif // ifndef TYPEDEFS_H

@@ -1,8 +1,7 @@
-
 #ifndef IRC_UDP_H
-#define IRC_UDP_H
+#define	IRC_UDP_H
 
-#define _GNU_SOURCE
+#define	_GNU_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,38 +26,38 @@
 #include "ui.h"
 #include "utils.h"
 
-#define JCH_NODE    "jch.irif.fr"
-#define JCH_SERVICE "1212"
+#define	JCH_NODE     "jch.irif.fr"
+#define	JCH_SERVICE  "1212"
 
-#define ENV_FAMILY   AF_INET6
-#define ENV_SOCKTYPE SOCK_DGRAM
-#define ENV_PROTOCOL 0
-#define ENV_FLAGS    (AI_V4MAPPED | AI_ALL)
+#define	ENV_FAMILY   AF_INET6
+#define	ENV_SOCKTYPE SOCK_DGRAM
+#define	ENV_PROTOCOL 0
+#define	ENV_FLAGS    (AI_V4MAPPED | AI_ALL)
 
 t_bool      get_sockaddr_juliusz(
-                struct sockaddr ** sock_addr,
-                socklen_t * sock_len);
+  struct sockaddr ** sock_addr,
+  socklen_t *        sock_len);
 
 t_bool      get_sockaddr(
-                const char * node,
-                const char * service,
-                struct sockaddr ** sock_addr,
-                socklen_t * sock_len);
+  const char *       node,
+  const char *       service,
+  struct sockaddr ** sock_addr,
+  socklen_t *        sock_len);
 
 void    client(
-                struct sockaddr *sock_addr,
-                socklen_t sock_len,
-                const void * buff,
-                size_t len_buff,
-                void *buff2,
-                size_t len_buff2);
+  struct sockaddr * sock_addr,
+  socklen_t         sock_len,
+  const void *      buff,
+  size_t            len_buff,
+  void *            buff2,
+  size_t            len_buff2);
 
 int     build_socket(void);
 
-void    parse_datagram(uint8_t *tlv, size_t len);
+void    parse_datagram(uint8_t * tlv, size_t len);
 
 void    update_buffer();
 
-extern t_env        *g_env;
+extern t_env * g_env;
 
-#endif
+#endif // ifndef IRC_UDP_H

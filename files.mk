@@ -31,3 +31,7 @@ SRC = \
 		$(SRC_STRUCT_PROTOCOL_FOLDER)t_acquit.c \
 		$(SRC_STRUCT_FOLDER)t_env.c \
 		$(SRC_FOLDER)update_buffer.c \
+
+INC = $(shell find $(INC_FOLDER) -name "*.h")
+
+ALL_FILES = $(SRC) $(INC)

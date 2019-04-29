@@ -1,15 +1,14 @@
 #include "irc_udp.h"
 
-char	*strnew(size_t size)
-{
-	char	*s;
-	size_t	index;
+char * strnew(size_t size) {
+	char * s;
+	size_t index;
 
 	index = 0;
-	if ((s = (char *)malloc(sizeof(char) * (size + 1))) == NULL)
-        return (NULL);
-	while (index < size)
-	{
+	if ((s = (char *) malloc(sizeof(char) * (size + 1))) == NULL)
+		return (NULL);
+
+	while (index < size) {
 		s[index] = 0;
 		index++;
 	}
@@ -17,27 +16,26 @@ char	*strnew(size_t size)
 	return (s);
 }
 
-char	*strjoin(const char *s1, const char *s2)
-{
-	unsigned int	len1;
-	unsigned int	len2;
-	unsigned int	len_tot;
-	char			*res;
+char * strjoin(const char * s1, const char * s2) {
+	unsigned int len1;
+	unsigned int len2;
+	unsigned int len_tot;
+	char * res;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
+
 	len_tot = strlen(s1) + strlen(s2);
-	if ((res = (char *)malloc(sizeof(char) * (len_tot + 1))) == NULL)
+	if ((res = (char *) malloc(sizeof(char) * (len_tot + 1))) == NULL)
 		return (NULL);
+
 	len1 = 0;
 	len2 = 0;
-	while (s1[len1])
-	{
+	while (s1[len1]) {
 		res[len1] = s1[len1];
 		len1++;
 	}
-	while (s2[len2])
-	{
+	while (s2[len2]) {
 		res[len1 + len2] = s2[len2];
 		len2++;
 	}

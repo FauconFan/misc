@@ -6,28 +6,28 @@
 
 
 #ifndef T_ACQUIT_H
-#define T_ACQUIT_H
+#define	T_ACQUIT_H
 
 #include "irc_udp.h"
 
-typedef struct      s_acquit {
-    uint64_t        sender_id;
-    uint32_t        nonce;
-    struct timeval  next_time;
-    uint8_t         no_response;
+typedef struct      s_acquit{
+	uint64_t       sender_id;
+	uint32_t       nonce;
+	struct timeval next_time;
+	uint8_t        no_response;
 }                   t_acquit;
 
-t_acquit                *acquit_alloc(uint64_t id, uint32_t nonce);
-void                    acquit_free(t_acquit *acquit);
+t_acquit * acquit_alloc(uint64_t id, uint32_t nonce);
+void                    acquit_free(t_acquit * acquit);
 
-void                    acquit_print(t_acquit *acquit, int fd);
+void                    acquit_print(t_acquit * acquit, int fd);
 
 // incrémenter le next_time et (no_response +1)
-void                    acquit_no_response(t_acquit *acquit);
+void                    acquit_no_response(t_acquit * acquit);
 
 // prédicat d'égalité
-t_bool                  is_acquit(t_acquit *acquit, uint64_t id, uint32_t nonce);
+t_bool                  is_acquit(t_acquit * acquit, uint64_t id, uint32_t nonce);
 
-struct timeval          acquit_get_min_time(t_list *li_acquit);
+struct timeval          acquit_get_min_time(t_list * li_acquit);
 
-#endif
+#endif // ifndef T_ACQUIT_H

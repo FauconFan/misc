@@ -75,3 +75,29 @@ fclean: clean
 
 .PHONY: re
 re: fclean all
+
+################################### SUBMODULE #################################
+
+.PHONY: submodule
+submodule:
+	git submodule init
+	git submodule update
+
+
+################################### UNCRUSTIFY ################################
+
+UNCRUSTIFY = uncrustify/build/uncrustify
+CONFIG_UNCRUSTIFY = .UNCRUSTIFY.cfg
+
+$(UNCRUSTIFY): submodule
+	mkdir -p uncrustify/build
+	(cd uncrustify/build && cmake ..)
+	make -C uncrustify/build -j8
+
+.PHONY: uncrustify_apply
+uncrustify_apply: $(UNCRUSTIFY)
+	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --replace --no-backup --mtime $(ALL_FILES)
+
+.PHONY: uncrustify_check
+uncrustify_check: $(UNCRUSTIFY)
+	$(UNCRUSTIFY) -c $(CONFIG_UNCRUSTIFY) --check $(ALL_FILES)
