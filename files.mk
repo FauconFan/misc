@@ -1,8 +1,11 @@
 
-SRC_FOLDER         = src/
-SRC_UTILS_FOLDER   = src/utils/
-SRC_STRUCT_FOLDER  = src/struct/
-UI_FOLDER          = src/ui/
+SRC_FOLDER                  = src/
+SRC_UTILS_FOLDER            = src/utils/
+SRC_STRUCT_FOLDER           = src/struct/
+SRC_STRUCT_DATA_FOLDER      = src/struct/data/
+SRC_STRUCT_NETWORK_FOLDER   = src/struct/network/
+SRC_STRUCT_PROTOCOL_FOLDER  = src/struct/protocol/
+SRC_UI_FOLDER               = src/ui/
 
 SRC = \
 		$(SRC_FOLDER)main.c \
@@ -13,18 +16,18 @@ SRC = \
 		$(SRC_UTILS_FOLDER)my_getrandom.c \
 		$(SRC_UTILS_FOLDER)my_time.c \
 		$(SRC_UTILS_FOLDER)my_str.c \
-		$(UI_FOLDER)ui_main.c \
-		$(UI_FOLDER)ui_read_pseudo.c \
-		$(UI_FOLDER)ui_print.c \
-		$(UI_FOLDER)ui_utils.c \
-		$(UI_FOLDER)ui_setup.c \
+		$(SRC_UI_FOLDER)ui_main.c \
+		$(SRC_UI_FOLDER)ui_read_pseudo.c \
+		$(SRC_UI_FOLDER)ui_print.c \
+		$(SRC_UI_FOLDER)ui_utils.c \
+		$(SRC_UI_FOLDER)ui_setup.c \
+		$(SRC_STRUCT_DATA_FOLDER)t_list.c \
+		$(SRC_STRUCT_NETWORK_FOLDER)t_tlv_builder.c \
+		$(SRC_STRUCT_NETWORK_FOLDER)t_iovec_builder.c \
+		$(SRC_STRUCT_NETWORK_FOLDER)t_buffer_tlv_ip.c \
+		$(SRC_STRUCT_PROTOCOL_FOLDER)t_neighbour.c \
+		$(SRC_STRUCT_PROTOCOL_FOLDER)t_potential_neighbour.c \
+		$(SRC_STRUCT_PROTOCOL_FOLDER)t_message.c \
+		$(SRC_STRUCT_PROTOCOL_FOLDER)t_acquit.c \
 		$(SRC_STRUCT_FOLDER)t_env.c \
-		$(SRC_STRUCT_FOLDER)t_list.c \
-		$(SRC_STRUCT_FOLDER)t_iovec_builder.c \
-		$(SRC_STRUCT_FOLDER)t_tlv_builder.c \
-		$(SRC_STRUCT_FOLDER)t_neighbour.c \
-		$(SRC_STRUCT_FOLDER)t_potential_neighbour.c \
-		$(SRC_STRUCT_FOLDER)t_message.c \
-		$(SRC_STRUCT_FOLDER)t_acquit.c \
-		$(SRC_STRUCT_FOLDER)t_buffer_tlv_ip.c \
 		$(SRC_FOLDER)update_buffer.c \

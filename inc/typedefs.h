@@ -29,14 +29,14 @@ typedef enum    e_tlv_type {
 
 // Struct declarations
 
-#include "struct/t_list.h"
-#include "struct/t_iovec_builder.h"
-#include "struct/t_tlv_builder.h"
-#include "struct/t_acquit.h"
-#include "struct/t_neighbour.h"
-#include "struct/t_potential_neighbour.h"
-#include "struct/t_message.h"
-#include "struct/t_buffer_tlv_ip.h"
+#include "struct/data/t_list.h"
+#include "struct/network/t_iovec_builder.h"
+#include "struct/network/t_tlv_builder.h"
+#include "struct/network/t_buffer_tlv_ip.h"
+#include "struct/protocol/t_acquit.h"
+#include "struct/protocol/t_neighbour.h"
+#include "struct/protocol/t_potential_neighbour.h"
+#include "struct/protocol/t_message.h"
 #include "struct/t_env.h"
 
 #endif

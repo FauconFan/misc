@@ -13,21 +13,6 @@ int main(void)
     if (g_env == NULL)
         return (1);
 
-    // uint8_t ip[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-    // lst_add(g_env->li_neighbours, nei_alloc(gen_id(), ip, 1234));
-    // lst_add(g_env->li_neighbours, nei_alloc(gen_id(), ip, 1234));
-
-    // lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip, 4321));
-    // lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip, 4321));
-
-    // lst_add(g_env->li_messages, message_alloc(gen_id(), gen_nonce(), 0, 6, (uint8_t *)"coucou"));
-    // lst_add(g_env->li_messages, message_alloc(gen_id(), gen_nonce(), 0, 6, (uint8_t *)"coucou"));
-
-    // lst_add(g_env->li_acquit, acquit_alloc(gen_id(), gen_nonce()));
-    // lst_add(g_env->li_acquit, acquit_alloc(gen_id(), gen_nonce()));
-    // lst_add(g_env->li_acquit, acquit_alloc(gen_id(), gen_nonce()));
-    // lst_add(g_env->li_acquit, acquit_alloc(gen_id(), gen_nonce()));
-
     env_print(g_env, ui_getfd());
 
     memcpy(msg + 6, (char *)&g_env->id, 8);
