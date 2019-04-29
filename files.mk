@@ -19,3 +19,5 @@ SRC = \
 		$(SRC_STRUCT_FOLDER)t_potential_neighbour.c \
 		$(SRC_STRUCT_FOLDER)t_message.c \
 		$(SRC_STRUCT_FOLDER)t_acquit.c \
+		$(SRC_STRUCT_FOLDER)t_buffer_tlv_ip.c \
+		$(SRC_FOLDER)update_buffer.c \

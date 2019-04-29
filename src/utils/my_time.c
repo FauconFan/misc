@@ -11,6 +11,15 @@ struct timeval      add(struct timeval *t1, struct timeval *t2){
     return time;
 }
 
+struct timeval      diff(struct timeval *t1, struct timeval *t2){
+    if (t1 != min_time(*t1, *t2))
+        return diff(t2, t1);
+    struct timeval time;
+    time.tv_sec = t1->tv_sec - t2->tv_sec;
+    time.tv_usec = t1->tv_usec -t2->tv_usec;
+    return time;
+}
+
 struct timeval      raise(uint8_t n){
     struct timeval  time;
     uint32_t        sec = 2;

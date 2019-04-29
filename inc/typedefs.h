@@ -38,6 +38,7 @@ typedef enum    e_tlv_type {
 #include "struct/t_neighbour.h"
 #include "struct/t_potential_neighbour.h"
 #include "struct/t_message.h"
+#include "struct/t_buffer_tlv_ip.h"
 #include "struct/t_env.h"
 
 #endif

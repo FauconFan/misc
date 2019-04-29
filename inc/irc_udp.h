@@ -52,6 +52,8 @@ int     build_socket(void);
 
 void    parse_datagram(uint8_t *tlv, size_t len);
 
+void    update_buffer();
+
 extern t_env        *g_env;
 
 #endif

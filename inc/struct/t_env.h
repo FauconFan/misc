@@ -11,6 +11,7 @@ typedef struct      s_env {
     t_list          *li_potential_neighbours;
     t_list          *li_messages;
     t_list          *li_acquit;
+    t_list          *li_buffer_tlv_ip;
 }                   t_env;
 
 t_env               *env_alloc(void);
