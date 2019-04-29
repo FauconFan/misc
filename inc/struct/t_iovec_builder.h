@@ -34,7 +34,7 @@ t_bool              iovb_skip(t_iovec_builder *msg);
 size_t              iovb_get_index(t_iovec_builder *msg);
 
 // Print a human readable form of the iovec builder msg.
-void                iovb_print(t_iovec_builder *msg);
+void                iovb_print(t_iovec_builder *msg, int fd);
 
 // Return a array of iovec in the parameters.
 // Return true if it's all good.

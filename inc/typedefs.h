@@ -14,7 +14,7 @@ typedef uint8_t     t_bool;
 #define VERSION         2
 
 #define FREE_PTR(ptr)   ((void (*)(void *))(ptr))
-#define PRINT_PTR(ptr)  ((void (*)(void *))(ptr))
+#define PRINT_PTR(ptr)  ((void (*)(void *, int))(ptr))
 
 typedef enum    e_tlv_type {
     PAD1 = 0,
@@ -28,8 +28,6 @@ typedef enum    e_tlv_type {
 }               t_tlv_type;
 
 // Struct declarations
-
-#include "utils.h"
 
 #include "struct/t_list.h"
 #include "struct/t_iovec_builder.h"

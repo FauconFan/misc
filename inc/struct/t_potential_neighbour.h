@@ -19,7 +19,7 @@ typedef struct      s_potential_neighbour{
 t_potential_neighbour       *pot_nei_alloc(uint8_t ip[16], uint16_t port);
 void                        pot_nei_free(t_potential_neighbour *pot_nei);
 
-void                        pot_nei_print(t_potential_neighbour *pot_nei);
+void                        pot_nei_print(t_potential_neighbour *pot_nei, int fd);
 
 // prédicat d'égalité
 t_bool                      pot_nei_is_id(t_potential_neighbour *pot_nei, uint8_t ip[16], uint16_t port);

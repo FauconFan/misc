@@ -23,20 +23,20 @@ void            nei_free(t_neighbour *nei){
     free(nei);
 }
 
-void            nei_print(t_neighbour *nei) {
-    printf("neighbour { id : %016lx, port : %d, ip : ", nei->id, nei->port);
+void            nei_print(t_neighbour *nei, int fd) {
+    dprintf(fd, "neighbour { id : %016lx, port : %d, ip : ", nei->id, nei->port);
     for (size_t i = 0; i < 16; ++i) {
         if (i != 0)
-            printf(" ");
-        printf("%.2x", nei->ip[i]);
+            dprintf(fd, " ");
+        dprintf(fd, "%.2x", nei->ip[i]);
     }
-    printf(", last hello ");
-    print_time_val(nei->last_hello);
-    printf(", last hello long ");
-    print_time_val(nei->last_hello_long);
-    printf(", next_hello ");
-    print_time_val(nei->next_hello);
-    printf("}");
+    dprintf(fd, ", last hello ");
+    print_time_val(nei->last_hello, fd);
+    dprintf(fd, ", last hello long ");
+    print_time_val(nei->last_hello_long, fd);
+    dprintf(fd, ", our last hello ");
+    print_time_val(nei->next_hello, fd);
+    dprintf(fd, "}");
 }
 
 

@@ -20,7 +20,7 @@ typedef struct      s_acquit {
 t_acquit                *acquit_alloc(uint64_t id, uint32_t nonce);
 void                    acquit_free(t_acquit *acquit);
 
-void                    acquit_print(t_acquit *acquit);
+void                    acquit_print(t_acquit *acquit, int fd);
 
 // incrémenter le next_time et (no_response +1)
 void                    acquit_no_response(t_acquit *acquit);

@@ -24,7 +24,7 @@ typedef struct  s_list {
     size_t      len; // Len of the list
     t_list_node *head; // Head of the list
     void        (*freefptr)(void *); // Free function to elements
-    void        (*printfptr)(void *); // Print function to elements
+    void        (*printfptr)(void *, int); // Print function to elements
 }               t_list;
 
 /**
@@ -45,7 +45,7 @@ typedef void    (*t_iterpf)(void *, void *);
 // Return a new structure
 // The free function of the given elements must be given in the alloc function
 // The free function can be null, and none of the elements are freed at the end.
-t_list  *lst_alloc(void (*freefptr)(void *), void (*printfptr)(void *));
+t_list  *lst_alloc(void (*freefptr)(void *), void (*printfptr)(void *, int));
 
 // Free a list and all elements in the list using the freef function.
 void    lst_free(t_list * lst);
@@ -65,7 +65,7 @@ size_t  lst_size(t_list * lst);
 t_bool  lst_isempty(t_list * lst);
 
 // Print the list
-void    lst_print(t_list * lst);
+void    lst_print(t_list * lst, int fd);
 
 // Return a pointer to the first element in the list.
 void    *lst_top(t_list * lst);

@@ -25,7 +25,7 @@ static t_bool _lst_free_next_then_connect(
     return (TRUE);
 }
 
-t_list  *lst_alloc(void (*freefptr)(void *), void (*printfptr)(void *)) {
+t_list  *lst_alloc(void (*freefptr)(void *), void (*printfptr)(void *, int)) {
     t_list  *res;
 
     if (freefptr == NULL)
@@ -91,25 +91,36 @@ void    *lst_top(t_list * lst) {
     return (lst->head->data);
 }
 
-static void pretty_print_list(void *v, void *fptrv) {
-    void    (*fptr)(void *);
+typedef struct s_tmp_print {
+    void        (*printfptr)(void *, int);
+    int         fd;
+}              t_tmp_print;
 
-    fptr = PRINT_PTR(fptrv);
-    printf("\t");
-    fptr(v);
-    printf(",\n");
+static void pretty_print_list(void *v, void * tmpp) {
+    t_tmp_print *tmp;
+    void    (*fptr)(void *, int);
+
+    tmp = (t_tmp_print *)tmpp;
+    fptr = PRINT_PTR(tmp->printfptr);
+    dprintf(tmp->fd, "\t");
+    fptr(v, tmp->fd);
+    dprintf(tmp->fd, ",\n");
 }
 
-void    lst_print(t_list * lst) {
+void    lst_print(t_list * lst, int fd) {
+    t_tmp_print tmp;
+
     if (lst == NULL || lst->printfptr == NULL)
         return ;
     if (lst_isempty(lst)) {
-        printf("[]\n");
+        dprintf(fd, "[]\n");
         return ;
     }
-    printf("[\n");
-    lst_iterp(lst, pretty_print_list, lst->printfptr);
-    printf("]\n");
+    tmp.fd = fd;
+    tmp.printfptr = lst->printfptr;
+    dprintf(fd, "[\n");
+    lst_iterp(lst, pretty_print_list, &tmp);
+    dprintf(fd, "]\n");
 }
 
 t_bool  lst_add(t_list * lst, void * data) {

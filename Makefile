@@ -40,7 +40,7 @@ INC_FOLDER = inc/
 
 CFLAGS = -g -Wall -Wextra -Werror
 IFLAGS = -I $(INC_FOLDER)
-LFLAGS =
+LFLAGS = -lncurses -lm
 FLAGS = $(CFLAGS) $(IFLAGS)
 
 SRC := ""

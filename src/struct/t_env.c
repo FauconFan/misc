@@ -43,23 +43,20 @@ void                env_free(t_env * env) {
     free(env);
 }
 
-void                env_print(t_env * env) {
-    printf("env {\n");
-    printf("\tid : %016lx\n", env->id);
-    printf("\tsocket : %d\n", env->socket);
-    printf("\tli_neighbours : ");
-    lst_print(env->li_neighbours);
-    printf("\tli_potential_neighbours : ");
-    lst_print(env->li_potential_neighbours);
-    printf("\tli_messages : ");
-    lst_print(env->li_messages);
-    printf("\tli_acquit : ");
-    lst_print(env->li_acquit);
-    printf("\tli_buffer_tlv_ip : " );
-    lst_print(env->li_buffer_tlv_ip);
-    printf("}\n");
+void                env_print(t_env * env, int fd) {
+    dprintf(fd, "env {\n");
+    dprintf(fd, "\tid : %016lx\n", env->id);
+    dprintf(fd, "\tsocket : %d\n", env->socket);
+    dprintf(fd, "\tli_neighbours : ");
+    lst_print(env->li_neighbours, fd);
+    dprintf(fd, "\tli_potential_neighbours : ");
+    lst_print(env->li_potential_neighbours, fd);
+    dprintf(fd, "\tli_messages : ");
+    lst_print(env->li_messages, fd);
+    dprintf(fd, "\tli_acquit : ");
+    lst_print(env->li_acquit, fd);
+    dprintf(fd, "}\n");
 }
-
 
 struct timeval      env_min_time(t_env * env){
     struct timeval min_hello = nei_get_min_time(env->li_neighbours);

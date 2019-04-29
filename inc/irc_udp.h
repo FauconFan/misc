@@ -2,10 +2,13 @@
 #ifndef IRC_UDP_H
 #define IRC_UDP_H
 
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
 
@@ -21,6 +24,8 @@
 #include <arpa/inet.h>
 
 #include "typedefs.h"
+#include "ui.h"
+#include "utils.h"
 
 #define JCH_NODE    "jch.irif.fr"
 #define JCH_SERVICE "1212"

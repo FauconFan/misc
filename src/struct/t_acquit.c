@@ -18,10 +18,10 @@ void                    acquit_free(t_acquit *acquit){
     free(acquit);
 }
 
-void                    acquit_print(t_acquit *acquit) {
-    printf("acquit { sender_id : %016lx, nonce : %x, next_time : ", acquit->sender_id, acquit->nonce);
-    print_time_val(acquit->next_time);
-    printf(", no_respons : %d }", acquit->no_response);
+void                    acquit_print(t_acquit *acquit, int fd) {
+    dprintf(fd, "acquit { sender_id : %016lx, nonce : %x, next_time : ", acquit->sender_id, acquit->nonce);
+    print_time_val(acquit->next_time, fd);
+    dprintf(fd, ", no_respons : %d }", acquit->no_response);
 }
 
 void                    acquit_no_response(t_acquit *acquit){

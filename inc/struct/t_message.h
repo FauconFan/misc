@@ -21,7 +21,7 @@ t_message               *message_alloc(uint64_t id, uint32_t nonce, uint8_t type
 void                    message_free(t_message *message);
 
 // une fonction pour afficher le message
-void                    message_print(t_message *message);
+void                    message_print(t_message *message, int fd);
 
 
 // prédicat d'égalité

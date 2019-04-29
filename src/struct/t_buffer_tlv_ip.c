@@ -17,16 +17,16 @@ void                buffer_free(t_buffer_tlv_ip *buffer){
     free(buffer);
 }
 
-void                buffer_print(t_buffer_tlv_ip *buffer){
-    printf("buffer_tlv_ip { id : ");
+void                buffer_print(t_buffer_tlv_ip *buffer, int fd) {
+    dprintf(fd, "buffer_tlv_ip { id : ");
     for (size_t i = 0; i < 16; ++i) {
         if (i != 0)
-            printf(" ");
-        printf("%.2x", buffer->ip[i]);
+            dprintf(fd, " ");
+        dprintf(fd, "%.2x", buffer->ip[i]);
     }
-    printf(", port : %d, tlv_builder : \n", buffer->port);
-    iovb_print(buffer->tlv_builder->msg);
-    printf("} :\n" );
+    dprintf(fd, ", port : %d, tlv_builder : \n", buffer->port);
+    iovb_print(buffer->tlv_builder->msg, fd);
+    dprintf(fd, "} :\n" );
 }
 
 typedef struct              s_ip_port{

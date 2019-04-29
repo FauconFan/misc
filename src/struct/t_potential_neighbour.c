@@ -15,14 +15,14 @@ void                        pot_nei_free(t_potential_neighbour *pot_nei){
     free(pot_nei);
 }
 
-void                        pot_nei_print(t_potential_neighbour *pot_nei){
-    printf("potential neighbour { ip : ");
+void                        pot_nei_print(t_potential_neighbour *pot_nei, int fd){
+    dprintf(fd, "potential neighbour { ip : ");
     for (size_t i = 0; i < 16; ++i) {
         if (i != 0)
-            printf(" ");
-        printf("%.2x", pot_nei->ip[i]);
+            dprintf(fd, " ");
+        dprintf(fd, "%.2x", pot_nei->ip[i]);
     }
-    printf(", port : %d }", pot_nei->port);
+    dprintf(fd, ", port : %d }", pot_nei->port);
 }
 
 t_bool                      pot_nei_is_id(t_potential_neighbour *pot_nei, uint8_t ip[16], uint16_t port){

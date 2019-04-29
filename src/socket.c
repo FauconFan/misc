@@ -5,6 +5,6 @@ int     build_socket(void) {
 
     sock = socket(ENV_FAMILY, ENV_SOCKTYPE, ENV_PROTOCOL);
     if (sock < 0)
-        printf("Error Setup socket %s\n", strerror(errno));
+        dprintf(ui_getfd(), "Error Setup socket %s\n", strerror(errno));
     return (sock);
 }

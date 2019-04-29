@@ -20,16 +20,16 @@ void    client(
     /*Send message to server*/
     rc = sendto(g_env->socket, buff, len_buff, 0, sock_addr, sock_len);
 
-    printf("%d\n", rc);
+    dprintf(ui_getfd(), "%d\n", rc);
 
     /*Receive message from server*/
     memset(buff_res, 0, 1024);
     N = recv(g_env->socket, buff_res, 1024, 0);
 
     for (size_t i = 0; i < N; ++i) {
-        printf("%.2d ", buff_res[i]);
+        dprintf(ui_getfd(), "%.2d ", buff_res[i]);
     }
-    printf("\n");
+    dprintf(ui_getfd(), "\n");
 
     parse_datagram(buff_res, N);
 
@@ -37,40 +37,46 @@ void    client(
 
     rc = fcntl(g_env->socket, F_GETFL);
     if (rc < 0){
-        fprintf(stderr, "echec flags non bloquants 1\n");
+        dprintf(ui_getfd(), "echec flags non bloquants 1\n");
         exit(1);
     }
     rc = fcntl(g_env->socket, F_SETFL, rc | O_NONBLOCK);
     if (rc < 0) {
-        fprintf(stderr, "echec flags non bloquants 2\n" );
+        dprintf(ui_getfd(), "echec flags non bloquants 2\n" );
     }
 
     tv.tv_sec = TIME;
     tv.tv_usec = 0;
     gettimeofday(&debut, NULL);
 
+    t_bool running = TRUE;
 
-    while (1) {
+    while (running) {
+        int max_fd = g_env->socket;
         FD_ZERO(&readfds);
         FD_SET(g_env->socket, &readfds);
-        rc = select(g_env->socket +1, &readfds, NULL, NULL, &tv);
+        FD_SET(ui_getcallbackfd(), &readfds);
+        if (ui_getcallbackfd() > max_fd)
+            max_fd = ui_getcallbackfd();
+        rc = select(max_fd + 1, &readfds, NULL, NULL, &tv);
+
 
         // timeout
         if (rc == 0) {
             get_sockaddr_juliusz(&sock_addr, &sock_len);
-            printf("timeout\n");
+            dprintf(ui_getfd(), "timeout\n");
             N = sendto(g_env->socket, hello_long, len_hello, 0, sock_addr, sock_len);
 
-            printf("N : %ld\n", (long int)N);
+            dprintf(ui_getfd(), "N : %ld\n", (long int)N);
             if (N == (size_t)-1) {
-                printf("sendto failed %s\n", strerror(errno));
+                dprintf(ui_getfd(), "sendto failed %s\n", strerror(errno));
             }
             else {
-                printf(">> ");
+                dprintf(ui_getfd(), ">> ");
                 for (size_t i = 0; i < N; i++){
-                    printf("%.2d ",((uint8_t *)hello_long)[i]);
+                    dprintf(ui_getfd(), "%.2d ",((uint8_t *)hello_long)[i]);
                 }
-                printf("\n");
+                dprintf(ui_getfd(), "\n");
             }
 
             gettimeofday(&debut, NULL);
@@ -79,35 +85,45 @@ void    client(
         }
 
         // message de Juliusz
-        else if (rc == 1) {
+        else if (FD_ISSET(g_env->socket, &readfds)) {
             struct sockaddr_in6     sock6;
             socklen_t               len;
 
-            printf("read\n");
+            dprintf(ui_getfd(), "read\n");
             memset(buff_res, 0, 1024);
             N = recvfrom(g_env->socket, buff_res, 1024, 0, (struct sockaddr *)&sock6, &len);
 
-            printf("From\n");
-            printf("Ip : ");
+            dprintf(ui_getfd(), "From\n");
+            dprintf(ui_getfd(), "Ip : ");
 
             for (size_t i = 0; i < 16; ++i) {
-                printf("%.2x ", sock6.sin6_addr.s6_addr[i]);
+                dprintf(ui_getfd(), "%.2x ", sock6.sin6_addr.s6_addr[i]);
             }
-            printf("\n");
-            printf("Port : %d\n", ntohs(sock6.sin6_port));
+            dprintf(ui_getfd(), "\n");
+            dprintf(ui_getfd(), "Port : %d\n", ntohs(sock6.sin6_port));
 
             for (size_t i = 0; i < N; ++i) {
-                printf("%.2d ", buff_res[i]);
+                dprintf(ui_getfd(), "%.2d ", buff_res[i]);
             }
-            printf("\n");
+            dprintf(ui_getfd(), "\n");
             parse_datagram(buff_res, N); // Pretty parser
             gettimeofday(&current, NULL);
             tv.tv_sec = TIME - (current.tv_sec - debut.tv_sec);
             tv.tv_usec = 0;
         }
-        else {
-            perror("select failed");
-            exit(1);
+        else if (FD_ISSET(ui_getcallbackfd(), &readfds)) {
+            t_ui_in in;
+
+            ui_receive(&in);
+            switch (in.type)
+            {
+                case UI_OK: break;
+                case UI_STOP: running = FALSE; break;
+                case UI_MESSAGE:
+                    dprintf(ui_getfd(), "Me: %s\n", in.u.message);
+                    free(in.u.message);
+                    break;
+            }
         }
     }
 }

@@ -109,25 +109,25 @@ size_t              iovb_get_index(t_iovec_builder *msg) {
     return (msg->len_used);
 }
 
-void                iovb_print(t_iovec_builder *msg) {
-    printf("{ msg printing\n");
-    printf("\tlen_used %lu\n", msg->len_used);
-    printf("\tlen_max %lu\n", msg->len_max);
+void                iovb_print(t_iovec_builder *msg, int fd) {
+    dprintf(fd, "{ msg printing\n");
+    dprintf(fd, "\tlen_used %lu\n", msg->len_used);
+    dprintf(fd, "\tlen_max %lu\n", msg->len_max);
     for (size_t i = 0; i < msg->len_max; ++i) {
-        printf("\t[%lu] -> len : %lu\n", i, msg->msg_iov[i].iov_len);
-        printf("\t         ");
+        dprintf(fd, "\t[%lu] -> len : %lu\n", i, msg->msg_iov[i].iov_len);
+        dprintf(fd, "\t         ");
 
         uint8_t        *vp = (uint8_t *)msg->msg_iov[i].iov_base;
 
         for (size_t j = 0; j < msg->msg_iov[i].iov_len; ++j) {
-            printf("%.2d ", vp[j]);
+            dprintf(fd, "%.2d ", vp[j]);
         }
         if (msg->msg_iov[i].iov_base == NULL) {
-            printf("(NULL)");
+            dprintf(fd, "(NULL)");
         }
-        printf("\n");
+        dprintf(fd, "\n");
     }
-    printf("}\n");
+    dprintf(fd, "}\n");
 }
 
 t_bool              iovb_get_iovec(t_iovec_builder *msg, struct iovec ** iovec, size_t *iovec_len) {

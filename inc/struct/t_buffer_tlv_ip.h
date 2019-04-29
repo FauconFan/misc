@@ -14,7 +14,7 @@ t_buffer_tlv_ip     *buffer_alloc(uint8_t ip[16], uint16_t port);
 void                buffer_free(t_buffer_tlv_ip *buffer);
 // print
 
-void                buffer_print(t_buffer_tlv_ip *buffer);
+void                buffer_print(t_buffer_tlv_ip *buffer, int fd);
 
 
 t_buffer_tlv_ip     *buffer_search(uint8_t ip[16], uint16_t port);

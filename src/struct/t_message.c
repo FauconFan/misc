@@ -25,13 +25,13 @@ void                    message_free(t_message *message){
     free(message);
 }
 
-void                    message_print(t_message *message){
-    printf("message { sender_id : %016lx, nonce : %x, type : %d, length : %d, msg : ", message->sender_id, message->nonce, message->type, message->length);
+void                    message_print(t_message *message, int fd){
+    dprintf(fd, "message { sender_id : %016lx, nonce : %x, type : %d, length : %d, msg : ", message->sender_id, message->nonce, message->type, message->length);
     if (message->type != 0)
-        printf("No printable message");
+        dprintf(fd, "No printable message");
     else
-        printf("\"%.*s\"", message->length, message->text);
-    printf("}");
+        dprintf(fd, "\"%.*s\"", message->length, message->text);
+    dprintf(fd, "}");
 }
 
 t_bool                  is_message(t_message *message, uint64_t id, uint32_t nonce){
