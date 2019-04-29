@@ -48,10 +48,10 @@ static void     ui_print_single_message(char *line, t_tmp_struct_print *stpp) {
     int tot_size;
     size_t len;
 
-    if (stpp->i_actu == 0)
-        return ;
-    tot_size = COLS - 8;
+    tot_size = COLS - 11 + stpp->nb_col_left;
     len = (strlen(line) / tot_size) + 1;
+    if (stpp->i_actu == 0 || stpp->i_actu <= (int)len)
+        return ;
     stpp->i_actu -= len;
     for (size_t i = 0; i < len; ++i) {
         move(stpp->i_actu + i, 2);
@@ -59,7 +59,7 @@ static void     ui_print_single_message(char *line, t_tmp_struct_print *stpp) {
             printw("%*d", stpp->nb_col_left, stpp->index);
         else
             printw("%*s", stpp->nb_col_left, "");
-        move(stpp->i_actu + i, 7);
+        move(stpp->i_actu + i, 5 + stpp->nb_col_left);
         printw("%.*s", tot_size, line + i * tot_size);
     }
     stpp->index--;
