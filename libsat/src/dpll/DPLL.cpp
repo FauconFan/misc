@@ -5,11 +5,11 @@ static bool dpll_recu(Fnc & fnc) {
 
 	INFO(fnc)
 
-	fnc.simplify();
+	fnc.polarity_check();
 
 	INFO(fnc)
 
-	if (fnc.has_empty_clause() || fnc.unit_propagation().first == false)
+	if (fnc.has_empty_clause() || fnc.unit_propagation().ok == false)
 		return (false);
 
 	if (fnc.empty())

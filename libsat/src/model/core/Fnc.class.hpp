@@ -20,7 +20,7 @@ class Fnc
 		// Setters
 		void add_clause(const Clause &);
 		void add_falsy_clause(Clause);
-		void add_fnc(const Fnc &);
+		void add_fnc(const Fnc & fnc);
 		void set_as_ready();
 		void set_distrib_as_finished();
 
@@ -29,13 +29,29 @@ class Fnc
 		bool has_empty_clause() const;
 		bool is_two_fnc() const;
 
+		// Class response to unit_propagation
+		class UPresponse{
+			public:
+				UPresponse()  = default;
+				~UPresponse() = default;
+				UPresponse(const UPresponse &) = default;
+				UPresponse &operator=(const UPresponse &) = default;
+
+				// false if there is an empty clause somewhere
+				bool ok {true};
+				// list of all consequences in unit propagation
+				std::list<std::pair<int, std::set<int> > > li_implies {};
+				// the litt_id that implies the empty clause, 0 otherwise
+				unsigned int litt_id {0};
+		};
+
 		// Other
-		void assign(unsigned int id, bool value);
+		bool assign(unsigned int id, bool value);
 		void unassign();
 		void backjump(unsigned int level);
-		void simplify();
+		void polarity_check();
 
-		std::pair<bool, std::list<std::pair<int, std::set<int> > > > unit_propagation();
+		UPresponse unit_propagation();
 
 		void display(std::ostream &) const;
 
@@ -43,6 +59,8 @@ class Fnc
 		bool ready {false};
 		// List of clauses
 		std::vector<Clause> _clauses {};
+		// List of id of unit clauses
+		std::set<unsigned int> _unit_clauses_id {};
 		// variable distribution
 		Distrib _distrib;
 		// list of occurences (variables)
@@ -53,9 +71,12 @@ class Fnc
 		std::vector<Decision> _decisions {};
 
 		// Simplification
-		void set_satisfy_if_contains(int);
-		void polarity_check();
-		void assign_simplify(unsigned int id_litt, bool value);
+		void clause_satisfy_if_contains(unsigned int id_litt);
+		void clause_satisfy(unsigned int id_clause);
+		void litt_satisfy(unsigned int id_clause, unsigned int id_litt, bool value);
+
+		// Returns 0 if no conflict, otherwise returns the id of the empty clause
+		unsigned int assign_simplify(unsigned int id_litt, bool value);
 
 		// Decisions utils
 		void add_sub_decision(const SubDecision & sd);
