@@ -35,7 +35,7 @@ void Distrib::remove(unsigned int id) {
 void Distrib::finalize() {
 	for (unsigned int var : this->_present_variables) {
 		if (this->_distrib.find(var) == this->_distrib.end()) {
-			Logger::info() << "variable not set : " << var << " -> false\n";
+			INFO("variable not set : ", var, " -> false")
 			this->_distrib[var] = false;
 		}
 	}

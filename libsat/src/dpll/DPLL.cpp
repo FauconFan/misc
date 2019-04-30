@@ -3,7 +3,11 @@
 static bool dpll_recu(Fnc & fnc) {
 	unsigned int assign_value;
 
+	INFO(fnc)
+
 	fnc.simplify();
+
+	INFO(fnc)
 
 	if (fnc.has_empty_clause() || fnc.unit_propagation().first == false)
 		return (false);
@@ -12,23 +16,23 @@ static bool dpll_recu(Fnc & fnc) {
 		return (true);
 
 	assign_value = fnc.get_occ_list().stat_max_occu();
-	Logger::info() << "assign value : " << assign_value << "\n";
-	Logger::info() << "Try true\n";
+	INFO("assign value : ", assign_value)
+	INFO("Try true")
 
 	fnc.assign(assign_value, true);
 
-	Logger::info() << fnc;
+	INFO(fnc)
 
 	if (dpll_recu(fnc))
 		return (true);
 
-	Logger::info() << "step back (" << assign_value << ")\n";
-	Logger::info() << "Try false\n";
+	INFO("step back (", assign_value, ")")
+	INFO("Try false")
 
 	fnc.unassign();
 
 	fnc.assign(assign_value, false);
-	Logger::info() << fnc;
+	INFO(fnc)
 
 	if (dpll_recu(fnc))
 		return (true);
@@ -38,12 +42,14 @@ static bool dpll_recu(Fnc & fnc) {
 } // dpll_recu
 
 std::pair<bool, Distrib> dpll_solve(Fnc & fnc) {
-	Logger::info() << "DPLL algorithm\n";
+	INFO("DPLL algorithm")
 
 	fnc.set_as_ready();
-	Logger::info() << fnc << "\n";
+	INFO(fnc)
 
 	bool res = dpll_recu(fnc);
+
+	INFO("Finale fnc\n", fnc)
 
 	fnc.set_distrib_as_finished();
 	return (std::make_pair(res, fnc.get_distrib()));

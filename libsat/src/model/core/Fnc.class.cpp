@@ -23,18 +23,52 @@ const Occ_list & Fnc::get_occ_list() const{
 
 void Fnc::add_clause(const Clause & acl) {
 	if (this->ready) {
-		std::cerr << "Not yet...\n";
-		return;
+		WARN("Try adding clause after setting as ready")
 	}
 	this->_clauses.push_back(acl);
 }
 
 void Fnc::add_fnc(const Fnc & fnc) {
 	if (this->ready) {
-		std::cerr << "Not yet...\n";
+		WARN("Try adding fnc after setting as ready")
 		return;
 	}
 	this->_clauses.insert(this->_clauses.end(), fnc._clauses.begin(), fnc._clauses.end());
+}
+
+// We suppose that the clause given is not satisified by the actual distribution, and is not reductible to an unit clause.
+// Usefull in CDCL.
+void Fnc::add_falsy_clause(Clause cl) {
+	static const auto & func_comp = [](
+		std::pair<int, unsigned int> p1,
+		std::pair<int, unsigned int> p2) -> bool{
+		  return (p1.second < p2.second);
+	  };
+
+	if (this->ready == false) {
+		WARN("Try adding falsy clause before setting as ready")
+	}
+	unsigned int clause_id = this->_clauses.size();
+	std::vector<std::pair<int, unsigned int> > vec;
+
+	for (int litt : cl.get_litts()) {
+		unsigned int m = -1;
+
+		auto it = this->_map_litt_level_decision.find(-litt);
+		if (it != this->_map_litt_level_decision.end())
+			m = it->second;
+		vec.push_back(std::make_pair(litt, m));
+	}
+
+	std::sort(vec.begin(), vec.end(), func_comp);
+
+	for (const auto & p : vec) {
+		if (p.second >= this->_decisions.size())
+			break;
+		cl.remove_litt(p.first);
+		this->_decisions[p.second].add_subdecision(SubDecision::decision_rm_litt(clause_id, p.first));
+	}
+	this->_occ_list.add_clause_id(cl.get_litts(), clause_id);
 }
 
 bool Fnc::empty() const{
@@ -85,18 +119,18 @@ void Fnc::polarity_check() {
 		auto pos = p.first;
 		auto neg = p.second;
 
-		Logger::info() << "FNC polarity check" << * this << this->_occ_list;
+		INFO("FNC polarity check", *this, this->_occ_list)
 
 		if (pos.empty() && neg.empty())
 			break;
 		for (auto i : pos) {
-			Logger::info() << "Polarity positive only : " << i << "\n";
+			INFO("Polarity positive only : ", i)
 			this->_distrib.set(i, true);
 			this->add_sub_decision(SubDecision::decision_assign(i, true));
 			this->set_satisfy_if_contains(i);
 		}
 		for (auto i : neg) {
-			Logger::info() << "Polarity negative only : " << i << "\n";
+			INFO("Polarity negative only : ", i)
 			this->_distrib.set(i, false);
 			this->add_sub_decision(SubDecision::decision_assign(i, false));
 			this->set_satisfy_if_contains(i);
@@ -110,16 +144,16 @@ void Fnc::polarity_check() {
  * Si x a toujours une polarité positive, la retirer partout et mettre x = 1
  */
 void Fnc::simplify() {
-	Logger::info() << "simplify... \n";
+	INFO("simplify")
 
 	// Suppression si polarité unique
-	Logger::info() << "Polarity test\n";
+	INFO("Polarity test")
 	this->polarity_check();
-	Logger::info() << this->_occ_list;
+	INFO(this->_occ_list)
 
-	Logger::info() << * this;
+	INFO(*this)
 
-	Logger::info() << "end clean\n";
+	INFO("end clean")
 }
 
 void Fnc::set_satisfy_if_contains(int val) {
@@ -131,7 +165,7 @@ void Fnc::set_satisfy_if_contains(int val) {
 			continue;
 		int litt_side = cl.presence_litt(val);
 		if (litt_side != 0) {
-			this->_occ_list.remove_clause_id(cl.build_litts(), id);
+			this->_occ_list.remove_clause_id(cl.get_litts(), id);
 			cl.set_satisfied(true);
 			this->add_sub_decision(SubDecision::decision_rm_clause(id));
 		}
@@ -154,13 +188,13 @@ std::pair<bool, std::list<std::pair<int, std::set<int> > > > Fnc::unit_propagati
 			if (current_unit_litteral == 0)
 				continue;
 			if (unit_litteraux.find(-current_unit_litteral) != unit_litteraux.end()) {
-				Logger::info() << "2 opposites unit clauses are presents : " << current_unit_litteral << "\n";
+				INFO("2 opposites unit clauses are presents : ", current_unit_litteral)
 				return (UP_FALSE(list_impli));
 			}
 
 			unit_litteraux.insert(current_unit_litteral);
 			list_impli.push_back(std::make_pair(current_unit_litteral, ac.get_absent_litts()));
-			Logger::info() << "Detect new unit clause : " << current_unit_litteral << "\n";
+			INFO("Detect new unit clause : ", current_unit_litteral)
 		}
 
 		if (unit_litteraux.empty()) {
@@ -188,7 +222,10 @@ std::pair<bool, std::list<std::pair<int, std::set<int> > > > Fnc::unit_propagati
 } // Fnc::unit_propagation
 
 void Fnc::assign(unsigned int id, bool value) {
-	this->_decisions.push_front(Decision(id, value));
+	int val = static_cast<int>(id) * (value ? 1 : -1);
+
+	this->_map_litt_level_decision[val] = this->_decisions.size();
+	this->_decisions.push_back(Decision(id, value));
 	this->_distrib.set(id, value);
 	this->assign_simplify(id, value);
 }
@@ -203,7 +240,7 @@ void Fnc::assign_simplify(unsigned int id_litt, bool value) {
 
 	for (unsigned int id_clause : rm_clauses_cid) {
 		Clause & cl = this->_clauses[id_clause];
-		this->_occ_list.remove_clause_id(cl.build_litts(), id_clause);
+		this->_occ_list.remove_clause_id(cl.get_litts(), id_clause);
 		cl.set_satisfied(true);
 		this->add_sub_decision(SubDecision::decision_rm_clause(id_clause));
 	}
@@ -221,20 +258,21 @@ void Fnc::unassign() {
 	if (this->_decisions.empty())
 		return;
 
-	Decision last = this->_decisions.front();
-	this->_decisions.pop_front();
+	const Decision & last = this->_decisions.back();
 
 	for (const SubDecision & sd : last.get_consequences()) {
 		switch (sd.get_type()) {
 			case ASSIGN: {
-				auto litt = sd.assign_get_litt();
+				unsigned int litt = sd.assign_get_litt();
+				int val = static_cast<int>(litt) * (sd.assign_get_value() ? 1 : -1);
 				this->_distrib.remove(litt);
+				this->_map_litt_level_decision.erase(val);
 				break;
 			}
 			case RM_CLAUSE: {
 				auto clause_id = sd.rm_clause_get_clause_id();
 				this->_clauses[clause_id].set_satisfied(false);
-				this->_occ_list.add_clause_id(this->_clauses[clause_id].build_litts(), clause_id);
+				this->_occ_list.add_clause_id(this->_clauses[clause_id].get_litts(), clause_id);
 				break;
 			}
 			case RM_LITT: {
@@ -246,29 +284,45 @@ void Fnc::unassign() {
 			}
 		}
 	}
+	int val = static_cast<int>(last.get_variable_id()) * (last.get_value() ? 1 : -1);
 	this->_distrib.remove(last.get_variable_id());
+	this->_map_litt_level_decision.erase(val);
+	this->_decisions.pop_back();
+} // Fnc::unassign
+
+void Fnc::backjump(unsigned int level) {
+	while (this->_decisions.size() > level) {
+		this->unassign();
+	}
 }
 
 void Fnc::add_sub_decision(const SubDecision & sd) {
 	if (this->_decisions.empty())
 		return;
 
-	this->_decisions.front().add_subdecision(sd);
+	if (sd.get_type() == ASSIGN) {
+		int val = static_cast<int>(sd.assign_get_litt()) * (sd.assign_get_value() ? 1 : -1);
+		this->_map_litt_level_decision[val] = this->_decisions.size() - 1;
+	}
+	this->_decisions.back().add_subdecision(sd);
 }
 
 void Fnc::display(std::ostream & os) const{
 	os << "FNC [\n";
 
-	// unsigned int clause_id = 0;
-	// for (const auto & acl : this->_clauses) {
-	//  if (acl.is_satisfied() == false)
-	//      os << "\t" << clause_id << ":" << acl;
-	//  clause_id++;
-	// }
+	unsigned int clause_id = 0;
+	for (const auto & acl : this->_clauses) {
+		if (acl.is_satisfied() == false)
+			os << "\t" << clause_id << ":" << acl;
+		clause_id++;
+	}
 	os << this->_distrib;
 	os << this->_occ_list;
 	for (const Decision & dec : this->_decisions) {
 		os << dec << "\n";
+	}
+	for (const auto & p : this->_map_litt_level_decision) {
+		os << "variable : " << p.first << " level : " << p.second << "\n";
 	}
 	os << "]\n";
 }

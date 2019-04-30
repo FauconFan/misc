@@ -129,6 +129,10 @@ unsigned int Decision::get_variable_id() const{
 	return (this->_variable_id);
 }
 
+bool Decision::get_value() const{
+	return (this->_value);
+}
+
 std::ostream &operator<<(std::ostream & os, const Decision & dec) {
 	os << "Decision " << dec.get_variable_id() << "\n";
 	for (const SubDecision & subdec : dec.get_consequences()) {

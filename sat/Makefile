@@ -46,6 +46,9 @@ OBJ = \
 .PHONY: all
 all: libsat $(NAME)
 
+.PHONY: fast
+fast: libsat_fast $(NAME)
+
 $(NAME): $(LIBA) $(OBJ)
 	@printf "Program %s... " "$(NAME)"
 	@$(CXX) $(FLAGS) $(OBJ) -o $(NAME) $(LIB_FLAGS)
@@ -54,6 +57,10 @@ $(NAME): $(LIBA) $(OBJ)
 .PHONY: libsat
 libsat:
 	@make -C $(LIBSAT_DIR)
+
+.PHONY: libsat_fast
+libsat_fast:
+	@make -C $(LIBSAT_DIR) fast
 
 %.a:
 	@make -C $(dir $@)

@@ -3,6 +3,6 @@
 
 #include "libsat.hpp"
 
-std::pair<bool, Distrib> bruteforcing_solve(const Fnc &);
+std::pair<bool, Distrib> bruteforcing_solve(Fnc &);
 
 #endif // ifndef DPLL_HPP

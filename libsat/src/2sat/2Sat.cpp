@@ -4,7 +4,7 @@ static Graph<int>   buildGraph2SAT(const Fnc & fnc) {
 	Graph<int> res;
 
 	for (const auto & cl : fnc.get_clauses()) {
-		const auto & litts = cl.build_litts();
+		const auto & litts = cl.get_litts();
 		const auto val1    = *litts.cbegin();
 		const auto val2    = *(litts.cbegin()++);
 
@@ -85,22 +85,22 @@ std::pair<bool, Distrib> twosat_solve(const Fnc & fnc) {
 	std::map<std::set<int>, int> m_con_did;
 	std::list<std::set<int> > tri_topo;
 
-	Logger::info() << "Two sat Algorithm\n";
+	INFO("Two sat Algorithm")
 	if (fnc.is_two_fnc() == false) {
-		Logger::info() << "The fnc given is not a 2 fnc\n";
+		INFO("The fnc fiven is not a 2 fnc")
 		return std::make_pair(false, Distrib());
 	}
-	Logger::info() << "Building graph of implications\n";
+	INFO("Building graph of implications")
 	gst = buildGraph2SAT(fnc);
-	Logger::info() << "Building Cfc of the graph\n";
+	INFO("Building CFC of the graph")
 	cfc = gst.getCFC();
-	Logger::info() << "Checking inconsistent condition to satisfaisability\n";
+	INFO("Checking inconsistent condition to satisfaisability")
 	if (isSat(cfc) == false) {
-		Logger::info() << "The fnc is not satisfaisable\n";
+		INFO("The fnc is not satisfaisable")
 		return std::make_pair(false, Distrib());
 	}
-	Logger::info() << "Building solution\n";
+	INFO("Building solution")
 	m_con_did = build_cc_ID_from_CFC(cfc);
 	tri_topo  = gst.getCFC_DAG(&cfc).getTriTopo();
-	return std::make_pair(true, build_solution(m_con_did, tri_topo));
+	return (std::make_pair(true, build_solution(m_con_did, tri_topo)));
 }

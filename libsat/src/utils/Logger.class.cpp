@@ -8,6 +8,8 @@
 #include <ctime>
 
 Logger::Logger() {
+	#ifndef FAST
+
 	this->_is_ok = Logger::create_log_dir();
 
 	if (this->_is_ok) {
@@ -32,6 +34,13 @@ Logger::Logger() {
 	}
 
 	*this->log_file << Logger::build_header() << std::endl;
+
+	#else // ifndef FAST
+
+	this->_is_ok   = false;
+	this->log_file = &cnull;
+
+	#endif // ifndef FAST
 }
 
 Logger::~Logger() {
@@ -40,6 +49,8 @@ Logger::~Logger() {
 }
 
 Logger Logger::logger;
+
+#ifndef FAST
 
 std::ostream &Logger::info() {
 	*(logger.log_file) << Logger::build_header_line("INFO");
@@ -50,6 +61,8 @@ std::ostream &Logger::warn() {
 	*(logger.log_file) << Logger::build_header_line("WARN");
 	return *(logger.log_file);
 }
+
+#endif // ifndef FAST
 
 void Logger::disable() {
 	if (logger.log_file != &cnull) {

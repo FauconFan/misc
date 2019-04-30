@@ -13,9 +13,10 @@
 #include <sstream>
 #include <iomanip>
 
+#include "src/utils/macros.hpp"
 #include "src/utils/cnull.hpp"
-#include "src/utils/Pair.class.hpp"
 #include "src/utils/Logger.class.hpp"
+#include "src/utils/IPair.class.hpp"
 #include "src/utils/combinatorics.ns.hpp"
 #include "src/utils/Graph.class.hpp"
 
