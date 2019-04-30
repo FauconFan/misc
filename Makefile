@@ -146,6 +146,7 @@ clang_tidy_run:
 		-checks="$(WARNS)" \
 		-header-filter=".*" \
 		-warnings-as-errors="*" \
+		-extra-arg=-std=c++17 \
 		$(SRC_FILES) -- $(IFLAGS) \
 
 .PHONY: clang_tidy_fix

@@ -18,6 +18,8 @@ class Graph
 		const std::set<T> & getVertices() const;
 		const std::map<T, std::set<T> > & getEdges() const;
 
+		std::optional<T &> findVertex(const T & v) const;
+
 		Graph transpose() const;
 
 		std::set<std::set<T> > getCFC() const;

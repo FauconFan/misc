@@ -12,6 +12,7 @@
 #include <exception>
 #include <sstream>
 #include <iomanip>
+#include <optional>
 
 #include "src/utils/macros.hpp"
 #include "src/utils/cnull.hpp"
@@ -28,6 +29,7 @@
 
 #include "src/model/model_builder/modelbuilder.ns.hpp"
 
+#include "src/cdcl/CDCL.hpp"
 #include "src/dpll/DPLL.hpp"
 #include "src/bruteforcing/bruteforcing.hpp"
 #include "src/2sat/2Sat.hpp"

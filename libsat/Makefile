@@ -14,6 +14,7 @@ SRC_FOLDER       = src/
 MODEL_FOLDER     = src/model/
 CORE_FOLDER      = src/model/core/
 MODEL_BD_FOLDER  = src/model/model_builder/
+CDCL_FOLDER 	 = src/cdcl/
 DPLL_FOLDER      = src/dpll/
 BRUTE_FOLDER     = src/bruteforcing/
 2SAT_FOLDER      = src/2sat/
@@ -25,7 +26,7 @@ CXX_FLAGS = -g -O2 -Wall -Wextra -Werror \
 			-Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align \
 			-Wunused -Woverloaded-virtual -pedantic
 CXX_ADDITIONAL_FLAGS = ""
-CXX_STD = -std=c++14
+CXX_STD = -std=c++17 #14
 INC_FLAGS = -I ./
 FLAGS = $(CXX_FLAGS) $(CXX_ADDITIONAL_FLAGS) $(CXX_STD) $(INC_FLAGS)
 
@@ -40,6 +41,7 @@ SRC = \
 	$(UTILS_FOLDER)Logger.class.cpp \
 	$(UTILS_FOLDER)cnull.cpp \
 	$(UTILS_FOLDER)combinatorics.ns.cpp \
+	$(CDCL_FOLDER)CDCL.cpp \
 	$(DPLL_FOLDER)DPLL.cpp \
 	$(BRUTE_FOLDER)bruteforcing.cpp \
 	$(2SAT_FOLDER)2Sat.cpp \

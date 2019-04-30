@@ -33,6 +33,12 @@ const std::map<T, std::set<T> > &Graph<T>::getEdges() const{
 }
 
 template <typename T>
+std::optional<T &> Graph<T>::findVertex(const T & v) const{
+	auto res = this->_li_vertices.find(v);
+	return (res != _li_vertices.cend()) ? make_optional(*res) : std::nullopt;
+}
+
+template <typename T>
 Graph<T> Graph<T>::transpose() const{
 	Graph<T> gst;
 	std::set<T> vert_actu;
