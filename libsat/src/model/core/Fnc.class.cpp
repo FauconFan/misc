@@ -21,6 +21,14 @@ const Occ_list & Fnc::get_occ_list() const{
 	return (this->_occ_list);
 }
 
+std::optional<unsigned int> Fnc::get_level_decision_assigned_variable(int val) const {
+	auto it = this->_map_litt_level_decision.find(val);
+
+	if (it == this->_map_litt_level_decision.end())
+		return (std::nullopt);
+	return (std::optional<unsigned int>(it->second));
+}
+
 void Fnc::add_clause(const Clause & cl) {
 	if (this->ready) {
 		WARN("Try adding clause after setting as ready")
@@ -73,7 +81,7 @@ void Fnc::add_falsy_clause(Clause cl) {
 		if (p.second >= this->_decisions.size())
 			break;
 		cl.remove_litt(p.first);
-		this->_decisions[p.second].add_subdecision(SubDecision::decision_rm_litt(id_clause, p.first));
+		this->_decisions[p.second - 1].add_subdecision(SubDecision::decision_rm_litt(id_clause, p.first));
 	}
 	this->_occ_list.add_clause_id(cl.get_litts(), id_clause);
 	this->_clauses.push_back(cl);
@@ -127,8 +135,8 @@ bool Fnc::is_two_fnc() const{
 bool Fnc::assign(unsigned int id, bool value) {
 	int val = static_cast<int>(id) * (value ? 1 : -1);
 
-	this->_map_litt_level_decision[val] = this->_decisions.size();
 	this->_decisions.push_back(Decision(id, value));
+	this->_map_litt_level_decision[val] = this->_decisions.size();
 	this->_distrib.set(id, value);
 	return (this->assign_simplify(id, value) == 0);
 }
@@ -237,8 +245,13 @@ Fnc::UPresponse Fnc::unit_propagation() {
 		this->_distrib.set(res.litt_id, val);
 		this->add_sub_decision(SubDecision::decision_assign(res.litt_id, val));
 
-		if (this->assign_simplify(res.litt_id, val) != 0) {
+		unsigned int clause_id;
+		if ((clause_id = this->assign_simplify(res.litt_id, val)) != 0) {
 			res.ok = false;
+			INFO("Clause id conflict : ", clause_id)
+			auto implied = this->_clauses[clause_id].get_absent_litts();
+			implied.erase(-litt);
+			res.li_implies.push_back(std::make_pair(-litt, implied));
 			return (res);
 		}
 	}
@@ -331,13 +344,14 @@ unsigned int Fnc::assign_simplify(unsigned int id_litt, bool value) {
 }
 
 void Fnc::add_sub_decision(const SubDecision & sd) {
-	if (this->_decisions.empty())
-		return;
-
 	if (sd.get_type() == ASSIGN) {
 		int val = static_cast<int>(sd.assign_get_litt()) * (sd.assign_get_value() ? 1 : -1);
-		this->_map_litt_level_decision[val] = this->_decisions.size() - 1;
+		this->_map_litt_level_decision[val] = this->_decisions.size();
 	}
+	
+	if (this->_decisions.empty())
+		return;
+	
 	this->_decisions.back().add_subdecision(sd);
 }
 

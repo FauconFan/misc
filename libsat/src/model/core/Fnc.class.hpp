@@ -17,6 +17,8 @@ class Fnc
 		const Distrib & get_distrib() const;
 		const Occ_list & get_occ_list() const;
 
+		std::optional<unsigned int> get_level_decision_assigned_variable(int) const;
+
 		// Setters
 		void add_clause(const Clause &);
 		void add_falsy_clause(Clause);

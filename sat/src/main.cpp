@@ -20,6 +20,21 @@ static void print_result(std::pair<bool, Distrib> result) {
 	}
 }
 
+static int cdcl_run(int argc, char ** argv) {
+	if (argc != 1)
+		return (1);
+
+	Fnc * fnc = getInputFNC(argv[0]);
+
+	if (fnc != nullptr) {
+		auto p = cdcl_solve(*fnc);
+		print_result(p);
+
+		delete fnc;
+	}
+	return (0);
+}
+
 static int dpll_run(int argc, char ** argv) {
 	if (argc != 1)
 		return (1);
@@ -87,6 +102,9 @@ int main(int argc, char ** argv) {
 	std::string cmd = argv[0];
 	argc--;
 	argv++;
+
+	if (cmd == "cdcl")
+		return (cdcl_run(argc, argv));
 
 	if (cmd == "dpll")
 		return (dpll_run(argc, argv));
