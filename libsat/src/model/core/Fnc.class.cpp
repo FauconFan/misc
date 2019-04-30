@@ -138,7 +138,7 @@ void Fnc::set_satisfy_if_contains(int val) {
 	}
 }
 
-#define	UP_FALSE std::make_pair(false, std::list<std::pair<int, std::set<int> > >())
+#define	UP_FALSE(li) std::make_pair(false, (li))
 #define	UP_TRUE(li) std::make_pair(true, (li))
 
 std::pair<bool, std::list<std::pair<int, std::set<int> > > > Fnc::unit_propagation() {
@@ -155,7 +155,7 @@ std::pair<bool, std::list<std::pair<int, std::set<int> > > > Fnc::unit_propagati
 				continue;
 			if (unit_litteraux.find(-current_unit_litteral) != unit_litteraux.end()) {
 				Logger::info() << "2 opposites unit clauses are presents : " << current_unit_litteral << "\n";
-				return (UP_FALSE);
+				return (UP_FALSE(list_impli));
 			}
 
 			unit_litteraux.insert(current_unit_litteral);
@@ -165,7 +165,7 @@ std::pair<bool, std::list<std::pair<int, std::set<int> > > > Fnc::unit_propagati
 
 		if (unit_litteraux.empty()) {
 			if (this->has_empty_clause())
-				return (UP_FALSE);
+				return (UP_FALSE(list_impli));
 
 			return (UP_TRUE(list_impli));
 		}

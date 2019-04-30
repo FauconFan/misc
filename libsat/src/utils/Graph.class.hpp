@@ -15,8 +15,8 @@ class Graph
 		void addVertex(const T & u);
 		void addEdge(const T & u, const T & v);
 
-		const std::set<T> &getVertices() const;
-		const std::map<T, std::set<T> > &getEdges() const;
+		const std::set<T> & getVertices() const;
+		const std::map<T, std::set<T>> & getEdges() const;
 
 		Graph transpose() const;
 
