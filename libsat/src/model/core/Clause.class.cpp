@@ -15,6 +15,7 @@ Clause::Clause (const std::vector<int> & litts) {
 Clause & Clause::operator=(const Clause & icl) {
 	if (this != &icl) {
 		this->_litts    = icl.get_litts();
+		this->_absent_litts = icl.get_absent_litts();
 		this->satisfied = icl.is_satisfied();
 	}
 	return *this;
@@ -107,6 +108,14 @@ std::ostream & operator<<(std::ostream & os, const Clause & icl) {
 		if (i != pos_litts.cbegin())
 			os << " | ";
 		os << *i;
+	}
+
+	os << "] abs : [";
+
+	for (auto it = icl.get_absent_litts().begin(); it != icl.get_absent_litts().end(); ++it) {
+		if (it != icl.get_absent_litts().begin())
+			os << ", ";
+		os << *it;
 	}
 
 	return (os << "]\n");

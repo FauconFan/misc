@@ -98,6 +98,12 @@ static std::pair<std::set<int>, unsigned int> get_learn(Fnc & fnc, unsigned int 
 		}
 	}
 
+	for (int litt_current_level : litts_current_level)
+		INFO("litt current level : ", litt_current_level)
+
+	for (int litt_others_level : litts_others_level)
+		INFO("litt other level : ", litt_others_level)
+
 	if (litts_current_level.size() > 1){
 		WARN("Probleme cdcl not only one in current level")
 	}
@@ -149,7 +155,6 @@ static bool cdcl_ite(Fnc & fnc) {
 		else if (fnc.empty())
 				break ;
 
-		std::cout << fnc << std::endl;
 		//update_graph(decision_level, igraph, res.li_implies);
 
 		assign_value = fnc.get_occ_list().stat_max_occu();
@@ -157,21 +162,21 @@ static bool cdcl_ite(Fnc & fnc) {
 		// igraph.add_vertex(assign_value, decision_level);
 
 		INFO("assign value : ", assign_value)
-		Logger::info() << "Try true\n";
+		INFO("Try true")
 
 		fnc.assign(assign_value, true);
 
-		Logger::info() << fnc;
+		INFO(fnc)
 	}
 
 	return (true);
 } // cdcl_ite
 
 std::pair<bool, Distrib> cdcl_solve(Fnc & fnc) {
-	Logger::info() << "CDCL algorithm\n";
+	INFO("CDCL algorithm")
 
 	fnc.set_as_ready();
-	Logger::info() << fnc << "\n";
+	INFO(fnc)
 
 	bool res = cdcl_ite(fnc);
 

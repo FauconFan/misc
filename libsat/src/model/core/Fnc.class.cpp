@@ -75,18 +75,29 @@ void Fnc::add_falsy_clause(Clause cl) {
 		vec.push_back(std::make_pair(litt, m));
 	}
 
+	INFO("Adding falsy clause : ", cl)
+
 	std::sort(vec.begin(), vec.end(), func_comp);
 
+	INFO("printing info")
 	for (const auto & p : vec) {
-		if (p.second >= this->_decisions.size())
+		INFO("litt : ", p.first, ", level : ", p.second)
+	}
+
+	for (const auto & p : vec) {
+		if (p.second > this->_decisions.size())
 			break;
 		cl.remove_litt(p.first);
-		this->_decisions[p.second - 1].add_subdecision(SubDecision::decision_rm_litt(id_clause, p.first));
+		if (p.second > 0)
+			this->_decisions[p.second - 1].add_subdecision(SubDecision::decision_rm_litt(id_clause, p.first));
 	}
 	this->_occ_list.add_clause_id(cl.get_litts(), id_clause);
 	this->_clauses.push_back(cl);
 	if (cl.is_unit_clause() != 0)
 		this->_unit_clauses_id.insert(id_clause);
+	for (int abstent_litt : cl.get_absent_litts()) {
+		INFO("abstent litts ", abstent_litt)
+	}
 } // Fnc::add_falsy_clause
 
 void Fnc::set_as_ready() {
