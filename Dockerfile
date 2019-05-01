@@ -10,3 +10,4 @@ RUN \
             bison \
             flex \
             curl \
+            python3 \
