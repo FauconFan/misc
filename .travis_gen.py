@@ -4,7 +4,7 @@
 ## To update the .travis.yml file, you just have to run python3 .travis_gen.py > .travis.yml
 
 LANG = "cpp"
-DIST = "trusty"
+DIST = "xenial"
 COMPILER = "clang"
 
 J_BASE = "Base"
@@ -24,11 +24,11 @@ JOBS = [J_BASE, J_LINT, J_TEST, J_BENCH]
 #  - it tests if the project compile
 
 BASE_TASKS = [
-    (J_BASE, "verifying travis.yml file", [], ["python3 .travis_gen.py > expected.out", "diff .travis.yml expected.out"]),
-    (J_BASE, "compile libsat", [], ["make -C libsat"]),
-    (J_BASE, "compile libsat fast", [], ["make -C libsat fast"]),
-    (J_BASE, "compile sat", [], ["make -C sat"]),
-    (J_BASE, "compile sat fast", [], ["make -C sat fast"]),
+    (J_BASE, False, "verifying travis.yml file", [], ["python3 .travis_gen.py > expected.out", "diff .travis.yml expected.out"]),
+    (J_BASE, True, "compile libsat", [], ["make -C libsat"]),
+    (J_BASE, True, "compile libsat fast", [], ["make -C libsat fast"]),
+    (J_BASE, True, "compile sat", [], ["make -C sat"]),
+    (J_BASE, True, "compile sat fast", [], ["make -C sat fast"]),
 ]
 
 # Lint is a stage that test the project using some external tools
@@ -36,10 +36,10 @@ BASE_TASKS = [
 #  - cpplint, cppcheck, clang-tidy, infer, checks leaks, known errors and undefined behaviours
 
 LINT_TASKS = [
-    (J_LINT, "uncrustify", [], ["make uncrustify_check"]),
-    (J_LINT, "cpplint", ["python3-venv"], ["make cpplint_run"]),
-    (J_LINT, "cppcheck", ["cppcheck"], ["make cppcheck_run"]),
-    (J_LINT, "clang-tidy", ["clang-tidy-6.0", "clang-6.0"], ["travis_retry make clang_tidy_run"]),
+    (J_LINT, False, "uncrustify", [], ["make uncrustify_check"]),
+    (J_LINT, False, "cpplint", ["python3-venv"], ["make cpplint_run"]),
+    (J_LINT, False, "cppcheck", ["cppcheck"], ["make cppcheck_run"]),
+    (J_LINT, True, "clang-tidy", ["clang-tidy-6.0", "clang-6.0"], ["travis_retry make clang_tidy_run"]),
 ]
 
 # Test is a stage that test the project using the ./check_sat.py
@@ -155,7 +155,7 @@ for (name, li) in SAT_DPLL:
     for (folder, is_sat) in li:
         li_tasks.append(build_command(is_sat, folder))
 
-    TEST_TASKS.append((J_TEST, name, [], li_tasks))
+    TEST_TASKS.append((J_TEST, True, name, [], li_tasks))
 
 # Bench is a stage when we run bench with examples, without verifying
 
@@ -165,7 +165,7 @@ for i in range(1, 21 + 1):
     CMDS_QUEENS.append("time (echo " + str(i) + " | sat/sat queens)")
 
 BENCH_TASKS = [
-    (J_BENCH, "queens", [], CMDS_QUEENS)
+    (J_BENCH, True, "queens", [], CMDS_QUEENS)
 ]
 
 DOCKER_EXEC = "docker exec -t cpp"
@@ -188,35 +188,36 @@ def print_header():
     print()
 
 def print_before_install():
-    print("before_install:")
-    print("  - docker build -t cpp .")
-    print("  - docker run --rm --detach --volume `pwd`:/code --workdir /code --name cpp cpp tail -f /dev/null")
-    print()
+    print("      before_install:")
+    print("        - docker build -t cpp .")
+    print("        - docker run --rm --detach --volume `pwd`:/code --workdir /code --name cpp cpp tail -f /dev/null")
 
 def print_after_script():
-    print("after_script:")
-    print("  - docker stop cpp")
-    print()
+    print("      after_script:")
+    print("        - docker stop cpp")
 
-def print_dep(apt_deps):
+def print_dep(prefix, apt_deps):
     if len(apt_deps) is not 0:
         print("      install:")
-        print("        -", DOCKER_EXEC, "apt update")
-        print("        -", DOCKER_EXEC, INSTALL_APT_PREFIX, " ".join(apt_deps))
+        print("        -", prefix, "apt update")
+        print("        -", prefix, INSTALL_APT_PREFIX, " ".join(apt_deps))
 
 def print_task(task):
-    (stage, name, dep, cmds) = task
+    (stage, is_docker, name, dep, cmds) = task
+    prefix = DOCKER_EXEC if is_docker else ""
     print("    - name:", name)
     print("      stage:", stage)
-    print_dep(dep)
+    if is_docker:
+        print_before_install()
+    print_dep(prefix, dep)
     print("      script:")
     for cmd in cmds:
-        print("        -", DOCKER_EXEC, cmd)
+        print("        -", prefix, cmd)
+    if is_docker:
+        print_after_script()
 
 def main():
     print_header()
-    print_before_install()
-    print_after_script()
     print("matrix:")
     print("  include:")
     for task in TASKS:
