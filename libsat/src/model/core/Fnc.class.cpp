@@ -21,11 +21,12 @@ const Occ_list & Fnc::get_occ_list() const{
 	return (this->_occ_list);
 }
 
-std::optional<unsigned int> Fnc::get_level_decision_assigned_variable(int val) const {
+std::optional<unsigned int> Fnc::get_level_decision_assigned_variable(int val) const{
 	auto it = this->_map_litt_level_decision.find(val);
 
 	if (it == this->_map_litt_level_decision.end())
 		return (std::nullopt);
+
 	return (std::optional<unsigned int>(it->second));
 }
 
@@ -80,9 +81,10 @@ void Fnc::add_falsy_clause(Clause cl) {
 	std::sort(vec.begin(), vec.end(), func_comp);
 
 	INFO("printing info")
-	for (const auto & p : vec) {
-		INFO("litt : ", p.first, ", level : ", p.second)
-	}
+
+	/*for (const auto & p : vec) {
+	 *  INFO("litt : ", p.first, ", level : ", p.second)
+	 * }*/
 
 	for (const auto & p : vec) {
 		if (p.second > this->_decisions.size())
@@ -95,9 +97,10 @@ void Fnc::add_falsy_clause(Clause cl) {
 	this->_clauses.push_back(cl);
 	if (cl.is_unit_clause() != 0)
 		this->_unit_clauses_id.insert(id_clause);
-	for (int abstent_litt : cl.get_absent_litts()) {
-		INFO("abstent litts ", abstent_litt)
-	}
+
+	/*for (int abstent_litt : cl.get_absent_litts()) {
+	 *  INFO("abstent litts ", abstent_litt)
+	 * }*/
 } // Fnc::add_falsy_clause
 
 void Fnc::set_as_ready() {
@@ -359,10 +362,10 @@ void Fnc::add_sub_decision(const SubDecision & sd) {
 		int val = static_cast<int>(sd.assign_get_litt()) * (sd.assign_get_value() ? 1 : -1);
 		this->_map_litt_level_decision[val] = this->_decisions.size();
 	}
-	
+
 	if (this->_decisions.empty())
 		return;
-	
+
 	this->_decisions.back().add_subdecision(sd);
 }
 

@@ -14,9 +14,9 @@ Clause::Clause (const std::vector<int> & litts) {
 
 Clause & Clause::operator=(const Clause & icl) {
 	if (this != &icl) {
-		this->_litts    = icl.get_litts();
+		this->_litts        = icl.get_litts();
 		this->_absent_litts = icl.get_absent_litts();
-		this->satisfied = icl.is_satisfied();
+		this->satisfied     = icl.is_satisfied();
 	}
 	return *this;
 }
@@ -119,4 +119,4 @@ std::ostream & operator<<(std::ostream & os, const Clause & icl) {
 	}
 
 	return (os << "]\n");
-}
+} // <<

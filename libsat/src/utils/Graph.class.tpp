@@ -35,6 +35,7 @@ const std::map<T, std::set<T> > &Graph<T>::getEdges() const{
 template <typename T>
 std::optional<T> Graph<T>::findVertex(const T & v) const{
 	auto res = this->_li_vertices.find(v);
+
 	return (res != _li_vertices.cend()) ? std::optional<T>(*res) : std::nullopt;
 }
 
