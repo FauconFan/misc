@@ -4,7 +4,7 @@
 ## To update the .travis.yml file, you just have to run python3 .travis_gen.py > .travis.yml
 
 LANG = "cpp"
-DIST = "xenial"
+DIST = "trusty"
 COMPILER = "clang"
 
 J_BASE = "Base"
@@ -176,6 +176,12 @@ def print_header():
     print("language:", LANG)
     print("dist:", DIST)
     print("compiler:", COMPILER)
+    print("addons:")
+    print("    apt:")
+    print("      sources:")
+    print("        - llvm-toolchain-trusty-5.0")
+    print("      packages:")
+    print("        - clang-5.0")
     print()
     print("stages:")
     for job in JOBS:
