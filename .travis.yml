@@ -1,5 +1,6 @@
-language: C
+language: cpp
 dist: xenial
+compiler: clang
 
 stages:
   - Base

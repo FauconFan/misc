@@ -3,8 +3,9 @@
 ## This is a python script file to generate a .travis.yml file according to some contents.
 ## To update the .travis.yml file, you just have to run python3 .travis_gen.py > .travis.yml
 
-LANG = "C"
+LANG = "cpp"
 DIST = "xenial"
+COMPILER = "clang"
 
 J_BASE = "Base"
 J_LINT = "Lint"
@@ -174,6 +175,7 @@ TASKS = BASE_TASKS + LINT_TASKS + TEST_TASKS + BENCH_TASKS
 def print_header():
     print("language:", LANG)
     print("dist:", DIST)
+    print("compiler:", COMPILER)
     print()
     print("stages:")
     for job in JOBS:
