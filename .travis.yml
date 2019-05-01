@@ -1,12 +1,9 @@
 language: cpp
 dist: trusty
 compiler: clang
-addons:
-    apt:
-      sources:
-        - llvm-toolchain-trusty-5.0
-      packages:
-        - clang-5.0
+git:
+  depth: false
+  gitsubmodules: false
 
 stages:
   - Base
@@ -14,151 +11,158 @@ stages:
   - Test
   - Benchmark
 
+before_install:
+  - docker build -t cpp .
+  - docker run --rm --detach --volume `pwd`:/code -- workdir /code --name cpp cpp tail -f /dev/null
+
+after_script:
+  - docker stop cpp
+
 matrix:
   include:
     - name: verifying travis.yml file
       stage: Base
       script:
-        - python3 .travis_gen.py > expected.out
-        - diff .travis.yml expected.out
+        - docker exec -t cpp python3 .travis_gen.py > expected.out
+        - docker exec -t cpp diff .travis.yml expected.out
     - name: compile libsat
       stage: Base
       script:
-        - make -C libsat
+        - docker exec -t cpp make -C libsat
     - name: compile libsat fast
       stage: Base
       script:
-        - make -C libsat fast
+        - docker exec -t cpp make -C libsat fast
     - name: compile sat
       stage: Base
       script:
-        - make -C sat
+        - docker exec -t cpp make -C sat
     - name: compile sat fast
       stage: Base
       script:
-        - make -C sat fast
+        - docker exec -t cpp make -C sat fast
     - name: uncrustify
       stage: Lint
       script:
-        - make uncrustify_check
+        - docker exec -t cpp make uncrustify_check
     - name: cpplint
       stage: Lint
-      before_install: sudo apt-get update
       install:
-        - sudo apt-get install -y --no-install-recommends python3-venv
+        - docker exec -t cpp apt update
+        - docker exec -t cpp apt-get install -y --no-install-recommends python3-venv
       script:
-        - make cpplint_run
+        - docker exec -t cpp make cpplint_run
     - name: cppcheck
       stage: Lint
-      before_install: sudo apt-get update
       install:
-        - sudo apt-get install -y --no-install-recommends cppcheck
+        - docker exec -t cpp apt update
+        - docker exec -t cpp apt-get install -y --no-install-recommends cppcheck
       script:
-        - make cppcheck_run
+        - docker exec -t cpp make cppcheck_run
     - name: clang-tidy
       stage: Lint
-      before_install: sudo apt-get update
       install:
-        - sudo apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0
+        - docker exec -t cpp apt update
+        - docker exec -t cpp apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0
       script:
-        - travis_retry make clang_tidy_run
+        - docker exec -t cpp travis_retry make clang_tidy_run
     - name: sat dpll RND3SAT 01 - 09
       stage: Test
       script:
-        - make satlib_bench
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_02_RND3SAT__uf50-218
-        - make -C tests test_unsat FOLDER_CNFS=../input_files/satlib/_03_RND3SAT__uuf50-218
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_04_RND3SAT__uf75-325
-        - make -C tests test_unsat FOLDER_CNFS=../input_files/satlib/_05_RND3SAT__uuf75-325
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_06_RND3SAT__uf100-430
-        - make -C tests test_unsat FOLDER_CNFS=../input_files/satlib/_07_RND3SAT__uuf100-430
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_08_RND3SAT__uf125-538
-        - make -C tests test_unsat FOLDER_CNFS=../input_files/satlib/_09_RND3SAT__uuf125-538
+        - docker exec -t cpp make satlib_bench
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_01_RND3SAT__uf20-91
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_02_RND3SAT__uf50-218
+        - docker exec -t cpp make -C tests test_unsat FOLDER_CNFS=../input_files/satlib/_03_RND3SAT__uuf50-218
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_04_RND3SAT__uf75-325
+        - docker exec -t cpp make -C tests test_unsat FOLDER_CNFS=../input_files/satlib/_05_RND3SAT__uuf75-325
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_06_RND3SAT__uf100-430
+        - docker exec -t cpp make -C tests test_unsat FOLDER_CNFS=../input_files/satlib/_07_RND3SAT__uuf100-430
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_08_RND3SAT__uf125-538
+        - docker exec -t cpp make -C tests test_unsat FOLDER_CNFS=../input_files/satlib/_09_RND3SAT__uuf125-538
     - name: sat dpll BMS 20 - 21
       stage: Test
       script:
-        - make satlib_bench
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_20_BMS__RTI_k3_n100_m429
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_21_BMS__BMS_k3_n100_m429
+        - docker exec -t cpp make satlib_bench
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_20_BMS__RTI_k3_n100_m429
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_21_BMS__BMS_k3_n100_m429
     - name: sat dpll CBS 22 - 31
       stage: Test
       script:
-        - make satlib_bench
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_22_CBS__CBS_k3_n100_m403_b10
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_23_CBS__CBS_k3_n100_m403_b30
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_24_CBS__CBS_k3_n100_m403_b50
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_25_CBS__CBS_k3_n100_m403_b70
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_26_CBS__CBS_k3_n100_m403_b90
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_27_CBS__CBS_k3_n100_m411_b10
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_28_CBS__CBS_k3_n100_m411_b30
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_29_CBS__CBS_k3_n100_m411_b50
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_30_CBS__CBS_k3_n100_m411_b70
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_31_CBS__CBS_k3_n100_m411_b90
+        - docker exec -t cpp make satlib_bench
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_22_CBS__CBS_k3_n100_m403_b10
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_23_CBS__CBS_k3_n100_m403_b30
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_24_CBS__CBS_k3_n100_m403_b50
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_25_CBS__CBS_k3_n100_m403_b70
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_26_CBS__CBS_k3_n100_m403_b90
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_27_CBS__CBS_k3_n100_m411_b10
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_28_CBS__CBS_k3_n100_m411_b30
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_29_CBS__CBS_k3_n100_m411_b50
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_30_CBS__CBS_k3_n100_m411_b70
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_31_CBS__CBS_k3_n100_m411_b90
     - name: sat dpll CBS 32 - 41
       stage: Test
       script:
-        - make satlib_bench
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_32_CBS__CBS_k3_n100_m418_b10
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_33_CBS__CBS_k3_n100_m418_b30
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_34_CBS__CBS_k3_n100_m418_b50
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_35_CBS__CBS_k3_n100_m418_b70
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_36_CBS__CBS_k3_n100_m418_b90
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_37_CBS__CBS_k3_n100_m423_b10
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_38_CBS__CBS_k3_n100_m423_b30
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_39_CBS__CBS_k3_n100_m423_b50
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_40_CBS__CBS_k3_n100_m423_b70
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_41_CBS__CBS_k3_n100_m423_b90
+        - docker exec -t cpp make satlib_bench
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_32_CBS__CBS_k3_n100_m418_b10
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_33_CBS__CBS_k3_n100_m418_b30
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_34_CBS__CBS_k3_n100_m418_b50
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_35_CBS__CBS_k3_n100_m418_b70
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_36_CBS__CBS_k3_n100_m418_b90
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_37_CBS__CBS_k3_n100_m423_b10
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_38_CBS__CBS_k3_n100_m423_b30
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_39_CBS__CBS_k3_n100_m423_b50
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_40_CBS__CBS_k3_n100_m423_b70
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_41_CBS__CBS_k3_n100_m423_b90
     - name: sat dpll CBS 42 - 51
       stage: Test
       script:
-        - make satlib_bench
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_42_CBS__CBS_k3_n100_m429_b10
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_43_CBS__CBS_k3_n100_m429_b30
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_44_CBS__CBS_k3_n100_m429_b50
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_45_CBS__CBS_k3_n100_m429_b70
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_46_CBS__CBS_k3_n100_m429_b90
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_47_CBS__CBS_k3_n100_m435_b10
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_48_CBS__CBS_k3_n100_m435_b30
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_49_CBS__CBS_k3_n100_m435_b50
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_50_CBS__CBS_k3_n100_m435_b70
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_51_CBS__CBS_k3_n100_m435_b90
+        - docker exec -t cpp make satlib_bench
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_42_CBS__CBS_k3_n100_m429_b10
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_43_CBS__CBS_k3_n100_m429_b30
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_44_CBS__CBS_k3_n100_m429_b50
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_45_CBS__CBS_k3_n100_m429_b70
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_46_CBS__CBS_k3_n100_m429_b90
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_47_CBS__CBS_k3_n100_m435_b10
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_48_CBS__CBS_k3_n100_m435_b30
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_49_CBS__CBS_k3_n100_m435_b50
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_50_CBS__CBS_k3_n100_m435_b70
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_51_CBS__CBS_k3_n100_m435_b90
     - name: sat dpll CBS 52 - 61
       stage: Test
       script:
-        - make satlib_bench
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_52_CBS__CBS_k3_n100_m441_b10
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_53_CBS__CBS_k3_n100_m441_b30
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_54_CBS__CBS_k3_n100_m441_b50
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_55_CBS__CBS_k3_n100_m441_b70
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_56_CBS__CBS_k3_n100_m441_b90
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_57_CBS__CBS_k3_n100_m449_b10
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_58_CBS__CBS_k3_n100_m449_b30
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_59_CBS__CBS_k3_n100_m449_b50
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_60_CBS__CBS_k3_n100_m449_b70
-        - make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_61_CBS__CBS_k3_n100_m449_b90
+        - docker exec -t cpp make satlib_bench
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_52_CBS__CBS_k3_n100_m441_b10
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_53_CBS__CBS_k3_n100_m441_b30
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_54_CBS__CBS_k3_n100_m441_b50
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_55_CBS__CBS_k3_n100_m441_b70
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_56_CBS__CBS_k3_n100_m441_b90
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_57_CBS__CBS_k3_n100_m449_b10
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_58_CBS__CBS_k3_n100_m449_b30
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_59_CBS__CBS_k3_n100_m449_b50
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_60_CBS__CBS_k3_n100_m449_b70
+        - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_61_CBS__CBS_k3_n100_m449_b90
     - name: queens
       stage: Benchmark
       script:
-        - make -C sat fast
-        - time (echo 1 | sat/sat queens)
-        - time (echo 2 | sat/sat queens)
-        - time (echo 3 | sat/sat queens)
-        - time (echo 4 | sat/sat queens)
-        - time (echo 5 | sat/sat queens)
-        - time (echo 6 | sat/sat queens)
-        - time (echo 7 | sat/sat queens)
-        - time (echo 8 | sat/sat queens)
-        - time (echo 9 | sat/sat queens)
-        - time (echo 10 | sat/sat queens)
-        - time (echo 11 | sat/sat queens)
-        - time (echo 12 | sat/sat queens)
-        - time (echo 13 | sat/sat queens)
-        - time (echo 14 | sat/sat queens)
-        - time (echo 15 | sat/sat queens)
-        - time (echo 16 | sat/sat queens)
-        - time (echo 17 | sat/sat queens)
-        - time (echo 18 | sat/sat queens)
-        - time (echo 19 | sat/sat queens)
-        - time (echo 20 | sat/sat queens)
-        - time (echo 21 | sat/sat queens)
+        - docker exec -t cpp make -C sat fast
+        - docker exec -t cpp time (echo 1 | sat/sat queens)
+        - docker exec -t cpp time (echo 2 | sat/sat queens)
+        - docker exec -t cpp time (echo 3 | sat/sat queens)
+        - docker exec -t cpp time (echo 4 | sat/sat queens)
+        - docker exec -t cpp time (echo 5 | sat/sat queens)
+        - docker exec -t cpp time (echo 6 | sat/sat queens)
+        - docker exec -t cpp time (echo 7 | sat/sat queens)
+        - docker exec -t cpp time (echo 8 | sat/sat queens)
+        - docker exec -t cpp time (echo 9 | sat/sat queens)
+        - docker exec -t cpp time (echo 10 | sat/sat queens)
+        - docker exec -t cpp time (echo 11 | sat/sat queens)
+        - docker exec -t cpp time (echo 12 | sat/sat queens)
+        - docker exec -t cpp time (echo 13 | sat/sat queens)
+        - docker exec -t cpp time (echo 14 | sat/sat queens)
+        - docker exec -t cpp time (echo 15 | sat/sat queens)
+        - docker exec -t cpp time (echo 16 | sat/sat queens)
+        - docker exec -t cpp time (echo 17 | sat/sat queens)
+        - docker exec -t cpp time (echo 18 | sat/sat queens)
+        - docker exec -t cpp time (echo 19 | sat/sat queens)
+        - docker exec -t cpp time (echo 20 | sat/sat queens)
+        - docker exec -t cpp time (echo 21 | sat/sat queens)

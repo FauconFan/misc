@@ -168,7 +168,9 @@ BENCH_TASKS = [
     (J_BENCH, "queens", [], CMDS_QUEENS)
 ]
 
-INSTALL_APT_PREFIX = "sudo apt-get install -y --no-install-recommends"
+DOCKER_EXEC = "docker exec -t cpp"
+
+INSTALL_APT_PREFIX = "apt-get install -y --no-install-recommends"
 
 TASKS = BASE_TASKS + LINT_TASKS + TEST_TASKS + BENCH_TASKS
 
@@ -176,23 +178,31 @@ def print_header():
     print("language:", LANG)
     print("dist:", DIST)
     print("compiler:", COMPILER)
-    print("addons:")
-    print("    apt:")
-    print("      sources:")
-    print("        - llvm-toolchain-trusty-5.0")
-    print("      packages:")
-    print("        - clang-5.0")
+    print("git:")
+    print("  depth: false")
+    print("  gitsubmodules: false")
     print()
     print("stages:")
     for job in JOBS:
         print("  -", job)
     print()
 
+def print_before_install():
+    print("before_install:")
+    print("  - docker build -t cpp .")
+    print("  - docker run --rm --detach --volume `pwd`:/code -- workdir /code --name cpp cpp tail -f /dev/null")
+    print()
+
+def print_after_script():
+    print("after_script:")
+    print("  - docker stop cpp")
+    print()
+
 def print_dep(apt_deps):
     if len(apt_deps) is not 0:
-        print("      before_install: sudo apt-get update")
         print("      install:")
-        print("        -", INSTALL_APT_PREFIX + " " + " ".join(apt_deps))
+        print("        -", DOCKER_EXEC, "apt update")
+        print("        -", DOCKER_EXEC, INSTALL_APT_PREFIX, " ".join(apt_deps))
 
 def print_task(task):
     (stage, name, dep, cmds) = task
@@ -201,10 +211,12 @@ def print_task(task):
     print_dep(dep)
     print("      script:")
     for cmd in cmds:
-        print("        -", cmd)
+        print("        -", DOCKER_EXEC, cmd)
 
 def main():
     print_header()
+    print_before_install()
+    print_after_script()
     print("matrix:")
     print("  include:")
     for task in TASKS:
