@@ -190,7 +190,7 @@ def print_header():
 def print_before_install():
     print("before_install:")
     print("  - docker build -t cpp .")
-    print("  - docker run --rm --detach --volume `pwd`:/code -- workdir /code --name cpp cpp tail -f /dev/null")
+    print("  - docker run --rm --detach --volume `pwd`:/code --workdir /code --name cpp cpp tail -f /dev/null")
     print()
 
 def print_after_script():

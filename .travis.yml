@@ -13,7 +13,7 @@ stages:
 
 before_install:
   - docker build -t cpp .
-  - docker run --rm --detach --volume `pwd`:/code -- workdir /code --name cpp cpp tail -f /dev/null
+  - docker run --rm --detach --volume `pwd`:/code --workdir /code --name cpp cpp tail -f /dev/null
 
 after_script:
   - docker stop cpp
