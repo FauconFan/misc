@@ -84,7 +84,7 @@ matrix:
         - docker exec -t cpp make clang_tidy_run
       after_script:
         - docker stop cpp
-    - name: sat dpll RND3SAT 01 - 09
+    - name: sat cdcl RND3SAT 01 - 09
       stage: Test
       before_install:
         - docker build -t cpp .
@@ -102,7 +102,7 @@ matrix:
         - docker exec -t cpp make -C tests test_unsat FOLDER_CNFS=../input_files/satlib/_09_RND3SAT__uuf125-538
       after_script:
         - docker stop cpp
-    - name: sat dpll BMS 20 - 21
+    - name: sat cdcl BMS 20 - 21
       stage: Test
       before_install:
         - docker build -t cpp .
@@ -113,7 +113,7 @@ matrix:
         - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_21_BMS__BMS_k3_n100_m429
       after_script:
         - docker stop cpp
-    - name: sat dpll CBS 22 - 31
+    - name: sat cdcl CBS 22 - 31
       stage: Test
       before_install:
         - docker build -t cpp .
@@ -132,7 +132,7 @@ matrix:
         - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_31_CBS__CBS_k3_n100_m411_b90
       after_script:
         - docker stop cpp
-    - name: sat dpll CBS 32 - 41
+    - name: sat cdcl CBS 32 - 41
       stage: Test
       before_install:
         - docker build -t cpp .
@@ -151,7 +151,7 @@ matrix:
         - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_41_CBS__CBS_k3_n100_m423_b90
       after_script:
         - docker stop cpp
-    - name: sat dpll CBS 42 - 51
+    - name: sat cdcl CBS 42 - 51
       stage: Test
       before_install:
         - docker build -t cpp .
@@ -170,7 +170,7 @@ matrix:
         - docker exec -t cpp make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_51_CBS__CBS_k3_n100_m435_b90
       after_script:
         - docker stop cpp
-    - name: sat dpll CBS 52 - 61
+    - name: sat cdcl CBS 52 - 61
       stage: Test
       before_install:
         - docker build -t cpp .

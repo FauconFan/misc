@@ -9,3 +9,4 @@ RUN \
             make \
             bison \
             flex \
+            curl \

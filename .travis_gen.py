@@ -49,7 +49,7 @@ TEST_TASKS = []
 SAT = 0
 UNSAT = 1
 
-SAT_DPLL =[
+SAT_CDCL =[
                 ("RND3SAT 01 - 09", [("_01_RND3SAT__uf20-91", SAT), ("_02_RND3SAT__uf50-218", SAT), ("_03_RND3SAT__uuf50-218", UNSAT), ("_04_RND3SAT__uf75-325", SAT), ("_05_RND3SAT__uuf75-325", UNSAT), ("_06_RND3SAT__uf100-430", SAT), ("_07_RND3SAT__uuf100-430", UNSAT), ("_08_RND3SAT__uf125-538", SAT), ("_09_RND3SAT__uuf125-538", UNSAT),
                     # ("_10_RND3SAT__uf150-645", SAT),
                     # ("_11_RND3SAT__uuf150-645", UNSAT),
@@ -93,8 +93,8 @@ def build_command(is_sat, folder):
     rule = "test_sat" if is_sat == SAT else "test_unsat"
     return ("make -C tests " + rule + " FOLDER_CNFS=../input_files/satlib/" + folder)
 
-for (name, li) in SAT_DPLL:
-    name = "sat dpll " + name
+for (name, li) in SAT_CDCL:
+    name = "sat cdcl " + name
     li_tasks = ["make satlib_bench"]
     for (folder, is_sat) in li:
         li_tasks.append(build_command(is_sat, folder))

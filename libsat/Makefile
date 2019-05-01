@@ -53,18 +53,16 @@ OBJ = $(SRC:%.cpp=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "Library %s... " "$(NAME)"
+	@printf "\\t%sLD%s\\t%s\\n" "$(_PURPLE)" "$(_END)" "$@"
 	@$(AR) rc $(NAME) $(OBJ)
-	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
 
 .PHONY: fast
 fast:
 	make all CXX_ADDITIONAL_FLAGS="-DFAST"
 
 %.o: %.cpp
-	@printf "Compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t%s\\n" "$(_GREEN)" "$(_END)" "$?"
 	@$(CXX) $(FLAGS) -c $? -o $@
-	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
 
 .PHONY: clean
 clean:

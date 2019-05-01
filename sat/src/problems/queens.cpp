@@ -71,7 +71,7 @@ void    queens_problems() {
 
 	// std::cout << fnc;
 
-	auto p = dpll_solve(fnc);
+	auto p = cdcl_solve(fnc);
 
 	if (p.first) {
 		std::cout << "Found a solution\n";

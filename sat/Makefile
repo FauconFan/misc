@@ -50,9 +50,8 @@ all: libsat $(NAME)
 fast: libsat_fast $(NAME)
 
 $(NAME): $(LIBA) $(OBJ)
-	@printf "Program %s... " "$(NAME)"
+	@printf "\\t%sLD%s\\t%s\\n" "$(_PURPLE)" "$(_END)" "$@"
 	@$(CXX) $(FLAGS) $(OBJ) -o $(NAME) $(LIB_FLAGS)
-	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
 
 .PHONY: libsat
 libsat:
@@ -66,26 +65,21 @@ libsat_fast:
 	@make -C $(dir $@)
 
 %.o: %.cpp
-	@printf "Compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t%s\\n" "$(_GREEN)" "$(_END)" "$?"
 	@$(CXX) $(FLAGS) -c $? -o $@
-	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
 
 $(LEXER_PARSER_FOLDER)%.lexer.o: $(LEXER_PARSER_FOLDER)%.l
-	@printf "Lexer generating %s... " "$?"
+	@printf "\\t%sFL%s\\t%s\\n" "$(_YELLOW)" "$(_END)" "$?"
 	@flex -o $(@:.o=.cpp) $?
-	@printf "%sgenerated%s\\n" "$(_YELLOW)" "$(_END)"
-	@printf "Lexer compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t%s\\n" "$(_YELLOW)" "$(_END)" "$?"
 	@$(CXX) $(INC_FLAGS) $(CXX_STD) -c $(@:.o=.cpp) -o $@
-	@printf "%scompiled%s\\n" "$(_YELLOW)" "$(_END)"
 	@rm -f $(@:.o=.cpp)
 
 $(LEXER_PARSER_FOLDER)%.parser.o: $(LEXER_PARSER_FOLDER)%.y
-	@printf "Parser generating %s... " "$?"
+	@printf "\\t%sBS%s\\t%s\\n" "$(_YELLOW)" "$(_END)" "$?"
 	@bison -d -o $(@:.o=.cpp) $?
-	@printf "%sgenerated%s\\n" "$(_YELLOW)" "$(_END)"
-	@printf "Parser compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t%s\\n" "$(_YELLOW)" "$(_END)" "$?"
 	@$(CXX) $(INC_FLAGS) $(CXX_STD) -c $(@:.o=.cpp) -o $@
-	@printf "%scompiled%s\\n" "$(_YELLOW)" "$(_END)"
 	@rm -f $(@:.o=.cpp)
 
 .PHONY: clean
