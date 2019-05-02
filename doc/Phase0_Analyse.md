@@ -16,8 +16,8 @@ On analyse le message :
 
 ### Si on ne connaît pas le sender :
 On analyse le message :
-- si c'est un hello court, on regarde le nombre de voisins qu'on a, si on en a pas assez on lui renvoie un hello_long et on l'ajoute à notre liste de voisins
-- si c'est un hello long, on l'ajoute à notre liste de voisins
+- si c'est un hello court, on regarde le nombre de voisins qu'on a, si on en a pas assez on lui renvoie un hello_long et on l'ajoute à notre liste de voisins sinon on l'ajoute à la liste des voisins potentiels
+- si c'est un hello long, on l'ajoute à notre liste de voisins, et le supprime des voisins potentiels s'il y était
 - on ignore tout le reste.  
 
 ## Réveillé par un message de l'utilisateur :
@@ -25,4 +25,4 @@ Construit le message, on l'ajoute à la liste li_buffer_tlv_ip par voisins et à
 
 
 ## Réveillé par un timeout :
-Passage à la phase 1 directement.
+Passage à la [phase 1](Phase1_Analyse.md) directement.

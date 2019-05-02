@@ -51,7 +51,7 @@ void    client();
 
 int     build_socket(void);
 
-void    parse_datagram(uint8_t * tlv, size_t len);
+void    parse_datagram(uint8_t * tlv, size_t len, t_neighbour * nei, t_ip_port ip_port);
 
 void    update_buffer();
 

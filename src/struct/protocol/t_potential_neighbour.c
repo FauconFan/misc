@@ -25,6 +25,10 @@ void                        pot_nei_print(t_potential_neighbour * pot_nei, int f
 	dprintf(fd, "}");
 }
 
+t_bool                      pot_nei_is(t_potential_neighbour * pot_nei, t_ip_port ip_port) {
+	return (ip_port_is_eq(&(pot_nei->ip_port), &ip_port));
+}
+
 static t_bool               is_available(t_potential_neighbour * pot_nei, struct timeval * now) {
 	struct timeval diff;
 

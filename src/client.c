@@ -59,8 +59,10 @@ static t_bool   select_treat_input() {
 			dprintf(ui_getfd(), "%.2d ", buff_res[i]);
 		}
 		dprintf(ui_getfd(), "\n");
-
-		parse_datagram(buff_res, N); // Pretty parser
+		t_ip_port ip_port;
+		ip_port_assign_sockaddr6(&ip_port, sock6);
+		parse_datagram(buff_res, N, nei_search_neighbour(g_env->li_neighbours, ip_port), ip_port);
+		// Pretty parser
 	}
 	else if (FD_ISSET(ui_getcallbackfd(), &readfds)) {
 		t_ui_in in;

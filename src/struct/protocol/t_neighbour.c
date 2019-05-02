@@ -37,9 +37,13 @@ void            nei_print(t_neighbour * nei, int fd) {
 	dprintf(fd, "}");
 }
 
-// t_neighbour		*nei_search_neighbour(t_list * li_neighbours, uint8_t ip[16], uint16_t port) {
+static t_bool   ip_port_is_eq_nei(t_neighbour * nei, t_ip_port * ip_port) {
+	return (ip_port_is_eq(&(nei->ip_port), ip_port));
+}
 
-// }
+t_neighbour * nei_search_neighbour(t_list * li_neighbours, t_ip_port ip_port) {
+	return lst_findp(li_neighbours, (t_bool(*)(void *, void *))ip_port_is_eq_nei, &ip_port);
+}
 
 t_bool          nei_is_id(t_neighbour * nei, uint64_t id) {
 	return (nei->id == id);
