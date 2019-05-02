@@ -10,7 +10,7 @@ static t_bool   search_msg(t_message * msg, t_acquit * acq) {
 
 static void     build_hello(t_neighbour * nei, struct timeval * now) {
 	if (min_time(*now, nei->next_hello) != now) {
-		t_buffer_tlv_ip * buffer = buffer_search(nei->ip, nei->port);
+		t_buffer_tlv_ip * buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
 		tlvb_add_hello(buffer->tlv_builder, g_env->id, nei->id);
 		nei->next_hello.tv_sec += 30;
 	}
@@ -21,7 +21,7 @@ static void     build_acquit(t_acquit * acq, struct timeval * now) {
 		t_neighbour * nei = lst_findp(g_env->li_neighbours, (t_bool(*)(void *, void *))search_nei, acq);
 		t_message * msg   = lst_findp(g_env->li_messages, (t_bool(*)(void *, void *))search_msg, acq);
 
-		t_buffer_tlv_ip * buffer = buffer_search(nei->ip, nei->port);
+		t_buffer_tlv_ip * buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
 		tlvb_add_data(buffer->tlv_builder, acq->sender_id, acq->nonce, msg->type, msg->text, msg->length);
 
 		acquit_no_response(acq);

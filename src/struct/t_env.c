@@ -36,6 +36,7 @@ t_env * env_alloc(void) {
 } /* env_alloc */
 
 void                env_free(t_env * env) {
+	close(env->socket);
 	lst_free(env->li_neighbours);
 	lst_free(env->li_potential_neighbours);
 	lst_free(env->li_messages);
@@ -60,10 +61,25 @@ void                env_print(t_env * env, int fd) {
 }
 
 struct timeval      env_min_time(t_env * env) {
-	struct timeval min_hello  = nei_get_min_time(env->li_neighbours);
-	struct timeval min_acquit = acquit_get_min_time(env->li_acquit);
+	t_bool ok[2];
+	struct timeval min_hello;
+	struct timeval min_acquit;
+	struct timeval res;
 
-	struct timeval * next = min_time(min_hello, min_acquit);
+	ok[0] = nei_get_min_time(env->li_neighbours, &min_hello);
+	ok[1] = acquit_get_min_time(env->li_acquit, &min_acquit);
 
-	return *next;
+	if (ok[0] == FALSE && ok[1] == FALSE) {
+		gettimeofday(&res, NULL);
+		res.tv_sec += 5; // On attend 5 sec si on a rien à attendre
+		return (res);
+	}
+	else if (ok[0] == FALSE) {
+		return (min_acquit);
+	}
+	else if (ok[1] == FALSE) {
+		return (min_hello);
+	}
+	res = *min_time(min_hello, min_acquit);
+	return res;
 }

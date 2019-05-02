@@ -30,6 +30,7 @@ typedef enum    e_tlv_type{
 // Struct declarations
 
 #include "struct/data/t_list.h"
+#include "struct/network/t_ip_port.h"
 #include "struct/network/t_iovec_builder.h"
 #include "struct/network/t_tlv_builder.h"
 #include "struct/network/t_buffer_tlv_ip.h"

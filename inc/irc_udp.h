@@ -44,13 +44,7 @@ t_bool      get_sockaddr(
   struct sockaddr ** sock_addr,
   socklen_t *        sock_len);
 
-void    client(
-  struct sockaddr * sock_addr,
-  socklen_t         sock_len,
-  const void *      buff,
-  size_t            len_buff,
-  void *            buff2,
-  size_t            len_buff2);
+void    client();
 
 int     build_socket(void);
 

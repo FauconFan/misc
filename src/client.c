@@ -1,130 +1,90 @@
 #include "irc_udp.h"
 
-#define	TIME 25
+#define	TIME      30
+#define	BUFF_SIZE 4096 + 1
 
-void    client(
-  struct sockaddr * sock_addr,
-  socklen_t         sock_len,
-  const void *      buff,
-  size_t            len_buff,
-  void *            hello_long,
-  size_t            len_hello) {
-	uint8_t buff_res[1024];
-	size_t N;
-	int rc;
-	struct timeval tv;
-	struct timeval debut;
-	struct timeval current;
+// static void		build_sock_addr6(struct sockaddr_in6 *in6, uint8_t ip[16], uint16_t port) {
+// 	memset(in6, 0, sizeof(*in6));
+// 	in6->sin6_family = AF_INET6;
+// 	in6->sin6_port = port;
+// 	for (size_t i = 0; i < 16; ++i) {
+// 		in6->sin6_addr.s6_addr[i] = ip[i];
+// 	}
+// }
+
+static t_bool   select_treat_input() {
 	fd_set readfds;
+	int max_fd;
+	int rc_select;
+	struct timeval tv;
+	t_bool running;
+	uint8_t buff_res[BUFF_SIZE];
+	size_t N;
 
-	/*Send message to server*/
-	rc = sendto(g_env->socket, buff, len_buff, 0, sock_addr, sock_len);
+	running = TRUE;
+	FD_ZERO(&readfds);
+	FD_SET(g_env->socket, &readfds);
+	FD_SET(ui_getcallbackfd(), &readfds);
+	max_fd = g_env->socket;
+	if (ui_getcallbackfd() > max_fd)
+		max_fd = ui_getcallbackfd();
 
-	dprintf(ui_getfd(), "%d\n", rc);
+	// Calculer le minimum time to wait pour tv
+	tv        = env_min_time(g_env);
+	rc_select = select(max_fd + 1, &readfds, NULL, NULL, &tv);
 
-	/*Receive message from server*/
-	memset(buff_res, 0, 1024);
-	N = recv(g_env->socket, buff_res, 1024, 0);
-
-	for (size_t i = 0; i < N; ++i) {
-		dprintf(ui_getfd(), "%.2d ", buff_res[i]);
+	if (rc_select < 0) {
+		dprintf(ui_getfd(), "select failed : %s\n", strerror(errno));
+		running = FALSE;
 	}
-	dprintf(ui_getfd(), "\n");
+	// on a reçu un message
+	else if (FD_ISSET(g_env->socket, &readfds)) {
+		struct sockaddr_in6 sock6;
+		socklen_t len;
 
-	parse_datagram(buff_res, N);
+		memset(buff_res, 0, BUFF_SIZE);
+		N = recvfrom(g_env->socket, buff_res, BUFF_SIZE, 0, (struct sockaddr *) &sock6, &len);
 
-	memcpy(hello_long + 14, buff_res + 6, 8);
+		dprintf(ui_getfd(), "message from\n");
+		dprintf(ui_getfd(), "From\n");
+		dprintf(ui_getfd(), "Ip : ");
 
-	rc = fcntl(g_env->socket, F_GETFL);
-	if (rc < 0) {
-		dprintf(ui_getfd(), "echec flags non bloquants 1\n");
-		exit(1);
+		for (size_t i = 0; i < 16; ++i) {
+			dprintf(ui_getfd(), "%.2x ", sock6.sin6_addr.s6_addr[i]);
+		}
+		dprintf(ui_getfd(), "\n");
+		dprintf(ui_getfd(), "Port : %d\n", ntohs(sock6.sin6_port));
+
+		for (size_t i = 0; i < N; ++i) {
+			dprintf(ui_getfd(), "%.2d ", buff_res[i]);
+		}
+		dprintf(ui_getfd(), "\n");
+
+		parse_datagram(buff_res, N); // Pretty parser
 	}
-	rc = fcntl(g_env->socket, F_SETFL, rc | O_NONBLOCK);
-	if (rc < 0) {
-		dprintf(ui_getfd(), "echec flags non bloquants 2\n");
+	else if (FD_ISSET(ui_getcallbackfd(), &readfds)) {
+		t_ui_in in;
+
+		ui_receive(&in);
+		switch (in.type) {
+			case UI_OK:
+				break;
+			case UI_STOP:
+				running = FALSE;
+				break;
+			case UI_MESSAGE:
+				dprintf(ui_getfd(), "Me: %s\n", in.u.message);
+				free(in.u.message);
+				break;
+		}
 	}
+	return (running);
+} /* select_treat_input */
 
-	tv.tv_sec  = TIME;
-	tv.tv_usec = 0;
-	gettimeofday(&debut, NULL);
-
+void    client() {
 	t_bool running = TRUE;
 
 	while (running) {
-		int max_fd = g_env->socket;
-		FD_ZERO(&readfds);
-		FD_SET(g_env->socket, &readfds);
-		FD_SET(ui_getcallbackfd(), &readfds);
-		if (ui_getcallbackfd() > max_fd)
-			max_fd = ui_getcallbackfd();
-		rc = select(max_fd + 1, &readfds, NULL, NULL, &tv);
-
-
-		// timeout
-		if (rc == 0) {
-			get_sockaddr_juliusz(&sock_addr, &sock_len);
-			dprintf(ui_getfd(), "timeout\n");
-			N = sendto(g_env->socket, hello_long, len_hello, 0, sock_addr, sock_len);
-
-			dprintf(ui_getfd(), "N : %ld\n", (long int) N);
-			if (N == (size_t) -1) {
-				dprintf(ui_getfd(), "sendto failed %s\n", strerror(errno));
-			}
-			else {
-				dprintf(ui_getfd(), ">> ");
-				for (size_t i = 0; i < N; i++) {
-					dprintf(ui_getfd(), "%.2d ", ((uint8_t *) hello_long)[i]);
-				}
-				dprintf(ui_getfd(), "\n");
-			}
-
-			gettimeofday(&debut, NULL);
-			tv.tv_sec  = TIME;
-			tv.tv_usec = 0;
-		}
-		// message de Juliusz
-		else if (FD_ISSET(g_env->socket, &readfds)) {
-			struct sockaddr_in6 sock6;
-			socklen_t len;
-
-			dprintf(ui_getfd(), "read\n");
-			memset(buff_res, 0, 1024);
-			N = recvfrom(g_env->socket, buff_res, 1024, 0, (struct sockaddr *) &sock6, &len);
-
-			dprintf(ui_getfd(), "From\n");
-			dprintf(ui_getfd(), "Ip : ");
-
-			for (size_t i = 0; i < 16; ++i) {
-				dprintf(ui_getfd(), "%.2x ", sock6.sin6_addr.s6_addr[i]);
-			}
-			dprintf(ui_getfd(), "\n");
-			dprintf(ui_getfd(), "Port : %d\n", ntohs(sock6.sin6_port));
-
-			for (size_t i = 0; i < N; ++i) {
-				dprintf(ui_getfd(), "%.2d ", buff_res[i]);
-			}
-			dprintf(ui_getfd(), "\n");
-			parse_datagram(buff_res, N); // Pretty parser
-			gettimeofday(&current, NULL);
-			tv.tv_sec  = TIME - (current.tv_sec - debut.tv_sec);
-			tv.tv_usec = 0;
-		}
-		else if (FD_ISSET(ui_getcallbackfd(), &readfds)) {
-			t_ui_in in;
-
-			ui_receive(&in);
-			switch (in.type) {
-				case UI_OK:
-					break;
-				case UI_STOP:
-					running = FALSE;
-					break;
-				case UI_MESSAGE:
-					dprintf(ui_getfd(), "Me: %s\n", in.u.message);
-					free(in.u.message);
-					break;
-			}
-		}
+		running = select_treat_input();
 	}
 } /* client */

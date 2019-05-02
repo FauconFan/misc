@@ -38,7 +38,7 @@ void        ui_main(int fd_ui, int fd_callback) {
 
 	initscr();
 	echo();
-	timeout(30);
+	timeout(100);
 
 	while (1) {
 		int actu;
