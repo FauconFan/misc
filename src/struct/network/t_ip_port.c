@@ -1,6 +1,6 @@
 #include "irc_udp.h"
 
-static void        ip_port_assign_brut(t_ip_port * ip_port, uint8_t ip[16], uint16_t port) {
+void        ip_port_assign_brut(t_ip_port * ip_port, uint8_t ip[16], uint16_t port) {
 	memcpy(ip_port->ip, ip, 16);
 	ip_port->port = port;
 }

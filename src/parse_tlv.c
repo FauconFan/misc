@@ -25,11 +25,12 @@ static uint16_t parse_padN(uint8_t * tlv) {
 	return (2 + len);
 }
 
-static uint16_t parse_hello(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
+static uint16_t parse_hello(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port) {
 	uint16_t len;
 	uint64_t source_id;
 	uint64_t dest_id;
 	struct timeval now;
+	t_neighbour *nei2;
 
 	gettimeofday(&now, NULL);
 
@@ -41,12 +42,16 @@ static uint16_t parse_hello(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port)
 	else if (len == 8) {
 		source_id = *(uint64_t *) (tlv + 2);
 		dprintf(ui_getfd(), "HELLO SHORT Source-id: %016lx\n", source_id);
-		if (nei != NULL) {
-			nei->last_hello = now;
+		if (*nei != NULL) {
+			(*nei)->last_hello = now;
 		}
 		else {
-			if (lst_size(g_env->li_neighbours) <= NB_NEI_MAX) {
-				nei = nei_alloc(source_id, ip_port);
+			if (lst_size(g_env->li_neighbours) < NB_NEI_MAX) {
+				nei2 = nei_alloc(source_id, ip_port);
+				t_buffer_tlv_ip * buffer = buffer_search(g_env->li_buffer_tlv_ip, nei2->ip_port);
+				tlvb_add_hello(buffer->tlv_builder, g_env->id, nei2->id);
+				lst_add(g_env->li_neighbours, nei2);
+				*nei = nei2;
 			}
 			else {
 				lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip_port));
@@ -57,20 +62,21 @@ static uint16_t parse_hello(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port)
 		source_id = *(uint64_t *) (tlv + 2);
 		dest_id   = *(uint64_t *) (tlv + 10);
 		dprintf(ui_getfd(), "HELLO LONG Source-id: %016lx, Dest-id: %016lx\n", source_id, dest_id);
-		if (nei != NULL) {
-			nei->last_hello      = now;
-			nei->last_hello_long = now;
+		if (*nei != NULL) {
+			(*nei)->last_hello      = now;
+			(*nei)->last_hello_long = now;
 		}
 		else {
-			nei = nei_alloc(source_id, ip_port);
+			nei2 = nei_alloc(source_id, ip_port);
 			lst_remove_ifp(g_env->li_potential_neighbours, (t_bool(*)(void *, void *))pot_nei_is, &ip_port);
-			lst_add(g_env->li_neighbours, nei);
+			lst_add(g_env->li_neighbours, nei2);
+			*nei = nei2;
 		}
 	}
 	return (len + 2);
 } /* parse_hello */
 
-static uint16_t parse_neighbour(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
+static uint16_t parse_neighbour(uint8_t * tlv, t_neighbour * nei) {
 	uint16_t len;
 	uint8_t * ip;
 	uint16_t port;
@@ -93,7 +99,9 @@ static uint16_t parse_neighbour(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_p
 			dprintf(ui_getfd(), "%.2x ", ip[i]);
 		}
 		dprintf(ui_getfd(), "Port : %d\n", ntohs(port));
-		lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip_port));
+		t_ip_port ip_port2;
+		ip_port_assign_brut(&ip_port2, ip, port);
+		lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip_port2));
 	}
 	return (len + 2);
 }
@@ -251,7 +259,7 @@ static uint16_t parse_warning(uint8_t * tlv, t_neighbour * nei) {
 	return (len + 2);
 }
 
-static uint16_t parse_tlv(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
+static uint16_t parse_tlv(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port) {
 	switch (tlv[0]) {
 		case PAD1:
 			return (parse_pad1(tlv));
@@ -263,19 +271,19 @@ static uint16_t parse_tlv(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
 			return (parse_hello(tlv, nei, ip_port));
 
 		case NEIGHBOUR:
-			return (parse_neighbour(tlv, nei, ip_port));
+			return (parse_neighbour(tlv, *nei));
 
 		case DATA:
-			return (parse_data(tlv, nei, ip_port));
+			return (parse_data(tlv, *nei, ip_port));
 
 		case ACK:
-			return (parse_ack(tlv, nei));
+			return (parse_ack(tlv, *nei));
 
 		case GOAWAY:
-			return (parse_goaway(tlv, nei));
+			return (parse_goaway(tlv, *nei));
 
 		case WARNING:
-			return (parse_warning(tlv, nei));
+			return (parse_warning(tlv, *nei));
 
 		default:
 			dprintf(ui_getfd(), "unrecognised tlv\n");
@@ -316,6 +324,6 @@ void            parse_datagram(uint8_t * tlv, size_t len, t_neighbour * nei, t_i
 	len_actu = 4;
 	while (len_actu < len) {
 		dprintf(ui_getfd(), "=== ");
-		len_actu += parse_tlv(tlv + len_actu, nei, ip_port);
+		len_actu += parse_tlv(tlv + len_actu, &nei, ip_port);
 	}
 } /* parse_datagram */
