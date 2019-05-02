@@ -1,4 +1,5 @@
-# Phase d'analyse de la boucle principale
+# Phase d'analyse de la phase 1
+il s'agit du moment ou on analyse ce qu'on doit faire 
 
 ### Première étape :
 On compte le nombre de voisin qu'on a, si on en a pas assez, c'est à dire moins que NB_NEI_MAX (on supposera au début que NB_NEI_MAX = 8), on regarde dans notre liste de voisins potentiels à qui on peut envoyer un hello court. Si on a déjà envoyé un hello court à un voisin potentiel on attend avant de lui en renvoyé un.
