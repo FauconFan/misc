@@ -112,7 +112,8 @@ BENCH_TASKS = [
     (J_BENCH, True, "queens", [], CMDS_QUEENS)
 ]
 
-DOCKER_EXEC = "docker exec -t cpp"
+DOCKER_EXEC_PREFIX = "docker exec -t cpp bash -c \""
+DOCKER_EXEC_SUFFIX = "\""
 
 INSTALL_APT_PREFIX = "apt-get install -y --no-install-recommends"
 
@@ -132,11 +133,12 @@ def print_header():
     print()
 
 def print_dep(is_docker, apt_deps):
-    prefix = DOCKER_EXEC if is_docker else "sudo"
+    prefix = DOCKER_EXEC_PREFIX if is_docker else "sudo"
+    suffix = DOCKER_EXEC_SUFFIX if is_docker else ""
     if len(apt_deps) is not 0:
         print("      install:")
-        print("        -", prefix, "apt update")
-        print("        -", prefix, INSTALL_APT_PREFIX, " ".join(apt_deps))
+        print("        -", prefix, "apt update", suffix)
+        print("        -", prefix, INSTALL_APT_PREFIX, " ".join(apt_deps), suffix)
 
 def print_docker_before_install():
     print("      before_install:")
@@ -154,10 +156,11 @@ def print_task(task):
     if is_docker:
         print_docker_before_install()
     print_dep(is_docker, dep)
-    prefix = DOCKER_EXEC if is_docker else ""
+    prefix = DOCKER_EXEC_PREFIX if is_docker else ""
+    suffix = DOCKER_EXEC_SUFFIX if is_docker else ""
     print("      script:")
     for cmd in cmds:
-        print("        -", prefix, cmd)
+        print("        -", prefix, cmd, suffix)
     if is_docker:
         print_docker_after_script()
 
