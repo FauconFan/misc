@@ -29,11 +29,11 @@ typedef struct  s_ui_in{
 
 int     ui_getfd(void);
 int     ui_getcallbackfd(void);
-void ui_receive(t_ui_in * in);
+void	ui_receive(t_ui_in * in);
 void    ui_setup(void);
 void    ui_down(void);
 
-void    ui_main(int fd_ui, int fd_callback);
+void    ui_main(int fd_ui, int fd_callback, int fd_stop);
 void    ui_print(t_ui * ui);
 char * ui_read_pseudo(void);
 

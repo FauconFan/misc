@@ -8,6 +8,10 @@ static void ui_check_message(t_ui * ui, int fd_ui) {
 		ui_treat_buffer(ui);
 }
 
+static void ui_check_stop(int fd_stop, t_bool * running) {
+	*running = (read(fd_stop, NULL, 0) == -1);
+}
+
 static void ui_send_stop(int fd_callback) {
 	t_ui_type stop;
 
@@ -25,8 +29,9 @@ static void ui_send_remote_message(int fd_callback, t_ui * ui) {
 	ui_init_line(ui);
 }
 
-void        ui_main(int fd_ui, int fd_callback) {
+void        ui_main(int fd_ui, int fd_callback, int fd_stop) {
 	t_ui * ui;
+	t_bool running;
 
 	// char        *pseudo;
 
@@ -40,17 +45,21 @@ void        ui_main(int fd_ui, int fd_callback) {
 	echo();
 	timeout(100);
 
-	while (1) {
+	running = TRUE;
+
+	while (running) {
 		int actu;
 
 		ui_check_message(ui, fd_ui);
 		ui_print(ui);
+		ui_check_stop(fd_stop, &running);
 		refresh();
 		actu = getch();
 		if (actu != ERR) {
 			if (actu == '\n') {
-				if (strcmp(ui->line, "QUIT") == 0)
+				if (strcmp(ui->line, "QUIT") == 0) {
 					break;
+				}
 				ui_send_remote_message(fd_callback, ui);
 			}
 			else if (actu == 127) {
@@ -72,6 +81,8 @@ void        ui_main(int fd_ui, int fd_callback) {
 	ui_free(ui);
 
 	ui_send_stop(fd_callback);
+
+	sleep(1); // Sleep to let the super process to quit properly without any SIGPIPE.
 
 	close(fd_ui);
 	close(fd_callback);
