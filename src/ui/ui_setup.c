@@ -43,6 +43,7 @@ void    ui_down(void) {
 	}
 	if (g_fd_stop != -1) {
 		write(g_fd_stop, &g_fd_stop, sizeof(g_fd_stop));
+		sleep(1);
 		close(g_fd_stop);
 		g_fd_stop = -1;
 	}
