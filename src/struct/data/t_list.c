@@ -204,7 +204,7 @@ t_bool lst_pop(t_list * lst) {
 		if (lst->head == NULL) { \
 			return (FALSE); \
 		} \
-		while (COND((lst)->head)) { \
+		while (COND((lst)->head->data)) { \
 			if (lst_pop(lst) == FALSE) { \
 				return (FALSE); \
 			} \
@@ -214,7 +214,7 @@ t_bool lst_pop(t_list * lst) {
 		} \
 		prev = (lst)->head; \
 		while (prev->next) { \
-			if (COND(prev->next)) { \
+			if (COND(prev->next->data)) { \
 				lst->len = lst->len - 1; \
 				if (_lst_free_next_then_connect(prev, (lst)->freefptr) == FALSE) { \
 					return (FALSE); \

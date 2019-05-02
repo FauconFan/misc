@@ -39,7 +39,7 @@ t_bool                  is_acquit(t_acquit * acquit, uint64_t dest_id, uint64_t 
 static void             parcours_acq(t_acquit * acq, struct timeval * tv) {
 	struct timeval * tmp;
 
-	tmp = timeval_min(*tv, acq->next_time);
+	tmp = timeval_min(tv, &acq->next_time);
 	timeval_assign(tv, tmp);
 }
 

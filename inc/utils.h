@@ -8,7 +8,7 @@ void                timeval_print(struct timeval t, int fd);
 struct timeval      timeval_add(struct timeval * t1, struct timeval * t2);
 struct timeval      timeval_diff(struct timeval * t1, struct timeval * t2);
 struct timeval      timeval_raise(uint8_t n);
-struct timeval * timeval_min(struct timeval t1, struct timeval t2);
+struct timeval * timeval_min(struct timeval * t1, struct timeval * t2);
 void                timeval_assign(struct timeval * t1, struct timeval * t2);
 
 // my_getrandom

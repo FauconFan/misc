@@ -147,5 +147,5 @@ t_bool              iovb_get_iovec(t_iovec_builder * msg, struct iovec ** iovec,
 	}
 	*iovec     = msg->msg_iov;
 	*iovec_len = msg->len_used;
-	return (FALSE);
+	return (TRUE);
 }

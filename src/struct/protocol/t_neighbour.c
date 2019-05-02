@@ -52,7 +52,7 @@ t_bool          nei_is_id(t_neighbour * nei, uint64_t id) {
 static void     parcours_nei(t_neighbour * nei, struct timeval * tv) {
 	struct timeval * tmp;
 
-	tmp = timeval_min(*tv, nei->next_hello);
+	tmp = timeval_min(tv, &nei->next_hello);
 	timeval_assign(tv, tmp);
 }
 

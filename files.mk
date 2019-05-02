@@ -13,6 +13,7 @@ SRC = \
 		$(SRC_FOLDER)socket.c \
 		$(SRC_FOLDER)client.c \
 		$(SRC_FOLDER)parse_tlv.c \
+		$(SRC_FOLDER)select_treat_input.c \
 		$(SRC_FOLDER)update_buffer.c \
 		$(SRC_FOLDER)clear_buffer.c \
 		$(SRC_UTILS_FOLDER)my_getrandom.c \

@@ -53,7 +53,9 @@ int     build_socket(void);
 
 void    parse_datagram(uint8_t * tlv, size_t len, t_neighbour * nei, t_ip_port ip_port);
 
-void    update_buffer();
+t_bool   select_treat_input(void);
+void    update_buffer(void);
+void    clear_buffer(void);
 
 extern t_env * g_env;
 

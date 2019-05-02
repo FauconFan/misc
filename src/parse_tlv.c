@@ -64,6 +64,7 @@ static uint16_t parse_hello(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port)
 		else {
 			nei = nei_alloc(source_id, ip_port);
 			lst_remove_ifp(g_env->li_potential_neighbours, (t_bool(*)(void *, void *))pot_nei_is, &ip_port);
+			lst_add(g_env->li_neighbours, nei);
 		}
 	}
 	return (len + 2);
@@ -76,7 +77,7 @@ static uint16_t parse_neighbour(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_p
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "neighbour reçu d'un non neighbour");
+		dprintf(ui_getfd(), "neighbour reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	if (len != 18) {

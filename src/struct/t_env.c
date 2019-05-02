@@ -82,6 +82,6 @@ struct timeval      env_min_time(t_env * env) {
 	else if (ok[1] == FALSE) {
 		return (min_hello);
 	}
-	res = *timeval_min(min_hello, min_acquit);
-	return res;
+	res = *timeval_min(&min_hello, &min_acquit);
+	return (res);
 }
