@@ -9,7 +9,8 @@
 #include "irc_udp.h"
 
 typedef struct      s_potential_neighbour{
-	t_ip_port ip_port;
+	t_ip_port      ip_port;
+	struct timeval last_send;
 }                   t_potential_neighbour;
 
 
@@ -18,8 +19,7 @@ void                        pot_nei_free(t_potential_neighbour * pot_nei);
 
 void                        pot_nei_print(t_potential_neighbour * pot_nei, int fd);
 
-// prédicat d'égalité
-t_bool                      pot_nei_is(t_potential_neighbour * pot_nei, t_ip_port ip_port);
+t_potential_neighbour * pot_nei_get_available(t_list * li_potential_neighbours, struct timeval * now);
 
 
 #endif // ifndef T_POTENTIAL_NEIGHBOUR_H

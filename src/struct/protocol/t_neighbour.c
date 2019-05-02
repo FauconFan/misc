@@ -29,11 +29,11 @@ void            nei_print(t_neighbour * nei, int fd) {
 	dprintf(fd, "neighbour { id : %016lx, ip_port : ", nei->id);
 	ip_port_print(nei->ip_port, fd);
 	dprintf(fd, ", last hello ");
-	print_time_val(nei->last_hello, fd);
+	timeval_print(nei->last_hello, fd);
 	dprintf(fd, ", last hello long ");
-	print_time_val(nei->last_hello_long, fd);
+	timeval_print(nei->last_hello_long, fd);
 	dprintf(fd, ", our last hello ");
-	print_time_val(nei->next_hello, fd);
+	timeval_print(nei->next_hello, fd);
 	dprintf(fd, "}");
 }
 
@@ -48,15 +48,15 @@ t_bool          nei_is_id(t_neighbour * nei, uint64_t id) {
 static void     parcours_nei(t_neighbour * nei, struct timeval * tv) {
 	struct timeval * tmp;
 
-	tmp = min_time(*tv, nei->next_hello);
-	time_assign(tv, tmp);
+	tmp = timeval_min(*tv, nei->next_hello);
+	timeval_assign(tv, tmp);
 }
 
 t_bool          nei_get_min_time(t_list * li_neighbours, struct timeval * tv) {
 	if (lst_isempty(li_neighbours)) {
 		return (FALSE);
 	}
-	time_assign(tv, &(((t_neighbour *) lst_top(li_neighbours))->next_hello));
+	timeval_assign(tv, &(((t_neighbour *) lst_top(li_neighbours))->next_hello));
 	lst_iterp(li_neighbours, (void(*)(void *, void *))parcours_nei, tv);
 	return (TRUE);
 }

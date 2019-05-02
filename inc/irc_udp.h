@@ -26,13 +26,16 @@
 #include "ui.h"
 #include "utils.h"
 
-#define	JCH_NODE     "jch.irif.fr"
-#define	JCH_SERVICE  "1212"
+#define	JCH_NODE        "jch.irif.fr"
+#define	JCH_SERVICE     "1212"
 
-#define	ENV_FAMILY   AF_INET6
-#define	ENV_SOCKTYPE SOCK_DGRAM
-#define	ENV_PROTOCOL 0
-#define	ENV_FLAGS    (AI_V4MAPPED | AI_ALL)
+#define	ENV_FAMILY      AF_INET6
+#define	ENV_SOCKTYPE    SOCK_DGRAM
+#define	ENV_PROTOCOL    0
+#define	ENV_FLAGS       (AI_V4MAPPED | AI_ALL)
+
+#define	NB_NEI_MAX      8
+#define	TIMEOUT_POT_NEI 30
 
 t_bool      get_sockaddr_juliusz(
   struct sockaddr ** sock_addr,

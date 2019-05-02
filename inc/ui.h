@@ -29,7 +29,7 @@ typedef struct  s_ui_in{
 
 int     ui_getfd(void);
 int     ui_getcallbackfd(void);
-void	ui_receive(t_ui_in * in);
+void ui_receive(t_ui_in * in);
 void    ui_setup(void);
 void    ui_down(void);
 
