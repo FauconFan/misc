@@ -12,7 +12,7 @@ int main(void) {
 	env_print(g_env, ui_getfd());
 
 	// client();
-	sleep(1);
+	sleep(10);
 
 	env_free(g_env);
 

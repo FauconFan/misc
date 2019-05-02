@@ -57,6 +57,8 @@ void                env_print(t_env * env, int fd) {
 	lst_print(env->li_messages, fd);
 	dprintf(fd, "\tli_acquit : ");
 	lst_print(env->li_acquit, fd);
+	dprintf(fd, "\tli_buffer_tlv_ip : ");
+	lst_print(env->li_buffer_tlv_ip, fd);
 	dprintf(fd, "}\n");
 }
 

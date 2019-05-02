@@ -67,6 +67,9 @@ t_bool  lst_isempty(t_list * lst);
 // Print the list
 void    lst_print(t_list * lst, int fd);
 
+// Clears the list, free all elements
+void    lst_clear(t_list * lst);
+
 // Return a pointer to the first element in the list.
 void * lst_top(t_list * lst);
 

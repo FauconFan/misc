@@ -13,6 +13,8 @@ SRC = \
 		$(SRC_FOLDER)socket.c \
 		$(SRC_FOLDER)client.c \
 		$(SRC_FOLDER)parse_tlv.c \
+		$(SRC_FOLDER)update_buffer.c \
+		$(SRC_FOLDER)clear_buffer.c \
 		$(SRC_UTILS_FOLDER)my_getrandom.c \
 		$(SRC_UTILS_FOLDER)my_time.c \
 		$(SRC_UTILS_FOLDER)my_str.c \
@@ -31,7 +33,6 @@ SRC = \
 		$(SRC_STRUCT_PROTOCOL_FOLDER)t_message.c \
 		$(SRC_STRUCT_PROTOCOL_FOLDER)t_acquit.c \
 		$(SRC_STRUCT_FOLDER)t_env.c \
-		$(SRC_FOLDER)update_buffer.c \
 
 INC = $(shell find $(INC_FOLDER) -name "*.h")
 

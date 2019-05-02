@@ -44,20 +44,10 @@ t_list * lst_alloc(void(* freefptr)(void *), void(* printfptr)(void *, int)) {
 }
 
 void    lst_free(t_list * lst) {
-	t_list_node * actu;
-	t_list_node * next;
-
 	if (lst == NULL)
 		return;
 
-	actu = lst->head;
-	while (actu) {
-		next = actu->next;
-		if (lst->freefptr != NULL)
-			(lst->freefptr)(actu->data);
-		free(actu);
-		actu = next;
-	}
+	lst_clear(lst);
 	free(lst);
 }
 
@@ -94,6 +84,25 @@ t_bool  lst_isempty(t_list * lst) {
 	return (lst->len == 0);
 }
 
+void    lst_clear(t_list * lst) {
+	t_list_node * actu;
+	t_list_node * next;
+
+	if (lst == NULL)
+		return;
+
+	actu = lst->head;
+	while (actu) {
+		next = actu->next;
+		if (lst->freefptr != NULL)
+			(lst->freefptr)(actu->data);
+		free(actu);
+		actu = next;
+	}
+	lst->len  = 0;
+	lst->head = NULL;
+}
+
 void * lst_top(t_list * lst) {
 	if (lst == NULL || lst->head == NULL)
 		return (NULL);
@@ -103,7 +112,8 @@ void * lst_top(t_list * lst) {
 
 typedef struct s_tmp_print{
 	void(* printfptr)(void *, int);
-	int fd;
+	int    fd;
+	size_t remain;
 }              t_tmp_print;
 
 static void pretty_print_list(void * v, void * tmpp) {
@@ -115,7 +125,9 @@ static void pretty_print_list(void * v, void * tmpp) {
 	fptr = PRINT_PTR(tmp->printfptr);
 	dprintf(tmp->fd, "\t");
 	fptr(v, tmp->fd);
-	dprintf(tmp->fd, ",\n");
+	if (tmp->remain != 1)
+		dprintf(tmp->fd, ",\n");
+	tmp->remain--;
 }
 
 void    lst_print(t_list * lst, int fd) {
@@ -130,6 +142,7 @@ void    lst_print(t_list * lst, int fd) {
 	}
 	tmp.fd        = fd;
 	tmp.printfptr = lst->printfptr;
+	tmp.remain    = lst_size(lst);
 	dprintf(fd, "[\n");
 	lst_iterp(lst, pretty_print_list, &tmp);
 	dprintf(fd, "]\n");

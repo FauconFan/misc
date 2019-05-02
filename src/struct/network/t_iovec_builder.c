@@ -119,12 +119,9 @@ size_t              iovb_get_index(t_iovec_builder * msg) {
 }
 
 void                iovb_print(t_iovec_builder * msg, int fd) {
-	dprintf(fd, "{ msg printing\n");
-	dprintf(fd, "\tlen_used %lu\n", msg->len_used);
-	dprintf(fd, "\tlen_max %lu\n", msg->len_max);
+	dprintf(fd, "{ iovb printing, len_used %lu, len_max %lu\n", msg->len_used, msg->len_max);
 	for (size_t i = 0; i < msg->len_max; ++i) {
-		dprintf(fd, "\t[%lu] -> len : %lu\n", i, msg->msg_iov[i].iov_len);
-		dprintf(fd, "\t         ");
+		dprintf(fd, "\t[%lu], len : %lu -> ", i, msg->msg_iov[i].iov_len);
 
 		uint8_t * vp = (uint8_t *) msg->msg_iov[i].iov_base;
 
@@ -136,7 +133,7 @@ void                iovb_print(t_iovec_builder * msg, int fd) {
 		}
 		dprintf(fd, "\n");
 	}
-	dprintf(fd, "}\n");
+	dprintf(fd, "}");
 }
 
 t_bool              iovb_get_iovec(t_iovec_builder * msg, struct iovec ** iovec, size_t * iovec_len) {

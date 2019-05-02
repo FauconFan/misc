@@ -23,9 +23,9 @@ void                buffer_free(t_buffer_tlv_ip * buffer) {
 void                buffer_print(t_buffer_tlv_ip * buffer, int fd) {
 	dprintf(fd, "buffer_tlv_ip { ip_port : ");
 	ip_port_print(buffer->ip_port, fd);
-	dprintf(fd, ", tlv_builder : \n");
+	dprintf(fd, ", tlv_builder");
 	iovb_print(buffer->tlv_builder->msg, fd);
-	dprintf(fd, "} :\n");
+	dprintf(fd, "}\n");
 }
 
 static t_bool       buffer_is_ip(t_buffer_tlv_ip * buffer, t_ip_port * ip_port) {

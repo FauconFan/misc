@@ -3,15 +3,6 @@
 #define	TIME      30
 #define	BUFF_SIZE 4096 + 1
 
-// static void		build_sock_addr6(struct sockaddr_in6 *in6, uint8_t ip[16], uint16_t port) {
-// 	memset(in6, 0, sizeof(*in6));
-// 	in6->sin6_family = AF_INET6;
-// 	in6->sin6_port = port;
-// 	for (size_t i = 0; i < 16; ++i) {
-// 		in6->sin6_addr.s6_addr[i] = ip[i];
-// 	}
-// }
-
 static t_bool   select_treat_input() {
 	fd_set readfds;
 	int max_fd;
