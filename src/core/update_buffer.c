@@ -10,7 +10,7 @@ static void     good_num_neighbours(struct timeval * now) {
 		pot_nei = pot_nei_get_available(g_env->li_potential_neighbours, now);
 		if (pot_nei != NULL) {
 			buffer = buffer_search(g_env->li_buffer_tlv_ip, pot_nei->ip_port);
-			tlvb_add_hello(buffer->tlv_builder, g_env->id, 0);
+			tlvb_add_hello_short(buffer->tlv_builder, g_env->id);
 			timeval_assign(&pot_nei->last_send, now);
 		}
 	}
@@ -23,7 +23,7 @@ static void     build_hello(t_neighbour * nei, struct timeval * now) {
 
 	if (timeval_min(now, &nei->next_hello) != now) {
 		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
-		tlvb_add_hello(buffer->tlv_builder, g_env->id, nei->id);
+		tlvb_add_hello_long(buffer->tlv_builder, g_env->id, nei->id);
 		nei->next_hello.tv_sec += TIMEOUT_NEI_TIME;
 	}
 }
@@ -43,7 +43,7 @@ static void     build_acquit(t_acquit * acq, struct timeval * now) {
 	t_message * msg;
 	t_buffer_tlv_ip * buffer;
 
-	if (timeval_min(now, &acq->next_time) != now) {
+	if (timeval_min(now, &(acq->next_time)) != now) {
 		nei    = lst_findp(g_env->li_neighbours, (t_bool(*)(void *, void *))search_nei, acq);
 		msg    = lst_findp(g_env->li_messages, (t_bool(*)(void *, void *))search_msg, acq);
 		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
@@ -60,6 +60,9 @@ void            update_buffer() {
 
 	gettimeofday(&now, NULL);
 
+	dprintf(ui_getfd(), "current time : ");
+	timeval_print(now, ui_getfd());
+	dprintf(ui_getfd(), "\n");
 	// étape 1
 	good_num_neighbours(&now);
 	// étape 2

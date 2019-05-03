@@ -7,7 +7,7 @@ t_message * message_alloc(uint64_t id, uint32_t nonce, uint8_t type, uint8_t len
 	if (message == NULL)
 		return (NULL);
 
-	if ((message->text = malloc(length)) == NULL) {
+	if ((message->text = malloc(length + 1)) == NULL) {
 		free(message);
 		return (NULL);
 	}
@@ -16,7 +16,7 @@ t_message * message_alloc(uint64_t id, uint32_t nonce, uint8_t type, uint8_t len
 	message->type      = type;
 	message->length    = length;
 	memcpy(message->text, text, length);
-
+	message->text[length] = 0;
 	return (message);
 }
 

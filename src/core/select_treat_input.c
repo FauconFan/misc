@@ -21,6 +21,62 @@ static void display_in_message(
 	dprintf(ui_getfd(), "\n\n");
 }
 
+static void receive_in_message() {
+	struct sockaddr_in6 sin6;
+	unsigned int sin6_len;
+	t_ip_port ip_port;
+	uint8_t buff_res[BUFF_SIZE];
+	size_t N;
+
+	sin6_len = sizeof(sin6);
+	memset(buff_res, 0, BUFF_SIZE);
+	N = recvfrom(g_env->socket, buff_res, BUFF_SIZE, 0, (struct sockaddr *) &sin6, &sin6_len);
+
+	display_in_message(&sin6, buff_res, N);
+	ip_port_assign_sockaddr6(&ip_port, sin6);
+	parse_datagram(buff_res, N, nei_search_neighbour(g_env->li_neighbours, ip_port), ip_port);
+}
+
+typedef struct  s_rec_metadata{
+	uint32_t nonce;
+	char *   message;
+}               t_rec_metadata;
+
+static void sendall_msg(t_neighbour * nei, t_rec_metadata * rec_mdt) {
+	t_buffer_tlv_ip * buffer;
+
+	buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
+	tlvb_add_data(buffer->tlv_builder, g_env->id, rec_mdt->nonce, 0, (uint8_t *) rec_mdt->message,
+	  strlen(rec_mdt->message));
+	lst_add(g_env->li_acquit, acquit_alloc(nei->id, g_env->id, rec_mdt->nonce));
+}
+
+static void receive_user_message(t_bool * running) {
+	t_ui_in in;
+	char last_message[254];
+	t_rec_metadata rec_mdt;
+
+	ui_receive(&in);
+	switch (in.type) {
+		case UI_OK:
+			break;
+		case UI_STOP:
+			*running = FALSE;
+			break;
+		case UI_MESSAGE:
+			memset(last_message, 0, 254);
+			snprintf(last_message, 253, "%s: %s", g_pseudo, in.u.message);
+			dprintf(ui_getfd(), "%s\n", last_message);
+			rec_mdt.nonce   = gen_nonce();
+			rec_mdt.message = last_message;
+			lst_add(g_env->li_messages,
+			  message_alloc(g_env->id, rec_mdt.nonce, 0, strlen(last_message), (uint8_t *) last_message));
+			lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))sendall_msg, &rec_mdt);
+			free(in.u.message);
+			break;
+	}
+}
+
 t_bool   select_treat_input() {
 	fd_set readfds;
 	int max_fd;
@@ -42,39 +98,13 @@ t_bool   select_treat_input() {
 
 	if (rc_select < 0) {
 		dprintf(ui_getfd(), "select failed : %s\n", strerror(errno));
-		running = FALSE;
+		return (FALSE);
 	}
+
 	// on a reçu un message
-	else if (FD_ISSET(g_env->socket, &readfds)) {
-		struct sockaddr_in6 sin6;
-		unsigned int sin6_len;
-		t_ip_port ip_port;
-		uint8_t buff_res[BUFF_SIZE];
-		size_t N;
-
-		sin6_len = sizeof(sin6);
-		memset(buff_res, 0, BUFF_SIZE);
-		N = recvfrom(g_env->socket, buff_res, BUFF_SIZE, 0, (struct sockaddr *) &sin6, &sin6_len);
-
-		display_in_message(&sin6, buff_res, N);
-		ip_port_assign_sockaddr6(&ip_port, sin6);
-		parse_datagram(buff_res, N, nei_search_neighbour(g_env->li_neighbours, ip_port), ip_port);
-	}
-	else if (FD_ISSET(ui_getcallbackfd(), &readfds)) {
-		t_ui_in in;
-
-		ui_receive(&in);
-		switch (in.type) {
-			case UI_OK:
-				break;
-			case UI_STOP:
-				running = FALSE;
-				break;
-			case UI_MESSAGE:
-				dprintf(ui_getfd(), "Me: %s\n", in.u.message);
-				free(in.u.message);
-				break;
-		}
-	}
+	if (FD_ISSET(g_env->socket, &readfds))
+		receive_in_message();
+	if (FD_ISSET(ui_getcallbackfd(), &readfds))
+		receive_user_message(&running);
 	return (running);
 } /* select_treat_input */

@@ -49,7 +49,7 @@ static uint16_t parse_hello(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port
 			if (lst_size(g_env->li_neighbours) < NB_NEI_MAX) {
 				nei2 = nei_alloc(source_id, ip_port);
 				t_buffer_tlv_ip * buffer = buffer_search(g_env->li_buffer_tlv_ip, nei2->ip_port);
-				tlvb_add_hello(buffer->tlv_builder, g_env->id, nei2->id);
+				tlvb_add_hello_long(buffer->tlv_builder, g_env->id, nei2->id);
 				lst_add(g_env->li_neighbours, nei2);
 				*nei = nei2;
 			}
@@ -83,7 +83,7 @@ static uint16_t parse_neighbour(uint8_t * tlv, t_neighbour * nei) {
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "neighbour reçu d'un non neighbour\n");
+		dprintf(ui_getfd(), "NEIGHBOUR reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	if (len != 18) {
@@ -117,27 +117,33 @@ static t_bool search_msg(t_message * msg, t_id_nonce * id_nonce) {
 	return is_message(msg, id_nonce->sender_id, id_nonce->nonce);
 }
 
-static void forall_nei(t_neighbour * nei, uint8_t * tlv) {
-	t_buffer_tlv_ip * buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
-	uint16_t len       = tlv[1];
-	uint64_t sender_id = *(uint64_t *) (tlv + 2);
-	uint32_t nonce     = *(uint32_t *) (tlv + 10);
-	uint8_t type       = *(uint8_t *) (tlv + 14);
-	uint8_t * msg      = tlv + 15;
+typedef struct  s_meta_data{
+	uint64_t  sender_id;
+	uint32_t  nonce;
+	uint8_t   type;
+	uint16_t  msg_len;
+	uint8_t * msg;
+}               t_meta_data;
 
-	tlvb_add_data(buffer->tlv_builder, sender_id, nonce, type, msg, len);
+static void forall_nei(t_neighbour * nei, t_meta_data * metadata) {
+	t_buffer_tlv_ip * buffer;
+
+	if (nei->id != metadata->sender_id) {
+		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
+		tlvb_add_data(buffer->tlv_builder, metadata->sender_id, metadata->nonce, metadata->type, metadata->msg,
+		  metadata->msg_len);
+	}
 }
 
 static uint16_t parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
 	uint16_t len;
-	uint64_t sender_id;
-	uint32_t nonce;
-	uint8_t type;
-	uint8_t * msg;
+	t_buffer_tlv_ip * buffer;
+	t_meta_data mdt;
+	t_id_nonce id_nonce;
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "data reçu d'un non neighbour\n");
+		dprintf(ui_getfd(), "DATA reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	if (len < 13) {
@@ -145,26 +151,31 @@ static uint16_t parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) 
 		dprintf(ui_getfd(), "len too short : %d\n", len);
 	}
 	else {
-		sender_id = *(uint64_t *) (tlv + 2);
-		nonce     = *(uint32_t *) (tlv + 10);
-		type      = *(uint8_t *) (tlv + 14);
-		msg       = tlv + 15;
+		mdt.sender_id = *(uint64_t *) (tlv + 2);
+		mdt.nonce     = *(uint32_t *) (tlv + 10);
+		mdt.type      = *(uint8_t *) (tlv + 14);
+		mdt.msg_len   = len - 13;
+		mdt.msg       = tlv + 15;
 
-		t_id_nonce id_nonce;
-		id_nonce.sender_id = sender_id;
-		id_nonce.nonce     = nonce;
+		id_nonce.sender_id = mdt.sender_id;
+		id_nonce.nonce     = mdt.nonce;
+
+		buffer = buffer_search(g_env->li_buffer_tlv_ip, ip_port);
+		tlvb_add_ack(buffer->tlv_builder, mdt.sender_id, mdt.nonce);
+
+		dprintf(ui_getfd(), "DATA ");
+		dprintf(ui_getfd(), "sender id : %016lx, nonce : %d, type : %d, msg : ", mdt.sender_id, mdt.nonce, mdt.type);
+		if (mdt.type != 0)
+			dprintf(ui_getfd(), "No printable message\n");
+		else
+			dprintf(ui_getfd(), "\"%.*s\"", mdt.msg_len, mdt.msg);
 
 		if (lst_findp(g_env->li_messages, (t_bool(*)(void *, void *))search_msg, &id_nonce) == NULL) {
-			dprintf(ui_getfd(), "DATA ");
-			dprintf(ui_getfd(), "sender id : %016lx, nonce : %d, type : %d, msg : ", sender_id, nonce, type);
-			if (type != 0)
-				dprintf(ui_getfd(), "No printable message\n");
-			else
-				dprintf(ui_getfd(), "\"%.*s\"", len - 13, msg);
-			t_buffer_tlv_ip * buffer = buffer_search(g_env->li_buffer_tlv_ip, ip_port);
-			tlvb_add_ack(buffer->tlv_builder, sender_id, nonce);
-
-			lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))forall_nei, tlv);
+			lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))forall_nei, &mdt);
+		}
+		else {
+			dprintf(ui_getfd(), "This message has been already received\n");
+			lst_add(g_env->li_messages, message_alloc(mdt.sender_id, mdt.nonce, mdt.type, mdt.msg_len, mdt.msg));
 		}
 	}
 	return (len + 2);
@@ -178,10 +189,11 @@ static uint16_t parse_ack(uint8_t * tlv, t_neighbour * nei) {
 	uint8_t len;
 	uint64_t sender_id;
 	uint32_t nonce;
+	t_id_nonce id_nonce;
 
 	len = tlv[1];
 	if (nei != NULL) {
-		dprintf(ui_getfd(), "ack reçu d'un non neighbour\n");
+		dprintf(ui_getfd(), "ACK reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	if (len != 12) {
@@ -192,7 +204,6 @@ static uint16_t parse_ack(uint8_t * tlv, t_neighbour * nei) {
 		sender_id = *(uint64_t *) (tlv + 2);
 		nonce     = *(uint32_t *) (tlv + 10);
 		dprintf(ui_getfd(), "ACK sender id : %016lx, nonce : %d\n", sender_id, nonce);
-		t_id_nonce id_nonce;
 		id_nonce.sender_id = sender_id;
 		id_nonce.nonce     = nonce;
 		id_nonce.dest_id   = nei->id;
@@ -208,7 +219,7 @@ static uint16_t parse_goaway(uint8_t * tlv, t_neighbour * nei) {
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "GoAway reçu d'un non neighbour\n");
+		dprintf(ui_getfd(), "GOAWAY reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	if (len < 1) {
@@ -237,8 +248,9 @@ static uint16_t parse_goaway(uint8_t * tlv, t_neighbour * nei) {
 			default:
 				dprintf(ui_getfd(), "unknown code");
 				break;
-				lst_remove_ifp(g_env->li_neighbours, (t_bool(*)(void *, void *))nei_is_id, (void *) (nei->id));
 		}
+		lst_add(g_env->li_potential_neighbours, pot_nei_alloc(nei->ip_port));
+		lst_remove_ifp(g_env->li_neighbours, (t_bool(*)(void *, void *))nei_is_id, (void *) nei->id);
 		msg = tlv + 3;
 		dprintf(ui_getfd(), ", msg : %.*s\n", len - 1, msg);
 	}
@@ -251,7 +263,7 @@ static uint16_t parse_warning(uint8_t * tlv, t_neighbour * nei) {
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "warning reçu d'un non neighbour\n");
+		dprintf(ui_getfd(), "WARNING reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	msg = tlv + 3;
@@ -323,7 +335,7 @@ void            parse_datagram(uint8_t * tlv, size_t len, t_neighbour * nei, t_i
 
 	len_actu = 4;
 	while (len_actu < len) {
-		dprintf(ui_getfd(), "=== ");
+		dprintf(ui_getfd(), " === ");
 		len_actu += parse_tlv(tlv + len_actu, &nei, ip_port);
 	}
 } /* parse_datagram */

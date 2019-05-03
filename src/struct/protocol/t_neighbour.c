@@ -32,7 +32,7 @@ void            nei_print(t_neighbour * nei, int fd) {
 	timeval_print(nei->last_hello, fd);
 	dprintf(fd, ", last hello long ");
 	timeval_print(nei->last_hello_long, fd);
-	dprintf(fd, ", our last hello ");
+	dprintf(fd, ", our next hello ");
 	timeval_print(nei->next_hello, fd);
 	dprintf(fd, "}");
 }

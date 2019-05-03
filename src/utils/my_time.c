@@ -32,14 +32,14 @@ struct timeval      timeval_diff(struct timeval * t1, struct timeval * t2) {
 
 struct timeval      timeval_raise(uint8_t n) {
 	struct timeval time;
-	uint32_t sec = 2;
+	uint32_t sec = 1;
 
 	for (size_t i = 0; i < n; i++) {
 		sec = sec * 2;
 	}
 	gettimeofday(&time, NULL);
 	time.tv_sec = time.tv_sec + sec;
-	return time;
+	return (time);
 }
 
 struct timeval * timeval_min(struct timeval * t1, struct timeval * t2) {

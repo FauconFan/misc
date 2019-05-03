@@ -80,7 +80,7 @@ t_bool      tlvb_add_padN(t_tlv_builder * tlv, size_t l) {
 	return (tlvb_add_value(tlv, zeros, l));
 }
 
-t_bool      tlvb_add_hello(t_tlv_builder * tlv, uint64_t id1, uint64_t id2) {
+t_bool      tlvb_add_hello_short(t_tlv_builder * tlv, uint64_t id1) {
 	if (tlv == NULL || tlv->ready)
 		return (FALSE);
 
@@ -88,15 +88,23 @@ t_bool      tlvb_add_hello(t_tlv_builder * tlv, uint64_t id1, uint64_t id2) {
 		return (FALSE);
 
 	uint8_t id[16];
-	size_t taille = 8;
+
 	memcpy(id, ((uint8_t *) &id1), 8);
+	return (tlvb_add_value(tlv, id, 8));
+}
 
-	if (id2 != 0) {
-		taille = 16;
-		memcpy(id + 8, ((uint8_t *) &id2), 8);
-	}
+t_bool      tlvb_add_hello_long(t_tlv_builder * tlv, uint64_t id1, uint64_t id2) {
+	if (tlv == NULL || tlv->ready)
+		return (FALSE);
 
-	return (tlvb_add_value(tlv, id, taille));
+	if (tlvb_add_type(tlv, HELLO) == FALSE)
+		return (FALSE);
+
+	uint8_t id[16];
+
+	memcpy(id, ((uint8_t *) &id1), 8);
+	memcpy(id + 8, ((uint8_t *) &id2), 8);
+	return (tlvb_add_value(tlv, id, 16));
 }
 
 t_bool      tlvb_add_neighbour(t_tlv_builder * tlv, uint8_t ip[16], uint16_t port) {
@@ -127,7 +135,7 @@ t_bool      tlvb_add_data(t_tlv_builder * tlv, uint64_t id, uint32_t nonce, uint
 	memcpy(msg + 13, data, taille);
 	t_bool rc = tlvb_add_value(tlv, msg, 13 + taille);
 	free(msg);
-	return rc;
+	return (rc);
 }
 
 t_bool      tlvb_add_ack(t_tlv_builder * tlv, uint64_t id, uint32_t nonce) {
@@ -155,7 +163,7 @@ t_bool      tlvb_add_goaway(t_tlv_builder * tlv, uint8_t code, uint8_t * message
 	memcpy(msg + 1, message, taille);
 	t_bool rc = tlvb_add_value(tlv, msg, taille + 1);
 	free(msg);
-	return rc;
+	return (rc);
 }
 
 t_bool      tlvb_add_warning(t_tlv_builder * tlv, uint8_t * message, size_t taille) {
