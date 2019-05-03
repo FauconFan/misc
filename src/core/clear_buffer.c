@@ -1,5 +1,13 @@
 #include "irc_udp.h"
 
+static void     print_msg_to_ui(t_ip_port ip_port, t_iovec_builder * iovec_builder) {
+	dprintf(ui_getfd(), "\nSend message : ");
+	ip_port_print(ip_port, ui_getfd());
+	dprintf(ui_getfd(), "\n");
+	iovb_print(iovec_builder, ui_getfd());
+	dprintf(ui_getfd(), "\n");
+}
+
 static void     build_sock_addr6(struct sockaddr_in6 * in6, uint8_t ip[16], uint16_t port) {
 	memset(in6, 0, sizeof(*in6));
 	in6->sin6_family = AF_INET6;
@@ -25,6 +33,7 @@ static void     send_buffer(t_buffer_tlv_ip * tlvip) {
 	build_sock_addr6(&in6, tlvip->ip_port.ip, tlvip->ip_port.port);
 	msg.msg_name    = &in6;
 	msg.msg_namelen = sizeof(in6);
+	print_msg_to_ui(tlvip->ip_port, tlvip->tlv_builder->msg);
 	sendmsg(g_env->socket, &msg, 0);
 }
 

@@ -27,19 +27,20 @@ typedef struct  s_ui_in{
 	} u;
 }               t_ui_in;
 
-int     ui_getfd(void);
-int     ui_getcallbackfd(void);
+int ui_getfd(void);
+int ui_getcallbackfd(void);
 void ui_receive(t_ui_in * in);
-void    ui_setup(void);
-void    ui_down(void);
+t_bool ui_setup(void);
+void ui_down(void);
+t_bool ui_log_setup(int * fd);
 
-void    ui_main(int fd_ui, int fd_callback, int fd_stop);
-void    ui_print(t_ui * ui);
+int ui_main(int fd_ui, int fd_callback, int fd_stop);
+void ui_print(t_ui * ui);
 char * ui_read_pseudo(void);
 
 t_ui * ui_alloc(char * pseudo);
-void    ui_free(t_ui * ui);
-void    ui_init_line(t_ui * ui);
-void    ui_treat_buffer(t_ui * ui);
+void ui_free(t_ui * ui);
+void ui_init_line(t_ui * ui);
+void ui_treat_buffer(t_ui * ui, int fd_log);
 
 #endif // ifndef UI_H

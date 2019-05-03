@@ -43,71 +43,38 @@ char * strjoin(const char * s1, const char * s2) {
 	return (res);
 }
 
-// static char		*split_ignorechr(char *s, char c)
-// {
-// 	while (*s != 0 && *s == c)
-// 		s++;
-// 	return (s);
-// }
+void strreplace(char ** str, char * pattern, char * with) {
+	char * res;
+	char * tmp[2];
+	size_t len_res;
+	size_t index;
+	size_t len_pattern;
+	size_t len_with;
 
-// static char		*split_ignoreword(char *s, char c)
-// {
-// 	while (*s != 0 && *s != c)
-// 		s++;
-// 	return (s);
-// }
+	if (str == NULL || *str == NULL || pattern == NULL || with == NULL)
+		return;
 
-// static int		split_len_words(char *s, char c, int *num)
-// {
-// 	int		res;
-
-// 	*num = 0;
-// 	res = 0;
-// 	s = split_ignorechr(s, c);
-// 	while (*s)
-// 	{
-// 		s = split_ignoreword(s, c);
-// 		s = split_ignorechr(s, c);
-// 		res++;
-// 	}
-// 	return (res);
-// }
-
-// static int		split_len_word(char *s, char c, int *num)
-// {
-// 	int		length;
-
-// 	*num = 0;
-// 	length = 0;
-// 	while (s[length] && s[length] != c)
-// 		length++;
-// 	return (length);
-// }
-
-// char			**strtab_strsplit(char const *s, char c)
-// {
-// 	int		length_tot;
-// 	int		length_word;
-// 	int		index[2];
-// 	char	*tmp;
-// 	char	**res;
-
-// 	if (s == 0)
-// 		return (NULL);
-// 	length_tot = split_len_words((char *)s, c, index);
-// 	tmp = split_ignorechr((char *)s, c);
-// 	if ((res = (char **)malloc(sizeof(char *) * (length_tot + 1))) == NULL)
-// 		return (NULL);
-// 	while (index[0] < length_tot)
-// 	{
-// 		length_word = split_len_word(tmp, c, index + 1);
-// 		if ((res[index[0]] = (char *)malloc(sizeof(char) * (length_word + 1))) == NULL)
-// 			return (NULL);
-// 		while (index[1] < length_word)
-// 			res[index[0]][index[1]++] = *(tmp++);
-// 		res[index[0]++][index[1]] = 0;
-// 		tmp = split_ignorechr(tmp, c);
-// 	}
-// 	res[index[0]] = 0;
-// 	return (res);
-// }
+	len_pattern = strlen(pattern);
+	len_with    = strlen(with);
+	len_res     = 0;
+	tmp[0]      = *str;
+	while ((tmp[1] = strstr(tmp[0], pattern)) != NULL) {
+		len_res += tmp[1] - tmp[0];
+		len_res += len_with;
+		tmp[0]   = tmp[1] + len_pattern;
+	}
+	len_res += strlen(tmp[0]);
+	res      = strnew(len_res);
+	index    = 0;
+	tmp[0]   = *str;
+	while ((tmp[1] = strstr(tmp[0], pattern)) != NULL) {
+		strncpy(res + index, tmp[0], tmp[1] - tmp[0]);
+		index += tmp[1] - tmp[0];
+		strncpy(res + index, with, len_with);
+		index += len_with;
+		tmp[0] = tmp[1] + len_pattern;
+	}
+	strncpy(res + index, tmp[0], strlen(tmp[0]));
+	free(*str);
+	*str = res;
+} /* strreplace */

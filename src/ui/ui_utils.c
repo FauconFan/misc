@@ -24,13 +24,19 @@ void    ui_init_line(t_ui * ui) {
 	memset(ui->line, 0, sizeof(ui->line) / sizeof(ui->line[0]));
 }
 
-void    ui_treat_buffer(t_ui * ui) {
+void    ui_treat_buffer(t_ui * ui, int g_log) {
 	char * tmp;
+	char * line;
+	size_t s;
+	size_t len;
 
 	while ((tmp = strchr(ui->buffer_in, '\n')) != NULL) {
-		size_t s   = tmp - ui->buffer_in;
-		size_t len = strlen(ui->buffer_in);
-		lst_add(ui->li_messages, strndup(ui->buffer_in, s));
+		s    = tmp - ui->buffer_in;
+		len  = strlen(ui->buffer_in);
+		line = strndup(ui->buffer_in, s);
+		strreplace(&line, "\t", "    ");
+		dprintf(g_log, "%s\n", line);
+		lst_add(ui->li_messages, line);
 		memmove(ui->buffer_in, ui->buffer_in + s + 1, len - s);
 		memset(ui->buffer_in + len - s, 0, s);
 	}

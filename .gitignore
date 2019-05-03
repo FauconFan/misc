@@ -54,4 +54,4 @@ dkms.conf
 # Custom
 irc_udp
 .vscode/
-
+.logs/

@@ -49,26 +49,26 @@ void    ui_down(void) {
 	}
 }
 
-void    ui_setup(void) {
+t_bool    ui_setup(void) {
 	int fds_ui[2];
 	int fds_callback[2];
 	int fds_stop[2];
 	pid_t pid_child;
 
 	if (pipe2(fds_ui, O_NONBLOCK) == -1) {
-		return;
+		return (FALSE);
 	}
 	else if (pipe2(fds_callback, O_NONBLOCK) == -1) {
 		close(fds_ui[0]);
 		close(fds_ui[1]);
-		return;
+		return (FALSE);
 	}
 	else if (pipe2(fds_stop, O_NONBLOCK) == -1) {
 		close(fds_ui[0]);
 		close(fds_ui[1]);
 		close(fds_callback[0]);
 		close(fds_callback[1]);
-		return;
+		return (FALSE);
 	}
 
 	pid_child = fork();
@@ -79,7 +79,7 @@ void    ui_setup(void) {
 		close(fds_callback[1]);
 		close(fds_stop[0]);
 		close(fds_stop[1]);
-		return;
+		return (FALSE);
 	}
 
 	if (pid_child == 0) {
@@ -87,12 +87,12 @@ void    ui_setup(void) {
 		close(fds_callback[0]);
 		close(fds_stop[1]);
 
-		ui_main(fds_ui[0], fds_callback[1], fds_stop[0]);
+		int ret = ui_main(fds_ui[0], fds_callback[1], fds_stop[0]);
 
 		close(fds_ui[0]);
 		close(fds_callback[1]);
 		close(fds_stop[0]);
-		exit(0);
+		exit(ret);
 	}
 	else {
 		close(fds_ui[0]);
@@ -103,4 +103,5 @@ void    ui_setup(void) {
 		g_fd_callback = fds_callback[0];
 		g_fd_stop     = fds_stop[1];
 	}
+	return (TRUE);
 } /* ui_setup */

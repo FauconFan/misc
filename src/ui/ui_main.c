@@ -1,11 +1,11 @@
 #include "irc_udp.h"
 
-static void ui_check_message(t_ui * ui, int fd_ui) {
+static void ui_check_message(t_ui * ui, int fd_ui, int fd_log) {
 	size_t len;
 
 	len = strlen(ui->buffer_in);
 	if (read(fd_ui, ui->buffer_in + len, 1024 - len) > 0)
-		ui_treat_buffer(ui);
+		ui_treat_buffer(ui, fd_log);
 }
 
 static void ui_check_stop(int fd_stop, t_bool * has_received_stop) {
@@ -31,12 +31,14 @@ static void ui_send_remote_message(int fd_callback, t_ui * ui) {
 	ui_init_line(ui);
 }
 
-void        ui_main(int fd_ui, int fd_callback, int fd_stop) {
+int        ui_main(int fd_ui, int fd_callback, int fd_stop) {
 	t_ui * ui;
 	t_bool has_received_stop;
+	int fd_log;
 
-	if ((ui = ui_alloc(g_pseudo)) == NULL)
-		return;
+	// if ((ui = ui_alloc(g_pseudo)) == NULL)
+	if ((ui = ui_alloc(g_pseudo)) == NULL || ui_log_setup(&fd_log) == FALSE)
+		return (1);
 
 	initscr();
 	echo();
@@ -44,10 +46,11 @@ void        ui_main(int fd_ui, int fd_callback, int fd_stop) {
 
 	has_received_stop = FALSE;
 
+
 	while (has_received_stop == FALSE) {
 		int actu;
 
-		ui_check_message(ui, fd_ui);
+		ui_check_message(ui, fd_ui, fd_log);
 		ui_print(ui);
 		ui_check_stop(fd_stop, &has_received_stop);
 		refresh();
@@ -86,5 +89,6 @@ void        ui_main(int fd_ui, int fd_callback, int fd_stop) {
 	close(fd_callback);
 	close(fd_stop);
 	free(g_pseudo);
-	exit(0);
+	close(fd_log);
+	return (0);
 } /* ui_main */

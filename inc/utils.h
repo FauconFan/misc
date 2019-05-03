@@ -18,6 +18,6 @@ uint32_t        gen_nonce();
 // my_str
 char * strnew(size_t size);
 char * strjoin(const char * s1, const char * s2);
-char ** strtab_strsplit(char const * s, char c);
+void strreplace(char ** str, char * pattern, char * with);
 
 #endif // ifndef MY_HEADER_H

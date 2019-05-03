@@ -3,10 +3,10 @@
 
 // Globals defines
 
-#define	TRUE  1
-#define	FALSE 0
-
-typedef uint8_t t_bool;
+typedef enum    e_bool{
+	FALSE = 0,
+	TRUE  = 1,
+}               t_bool;
 
 // Project defines
 
@@ -15,17 +15,6 @@ typedef uint8_t t_bool;
 
 #define	FREE_PTR(ptr)  ((void(*)(void *))(ptr))
 #define	PRINT_PTR(ptr) ((void(*)(void *, int))(ptr))
-
-typedef enum    e_tlv_type{
-	PAD1      = 0,
-	PADN      = 1,
-	HELLO     = 2,
-	NEIGHBOUR = 3,
-	DATA      = 4,
-	ACK       = 5,
-	GOAWAY    = 6,
-	WARNING   = 7,
-}               t_tlv_type;
 
 // Struct declarations
 
