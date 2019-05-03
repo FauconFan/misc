@@ -30,7 +30,7 @@ static uint16_t parse_hello(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port
 	uint64_t source_id;
 	uint64_t dest_id;
 	struct timeval now;
-	t_neighbour *nei2;
+	t_neighbour * nei2;
 
 	gettimeofday(&now, NULL);
 
@@ -137,7 +137,7 @@ static uint16_t parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) 
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "data reçu d'un non neighbour");
+		dprintf(ui_getfd(), "data reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	if (len < 13) {
@@ -181,7 +181,7 @@ static uint16_t parse_ack(uint8_t * tlv, t_neighbour * nei) {
 
 	len = tlv[1];
 	if (nei != NULL) {
-		dprintf(ui_getfd(), "ack reçu d'un non neighbour");
+		dprintf(ui_getfd(), "ack reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	if (len != 12) {
@@ -208,7 +208,7 @@ static uint16_t parse_goaway(uint8_t * tlv, t_neighbour * nei) {
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "GoAway reçu d'un non neighbour");
+		dprintf(ui_getfd(), "GoAway reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	if (len < 1) {
@@ -251,7 +251,7 @@ static uint16_t parse_warning(uint8_t * tlv, t_neighbour * nei) {
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "warning reçu d'un non neighbour");
+		dprintf(ui_getfd(), "warning reçu d'un non neighbour\n");
 		return (len + 2);
 	}
 	msg = tlv + 3;

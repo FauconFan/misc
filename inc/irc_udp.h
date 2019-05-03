@@ -47,16 +47,17 @@ t_bool      get_sockaddr(
   struct sockaddr ** sock_addr,
   socklen_t *        sock_len);
 
-void    client();
+void    core_loop();
 
 int     build_socket(void);
 
 void    parse_datagram(uint8_t * tlv, size_t len, t_neighbour * nei, t_ip_port ip_port);
 
-t_bool   select_treat_input(void);
+t_bool  select_treat_input(void);
 void    update_buffer(void);
 void    clear_buffer(void);
 
 extern t_env * g_env;
+extern char * g_pseudo;
 
 #endif // ifndef IRC_UDP_H

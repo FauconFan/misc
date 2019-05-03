@@ -35,12 +35,7 @@ void        ui_main(int fd_ui, int fd_callback, int fd_stop) {
 	t_ui * ui;
 	t_bool has_received_stop;
 
-	// char        *pseudo;
-
-	// write(1, "Enter your pseudonyme: ", 23);
-	// if ((pseudo = ui_read_pseudo()) == NULL)
-	//     return ;
-	if ((ui = ui_alloc(strdup("pepe"))) == NULL)
+	if ((ui = ui_alloc(g_pseudo)) == NULL)
 		return;
 
 	initscr();
@@ -90,5 +85,6 @@ void        ui_main(int fd_ui, int fd_callback, int fd_stop) {
 	close(fd_ui);
 	close(fd_callback);
 	close(fd_stop);
+	free(g_pseudo);
 	exit(0);
 } /* ui_main */

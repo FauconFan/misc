@@ -6,7 +6,7 @@ t_ui * ui_alloc(char * pseudo) {
 	if ((ui = (t_ui *) malloc(sizeof(t_ui))) == NULL)
 		return (NULL);
 
-	ui->pseudo      = pseudo;
+	ui->pseudo      = strdup(pseudo);
 	ui->li_messages = lst_alloc(free, NULL);
 	ui_init_line(ui);
 	memset(ui->buffer_in, 0, sizeof(ui->buffer_in) / sizeof(ui->buffer_in[0]));

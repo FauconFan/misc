@@ -6,16 +6,17 @@ SRC_STRUCT_DATA_FOLDER      = src/struct/data/
 SRC_STRUCT_NETWORK_FOLDER   = src/struct/network/
 SRC_STRUCT_PROTOCOL_FOLDER  = src/struct/protocol/
 SRC_UI_FOLDER               = src/ui/
+SRC_CORE_FOLDER             = src/core/
 
 SRC = \
 		$(SRC_FOLDER)main.c \
 		$(SRC_FOLDER)getaddrinfo.c \
 		$(SRC_FOLDER)socket.c \
-		$(SRC_FOLDER)client.c \
-		$(SRC_FOLDER)parse_tlv.c \
-		$(SRC_FOLDER)select_treat_input.c \
-		$(SRC_FOLDER)update_buffer.c \
-		$(SRC_FOLDER)clear_buffer.c \
+		$(SRC_CORE_FOLDER)core_loop.c \
+		$(SRC_CORE_FOLDER)parse_tlv.c \
+		$(SRC_CORE_FOLDER)select_treat_input.c \
+		$(SRC_CORE_FOLDER)update_buffer.c \
+		$(SRC_CORE_FOLDER)clear_buffer.c \
 		$(SRC_UTILS_FOLDER)my_getrandom.c \
 		$(SRC_UTILS_FOLDER)my_time.c \
 		$(SRC_UTILS_FOLDER)my_str.c \
