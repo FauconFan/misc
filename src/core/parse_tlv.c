@@ -31,6 +31,7 @@ static uint16_t parse_hello(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port
 	uint64_t dest_id;
 	struct timeval now;
 	t_neighbour * nei2;
+	t_buffer_tlv_ip * buffer;
 
 	gettimeofday(&now, NULL);
 
@@ -47,11 +48,8 @@ static uint16_t parse_hello(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port
 		}
 		else {
 			if (lst_size(g_env->li_neighbours) < NB_NEI_MAX) {
-				nei2 = nei_alloc(source_id, ip_port);
-				t_buffer_tlv_ip * buffer = buffer_search(g_env->li_buffer_tlv_ip, nei2->ip_port);
-				tlvb_add_hello_long(buffer->tlv_builder, g_env->id, nei2->id);
-				lst_add(g_env->li_neighbours, nei2);
-				*nei = nei2;
+				buffer = buffer_search(g_env->li_buffer_tlv_ip, ip_port);
+				tlvb_add_hello_long(buffer->tlv_builder, g_env->id, source_id);
 			}
 			else {
 				lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip_port));
@@ -71,6 +69,10 @@ static uint16_t parse_hello(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port
 			lst_remove_ifp(g_env->li_potential_neighbours, (t_bool(*)(void *, void *))pot_nei_is, &ip_port);
 			lst_add(g_env->li_neighbours, nei2);
 			*nei = nei2;
+
+			// Resend hello long first time
+			buffer = buffer_search(g_env->li_buffer_tlv_ip, nei2->ip_port);
+			tlvb_add_hello_long(buffer->tlv_builder, g_env->id, source_id);
 		}
 	}
 	return (len + 2);
@@ -101,7 +103,9 @@ static uint16_t parse_neighbour(uint8_t * tlv, t_neighbour * nei) {
 		dprintf(ui_getfd(), "Port : %d\n", ntohs(port));
 		t_ip_port ip_port2;
 		ip_port_assign_brut(&ip_port2, ip, port);
-		lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip_port2));
+		if (lst_findp(g_env->li_potential_neighbours, (t_bool (*)(void *, void *))pot_nei_is, &ip_port2) == NULL
+			&& nei_search_neighbour(g_env->li_neighbours, ip_port2) == NULL)
+			lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip_port2));
 	}
 	return (len + 2);
 }
@@ -118,6 +122,7 @@ static t_bool search_msg(t_message * msg, t_id_nonce * id_nonce) {
 }
 
 typedef struct  s_meta_data{
+	uint64_t  from_id;
 	uint64_t  sender_id;
 	uint32_t  nonce;
 	uint8_t   type;
@@ -128,10 +133,11 @@ typedef struct  s_meta_data{
 static void forall_nei(t_neighbour * nei, t_meta_data * metadata) {
 	t_buffer_tlv_ip * buffer;
 
-	if (nei->id != metadata->sender_id) {
+	if (nei->id != metadata->from_id) {
 		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
 		tlvb_add_data(buffer->tlv_builder, metadata->sender_id, metadata->nonce, metadata->type, metadata->msg,
 		  metadata->msg_len);
+		lst_add(g_env->li_acquit, acquit_alloc(nei->id, metadata->sender_id, metadata->nonce));
 	}
 }
 
@@ -151,6 +157,7 @@ static uint16_t parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) 
 		dprintf(ui_getfd(), "len too short : %d\n", len);
 	}
 	else {
+		mdt.from_id = nei->id;
 		mdt.sender_id = *(uint64_t *) (tlv + 2);
 		mdt.nonce     = *(uint32_t *) (tlv + 10);
 		mdt.type      = *(uint8_t *) (tlv + 14);
@@ -164,25 +171,25 @@ static uint16_t parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) 
 		tlvb_add_ack(buffer->tlv_builder, mdt.sender_id, mdt.nonce);
 
 		dprintf(ui_getfd(), "DATA ");
-		dprintf(ui_getfd(), "sender id : %016lx, nonce : %d, type : %d, msg : ", mdt.sender_id, mdt.nonce, mdt.type);
+		dprintf(ui_getfd(), "sender id : %016lx, nonce : %08x, type : %d, msg : ", mdt.sender_id, mdt.nonce, mdt.type);
 		if (mdt.type != 0)
 			dprintf(ui_getfd(), "No printable message\n");
 		else
-			dprintf(ui_getfd(), "\"%.*s\"", mdt.msg_len, mdt.msg);
+			dprintf(ui_getfd(), "\"%.*s\"\n", mdt.msg_len, mdt.msg);
 
 		if (lst_findp(g_env->li_messages, (t_bool(*)(void *, void *))search_msg, &id_nonce) == NULL) {
 			lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))forall_nei, &mdt);
+			lst_add(g_env->li_messages, message_alloc(mdt.sender_id, mdt.nonce, mdt.type, mdt.msg_len, mdt.msg));
 		}
 		else {
 			dprintf(ui_getfd(), "This message has been already received\n");
-			lst_add(g_env->li_messages, message_alloc(mdt.sender_id, mdt.nonce, mdt.type, mdt.msg_len, mdt.msg));
 		}
 	}
 	return (len + 2);
 } /* parse_data */
 
-static t_bool   search_ack(t_acquit * ack, t_id_nonce id_nonce) {
-	return is_acquit(ack, id_nonce.dest_id, id_nonce.sender_id, id_nonce.nonce);
+static t_bool   search_ack(t_acquit * ack, t_id_nonce * id_nonce) {
+	return (is_acquit(ack, id_nonce->dest_id, id_nonce->sender_id, id_nonce->nonce));
 }
 
 static uint16_t parse_ack(uint8_t * tlv, t_neighbour * nei) {
@@ -192,7 +199,7 @@ static uint16_t parse_ack(uint8_t * tlv, t_neighbour * nei) {
 	t_id_nonce id_nonce;
 
 	len = tlv[1];
-	if (nei != NULL) {
+	if (nei == NULL) {
 		dprintf(ui_getfd(), "ACK reçu d'un non neighbour\n");
 		return (len + 2);
 	}
@@ -203,13 +210,17 @@ static uint16_t parse_ack(uint8_t * tlv, t_neighbour * nei) {
 	else {
 		sender_id = *(uint64_t *) (tlv + 2);
 		nonce     = *(uint32_t *) (tlv + 10);
-		dprintf(ui_getfd(), "ACK sender id : %016lx, nonce : %d\n", sender_id, nonce);
+		dprintf(ui_getfd(), "ACK sender id : %016lx, nonce : %08x\n", sender_id, nonce);
 		id_nonce.sender_id = sender_id;
 		id_nonce.nonce     = nonce;
 		id_nonce.dest_id   = nei->id;
 		lst_remove_ifp(g_env->li_acquit, (t_bool(*)(void *, void *))search_ack, &id_nonce);
 	}
 	return (len + 2);
+}
+
+static t_bool is_acquit_from_sender(t_acquit * acquit, uint64_t dest_id) {
+	return (acquit->dest_id == dest_id);
 }
 
 static uint16_t parse_goaway(uint8_t * tlv, t_neighbour * nei) {
@@ -249,10 +260,11 @@ static uint16_t parse_goaway(uint8_t * tlv, t_neighbour * nei) {
 				dprintf(ui_getfd(), "unknown code");
 				break;
 		}
-		lst_add(g_env->li_potential_neighbours, pot_nei_alloc(nei->ip_port));
-		lst_remove_ifp(g_env->li_neighbours, (t_bool(*)(void *, void *))nei_is_id, (void *) nei->id);
 		msg = tlv + 3;
 		dprintf(ui_getfd(), ", msg : %.*s\n", len - 1, msg);
+		lst_add(g_env->li_potential_neighbours, pot_nei_alloc(nei->ip_port));
+		lst_removeall_ifp(g_env->li_acquit, (t_bool (*)(void *, void *))is_acquit_from_sender, (void *)nei->id);
+		lst_remove_ifp(g_env->li_neighbours, (t_bool(*)(void *, void *))nei_is_id, (void *) nei->id);
 	}
 	return (len + 2);
 } /* parse_goaway */

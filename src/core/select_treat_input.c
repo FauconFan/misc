@@ -94,6 +94,11 @@ t_bool   select_treat_input() {
 
 	// Calculer le minimum time to wait pour tv
 	tv        = env_min_time(g_env);
+
+	dprintf(ui_getfd(), "waiting for at least : ");
+	timeval_print(tv, ui_getfd());
+	dprintf(ui_getfd(), "\n");
+
 	rc_select = select(max_fd + 1, &readfds, NULL, NULL, &tv);
 
 	if (rc_select < 0) {

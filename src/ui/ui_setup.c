@@ -87,7 +87,7 @@ t_bool    ui_setup(void) {
 		close(fds_callback[0]);
 		close(fds_stop[1]);
 
-		int ret = ui_main(fds_ui[0], fds_callback[1], fds_stop[0]);
+		int ret = ui_main(FALSE, fds_ui[0], fds_callback[1], fds_stop[0]);
 
 		close(fds_ui[0]);
 		close(fds_callback[1]);

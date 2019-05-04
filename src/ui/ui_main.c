@@ -1,11 +1,18 @@
 #include "irc_udp.h"
 
 static void ui_check_message(t_ui * ui, int fd_ui, int fd_log) {
-	size_t len;
+	char buff[1025];
+	char * tmp;
 
-	len = strlen(ui->buffer_in);
-	if (read(fd_ui, ui->buffer_in + len, 1024 - len) > 0)
-		ui_treat_buffer(ui, fd_log);
+	while (1) {
+		memset(buff, 0, 1025);
+		if (read(fd_ui, buff, 1024) < 0)
+			break ;
+		tmp = strjoin(ui->buffer_in, buff);
+		free(ui->buffer_in);
+		ui->buffer_in = tmp;
+	}
+	ui_treat_buffer(ui, fd_log);
 }
 
 static void ui_check_stop(int fd_stop, t_bool * has_received_stop) {
@@ -31,30 +38,38 @@ static void ui_send_remote_message(int fd_callback, t_ui * ui) {
 	ui_init_line(ui);
 }
 
-int        ui_main(int fd_ui, int fd_callback, int fd_stop) {
-	t_ui * ui;
-	t_bool has_received_stop;
-	int fd_log;
+static void	ui_main_loop(t_ui * ui, int fd_ui, int fd_callback, int fd_stop, int fd_log, t_bool *has_received_stop) {
+	*has_received_stop = FALSE;
+	int fd_stdin_custom_get = 0;
+	int fd_stdin_custom_stop = 0;
 
-	// if ((ui = ui_alloc(g_pseudo)) == NULL)
-	if ((ui = ui_alloc(g_pseudo)) == NULL || ui_log_setup(&fd_log) == FALSE)
-		return (1);
+	if (ui->with_ncurses) {
+		initscr();
+		echo();
+		timeout(TIMEOUT_READ);
+	}
+	else {
+		if (ui_stdin_custom_setup(&fd_stdin_custom_get, &fd_stdin_custom_stop) == FALSE) {
+			printf("fail setup stdin custom");
+			return ;
+		}
+	}
 
-	initscr();
-	echo();
-	timeout(100);
-
-	has_received_stop = FALSE;
-
-
-	while (has_received_stop == FALSE) {
+	while (*has_received_stop == FALSE) {
 		int actu;
 
 		ui_check_message(ui, fd_ui, fd_log);
-		ui_print(ui);
-		ui_check_stop(fd_stop, &has_received_stop);
-		refresh();
-		actu = getch();
+		ui_check_stop(fd_stop, has_received_stop);
+		if (ui->with_ncurses) {
+			ui_print(ui);
+			refresh();
+			actu = getch();
+		}
+		else {
+			actu = ui_getstdin_custom(fd_stdin_custom_get);
+			if (actu == ERR) // sleep if there is no read
+				usleep(TIMEOUT_READ * 1000);
+		}
 		if (actu != ERR) {
 			if (actu == '\n') {
 				if (strcmp(ui->line, "QUIT") == 0) {
@@ -66,18 +81,34 @@ int        ui_main(int fd_ui, int fd_callback, int fd_stop) {
 				if (ui->len != 0)
 					ui->line[--ui->len] = 0;
 			}
-			else if (isascii(actu) == 0) {
-				continue;
-			}
-			else {
-				ui->line[ui->len] = actu;
-				ui->len++;
-			}
+			else if (isascii(actu))
+				ui->line[ui->len++] = actu;
+
+			if (ui->with_ncurses == FALSE)
+				ui_getstdin_continue(fd_stdin_custom_stop);
 		}
 	}
 
-	endwin();
+	if (ui->with_ncurses) {
+		endwin();
+	}
+	else {
+		ui_getstdin_stop(fd_stdin_custom_stop);
+		sleep(1);
+		close(fd_stdin_custom_get);
+		close(fd_stdin_custom_stop);
+	}
+}
 
+int        ui_main(t_bool with_ncurses, int fd_ui, int fd_callback, int fd_stop) {
+	t_ui * ui;
+	int fd_log;
+	t_bool has_received_stop;
+
+	if ((ui = ui_alloc(g_pseudo, with_ncurses)) == NULL || ui_log_setup(&fd_log) == FALSE)
+		return (1);
+
+	ui_main_loop(ui, fd_ui, fd_callback, fd_stop, fd_log, &has_received_stop);
 	ui_free(ui);
 
 	if (has_received_stop == FALSE)

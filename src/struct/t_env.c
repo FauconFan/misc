@@ -66,22 +66,25 @@ struct timeval      env_min_time(t_env * env) {
 	t_bool ok[2];
 	struct timeval min_hello;
 	struct timeval min_acquit;
+	struct timeval min;
 	struct timeval res;
+	struct timeval current_time;
 
 	ok[0] = nei_get_min_time(env->li_neighbours, &min_hello);
 	ok[1] = acquit_get_min_time(env->li_acquit, &min_acquit);
+	gettimeofday(&current_time, NULL);
 
 	if (ok[0] == FALSE && ok[1] == FALSE) {
-		gettimeofday(&res, NULL);
-		res.tv_sec += 5; // On attend 5 sec si on a rien à attendre
+		res = current_time;
+		res.tv_sec = 5;
+		res.tv_usec = 0; // On attend 5 sec si on a rien à attendre
 		return (res);
 	}
-	else if (ok[0] == FALSE) {
-		return (min_acquit);
-	}
-	else if (ok[1] == FALSE) {
-		return (min_hello);
-	}
-	res = *timeval_min(&min_hello, &min_acquit);
-	return (res);
+	else if (ok[0] == FALSE)
+		min = min_acquit;
+	else if (ok[1] == FALSE)
+		min = min_hello;
+	else
+		min = *timeval_min(&min_hello, &min_acquit);
+	return (timeval_diff(&current_time, &min));
 }

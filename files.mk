@@ -26,6 +26,7 @@ SRC = \
 		$(SRC_UI_FOLDER)ui_utils.c \
 		$(SRC_UI_FOLDER)ui_setup.c \
 		$(SRC_UI_FOLDER)ui_log_setup.c \
+		$(SRC_UI_FOLDER)ui_stdin_custom.c \
 		$(SRC_STRUCT_DATA_FOLDER)t_list.c \
 		$(SRC_STRUCT_NETWORK_FOLDER)t_ip_port.c \
 		$(SRC_STRUCT_NETWORK_FOLDER)t_tlv_builder.c \

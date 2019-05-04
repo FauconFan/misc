@@ -31,7 +31,7 @@ static void     build_hello(t_neighbour * nei, struct timeval * now) {
 // Étape 4
 
 static t_bool   search_nei(t_neighbour * nei, t_acquit * acq) {
-	return (nei->id == acq->sender_id);
+	return (nei->id == acq->dest_id);
 }
 
 static t_bool   search_msg(t_message * msg, t_acquit * acq) {

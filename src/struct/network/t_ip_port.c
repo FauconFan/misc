@@ -20,7 +20,7 @@ void        ip_port_print(t_ip_port ip_port, int fd) {
 			dprintf(fd, " ");
 		dprintf(fd, "%.2x", ip_port.ip[i]);
 	}
-	dprintf(fd, ", port : %d }", ip_port.port);
+	dprintf(fd, ", port : %d }", ntohs(ip_port.port));
 }
 
 t_bool      ip_port_is_eq(t_ip_port * ip_port1, t_ip_port * ip_port2) {

@@ -7,7 +7,7 @@ static void    build_name(char name[4096]) {
 	memset(name, 0, 4096);
 	time(&traw);
 	info = localtime(&traw);
-	snprintf(name, 4095, ".logs/%d_%d_%d__%d:%d:%d.log", 1900 + info->tm_year, 1 + info->tm_mon, info->tm_mday,
+	snprintf(name, 4095, ".logs/%d_%02d_%02d__%02d:%02d:%02d.log", 1900 + info->tm_year, 1 + info->tm_mon, info->tm_mday,
 	  info->tm_hour, info->tm_min, info->tm_sec);
 }
 
