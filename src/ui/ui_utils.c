@@ -7,10 +7,10 @@ t_ui * ui_alloc(char * pseudo, t_bool with_ncurses) {
 		return (NULL);
 
 	memset(ui, 0, sizeof(*ui));
-	ui->pseudo      = strdup(pseudo);
+	ui->pseudo       = strdup(pseudo);
 	ui->with_ncurses = with_ncurses;
-	ui->li_messages = lst_alloc(free, NULL);
-	ui->buffer_in = strnew(0);
+	ui->li_messages  = lst_alloc(free, NULL);
+	ui->buffer_in    = strnew(0);
 	ui_init_line(ui);
 	return (ui);
 }

@@ -7,16 +7,25 @@ SRC_STRUCT_NETWORK_FOLDER   = src/struct/network/
 SRC_STRUCT_PROTOCOL_FOLDER  = src/struct/protocol/
 SRC_UI_FOLDER               = src/ui/
 SRC_CORE_FOLDER             = src/core/
+SRC_CORE_PARSER_FOLDER      = src/core/parse_tlv/
 
 SRC = \
 		$(SRC_FOLDER)main.c \
 		$(SRC_FOLDER)getaddrinfo.c \
 		$(SRC_FOLDER)socket.c \
 		$(SRC_CORE_FOLDER)core_loop.c \
-		$(SRC_CORE_FOLDER)parse_tlv.c \
 		$(SRC_CORE_FOLDER)select_treat_input.c \
 		$(SRC_CORE_FOLDER)update_buffer.c \
 		$(SRC_CORE_FOLDER)clear_buffer.c \
+		$(SRC_CORE_PARSER_FOLDER)parse_tlv_core.c \
+		$(SRC_CORE_PARSER_FOLDER)parse_pad1.c \
+		$(SRC_CORE_PARSER_FOLDER)parse_padN.c \
+		$(SRC_CORE_PARSER_FOLDER)parse_hello.c \
+		$(SRC_CORE_PARSER_FOLDER)parse_neighbour.c \
+		$(SRC_CORE_PARSER_FOLDER)parse_data.c \
+		$(SRC_CORE_PARSER_FOLDER)parse_ack.c \
+		$(SRC_CORE_PARSER_FOLDER)parse_go_away.c \
+		$(SRC_CORE_PARSER_FOLDER)parse_warning.c \
 		$(SRC_UTILS_FOLDER)my_getrandom.c \
 		$(SRC_UTILS_FOLDER)my_time.c \
 		$(SRC_UTILS_FOLDER)my_str.c \

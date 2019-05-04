@@ -1,0 +1,76 @@
+#include "irc_udp.h"
+
+typedef struct      s_id_nonce{
+	uint64_t sender_id;
+	uint32_t nonce;
+}                   t_id_nonce;
+
+static t_bool search_msg(t_message * msg, t_id_nonce * id_nonce) {
+	return is_message(msg, id_nonce->sender_id, id_nonce->nonce);
+}
+
+typedef struct  s_meta_data{
+	uint64_t  from_id;
+	uint64_t  sender_id;
+	uint32_t  nonce;
+	uint8_t   type;
+	uint16_t  msg_len;
+	uint8_t * msg;
+}               t_meta_data;
+
+static void forall_nei(t_neighbour * nei, t_meta_data * metadata) {
+	t_buffer_tlv_ip * buffer;
+
+	if (nei->id != metadata->from_id) {
+		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
+		tlvb_add_data(buffer->tlv_builder, metadata->sender_id, metadata->nonce, metadata->type, metadata->msg,
+		  metadata->msg_len);
+		lst_add(g_env->li_acquit, acquit_alloc(nei->id, metadata->sender_id, metadata->nonce));
+	}
+}
+
+void    parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
+	uint16_t len;
+	t_buffer_tlv_ip * buffer;
+	t_meta_data mdt;
+	t_id_nonce id_nonce;
+
+	len = tlv[1];
+	if (nei == NULL) {
+		dprintf(ui_getfd(), "DATA reçu d'un non neighbour\n");
+		return;
+	}
+	if (len < 13) {
+		dprintf(ui_getfd(), "Inconsistent data message\n");
+		dprintf(ui_getfd(), "len too short : %d\n", len);
+	}
+	else {
+		mdt.from_id   = nei->id;
+		mdt.sender_id = *(uint64_t *) (tlv + 2);
+		mdt.nonce     = *(uint32_t *) (tlv + 10);
+		mdt.type      = *(uint8_t *) (tlv + 14);
+		mdt.msg_len   = len - 13;
+		mdt.msg       = tlv + 15;
+
+		id_nonce.sender_id = mdt.sender_id;
+		id_nonce.nonce     = mdt.nonce;
+
+		buffer = buffer_search(g_env->li_buffer_tlv_ip, ip_port);
+		tlvb_add_ack(buffer->tlv_builder, mdt.sender_id, mdt.nonce);
+
+		dprintf(ui_getfd(), "DATA ");
+		dprintf(ui_getfd(), "sender id : %016lx, nonce : %08x, type : %d, msg : ", mdt.sender_id, mdt.nonce, mdt.type);
+		if (mdt.type != 0)
+			dprintf(ui_getfd(), "No printable message\n");
+		else
+			dprintf(ui_getfd(), "\"%.*s\"\n", mdt.msg_len, mdt.msg);
+
+		if (lst_findp(g_env->li_messages, (t_bool(*)(void *, void *))search_msg, &id_nonce) == NULL) {
+			lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))forall_nei, &mdt);
+			lst_add(g_env->li_messages, message_alloc(mdt.sender_id, mdt.nonce, mdt.type, mdt.msg_len, mdt.msg));
+		}
+		else {
+			dprintf(ui_getfd(), "This message has been already received\n");
+		}
+	}
+} /* parse_data */

@@ -5,15 +5,15 @@
 #include <ctype.h>
 #include <math.h>
 
-#define TIMEOUT_READ	100 // ms
+#define	TIMEOUT_READ 100 // ms
 
 typedef struct  s_ui{
-	char *		pseudo;
-	t_bool		with_ncurses;
-	char		line[1024];
-	size_t		len;
-	t_list *	li_messages;
-	char *		buffer_in;
+	char *   pseudo;
+	t_bool   with_ncurses;
+	char     line[1024];
+	size_t   len;
+	t_list * li_messages;
+	char *   buffer_in;
 }               t_ui;
 
 typedef enum e_ui_type{

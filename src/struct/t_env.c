@@ -75,16 +75,19 @@ struct timeval      env_min_time(t_env * env) {
 	gettimeofday(&current_time, NULL);
 
 	if (ok[0] == FALSE && ok[1] == FALSE) {
-		res = current_time;
-		res.tv_sec = 5;
+		res         = current_time;
+		res.tv_sec  = 5;
 		res.tv_usec = 0; // On attend 5 sec si on a rien à attendre
 		return (res);
 	}
-	else if (ok[0] == FALSE)
+	else if (ok[0] == FALSE) {
 		min = min_acquit;
-	else if (ok[1] == FALSE)
+	}
+	else if (ok[1] == FALSE) {
 		min = min_hello;
-	else
+	}
+	else {
 		min = *timeval_min(&min_hello, &min_acquit);
+	}
 	return (timeval_diff(&current_time, &min));
 }

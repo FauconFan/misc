@@ -7,7 +7,7 @@ static void ui_check_message(t_ui * ui, int fd_ui, int fd_log) {
 	while (1) {
 		memset(buff, 0, 1025);
 		if (read(fd_ui, buff, 1024) < 0)
-			break ;
+			break;
 		tmp = strjoin(ui->buffer_in, buff);
 		free(ui->buffer_in);
 		ui->buffer_in = tmp;
@@ -38,9 +38,9 @@ static void ui_send_remote_message(int fd_callback, t_ui * ui) {
 	ui_init_line(ui);
 }
 
-static void	ui_main_loop(t_ui * ui, int fd_ui, int fd_callback, int fd_stop, int fd_log, t_bool *has_received_stop) {
+static void ui_main_loop(t_ui * ui, int fd_ui, int fd_callback, int fd_stop, int fd_log, t_bool * has_received_stop) {
 	*has_received_stop = FALSE;
-	int fd_stdin_custom_get = 0;
+	int fd_stdin_custom_get  = 0;
 	int fd_stdin_custom_stop = 0;
 
 	if (ui->with_ncurses) {
@@ -51,7 +51,7 @@ static void	ui_main_loop(t_ui * ui, int fd_ui, int fd_callback, int fd_stop, int
 	else {
 		if (ui_stdin_custom_setup(&fd_stdin_custom_get, &fd_stdin_custom_stop) == FALSE) {
 			printf("fail setup stdin custom");
-			return ;
+			return;
 		}
 	}
 
@@ -81,8 +81,9 @@ static void	ui_main_loop(t_ui * ui, int fd_ui, int fd_callback, int fd_stop, int
 				if (ui->len != 0)
 					ui->line[--ui->len] = 0;
 			}
-			else if (isascii(actu))
+			else if (isascii(actu)) {
 				ui->line[ui->len++] = actu;
+			}
 
 			if (ui->with_ncurses == FALSE)
 				ui_getstdin_continue(fd_stdin_custom_stop);
@@ -98,7 +99,7 @@ static void	ui_main_loop(t_ui * ui, int fd_ui, int fd_callback, int fd_stop, int
 		close(fd_stdin_custom_get);
 		close(fd_stdin_custom_stop);
 	}
-}
+} /* ui_main_loop */
 
 int        ui_main(t_bool with_ncurses, int fd_ui, int fd_callback, int fd_stop) {
 	t_ui * ui;
