@@ -24,7 +24,7 @@ struct timeval      timeval_diff(struct timeval * t1, struct timeval * t2) {
 	}
 	else {
 		time.tv_sec  = t2->tv_sec - t1->tv_sec - 1;
-		time.tv_usec = 1e6 - (t1->tv_usec - t2->tv_usec);
+		time.tv_usec = 1e9 - (t1->tv_usec - t2->tv_usec); // ns
 	}
 
 	return (time);
