@@ -49,7 +49,7 @@ void    ui_down(void) {
 	}
 }
 
-t_bool    ui_setup(void) {
+t_bool    ui_setup(t_bool with_ncurses) {
 	int fds_ui[2];
 	int fds_callback[2];
 	int fds_stop[2];
@@ -87,12 +87,8 @@ t_bool    ui_setup(void) {
 		close(fds_callback[0]);
 		close(fds_stop[1]);
 
-		int ret = ui_main(FALSE, fds_ui[0], fds_callback[1], fds_stop[0]);
-
-		close(fds_ui[0]);
-		close(fds_callback[1]);
-		close(fds_stop[0]);
-		exit(ret);
+		ui_main(with_ncurses, fds_ui[0], fds_callback[1], fds_stop[0]);
+		exit(1);
 	}
 	else {
 		close(fds_ui[0]);

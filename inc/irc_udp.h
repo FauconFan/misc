@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <errno.h>
 #include <netdb.h>
+#include <ctype.h>
+#include <math.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -26,19 +28,24 @@
 #include "ui.h"
 #include "utils.h"
 
-#define	JCH_NODE         "jch.irif.fr"
-#define	JCH_SERVICE      "1212"
+#define	JCH_NODE             "jch.irif.fr"
+#define	JCH_SERVICE          "1212"
 
-#define	ENV_FAMILY       AF_INET6
-#define	ENV_SOCKTYPE     SOCK_DGRAM
-#define	ENV_PROTOCOL     0
-#define	ENV_FLAGS        (AI_V4MAPPED | AI_ALL)
+#define	ENV_FAMILY           AF_INET6
+#define	ENV_SOCKTYPE         SOCK_DGRAM
+#define	ENV_PROTOCOL         0
+#define	ENV_FLAGS            (AI_V4MAPPED | AI_ALL)
 
-#define	NB_NEI_MAX       8
-#define	TIMEOUT_POT_NEI  30
-#define	TIMEOUT_NEI_TIME 30
+#define	NB_NEI_MAX           8
+#define	TIMEOUT_POT_NEI      30
+#define	TIMEOUT_NEI_TIME     30
+
+#define	SIZE_PSEUDO          20
+#define	WITH_NCURSES_DEFAULT TRUE
+
+t_bool    parse_args(int argc, char ** argv, t_bool * with_ncurses);
 
 extern t_env * g_env;
-extern char * g_pseudo;
+extern char g_pseudo[SIZE_PSEUDO + 1];
 
 #endif // ifndef IRC_UDP_H

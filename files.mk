@@ -11,8 +11,9 @@ SRC_CORE_PARSER_FOLDER      = src/core/parse_tlv/
 
 SRC = \
 		$(SRC_FOLDER)main.c \
-		$(SRC_FOLDER)getaddrinfo.c \
-		$(SRC_FOLDER)socket.c \
+		$(SRC_FOLDER)parse_args.c \
+		$(SRC_CORE_FOLDER)getaddrinfo.c \
+		$(SRC_CORE_FOLDER)socket.c \
 		$(SRC_CORE_FOLDER)core_loop.c \
 		$(SRC_CORE_FOLDER)select_treat_input.c \
 		$(SRC_CORE_FOLDER)update_buffer.c \
