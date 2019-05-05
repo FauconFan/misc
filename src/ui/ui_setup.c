@@ -1,14 +1,19 @@
 #include "irc_udp.h"
 
-static int g_fd_ui       = -1;
+static int g_fd_screen   = -1;
+static int g_fd_log      = -1;
 static int g_fd_callback = -1;
-static int g_fd_stop     = -1;
+static int g_fd_send     = -1;
 
-int     ui_getfd(void) {
-	return (g_fd_ui);
+int     ui_getfd_screen(void) {
+	return (g_fd_screen);
 }
 
-int     ui_getcallbackfd(void) {
+int     ui_getfd_log(void) {
+	return (g_fd_log);
+}
+
+int     ui_getfd_callback(void) {
 	return (g_fd_callback);
 }
 
@@ -33,39 +38,53 @@ void    ui_receive(t_ui_in * in) {
 }
 
 void    ui_down(void) {
-	if (g_fd_ui != -1) {
-		close(g_fd_ui);
-		g_fd_ui = -1;
+	if (g_fd_screen != -1) {
+		close(g_fd_screen);
+		g_fd_screen = -1;
+	}
+	if (g_fd_log != -1) {
+		close(g_fd_log);
+		g_fd_log = -1;
 	}
 	if (g_fd_callback != -1) {
 		close(g_fd_callback);
 		g_fd_callback = -1;
 	}
-	if (g_fd_stop != -1) {
-		write(g_fd_stop, &g_fd_stop, sizeof(g_fd_stop));
+	if (g_fd_send != -1) {
+		write(g_fd_send, &g_fd_send, sizeof(g_fd_send));
 		sleep(1);
-		close(g_fd_stop);
-		g_fd_stop = -1;
+		close(g_fd_send);
+		g_fd_send = -1;
 	}
 }
 
-t_bool    ui_setup(t_bool with_ncurses) {
-	int fds_ui[2];
+t_bool    ui_setup(t_bool with_ncurses, t_bool with_logs) {
+	int fds_screen[2];
+	int fds_log[2];
 	int fds_callback[2];
 	int fds_stop[2];
 	pid_t pid_child;
 
-	if (pipe2(fds_ui, O_NONBLOCK) == -1) {
+	if (pipe2(fds_screen, O_NONBLOCK) == -1) {
+		return (FALSE);
+	}
+	else if (pipe2(fds_log, O_NONBLOCK) == -1) {
+		close(fds_screen[0]);
+		close(fds_screen[1]);
 		return (FALSE);
 	}
 	else if (pipe2(fds_callback, O_NONBLOCK) == -1) {
-		close(fds_ui[0]);
-		close(fds_ui[1]);
+		close(fds_screen[0]);
+		close(fds_screen[1]);
+		close(fds_log[0]);
+		close(fds_log[1]);
 		return (FALSE);
 	}
 	else if (pipe2(fds_stop, O_NONBLOCK) == -1) {
-		close(fds_ui[0]);
-		close(fds_ui[1]);
+		close(fds_screen[0]);
+		close(fds_screen[1]);
+		close(fds_log[0]);
+		close(fds_log[1]);
 		close(fds_callback[0]);
 		close(fds_callback[1]);
 		return (FALSE);
@@ -73,8 +92,10 @@ t_bool    ui_setup(t_bool with_ncurses) {
 
 	pid_child = fork();
 	if (pid_child == -1) {
-		close(fds_ui[0]);
-		close(fds_ui[1]);
+		close(fds_screen[0]);
+		close(fds_screen[1]);
+		close(fds_log[0]);
+		close(fds_log[1]);
 		close(fds_callback[0]);
 		close(fds_callback[1]);
 		close(fds_stop[0]);
@@ -83,21 +104,24 @@ t_bool    ui_setup(t_bool with_ncurses) {
 	}
 
 	if (pid_child == 0) {
-		close(fds_ui[1]);
+		close(fds_screen[1]);
+		close(fds_log[1]);
 		close(fds_callback[0]);
 		close(fds_stop[1]);
 
-		ui_main(with_ncurses, fds_ui[0], fds_callback[1], fds_stop[0]);
+		ui_main(with_ncurses, with_logs, fds_screen[0], fds_log[0], fds_callback[1], fds_stop[0]);
 		exit(1);
 	}
 	else {
-		close(fds_ui[0]);
+		close(fds_screen[0]);
+		close(fds_log[0]);
 		close(fds_callback[1]);
 		close(fds_stop[0]);
 
-		g_fd_ui       = fds_ui[1];
+		g_fd_screen   = fds_screen[1];
+		g_fd_log      = fds_log[1];
 		g_fd_callback = fds_callback[0];
-		g_fd_stop     = fds_stop[1];
+		g_fd_send     = fds_stop[1];
 	}
 	return (TRUE);
 } /* ui_setup */

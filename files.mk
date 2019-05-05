@@ -32,7 +32,9 @@ SRC = \
 		$(SRC_UTILS_FOLDER)my_str.c \
 		$(SRC_UI_FOLDER)ui_main.c \
 		$(SRC_UI_FOLDER)ui_read_pseudo.c \
-		$(SRC_UI_FOLDER)ui_print.c \
+		$(SRC_UI_FOLDER)ui_ncurses_print.c \
+		$(SRC_UI_FOLDER)ui_check_message_stop.c \
+		$(SRC_UI_FOLDER)ui_send_message.c \
 		$(SRC_UI_FOLDER)ui_utils.c \
 		$(SRC_UI_FOLDER)ui_setup.c \
 		$(SRC_UI_FOLDER)ui_log_setup.c \

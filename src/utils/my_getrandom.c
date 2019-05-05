@@ -33,7 +33,7 @@ uint64_t        gen_id() {
 	uint64_t id;
 
 	if (my_getrandom(&id, 8) != 0) {
-		dprintf(ui_getfd(), "Erreur de génération id : %s\n", strerror(errno));
+		dprintf(ui_getfd_log(), "Erreur de génération id : %s\n", strerror(errno));
 		return 0;
 	}
 	return id;
@@ -43,7 +43,7 @@ uint32_t        gen_nonce() {
 	uint32_t nonce;
 
 	if (my_getrandom(&nonce, 4) != 0) {
-		dprintf(ui_getfd(), "Erreur de génération nonce : %s\n", strerror(errno));
+		dprintf(ui_getfd_log(), "Erreur de génération nonce : %s\n", strerror(errno));
 		return 0;
 	}
 	return nonce;

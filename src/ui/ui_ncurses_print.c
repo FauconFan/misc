@@ -100,7 +100,7 @@ static void     ui_print_entry(t_ui * ui, int nb_line, int margin) {
 	}
 }
 
-void            ui_print(t_ui * ui) {
+void            ui_ncurses_print(t_ui * ui) {
 	int nb_line;
 	int margin;
 	int nb_col_left;

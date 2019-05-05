@@ -3,12 +3,11 @@
 void    core_loop() {
 	t_bool running = TRUE;
 
-	env_print(g_env, ui_getfd());
+	env_print(g_env, ui_getfd_log());
 	while (running) {
 		update_buffer();
 		clear_buffer();
-		dprintf(ui_getfd(), "\n");
-		env_print(g_env, ui_getfd());
+		env_print(g_env, ui_getfd_log());
 		running = select_treat_input();
 	}
 } /* client */

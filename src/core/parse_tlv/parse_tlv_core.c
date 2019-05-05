@@ -6,7 +6,7 @@ static uint16_t parse_tlv(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port, 
 		return (1);
 	}
 	if (remain < tlv[1]) {
-		dprintf(ui_getfd(), "the actual tlv is too long, received a non well formatted message\n");
+		dprintf(ui_getfd_log(), "the actual tlv is too long, received a non well formatted message\n");
 		return (2 + tlv[1]);
 	}
 	switch (tlv[0]) {
@@ -39,7 +39,7 @@ static uint16_t parse_tlv(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port, 
 			break;
 
 		default:
-			dprintf(ui_getfd(), "unrecognised tlv\n");
+			dprintf(ui_getfd_log(), "unrecognised tlv\n");
 			// On suppose que la longueur existe.
 	}
 	return (2 + tlv[1]);
@@ -50,33 +50,33 @@ void            parse_datagram(uint8_t * tlv, size_t len, t_neighbour * nei, t_i
 	uint16_t len_actu;
 
 	if (tlv == NULL) {
-		dprintf(ui_getfd(), "TLV is null\n");
+		dprintf(ui_getfd_log(), "TLV is null\n");
 		return;
 	}
 	if (len < 4) {
-		dprintf(ui_getfd(), "TLV too short, can't contain header\n");
+		dprintf(ui_getfd_log(), "TLV too short, can't contain header\n");
 		return;
 	}
 	if (tlv[0] != MAGIC_NUMBER) {
-		dprintf(ui_getfd(), "Wrong magic number\n");
+		dprintf(ui_getfd_log(), "Wrong magic number\n");
 		return;
 	}
 	if (tlv[1] != VERSION) {
-		dprintf(ui_getfd(), "Wrong version\n");
+		dprintf(ui_getfd_log(), "Wrong version\n");
 		return;
 	}
 	len_body = *(uint16_t *) (tlv + 2);
 	len_body = ntohs(len_body);
 	if (len_body != len - 4) {
-		dprintf(ui_getfd(), "Wrong len body in header tlv\n");
-		dprintf(ui_getfd(), "len body : %d\n", len_body);
-		dprintf(ui_getfd(), "len received : %lu\n", len);
+		dprintf(ui_getfd_log(), "Wrong len body in header tlv\n");
+		dprintf(ui_getfd_log(), "len body : %d\n", len_body);
+		dprintf(ui_getfd_log(), "len received : %lu\n", len);
 		return;
 	}
 
 	len_actu = 4;
 	while (len_actu < len) {
-		dprintf(ui_getfd(), " === ");
+		dprintf(ui_getfd_log(), " === ");
 		len_actu += parse_tlv(tlv + len_actu, &nei, ip_port, len - len_actu);
 	}
 } /* parse_datagram */

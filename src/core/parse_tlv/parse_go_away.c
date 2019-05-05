@@ -11,38 +11,38 @@ void parse_goaway(uint8_t * tlv, t_neighbour * nei) {
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "GOAWAY reçu d'un non neighbour\n");
+		dprintf(ui_getfd_log(), "GOAWAY reçu d'un non neighbour\n");
 		return;
 	}
 	if (len < 1) {
-		dprintf(ui_getfd(), "Inconsistent goaway msg\n");
-		dprintf(ui_getfd(), "len is too short : %d\n", len);
+		dprintf(ui_getfd_log(), "Inconsistent goaway msg\n");
+		dprintf(ui_getfd_log(), "len is too short : %d\n", len);
 	}
 	else {
 		code = tlv[2];
-		dprintf(ui_getfd(), "GOAWAY code %d, meaning : ", code);
+		dprintf(ui_getfd_log(), "GOAWAY code %d, meaning : ", code);
 		switch (code) {
 			case 0:
-				dprintf(ui_getfd(), "unknown reason");
+				dprintf(ui_getfd_log(), "unknown reason");
 				break;
 			case 1:
-				dprintf(ui_getfd(), "sender quit the system");
+				dprintf(ui_getfd_log(), "sender quit the system");
 				break;
 			case 2:
-				dprintf(ui_getfd(), "hello message missing for too long");
+				dprintf(ui_getfd_log(), "hello message missing for too long");
 				break;
 			case 3:
-				dprintf(ui_getfd(), "sender didn't respect the protocol");
+				dprintf(ui_getfd_log(), "sender didn't respect the protocol");
 				break;
 			case 4:
-				dprintf(ui_getfd(), "sender has too many neighbours");
+				dprintf(ui_getfd_log(), "sender has too many neighbours");
 				break;
 			default:
-				dprintf(ui_getfd(), "unknown code");
+				dprintf(ui_getfd_log(), "unknown code");
 				break;
 		}
 		msg = tlv + 3;
-		dprintf(ui_getfd(), ", msg : %.*s\n", len - 1, msg);
+		dprintf(ui_getfd_log(), ", msg : %.*s\n", len - 1, msg);
 		lst_add(g_env->li_potential_neighbours, pot_nei_alloc(nei->ip_port));
 		lst_removeall_ifp(g_env->li_acquit, (t_bool(*)(void *, void *))is_acquit_from_sender, (void *) nei->id);
 		lst_remove_ifp(g_env->li_neighbours, (t_bool(*)(void *, void *))nei_is_id, (void *) nei->id);

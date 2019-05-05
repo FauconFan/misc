@@ -37,12 +37,13 @@ static void start(void) {
 
 int main(int argc, char ** argv) {
 	t_bool with_ncurses;
+	t_bool with_logs;
 	int rc_main;
 
 	rc_main = 1;
-	if (parse_args(argc, argv, &with_ncurses) == TRUE &&
+	if (parse_args(argc, argv, &with_ncurses, &with_logs) == TRUE &&
 	  setup_pseudo() == 0 &&
-	  ui_setup(with_ncurses) == TRUE &&
+	  ui_setup(with_ncurses, with_logs) == TRUE &&
 	  (g_env = env_alloc()) != NULL)
 	{
 		rc_main = 0;

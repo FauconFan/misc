@@ -37,12 +37,12 @@ void    parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
 
 	len = tlv[1];
 	if (nei == NULL) {
-		dprintf(ui_getfd(), "DATA reçu d'un non neighbour\n");
+		dprintf(ui_getfd_log(), "DATA reçu d'un non neighbour\n");
 		return;
 	}
 	if (len < 13) {
-		dprintf(ui_getfd(), "Inconsistent data message\n");
-		dprintf(ui_getfd(), "len too short : %d\n", len);
+		dprintf(ui_getfd_log(), "Inconsistent data message\n");
+		dprintf(ui_getfd_log(), "len too short : %d\n", len);
 	}
 	else {
 		mdt.from_id   = nei->id;
@@ -58,19 +58,24 @@ void    parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
 		buffer = buffer_search(g_env->li_buffer_tlv_ip, ip_port);
 		tlvb_add_ack(buffer->tlv_builder, mdt.sender_id, mdt.nonce);
 
-		dprintf(ui_getfd(), "DATA ");
-		dprintf(ui_getfd(), "sender id : %016lx, nonce : %08x, type : %d, msg : ", mdt.sender_id, mdt.nonce, mdt.type);
-		if (mdt.type != 0)
-			dprintf(ui_getfd(), "No printable message\n");
-		else
-			dprintf(ui_getfd(), "\"%.*s\"\n", mdt.msg_len, mdt.msg);
+		dprintf(ui_getfd_log(), "DATA ");
+		dprintf(
+		  ui_getfd_log(), "sender id : %016lx, nonce : %08x, type : %d, msg : ", mdt.sender_id, mdt.nonce, mdt.type);
+		if (mdt.type != 0) {
+			dprintf(ui_getfd_log(), "No printable message\n");
+		}
+		else {
+			dprintf(ui_getfd_log(), "\"%.*s\"\n", mdt.msg_len, mdt.msg);
+		}
 
 		if (lst_findp(g_env->li_messages, (t_bool(*)(void *, void *))search_msg, &id_nonce) == NULL) {
 			lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))forall_nei, &mdt);
 			lst_add(g_env->li_messages, message_alloc(mdt.sender_id, mdt.nonce, mdt.type, mdt.msg_len, mdt.msg));
+			if (mdt.type == 0)
+				dprintf(ui_getfd_screen(), "%.*s\n", mdt.msg_len, mdt.msg);
 		}
 		else {
-			dprintf(ui_getfd(), "This message has been already received\n");
+			dprintf(ui_getfd_log(), "This message has been already received\n");
 		}
 	}
 } /* parse_data */

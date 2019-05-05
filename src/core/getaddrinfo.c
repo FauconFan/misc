@@ -25,7 +25,7 @@ t_bool      get_sockaddr(
 
 	rc = getaddrinfo(node, service, &hints, &res);
 	if (rc != 0) {
-		dprintf(ui_getfd(), "Échec cinglant : %s\n", gai_strerror(rc));
+		dprintf(ui_getfd_screen(), "Échec cinglant : %s\n", gai_strerror(rc));
 		return (FALSE);
 	}
 
@@ -40,7 +40,7 @@ t_bool      get_sockaddr(
 	}
 
 	if (p == NULL) {
-		dprintf(ui_getfd(), "La connection a échoué.\n");
+		dprintf(ui_getfd_screen(), "La connection a échoué.\n");
 		freeaddrinfo(res);
 		return (FALSE);
 	}

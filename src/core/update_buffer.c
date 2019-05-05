@@ -60,9 +60,9 @@ void            update_buffer() {
 
 	gettimeofday(&now, NULL);
 
-	dprintf(ui_getfd(), "current time : ");
-	timeval_print(now, ui_getfd());
-	dprintf(ui_getfd(), "\n");
+	dprintf(ui_getfd_log(), "current time : ");
+	timeval_print(now, ui_getfd_log());
+	dprintf(ui_getfd_log(), "\n");
 	// étape 1
 	good_num_neighbours(&now);
 	// étape 2

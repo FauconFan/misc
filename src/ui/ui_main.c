@@ -1,63 +1,5 @@
 #include "irc_udp.h"
 
-static void    ui_treat_buffer(t_ui * ui) {
-	char * tmp;
-	char * line;
-	size_t s;
-
-	while ((tmp = strchr(ui->buffer_in, '\n')) != NULL) {
-		s    = tmp - ui->buffer_in;
-		line = strndup(ui->buffer_in, s);
-		strreplace(&line, "\t", "    ");
-		dprintf(ui->fd_log, "%s\n", line);
-		if (ui->with_ncurses == FALSE) {
-			printf("%s\n", line);
-		}
-		lst_add(ui->li_messages, line);
-		tmp = strdup(ui->buffer_in + s + 1);
-		free(ui->buffer_in);
-		ui->buffer_in = tmp;
-	}
-}
-
-static void ui_check_message(t_ui * ui) {
-	char buff[1025];
-	char * tmp;
-
-	while (1) {
-		memset(buff, 0, 1025);
-		if (read(ui->fd_ui, buff, 1024) < 0)
-			break;
-		tmp = strjoin(ui->buffer_in, buff);
-		free(ui->buffer_in);
-		ui->buffer_in = tmp;
-	}
-	ui_treat_buffer(ui);
-}
-
-static void ui_check_stop(t_ui * ui) {
-	char buff;
-
-	ui->has_received_stop = (read(ui->fd_stop, &buff, sizeof(buff)) != -1);
-}
-
-static void ui_send_stop(t_ui * ui) {
-	t_ui_type stop;
-
-	stop = UI_STOP;
-	write(ui->fd_callback, &stop, sizeof(stop));
-}
-
-static void ui_send_remote_message(t_ui * ui) {
-	t_ui_type msg;
-
-	msg = UI_MESSAGE;
-	write(ui->fd_callback, &msg, sizeof(msg));
-	write(ui->fd_callback, &(ui->len), sizeof(ui->len));
-	write(ui->fd_callback, ui->line, ui->len);
-	ui_init_line(ui);
-}
-
 static t_bool handle_new_charac(t_ui * ui, int actu) {
 	if (actu == '\n') {
 		if (strcmp(ui->line, "QUIT") == 0) {
@@ -85,7 +27,7 @@ static void ui_main_loop_with_ncurses(t_ui * ui) {
 
 		ui_check_message(ui);
 		ui_check_stop(ui);
-		ui_print(ui);
+		ui_ncurses_print(ui);
 		refresh();
 		actu = getch();
 		if (actu != ERR) {
@@ -118,7 +60,7 @@ static void ui_main_loop_no_ncurses(t_ui * ui, int fd_stdin_custom_get, int fd_s
 	sleep(1);
 }
 
-void        ui_main(t_bool with_ncurses, int fd_ui, int fd_callback, int fd_stop) {
+void        ui_main(t_bool with_ncurses, t_bool with_logs, int fd_screen, int fd_log, int fd_callback, int fd_stop) {
 	t_ui * ui;
 	int exit_code;
 	int fd_stdin_custom_get  = 0;
@@ -129,12 +71,13 @@ void        ui_main(t_bool with_ncurses, int fd_ui, int fd_callback, int fd_stop
 		if (ui_stdin_custom_setup(&fd_stdin_custom_get, &fd_stdin_custom_stop) == FALSE) {
 			printf("fail setup stdin custom");
 			exit_code = 1;
-			close(fd_ui);
+			close(fd_screen);
+			close(fd_log);
 			close(fd_callback);
 			close(fd_stop);
 		}
 	}
-	if ((ui = ui_alloc(with_ncurses, fd_ui, fd_callback, fd_stop)) == NULL) {
+	if ((ui = ui_alloc(with_ncurses, with_logs, fd_screen, fd_log, fd_callback, fd_stop)) == NULL) {
 		exit_code = 1;
 	}
 	else {
