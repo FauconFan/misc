@@ -67,6 +67,6 @@ void            update_buffer() {
 	good_num_neighbours(&now);
 	// étape 2
 	lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))build_hello, &now);
-	// étape 4
+	// étape 5
 	lst_iterp(g_env->li_acquit, (void(*)(void *, void *))build_acquit, &now);
 }

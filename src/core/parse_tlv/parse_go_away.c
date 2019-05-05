@@ -29,7 +29,7 @@ void parse_goaway(uint8_t * tlv, t_neighbour * nei) {
 				dprintf(ui_getfd_log(), "sender quit the system");
 				break;
 			case 2:
-				dprintf(ui_getfd_log(), "hello message missing for too long");
+				dprintf(ui_getfd_log(), "hello message or ack missing for too long");
 				break;
 			case 3:
 				dprintf(ui_getfd_log(), "sender didn't respect the protocol");
