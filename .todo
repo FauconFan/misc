@@ -8,7 +8,7 @@ Mandatory part:
         ☐ Ajout
         ☐ Suppression (remplacement correct)
     ☐ Faire l'implémentation pour les larges
-        ☐ Parcours (recherche dispo + existing)
+        ☐ Parcours (existing)
         ☐ Ajout
         ☐ Suppresion (juste rendre libre)
     ☐ Faire une abstraction pour allouer des pages, multiples de getpagesize...
@@ -16,6 +16,9 @@ Mandatory part:
         ☐ getpagesize
         ☐ vérification defines
         ☐ préallocation (calcul dynamique)
+    ☐ Gestion de la bufferisation de pages
+        ☐ get_min_of
+        ☐ libérer quand trop
     ☐ Faire le show_mem_alloc (en write only)
 
 Bonus part:
