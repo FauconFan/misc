@@ -67,7 +67,7 @@ fclean: clean
 re: fclean all
 
 .PHONY: run
-run:
+run: all
 	@make ..
 	@$(foreach prog, $(PROGS_NS), \
 		printf "\t===== %s =====\\n" "$(prog)"; \

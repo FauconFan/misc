@@ -40,15 +40,19 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 CC = gcc
 
 SRC_FOLDER = src/
-INC_FOLDER = inc/
 
 CFLAGS = -Wall -Wextra -Werror -fPIC
-IFLAGS = -I $(INC_FOLDER)
+IFLAGS = -I .
 LFLAGS =
 FLAGS = $(CFLAGS) $(IFLAGS)
 
 SRC_FILES = \
 			malloc.c \
+			free.c \
+			realloc.c \
+			calloc.c \
+			show_alloc_mem.c \
+			utils/mmap_utils.c \
 
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_FILES))
 

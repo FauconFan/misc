@@ -1,0 +1,22 @@
+
+Todo List
+
+Mandatory part:
+    ☐ Faire un peu de documentation (dans le .h uniquement)
+    ☐ Faire l'implémentation de la liste simplement châiné pour tiny et small
+        ☐ Parcours (recherche dispo + existing)
+        ☐ Ajout
+        ☐ Suppression (remplacement correct)
+    ☐ Faire l'implémentation pour les larges
+        ☐ Parcours (recherche dispo + existing)
+        ☐ Ajout
+        ☐ Suppresion (juste rendre libre)
+    ☐ Faire une abstraction pour allouer des pages, multiples de getpagesize...
+    ☐ Mise en place de la structure principale
+        ☐ getpagesize
+        ☐ vérification defines
+        ☐ préallocation (calcul dynamique)
+    ☐ Faire le show_mem_alloc (en write only)
+
+Bonus part:
+    ☐ Faire le lock pour les pthreads (easy)
