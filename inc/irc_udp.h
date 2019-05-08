@@ -27,6 +27,7 @@
 #include "core.h"
 #include "ui.h"
 #include "utils.h"
+#include  "struct/env_utils.h"
 
 #define	JCH_NODE             "jch.irif.fr"
 #define	JCH_SERVICE          "1212"

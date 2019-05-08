@@ -48,6 +48,7 @@ SRC = \
 		$(SRC_STRUCT_PROTOCOL_FOLDER)t_potential_neighbour.c \
 		$(SRC_STRUCT_PROTOCOL_FOLDER)t_message.c \
 		$(SRC_STRUCT_PROTOCOL_FOLDER)t_acquit.c \
+		$(SRC_STRUCT_FOLDER)env_utils.c \
 		$(SRC_STRUCT_FOLDER)t_env.c \
 
 INC = $(shell find $(INC_FOLDER) -name "*.h")

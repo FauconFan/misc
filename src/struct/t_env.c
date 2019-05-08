@@ -36,6 +36,7 @@ t_env * env_alloc(void) {
 } /* env_alloc */
 
 void                env_free(t_env * env) {
+	go_away();
 	close(env->socket);
 	lst_free(env->li_neighbours);
 	lst_free(env->li_potential_neighbours);

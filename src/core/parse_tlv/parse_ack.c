@@ -1,14 +1,5 @@
 #include "irc_udp.h"
 
-typedef struct      s_id_nonce{
-	uint64_t sender_id;
-	uint32_t nonce;
-	uint64_t dest_id;
-}                   t_id_nonce;
-
-static t_bool   search_ack(t_acquit * ack, t_id_nonce * id_nonce) {
-	return (is_acquit(ack, id_nonce->dest_id, id_nonce->sender_id, id_nonce->nonce));
-}
 
 void parse_ack(uint8_t * tlv, t_neighbour * nei) {
 	uint8_t len;

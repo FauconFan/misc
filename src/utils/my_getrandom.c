@@ -48,3 +48,12 @@ uint32_t        gen_nonce() {
 	}
 	return nonce;
 }
+
+uint8_t			gen_pile_face(){
+	uint8_t piece;
+	if (my_getrandom(&piece, 1) != 0){
+		dprintf(ui_getfd_log(), "Erreur de génération aléatoire : %s\n", strerror(errno));
+		return 0;
+	}
+	return piece;
+}
