@@ -9,6 +9,6 @@ void parse_warning(uint8_t * tlv, t_neighbour * nei) {
 		dprintf(ui_getfd_log(), "WARNING reçu d'un non neighbour\n");
 		return;
 	}
-	msg = tlv + 3;
-	dprintf(ui_getfd_log(), "WARNING msg : %.*s\n", len, msg);
+	msg = tlv + 2;
+	dprintf(ui_getfd_screen(), "WARNING msg : %.*s\n", len, msg);
 }

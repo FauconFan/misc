@@ -37,16 +37,17 @@ static void     send_buffer(t_buffer_tlv_ip * tlvip) {
 	print_msg_to_ui(tlvip->ip_port, tlvip->tlv_builder->msg);
 	ret_sendmsg = sendmsg(g_env->socket, &msg, 0);
 
-	if (ret_sendmsg == -1)
+	if (ret_sendmsg == -1) {
 		dprintf(ui_getfd_log(), "Failed call to sendmsg\n");
+		dprintf(ui_getfd_log(), "error code %d error msg %s\n", errno, strerror(errno));
+	}
 	else
-		dprintf(ui_getfd_log(), "Succes call to sendmsg\n");
+		dprintf(ui_getfd_log(), "Success call to sendmsg\n");
 }
 
 void    clear_buffer(void) {
 	if (lst_isempty(g_env->li_buffer_tlv_ip))
 		dprintf(ui_getfd_log(), "Nothing to send\n");
-	dprintf(ui_getfd_log(), "là\n");
 	lst_iter(g_env->li_buffer_tlv_ip, (void(*)(void *))send_buffer);
 	lst_clear(g_env->li_buffer_tlv_ip);
 }
