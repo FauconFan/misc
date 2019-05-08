@@ -16,27 +16,32 @@ static void     good_num_neighbours(struct timeval * now) {
 	}
 }
 
-// Étapes 2 et 3
-
-static void     build_hello(t_neighbour * nei, struct timeval * now) {
-	t_buffer_tlv_ip * buffer;
+// Étapes 2
+static t_bool		is_out_of_time(t_neighbour *nei, struct timeval *now){
 	struct timeval limite;
 	limite.tv_sec = 120;
 	limite.tv_usec = 0;
 	struct timeval diff = timeval_diff(now, &nei->last_hello);
-	if (timeval_min (&limite, &diff) != &limite){
-		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
-		char msg[] = "No hello receivedfor too long";
-		tlvb_add_goaway(buffer->tlv_builder, 2, (uint8_t *)msg, sizeof(msg));
-	}
-	else if (timeval_min(now, &nei->next_hello) != now) {
+	return (timeval_min (&limite, &diff) != &limite);
+
+}
+static void			build_go_away(t_neighbour *nei){
+	t_buffer_tlv_ip * buffer;
+	buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
+	tlvb_add_goaway(buffer->tlv_builder, 2,(uint8_t *) NO_HELLO, sizeof(NO_HELLO));
+}
+
+// Étape 3
+static void     build_hello(t_neighbour * nei, struct timeval * now) {
+	t_buffer_tlv_ip * buffer;
+
+	if (timeval_min(now, &nei->next_hello) != now) {
 		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
 		tlvb_add_hello_long(buffer->tlv_builder, g_env->id, nei->id);
 		nei->next_hello.tv_sec += TIMEOUT_NEI_TIME;
 	}
 }
 
-// Étape 4 et 5
 
 static t_bool   search_nei(t_neighbour * nei, t_acquit * acq) {
 	return (nei->id == acq->dest_id);
@@ -46,19 +51,28 @@ static t_bool   search_msg(t_message * msg, t_acquit * acq) {
 	return (msg->sender_id == acq->sender_id && msg->nonce == acq->nonce);
 }
 
+// Étape 4
+static t_bool 	is_out_of_wait(t_acquit *acq){
+	return (acq->no_response >=5);
+}
+static void 	build_au_revoir(t_acquit * acq){
+		t_neighbour * nei;
+		t_buffer_tlv_ip * buffer;
+
+		nei    = lst_findp(g_env->li_neighbours, (t_bool(*)(void *, void *))search_nei, acq);
+		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
+		tlvb_add_goaway(buffer->tlv_builder, 2, (uint8_t *) NO_ACK, sizeof(NO_ACK));
+
+}
+
+// Étape 5
 static void     build_acquit(t_acquit * acq, struct timeval * now) {
 	t_neighbour * nei;
 	t_message * msg;
 	t_buffer_tlv_ip * buffer;
 
-	nei    = lst_findp(g_env->li_neighbours, (t_bool(*)(void *, void *))search_nei, acq);
-	if (acq->no_response >= 5){
-		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
-		char msg[14] = "No ack in time";
-		tlvb_add_goaway(buffer->tlv_builder, 2, (uint8_t *) msg, 14);
-	}
-
 	if (timeval_min(now, &(acq->next_time)) != now) {
+		nei    = lst_findp(g_env->li_neighbours, (t_bool(*)(void *, void *))search_nei, acq);
 		msg    = lst_findp(g_env->li_messages, (t_bool(*)(void *, void *))search_msg, acq);
 		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
 		tlvb_add_data(buffer->tlv_builder, acq->sender_id, acq->nonce, msg->type, msg->text, msg->length);
@@ -99,9 +113,27 @@ void            update_buffer() {
 	dprintf(ui_getfd_log(), "\n");
 	// étape 1
 	good_num_neighbours(&now);
-	// étape 2 et 3
+	// étape 2
+
+	t_neighbour *nei;
+	while ((nei = lst_findp(g_env->li_neighbours, (t_bool(*)(void *, void *))is_out_of_time, &now)) != NULL) {
+		build_go_away(nei);
+		erase_nei(nei);
+	}
+
+	// étape 3
 	lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))build_hello, &now);
-	// étape 4 et 5
+	// étape 4
+
+	t_acquit *acq;
+	while((acq = lst_find(g_env->li_acquit, (t_bool(*)(void *))is_out_of_wait)) != NULL) {
+		build_au_revoir(acq);
+		erase_nei(nei);
+	}
+
+
+
+	// étape 5
 	lst_iterp(g_env->li_acquit, (void(*)(void *, void *))build_acquit, &now);
 	// étape 6
 	ajout_alea_neighbours();

@@ -46,6 +46,9 @@
 #define	WITH_NCURSES_DEFAULT TRUE
 #define	WITH_LOG_DEFAULT     FALSE
 
+#define NO_HELLO             "No hello received for too long"
+#define NO_ACK               "No ack in time"
+
 t_bool    parse_args(int argc, char ** argv, t_bool * with_ncurses, t_bool * with_log);
 
 extern t_env * g_env;

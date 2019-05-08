@@ -15,4 +15,6 @@ t_bool          already_received_msg(t_message * msg, t_id_nonce * id_nonce);
 // Pour envoyer un go_away à nos voisins quand on quitte le réseau
 void            go_away();
 
+void 			erase_nei(t_neighbour *nei);
+
 #endif

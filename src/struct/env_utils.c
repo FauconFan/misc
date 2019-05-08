@@ -27,3 +27,19 @@ void            go_away(){
     lst_iter(g_env->li_neighbours, (void (*)(void *))go_away_for_all);
     clear_buffer();
 }
+
+static t_bool 	search_acq_nei(t_acquit *acq, t_neighbour *nei){
+	return (nei->id == acq->dest_id);
+}
+
+
+void 			erase_nei(t_neighbour *nei){
+	// remove tous les ack
+	lst_removeall_ifp(g_env->li_acquit, (t_bool(*)(void *, void *))search_acq_nei, nei);
+	// ajout pot_nei
+	t_potential_neighbour *pot_nei = pot_nei_alloc(nei->ip_port);
+	lst_add(g_env->li_potential_neighbours, pot_nei);
+	// remove nei
+	lst_remove_ifp(g_env->li_neighbours, (t_bool(*)( void *, void *))nei_is_id, (void *)nei->id);
+
+}
