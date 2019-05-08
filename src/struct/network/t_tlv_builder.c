@@ -159,7 +159,6 @@ t_bool      tlvb_add_goaway(t_tlv_builder * tlv, uint8_t code, uint8_t * message
 	if (tlvb_add_type(tlv, GOAWAY) == FALSE)
 		return (FALSE);
 
-	dprintf(ui_getfd_log(), "coucou %d\n", GOAWAY);
 	uint8_t * msg = (uint8_t *) malloc(taille + 1);
 	memcpy(msg, &code, 1);
 	memcpy(msg + 1, message, taille);
