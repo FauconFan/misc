@@ -79,6 +79,9 @@ t_bool  lst_add(t_list * lst, void * data);
 // Pop the first element
 t_bool  lst_pop(t_list * lst);
 
+// Returns the element at index position in the list, NULL if any errors occurs
+void * lst_get(t_list * lst, int index);
+
 // Remove the first element that satisfy the predicate
 // the last p stands for an extra parameter
 t_bool  lst_remove_if(t_list * lst, t_predf predf);

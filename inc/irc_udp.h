@@ -40,6 +40,7 @@
 #define	NB_NEI_MAX           8
 #define	TIMEOUT_POT_NEI      30
 #define	TIMEOUT_NEI_TIME     30
+#define PERCENT_SEND_NEI     0.15 // 15%
 
 #define	SIZE_PSEUDO          20
 #define	WITH_NCURSES_DEFAULT TRUE

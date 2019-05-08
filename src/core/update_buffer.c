@@ -67,6 +67,26 @@ static void     build_acquit(t_acquit * acq, struct timeval * now) {
 	}
 }
 
+// Étape 6
+void			ajout_alea_neighbours() {
+	size_t		nb_nei;
+	int			pos[2];
+	t_neighbour	*nei[2];
+	t_buffer_tlv_ip * buffer;
+
+	nb_nei = lst_size(g_env->li_neighbours);
+	if (nb_nei <= 1 || gen_rand() >= PERCENT_SEND_NEI)
+		return ;
+	pos[0] = gen_randint(nb_nei);
+	pos[1] = gen_randint(nb_nei - 1);
+	if (pos[1] >= pos[0])
+		pos[1]++;
+	nei[0] = lst_get(g_env->li_neighbours, pos[0]);
+	nei[1] = lst_get(g_env->li_neighbours, pos[1]);
+	buffer = buffer_search(g_env->li_buffer_tlv_ip, nei[0]->ip_port);
+	tlvb_add_neighbour(buffer->tlv_builder, nei[1]->ip_port);
+}
+
 // Update buffer
 
 void            update_buffer() {
@@ -83,9 +103,6 @@ void            update_buffer() {
 	lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))build_hello, &now);
 	// étape 4 et 5
 	lst_iterp(g_env->li_acquit, (void(*)(void *, void *))build_acquit, &now);
-	// étape 6, ajouter des neighbours aléatoirement
-	/* uint8_t piece = gen_pile_face();
-	if (piece % 2== 1){
-		send_nei();
-	}*/
+	// étape 6
+	ajout_alea_neighbours();
 }

@@ -107,16 +107,16 @@ t_bool      tlvb_add_hello_long(t_tlv_builder * tlv, uint64_t id1, uint64_t id2)
 	return (tlvb_add_value(tlv, id, 16));
 }
 
-t_bool      tlvb_add_neighbour(t_tlv_builder * tlv, uint8_t ip[16], uint16_t port) {
-	if (tlv == NULL || tlv->ready || ip == NULL)
+t_bool      tlvb_add_neighbour(t_tlv_builder * tlv, t_ip_port ip_port) {
+	if (tlv == NULL || tlv->ready)
 		return (FALSE);
 
 	if (tlvb_add_type(tlv, NEIGHBOUR) == FALSE)
 		return (FALSE);
 
 	uint8_t msg[18];
-	memcpy(msg, ip, 16);
-	memcpy(msg + 16, ((uint8_t *) &port), 2);
+	memcpy(msg, ip_port.ip, 16);
+	memcpy(msg + 16, &(ip_port.port), 2);
 	return (tlvb_add_value(tlv, msg, 18));
 }
 

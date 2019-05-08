@@ -180,6 +180,19 @@ t_bool lst_pop(t_list * lst) {
 	return (TRUE);
 }
 
+void	*lst_get(t_list * lst, int index) {
+	t_list_node * tmp;
+
+	if (index < 0 || (size_t)index >= lst->len)
+		return (NULL);
+	tmp = lst->head;
+	while (index && tmp)
+		tmp = tmp->next;
+	if (tmp == NULL) // impossible
+		return (NULL);
+	return (tmp->data);
+}
+
 /**
  * STRANGE CODE INCOMING !!
  * sensible soul to withhold

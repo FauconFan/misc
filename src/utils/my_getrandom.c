@@ -49,11 +49,32 @@ uint32_t        gen_nonce() {
 	return nonce;
 }
 
-uint8_t			gen_pile_face(){
-	uint8_t piece;
-	if (my_getrandom(&piece, 1) != 0){
-		dprintf(ui_getfd_log(), "Erreur de génération aléatoire : %s\n", strerror(errno));
+float			gen_rand() {
+	uint64_t	rnd;
+	float		res;
+
+	rnd = 0;
+	if (my_getrandom(&rnd, sizeof(rnd)) != 0) {
+		dprintf(ui_getfd_log(), "Erreur de génération nonce : %s\n", strerror(errno));
 		return 0;
 	}
-	return piece;
+	rnd = rnd >> 8;
+	res = (float)rnd / (float)((uint64_t)(1) << (8 * (sizeof(rnd) - 1)));
+	return (res);
+}
+
+int				gen_randint(int max) {
+	int			res;
+	float		tmp;
+
+	if (max < 0)
+		return (0);
+	tmp = gen_rand();
+	res = (int)(tmp * max);
+	// impossible, but still bound result
+	if (res < 0)
+		res = 0;
+	else if (res >= max)
+		res = max - 1;
+	return (res);
 }
