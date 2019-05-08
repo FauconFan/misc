@@ -14,8 +14,8 @@ void                timeval_assign(struct timeval * t1, struct timeval * t2);
 // my_getrandom
 uint64_t        gen_id();
 uint32_t        gen_nonce();
-float			gen_rand();
-int				gen_randint(int max);
+float           gen_rand();
+int             gen_randint(int max);
 
 // my_str
 char * strnew(size_t size);

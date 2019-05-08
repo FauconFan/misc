@@ -49,9 +49,9 @@ uint32_t        gen_nonce() {
 	return nonce;
 }
 
-float			gen_rand() {
-	uint64_t	rnd;
-	float		res;
+float           gen_rand() {
+	uint64_t rnd;
+	float res;
 
 	rnd = 0;
 	if (my_getrandom(&rnd, sizeof(rnd)) != 0) {
@@ -59,18 +59,19 @@ float			gen_rand() {
 		return 0;
 	}
 	rnd = rnd >> 8;
-	res = (float)rnd / (float)((uint64_t)(1) << (8 * (sizeof(rnd) - 1)));
+	res = (float) rnd / (float) ((uint64_t) (1) << (8 * (sizeof(rnd) - 1)));
 	return (res);
 }
 
-int				gen_randint(int max) {
-	int			res;
-	float		tmp;
+int             gen_randint(int max) {
+	int res;
+	float tmp;
 
 	if (max < 0)
 		return (0);
+
 	tmp = gen_rand();
-	res = (int)(tmp * max);
+	res = (int) (tmp * max);
 	// impossible, but still bound result
 	if (res < 0)
 		res = 0;

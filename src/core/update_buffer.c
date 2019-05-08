@@ -16,19 +16,25 @@ static void     good_num_neighbours(struct timeval * now) {
 	}
 }
 
-// Étapes 2
-static t_bool		is_out_of_time(t_neighbour *nei, struct timeval *now){
+// Étape 2
+static t_bool       is_out_of_time(t_neighbour * nei, struct timeval * now) {
 	struct timeval limite;
-	limite.tv_sec = 120;
+
+	limite.tv_sec  = 120;
 	limite.tv_usec = 0;
 	struct timeval diff = timeval_diff(now, &nei->last_hello);
-	return (timeval_min (&limite, &diff) != &limite);
-
+	return (timeval_min(&limite, &diff) == &limite);
 }
-static void			build_go_away(t_neighbour *nei){
+
+static void         send_good_bye_old_neighbours(struct timeval * now) {
+	t_neighbour * nei;
 	t_buffer_tlv_ip * buffer;
-	buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
-	tlvb_add_goaway(buffer->tlv_builder, 2,(uint8_t *) NO_HELLO, sizeof(NO_HELLO));
+
+	while ((nei = lst_findp(g_env->li_neighbours, (t_bool(*)(void *, void *))is_out_of_time, now)) != NULL) {
+		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
+		tlvb_add_goaway(buffer->tlv_builder, 2, (uint8_t *) NO_HELLO, sizeof(NO_HELLO));
+		erase_nei(nei);
+	}
 }
 
 // Étape 3
@@ -42,7 +48,6 @@ static void     build_hello(t_neighbour * nei, struct timeval * now) {
 	}
 }
 
-
 static t_bool   search_nei(t_neighbour * nei, t_acquit * acq) {
 	return (nei->id == acq->dest_id);
 }
@@ -52,17 +57,22 @@ static t_bool   search_msg(t_message * msg, t_acquit * acq) {
 }
 
 // Étape 4
-static t_bool 	is_out_of_wait(t_acquit *acq){
-	return (acq->no_response >=5);
+static t_bool   is_out_of_wait(t_acquit * acq) {
+	return (acq->no_response >= 5);
 }
-static void 	build_au_revoir(t_acquit * acq){
+
+static void     send_hello_old_acquit(void) {
+	t_acquit * acq;
+
+	while ((acq = lst_find(g_env->li_acquit, (t_bool(*)(void *))is_out_of_wait)) != NULL) {
 		t_neighbour * nei;
 		t_buffer_tlv_ip * buffer;
 
 		nei    = lst_findp(g_env->li_neighbours, (t_bool(*)(void *, void *))search_nei, acq);
 		buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
 		tlvb_add_goaway(buffer->tlv_builder, 2, (uint8_t *) NO_ACK, sizeof(NO_ACK));
-
+		erase_nei(nei);
+	}
 }
 
 // Étape 5
@@ -82,15 +92,16 @@ static void     build_acquit(t_acquit * acq, struct timeval * now) {
 }
 
 // Étape 6
-void			ajout_alea_neighbours() {
-	size_t		nb_nei;
-	int			pos[2];
-	t_neighbour	*nei[2];
+void            ajout_alea_neighbours() {
+	size_t nb_nei;
+	int pos[2];
+	t_neighbour * nei[2];
 	t_buffer_tlv_ip * buffer;
 
 	nb_nei = lst_size(g_env->li_neighbours);
 	if (nb_nei <= 1 || gen_rand() >= PERCENT_SEND_NEI)
-		return ;
+		return;
+
 	pos[0] = gen_randint(nb_nei);
 	pos[1] = gen_randint(nb_nei - 1);
 	if (pos[1] >= pos[0])
@@ -114,25 +125,11 @@ void            update_buffer() {
 	// étape 1
 	good_num_neighbours(&now);
 	// étape 2
-
-	t_neighbour *nei;
-	while ((nei = lst_findp(g_env->li_neighbours, (t_bool(*)(void *, void *))is_out_of_time, &now)) != NULL) {
-		build_go_away(nei);
-		erase_nei(nei);
-	}
-
+	send_good_bye_old_neighbours(&now);
 	// étape 3
 	lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))build_hello, &now);
 	// étape 4
-
-	t_acquit *acq;
-	while((acq = lst_find(g_env->li_acquit, (t_bool(*)(void *))is_out_of_wait)) != NULL) {
-		build_au_revoir(acq);
-		erase_nei(nei);
-	}
-
-
-
+	send_hello_old_acquit();
 	// étape 5
 	lst_iterp(g_env->li_acquit, (void(*)(void *, void *))build_acquit, &now);
 	// étape 6
