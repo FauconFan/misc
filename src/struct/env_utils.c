@@ -14,12 +14,12 @@ static void     go_away_for_all(t_neighbour * nei) {
 	t_buffer_tlv_ip * buffer;
 
 	ip_port_assign_brut(&ip_port, nei->ip_port.ip, nei->ip_port.port);
-	buffer = buffer_search(g_env->li_neighbours, ip_port);
-	char msg[11] = "Au revoir";
-	tlvb_add_goaway(buffer->tlv_builder, 1, (uint8_t *) msg, 11);
+	buffer = buffer_search(g_env->li_buffer_tlv_ip, ip_port);
+	tlvb_add_goaway(buffer->tlv_builder, 1, (uint8_t *) GOOD_BYE, sizeof(GOOD_BYE) - 1);
 }
 
 void            go_away() {
+	dprintf(ui_getfd_log(), "go away protocol called\n");
 	lst_iter(g_env->li_neighbours, (void(*)(void *))go_away_for_all);
 	clear_buffer();
 }

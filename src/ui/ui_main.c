@@ -1,11 +1,11 @@
 #include "irc_udp.h"
 
-static t_bool handle_new_charac(t_ui * ui, int actu) {
+static void handle_new_charac(t_ui * ui, int actu) {
 	if (actu == '\n') {
-		if (strcmp(ui->line, "QUIT") == 0) {
-			return (FALSE);
-		}
-		ui_send_remote_message(ui);
+		if (strcmp(ui->line, "QUIT") == 0)
+			ui_send_stop(ui);
+		else
+			ui_send_remote_message(ui);
 	}
 	else if (actu == 127) {
 		if (ui->len != 0)
@@ -14,7 +14,6 @@ static t_bool handle_new_charac(t_ui * ui, int actu) {
 	else if (isascii(actu)) {
 		ui->line[ui->len++] = actu;
 	}
-	return (TRUE);
 }
 
 static void ui_main_loop_with_ncurses(t_ui * ui) {
@@ -31,8 +30,7 @@ static void ui_main_loop_with_ncurses(t_ui * ui) {
 		refresh();
 		actu = getch();
 		if (actu != ERR) {
-			if (handle_new_charac(ui, actu) == FALSE)
-				break;
+			handle_new_charac(ui, actu);
 		}
 	}
 
@@ -40,23 +38,26 @@ static void ui_main_loop_with_ncurses(t_ui * ui) {
 }
 
 static void ui_main_loop_no_ncurses(t_ui * ui, int fd_stdin_custom_get, int fd_stdin_custom_stop) {
-	while (ui->has_received_stop == FALSE) {
+	ui_getstdin_continue(fd_stdin_custom_stop);
+	while (1) {
 		int actu;
 
 		ui_check_message(ui);
-		ui_check_stop(ui);
 		actu = ui_getstdin_custom(fd_stdin_custom_get);
 		if (actu == ERR) { // sleep if there is no read
 			usleep(TIMEOUT_READ * 1000);
 		}
 		else {
-			if (handle_new_charac(ui, actu) == FALSE)
+			handle_new_charac(ui, actu);
+			usleep(TIMEOUT_READ * 1000);
+			ui_check_stop(ui);
+			if (ui->has_received_stop) {
+				ui_getstdin_stop(fd_stdin_custom_stop);
 				break;
+			}
 			ui_getstdin_continue(fd_stdin_custom_stop);
 		}
 	}
-
-	ui_getstdin_stop(fd_stdin_custom_stop);
 	sleep(1);
 }
 

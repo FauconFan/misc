@@ -48,6 +48,7 @@
 
 #define	NO_HELLO             "No hello received for too long"
 #define	NO_ACK               "No ack in time"
+#define	GOOD_BYE             "Au revoir"
 
 t_bool    parse_args(int argc, char ** argv, t_bool * with_ncurses, t_bool * with_log);
 

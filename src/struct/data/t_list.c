@@ -187,8 +187,10 @@ void * lst_get(t_list * lst, int index) {
 		return (NULL);
 
 	tmp = lst->head;
-	while (index && tmp)
+	while (index && tmp) {
 		tmp = tmp->next;
+		index--;
+	}
 	if (tmp == NULL) // impossible
 		return (NULL);
 

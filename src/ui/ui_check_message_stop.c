@@ -16,12 +16,13 @@ static void    ui_treat_buffer_abstract(t_ui * ui, char ** ptrbuff, void(* callb
 		tmp = strdup(*ptrbuff + s + 1);
 		free(*ptrbuff);
 		*ptrbuff = tmp;
+		free(line);
 	}
 }
 
 static void     ui_callback_buffer_screen(t_ui * ui, char * line) {
 	dprintf(ui->fd_log_file, "NORMAL: %s\n", line);
-	lst_add(ui->li_messages, line);
+	lst_add(ui->li_messages, strdup(line));
 	if (ui->with_ncurses == FALSE) {
 		printf("%s\n", line);
 	}
@@ -30,7 +31,7 @@ static void     ui_callback_buffer_screen(t_ui * ui, char * line) {
 static void     ui_callback_buffer_logs(t_ui * ui, char * line) {
 	dprintf(ui->fd_log_file, "INFO:   %s\n", line);
 	if (ui->with_logs) {
-		lst_add(ui->li_messages, line);
+		lst_add(ui->li_messages, strdup(line));
 		if (ui->with_ncurses == FALSE) {
 			printf("%s\n", line);
 		}
@@ -61,5 +62,5 @@ void ui_check_message(t_ui * ui) {
 void ui_check_stop(t_ui * ui) {
 	char buff;
 
-	ui->has_received_stop = (read(ui->fd_stop, &buff, sizeof(buff)) != -1);
+	ui->has_received_stop = (read(ui->fd_send, &buff, sizeof(buff)) != -1);
 }

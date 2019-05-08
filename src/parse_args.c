@@ -9,7 +9,7 @@
 
 static void print_help(char * argv0) {
 	printf("Help:\n");
-	printf("%s " ARG_NCURSES " " ARG_NO_NCURSES "\n", argv0);
+	printf("%s " ARG_NCURSES " " ARG_NO_NCURSES " " ARG_W_LOG " " ARG_W_NOLOG "\n", argv0);
 	printf("\n");
 	printf("\t" ARG_NCURSES " : launch the application in ncurses mode\n");
 	printf("\t" ARG_NO_NCURSES " : launch the application in raw mode\n");

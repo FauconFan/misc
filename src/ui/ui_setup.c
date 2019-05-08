@@ -52,7 +52,7 @@ void    ui_down(void) {
 	}
 	if (g_fd_send != -1) {
 		write(g_fd_send, &g_fd_send, sizeof(g_fd_send));
-		sleep(1);
+		sleep(2);
 		close(g_fd_send);
 		g_fd_send = -1;
 	}
@@ -62,7 +62,7 @@ t_bool    ui_setup(t_bool with_ncurses, t_bool with_logs) {
 	int fds_screen[2];
 	int fds_log[2];
 	int fds_callback[2];
-	int fds_stop[2];
+	int fds_send[2];
 	pid_t pid_child;
 
 	if (pipe2(fds_screen, O_NONBLOCK) == -1) {
@@ -80,7 +80,7 @@ t_bool    ui_setup(t_bool with_ncurses, t_bool with_logs) {
 		close(fds_log[1]);
 		return (FALSE);
 	}
-	else if (pipe2(fds_stop, O_NONBLOCK) == -1) {
+	else if (pipe2(fds_send, O_NONBLOCK) == -1) {
 		close(fds_screen[0]);
 		close(fds_screen[1]);
 		close(fds_log[0]);
@@ -98,8 +98,8 @@ t_bool    ui_setup(t_bool with_ncurses, t_bool with_logs) {
 		close(fds_log[1]);
 		close(fds_callback[0]);
 		close(fds_callback[1]);
-		close(fds_stop[0]);
-		close(fds_stop[1]);
+		close(fds_send[0]);
+		close(fds_send[1]);
 		return (FALSE);
 	}
 
@@ -107,21 +107,21 @@ t_bool    ui_setup(t_bool with_ncurses, t_bool with_logs) {
 		close(fds_screen[1]);
 		close(fds_log[1]);
 		close(fds_callback[0]);
-		close(fds_stop[1]);
+		close(fds_send[1]);
 
-		ui_main(with_ncurses, with_logs, fds_screen[0], fds_log[0], fds_callback[1], fds_stop[0]);
+		ui_main(with_ncurses, with_logs, fds_screen[0], fds_log[0], fds_callback[1], fds_send[0]);
 		exit(1);
 	}
 	else {
 		close(fds_screen[0]);
 		close(fds_log[0]);
 		close(fds_callback[1]);
-		close(fds_stop[0]);
+		close(fds_send[0]);
 
 		g_fd_screen   = fds_screen[1];
 		g_fd_log      = fds_log[1];
 		g_fd_callback = fds_callback[0];
-		g_fd_send     = fds_stop[1];
+		g_fd_send     = fds_send[1];
 	}
 	return (TRUE);
 } /* ui_setup */

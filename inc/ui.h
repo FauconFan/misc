@@ -18,7 +18,7 @@ typedef struct  s_ui{
 	int      fd_screen;
 	int      fd_log_new;
 	int      fd_callback;
-	int      fd_stop;
+	int      fd_send;
 	int      fd_log_file;
 	t_bool   has_received_stop;
 }               t_ui;

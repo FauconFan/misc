@@ -106,9 +106,12 @@ void            ajout_alea_neighbours() {
 	pos[1] = gen_randint(nb_nei - 1);
 	if (pos[1] >= pos[0])
 		pos[1]++;
+	dprintf(ui_getfd_log(), "pos0 : %d, pos1 : %d\n", pos[0], pos[1]);
 	nei[0] = lst_get(g_env->li_neighbours, pos[0]);
 	nei[1] = lst_get(g_env->li_neighbours, pos[1]);
+	dprintf(ui_getfd_log(), "nei0 : %p, nei1 : %p\n", nei[0], nei[1]);
 	buffer = buffer_search(g_env->li_buffer_tlv_ip, nei[0]->ip_port);
+	dprintf(ui_getfd_log(), "buffer : %p\n", buffer);
 	tlvb_add_neighbour(buffer->tlv_builder, nei[1]->ip_port);
 }
 

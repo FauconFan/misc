@@ -4,11 +4,12 @@ static int ui_stdin_custom_run(int fd_get, int fd_stop) {
 	char c;
 
 	while (1) {
-		read(0, &c, sizeof(c));
-		write(fd_get, &c, sizeof(c));
 		read(fd_stop, &c, sizeof(c));
 		if (c == 1)
 			return (0);
+
+		read(0, &c, sizeof(c));
+		write(fd_get, &c, sizeof(c));
 	}
 	return (1);
 }

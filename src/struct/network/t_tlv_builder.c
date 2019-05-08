@@ -49,9 +49,10 @@ static t_bool   tlvb_add_type(t_tlv_builder * tlv, t_tlv_type t) {
 }
 
 static t_bool   tlvb_add_value(t_tlv_builder * tlv, const void * v, size_t l) {
-	uint8_t length[1] = {l};
+	uint8_t length;
 
-	if (iovb_push(tlv->msg, length, 1) == FALSE)
+	length = l;
+	if (iovb_push(tlv->msg, &length, 1) == FALSE)
 		return (FALSE);
 
 	tlv->len_body += l + 1;
@@ -147,7 +148,7 @@ t_bool      tlvb_add_ack(t_tlv_builder * tlv, uint64_t id, uint32_t nonce) {
 
 	uint8_t msg[12];
 	memcpy(msg, ((uint8_t *) &id), 8);
-	memcpy(msg, ((uint8_t *) &nonce), 4);
+	memcpy(msg + 8, ((uint8_t *) &nonce), 4);
 	return (tlvb_add_value(tlv, msg, 12));
 }
 
@@ -158,7 +159,8 @@ t_bool      tlvb_add_goaway(t_tlv_builder * tlv, uint8_t code, uint8_t * message
 	if (tlvb_add_type(tlv, GOAWAY) == FALSE)
 		return (FALSE);
 
-	uint8_t * msg = (uint8_t *) malloc(taille);
+	dprintf(ui_getfd_log(), "coucou %d\n", GOAWAY);
+	uint8_t * msg = (uint8_t *) malloc(taille + 1);
 	memcpy(msg, &code, 1);
 	memcpy(msg + 1, message, taille);
 	t_bool rc = tlvb_add_value(tlv, msg, taille + 1);

@@ -1,6 +1,6 @@
 #include "irc_udp.h"
 
-t_ui * ui_alloc(t_bool with_ncurses, t_bool with_logs, int fd_screen, int fd_log, int fd_callback, int fd_stop) {
+t_ui * ui_alloc(t_bool with_ncurses, t_bool with_logs, int fd_screen, int fd_log, int fd_callback, int fd_send) {
 	t_ui * ui;
 
 	if ((ui = (t_ui *) malloc(sizeof(t_ui))) == NULL)
@@ -21,7 +21,7 @@ t_ui * ui_alloc(t_bool with_ncurses, t_bool with_logs, int fd_screen, int fd_log
 	ui->fd_screen         = fd_screen;
 	ui->fd_log_new        = fd_log;
 	ui->fd_callback       = fd_callback;
-	ui->fd_stop           = fd_stop;
+	ui->fd_send           = fd_send;
 	ui->has_received_stop = FALSE;
 	return (ui);
 }
@@ -34,7 +34,7 @@ void    ui_free(t_ui * ui) {
 	close(ui->fd_screen);
 	close(ui->fd_log_new);
 	close(ui->fd_callback);
-	close(ui->fd_stop);
+	close(ui->fd_send);
 	close(ui->fd_log_file);
 	free(ui);
 }

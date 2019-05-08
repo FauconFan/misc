@@ -53,8 +53,8 @@ int main(int argc, char ** argv) {
 		start();
 	}
 
-	ui_down();
 	if (g_env)
 		env_free(g_env);
+	ui_down();
 	return (rc_main);
 }

@@ -46,6 +46,7 @@ static void     send_buffer(t_buffer_tlv_ip * tlvip) {
 void    clear_buffer(void) {
 	if (lst_isempty(g_env->li_buffer_tlv_ip))
 		dprintf(ui_getfd_log(), "Nothing to send\n");
+	dprintf(ui_getfd_log(), "là\n");
 	lst_iter(g_env->li_buffer_tlv_ip, (void(*)(void *))send_buffer);
 	lst_clear(g_env->li_buffer_tlv_ip);
 }
