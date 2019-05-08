@@ -8,7 +8,13 @@ struct timeval      timeval_add(struct timeval * t1, struct timeval * t2) {
 	struct timeval time;
 
 	time.tv_sec  = t1->tv_sec + t2->tv_sec;
-	time.tv_usec = t1->tv_usec + t2->tv_usec;
+	if(t1->tv_usec + t2->tv_usec >= 1e6){
+		time.tv_usec = (t1->tv_usec + t2->tv_usec) %1e6;
+		time.tv_sec += 1;
+	}
+	else {
+		time.tv_usec = t1->tv_usec + t2->tv_usec;
+	}
 	return time;
 }
 
@@ -34,11 +40,15 @@ struct timeval      timeval_raise(uint8_t n) {
 	struct timeval time;
 	uint32_t sec = 1;
 
-	for (size_t i = 0; i < n; i++) {
+	for (size_t i = 0; i < n-1; i++) {
 		sec = sec * 2;
 	}
+	struct timeval plus_time;
+	plus_time.tv_sec = sec + gen_randint(sec);
+	plus_time.tv_usec = gen_randint(1e6);
+
 	gettimeofday(&time, NULL);
-	time.tv_sec = time.tv_sec + sec;
+	time = timeval_add(&time, &plus_time);
 	return (time);
 }
 
