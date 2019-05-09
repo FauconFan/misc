@@ -43,8 +43,8 @@ int main(int argc, char ** argv) {
 	rc_main = 1;
 	if (parse_args(argc, argv, &with_ncurses, &with_logs) == TRUE &&
 	  setup_pseudo() == 0 &&
-	  ui_setup(with_ncurses, with_logs) == TRUE &&
-	  (g_env = env_alloc()) != NULL)
+	  (g_env = env_alloc()) != NULL &&
+	  ui_setup(with_ncurses, with_logs) == TRUE)
 	{
 		rc_main = 0;
 	}
