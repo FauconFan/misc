@@ -24,7 +24,7 @@ void                buffer_print(t_buffer_tlv_ip * buffer, int fd) {
 	dprintf(fd, "buffer_tlv_ip { ip_port : ");
 	ip_port_print(buffer->ip_port, fd);
 	dprintf(fd, ", tlv_builder");
-	iovb_print(buffer->tlv_builder->msg, fd);
+	iovb_print(buffer->tlv_builder->builder, fd);
 	dprintf(fd, "}\n");
 }
 

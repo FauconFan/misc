@@ -37,7 +37,8 @@
 #define	ENV_PROTOCOL         0
 #define	ENV_FLAGS            (AI_V4MAPPED | AI_ALL)
 
-#define MY_PORT              4242
+#define	MY_PORT              4242
+#define	GMTU                 1024
 #define	NB_NEI_MAX           8
 #define	TIMEOUT_POT_NEI      30
 #define	TIMEOUT_NEI_TIME     30

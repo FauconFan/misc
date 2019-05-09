@@ -25,9 +25,10 @@ static void receive_in_message() {
 	struct sockaddr_in6 sin6;
 	struct msghdr msg;
 	struct iovec iov[1];
+
 	union {
 		struct cmsghdr hdr;
-		unsigned char cmsgbuf[CMSG_SPACE(sizeof(struct in6_pktinfo))];
+		unsigned char  cmsgbuf[CMSG_SPACE(sizeof(struct in6_pktinfo))];
 	} u;
 	t_ip_port ip_port;
 	uint8_t buff_res[BUFF_SIZE];
@@ -35,36 +36,37 @@ static void receive_in_message() {
 
 	memset(buff_res, 0, BUFF_SIZE);
 	memset(&msg, 0, sizeof(msg));
-	iov[0].iov_base = buff_res;
-	iov[0].iov_len = BUFF_SIZE;
-	msg.msg_name = &sin6;
-	msg.msg_namelen = sizeof(sin6);
-	msg.msg_iov = iov;
-	msg.msg_iovlen = 1;
-	msg.msg_control = u.cmsgbuf;
+	iov[0].iov_base    = buff_res;
+	iov[0].iov_len     = BUFF_SIZE;
+	msg.msg_name       = &sin6;
+	msg.msg_namelen    = sizeof(sin6);
+	msg.msg_iov        = iov;
+	msg.msg_iovlen     = 1;
+	msg.msg_control    = u.cmsgbuf;
 	msg.msg_controllen = sizeof(u);
 	N = recvmsg(g_env->socket, &msg, 0);
 
 	if (N < 0) {
 		dprintf(ui_getfd_log(), "recvmsg failed : %s\n", strerror(errno));
-		return ;
+		return;
 	}
 
 	uint8_t my_ip[16];
-	struct cmsghdr *cmsg;
-	struct in6_pktinfo *info = NULL;
+	struct cmsghdr * cmsg;
+	struct in6_pktinfo * info = NULL;
 
 	cmsg = CMSG_FIRSTHDR(&msg);
-	while(cmsg != NULL) {
+	while (cmsg != NULL) {
 		if ((cmsg->cmsg_level == IPPROTO_IPV6) &&
-			(cmsg->cmsg_type == IPV6_PKTINFO)) {
-			info = (struct in6_pktinfo*)CMSG_DATA(cmsg);
+		  (cmsg->cmsg_type == IPV6_PKTINFO))
+		{
+			info = (struct in6_pktinfo *) CMSG_DATA(cmsg);
 			break;
 		}
 		cmsg = CMSG_NXTHDR(&msg, cmsg);
 	}
 
-	if(info == NULL) {/* ce cas ne devrait pas arriver */
+	if (info == NULL) {/* ce cas ne devrait pas arriver */
 		dprintf(ui_getfd_log(), "IPV6_PKTINFO non trouvé\n");
 	}
 	else {
@@ -80,7 +82,7 @@ static void receive_in_message() {
 	display_in_message(&sin6, buff_res, N);
 	ip_port_assign_sockaddr6(&ip_port, sin6);
 	parse_datagram(buff_res, N, nei_search_neighbour(g_env->li_neighbours, ip_port), ip_port);
-}
+} /* receive_in_message */
 
 typedef struct  s_rec_metadata{
 	uint32_t nonce;

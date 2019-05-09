@@ -36,6 +36,42 @@ static void start(void) {
 }
 
 int main(int argc, char ** argv) {
+	// t_tlv_builder * bd;
+	// t_ip_port ipp;
+	// uint64_t id = gen_id();
+	// uint32_t nonce = gen_nonce();
+
+	// for (size_t i = 0; i < 16; ++i)
+	// 	ipp.ip[i] = i;
+	// ipp.port = 1234;
+	// bd = tlvb_alloc();
+
+	// tlvb_add_pad1(bd);
+	// tlvb_add_padN(bd, 4);
+	// tlvb_add_hello_short(bd, 1);
+	// tlvb_add_hello_long(bd, 1, 2);
+	// tlvb_add_neighbour(bd, ipp);
+	// tlvb_add_data(bd, id, nonce, 0, (uint8_t *)"coucou", 6);
+	// tlvb_add_ack(bd, id, nonce);
+	// tlvb_add_goaway(bd, 0, (uint8_t *)"t moche", 7);
+	// tlvb_add_warning(bd, (uint8_t *)"Warning", 7);
+	// tlvb_add_padN(bd, 5);
+	// tlvb_add_padN(bd, 6);
+	// tlvb_add_padN(bd, 7);
+
+	// iovb_print(bd->builder, 1);
+
+	// printf("%d\n", tlvb_finish(bd, 26));
+
+	// iovb_print(bd->builder, 1);
+
+	// for (size_t i = 0; i < bd->num_splitted; ++i) {
+	// 	printf("PRINTING %ld\n", i);
+	// 	iovb_print(bd->splitted[i], 1);
+	// }
+
+	// tlvb_free(bd);
+
 	t_bool with_ncurses;
 	t_bool with_logs;
 	int rc_main;
@@ -43,8 +79,8 @@ int main(int argc, char ** argv) {
 	rc_main = 1;
 	if (parse_args(argc, argv, &with_ncurses, &with_logs) == TRUE &&
 	  setup_pseudo() == 0 &&
-	  (g_env = env_alloc()) != NULL &&
-	  ui_setup(with_ncurses, with_logs) == TRUE)
+	  ui_setup(with_ncurses, with_logs) == TRUE &&
+	  (g_env = env_alloc()) != NULL)
 	{
 		rc_main = 0;
 	}
@@ -57,4 +93,4 @@ int main(int argc, char ** argv) {
 		env_free(g_env);
 	ui_down();
 	return (rc_main);
-}
+} /* main */

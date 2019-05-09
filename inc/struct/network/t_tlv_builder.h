@@ -20,10 +20,10 @@ typedef enum    e_tlv_type{
  *  tlv builder construct a tlv message
  */
 typedef struct  s_tlv_builder{
-	t_iovec_builder * msg;            // iovec builder
-	uint16_t          len_body;       // len of the total message
-	size_t            index_len_body; // index of the total message
-	t_bool            ready;          // if the finish has been called
+	t_iovec_builder *  builder; // iovec builder
+	t_bool             finished;
+	t_iovec_builder ** splitted;
+	size_t             num_splitted;
 }               t_tlv_builder;
 
 // tlvb stands for tlv builder
@@ -35,7 +35,7 @@ t_tlv_builder * tlvb_alloc(void);
 void            tlvb_free(t_tlv_builder * tlv);
 
 // Finish the structure
-t_bool          tlvb_finish(t_tlv_builder * tlv);
+t_bool          tlvb_finish(t_tlv_builder * tlv, uint32_t mtu);
 
 // The following functions adds in tlv the corresping tlv according to specifications.
 
