@@ -3,7 +3,7 @@
 
 #include "irc_udp.h"
 
-#define	IOVEC_DEFAULT_SIZE 8
+#define	IOVEC_DEFAULT_SIZE 4  
 #define	IOVEC_EXTEND_ADD   2
 
 /**

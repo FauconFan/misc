@@ -228,6 +228,9 @@ void * lst_get(t_list * lst, int index) {
 			else if (all == FALSE) { \
 				return (TRUE); \
 			} \
+			if ((lst)->head == NULL) { \
+				return (TRUE); \
+			} \
 		} \
 		prev = (lst)->head; \
 		while (prev->next) { \
