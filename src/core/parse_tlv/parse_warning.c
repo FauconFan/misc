@@ -10,5 +10,6 @@ void parse_warning(uint8_t * tlv, t_neighbour * nei) {
 		return;
 	}
 	msg = tlv + 2;
+	dprintf(ui_getfd_log(), "WARNING msg : %.*s\n", len, msg);
 	dprintf(ui_getfd_screen(), "WARNING msg : %.*s\n", len, msg);
 }
