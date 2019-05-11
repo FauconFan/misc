@@ -7,6 +7,10 @@ t_env * env_alloc(void) {
 		return (NULL);
 
 	memset(res, 0, sizeof(t_env));
+	if (gettimeofday(&res->now, NULL) == -1) {
+		free(res);
+		return (NULL);
+	}
 	res->socket = build_socket();
 	if (res->socket < 0) {
 		free(res);
@@ -28,6 +32,7 @@ t_env * env_alloc(void) {
 			lst_free(res->li_acquit);
 		if (res->li_buffer_tlv_ip)
 			lst_free(res->li_buffer_tlv_ip);
+		close(res->socket);
 		free(res);
 		return (NULL);
 	}
@@ -63,12 +68,20 @@ void                env_print(t_env * env, int fd) {
 	dprintf(fd, "}\n");
 }
 
-struct timeval      env_min_time(t_env * env) {
+void                env_update_time(t_env * env) {
+	if (env == NULL)
+		return;
+
+	if (gettimeofday(&env->now, NULL) == -1) {
+		dprintf(ui_getfd_log(), "Fail update env time : %s\n", strerror(errno));
+	}
+}
+
+void      env_min_time(t_env * env, struct timeval * res) {
 	t_bool ok[2];
 	struct timeval min_hello;
 	struct timeval min_acquit;
 	struct timeval min;
-	struct timeval res;
 	struct timeval current_time;
 
 	ok[0] = nei_get_min_time(env->li_neighbours, &min_hello);
@@ -76,10 +89,9 @@ struct timeval      env_min_time(t_env * env) {
 	gettimeofday(&current_time, NULL);
 
 	if (ok[0] == FALSE && ok[1] == FALSE) {
-		res         = current_time;
-		res.tv_sec  = 5;
-		res.tv_usec = 0; // On attend 5 sec si on a rien à attendre
-		return (res);
+		timeval_assign(res, current_time);
+		res->tv_sec  = 5;
+		res->tv_usec = 0; // On attend 5 sec si on a rien à attendre
 	}
 	else if (ok[0] == FALSE) {
 		min = min_acquit;
@@ -90,5 +102,5 @@ struct timeval      env_min_time(t_env * env) {
 	else {
 		min = *timeval_min(&min_hello, &min_acquit);
 	}
-	return (timeval_diff(&current_time, &min));
+	return (timeval_diff(res, current_time, min));
 }

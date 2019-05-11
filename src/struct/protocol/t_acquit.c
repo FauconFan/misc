@@ -11,7 +11,7 @@ t_acquit * acquit_alloc(uint64_t dest_id, uint64_t sender_id, uint32_t nonce) {
 	acquit->sender_id   = sender_id;
 	acquit->nonce       = nonce;
 	acquit->no_response = 0;
-	acquit->next_time   = timeval_raise(acquit->no_response);
+	timeval_raise(&acquit->next_time, acquit->no_response);
 
 	return acquit;
 }
@@ -29,7 +29,7 @@ void                    acquit_print(t_acquit * acquit, int fd) {
 
 void                    acquit_no_response(t_acquit * acquit) {
 	acquit->no_response = acquit->no_response + 1;
-	acquit->next_time   = timeval_raise(acquit->no_response);
+	timeval_raise(&acquit->next_time, acquit->no_response);
 }
 
 t_bool                  is_acquit(t_acquit * acquit, uint64_t dest_id, uint64_t sender_id, uint32_t nonce) {
@@ -59,14 +59,14 @@ static void             parcours_acq(t_acquit * acq, struct timeval * tv) {
 	struct timeval * tmp;
 
 	tmp = timeval_min(tv, &acq->next_time);
-	timeval_assign(tv, tmp);
+	timeval_assign(tv, *tmp);
 }
 
 t_bool                  acquit_get_min_time(t_list * li_acquit, struct timeval * tv) {
 	if (lst_isempty(li_acquit))
 		return (FALSE);
 
-	timeval_assign(tv, &(((t_acquit *) lst_top(li_acquit))->next_time));
+	timeval_assign(tv, (((t_acquit *) lst_top(li_acquit))->next_time));
 	lst_iterp(li_acquit, (void(*)(void *, void *))parcours_acq, tv);
 	return (TRUE);
 }

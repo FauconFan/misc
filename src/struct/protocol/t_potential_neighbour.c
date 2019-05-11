@@ -38,13 +38,13 @@ t_bool                      pot_nei_is(t_potential_neighbour * pot_nei, t_ip_por
 	return (ip_port_is_eq(&(pot_nei->ip_port), ip_port));
 }
 
-static t_bool               is_available(t_potential_neighbour * pot_nei, struct timeval * now) {
+static t_bool               is_available(t_potential_neighbour * pot_nei) {
 	struct timeval diff;
 
-	diff = timeval_diff(&pot_nei->last_send, now);
+	timeval_diff(&diff, pot_nei->last_send, g_env->now);
 	return (diff.tv_sec > TIMEOUT_POT_NEI);
 }
 
-t_potential_neighbour * pot_nei_get_available(t_list * li_potential_neighbours, struct timeval * now) {
-	return (lst_findp(li_potential_neighbours, (t_bool(*)(void *, void *))is_available, now));
+t_potential_neighbour * pot_nei_get_available(t_list * li_potential_neighbours) {
+	return (lst_find(li_potential_neighbours, (t_bool(*)(void *))is_available));
 }

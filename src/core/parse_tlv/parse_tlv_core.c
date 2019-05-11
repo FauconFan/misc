@@ -58,11 +58,11 @@ void            parse_datagram(uint8_t * tlv, size_t len, t_neighbour * nei, t_i
 		return;
 	}
 	if (tlv[0] != MAGIC_NUMBER) {
-		dprintf(ui_getfd_log(), "Wrong magic number\n");
+		dprintf(ui_getfd_log(), "Wrong magic number : %d\n", tlv[0]);
 		return;
 	}
 	if (tlv[1] != VERSION) {
-		dprintf(ui_getfd_log(), "Wrong version\n");
+		dprintf(ui_getfd_log(), "Wrong version : %d\n", tlv[1]);
 		return;
 	}
 	len_body = *(uint16_t *) (tlv + 2);

@@ -140,7 +140,7 @@ t_bool   select_treat_input() {
 		max_fd = ui_getfd_callback();
 
 	// Calculer le minimum time to wait pour tv
-	tv = env_min_time(g_env);
+	env_min_time(g_env, &tv);
 
 	dprintf(ui_getfd_log(), "waiting for at least : ");
 	timeval_print(tv, ui_getfd_log());
@@ -152,6 +152,8 @@ t_bool   select_treat_input() {
 		dprintf(ui_getfd_log(), "select failed : %s\n", strerror(errno));
 		return (FALSE);
 	}
+
+	env_update_time(g_env);
 
 	// on a reçu un message
 	if (FD_ISSET(g_env->socket, &readfds))

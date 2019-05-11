@@ -53,14 +53,14 @@ static void     parcours_nei(t_neighbour * nei, struct timeval * tv) {
 	struct timeval * tmp;
 
 	tmp = timeval_min(tv, &nei->next_hello);
-	timeval_assign(tv, tmp);
+	timeval_assign(tv, *tmp);
 }
 
 t_bool          nei_get_min_time(t_list * li_neighbours, struct timeval * tv) {
 	if (lst_isempty(li_neighbours)) {
 		return (FALSE);
 	}
-	timeval_assign(tv, &(((t_neighbour *) lst_top(li_neighbours))->next_hello));
+	timeval_assign(tv, (((t_neighbour *) lst_top(li_neighbours))->next_hello));
 	lst_iterp(li_neighbours, (void(*)(void *, void *))parcours_nei, tv);
 	return (TRUE);
 }
