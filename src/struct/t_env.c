@@ -11,8 +11,8 @@ t_env * env_alloc(void) {
 		free(res);
 		return (NULL);
 	}
-	res->socket = build_socket();
-	if (res->socket < 0) {
+	res->sock = build_socket();
+	if (res->sock < 0) {
 		free(res);
 		return (NULL);
 	}
@@ -32,7 +32,7 @@ t_env * env_alloc(void) {
 			lst_free(res->li_acquit);
 		if (res->li_buffer_tlv_ip)
 			lst_free(res->li_buffer_tlv_ip);
-		close(res->socket);
+		close(res->sock);
 		free(res);
 		return (NULL);
 	}
@@ -42,7 +42,7 @@ t_env * env_alloc(void) {
 
 void                env_free(t_env * env) {
 	go_away();
-	close(env->socket);
+	close(env->sock);
 	lst_free(env->li_neighbours);
 	lst_free(env->li_potential_neighbours);
 	lst_free(env->li_messages);
@@ -54,7 +54,7 @@ void                env_free(t_env * env) {
 void                env_print(t_env * env, int fd) {
 	dprintf(fd, "env {\n");
 	dprintf(fd, "\tid : %016lx\n", env->id);
-	dprintf(fd, "\tsocket : %d\n", env->socket);
+	dprintf(fd, "\tsock : %d\n", env->sock);
 	dprintf(fd, "\tli_neighbours : ");
 	lst_print(env->li_neighbours, fd);
 	dprintf(fd, "\tli_potential_neighbours : ");

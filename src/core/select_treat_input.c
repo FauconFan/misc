@@ -21,6 +21,36 @@ static void display_in_message(
 	dprintf(ui_getfd_log(), "\n\n");
 }
 
+static void handle_pktinfo(struct msghdr * msg) {
+	uint8_t my_ip[16];
+	struct cmsghdr * cmsg;
+	struct in6_pktinfo * info = NULL;
+
+	cmsg = CMSG_FIRSTHDR(msg);
+	while (cmsg != NULL) {
+		if ((cmsg->cmsg_level == IPPROTO_IPV6) &&
+		  (cmsg->cmsg_type == IPV6_PKTINFO))
+		{
+			info = (struct in6_pktinfo *) CMSG_DATA(cmsg);
+			break;
+		}
+		cmsg = CMSG_NXTHDR(msg, cmsg);
+	}
+
+	if (info == NULL) {/* ce cas ne devrait pas arriver */
+		dprintf(ui_getfd_log(), "IPV6_PKTINFO non trouvé\n");
+	}
+	else {
+		memcpy(my_ip, info->ipi6_addr.s6_addr, 16);
+
+		dprintf(ui_getfd_log(), "my theoric ip interface : ");
+		for (size_t i = 0; i < 16; ++i) {
+			dprintf(ui_getfd_log(), "%d ", my_ip[i]);
+		}
+		dprintf(ui_getfd_log(), "\n");
+	}
+}
+
 static void receive_in_message() {
 	struct sockaddr_in6 sin6;
 	struct msghdr msg;
@@ -44,41 +74,14 @@ static void receive_in_message() {
 	msg.msg_iovlen     = 1;
 	msg.msg_control    = u.cmsgbuf;
 	msg.msg_controllen = sizeof(u);
-	N = recvmsg(g_env->socket, &msg, 0);
+	N = recvmsg(g_env->sock, &msg, 0);
 
 	if (N < 0) {
 		dprintf(ui_getfd_log(), "recvmsg failed : %s\n", strerror(errno));
 		return;
 	}
 
-	uint8_t my_ip[16];
-	struct cmsghdr * cmsg;
-	struct in6_pktinfo * info = NULL;
-
-	cmsg = CMSG_FIRSTHDR(&msg);
-	while (cmsg != NULL) {
-		if ((cmsg->cmsg_level == IPPROTO_IPV6) &&
-		  (cmsg->cmsg_type == IPV6_PKTINFO))
-		{
-			info = (struct in6_pktinfo *) CMSG_DATA(cmsg);
-			break;
-		}
-		cmsg = CMSG_NXTHDR(&msg, cmsg);
-	}
-
-	if (info == NULL) {/* ce cas ne devrait pas arriver */
-		dprintf(ui_getfd_log(), "IPV6_PKTINFO non trouvé\n");
-	}
-	else {
-		memcpy(my_ip, info->ipi6_addr.s6_addr, 16);
-
-		dprintf(ui_getfd_log(), "my theoric ip interface : ");
-		for (size_t i = 0; i < 16; ++i) {
-			dprintf(ui_getfd_log(), "%d ", my_ip[i]);
-		}
-		dprintf(ui_getfd_log(), "\n");
-	}
-
+	handle_pktinfo(&msg);
 	display_in_message(&sin6, buff_res, N);
 	ip_port_assign_sockaddr6(&ip_port, sin6);
 	parse_datagram(buff_res, N, nei_search_neighbour(g_env->li_neighbours, ip_port), ip_port);
@@ -133,9 +136,9 @@ t_bool   select_treat_input() {
 
 	running = TRUE;
 	FD_ZERO(&readfds);
-	FD_SET(g_env->socket, &readfds);
+	FD_SET(g_env->sock, &readfds);
 	FD_SET(ui_getfd_callback(), &readfds);
-	max_fd = g_env->socket;
+	max_fd = g_env->sock;
 	if (ui_getfd_callback() > max_fd)
 		max_fd = ui_getfd_callback();
 
@@ -156,7 +159,7 @@ t_bool   select_treat_input() {
 	env_update_time(g_env);
 
 	// on a reçu un message
-	if (FD_ISSET(g_env->socket, &readfds))
+	if (FD_ISSET(g_env->sock, &readfds))
 		receive_in_message();
 	if (FD_ISSET(ui_getfd_callback(), &readfds))
 		receive_user_message(&running);

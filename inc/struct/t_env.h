@@ -6,7 +6,7 @@
 // Global structure to the program
 typedef struct      s_env{
 	uint64_t       id;
-	int            socket;
+	int            sock;
 	struct timeval now;
 	t_list *       li_neighbours;
 	t_list *       li_potential_neighbours;

@@ -45,7 +45,7 @@ static void     send_buffer(t_buffer_tlv_ip * tlvip) {
 		msg.msg_namelen = sizeof(sin6);
 		msg.msg_iov     = final->msg_iov;
 		msg.msg_iovlen  = final->len_max;
-		ret_sendmsg     = sendmsg(g_env->socket, &msg, 0);
+		ret_sendmsg     = sendmsg(g_env->sock, &msg, 0);
 
 		if (ret_sendmsg == -1) {
 			dprintf(ui_getfd_log(), "Failed call to sendmsg\n");
