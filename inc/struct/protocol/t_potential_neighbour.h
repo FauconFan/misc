@@ -11,6 +11,7 @@
 typedef struct      s_potential_neighbour{
 	t_ip_port      ip_port;
 	struct timeval last_send;
+	uint8_t        no_response;
 }                   t_potential_neighbour;
 
 
@@ -18,6 +19,8 @@ t_potential_neighbour * pot_nei_alloc(t_ip_port ip_port);
 void                        pot_nei_free(t_potential_neighbour * pot_nei);
 
 void                        pot_nei_print(t_potential_neighbour * pot_nei, int fd);
+
+t_bool                      is_pot_nei_old(t_potential_neighbour * pot_nei);
 
 t_bool                      pot_nei_is(t_potential_neighbour * pot_nei, t_ip_port * ip_port);
 

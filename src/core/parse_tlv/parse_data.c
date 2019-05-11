@@ -11,8 +11,15 @@ typedef struct  s_meta_data{
 }               t_meta_data;
 
 static void forall_nei(t_neighbour * nei, t_meta_data * metadata) {
-	if (nei->id != metadata->from_id) {
-		lst_add(g_env->li_acquit, acquit_alloc(nei->id, metadata->sender_id, metadata->nonce));
+	uint64_t dest_id;
+	uint64_t sender_id;
+	uint32_t nonce;
+
+	dest_id   = nei->id;
+	sender_id = metadata->sender_id;
+	nonce     = metadata->nonce;
+	if (nei->id != metadata->from_id && list_has_acquit(g_env->li_acquit, dest_id, sender_id, nonce) == FALSE) {
+		lst_add(g_env->li_acquit, acquit_alloc(dest_id, sender_id, nonce));
 	}
 }
 

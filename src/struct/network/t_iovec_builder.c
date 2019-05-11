@@ -100,7 +100,7 @@ static void         rearrange_recu(struct iovec * vec, size_t * iactu, size_t mt
 
 	found = FALSE;
 	for (size_t i = *iactu; i < bound_max; ++i) {
-		if (vec[i].iov_len <= mtu_remain && (found == FALSE || vec[i].iov_len > lmax)) {
+		if (vec[i].iov_len < mtu_remain && (found == FALSE || vec[i].iov_len > lmax)) {
 			found = TRUE;
 			lmax  = vec[i].iov_len;
 			imax  = i;

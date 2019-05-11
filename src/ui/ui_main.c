@@ -11,7 +11,7 @@ static void handle_new_charac(t_ui * ui, int actu) {
 		if (ui->len != 0)
 			ui->line[--ui->len] = 0;
 	}
-	else if (isascii(actu)) {
+	else {
 		ui->line[ui->len++] = actu;
 	}
 }

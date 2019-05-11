@@ -22,10 +22,17 @@ static void     send_buffer(t_buffer_tlv_ip * tlvip) {
 	struct msghdr msg;
 	ssize_t ret_sendmsg;
 
+	dprintf(ui_getfd_log(), "send buffer called\n");
+
+	dprintf(ui_getfd_log(), "all buffer\n");
+	print_msg_to_ui(tlvip->ip_port, tlvip->tlv_builder->builder);
+
 	if (tlvb_finish(tlvip->tlv_builder, GMTU) == FALSE) {
 		dprintf(ui_getfd_log(), "something strange happens in send_buffer 1\n");
 		return;
 	}
+
+	dprintf(ui_getfd_log(), "splitted in %ld messages\n", tlvip->tlv_builder->num_splitted);
 
 	for (size_t i = 0; i < tlvip->tlv_builder->num_splitted; ++i) {
 		t_iovec_builder * final;
@@ -48,9 +55,10 @@ static void     send_buffer(t_buffer_tlv_ip * tlvip) {
 			dprintf(ui_getfd_log(), "Success call to sendmsg\n");
 		}
 	}
-}
+} /* send_buffer */
 
 void    clear_buffer(void) {
+	dprintf(ui_getfd_log(), "Clearing buffer\n");
 	if (lst_isempty(g_env->li_buffer_tlv_ip))
 		dprintf(ui_getfd_log(), "Nothing to send\n");
 	lst_iter(g_env->li_buffer_tlv_ip, (void(*)(void *))send_buffer);

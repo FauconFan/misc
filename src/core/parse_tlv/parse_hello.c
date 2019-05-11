@@ -22,12 +22,9 @@ void parse_hello(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port) {
 			(*nei)->last_hello = now;
 		}
 		else {
-			if (lst_findp(g_env->li_potential_neighbours, (t_bool(*)(void *, void *))pot_nei_is, &ip_port) == NULL)
+			if (lst_findp(g_env->li_potential_neighbours, (t_bool(*)(void *, void *))pot_nei_is,
+					&ip_port) == NULL && source_id != g_env->id)
 				lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip_port));
-			if (lst_size(g_env->li_neighbours) < NB_NEI_MAX) {
-				buffer = buffer_search(g_env->li_buffer_tlv_ip, ip_port);
-				tlvb_add_hello_long(buffer->tlv_builder, g_env->id, source_id);
-			}
 		}
 	}
 	else if (len == 16) {

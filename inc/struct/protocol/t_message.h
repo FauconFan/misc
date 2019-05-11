@@ -10,11 +10,12 @@
 #include "irc_udp.h"
 
 typedef struct      s_message{
-	uint64_t  sender_id;
-	uint32_t  nonce;
-	uint8_t   type;
-	uint8_t   length;
-	uint8_t * text;
+	uint64_t       sender_id;
+	uint32_t       nonce;
+	uint8_t        type;
+	uint8_t        length;
+	uint8_t *      text;
+	struct timeval check_timeout;
 }                   t_message;
 
 t_message * message_alloc(uint64_t id, uint32_t nonce, uint8_t type, uint8_t length, uint8_t * text);

@@ -17,6 +17,8 @@ t_message * message_alloc(uint64_t id, uint32_t nonce, uint8_t type, uint8_t len
 	message->length    = length;
 	memcpy(message->text, text, length);
 	message->text[length] = 0;
+	gettimeofday(&message->check_timeout, NULL);
+	message->check_timeout.tv_sec += TIMEOUT_CHECK_MSG;
 	return (message);
 }
 
@@ -26,8 +28,9 @@ void                    message_free(t_message * message) {
 }
 
 void                    message_print(t_message * message, int fd) {
-	dprintf(fd, "message { sender_id : %016lx, nonce : %x, type : %d, length : %d, msg : ", message->sender_id,
-	  message->nonce, message->type, message->length);
+	dprintf(fd, "message { sender_id : %016lx, nonce : %08x, timeout : ", message->sender_id, message->nonce);
+	timeval_print(message->check_timeout, fd);
+	dprintf(fd, ", type : %d, length : %d, msg : ", message->type, message->length);
 	if (message->type != 0)
 		dprintf(fd, "No printable message");
 	else

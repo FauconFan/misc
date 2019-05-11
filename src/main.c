@@ -22,13 +22,12 @@ static int setup_pseudo() {
 }
 
 static void start(void) {
-	struct sockaddr * in;
-	socklen_t lsock;
+	struct sockaddr_in6 sock_juliusz;
 	t_ip_port ip_port_juliusz;
 
 	// Setting up env with juliusz by default
-	get_sockaddr_juliusz(&in, &lsock);
-	ip_port_assign_sockaddr6(&ip_port_juliusz, *(struct sockaddr_in6 *) in);
+	get_sockaddr_juliusz(&sock_juliusz);
+	ip_port_assign_sockaddr6(&ip_port_juliusz, sock_juliusz);
 	lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip_port_juliusz));
 
 	// Run

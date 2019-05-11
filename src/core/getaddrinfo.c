@@ -1,16 +1,14 @@
 #include "irc_udp.h"
 
 t_bool      get_sockaddr_juliusz(
-  struct sockaddr ** sock_addr,
-  socklen_t *        sock_len) {
-	return (get_sockaddr(JCH_NODE, JCH_SERVICE, sock_addr, sock_len));
+  struct sockaddr_in6 * sock_addr) {
+	return (get_sockaddr(JCH_NODE, JCH_SERVICE, sock_addr));
 }
 
 t_bool      get_sockaddr(
-  const char *       node,
-  const char *       service,
-  struct sockaddr ** sock_addr,
-  socklen_t *        sock_len) {
+  const char *          node,
+  const char *          service,
+  struct sockaddr_in6 * sock_addr) {
 	struct addrinfo hints;
 	struct addrinfo * res;
 	struct addrinfo * p;
@@ -44,8 +42,7 @@ t_bool      get_sockaddr(
 		freeaddrinfo(res);
 		return (FALSE);
 	}
-	*sock_addr = p->ai_addr;
-	*sock_len  = p->ai_addrlen;
+	memcpy(sock_addr, p->ai_addr, sizeof(*sock_addr));
 	freeaddrinfo(res);
 	return (TRUE);
 } /* get_sockaddr */

@@ -29,28 +29,30 @@
 #include "utils.h"
 #include  "struct/env_utils.h"
 
-#define	JCH_NODE             "jch.irif.fr"
-#define	JCH_SERVICE          "1212"
+#define	JCH_NODE              "jch.irif.fr"
+#define	JCH_SERVICE           "1212"
 
-#define	ENV_FAMILY           AF_INET6
-#define	ENV_SOCKTYPE         SOCK_DGRAM
-#define	ENV_PROTOCOL         0
-#define	ENV_FLAGS            (AI_V4MAPPED | AI_ALL)
+#define	ENV_FAMILY            AF_INET6
+#define	ENV_SOCKTYPE          SOCK_DGRAM
+#define	ENV_PROTOCOL          0
+#define	ENV_FLAGS             (AI_V4MAPPED | AI_ALL)
 
-#define	MY_PORT              4242
-#define	GMTU                 1024
-#define	NB_NEI_MAX           8
-#define	TIMEOUT_POT_NEI      30
-#define	TIMEOUT_NEI_TIME     30
-#define	PERCENT_SEND_NEI     0.15 // 15%
+#define	MY_PORT               4242
+#define	GMTU                  1024
+#define	NB_NEI_MAX            8
+#define	TIMEOUT_POT_NEI       30
+#define	TIMEOUT_NEI_TIME      30
+#define	TIMEOUT_CHECK_MSG     120
+#define	TIMEOUT_POT_NEI_RETRY 5
+#define	PERCENT_SEND_NEI      0.30 // 30%
 
-#define	SIZE_PSEUDO          20
-#define	WITH_NCURSES_DEFAULT TRUE
-#define	WITH_LOG_DEFAULT     FALSE
+#define	SIZE_PSEUDO           20
+#define	WITH_NCURSES_DEFAULT  TRUE
+#define	WITH_LOG_DEFAULT      FALSE
 
-#define	NO_HELLO             "No hello received for too long"
-#define	NO_ACK               "No ack in time"
-#define	GOOD_BYE             "Au revoir"
+#define	NO_HELLO              "No hello received for too long"
+#define	NO_ACK                "No ack in time"
+#define	GOOD_BYE              "Au revoir"
 
 t_bool    parse_args(int argc, char ** argv, t_bool * with_ncurses, t_bool * with_log);
 

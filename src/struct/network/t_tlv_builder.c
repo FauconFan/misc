@@ -83,9 +83,9 @@ t_bool      tlvb_finish(t_tlv_builder * tlv, uint32_t mtu) {
 			index_actu++;
 			size_actu = 0;
 		}
-		size_actu += tlv->builder->msg_iov[i].iov_len + size_actu;
+		size_actu += tlv->builder->msg_iov[i].iov_len;
 	}
-	tlvb_finish_single(tlv->splitted[tlv->num_splitted - 1], tlv->builder, first_index, tlv->builder->len_used);
+	tlvb_finish_single(tlv->splitted[index_actu], tlv->builder, first_index, tlv->builder->len_used);
 
 	tlv->finished = TRUE;
 	return (TRUE);

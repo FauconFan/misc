@@ -1,15 +1,12 @@
 #ifndef CORE_H
 #define	CORE_H
 
-t_bool      get_sockaddr_juliusz(
-  struct sockaddr ** sock_addr,
-  socklen_t *        sock_len);
+t_bool      get_sockaddr_juliusz(struct sockaddr_in6 * sock_addr);
 
 t_bool      get_sockaddr(
-  const char *       node,
-  const char *       service,
-  struct sockaddr ** sock_addr,
-  socklen_t *        sock_len);
+  const char *          node,
+  const char *          service,
+  struct sockaddr_in6 * sock_addr);
 
 void    core_loop();
 
