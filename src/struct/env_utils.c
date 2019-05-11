@@ -2,7 +2,7 @@
 
 
 t_bool          already_received_msg(t_message * msg, t_id_nonce * id_nonce) {
-	return is_message(msg, id_nonce->sender_id, id_nonce->nonce);
+	return (is_message(msg, id_nonce->sender_id, id_nonce->nonce));
 }
 
 t_bool           search_ack(t_acquit * ack, t_id_nonce * id_nonce) {

@@ -7,7 +7,7 @@ t_potential_neighbour * pot_nei_alloc(t_ip_port ip_port) {
 	if (pot_nei == NULL)
 		return (NULL);
 
-	ip_port_assign(&pot_nei->ip_port, &ip_port);
+	ip_port_assign(&pot_nei->ip_port, ip_port);
 	pot_nei->last_send.tv_sec  = 0;
 	pot_nei->last_send.tv_usec = 0;
 	pot_nei->no_response       = 0;
@@ -27,7 +27,7 @@ void                        pot_nei_print(t_potential_neighbour * pot_nei, int f
 	dprintf(fd, "}");
 }
 
-t_bool                      is_pot_nei_old(t_potential_neighbour * pot_nei) {
+t_bool                      pot_nei_is_old(t_potential_neighbour * pot_nei) {
 	if (pot_nei == NULL)
 		return (FALSE);
 
@@ -35,7 +35,7 @@ t_bool                      is_pot_nei_old(t_potential_neighbour * pot_nei) {
 }
 
 t_bool                      pot_nei_is(t_potential_neighbour * pot_nei, t_ip_port * ip_port) {
-	return (ip_port_is_eq(&(pot_nei->ip_port), ip_port));
+	return (ip_port_is_eq((pot_nei->ip_port), *ip_port));
 }
 
 static t_bool               is_available(t_potential_neighbour * pot_nei) {

@@ -38,7 +38,7 @@ void            nei_print(t_neighbour * nei, int fd) {
 }
 
 static t_bool   ip_port_is_eq_nei(t_neighbour * nei, t_ip_port * ip_port) {
-	return (ip_port_is_eq(&(nei->ip_port), ip_port));
+	return (ip_port_is_eq((nei->ip_port), *ip_port));
 }
 
 t_neighbour * nei_search_neighbour(t_list * li_neighbours, t_ip_port ip_port) {

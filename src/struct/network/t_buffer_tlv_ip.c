@@ -6,7 +6,7 @@ t_buffer_tlv_ip * tlvip_alloc(t_ip_port ip_port) {
 	if (buffer == NULL)
 		return (NULL);
 
-	ip_port_assign(&buffer->ip_port, &ip_port);
+	ip_port_assign(&buffer->ip_port, ip_port);
 	buffer->tlv_builder = tlvb_alloc();
 	if (buffer->tlv_builder == NULL) {
 		free(buffer);
@@ -29,7 +29,7 @@ void                tlvip_print(t_buffer_tlv_ip * buffer, int fd) {
 }
 
 static t_bool       tlv_is_ip(t_buffer_tlv_ip * buffer, t_ip_port * ip_port) {
-	return (ip_port_is_eq(&buffer->ip_port, ip_port));
+	return (ip_port_is_eq(buffer->ip_port, *ip_port));
 }
 
 // regarder si ça existe deja
