@@ -30,4 +30,15 @@ void    parse_ack(uint8_t * tlv, t_neighbour * nei);
 void    parse_goaway(uint8_t * tlv, t_neighbour * nei);
 void    parse_warning(uint8_t * tlv, t_neighbour * nei);
 
+// process_steps
+
+void     ps1_delete_old_pot_neighbours(void);
+void     ps2_connect_new_neighbour(void);
+void     ps3_go_away_old_neighbours(void);
+void     ps4_send_long_hello(void);
+void     ps5_go_away_ack_missing(void);
+void     ps6_resend_messages_non_acquitted(void);
+void     ps7_send_random_neighbour_tlv(void);
+void     ps8_delete_messages_if_too_late(void);
+
 #endif // ifndef CORE_H

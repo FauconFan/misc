@@ -92,7 +92,7 @@ typedef struct  s_rec_metadata{
 static void sendall_msg(t_neighbour * nei, t_rec_metadata * rec_mdt) {
 	t_buffer_tlv_ip * buffer;
 
-	buffer = buffer_search(g_env->li_buffer_tlv_ip, nei->ip_port);
+	buffer = tlvip_search(g_env->li_buffer_tlv_ip, nei->ip_port);
 	tlvb_add_data(buffer->tlv_builder, g_env->id, rec_mdt->nonce, 0, (uint8_t *) rec_mdt->message,
 	  strlen(rec_mdt->message));
 	lst_add(g_env->li_acquit, acquit_alloc(nei->id, g_env->id, rec_mdt->nonce));

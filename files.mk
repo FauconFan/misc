@@ -1,13 +1,14 @@
 
-SRC_FOLDER                  = src/
-SRC_UTILS_FOLDER            = src/utils/
-SRC_STRUCT_FOLDER           = src/struct/
-SRC_STRUCT_DATA_FOLDER      = src/struct/data/
-SRC_STRUCT_NETWORK_FOLDER   = src/struct/network/
-SRC_STRUCT_PROTOCOL_FOLDER  = src/struct/protocol/
-SRC_UI_FOLDER               = src/ui/
-SRC_CORE_FOLDER             = src/core/
-SRC_CORE_PARSER_FOLDER      = src/core/parse_tlv/
+SRC_FOLDER                      = src/
+SRC_UTILS_FOLDER                = src/utils/
+SRC_STRUCT_FOLDER               = src/struct/
+SRC_STRUCT_DATA_FOLDER          = src/struct/data/
+SRC_STRUCT_NETWORK_FOLDER       = src/struct/network/
+SRC_STRUCT_PROTOCOL_FOLDER      = src/struct/protocol/
+SRC_UI_FOLDER                   = src/ui/
+SRC_CORE_FOLDER                 = src/core/
+SRC_CORE_PARSER_FOLDER          = src/core/parse_tlv/
+SRC_CORE_PROCESS_STEPS_FOLDER   = src/core/process_step/
 
 SRC = \
 		$(SRC_FOLDER)main.c \
@@ -27,6 +28,14 @@ SRC = \
 		$(SRC_CORE_PARSER_FOLDER)parse_ack.c \
 		$(SRC_CORE_PARSER_FOLDER)parse_go_away.c \
 		$(SRC_CORE_PARSER_FOLDER)parse_warning.c \
+		$(SRC_CORE_PROCESS_STEPS_FOLDER)ps1_delete_old_pot_neighbours.c \
+		$(SRC_CORE_PROCESS_STEPS_FOLDER)ps2_connect_new_neighbour.c \
+		$(SRC_CORE_PROCESS_STEPS_FOLDER)ps3_go_away_old_neighbours.c \
+		$(SRC_CORE_PROCESS_STEPS_FOLDER)ps4_send_long_hello.c \
+		$(SRC_CORE_PROCESS_STEPS_FOLDER)ps5_go_away_ack_missing.c \
+		$(SRC_CORE_PROCESS_STEPS_FOLDER)ps6_resend_messages_non_acquitted.c \
+		$(SRC_CORE_PROCESS_STEPS_FOLDER)ps7_send_random_neighbour_tlv.c \
+		$(SRC_CORE_PROCESS_STEPS_FOLDER)ps8_delete_messages_if_too_late.c \
 		$(SRC_UTILS_FOLDER)my_getrandom.c \
 		$(SRC_UTILS_FOLDER)my_time.c \
 		$(SRC_UTILS_FOLDER)my_str.c \

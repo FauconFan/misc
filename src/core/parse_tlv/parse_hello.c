@@ -39,7 +39,7 @@ void parse_hello(uint8_t * tlv, t_neighbour ** nei, t_ip_port ip_port) {
 			*nei = nei2;
 
 			// Resend hello long first time
-			buffer = buffer_search(g_env->li_buffer_tlv_ip, nei2->ip_port);
+			buffer = tlvip_search(g_env->li_buffer_tlv_ip, nei2->ip_port);
 			tlvb_add_hello_long(buffer->tlv_builder, g_env->id, source_id);
 		}
 	}

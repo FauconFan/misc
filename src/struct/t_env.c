@@ -20,7 +20,7 @@ t_env * env_alloc(void) {
 	  (res->li_potential_neighbours = lst_alloc(FREE_PTR(pot_nei_free), PRINT_PTR(pot_nei_print))) == NULL ||
 	  (res->li_messages = lst_alloc(FREE_PTR(message_free), PRINT_PTR(message_print))) == NULL ||
 	  (res->li_acquit = lst_alloc(FREE_PTR(acquit_free), PRINT_PTR(acquit_print))) == NULL ||
-	  (res->li_buffer_tlv_ip = lst_alloc(FREE_PTR(buffer_free), PRINT_PTR(buffer_print))) == NULL)
+	  (res->li_buffer_tlv_ip = lst_alloc(FREE_PTR(tlvip_free), PRINT_PTR(tlvip_print))) == NULL)
 	{
 		if (res->li_neighbours)
 			lst_free(res->li_neighbours);
@@ -41,7 +41,7 @@ t_env * env_alloc(void) {
 } /* env_alloc */
 
 void                env_free(t_env * env) {
-	// go_away();
+	go_away();
 	close(env->socket);
 	lst_free(env->li_neighbours);
 	lst_free(env->li_potential_neighbours);

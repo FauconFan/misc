@@ -14,7 +14,7 @@ static void     go_away_for_all(t_neighbour * nei) {
 	t_buffer_tlv_ip * buffer;
 
 	ip_port_assign_brut(&ip_port, nei->ip_port.ip, nei->ip_port.port);
-	buffer = buffer_search(g_env->li_buffer_tlv_ip, ip_port);
+	buffer = tlvip_search(g_env->li_buffer_tlv_ip, ip_port);
 	tlvb_add_goaway(buffer->tlv_builder, 1, (uint8_t *) GOOD_BYE, sizeof(GOOD_BYE) - 1);
 }
 

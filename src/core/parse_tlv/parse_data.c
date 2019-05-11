@@ -51,7 +51,7 @@ void    parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
 		id_nonce.dest_id   = mdt.from_id;
 
 		// on envoie un ack à la personne qui vient de nous envoyer un message
-		buffer = buffer_search(g_env->li_buffer_tlv_ip, ip_port);
+		buffer = tlvip_search(g_env->li_buffer_tlv_ip, ip_port);
 		tlvb_add_ack(buffer->tlv_builder, mdt.sender_id, mdt.nonce);
 
 		dprintf(ui_getfd_log(), "DATA ");
