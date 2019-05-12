@@ -38,6 +38,12 @@ static void ui_main_loop_with_ncurses(t_ui * ui) {
 }
 
 static void ui_main_loop_no_ncurses(t_ui * ui, int fd_stdin_custom_get, int fd_stdin_custom_stop) {
+	ui_check_stop(ui);
+	if (ui->has_received_stop) {
+		ui_getstdin_stop(fd_stdin_custom_stop);
+		return ;
+	}
+
 	ui_getstdin_continue(fd_stdin_custom_stop);
 	while (1) {
 		int actu;

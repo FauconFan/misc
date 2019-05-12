@@ -41,10 +41,12 @@ static void     ui_callback_buffer_logs(t_ui * ui, char * line) {
 static void ui_update_buffer(int fd, char ** ptrbuff) {
 	char buff[1025];
 	char * tmp;
+	int	ret;
 
 	while (1) {
 		memset(buff, 0, 1025);
-		if (read(fd, buff, 1024) < 0)
+		ret = read(fd, buff, 1024);
+		if (ret <= 0)
 			break;
 		tmp = strjoin(*ptrbuff, buff);
 		free(*ptrbuff);
