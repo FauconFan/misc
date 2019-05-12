@@ -8,6 +8,8 @@ typedef enum    e_bool{
 	TRUE  = 1,
 }               t_bool;
 
+#define	STR_OF_BOOL(a) ((a) ? "TRUE" : "FALSE")
+
 // Project defines
 
 #define	MAGIC_NUMBER 93

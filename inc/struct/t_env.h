@@ -7,7 +7,9 @@
 typedef struct      s_env{
 	uint64_t       id;
 	int            sock;
+	int            sock_multicast;
 	struct timeval now;
+	t_bool         need_neighbours;
 	t_list *       li_neighbours;
 	t_list *       li_potential_neighbours;
 	t_list *       li_messages;
@@ -15,7 +17,7 @@ typedef struct      s_env{
 	t_list *       li_buffer_tlv_ip;
 }                   t_env;
 
-t_env * env_alloc(void);
+t_env * env_alloc(int port);
 void                env_free(t_env * env);
 void                env_print(t_env * env, int fd);
 

@@ -25,13 +25,13 @@ static void ui_main_loop_with_ncurses(t_ui * ui) {
 		int actu;
 
 		ui_check_message(ui);
-		ui_check_stop(ui);
 		ui_ncurses_print(ui);
 		refresh();
 		actu = getch();
 		if (actu != ERR) {
 			handle_new_charac(ui, actu);
 		}
+		ui_check_stop(ui);
 	}
 
 	endwin();
@@ -58,7 +58,6 @@ static void ui_main_loop_no_ncurses(t_ui * ui, int fd_stdin_custom_get, int fd_s
 			ui_getstdin_continue(fd_stdin_custom_stop);
 		}
 	}
-	sleep(1);
 }
 
 void        ui_main(t_bool with_ncurses, t_bool with_logs, int fd_screen, int fd_log, int fd_callback, int fd_stop) {

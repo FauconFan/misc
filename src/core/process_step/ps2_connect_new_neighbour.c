@@ -5,7 +5,7 @@ void     ps2_connect_new_neighbour() {
 	t_buffer_tlv_ip * buffer;
 
 	dprintf(ui_getfd_log(), "Step 2 - Connect new Neighbour\n");
-	if (lst_size(g_env->li_neighbours) < NB_NEI_MAX) {
+	if (g_env->need_neighbours) {
 		pot_nei = pot_nei_get_available(g_env->li_potential_neighbours);
 		if (pot_nei != NULL) {
 			dprintf(ui_getfd_log(), "Try adding new neighbour : ");

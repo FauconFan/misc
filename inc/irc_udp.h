@@ -14,12 +14,15 @@
 #include <netdb.h>
 #include <ctype.h>
 #include <math.h>
+#include <ifaddrs.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <sys/time.h>
 #include <sys/select.h>
+#include <sys/ioctl.h>
+#include <net/if.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
@@ -27,17 +30,21 @@
 #include "core.h"
 #include "ui.h"
 #include "utils.h"
-#include  "struct/env_utils.h"
+#include "struct/env_utils.h"
 
 #define	JCH_NODE              "jch.irif.fr"
 #define	JCH_SERVICE           "1212"
+
+#define	MULTICAST_ADDR        "ff12:b456:dad4:cee1:4589:71de:a2ec:0e66"
+#define	MULTICAST_PORT        1212
 
 #define	ENV_FAMILY            AF_INET6
 #define	ENV_SOCKTYPE          SOCK_DGRAM
 #define	ENV_PROTOCOL          0
 #define	ENV_FLAGS             (AI_V4MAPPED | AI_ALL)
 
-#define	MY_PORT               4242
+#define	DEFAULT_PORT          4242
+#define	NO_PORT               -1
 #define	GMTU                  1024
 #define	NB_NEI_MAX            8
 #define	TIMEOUT_POT_NEI       30
@@ -49,12 +56,11 @@
 #define	SIZE_PSEUDO           20
 #define	WITH_NCURSES_DEFAULT  TRUE
 #define	WITH_LOG_DEFAULT      FALSE
+#define	WITH_JULIUSZ_INIT     TRUE
 
 #define	NO_HELLO              "No hello received for too long"
 #define	NO_ACK                "No ack in time"
 #define	GOOD_BYE              "Au revoir"
-
-t_bool    parse_args(int argc, char ** argv, t_bool * with_ncurses, t_bool * with_log);
 
 extern t_env * g_env;
 extern char g_pseudo[SIZE_PSEUDO + 1];

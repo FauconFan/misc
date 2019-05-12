@@ -10,12 +10,18 @@ t_bool      get_sockaddr(
 
 void    core_loop();
 
-int     build_socket(void);
+int     build_socket(int port);
+int     build_socket_multicast(void);
+t_bool build_sockaddr_multicast(struct sockaddr_in6 * sin6);
 
+void      send_multicast(void);
 
 t_bool  select_treat_input(void);
 void    update_buffer(void);
 void    clear_buffer(void);
+
+t_bool  parse_args(int argc, char ** argv, t_bool * with_ncurses, t_bool * with_log, t_bool * with_juliusz_init,
+  int * port);
 
 // parse_tlv
 

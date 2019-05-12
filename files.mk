@@ -19,6 +19,7 @@ SRC = \
 		$(SRC_CORE_FOLDER)select_treat_input.c \
 		$(SRC_CORE_FOLDER)update_buffer.c \
 		$(SRC_CORE_FOLDER)clear_buffer.c \
+		$(SRC_CORE_FOLDER)send_multicast.c \
 		$(SRC_CORE_PARSER_FOLDER)parse_tlv_core.c \
 		$(SRC_CORE_PARSER_FOLDER)parse_pad1.c \
 		$(SRC_CORE_PARSER_FOLDER)parse_padN.c \

@@ -51,18 +51,18 @@ static void handle_pktinfo(struct msghdr * msg) {
 	}
 }
 
-static void receive_in_message() {
+static void receive_in_message(void) {
 	struct sockaddr_in6 sin6;
 	struct msghdr msg;
 	struct iovec iov[1];
+	t_ip_port ip_port;
+	uint8_t buff_res[BUFF_SIZE];
+	int N;
 
 	union {
 		struct cmsghdr hdr;
 		unsigned char  cmsgbuf[CMSG_SPACE(sizeof(struct in6_pktinfo))];
 	} u;
-	t_ip_port ip_port;
-	uint8_t buff_res[BUFF_SIZE];
-	int N;
 
 	memset(buff_res, 0, BUFF_SIZE);
 	memset(&msg, 0, sizeof(msg));
@@ -86,6 +86,27 @@ static void receive_in_message() {
 	ip_port_assign_sockaddr6(&ip_port, sin6);
 	parse_datagram(buff_res, N, nei_search_neighbour(g_env->li_neighbours, ip_port), ip_port);
 } /* receive_in_message */
+
+static void     receive_multicast_message(void) {
+	struct sockaddr_in6 sin6;
+	socklen_t sinlen;
+	uint8_t buff_res[BUFF_SIZE];
+	int N;
+	t_ip_port ip_port;
+
+	memset(buff_res, 0, BUFF_SIZE);
+	sinlen = sizeof(sin6);
+	N      = recvfrom(g_env->sock_multicast, buff_res, BUFF_SIZE, 0, &sin6, &sinlen);
+
+	if (N < 0) {
+		dprintf(ui_getfd_log(), "recvmsg failed : %s\n", strerror(errno));
+		return;
+	}
+
+	display_in_message(&sin6, buff_res, N);
+	ip_port_assign_sockaddr6(&ip_port, sin6);
+	parse_datagram(buff_res, N, nei_search_neighbour(g_env->li_neighbours, ip_port), ip_port);
+}
 
 typedef struct  s_rec_metadata{
 	uint32_t nonce;
@@ -127,7 +148,7 @@ static void receive_user_message(t_bool * running) {
 	}
 }
 
-t_bool   select_treat_input() {
+t_bool   select_treat_input(void) {
 	fd_set readfds;
 	int max_fd;
 	int rc_select;
@@ -137,8 +158,11 @@ t_bool   select_treat_input() {
 	running = TRUE;
 	FD_ZERO(&readfds);
 	FD_SET(g_env->sock, &readfds);
+	FD_SET(g_env->sock_multicast, &readfds);
 	FD_SET(ui_getfd_callback(), &readfds);
 	max_fd = g_env->sock;
+	if (g_env->sock_multicast > max_fd)
+		max_fd = g_env->sock_multicast;
 	if (ui_getfd_callback() > max_fd)
 		max_fd = ui_getfd_callback();
 
@@ -161,6 +185,8 @@ t_bool   select_treat_input() {
 	// on a reçu un message
 	if (FD_ISSET(g_env->sock, &readfds))
 		receive_in_message();
+	if (FD_ISSET(g_env->sock_multicast, &readfds))
+		receive_multicast_message();
 	if (FD_ISSET(ui_getfd_callback(), &readfds))
 		receive_user_message(&running);
 	return (running);

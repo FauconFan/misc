@@ -1,6 +1,6 @@
 #include "irc_udp.h"
 
-t_env * env_alloc(void) {
+t_env * env_alloc(int port) {
 	t_env * res;
 
 	if ((res = (t_env *) malloc(sizeof(t_env))) == NULL)
@@ -11,8 +11,14 @@ t_env * env_alloc(void) {
 		free(res);
 		return (NULL);
 	}
-	res->sock = build_socket();
+	res->sock = build_socket(port);
 	if (res->sock < 0) {
+		free(res);
+		return (NULL);
+	}
+	res->sock_multicast = build_socket_multicast();
+	if (res->sock_multicast < 0) {
+		close(res->sock);
 		free(res);
 		return (NULL);
 	}
@@ -33,16 +39,19 @@ t_env * env_alloc(void) {
 		if (res->li_buffer_tlv_ip)
 			lst_free(res->li_buffer_tlv_ip);
 		close(res->sock);
+		close(res->sock_multicast);
 		free(res);
 		return (NULL);
 	}
 	res->id = gen_id();
+	res->need_neighbours = TRUE;
 	return (res);
 } /* env_alloc */
 
 void                env_free(t_env * env) {
 	go_away();
 	close(env->sock);
+	close(env->sock_multicast);
 	lst_free(env->li_neighbours);
 	lst_free(env->li_potential_neighbours);
 	lst_free(env->li_messages);
@@ -55,6 +64,7 @@ void                env_print(t_env * env, int fd) {
 	dprintf(fd, "env {\n");
 	dprintf(fd, "\tid : %016lx\n", env->id);
 	dprintf(fd, "\tsock : %d\n", env->sock);
+	dprintf(fd, "\tneed_neighbours : %s\n", STR_OF_BOOL(env->need_neighbours));
 	dprintf(fd, "\tli_neighbours : ");
 	lst_print(env->li_neighbours, fd);
 	dprintf(fd, "\tli_potential_neighbours : ");
@@ -82,16 +92,14 @@ void      env_min_time(t_env * env, struct timeval * res) {
 	struct timeval min_hello;
 	struct timeval min_acquit;
 	struct timeval min;
-	struct timeval current_time;
 
 	ok[0] = nei_get_min_time(env->li_neighbours, &min_hello);
 	ok[1] = acquit_get_min_time(env->li_acquit, &min_acquit);
-	gettimeofday(&current_time, NULL);
 
 	if (ok[0] == FALSE && ok[1] == FALSE) {
-		timeval_assign(res, current_time);
 		res->tv_sec  = 5;
 		res->tv_usec = 0; // On attend 5 sec si on a rien à attendre
+		return;
 	}
 	else if (ok[0] == FALSE) {
 		min = min_acquit;
@@ -102,5 +110,5 @@ void      env_min_time(t_env * env, struct timeval * res) {
 	else {
 		min = *timeval_min(&min_hello, &min_acquit);
 	}
-	return (timeval_diff(res, current_time, min));
+	return (timeval_diff(res, g_env->now, min));
 }
