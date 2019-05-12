@@ -37,7 +37,10 @@ _CYAN=$(shell tput setaf 6 2> /dev/null || echo "")
 _WHITE=$(shell tput setaf 7 2> /dev/null || echo "")
 _END=$(shell tput sgr0 2> /dev/null || echo "")
 
+MAKEFLAGS += --no-print-directory
+
 CC = gcc
+RUN_SH = ./run.sh
 
 SRC_FOLDER = src/
 
@@ -90,6 +93,7 @@ fclean: clean
 	@echo "Library $(NAME) removed"
 	@rm -rf $(NAME_LN)
 	@echo "Symbolic link $(NAME_LN) removed"
+	@make -C test fclean
 
 .PHONY: re
 re: fclean all
@@ -99,3 +103,11 @@ re: fclean all
 .PHONY: test
 test: $(NAME_LN)
 	make -C test run
+
+SINGLE = test/files/ns02_single
+SINGLE_DOWN = files/ns02_single
+
+.PHONY: single
+single:
+	make -C test $(SINGLE_DOWN)
+	$(RUN_SH) $(SINGLE)

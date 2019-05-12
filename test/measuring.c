@@ -27,11 +27,10 @@ void    end_test() {
     eff_minflt = rusage.ru_minflt - ru_minflt;
     eff_majflt = rusage.ru_majflt - ru_majflt;
 
-    write(1, "\t\tpage reclaims : ", 18);
+    write(1, "\t\tpage reclaims / faults : ", 29);
     s = itoa_buff(eff_minflt, buff);
     write(1, buff, s);
-    write(1, "\n", 1);
-    write(1, "\t\tpage faults : ", 16);
+    write(1, " / ", 3);
     s = itoa_buff(eff_majflt, buff);
     write(1, buff, s);
     write(1, "\n", 1);

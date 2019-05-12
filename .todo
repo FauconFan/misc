@@ -11,7 +11,7 @@ Mandatory part:
         ☐ Parcours (existing)
         ☐ Ajout
         ☐ Suppresion (juste rendre libre)
-    ☐ Faire une abstraction pour allouer des pages, multiples de getpagesize...
+    ✔ Faire une abstraction pour allouer des pages, multiples de getpagesize... @done(19-05-12 18:18)
     ☐ Mise en place de la structure principale
         ☐ getpagesize
         ☐ vérification defines

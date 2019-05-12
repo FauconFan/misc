@@ -9,6 +9,7 @@ _WHITE=$(shell tput setaf 7 2> /dev/null || echo "")
 _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 CC = gcc
+RUN_SH = ./run.sh
 
 SRC_FOLDER = src/
 
@@ -74,11 +75,11 @@ run: all
 		printf "\tNormal\\n"; \
 		./$(prog); \
 		printf "\tFt_malloc\\n"; \
-		(cd ..; ./run.sh ./test/$(prog)); \
+		(cd ..; $(RUN_SH) ./test/$(prog)); \
 	)
 	@$(foreach prog, $(PROGS_WS), \
 		printf "\t===== %s =====\\n" "$(prog)"; \
 		printf "\tFt_malloc\\n"; \
-		(cd ..; ./run.sh ./test/$(prog)); \
+		(cd ..; $(RUN_SH) ./test/$(prog)); \
 	)
 

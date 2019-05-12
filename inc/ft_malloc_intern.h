@@ -12,27 +12,29 @@
 #define PAGE_BUFFER 10
 
 typedef struct  s_mlc_block {
-    size_t      len;
+    size_t      len_block;
     uint8_t     is_free;
 }               t_mlc_block;
 
 // mlc_ph stands for malloc_page_header.
 typedef struct  s_mlc_ph {
-    size_t              tot;
+    size_t              len_page;
     struct s_mlc_ph     * next_page;
 }               t_mlc_ph;
 
 typedef struct  s_mlc_main {
-    int         pgsize;
+    int         len_main;
     t_mlc_ph    * tn_header;
     t_mlc_ph    * sm_header;
     t_mlc_ph    * lrg_header;
     t_mlc_ph    * buffer[PAGE_BUFFER];
 }               t_mlc_main;
 
+extern t_mlc_main   * g_mlc_main;
+
 // Utils
 
 // mmap_utils.c
-void *mmap_brut(size_t size); // todelete, create instead a helper function that constructs pages with size multiple of getpagesize
+void    * mmap_good_size(size_t * size);
 
 #endif
