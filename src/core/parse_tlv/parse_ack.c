@@ -1,11 +1,10 @@
 #include "irc_udp.h"
 
-
 void parse_ack(uint8_t * tlv, t_neighbour * nei) {
 	uint8_t len;
 	uint64_t sender_id;
 	uint32_t nonce;
-	t_id_nonce id_nonce;
+	t_id_nonce_acq id_nonce;
 
 	len = tlv[1];
 	if (nei == NULL) {
@@ -23,6 +22,6 @@ void parse_ack(uint8_t * tlv, t_neighbour * nei) {
 		id_nonce.sender_id = sender_id;
 		id_nonce.nonce     = nonce;
 		id_nonce.dest_id   = nei->id;
-		lst_remove_ifp(g_env->li_acquit, (t_bool(*)(void *, void *))search_ack, &id_nonce);
+		env_remove_acquit_by_id_nonce(id_nonce);
 	}
 }

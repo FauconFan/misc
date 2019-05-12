@@ -22,6 +22,6 @@ void         ps3_go_away_old_neighbours() {
 
 		buffer = tlvip_search(g_env->li_buffer_tlv_ip, nei->ip_port);
 		tlvb_add_goaway(buffer->tlv_builder, 2, (uint8_t *) NO_HELLO, sizeof(NO_HELLO));
-		erase_nei(nei);
+		env_erase_nei(nei);
 	}
 }

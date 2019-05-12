@@ -1,6 +1,5 @@
 #include "irc_udp.h"
 
-
 t_message * message_alloc(uint64_t id, uint32_t nonce, uint8_t type, uint8_t length, uint8_t * text) {
 	t_message * message = malloc(sizeof(t_message));
 

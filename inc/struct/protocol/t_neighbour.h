@@ -16,11 +16,7 @@ void            nei_free(t_neighbour * nei);
 
 void            nei_print(t_neighbour * nei, int fd);
 
-t_neighbour * nei_search_neighbour(t_list * li_neighbours, t_ip_port ip_port);
-
 // prédicat d'égalité
 t_bool          nei_is_id(t_neighbour * nei, uint64_t id);
-
-t_bool          nei_get_min_time(t_list * li_neighbours, struct timeval * tv);
 
 #endif // ifndef T_NEIGHBOUR_H

@@ -24,7 +24,4 @@ t_bool                      pot_nei_is_old(t_potential_neighbour * pot_nei);
 
 t_bool                      pot_nei_is(t_potential_neighbour * pot_nei, t_ip_port * ip_port);
 
-t_potential_neighbour * pot_nei_get_available(t_list * li_potential_neighbours);
-
-
 #endif // ifndef T_POTENTIAL_NEIGHBOUR_H

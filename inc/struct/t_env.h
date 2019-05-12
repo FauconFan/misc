@@ -23,6 +23,4 @@ void                env_print(t_env * env, int fd);
 
 void                env_update_time(t_env * env);
 
-void      env_min_time(t_env * env, struct timeval * res);
-
 #endif // ifndef T_ENV_H

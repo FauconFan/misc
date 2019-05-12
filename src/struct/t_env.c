@@ -49,7 +49,7 @@ t_env * env_alloc(int port) {
 } /* env_alloc */
 
 void                env_free(t_env * env) {
-	go_away();
+	env_go_away_all();
 	close(env->sock);
 	close(env->sock_multicast);
 	lst_free(env->li_neighbours);
@@ -85,30 +85,4 @@ void                env_update_time(t_env * env) {
 	if (gettimeofday(&env->now, NULL) == -1) {
 		dprintf(ui_getfd_log(), "Fail update env time : %s\n", strerror(errno));
 	}
-}
-
-void      env_min_time(t_env * env, struct timeval * res) {
-	t_bool ok[2];
-	struct timeval min_hello;
-	struct timeval min_acquit;
-	struct timeval min;
-
-	ok[0] = nei_get_min_time(env->li_neighbours, &min_hello);
-	ok[1] = acquit_get_min_time(env->li_acquit, &min_acquit);
-
-	if (ok[0] == FALSE && ok[1] == FALSE) {
-		res->tv_sec  = 5;
-		res->tv_usec = 0; // On attend 5 sec si on a rien à attendre
-		return;
-	}
-	else if (ok[0] == FALSE) {
-		min = min_acquit;
-	}
-	else if (ok[1] == FALSE) {
-		min = min_hello;
-	}
-	else {
-		min = *timeval_min(&min_hello, &min_acquit);
-	}
-	return (timeval_diff(res, g_env->now, min));
 }

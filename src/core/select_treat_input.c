@@ -84,7 +84,7 @@ static void receive_in_message(void) {
 	handle_pktinfo(&msg);
 	display_in_message(&sin6, buff_res, N);
 	ip_port_assign_sockaddr6(&ip_port, sin6);
-	parse_datagram(buff_res, N, nei_search_neighbour(g_env->li_neighbours, ip_port), ip_port);
+	parse_datagram(buff_res, N, env_search_nei(ip_port), ip_port);
 } /* receive_in_message */
 
 static void     receive_multicast_message(void) {
@@ -105,7 +105,7 @@ static void     receive_multicast_message(void) {
 
 	display_in_message(&sin6, buff_res, N);
 	ip_port_assign_sockaddr6(&ip_port, sin6);
-	parse_datagram(buff_res, N, nei_search_neighbour(g_env->li_neighbours, ip_port), ip_port);
+	parse_datagram(buff_res, N, env_search_nei(ip_port), ip_port);
 }
 
 typedef struct  s_rec_metadata{
@@ -167,7 +167,7 @@ t_bool   select_treat_input(void) {
 		max_fd = ui_getfd_callback();
 
 	// Calculer le minimum time to wait pour tv
-	env_min_time(g_env, &tv);
+	env_build_min_time(&tv);
 
 	dprintf(ui_getfd_log(), "waiting for at least : ");
 	timeval_print(tv, ui_getfd_log());

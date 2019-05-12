@@ -26,7 +26,7 @@ void parse_neighbour(uint8_t * tlv, t_neighbour * nei) {
 		t_ip_port ip_port2;
 		ip_port_assign_brut(&ip_port2, ip, port);
 		if (lst_findp(g_env->li_potential_neighbours, (t_bool(*)(void *, void *))pot_nei_is, &ip_port2) == NULL &&
-		  nei_search_neighbour(g_env->li_neighbours, ip_port2) == NULL)
+		  env_search_nei(ip_port2) == NULL)
 			lst_add(g_env->li_potential_neighbours, pot_nei_alloc(ip_port2));
 	}
 }

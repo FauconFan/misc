@@ -1,6 +1,5 @@
 #include "irc_udp.h"
 
-
 t_potential_neighbour * pot_nei_alloc(t_ip_port ip_port) {
 	t_potential_neighbour * pot_nei = malloc(sizeof(t_potential_neighbour));
 
@@ -36,15 +35,4 @@ t_bool                      pot_nei_is_old(t_potential_neighbour * pot_nei) {
 
 t_bool                      pot_nei_is(t_potential_neighbour * pot_nei, t_ip_port * ip_port) {
 	return (ip_port_is_eq((pot_nei->ip_port), *ip_port));
-}
-
-static t_bool               is_available(t_potential_neighbour * pot_nei) {
-	struct timeval diff;
-
-	timeval_diff(&diff, pot_nei->last_send, g_env->now);
-	return (diff.tv_sec > TIMEOUT_POT_NEI);
-}
-
-t_potential_neighbour * pot_nei_get_available(t_list * li_potential_neighbours) {
-	return (lst_find(li_potential_neighbours, (t_bool(*)(void *))is_available));
 }

@@ -19,8 +19,6 @@ void            ps7_send_random_neighbour_tlv(void) {
 	dprintf(ui_getfd_log(), "Sending neighbours\n");
 	nei[0] = lst_get(g_env->li_neighbours, pos[0]);
 	nei[1] = lst_get(g_env->li_neighbours, pos[1]);
-	dprintf(ui_getfd_log(), "nei0 : %p, nei1 : %p\n", nei[0], nei[1]);
 	buffer = tlvip_search(g_env->li_buffer_tlv_ip, nei[0]->ip_port);
-	dprintf(ui_getfd_log(), "buffer : %p\n", buffer);
 	tlvb_add_neighbour(buffer->tlv_builder, nei[1]->ip_port);
 }

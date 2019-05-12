@@ -1,6 +1,5 @@
 #include "irc_udp.h"
 
-
 typedef struct  s_meta_data{
 	uint64_t  from_id;
 	uint64_t  sender_id;
@@ -11,15 +10,13 @@ typedef struct  s_meta_data{
 }               t_meta_data;
 
 static void forall_nei(t_neighbour * nei, t_meta_data * metadata) {
-	uint64_t dest_id;
-	uint64_t sender_id;
-	uint32_t nonce;
+	t_id_nonce_acq id_nonce_acq;
 
-	dest_id   = nei->id;
-	sender_id = metadata->sender_id;
-	nonce     = metadata->nonce;
-	if (nei->id != metadata->from_id && list_has_acquit(g_env->li_acquit, dest_id, sender_id, nonce) == FALSE) {
-		lst_add(g_env->li_acquit, acquit_alloc(dest_id, sender_id, nonce));
+	id_nonce_acq.dest_id   = nei->id;
+	id_nonce_acq.sender_id = metadata->sender_id;
+	id_nonce_acq.nonce     = metadata->nonce;
+	if (nei->id != metadata->from_id && env_has_acquit_by_id_nonce(id_nonce_acq) == FALSE) {
+		lst_add(g_env->li_acquit, acquit_alloc(id_nonce_acq.dest_id, id_nonce_acq.sender_id, id_nonce_acq.nonce));
 	}
 }
 
@@ -27,7 +24,8 @@ void    parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
 	uint16_t len;
 	t_buffer_tlv_ip * buffer;
 	t_meta_data mdt;
-	t_id_nonce id_nonce;
+	t_id_nonce_acq id_nonce_acq;
+	t_id_nonce_msg id_nonce_msg;
 
 	len = tlv[1];
 	if (nei == NULL) {
@@ -46,9 +44,11 @@ void    parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
 		mdt.msg_len   = len - 13;
 		mdt.msg       = tlv + 15;
 
-		id_nonce.sender_id = mdt.sender_id;
-		id_nonce.nonce     = mdt.nonce;
-		id_nonce.dest_id   = mdt.from_id;
+		id_nonce_acq.sender_id = mdt.sender_id;
+		id_nonce_acq.nonce     = mdt.nonce;
+		id_nonce_acq.dest_id   = mdt.from_id;
+		id_nonce_msg.sender_id = mdt.sender_id;
+		id_nonce_msg.nonce     = mdt.nonce;
 
 		// on envoie un ack à la personne qui vient de nous envoyer un message
 		buffer = tlvip_search(g_env->li_buffer_tlv_ip, ip_port);
@@ -64,14 +64,14 @@ void    parse_data(uint8_t * tlv, t_neighbour * nei, t_ip_port ip_port) {
 			dprintf(ui_getfd_log(), "\"%.*s\"\n", mdt.msg_len, mdt.msg);
 		}
 
-		if (lst_findp(g_env->li_messages, (t_bool(*)(void *, void *))already_received_msg, &id_nonce) == NULL) {
+		if (env_has_already_received_msg(id_nonce_msg) == FALSE) {
 			lst_iterp(g_env->li_neighbours, (void(*)(void *, void *))forall_nei, &mdt);
 			lst_add(g_env->li_messages, message_alloc(mdt.sender_id, mdt.nonce, mdt.type, mdt.msg_len, mdt.msg));
 			if (mdt.type == 0)
 				dprintf(ui_getfd_screen(), "%.*s\n", mdt.msg_len, mdt.msg);
 		}
 		else {
-			lst_remove_ifp(g_env->li_acquit, (t_bool(*)(void *, void *))search_ack, &id_nonce);
+			env_remove_acquit_by_id_nonce(id_nonce_acq);
 			dprintf(ui_getfd_log(), "This message has been already received\n");
 		}
 	}

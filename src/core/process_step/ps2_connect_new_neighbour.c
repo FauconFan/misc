@@ -6,7 +6,7 @@ void     ps2_connect_new_neighbour() {
 
 	dprintf(ui_getfd_log(), "Step 2 - Connect new Neighbour\n");
 	if (g_env->need_neighbours) {
-		pot_nei = pot_nei_get_available(g_env->li_potential_neighbours);
+		pot_nei = env_get_pot_nei_available();
 		if (pot_nei != NULL) {
 			dprintf(ui_getfd_log(), "Try adding new neighbour : ");
 			ip_port_print(pot_nei->ip_port, ui_getfd_log());

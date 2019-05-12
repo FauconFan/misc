@@ -9,6 +9,7 @@ SRC_UI_FOLDER                   = src/ui/
 SRC_CORE_FOLDER                 = src/core/
 SRC_CORE_PARSER_FOLDER          = src/core/parse_tlv/
 SRC_CORE_PROCESS_STEPS_FOLDER   = src/core/process_step/
+SRC_CORE_ENV_MANIP_FOLDER       = src/core/env_manip/
 
 SRC = \
 		$(SRC_FOLDER)main.c \
@@ -20,6 +21,15 @@ SRC = \
 		$(SRC_CORE_FOLDER)update_buffer.c \
 		$(SRC_CORE_FOLDER)clear_buffer.c \
 		$(SRC_CORE_FOLDER)send_multicast.c \
+		$(SRC_CORE_ENV_MANIP_FOLDER)env_build_min_time.c \
+		$(SRC_CORE_ENV_MANIP_FOLDER)env_has_already_received_msg.c \
+		$(SRC_CORE_ENV_MANIP_FOLDER)env_remove_acquit_by_id_nonce.c \
+		$(SRC_CORE_ENV_MANIP_FOLDER)env_has_acquit_by_id_nonce.c \
+		$(SRC_CORE_ENV_MANIP_FOLDER)env_go_away_all.c \
+		$(SRC_CORE_ENV_MANIP_FOLDER)env_erase_nei.c \
+		$(SRC_CORE_ENV_MANIP_FOLDER)env_search_nei.c \
+		$(SRC_CORE_ENV_MANIP_FOLDER)env_search_nei_by_acq.c \
+		$(SRC_CORE_ENV_MANIP_FOLDER)env_get_pot_nei_available.c \
 		$(SRC_CORE_PARSER_FOLDER)parse_tlv_core.c \
 		$(SRC_CORE_PARSER_FOLDER)parse_pad1.c \
 		$(SRC_CORE_PARSER_FOLDER)parse_padN.c \
@@ -58,7 +68,6 @@ SRC = \
 		$(SRC_STRUCT_PROTOCOL_FOLDER)t_potential_neighbour.c \
 		$(SRC_STRUCT_PROTOCOL_FOLDER)t_message.c \
 		$(SRC_STRUCT_PROTOCOL_FOLDER)t_acquit.c \
-		$(SRC_STRUCT_FOLDER)env_utils.c \
 		$(SRC_STRUCT_FOLDER)t_env.c \
 
 INC = $(shell find $(INC_FOLDER) -name "*.h")
