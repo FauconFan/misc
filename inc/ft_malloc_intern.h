@@ -6,7 +6,8 @@
 #include <stdint.h>
 #include <string.h> // memcpy, memset
 
-void    end_test();
+#define TRUE                1
+#define FALSE               0
 
 #define TINY_MAX            64
 #define SMALL_MAX           3072
@@ -40,6 +41,8 @@ extern t_mlc_main   * g_mlc_main;
 t_mlc_main  * mlc_main_get(void);
 
 t_mlc_ph    *mlc_ph_new(size_t size);
+
+void        mlc_block_init(void * v, size_t remain_tot);
 
 // Utils
 

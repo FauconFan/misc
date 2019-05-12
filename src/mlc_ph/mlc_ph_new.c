@@ -8,5 +8,6 @@ t_mlc_ph    *mlc_ph_new(size_t size) {
         return (NULL);
     res->len_page = size - sizeof(t_mlc_ph);
     res->next_page = NULL;
+    mlc_block_init(res + 1, res->len_page);
     return (res);
 }

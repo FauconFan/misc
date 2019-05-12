@@ -57,6 +57,7 @@ SRC_FILES = \
 			api/show_alloc_mem.c \
 			mlc_main/mlc_main_get.c \
 			mlc_ph/mlc_ph_new.c \
+			mlc_block/mlc_block_init.c \
 			utils/mmap_utils.c \
 			utils/print_utils.c \
 
