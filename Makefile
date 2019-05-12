@@ -50,12 +50,15 @@ LFLAGS =
 FLAGS = $(CFLAGS) $(IFLAGS)
 
 SRC_FILES = \
-			malloc.c \
-			free.c \
-			realloc.c \
-			calloc.c \
-			show_alloc_mem.c \
+			api/malloc.c \
+			api/free.c \
+			api/realloc.c \
+			api/calloc.c \
+			api/show_alloc_mem.c \
+			mlc_main/mlc_main_get.c \
+			mlc_ph/mlc_ph_new.c \
 			utils/mmap_utils.c \
+			utils/print_utils.c \
 
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_FILES))
 
