@@ -45,7 +45,9 @@ static void handle_pktinfo(struct msghdr * msg) {
 
 		dprintf(ui_getfd_log(), "my theoric ip interface : ");
 		for (size_t i = 0; i < 16; ++i) {
-			dprintf(ui_getfd_log(), "%d ", my_ip[i]);
+			if (i != 0)
+				dprintf(ui_getfd_log(), " ");
+			dprintf(ui_getfd_log(), "%02x", my_ip[i]);
 		}
 		dprintf(ui_getfd_log(), "\n");
 	}

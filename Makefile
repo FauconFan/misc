@@ -38,8 +38,8 @@ CC = gcc
 
 INC_FOLDER = inc/
 
-# CFLAGS = -g -Wall -Wextra -Werror
-CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
+# CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
 IFLAGS = -I $(INC_FOLDER)
 LFLAGS = -lncurses -lm
 FLAGS = $(CFLAGS) $(IFLAGS)
