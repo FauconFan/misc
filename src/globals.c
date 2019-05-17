@@ -28,6 +28,10 @@ const t_cmd_config g_command_list[] = {
 	{"color_white_black",    cimp_color_white_black,    0,                    ARG_RECT | ARG_FOCUS | ARG_NUM},
 	{"ajust_light_contrast", cimp_ajust_light_contrast, ARG_NUM,              ARG_RECT | ARG_FOCUS          },
 	{"focus",                cimp_focus,                0,                    ARG_FOCUS                     },
+	{"scale_rect",           cimp_scale_rect,           ARG_PT,               ARG_FOCUS                     },
+	{"scale_ratio",          cimp_scale_ratio,          ARG_NUM,              ARG_FOCUS                     },
+	{"crop_reduce",          cimp_crop_reduce,          0,                    ARG_FOCUS | ARG_RECT          },
+	{"crop_extend",          cimp_crop_extend,          ARG_RECT,             ARG_FOCUS | ARG_COLOR         },
 	{"QUIT",                 NULL,                      0,                    0                             }, // QUIT must have NULL as func_ptr
 };
 
@@ -56,4 +60,12 @@ const size_t g_assoc_type_img_func_size = SIZE_TAB(g_assoc_type_img_func_list);
 int g_fd_readline = -1;
 int g_fd_callback = -1;
 
+#ifndef _VIEWING_ENABLED
+
 int g_viewing_enabled = 1;
+
+#else /* ifndef _VIEWING_ENABLED */
+
+int g_viewing_enabled = 0;
+
+#endif /* ifndef _VIEWING_ENABLED */

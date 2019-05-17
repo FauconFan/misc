@@ -9,11 +9,11 @@
  *  - ouvrir le fichier est construire un SDL_Surface.
  *  - créer la SDL_Window associé
  *  - construire enfin la structure et tout stocker
- * @param  path_img  le chemin de l'image (relative, absolu avec ~/ en préfixe)
- * @param  errno_str un pointeur vers une chaîne de charactères
- * @return           un pointeur vers la structure allouée
+ * @param  path_img   le chemin de l'image (relative, absolu avec ~/ en préfixe)
+ * @param  must_abort un pointeur vers un booléen qui permet de nous dire si une commande
+ * @return            un pointeur vers la structure allouée
  */
-t_cimp_screen * cimp_screen_init(char * path_img) {
+t_cimp_screen * cimp_screen_init(char * path_img, t_bool * must_abort) {
 	t_cimp_screen * sc;
 	SDL_Window * win;
 	SDL_Surface * surf;
@@ -21,11 +21,12 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 	SDL_Rect origin;
 	char * path;
 
-	sc   = NULL;
-	win  = NULL;
-	surf = NULL;
-	tmp  = NULL;
-	path = NULL;
+	sc          = NULL;
+	win         = NULL;
+	surf        = NULL;
+	tmp         = NULL;
+	path        = NULL;
+	*must_abort = FALSE;
 
 	if ((path = normalize_path(path_img)) == NULL) {
 		printf("%s\n", NOT_A_PATH);
@@ -34,6 +35,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 		printf("%s\n", IMG_GetError());
 	}
 	else if ((surf = SDL_CreateRGBSurface(0, tmp->w, tmp->h, 32, 0, 0, 0, 0)) == NULL) {
+		*must_abort = TRUE;
 		printf("%s\n", SDL_GetError());
 	}
 	else if (g_viewing_enabled && (win = SDL_CreateWindow(basename(path),
@@ -43,6 +45,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 			tmp->h,
 			SDL_WINDOW_SHOWN)) == NULL)
 	{
+		*must_abort = TRUE;
 		printf("%s\n", SDL_GetError());
 	}
 	else if ((sc = (t_cimp_screen *) malloc(sizeof(t_cimp_screen))) == NULL) {
@@ -93,11 +96,11 @@ void                cimp_screen_end(t_cimp_screen * sc) {
  * @param  screen the cimp screen pointer
  * @return        nothing
  */
-void                cimp_screen_update(t_cimp_screen * screen) {
+void                cimp_screen_update(t_cimp_screen * screen, int num) {
 	SDL_Rect full_rect;
 	int w_buff;
 	int h_buff;
-	char * name_actu;
+	char * name_actu, * path, * focus;
 
 	if (screen == NULL)
 		return;
@@ -109,10 +112,15 @@ void                cimp_screen_update(t_cimp_screen * screen) {
 	}
 
 	// Update window title
-	name_actu = basename(screen->path);
+	path      = basename(screen->path);
+	focus     = itoa(num + 1);
+	focus     = strjoin(" n°", focus);
+	name_actu = strjoin(path, focus);
 	if (strcmp(name_actu, SDL_GetWindowTitle(screen->window)) != 0) {
 		SDL_SetWindowTitle(screen->window, name_actu);
 	}
+	free(name_actu);
+	free(focus);
 
 	// Update content of the window
 	full_rect.x = 0;
@@ -121,7 +129,7 @@ void                cimp_screen_update(t_cimp_screen * screen) {
 	full_rect.h = screen->buff_screen->h;
 	SDL_BlitSurface(screen->buff_screen, &full_rect, SDL_GetWindowSurface(screen->window), NULL);
 	SDL_UpdateWindowSurface(screen->window);
-}
+} /* cimp_screen_update */
 
 t_bool              cimp_screen_set_path(t_cimp_screen * screen, char * path) {
 	char * p;

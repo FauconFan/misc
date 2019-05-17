@@ -47,10 +47,11 @@ LIBS_DEP = \
 RD_LIBS = -lreadline
 M_LIB = -lm
 
-CFLAGS = -g -Wall -Wextra -Werror -std=c11
+CFLAGS = -Wall -Wextra -Werror -std=c11
 IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(shell $(PKG) $(LIBS_DEP) --cflags)
+DFLAGS =
 LFLAGS = $(shell $(PKG) $(LIBS_DEP) --libs) $(RD_LIBS) $(M_LIB)
-FLAGS = $(CFLAGS) $(IFLAGS)
+FLAGS = $(CFLAGS) $(DFLAGS) $(IFLAGS)
 
 ALL_FILES = $(SRC) $(INC)
 
@@ -181,20 +182,24 @@ lint_check: uncrustify_check cpplint_run cppcheck_run clang_tidy_run infer_run
 
 ###################################### CHECK ###################################
 
+BLACK_BOX_DIR = tests/black_box
 CIMP_CHECK = cimp_check
 GCOV_LIBS = -lcheck -lm -lpthread -lrt -lsubunit -lgcov -coverage
 
 $(CIMP_CHECK): venv images recompile_with_profile_args $(OBJ_TEST) $(OBJ_LEX_PAR)
 	@$(CC) $(OBJ_NO_MAIN) $(OBJ_TEST) $(OBJ_LEX_PAR) $(GCOV_LIBS) $(LFLAGS) -o $@
 	./$@
-	make LFLAGS="$(GCOV_LIBS) $(LFLAGS)"
+	make LFLAGS="$(GCOV_LIBS) $(LFLAGS)" DFLAGS="-D_VIEWING_ENABLED"
+	make -C $(BLACK_BOX_DIR)
 	make gcovr
 
 .PHONY: recompile_with_profile_args
 recompile_with_profile_args: fclean
-	make CFLAGS="$(CFLAGS) -fprofile-arcs -ftest-coverage" $(OBJ)
+	make CFLAGS="$(CFLAGS) -fprofile-arcs -ftest-coverage" DFLAGS="-D_VIEWING_ENABLED" $(OBJ)
 
+.PHONY: gcovr
 gcovr:
+	rm -rf gcovr
 	mkdir -p gcovr
 	$(GCOVR) -r . --html --html-details -o gcovr/index.html
 

@@ -262,6 +262,21 @@ START_TEST(test_cut_copy_paste) {
 	  (char *[]) {"fill 0x000000 (42 14 8 22)"}, 1);
 } END_TEST;
 
+START_TEST(test_scale) {
+	test_same_treatment((char *[]) {"scale_rect (100 100)"}, 1,
+	  (char * []) {"scale_ratio 2"}, 1);
+	test_same_treatment((char *[]) {"scale_rect (500 500)"}, 1,
+	  (char * []) {"scale_ratio 10"}, 1);
+
+	test_idempotent((char * []) {"scale_rect (100 100)", "scale_rect (50 50)"}, 2);
+	test_idempotent((char * []) {"scale_ratio 2", "scale_rect (50 50)"}, 2);
+} END_TEST;
+
+START_TEST(test_crop_reduce) {
+	test_same_treatment((char *[]) {"crop_reduce (10 10 10 10)"}, 1,
+	  (char * []) {"select (10 10 10 10)", "crop_reduce"}, 2);
+} END_TEST;
+
 TCase * modif_test() {
 	TCase * tc_modif = tcase_create("Modif images");
 
@@ -274,5 +289,7 @@ TCase * modif_test() {
 	tcase_add_test(tc_modif, test_white_black);
 	tcase_add_test(tc_modif, test_ajust_light_contrast);
 	tcase_add_test(tc_modif, test_cut_copy_paste);
+	tcase_add_test(tc_modif, test_scale);
+	tcase_add_test(tc_modif, test_crop_reduce);
 	return tc_modif;
 }

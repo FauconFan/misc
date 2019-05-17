@@ -1,14 +1,18 @@
 #include "libtest.h"
 
 START_TEST(test_close) {
-	g_cimp->screen[0] = cimp_screen_init("images/untitled17.bmp");
+	t_bool must_abort;
+
+	g_cimp->screen[0] = cimp_screen_init("images/untitled17.bmp", &must_abort);
 	g_cimp->focus     = 0;
-	ck_assert(g_cimp->screen[0]);
+	ck_assert(g_cimp->screen[0] && must_abort == FALSE);
 	treat_line("close");
 	ck_assert(g_cimp->screen[0] == NULL);
-	g_cimp->screen[0] = cimp_screen_init("images/untitled17.bmp");
-	g_cimp->screen[1] = cimp_screen_init("images/untitled5.bmp");
-	g_cimp->focus     = 1;
+	g_cimp->screen[0] = cimp_screen_init("images/untitled17.bmp", &must_abort);
+	ck_assert(must_abort == FALSE);
+	g_cimp->screen[1] = cimp_screen_init("images/untitled5.bmp", &must_abort);
+	ck_assert(must_abort == FALSE);
+	g_cimp->focus = 1;
 	ck_assert(g_cimp->screen[0]);
 	ck_assert(g_cimp->screen[1]);
 	treat_line("close [1]");

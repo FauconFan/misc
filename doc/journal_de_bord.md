@@ -1,5 +1,22 @@
 # Journal de Bord
 
+## 17 Mai 2019
+
+Finalisation du projet
+
+- Diagramme d'architecture
+
+## Semaine 29 Avril - 16 Mai 2019
+
+Pause Préparation Examen + Examen
+
+## Semaine 22 - 28 Avril 2019
+
+- Commencement de la phase 4 lilas
+- Scale + Crop
+- Tests Scale + Crop
+- Bugs
+
 ## Semaine 15 - 21 Avril 2019
 
 - Bug fixing

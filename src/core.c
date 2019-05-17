@@ -57,10 +57,10 @@ void core() {
 		handle_line();
 		for (int i = 0; i < NB_SCREENS; i++) {
 			if (g_cimp->screen[i])
-				cimp_screen_update(g_cimp->screen[i]);
+				cimp_screen_update(g_cimp->screen[i], i);
 		}
 		// Update events (if any)
 		update_event(g_cimp->event);
-		usleep(30); // 30 ms arbitrary
+		usleep(TIMEOUT_USLEEP * 1000);
 	}
 }
