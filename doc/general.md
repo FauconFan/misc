@@ -1,6 +1,6 @@
 # Doc
 
-Ce document présente la documentation finale de ce projet. C'est un idéal. Au fur et à mesure du développement nous compléterons ce document en le perfectionnant.
+Ce document présente la documentation finale de ce projet. Au fur et à mesure du développement nous compléterons ce document en le perfectionnant.
 
 Ce document ne traite que de la partie obligatoire de ce projet.  
 
@@ -9,25 +9,30 @@ Ce document ne traite que de la partie obligatoire de ce projet.
 ```
 #define NB_SCREENS	4
 
-typedef struct      s_cimp_select
-{
-	SDL_Rect        surface;
-	int             id_screen;
-}                   t_cimp_select;
+typedef struct s_cimp_select {
+	int      id;
+	SDL_Rect surface;
+} t_cimp_select;
 
-typedef struct      s_cimp_screen
-{
-	SDL_Window      *window;
-	SDL_Surface     *buff_screen;
-	char            *original_name;
-}                   t_cimp_screen;
+typedef struct      s_cimp_event {
+	SDL_Rect selection;
+	int8_t   button_pressed;
+} t_cimp_event;
 
-typedef struct      s_cimp
-{
-	t_cimp_screen   screens[NB_SCREENS];
-	t_cimp_select   *select;
-	SDL_Surface     *copy_buffer;
-}                   t_cimp;
+typedef struct          s_cimp_screen {
+	SDL_Window *  window;
+	SDL_Surface * buff_screen;
+	char *        path;
+}                       t_cimp_screen;
+
+typedef struct          s_cimp {
+	t_cimp_screen * screen[NB_SCREENS];
+	int             running;
+	int             focus;
+	t_cimp_select * select;
+	t_cimp_event *  event;
+	SDL_Surface *   copy_buffer;
+}                       t_cimp;
 ```
 
 NB_SCREENS correspond à la valeur maximale d' écrans qu'il est permis d'ouvrir simultanément.
@@ -35,6 +40,8 @@ NB_SCREENS correspond à la valeur maximale d' écrans qu'il est permis d'ouvrir
 Chaque image est représentée par un identifiant (son index dans le tableau).
 
 La structure t_cimp_select stocke la zone sélectionnée ainsi que l'identifiant de l'écran.
+
+La structure t_cimp_event permet a l'utilisateur de selectionner une zone avec sa souris.
 
 La structure t_cimp_screen stocke toutes les informations nécessaires pour manipuler l'image. window est la structure renvoyée par SDL_CreateWindow, et buff_screen est une copie de ce qui est affiché à l'écran.
 
@@ -57,7 +64,7 @@ Pour simplifier la lecture, nous utiliseront les raccourcis suivants :
 RECT désigne 4 arguments.  
 COLOR permet d'écrire une couleur sous la forme décimale ou héxadécimale. (e.g: 255 0 0 ou FF00000)
 NAME permet de savoir de qu'elle image on parle.  
-Si il y a plus d'une image, l'argument NAME est obligatoire.  
+Si il y a plus d'une image, l'argument NAME est obligatoire, s'il n'est pas indiqué par l'utilisateur, il est initialise avec la valeur de l'id de la fenetre courante.
 Si la commande est open, l'argument NAME est obligatoire et ne peut pas être un ID.  
 En particulier si il n'y a qu'une seule image, NAME est un argument optionnelle.
 
@@ -89,19 +96,20 @@ cimp>> help
  - ajust_light_contrast [NAME] [? [RECT]] [? [CONTRAST_LEVEL]]
 ```
 
-Pour les commandes après la commande list, l'action ne s'applique que sur [NAME] (dans le cas où il y a plusieurs images).
+Les commandes, mis à part list et help, agissent seulement sur l'image sur [NAME] (dans le cas où il y a plusieurs images).
 
 ### open
 
-open permet d'ouvrir une nouvelle image si le nombre total de fenêtre déjà ouverte n'est pas atteint.
+open permet d'ouvrir une nouvelle image si le nombre total de fenêtres déjà ouvertes n'est pas atteint.
 
 ### close
 
-close permet de fermer une image SANS SAUVEGARDER. Le nom est le nom original de la photo, et l'id est récupéré depuis la commande list.
+close permet de fermer une image SANS SAUVEGARDER.
+on peut egalement effectuer cette action en cliquant sur le bouton pour fermer la fenetre.
 
 ### list
 
-list permet de lister (lol) les différentes images ouvertes. list affichera un ensemble d'information cohérentes sous forme d'un tableau.
+list permet de lister les différentes images ouvertes. list affichera un ensemble d'information cohérentes sous forme d'un tableau.
 
 Exemple:
 ```
@@ -113,7 +121,7 @@ fleur.img		1		640x480		/home/.../cimp/tests/fleur.img
 
 ### save
 
-save permet de sauvegarder l'image NAME|ID dans le chemin PATH, si le chemin PATH n'est pas spécifié, on sauvegarde l'image avec le chemin initial (utilisé pour charger l'image).
+save permet de sauvegarder l'image ID dans le chemin PATH, si le chemin PATH n'est pas spécifié, on sauvegarde l'image avec le chemin initial (utilisé pour charger l'image).
 
 ### update
 
@@ -121,7 +129,8 @@ update permet de recharger une image depuis le chemin donné. Si le chemin donn�
 
 ### select
 
-select définit la zone sélectionnée (un rectangle) par le point de coordonnée (X0, Y0) qui désigne le point le plus en bas à gauche de l'image, puis le rectangle est de taille W * H. Si le name (ou l'identifiant) n'est pas spécifié et qu'il y a plus qu'une image, produit une erreur.
+select sauvegarde la zone sélectionnée par l'utilisateur ou determinée par le rectangle passé en argument. Le point de coordonnée (X0, Y0) désigne le point le plus en haut à gauche de l'image, et le rectangle est de taille W * H.
+
 
 ### unselect
 
@@ -129,7 +138,7 @@ unselect efface les coordonnées de la zone en mémoire.
 
 ### cut/copy/paste
 
-cut copie la zone sélectionnée (ou donnée en argument) et la garde en mémoire, et remplace la zone sélectionnée par du blanc.  
+cut copie la zone sélectionnée (ou passée en argument) et la garde en mémoire, et remplace la zone sélectionnée par du noir.  
 copy fait la même chose mais n'efface pas la zone sélectionnée.  
 paste copie la zone en mémoire aux coordonnées spécifiées.
 
@@ -139,7 +148,7 @@ Ces deux commandes appliquent une symétrie verticale ou horizontale sur la zone
 
 ### rotate
 
-rotate est une commande qui prend un angle en argument (multiple de 90) et qui tourne l'image de ANGLE degré dans le sens horaire.
+rotate prend un angle en argument (multiple de 90) et tourne l'image de ANGLE degré dans le sens horaire.
 
 ### crop_reduce/crop_extend
 
@@ -147,7 +156,7 @@ Ces commandes correspondent à la modification de l'espace de travail.
 crop_reduce réduit l'image a l'aide d'un découpage rectangulaire.  
 crop_extend agrandit l'espace de travail (avec des pixels noirs si on ne passe pas de couleur en argument)
 
-### scale_rect/scale_ratio
+### scale_ratio/scale_rect
 
 scale est une commande qui agrandit/réduit l'espace de travail ainsi que la taille de l'image.
 Les arguments sont  soit un facteur multiplicatif pour scale_ratio(e.g: scale x1.2), soit une nouvelle taille pour scale_rect.
@@ -179,8 +188,3 @@ Si le représentant en variation de gris du pixel traité est plus grand (ou ég
 ### ajust_light_contrast
 
 ajust_light_contrast contrôle la luminéosité de la photo. Un contrôle de l'ajustement (coefficient compris entre -255 et 255), permet de contrôler la modification de l'image en fonction.
-
-## To see later
-
- - Gérer les actions partielles
- - Gérer les actions faites sur l'interface graphique
