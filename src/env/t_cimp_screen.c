@@ -9,11 +9,11 @@
  *  - ouvrir le fichier est construire un SDL_Surface.
  *  - créer la SDL_Window associé
  *  - construire enfin la structure et tout stocker
- * @param  path_img  le chemin de l'image (relative, absolu avec ~/ en préfixe)
- * @param  errno_str un pointeur vers une chaîne de charactères
- * @return           un pointeur vers la structure allouée
+ * @param  path_img   le chemin de l'image (relative, absolu avec ~/ en préfixe)
+ * @param  must_abort un pointeur vers un booléen qui permet de nous dire si une commande
+ * @return            un pointeur vers la structure allouée
  */
-t_cimp_screen * cimp_screen_init(char * path_img) {
+t_cimp_screen * cimp_screen_init(char * path_img, t_bool * must_abort) {
 	t_cimp_screen * sc;
 	SDL_Window * win;
 	SDL_Surface * surf;
@@ -21,11 +21,12 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 	SDL_Rect origin;
 	char * path;
 
-	sc   = NULL;
-	win  = NULL;
-	surf = NULL;
-	tmp  = NULL;
-	path = NULL;
+	sc          = NULL;
+	win         = NULL;
+	surf        = NULL;
+	tmp         = NULL;
+	path        = NULL;
+	*must_abort = FALSE;
 
 	if ((path = normalize_path(path_img)) == NULL) {
 		printf("%s\n", NOT_A_PATH);
@@ -34,6 +35,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 		printf("%s\n", IMG_GetError());
 	}
 	else if ((surf = SDL_CreateRGBSurface(0, tmp->w, tmp->h, 32, 0, 0, 0, 0)) == NULL) {
+		*must_abort = TRUE;
 		printf("%s\n", SDL_GetError());
 	}
 	else if (g_viewing_enabled && (win = SDL_CreateWindow(basename(path),
@@ -43,6 +45,7 @@ t_cimp_screen * cimp_screen_init(char * path_img) {
 			tmp->h,
 			SDL_WINDOW_SHOWN)) == NULL)
 	{
+		*must_abort = TRUE;
 		printf("%s\n", SDL_GetError());
 	}
 	else if ((sc = (t_cimp_screen *) malloc(sizeof(t_cimp_screen))) == NULL) {

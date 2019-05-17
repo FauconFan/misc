@@ -17,7 +17,7 @@ t_cmd * parser(char * line) {
 	ok      = FALSE;
 	li_toks = scan_string(line);
 	if (li_toks) {
-		li_token_print(li_toks);
+		// li_token_print(li_toks);
 
 		if (li_token_empty(li_toks) == FALSE && li_toks->ok == TRUE) {
 			res      = cmd_alloc();
