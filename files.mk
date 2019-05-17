@@ -77,6 +77,8 @@ COMMANDS_FILES = \
 			cimp_ajust_light_contrast.c \
 			cimp_focus.c \
 			cimp_scale.c \
+			cimp_crop_reduce.c \
+			cimp_crop_extend.c \
 
 LEX_PAR_FILES = \
 			parser.c \
@@ -99,9 +101,9 @@ SRC = \
 		$(SRC_NO_MAIN) \
 		$(MAIN_FILE) \
 
-################################# TEST SOURCE CODE ############################
+############################ CHECK TEST SOURCE CODE ###########################
 
-TEST_FOLDER			= tests/
+TEST_FOLDER			= tests/check/
 
 TEST_FILES = \
 			util_surface.c \
