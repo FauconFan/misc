@@ -10,8 +10,8 @@ IN_FILES = \
 			06_open_update.in \
 			07_wrong.in \
 			08_open_list.in \
-			08_open_jpg.in \
-			08_open_png.in \
+			09_open_jpg.in \
+			10_open_png.in \
 
 .PHONY: run
 run:
