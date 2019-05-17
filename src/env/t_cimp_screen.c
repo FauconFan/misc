@@ -116,6 +116,7 @@ void                cimp_screen_update(t_cimp_screen * screen, int num) {
 	if (strcmp(name_actu, SDL_GetWindowTitle(screen->window)) != 0) {
 		SDL_SetWindowTitle(screen->window, name_actu);
 	}
+	free(name_actu);
 	free(focus);
 
 	// Update content of the window
