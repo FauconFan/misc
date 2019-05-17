@@ -101,9 +101,9 @@ SRC = \
 		$(SRC_NO_MAIN) \
 		$(MAIN_FILE) \
 
-################################# TEST SOURCE CODE ############################
+############################ CHECK TEST SOURCE CODE ###########################
 
-TEST_FOLDER			= tests/
+TEST_FOLDER			= tests/check/
 
 TEST_FILES = \
 			util_surface.c \
