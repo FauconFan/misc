@@ -19,12 +19,12 @@ Nous avons spécifié dans un fichier doc/general.md, comment notre projet est i
 
 ## Manuel
 
-'make' va compiler notre programme, puis vous pourrez éxécutez le programme en faisant './cimp'.
-'make clean' supprime les fichiers objets.
-'make fclean' supprime les fichiers objets et l'éxécutable.
-'make ffclean' supprime tous les fichiers générés.
-'make re' supprime les fichiers objets et l'éxécutable et recompile.
-'make install' va installer le binaire sur votre ordinateur (dans /usr/local/bin)
-'make uncrustify_check' va vérifier que notre code respect notre norme de code (à l'aide de uncrustify)
-'make lint_check' lance tous nos outils de check pour vérifier que notre code fonctionne.
-'make cimp_check' lance les tests unitaires et les tests en boîtes noires puis va appeler gcovr afin de construire les fichiers html pour le code coverage.
+'make' va compiler notre programme, puis vous pourrez éxécutez le programme en faisant './cimp'.  
+'make clean' supprime les fichiers objets.  
+'make fclean' supprime les fichiers objets et l'éxécutable.  
+'make ffclean' supprime tous les fichiers générés.  
+'make re' supprime les fichiers objets et l'éxécutable et recompile.  
+'make install' va installer le binaire sur votre ordinateur (dans /usr/local/bin)  
+'make uncrustify_check' va vérifier que notre code respect notre norme de code (à l'aide de uncrustify)  
+'make lint_check' lance tous nos outils de check pour vérifier que notre code fonctionne.  
+'make cimp_check' lance les tests unitaires et les tests en boîtes noires puis va appeler gcovr afin de construire les fichiers html pour le code coverage.  
