@@ -60,4 +60,12 @@ const size_t g_assoc_type_img_func_size = SIZE_TAB(g_assoc_type_img_func_list);
 int g_fd_readline = -1;
 int g_fd_callback = -1;
 
+#ifndef _VIEWING_ENABLED
+
 int g_viewing_enabled = 1;
+
+#else /* ifndef _VIEWING_ENABLED */
+
+int g_viewing_enabled = 0;
+
+#endif /* ifndef _VIEWING_ENABLED */
