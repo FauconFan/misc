@@ -20,7 +20,7 @@ t_rc_cmd cimp_crop_extend(t_cmd * cmd) {
 		return (FAIL);
 	}
 	if (rectangle.w - rectangle.x < source->w && rectangle.h - rectangle.y < source->h) {
-		printf("Le rectangle est plus petit que l'image : pour rogner l'image utilisez la fonction crop_reduire\n");
+		printf("Le rectangle est plus petit que l'image : pour rogner l'image utilisez la fonction crop_reduce\n");
 		return (FAIL);
 	}
 
