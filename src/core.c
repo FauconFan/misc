@@ -61,6 +61,6 @@ void core() {
 		}
 		// Update events (if any)
 		update_event(g_cimp->event);
-		usleep(30); // 30 ms arbitrary
+		usleep(TIMEOUT_USLEEP * 1000);
 	}
 }
