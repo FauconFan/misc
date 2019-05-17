@@ -47,7 +47,8 @@
 #include "parser.h"
 #include "utils.h"
 
-#define	CIMP_PROMPT "cimp>> "
+#define	CIMP_PROMPT    "cimp>> "
+#define	TIMEOUT_USLEEP 50
 
 int cimp_exe(t_cmd * cmd);
 int setup_child();
