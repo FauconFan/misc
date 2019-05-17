@@ -62,7 +62,7 @@ int g_fd_callback = -1;
 
 int g_viewing_enabled = 1;
 
-#else  /* ifndef _VIEWING_ENABLED */
+#else /* ifndef _VIEWING_ENABLED */
 
 int g_viewing_enabled = 0;
 
