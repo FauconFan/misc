@@ -10,10 +10,6 @@ Il faut faire les 3 commandes suivantes:
 - crop_extend
 - scale
 
-## Focus improved
-
-Il faut rajouter le fait que l'on puisse changer le focus d'une fenêtre par leur nom en plus de leur ID.
-
 ## Diagramme
 
 Faire le diagramme d'architecture.
