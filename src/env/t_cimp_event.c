@@ -61,8 +61,8 @@ void update_event(t_cimp_event * evnmt) {
 			evnmt->selection.h    = abs(event.button.y - evnmt->selection.y);
 			evnmt->selection.x    = min(evnmt->selection.x, event.button.x);
 			evnmt->selection.y    = min(evnmt->selection.y, event.button.y);
-			if (evnmt->selection.x >= -0 && evnmt->selection.y >= 0 && evnmt->selection.w >= 0 &&
-			  evnmt->selection.h >= 0)
+			if (evnmt->selection.x >= -0 && evnmt->selection.y >= 0 && evnmt->selection.w > 0 &&
+			  evnmt->selection.h > 0)
 			{
 				t_cmd * cmd = cmd_alloc();
 				cmd->rect  = evnmt->selection;
