@@ -77,6 +77,8 @@ COMMANDS_FILES = \
 			cimp_ajust_light_contrast.c \
 			cimp_focus.c \
 			cimp_scale.c \
+			cimp_crop_reduce.c \
+			cimp_crop_extend.c \
 
 LEX_PAR_FILES = \
 			parser.c \
