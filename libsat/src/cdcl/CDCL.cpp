@@ -65,7 +65,7 @@ static std::pair<std::set<int>, unsigned int> get_learn(Fnc & fnc, unsigned int 
 	return std::make_pair(litts_others_level, max_others_level);
 } // get_learn
 
-static bool cdcl_ite(Fnc & fnc) {
+static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 	unsigned int assign_value, decision_level;
 	std::stack<std::pair<unsigned int, std::pair<int, std::set<int> > > > graph;
 
@@ -86,8 +86,10 @@ static bool cdcl_ite(Fnc & fnc) {
 		 * }*/
 
 		if (res.ok == false) {
+			nb_conflict++;
 			if (decision_level == 0)
 				return (false);
+
 
 			std::pair<std::set<int>, unsigned int> learn = get_learn(fnc, decision_level, graph, res.litt_id);
 			decision_level = learn.second;
@@ -121,12 +123,16 @@ static bool cdcl_ite(Fnc & fnc) {
 } // cdcl_ite
 
 std::pair<bool, Distrib> cdcl_solve(Fnc & fnc) {
+	unsigned int nb_conflict = 0;
 	INFO("CDCL algorithm")
 
 	fnc.set_as_ready();
 	INFO(fnc)
 
-	bool res = cdcl_ite(fnc);
+	bool res = cdcl_ite(fnc, nb_conflict);
+
+	std::cout << "Nb conflict : " << nb_conflict << std::endl;
+	INFO("Nb conflict : ", nb_conflict);
 
 	fnc.set_distrib_as_finished();
 	return (std::make_pair(res, fnc.get_distrib()));

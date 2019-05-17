@@ -1,6 +1,6 @@
 #include "libsat.hpp"
 
-static bool dpll_recu(Fnc & fnc) {
+static bool dpll_recu(Fnc & fnc, unsigned int & nb_conflict) {
 	unsigned int assign_value;
 
 	INFO(fnc)
@@ -23,8 +23,10 @@ static bool dpll_recu(Fnc & fnc) {
 
 	INFO(fnc)
 
-	if (dpll_recu(fnc))
+	if (dpll_recu(fnc, nb_conflict))
 		return (true);
+
+	nb_conflict++;
 
 	INFO("step back (", assign_value, ")")
 	INFO("Try false")
@@ -34,22 +36,28 @@ static bool dpll_recu(Fnc & fnc) {
 	fnc.assign(assign_value, false);
 	INFO(fnc)
 
-	if (dpll_recu(fnc))
+	if (dpll_recu(fnc, nb_conflict))
 		return (true);
+
+	nb_conflict++;
 
 	fnc.unassign();
 	return (false);
 } // dpll_recu
 
 std::pair<bool, Distrib> dpll_solve(Fnc & fnc) {
+	unsigned int nb_conflict = 0;
 	INFO("DPLL algorithm")
 
 	fnc.set_as_ready();
 	INFO(fnc)
 
-	bool res = dpll_recu(fnc);
+	bool res = dpll_recu(fnc, nb_conflict);
 
 	INFO("Finale fnc\n", fnc)
+
+	std::cout << "Nb conflict : " << nb_conflict << std::endl;
+	INFO("Nb conflict : ", nb_conflict);
 
 	fnc.set_distrib_as_finished();
 	return (std::make_pair(res, fnc.get_distrib()));
