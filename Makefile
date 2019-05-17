@@ -47,7 +47,7 @@ LIBS_DEP = \
 RD_LIBS = -lreadline
 M_LIB = -lm
 
-CFLAGS = -g -Wall -Wextra -Werror -std=c11
+CFLAGS = -Wall -Wextra -Werror -std=c11
 IFLAGS = -I $(INC_FOLDER) -I $(LEX_PAR_FOLDER) $(shell $(PKG) $(LIBS_DEP) --cflags)
 LFLAGS = $(shell $(PKG) $(LIBS_DEP) --libs) $(RD_LIBS) $(M_LIB)
 FLAGS = $(CFLAGS) $(IFLAGS)
