@@ -3,42 +3,87 @@
 
 #include "libsat.hpp"
 
-class Fnc{
+class Fnc
+{
 	public:
 		Fnc();
-		Fnc(const Fnc &);
-		Fnc &operator=(const Fnc &);
 		explicit Fnc(const std::vector<Clause> &);
 		virtual~Fnc();
+		Fnc(Fnc const &) = default;
+		Fnc &operator=(Fnc const &) = default;
 
-		const std::vector<Clause> & get_implclauses() const;
-		Occ_list                    build_occ_list() const;
+		// Getters
+		const std::vector<Clause> & get_clauses() const;
+		const Distrib & get_distrib() const;
+		const Occ_list & get_occ_list() const;
 
-		bool                        empty() const;
-		bool                        has_empty_clause() const;
-		bool                        is_two_fnc() const;
-		bool                        contains(const Clause &); // delete later subsumption
+		std::optional<unsigned int> get_level_decision_assigned_variable(int) const;
 
-		void                        add_clause(const Clause &);
-		void                        add_fnc(const Fnc &);
+		// Setters
+		void add_clause(const Clause &);
+		void add_falsy_clause(Clause);
+		void add_fnc(const Fnc & fnc);
+		void set_as_ready();
+		void set_distrib_as_finished();
 
-		Occ_list                    eval(unsigned int id, bool value);
-		void                        nettoyage(Occ_list &, Distrib &); // add subsumption
+		// Predicates
+		bool empty() const;
+		bool has_empty_clause() const;
+		bool is_two_fnc() const;
 
-		void                        cut_assign_other_value(unsigned int, Distrib &) const;
-		void                        deduce_unit_propagation(Distrib &) const;
-		bool                        elim_unit_propagation(Distrib &, Occ_list &);
+		// Class response to unit_propagation
+		class UPresponse{
+			public:
+				UPresponse()  = default;
+				~UPresponse() = default;
+				UPresponse(const UPresponse &) = default;
+				UPresponse &operator=(const UPresponse &) = default;
 
-		void                        display(std::ostream &) const;
+				// false if there is an empty clause somewhere
+				bool ok {true};
+				// list of all consequences in unit propagation
+				std::list<std::pair<int, std::set<int> > > li_implies {};
+				// the litt_id that implies the empty clause, 0 otherwise
+				unsigned int litt_id {0};
+		};
+
+		// Other
+		bool assign(unsigned int id, bool value);
+		void unassign();
+		void backjump(unsigned int level);
+		void polarity_check();
+
+		UPresponse unit_propagation();
+
+		void display(std::ostream &) const;
 
 	private:
+		bool ready {false};
+		// List of clauses
 		std::vector<Clause> _clauses {};
+		// List of id of unit clauses
+		std::set<unsigned int> _unit_clauses_id {};
+		// variable distribution
+		Distrib _distrib;
+		// list of occurences (variables)
+		Occ_list _occ_list;
 
-		Occ_list        remove_tautologies();
-		Occ_list        remove_if_contains(int);
-		void            polarity_check(Occ_list &, Distrib &);
+		// List of decisions
+		std::unordered_map<int, unsigned int> _map_litt_level_decision;
+		std::vector<Decision> _decisions {};
+
+		// Simplification
+		void clause_satisfy_if_contains(unsigned int id_litt);
+		void clause_satisfy(unsigned int id_clause);
+		void litt_satisfy(unsigned int id_clause, unsigned int id_litt, bool value);
+
+		// Returns 0 if no conflict, otherwise returns the id of the empty clause
+		unsigned int assign_simplify(unsigned int id_litt, bool value);
+
+		// Decisions utils
+		void add_sub_decision(const SubDecision & sd);
 };
 
 std::ostream    &operator<<(std::ostream &, const Fnc &);
 
-#endif // ifndef Fnc_CLASS_HPP
+#endif // ifndef FNC_CLASS_HPP

@@ -5,14 +5,31 @@
 
 #define	LOG_FOLDER ".logs/"
 
+#ifndef FAST
+
+# define	_PRINT(x) << (x)
+# define	INFO(...) Logger::info() FOR_EACH(_PRINT, __VA_ARGS__, "\n");
+# define	WARN(...) Logger::warn() FOR_EACH(_PRINT, __VA_ARGS__, "\n");
+
+#else // ifndef FAST
+
+# define	INFO(...) ;
+# define	WARN(...) ;
+
+#endif // ifndef FAST
+
 class Logger
 {
 	public:
 		Logger(const Logger &) = delete;
 		Logger &operator=(const Logger &) = delete;
 
+		#ifndef FAST
+
 		static std::ostream &info();
 		static std::ostream &warn();
+
+		#endif // ifndef FAST
 
 		static void disable();
 
@@ -31,6 +48,5 @@ class Logger
 
 		static Logger logger;
 };
-
 
 #endif // ifndef LOGGER_CLASS_HPP

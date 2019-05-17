@@ -30,5 +30,6 @@ void FNC_builder::endOfClause() {
 }
 
 std::vector<Clause> FNC_builder::getClauses() {
+	this->endOfClause();
 	return (this->_clauses);
 }

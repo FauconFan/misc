@@ -20,7 +20,7 @@ namespace ModelBuilder {
 		for (const auto & cl : sub_lists) {
 			fnc.add_clause(Clause(cl));
 		}
-		return fnc;
+		return (fnc);
 	}
 
 	Fnc     most_kb(const std::vector<unsigned int> & tab, unsigned int k, bool b) {

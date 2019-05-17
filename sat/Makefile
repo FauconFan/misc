@@ -24,7 +24,7 @@ CXX = clang++
 CXX_FLAGS = -g -O2 -Wall -Wextra -Werror \
 			-Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align \
 			-Wunused -Woverloaded-virtual -pedantic
-CXX_STD = -std=c++14
+CXX_STD = -std=c++17 #14
 INC_FLAGS = -I ./ $(LIB_INCS) -I $(LEXER_PARSER_FOLDER)
 FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 
@@ -46,39 +46,40 @@ OBJ = \
 .PHONY: all
 all: libsat $(NAME)
 
+.PHONY: fast
+fast: libsat_fast $(NAME)
+
 $(NAME): $(LIBA) $(OBJ)
-	@printf "Program %s... " "$(NAME)"
+	@printf "\\t%sLD%s\\t%s\\n" "$(_PURPLE)" "$(_END)" "$@"
 	@$(CXX) $(FLAGS) $(OBJ) -o $(NAME) $(LIB_FLAGS)
-	@printf "%scompiled%s\\n" "$(_CYAN)" "$(_END)"
 
 .PHONY: libsat
 libsat:
 	@make -C $(LIBSAT_DIR)
 
+.PHONY: libsat_fast
+libsat_fast:
+	@make -C $(LIBSAT_DIR) fast
+
 %.a:
 	@make -C $(dir $@)
 
 %.o: %.cpp
-	@printf "Compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t%s\\n" "$(_GREEN)" "$(_END)" "$?"
 	@$(CXX) $(FLAGS) -c $? -o $@
-	@printf "%scompiled%s\\n" "$(_GREEN)" "$(_END)"
 
 $(LEXER_PARSER_FOLDER)%.lexer.o: $(LEXER_PARSER_FOLDER)%.l
-	@printf "Lexer generating %s... " "$?"
+	@printf "\\t%sFL%s\\t%s\\n" "$(_YELLOW)" "$(_END)" "$?"
 	@flex -o $(@:.o=.cpp) $?
-	@printf "%sgenerated%s\\n" "$(_YELLOW)" "$(_END)"
-	@printf "Lexer compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t%s\\n" "$(_YELLOW)" "$(_END)" "$?"
 	@$(CXX) $(INC_FLAGS) $(CXX_STD) -c $(@:.o=.cpp) -o $@
-	@printf "%scompiled%s\\n" "$(_YELLOW)" "$(_END)"
 	@rm -f $(@:.o=.cpp)
 
 $(LEXER_PARSER_FOLDER)%.parser.o: $(LEXER_PARSER_FOLDER)%.y
-	@printf "Parser generating %s... " "$?"
+	@printf "\\t%sBS%s\\t%s\\n" "$(_YELLOW)" "$(_END)" "$?"
 	@bison -d -o $(@:.o=.cpp) $?
-	@printf "%sgenerated%s\\n" "$(_YELLOW)" "$(_END)"
-	@printf "Parser compiling %s... " "$?"
+	@printf "\\t%sCC%s\\t%s\\n" "$(_YELLOW)" "$(_END)" "$?"
 	@$(CXX) $(INC_FLAGS) $(CXX_STD) -c $(@:.o=.cpp) -o $@
-	@printf "%scompiled%s\\n" "$(_YELLOW)" "$(_END)"
 	@rm -f $(@:.o=.cpp)
 
 .PHONY: clean

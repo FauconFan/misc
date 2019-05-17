@@ -1,9 +1,6 @@
 #include "libsat.hpp"
 
-static bool brutefocing_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
-	Fnc copy_fnc;
-	Occ_list copy_litt_occ;
-	Distrib copy_dist;
+static bool bruteforce_recu(Fnc & fnc) {
 	unsigned int assign_value;
 
 	if (fnc.has_empty_clause())
@@ -12,52 +9,42 @@ static bool brutefocing_recu(Fnc fnc, Occ_list & litt_occ, Distrib & dist) {
 	if (fnc.empty())
 		return (true);
 
-	copy_fnc      = Fnc(fnc);
-	copy_litt_occ = Occ_list(litt_occ);
-	copy_dist     = Distrib(dist);
+	assign_value = fnc.get_occ_list().stat_max_occu();
+	INFO("assign value : ", assign_value)
+	INFO("Try true")
 
-	assign_value = litt_occ.getMaxOccu();
-	Logger::info() << "assign value : " << assign_value << "\n";
-	Logger::info() << "Try true\n";
+	fnc.assign(assign_value, true);
 
-	litt_occ -= fnc.eval(assign_value, true);
-	dist.set(assign_value, true);
+	INFO(fnc)
 
-
-	Logger::info() << fnc;
-	Logger::info() << litt_occ;
-
-	if (brutefocing_recu(fnc, litt_occ, dist))
+	if (bruteforce_recu(fnc))
 		return (true);
 
-	Logger::info() << "step back (" << assign_value << ")\n";
-	Logger::info() << "Try false\n";
+	INFO("step back (", assign_value, ")")
+	INFO("Try false")
 
-	litt_occ  = copy_litt_occ;
-	dist      = copy_dist;
-	litt_occ -= copy_fnc.eval(assign_value, false);
-	dist.set(assign_value, false);
+	fnc.unassign();
 
-	Logger::info() << copy_fnc;
-	Logger::info() << litt_occ;
+	fnc.assign(assign_value, false);
+	INFO(fnc)
 
-	return (brutefocing_recu(copy_fnc, litt_occ, dist));
-} // brutefocing_recu
+	if (bruteforce_recu(fnc))
+		return (true);
 
-std::pair<bool, Distrib> bruteforcing_solve(const Fnc & fnc) {
-	Occ_list litt_occ = Occ_list(fnc);
-	Distrib dist(litt_occ);
+	fnc.unassign();
+	return (false);
+} // bruteforce_recu
 
-	Logger::info() << "Bruteforcing algorithm\n";
-	Logger::info() << fnc << "\n";
-	Logger::info() << litt_occ << "\n";
+std::pair<bool, Distrib> bruteforcing_solve(Fnc & fnc) {
+	INFO("algorithm algorithm")
 
-	bool res = brutefocing_recu(Fnc(fnc), litt_occ, dist);
+	fnc.set_as_ready();
+	INFO(fnc)
 
-	dist.finish();
+	bool res = bruteforce_recu(fnc);
 
-	Logger::info() << litt_occ;
-	Logger::info() << dist;
+	INFO("Finale fnc\n", fnc)
 
-	return (std::make_pair(res, dist));
+	fnc.set_distrib_as_finished();
+	return (std::make_pair(res, fnc.get_distrib()));
 }

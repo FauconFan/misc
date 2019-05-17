@@ -37,14 +37,14 @@ static std::string      get_str_of_caract(int id) {
 }
 
 static void             print_result(const Distrib & distrib_cont) {
-	auto * distrib = distrib_cont.getDistrib();
+	const auto & distrib = distrib_cont.get_distrib();
 
 	for (int i = 0; i < 5; ++i) {
 		std::vector<int> res;
 		for (int j = 0; j < 5; ++j) {
 			int base = 25 * i + 5 * j + 1;
 			for (int k = base; k < base + 5; ++k) {
-				if (distrib->at(k)) {
+				if (distrib.at(k)) {
 					res.push_back(((k - 1) % 25) + 1);
 					break;
 				}

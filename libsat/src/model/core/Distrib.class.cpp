@@ -3,40 +3,40 @@
 Distrib::Distrib()  = default;
 Distrib::~Distrib() = default;
 
-Distrib::Distrib(const Occ_list & occ_list)
-	: _present_variables(occ_list.buildPresentVariables())
-{}
-
 Distrib::Distrib(const Distrib & dist) = default;
-
 Distrib &Distrib::operator=(const Distrib & dist) = default;
 
-const std::unordered_map<unsigned int, bool> * Distrib::getDistrib() const{
-	return &(this->_distrib);
+const std::unordered_map<unsigned int, bool> & Distrib::get_distrib() const{
+	return (this->_distrib);
 }
 
-bool Distrib::get(unsigned int k) const{
-	return this->_distrib.at(k);
+void Distrib::set_presence_variables(const std::vector<Clause> & clauses) {
+	std::set<unsigned int> s;
+
+	for (const auto & cl : clauses) {
+		const auto & pre_s = cl.build_presence_set();
+		s.insert(pre_s.cbegin(), pre_s.cend());
+	}
+	this->_present_variables = s;
 }
 
-void Distrib::set(unsigned int k, bool v) {
-	this->_distrib[k] = v;
+bool Distrib::get(unsigned int id) const{
+	return this->_distrib.at(id);
 }
 
-std::unordered_map<unsigned int, bool, std::hash<unsigned int>, std::equal_to<>,
-  std::allocator<std::pair<const unsigned int, bool> > >::const_iterator Distrib::find(unsigned int k) const{
-	return this->_distrib.find(k);
+void Distrib::set(unsigned int id, bool b) {
+	this->_distrib[id] = b;
 }
 
-std::unordered_map<unsigned int, bool, std::hash<unsigned int>, std::equal_to<>,
-  std::allocator<std::pair<const unsigned int, bool> > >::const_iterator Distrib::end() const{
-	return this->_distrib.end();
+void Distrib::remove(unsigned int id) {
+	this->_distrib.erase(id);
 }
 
-void Distrib::finish() {
-	for (const auto & ui : this->_present_variables) {
-		if (this->_distrib.find(ui) == this->_distrib.end()) {
-			this->_distrib[ui] = false;
+void Distrib::finalize() {
+	for (unsigned int var : this->_present_variables) {
+		if (this->_distrib.find(var) == this->_distrib.end()) {
+			INFO("variable not set : ", var, " -> false")
+			this->_distrib[var] = false;
 		}
 	}
 }
@@ -44,7 +44,7 @@ void Distrib::finish() {
 std::ostream & operator<<(std::ostream & os, const Distrib & d) {
 	os << "Distrib [\n";
 
-	for (const auto & p : *d.getDistrib()) {
+	for (const auto & p : d.get_distrib()) {
 		os << "val " << p.first << " to " << p.second << "\n";
 	}
 

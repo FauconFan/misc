@@ -49,7 +49,7 @@ def set_from_distrib(distrib):
     s = set()
     for i in distrib:
         s.add(abs(i))
-    return (s);
+    return (s)
 
 def verify_distrib(fnc, distrib):
     for clause in fnc:
@@ -81,7 +81,7 @@ def main():
         sys.exit(1)
 
     b = verify_distrib(fnc, distrib)
-    print(b)
+    print(b, input_file)
     if b is False:
         sys.exit(1)
     sys.exit(0)
