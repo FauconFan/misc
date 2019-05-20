@@ -11,7 +11,7 @@ void    pigeon_hole_principle(int N) {
 	std::cout << "Nb holes : " << N << std::endl;
 
 	if (N < 2)
-		return ;
+		return;
 
 	vec.reserve(N);
 	for (int id_pig = 1; id_pig <= N + 1; ++id_pig) {
@@ -36,10 +36,10 @@ void    pigeon_hole_principle(int N) {
 
 	if (p.first) {
 		std::cout << "Found a solution\n";
-		std::cout << "THAT SHOULD NEVER HAPPENDE\n";
+		std::cout << "THAT SHOULD NEVER HAPPEND\n";
 	}
 	else {
 		std::cout << "Has no solution\n";
 		std::cout << "It's normal\n";
 	}
-}
+} // pigeon_hole_principle

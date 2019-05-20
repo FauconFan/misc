@@ -11,31 +11,31 @@ struct cmd_config{
 	cmd_type    type;
 	union ptr_fns{
 		std::pair<bool, Distrib>(* brut)(Fnc &);
-		void (* internal_void)(void);
+		void (* internal_void)();
 		void (* internal_int)(int);
-	} fns;
+	} fns {};
 
-	cmd_config(std::string name, std::pair<bool, Distrib>(*brut)(Fnc &)) : name(name), type(BRUT_SAT) {
+	cmd_config(std::string name, std::pair<bool, Distrib>(*brut)(Fnc &)) : name(std::move(name)), type(BRUT_SAT) {
 		this->fns.brut = brut;
 	}
 
-	cmd_config(std::string name, void(*internal_void)(void)) : name(name), type(INTERNAL_VOID) {
+	cmd_config(std::string name, void(*internal_void)()) : name(std::move(name)), type(INTERNAL_VOID) {
 		this->fns.internal_void = internal_void;
 	}
 
-	cmd_config(std::string name, void(*internal_int)(int)) : name(name), type(INTERNAL_INT) {
+	cmd_config(std::string name, void(*internal_int)(int)) : name(std::move(name)), type(INTERNAL_INT) {
 		this->fns.internal_int = internal_int;
 	}
 };
 
 static const struct cmd_config cmds[] = {
-	{"cdcl",       cdcl_solve        },
-	{"dpll",       dpll_solve        },
-	{"bruteforce", bruteforcing_solve},
-	{"2sat",       twosat_solve      },
-	{"queens",     queens_problems   },
-	{"einstein",   einstein_problem  },
-	{"PHP", pigeon_hole_principle},
+	{"cdcl",       cdcl_solve           },
+	{"dpll",       dpll_solve           },
+	{"bruteforce", bruteforcing_solve   },
+	{"2sat",       twosat_solve         },
+	{"queens",     queens_problems      },
+	{"einstein",   einstein_problem     },
+	{"PHP",        pigeon_hole_principle},
 };
 
 static void print_result(std::pair<bool, Distrib> result) {
@@ -81,9 +81,7 @@ int main(int argc, char ** argv) {
 	argc--;
 	argv++;
 
-	for (size_t i = 0; i < sizeof(cmds) / sizeof(*cmds); ++i) {
-		struct cmd_config cmd_conf = cmds[i];
-
+	for (auto cmd_conf : cmds) {
 		if (cmd == cmd_conf.name) {
 			switch (cmd_conf.type) {
 				case BRUT_SAT: {
@@ -114,7 +112,12 @@ int main(int argc, char ** argv) {
 					if (argc != 1)
 						return (1);
 
-					int arg = atoi(argv[0]);
+					char * endptr;
+
+					int arg = strtol(argv[0], &endptr, 10);
+
+					if (endptr != nullptr && *endptr != '\0')
+						return (1);
 
 					cmd_conf.fns.internal_int(arg);
 					return (0);

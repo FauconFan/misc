@@ -74,7 +74,7 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 
 	while (!fnc.empty()) {
 		Fnc::UPresponse res;
-	
+
 		res = fnc.unit_propagation();
 		insert_stack(decision_level, graph, res.li_implies);
 
