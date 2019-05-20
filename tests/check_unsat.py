@@ -15,6 +15,7 @@ def main():
 
     with open(output_file, "r") as f:
         lines = f.readlines()
+    lines = [line for line in lines if not(line.startswith("--"))]
     b = len(lines) == 1 and (lines[0] == "UNSAT" or lines[0] == "UNSAT\n")
     print(b, input_file)
     if b is False:

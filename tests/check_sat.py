@@ -33,6 +33,7 @@ def read_output(output_file):
     with open(output_file, "r") as f:
         lines = f.readlines()
     lines = [line.replace("\n", "") for line in lines]
+    lines = [line for line in lines if not(line.startswith("--"))]
     assert len(lines) == 2
     assert lines[0] == "SAT"
     distrib = [int(num) for num in lines[1].split(" ")]

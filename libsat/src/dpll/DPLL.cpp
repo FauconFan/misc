@@ -57,7 +57,7 @@ std::pair<bool, Distrib> dpll_solve(Fnc & fnc) {
 
 	INFO("Finale fnc\n", fnc)
 
-	std::cout << "Nb conflict : " << nb_conflict << std::endl;
+	std::cout << "-- Nb conflict : " << nb_conflict << std::endl;
 	INFO("Nb conflict : ", nb_conflict);
 
 	fnc.set_distrib_as_finished();
