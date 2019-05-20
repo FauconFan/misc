@@ -16,15 +16,13 @@ void    draw_puzzle(int size_tab, const Distrib & distrib) {
 	}
 }
 
-void    queens_problems() {
+void    queens_problems(int size_tab) {
 	Fnc fnc;
-	int size_tab;
 	std::vector<unsigned int> vec;
 
 	// Logger::disable();
 
-	std::cout << "size of the grid :\n";
-	std::cin >> size_tab;
+	std::cout << "size of the grid : " << size_tab << "\n";
 
 	vec.reserve(size_tab);
 	for (int i = 0; i < size_tab; ++i) {

@@ -47,6 +47,7 @@ static bool dpll_recu(Fnc & fnc, unsigned int & nb_conflict) {
 
 std::pair<bool, Distrib> dpll_solve(Fnc & fnc) {
 	unsigned int nb_conflict = 0;
+
 	INFO("DPLL algorithm")
 
 	fnc.set_as_ready();

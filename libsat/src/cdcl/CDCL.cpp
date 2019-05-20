@@ -74,16 +74,9 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 
 	while (!fnc.empty()) {
 		Fnc::UPresponse res;
-
+	
 		res = fnc.unit_propagation();
 		insert_stack(decision_level, graph, res.li_implies);
-
-		/*for (auto impl : res.li_implies){
-		 *  INFO("target : ", impl.first)
-		 *  for (int litt : impl.second){
-		 *      INFO("origins : ", litt)
-		 *  }
-		 * }*/
 
 		if (res.ok == false) {
 			nb_conflict++;
@@ -124,6 +117,7 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 
 std::pair<bool, Distrib> cdcl_solve(Fnc & fnc) {
 	unsigned int nb_conflict = 0;
+
 	INFO("CDCL algorithm")
 
 	fnc.set_as_ready();

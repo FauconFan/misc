@@ -34,6 +34,7 @@ SRC = \
 		$(LEXER_PARSER_FOLDER)getinput.cpp \
 		$(PROBLEMS_FOLDER)queens.cpp \
 		$(PROBLEMS_FOLDER)einstein.cpp \
+		$(PROBLEMS_FOLDER)pigeon_hole_principle.cpp \
 
 SRC_FLEX = $(FLEX_BISON_FOLDER)dimacs.l
 SRC_BISON = $(FLEX_BISON_FOLDER)dimacs.y

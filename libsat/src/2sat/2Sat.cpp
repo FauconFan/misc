@@ -79,7 +79,7 @@ static Distrib          build_solution(
 	return (dist);
 }
 
-std::pair<bool, Distrib> twosat_solve(const Fnc & fnc) {
+std::pair<bool, Distrib> twosat_solve(Fnc & fnc) {
 	Graph<int> gst;
 	std::set<std::set<int> > cfc;
 	std::map<std::set<int>, int> m_con_did;

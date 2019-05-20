@@ -106,7 +106,7 @@ for (name, li) in SAT_CDCL:
 CMDS_QUEENS = ["make -C sat fast"]
 
 for i in range(1, 21 + 1):
-    CMDS_QUEENS.append("time (echo " + str(i) + " | sat/sat queens)")
+    CMDS_QUEENS.append("time sat/sat queens " + str(i))
 
 BENCH_TASKS = [
     (J_BENCH, True, "queens", [], CMDS_QUEENS)

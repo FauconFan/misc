@@ -1,5 +1,43 @@
 #include "sat.hpp"
 
+enum cmd_type{
+	BRUT_SAT,
+	INTERNAL_VOID,
+	INTERNAL_INT,
+};
+
+struct cmd_config{
+	std::string name;
+	cmd_type    type;
+	union ptr_fns{
+		std::pair<bool, Distrib>(* brut)(Fnc &);
+		void (* internal_void)(void);
+		void (* internal_int)(int);
+	} fns;
+
+	cmd_config(std::string name, std::pair<bool, Distrib>(*brut)(Fnc &)) : name(name), type(BRUT_SAT) {
+		this->fns.brut = brut;
+	}
+
+	cmd_config(std::string name, void(*internal_void)(void)) : name(name), type(INTERNAL_VOID) {
+		this->fns.internal_void = internal_void;
+	}
+
+	cmd_config(std::string name, void(*internal_int)(int)) : name(name), type(INTERNAL_INT) {
+		this->fns.internal_int = internal_int;
+	}
+};
+
+static const struct cmd_config cmds[] = {
+	{"cdcl",       cdcl_solve        },
+	{"dpll",       dpll_solve        },
+	{"bruteforce", bruteforcing_solve},
+	{"2sat",       twosat_solve      },
+	{"queens",     queens_problems   },
+	{"einstein",   einstein_problem  },
+	{"PHP", pigeon_hole_principle},
+};
+
 static void print_result(std::pair<bool, Distrib> result) {
 	if (result.first == false) {
 		std::cout << "UNSAT" << std::endl;
@@ -18,66 +56,6 @@ static void print_result(std::pair<bool, Distrib> result) {
 		}
 		std::cout << std::endl;
 	}
-}
-
-static int cdcl_run(int argc, char ** argv) {
-	if (argc != 1)
-		return (1);
-
-	Fnc * fnc = getInputFNC(argv[0]);
-
-	if (fnc != nullptr) {
-		auto p = cdcl_solve(*fnc);
-		print_result(p);
-
-		delete fnc;
-	}
-	return (0);
-}
-
-static int dpll_run(int argc, char ** argv) {
-	if (argc != 1)
-		return (1);
-
-	Fnc * fnc = getInputFNC(argv[0]);
-
-	if (fnc != nullptr) {
-		auto p = dpll_solve(*fnc);
-		print_result(p);
-
-		delete fnc;
-	}
-	return (0);
-}
-
-static int twosat_run(int argc, char ** argv) {
-	if (argc != 1)
-		return (1);
-
-	Fnc * fnc = getInputFNC(argv[0]);
-
-	if (fnc != nullptr) {
-		auto p = twosat_solve(*fnc);
-		print_result(p);
-
-		delete fnc;
-	}
-	return (0);
-}
-
-static int bruteforce_run(int argc, char ** argv) {
-	if (argc != 1)
-		return (1);
-
-	Fnc * fnc = getInputFNC(argv[0]);
-
-	if (fnc != nullptr) {
-		auto p = bruteforcing_solve(*fnc);
-		print_result(p);
-
-		delete fnc;
-	}
-	return (0);
 }
 
 int main(int argc, char ** argv) {
@@ -103,26 +81,47 @@ int main(int argc, char ** argv) {
 	argc--;
 	argv++;
 
-	if (cmd == "cdcl")
-		return (cdcl_run(argc, argv));
+	for (size_t i = 0; i < sizeof(cmds) / sizeof(*cmds); ++i) {
+		struct cmd_config cmd_conf = cmds[i];
 
-	if (cmd == "dpll")
-		return (dpll_run(argc, argv));
+		if (cmd == cmd_conf.name) {
+			switch (cmd_conf.type) {
+				case BRUT_SAT: {
+					if (argc != 1)
+						return (1);
 
-	if (cmd == "bruteforce")
-		return (bruteforce_run(argc, argv));
+					Fnc * fnc = getInputFNC(argv[0]);
 
-	if (cmd == "2sat")
-		return (twosat_run(argc, argv));
+					if (fnc != nullptr) {
+						auto p = cmd_conf.fns.brut(*fnc);
+						print_result(p);
 
-	if (cmd == "queens") {
-		queens_problems();
-		return (0);
-	}
+						delete fnc;
+					}
+					else {
+						return (1);
+					}
+					return (0);
+				}
+				case INTERNAL_VOID: {
+					if (argc != 0)
+						return (1);
 
-	if (cmd == "einstein") {
-		einstein_problem();
-		return (0);
+					cmd_conf.fns.internal_void();
+					return (0);
+				}
+				case INTERNAL_INT: {
+					if (argc != 1)
+						return (1);
+
+					int arg = atoi(argv[0]);
+
+					cmd_conf.fns.internal_int(arg);
+					return (0);
+				}
+			}
+			break;
+		}
 	}
 
 	std::cout << "The command is not recognised : " << cmd << "\n";
