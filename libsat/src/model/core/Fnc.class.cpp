@@ -155,9 +155,9 @@ bool Fnc::assign(unsigned int id, bool value) {
 	return (this->assign_simplify(id, value) == 0);
 }
 
-void Fnc::unassign() {
+int Fnc::unassign() {
 	if (this->_decisions.empty())
-		return;
+		return 0;
 
 	const Decision & last = this->_decisions.back();
 
@@ -195,6 +195,8 @@ void Fnc::unassign() {
 	this->_distrib.remove(last.get_variable_id());
 	this->_map_litt_level_decision.erase(val);
 	this->_decisions.pop_back();
+
+	return val;
 } // Fnc::unassign
 
 void Fnc::backjump(unsigned int level) {

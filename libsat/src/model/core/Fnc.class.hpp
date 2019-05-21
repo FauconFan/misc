@@ -49,7 +49,7 @@ class Fnc
 
 		// Other
 		bool assign(unsigned int id, bool value);
-		void unassign();
+		int unassign();
 		void backjump(unsigned int level);
 		void polarity_check();
 

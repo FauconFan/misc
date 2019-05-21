@@ -66,10 +66,13 @@ static std::pair<std::set<int>, unsigned int> get_learn(Fnc & fnc, unsigned int 
 } // get_learn
 
 static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
-	unsigned int assign_value, decision_level;
+	#define	LEARN_ALL_LIMIT 100
+	unsigned int assign_value, decision_level, nb_learnt_clause, average_clause_size;
 	std::stack<std::pair<unsigned int, std::pair<int, std::set<int> > > > graph;
 
-	decision_level = 0;
+	nb_learnt_clause    = 0;
+	average_clause_size = 0;
+	decision_level      = 0;
 	fnc.polarity_check();
 
 	while (!fnc.empty()) {
@@ -80,20 +83,38 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 
 		if (res.ok == false) {
 			nb_conflict++;
-			if (decision_level == 0)
+			if (decision_level == 0) {
 				return (false);
-
+			}
 
 			std::pair<std::set<int>, unsigned int> learn = get_learn(fnc, decision_level, graph, res.litt_id);
-			decision_level = learn.second;
-			fnc.backjump(decision_level);
-			backjump_stack(decision_level, graph);
-			std::vector<int> vec_new_clause;
-			for (int litt : learn.first)
-				vec_new_clause.push_back(-litt);
-			Clause new_clause = Clause(vec_new_clause);
-			fnc.add_falsy_clause(new_clause);
-			INFO(new_clause)
+			if (nb_learnt_clause > LEARN_ALL_LIMIT && learn.first.size() > average_clause_size) {
+				int last_assignment_value;
+				while (decision_level > 0 && (last_assignment_value = fnc.unassign()) < 0) {
+					decision_level--;
+				}
+
+				if (decision_level == 0) {
+					return (false);
+				}
+
+				backjump_stack(decision_level - 1, graph);
+				fnc.assign(last_assignment_value, false);
+			}
+			else {
+				decision_level = learn.second;
+				fnc.backjump(decision_level);
+				backjump_stack(decision_level, graph);
+				std::vector<int> vec_new_clause;
+				for (int litt : learn.first)
+					vec_new_clause.push_back(-litt);
+				Clause new_clause = Clause(vec_new_clause);
+				fnc.add_falsy_clause(new_clause);
+				INFO(new_clause)
+				average_clause_size = (average_clause_size * nb_learnt_clause + vec_new_clause.size())
+				  / (nb_learnt_clause + 1);
+				nb_learnt_clause++;
+			}
 			INFO(fnc)
 			continue;
 		}
