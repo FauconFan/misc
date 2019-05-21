@@ -13,6 +13,7 @@
 #include <sstream>
 #include <iomanip>
 #include <optional>
+#include <random>
 
 #include "src/utils/macros.hpp"
 #include "src/utils/cnull.hpp"
