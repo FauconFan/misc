@@ -1,5 +1,6 @@
 #include "libsat.hpp"
 
+#define	MAX_LEARN_CLAUSE_SIZE 5
 static void insert_stack(unsigned int current_level, std::stack<std::pair<unsigned int, std::pair<int,
   std::set<int> > > > & graph, std::list<std::pair<int, std::set<int> > > last_implications) {
 	for (auto impl : last_implications) {
@@ -66,13 +67,13 @@ static std::pair<std::set<int>, unsigned int> get_learn(Fnc & fnc, unsigned int 
 } // get_learn
 
 static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
-	#define	LEARN_ALL_LIMIT 100
-	unsigned int assign_value, decision_level, nb_learnt_clause, average_clause_size;
+	unsigned int assign_value, decision_level;
 	std::stack<std::pair<unsigned int, std::pair<int, std::set<int> > > > graph;
+	std::stack<bool> first_assignment;
+	std::minstd_rand simple_rand;
 
-	nb_learnt_clause    = 0;
-	average_clause_size = 0;
-	decision_level      = 0;
+	simple_rand.seed(time(nullptr));
+	decision_level = 0;
 	fnc.polarity_check();
 
 	while (!fnc.empty()) {
@@ -88,20 +89,30 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 			}
 
 			std::pair<std::set<int>, unsigned int> learn = get_learn(fnc, decision_level, graph, res.litt_id);
-			if (nb_learnt_clause > LEARN_ALL_LIMIT && learn.first.size() > average_clause_size) {
+			if (learn.first.size() > MAX_LEARN_CLAUSE_SIZE) {
 				int last_assignment_value;
-				while (decision_level > 0 && (last_assignment_value = fnc.unassign()) < 0) {
+				while (decision_level > 0 && first_assignment.top() == false) {
 					decision_level--;
+					fnc.unassign();
+					first_assignment.pop();
 				}
 
 				if (decision_level == 0) {
 					return (false);
 				}
 
+				last_assignment_value = fnc.unassign();
+				first_assignment.pop();
+
 				backjump_stack(decision_level - 1, graph);
-				fnc.assign(last_assignment_value, false);
+				fnc.assign(static_cast<unsigned int>(abs(
+						last_assignment_value)), (last_assignment_value > 0) ? false : true);
+				first_assignment.push(false);
 			}
 			else {
+				for (unsigned int i = 0; i < decision_level - learn.second; i++) {
+					first_assignment.pop();
+				}
 				decision_level = learn.second;
 				fnc.backjump(decision_level);
 				backjump_stack(decision_level, graph);
@@ -111,9 +122,6 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 				Clause new_clause = Clause(vec_new_clause);
 				fnc.add_falsy_clause(new_clause);
 				INFO(new_clause)
-				average_clause_size = (average_clause_size * nb_learnt_clause + vec_new_clause.size())
-				  / (nb_learnt_clause + 1);
-				nb_learnt_clause++;
 			}
 			INFO(fnc)
 			continue;
@@ -128,7 +136,8 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 		INFO("assign value : ", assign_value)
 		INFO("Try true")
 
-		fnc.assign(assign_value, true);
+		fnc.assign(assign_value, (simple_rand() % 2 == 0) ? true : false);
+		first_assignment.push(true);
 
 		INFO(fnc)
 	}
