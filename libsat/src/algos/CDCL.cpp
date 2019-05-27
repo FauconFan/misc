@@ -136,7 +136,7 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 	return (true);
 } // cdcl_ite
 
-std::pair<bool, Distrib> cdcl_solve(Fnc & fnc) {
+RSat cdcl_solve(Fnc & fnc) {
 	unsigned int nb_conflict = 0;
 
 	INFO("CDCL algorithm")
@@ -146,9 +146,8 @@ std::pair<bool, Distrib> cdcl_solve(Fnc & fnc) {
 
 	bool res = cdcl_ite(fnc, nb_conflict);
 
-	std::cout << "-- Nb conflict : " << nb_conflict << std::endl;
 	INFO("Nb conflict : ", nb_conflict);
 
 	fnc.set_distrib_as_finished();
-	return (std::make_pair(res, fnc.get_distrib()));
+	return (RSat(res, fnc.get_distrib(), nb_conflict));
 }

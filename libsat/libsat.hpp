@@ -29,9 +29,10 @@
 
 #include "src/model/model_builder/modelbuilder.ns.hpp"
 
-#include "src/cdcl/CDCL.hpp"
-#include "src/dpll/DPLL.hpp"
-#include "src/bruteforcing/bruteforcing.hpp"
-#include "src/2sat/2Sat.hpp"
+#include "src/algos/RSat.struct.hpp"
+#include "src/algos/CDCL.hpp"
+#include "src/algos/DPLL.hpp"
+#include "src/algos/bruteforcing.hpp"
+#include "src/algos/2Sat.hpp"
 
 #endif // ifndef LIBSAT_HPP

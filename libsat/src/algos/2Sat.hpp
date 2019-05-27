@@ -3,6 +3,6 @@
 
 #include "libsat.hpp"
 
-std::pair<bool, Distrib> twosat_solve(Fnc &);
+RSat twosat_solve(Fnc &);
 
 #endif // ifndef TWOSAT_HPP

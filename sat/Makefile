@@ -24,7 +24,7 @@ CXX = clang++
 CXX_FLAGS = -g -O2 -Wall -Wextra -Werror \
 			-Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align \
 			-Wunused -Woverloaded-virtual -pedantic
-CXX_STD = -std=c++17 #14
+CXX_STD = -std=c++17
 INC_FLAGS = -I ./ $(LIB_INCS) -I $(LEXER_PARSER_FOLDER)
 FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 

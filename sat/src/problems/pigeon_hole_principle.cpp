@@ -34,7 +34,7 @@ void    pigeon_hole_principle(int N) {
 
 	auto p = cdcl_solve(fnc);
 
-	if (p.first) {
+	if (p.is_sat) {
 		std::cout << "Found a solution\n";
 		std::cout << "THAT SHOULD NEVER HAPPEND\n";
 	}

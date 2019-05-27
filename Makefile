@@ -52,6 +52,7 @@ venv:
 	python3 -m venv venv
 	venv/bin/pip3 install pip --upgrade
 	venv/bin/pip3 install cpplint
+	venv/bin/pip3 install progressbar
 
 ###################################### SUBMODULES ##############################
 

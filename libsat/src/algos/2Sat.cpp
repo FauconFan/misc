@@ -79,7 +79,7 @@ static Distrib          build_solution(
 	return (dist);
 }
 
-std::pair<bool, Distrib> twosat_solve(Fnc & fnc) {
+RSat twosat_solve(Fnc & fnc) {
 	Graph<int> gst;
 	std::set<std::set<int> > cfc;
 	std::map<std::set<int>, int> m_con_did;
@@ -88,7 +88,7 @@ std::pair<bool, Distrib> twosat_solve(Fnc & fnc) {
 	INFO("Two sat Algorithm")
 	if (fnc.is_two_fnc() == false) {
 		INFO("The fnc fiven is not a 2 fnc")
-		return std::make_pair(false, Distrib());
+		return (RSat(false));
 	}
 	INFO("Building graph of implications")
 	gst = buildGraph2SAT(fnc);
@@ -97,10 +97,10 @@ std::pair<bool, Distrib> twosat_solve(Fnc & fnc) {
 	INFO("Checking inconsistent condition to satisfaisability")
 	if (isSat(cfc) == false) {
 		INFO("The fnc is not satisfaisable")
-		return std::make_pair(false, Distrib());
+		return (RSat(false));
 	}
 	INFO("Building solution")
 	m_con_did = build_cc_ID_from_CFC(cfc);
 	tri_topo  = gst.getCFC_DAG(&cfc).getTriTopo();
-	return (std::make_pair(true, build_solution(m_con_did, tri_topo)));
+	return (RSat(true, build_solution(m_con_did, tri_topo)));
 }

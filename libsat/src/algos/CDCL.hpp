@@ -3,6 +3,6 @@
 
 #include "libsat.hpp"
 
-std::pair<bool, Distrib> cdcl_solve(Fnc &);
+RSat cdcl_solve(Fnc &);
 
 #endif // ifndef DPLL_HPP

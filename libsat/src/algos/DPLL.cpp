@@ -1,9 +1,15 @@
 #include "libsat.hpp"
 
-static bool bruteforce_recu(Fnc & fnc) {
+static bool dpll_recu(Fnc & fnc, unsigned int & nb_conflict) {
 	unsigned int assign_value;
 
-	if (fnc.has_empty_clause())
+	INFO(fnc)
+
+	fnc.polarity_check();
+
+	INFO(fnc)
+
+	if (fnc.has_empty_clause() || fnc.unit_propagation().ok == false)
 		return (false);
 
 	if (fnc.empty())
@@ -17,7 +23,7 @@ static bool bruteforce_recu(Fnc & fnc) {
 
 	INFO(fnc)
 
-	if (bruteforce_recu(fnc))
+	if (dpll_recu(fnc, nb_conflict))
 		return (true);
 
 	INFO("step back (", assign_value, ")")
@@ -28,23 +34,28 @@ static bool bruteforce_recu(Fnc & fnc) {
 	fnc.assign(assign_value, false);
 	INFO(fnc)
 
-	if (bruteforce_recu(fnc))
+	if (dpll_recu(fnc, nb_conflict))
 		return (true);
+
+	nb_conflict++;
 
 	fnc.unassign();
 	return (false);
-} // bruteforce_recu
+} // dpll_recu
 
-std::pair<bool, Distrib> bruteforcing_solve(Fnc & fnc) {
-	INFO("algorithm algorithm")
+RSat dpll_solve(Fnc & fnc) {
+	unsigned int nb_conflict = 0;
+
+	INFO("DPLL algorithm")
 
 	fnc.set_as_ready();
 	INFO(fnc)
 
-	bool res = bruteforce_recu(fnc);
+	bool res = dpll_recu(fnc, nb_conflict);
 
 	INFO("Finale fnc\n", fnc)
+	INFO("Nb conflict : ", nb_conflict);
 
 	fnc.set_distrib_as_finished();
-	return (std::make_pair(res, fnc.get_distrib()));
+	return (RSat(res, fnc.get_distrib(), nb_conflict));
 }

@@ -14,10 +14,7 @@ SRC_FOLDER       = src/
 MODEL_FOLDER     = src/model/
 CORE_FOLDER      = src/model/core/
 MODEL_BD_FOLDER  = src/model/model_builder/
-CDCL_FOLDER 	 = src/cdcl/
-DPLL_FOLDER      = src/dpll/
-BRUTE_FOLDER     = src/bruteforcing/
-2SAT_FOLDER      = src/2sat/
+ALGO_FOLDER      = src/algos/
 UTILS_FOLDER     = src/utils/
 
 AR = ar
@@ -41,10 +38,11 @@ SRC = \
 	$(UTILS_FOLDER)Logger.class.cpp \
 	$(UTILS_FOLDER)cnull.cpp \
 	$(UTILS_FOLDER)combinatorics.ns.cpp \
-	$(CDCL_FOLDER)CDCL.cpp \
-	$(DPLL_FOLDER)DPLL.cpp \
-	$(BRUTE_FOLDER)bruteforcing.cpp \
-	$(2SAT_FOLDER)2Sat.cpp \
+	$(ALGO_FOLDER)RSat.struct.cpp \
+	$(ALGO_FOLDER)CDCL.cpp \
+	$(ALGO_FOLDER)DPLL.cpp \
+	$(ALGO_FOLDER)bruteforcing.cpp \
+	$(ALGO_FOLDER)2Sat.cpp \
 	
 
 OBJ = $(SRC:%.cpp=%.o)
