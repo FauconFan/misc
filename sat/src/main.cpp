@@ -15,15 +15,15 @@ struct cmd_config{
 		void (* internal_int)(int);
 	} fns {};
 
-	cmd_config(const std::string & name, RSat(*brut)(Fnc &)) : name(std::move(name)), type(BRUT_SAT) {
+	cmd_config(const std::string & name, RSat(*brut)(Fnc &)) : name(name), type(BRUT_SAT) {
 		this->fns.brut = brut;
 	}
 
-	cmd_config(const std::string & name, void(*internal_void)()) : name(std::move(name)), type(INTERNAL_VOID) {
+	cmd_config(const std::string & name, void(*internal_void)()) : name(name), type(INTERNAL_VOID) {
 		this->fns.internal_void = internal_void;
 	}
 
-	cmd_config(const std::string & name, void(*internal_int)(int)) : name(std::move(name)), type(INTERNAL_INT) {
+	cmd_config(const std::string & name, void(*internal_int)(int)) : name(name), type(INTERNAL_INT) {
 		this->fns.internal_int = internal_int;
 	}
 };
