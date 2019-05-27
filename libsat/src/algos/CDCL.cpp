@@ -1,6 +1,7 @@
 #include "libsat.hpp"
 
-#define	MAX_LEARN_CLAUSE_SIZE 5
+#define	MAX_LEARN_CLAUSE_SIZE 7
+
 static void insert_stack(unsigned int current_level, std::stack<std::pair<unsigned int, std::pair<int,
   std::set<int> > > > & graph, std::list<std::pair<int, std::set<int> > > last_implications) {
 	for (auto impl : last_implications) {
@@ -66,7 +67,7 @@ static std::pair<std::set<int>, unsigned int> get_learn(Fnc & fnc, unsigned int 
 	return std::make_pair(litts_others_level, max_others_level);
 } // get_learn
 
-static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
+static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict, unsigned int & nb_learnt_clauses) {
 	unsigned int assign_value, decision_level;
 	std::stack<std::pair<unsigned int, std::pair<int, std::set<int> > > > graph;
 	std::stack<bool> first_assignment;
@@ -122,6 +123,7 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 				Clause new_clause = Clause(vec_new_clause);
 				fnc.add_falsy_clause(new_clause);
 				INFO(new_clause)
+				nb_learnt_clauses++;
 			}
 			INFO(fnc)
 			continue;
@@ -146,17 +148,21 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict) {
 } // cdcl_ite
 
 RSat cdcl_solve(Fnc & fnc) {
-	unsigned int nb_conflict = 0;
+	RSat rsat;
 
 	INFO("CDCL algorithm")
 
 	fnc.set_as_ready();
 	INFO(fnc)
 
-	bool res = cdcl_ite(fnc, nb_conflict);
+	rsat.nb_init_clauses = fnc.nb_clauses();
 
-	INFO("Nb conflict : ", nb_conflict);
+	bool res = cdcl_ite(fnc, rsat.nb_conflict, rsat.nb_learnt_clauses);
+
+	INFO("Nb conflict : ", rsat.nb_conflict);
 
 	fnc.set_distrib_as_finished();
-	return (RSat(res, fnc.get_distrib(), nb_conflict));
+	rsat.is_sat  = res;
+	rsat.distrib = fnc.get_distrib();
+	return (rsat);
 }

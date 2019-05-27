@@ -16,6 +16,7 @@ class Fnc
 		const std::vector<Clause> & get_clauses() const;
 		const Distrib & get_distrib() const;
 		const Occ_list & get_occ_list() const;
+		size_t nb_clauses() const;
 
 		std::optional<unsigned int> get_level_decision_assigned_variable(int) const;
 

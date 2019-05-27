@@ -21,6 +21,10 @@ const Occ_list & Fnc::get_occ_list() const{
 	return (this->_occ_list);
 }
 
+size_t Fnc::nb_clauses() const{
+	return (this->_clauses.size());
+}
+
 std::optional<unsigned int> Fnc::get_level_decision_assigned_variable(int val) const{
 	auto it = this->_map_litt_level_decision.find(val);
 

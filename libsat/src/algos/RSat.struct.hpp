@@ -7,14 +7,16 @@ struct RSat{
 	bool         is_sat {false};
 	Distrib      distrib {};
 	unsigned int nb_conflict {0};
+	unsigned int nb_init_clauses {0};
+	unsigned int nb_learnt_clauses {0};
 
-	RSat()         = delete;
+	RSat()         = default;
 	virtual~RSat() = default;
 
 	RSat(const RSat & rsat) = default;
 	RSat &operator=(const RSat & rsat) = default;
-
-	explicit RSat(bool is_sat, const Distrib & dist = Distrib(), unsigned int nb_conflict = 0);
 };
+
+std::ostream &operator<<(std::ostream &, const RSat &);
 
 #endif // ifndef RSAT_STRUCT_HPP

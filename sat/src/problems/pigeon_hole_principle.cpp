@@ -41,5 +41,7 @@ void    pigeon_hole_principle(int N) {
 	else {
 		std::cout << "Has no solution\n";
 		std::cout << "It's normal\n";
+
+		std::cout << p;
 	}
 } // pigeon_hole_principle

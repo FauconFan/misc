@@ -5,6 +5,7 @@ import sys
 import subprocess
 import time
 import progressbar
+import argparse
 
 PATH_SAT = '../sat/sat'
 SATLIB_DIR = '../input_files/satlib'
@@ -51,7 +52,23 @@ def bench_folder(dir, algo):
 
 
 def main():
+
+    parser = argparse.ArgumentParser(description='Helper to some benchmark stuff.')
+
+    parser.add_argument('--only', type=int, default=0, help='only run on N foler')
+
+    args = parser.parse_args()
+
     subdir = get_rnd3sat()
+
+    if args.only != 0:
+        st = str(args.only) + '_'
+        if args.only < 10:
+            st = '0' + st
+        subdir = [dir for dir in subdir if st in os.path.basename(dir)]
+    
+    print(subdir)
+
     for dir in subdir:
         bench_folder(dir, 'cdcl')
         bench_folder(dir, 'dpll')

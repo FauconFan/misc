@@ -44,18 +44,22 @@ static bool dpll_recu(Fnc & fnc, unsigned int & nb_conflict) {
 } // dpll_recu
 
 RSat dpll_solve(Fnc & fnc) {
-	unsigned int nb_conflict = 0;
+	RSat rsat;
 
 	INFO("DPLL algorithm")
 
 	fnc.set_as_ready();
 	INFO(fnc)
 
-	bool res = dpll_recu(fnc, nb_conflict);
+	rsat.nb_init_clauses = fnc.nb_clauses();
+
+	bool res = dpll_recu(fnc, rsat.nb_conflict);
 
 	INFO("Finale fnc\n", fnc)
-	INFO("Nb conflict : ", nb_conflict);
+	INFO("Nb conflict : ", rsat.nb_conflict);
 
 	fnc.set_distrib_as_finished();
-	return (RSat(res, fnc.get_distrib(), nb_conflict));
+	rsat.is_sat  = res;
+	rsat.distrib = fnc.get_distrib();
+	return (rsat);
 }

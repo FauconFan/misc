@@ -78,4 +78,6 @@ void    queens_problems(int size_tab) {
 	else {
 		std::cout << "Has no solution\n";
 	}
+
+	std::cout << p;
 } // queens_problems

@@ -43,7 +43,6 @@ SRC = \
 	$(ALGO_FOLDER)DPLL.cpp \
 	$(ALGO_FOLDER)bruteforcing.cpp \
 	$(ALGO_FOLDER)2Sat.cpp \
-	
 
 OBJ = $(SRC:%.cpp=%.o)
 

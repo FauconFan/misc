@@ -38,17 +38,21 @@ static bool bruteforce_recu(Fnc & fnc, unsigned int & nb_conflict) {
 } // bruteforce_recu
 
 RSat bruteforcing_solve(Fnc & fnc) {
-	unsigned int nb_conflict;
+	RSat rsat;
 
 	INFO("algorithm algorithm")
 
 	fnc.set_as_ready();
 	INFO(fnc)
 
-	bool res = bruteforce_recu(fnc, nb_conflict);
+	rsat.nb_init_clauses = fnc.nb_clauses();
+
+	bool res = bruteforce_recu(fnc, rsat.nb_conflict);
 
 	INFO("Finale fnc\n", fnc)
 
 	fnc.set_distrib_as_finished();
-	return (RSat(res, fnc.get_distrib(), nb_conflict));
+	rsat.is_sat  = res;
+	rsat.distrib = fnc.get_distrib();
+	return (rsat);
 }

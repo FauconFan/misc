@@ -38,26 +38,6 @@ static const struct cmd_config cmds[] = {
 	{"PHP",        pigeon_hole_principle},
 };
 
-static void print_result(const RSat & result) {
-	if (result.is_sat == false) {
-		std::cout << "UNSAT" << std::endl;
-	}
-	else {
-		std::cout << "SAT" << std::endl;
-		size_t i = 0;
-
-		for (auto p : result.distrib.get_distrib()) {
-			if (i != 0)
-				std::cout << " ";
-			i++;
-			if (p.second == false)
-				std::cout << "-";
-			std::cout << p.first;
-		}
-		std::cout << std::endl;
-	}
-}
-
 int main(int argc, char ** argv) {
 	if (argc <= 0)
 		return (1);
@@ -92,7 +72,7 @@ int main(int argc, char ** argv) {
 
 					if (fnc != nullptr) {
 						auto p = cmd_conf.fns.brut(*fnc);
-						print_result(p);
+						std::cout << p;
 
 						delete fnc;
 					}
