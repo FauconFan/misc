@@ -86,11 +86,16 @@ header_sat:
     ;
 
 sat:
-    begin_formula formula ')'
+    begin_formula formula end_formula
     ;
 
 begin_formula:
     '(' { Formula_builder::init_formula(); }
+    ;
+
+end_formula:
+    ')'
+    | ')' endls
     ;
 
 formula:
