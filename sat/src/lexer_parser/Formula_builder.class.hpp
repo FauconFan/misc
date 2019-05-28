@@ -26,7 +26,7 @@ class Formula_builder final{
 		Formula_builder * _parent {nullptr};
 		Formula_builder * _child {nullptr};
 		TypeFormula _type {None};
-		BinOp binop;
+		BinOp binop {Or}; // default value, do not trust, except if type is Bin
 
 		Formula_builder(); // default parent
 
