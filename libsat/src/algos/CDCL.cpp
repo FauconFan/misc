@@ -2,7 +2,7 @@
 
 #define	MAX_LEARN_CLAUSE_SIZE 7
 #define	RESTART_CONFLICT_INIT 1e4
-#define	RESTART_CONFLICT_MULT 2
+#define	RESTART_CONFLICT_MULT 1.25
 
 static void insert_stack(unsigned int current_level, std::stack<std::pair<unsigned int, std::pair<int,
   std::set<int> > > > & graph, std::list<std::pair<int, std::set<int> > > last_implications) {
@@ -64,8 +64,7 @@ static std::pair<std::set<int>, unsigned int> get_learn(Fnc & fnc, unsigned int 
 
 static bool cdcl_ite(
   Fnc          & fnc,
-  unsigned int & nb_conflict,
-  unsigned int & nb_learnt_clauses,
+  RSat         & rsat,
   bool         & do_restart,
   unsigned int max_bound_conflict) {
 	unsigned int assign_value, decision_level;
@@ -84,7 +83,7 @@ static bool cdcl_ite(
 		insert_stack(decision_level, graph, res.li_implies);
 
 		if (res.ok == false) {
-			nb_conflict++;
+			rsat.increase_conflict();
 			max_bound_conflict--;
 			if (decision_level == 0) {
 				return (false);
@@ -129,7 +128,7 @@ static bool cdcl_ite(
 				Clause new_clause = Clause(vec_new_clause);
 				fnc.add_falsy_clause(new_clause);
 				INFO(new_clause)
-				nb_learnt_clauses++;
+				rsat.increase_learnt_clauses();
 			}
 			INFO(fnc)
 			continue;
@@ -165,26 +164,26 @@ RSat cdcl_solve(Fnc & fnc) {
 	fnc.set_as_ready();
 	INFO(fnc)
 
-	rsat.nb_init_clauses = fnc.nb_clauses();
+	rsat.set_init_clauses(fnc.nb_clauses());
 
 	copy_original = fnc;
 	do_restart    = false;
 
 	while (true) {
-		res = cdcl_ite(fnc, rsat.nb_conflict, rsat.nb_learnt_clauses, do_restart, restart_conflict);
+		res = cdcl_ite(fnc, rsat, do_restart, restart_conflict);
 		if (do_restart == false)
 			break;
 		restart_conflict *= RESTART_CONFLICT_MULT;
 		fnc        = copy_original;
 		do_restart = false;
-		rsat.nb_restart++;
 		std::cout << "restarted " << restart_conflict << "\n";
+		rsat.restart();
 	}
 
 	INFO("Nb conflict : ", rsat.nb_conflict);
 
 	fnc.set_distrib_as_finished();
-	rsat.is_sat  = res;
-	rsat.distrib = fnc.get_distrib();
+	rsat.set_is_sat(res);
+	rsat.set_distrib(fnc.get_distrib());
 	return (rsat);
 } // cdcl_solve

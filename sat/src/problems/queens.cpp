@@ -71,9 +71,9 @@ void    queens_problems(int size_tab) {
 
 	auto p = cdcl_solve(fnc);
 
-	if (p.is_sat) {
+	if (p.is_sat()) {
 		std::cout << "Found a solution\n";
-		draw_puzzle(size_tab, p.distrib);
+		draw_puzzle(size_tab, p.get_distrib());
 	}
 	else {
 		std::cout << "Has no solution\n";

@@ -1,6 +1,6 @@
 #include "libsat.hpp"
 
-static bool dpll_recu(Fnc & fnc, unsigned int & nb_conflict) {
+static bool dpll_recu(Fnc & fnc, RSat & rsat) {
 	unsigned int assign_value;
 
 	INFO(fnc)
@@ -23,7 +23,7 @@ static bool dpll_recu(Fnc & fnc, unsigned int & nb_conflict) {
 
 	INFO(fnc)
 
-	if (dpll_recu(fnc, nb_conflict))
+	if (dpll_recu(fnc, rsat))
 		return (true);
 
 	INFO("step back (", assign_value, ")")
@@ -34,10 +34,10 @@ static bool dpll_recu(Fnc & fnc, unsigned int & nb_conflict) {
 	fnc.assign(assign_value, false);
 	INFO(fnc)
 
-	if (dpll_recu(fnc, nb_conflict))
+	if (dpll_recu(fnc, rsat))
 		return (true);
 
-	nb_conflict++;
+	rsat.increase_conflict();
 
 	fnc.unassign();
 	return (false);
@@ -51,15 +51,15 @@ RSat dpll_solve(Fnc & fnc) {
 	fnc.set_as_ready();
 	INFO(fnc)
 
-	rsat.nb_init_clauses = fnc.nb_clauses();
+	rsat.set_init_clauses(fnc.nb_clauses());
 
-	bool res = dpll_recu(fnc, rsat.nb_conflict);
+	bool res = dpll_recu(fnc, rsat);
 
 	INFO("Finale fnc\n", fnc)
-	INFO("Nb conflict : ", rsat.nb_conflict);
+	INFO("Nb conflict : ", rsat.get_nb_conflict());
 
 	fnc.set_distrib_as_finished();
-	rsat.is_sat  = res;
-	rsat.distrib = fnc.get_distrib();
+	rsat.set_is_sat(res);
+	rsat.set_distrib(fnc.get_distrib());
 	return (rsat);
 }

@@ -30,7 +30,7 @@
 
 #include "src/model/model_builder/modelbuilder.ns.hpp"
 
-#include "src/algos/RSat.struct.hpp"
+#include "src/algos/RSat.class.hpp"
 #include "src/algos/CDCL.hpp"
 #include "src/algos/DPLL.hpp"
 #include "src/algos/bruteforcing.hpp"

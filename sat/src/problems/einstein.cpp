@@ -180,7 +180,7 @@ void                    einstein_problem() {
 
 	auto p = dpll_solve(fnc);
 
-	if (p.is_sat) {
+	if (p.is_sat()) {
 		std::cout << "\t\tEinstein problem:\n\n";
 
 		std::cout << "Link : http://www.davar.net/MATH/PROBLEMS/EINSTEIN.HTM\n\n";
@@ -205,7 +205,7 @@ void                    einstein_problem() {
 
 		std::cout << "\n\n";
 
-		print_result(p.distrib);
+		print_result(p.get_distrib());
 
 		std::cout << "\nNormally, the German has fish.\n\n";
 	}
