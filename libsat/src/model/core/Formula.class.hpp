@@ -36,7 +36,7 @@ class Formula{
 		void display(std::ostream &) const;
 
 	private:
-		TypeFormula _type;
+		TypeFormula _type {None};
 		union {
 			int       litt {0};
 			Formula * normal;
