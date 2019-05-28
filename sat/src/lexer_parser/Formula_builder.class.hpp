@@ -36,7 +36,7 @@ class Formula_builder final{
 
 		class UnknownErrorException: public std::exception {
 			public:
-				UnknownErrorException(UnknownErrorType uet);
+				explicit UnknownErrorException(UnknownErrorType uet);
 				UnknownErrorException()  = delete;
 				~UnknownErrorException() = default;
 
