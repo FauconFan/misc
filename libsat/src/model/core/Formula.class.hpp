@@ -31,6 +31,8 @@ class Formula{
 		static Formula build_true();
 		static Formula build_false();
 
+		Fnc * formula_to_fnc() const;
+
 		void display(std::ostream &) const;
 
 	private:
@@ -47,6 +49,8 @@ class Formula{
 		} _u;
 
 		Formula(); // internal use only
+
+		void formula_to_fnc_rec(Fnc *, int *) const;
 };
 
 std::ostream &operator<<(std::ostream &, const Formula & frml);

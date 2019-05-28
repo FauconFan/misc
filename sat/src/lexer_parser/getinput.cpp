@@ -55,9 +55,9 @@ Fnc * getInputFNC(const char * path) {
 
 	if (is_fnc == false) { // sat
 		Formula frml = Formula_builder::end_formula();
-		std::cerr << "sat captured\n";
-		std::cerr << frml;
-		return (nullptr);
+		std::cout << frml << std::endl;
+		fclose(file);
+		return frml.formula_to_fnc();
 	}
 
 	res = FNC_builder::get().getClauses();

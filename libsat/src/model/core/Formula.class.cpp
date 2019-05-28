@@ -96,6 +96,90 @@ Formula Formula::build_false() {
 	return (frml);
 }
 
+void Formula::formula_to_fnc_rec(Fnc * fnc, int * state) const{
+	std::vector<int> clause_vector;
+	int current_state;
+
+	current_state = *state;
+	*state       += 1;
+	switch (this->_type) {
+		case Neg:
+			this->_u.neg->formula_to_fnc_rec(fnc, state);
+
+			clause_vector.push_back(-current_state);
+			clause_vector.push_back(-(current_state + 1));
+			fnc->add_clause(Clause(clause_vector));
+			clause_vector.clear();
+			clause_vector.push_back(current_state);
+			clause_vector.push_back(current_state + 1);
+			fnc->add_clause(Clause(clause_vector));
+			break;
+
+		case Bin:
+			this->_u.bin.left->formula_to_fnc_rec(fnc, state);
+
+			switch (this->_u.bin.binop) {
+				case Or:
+					clause_vector.push_back(-current_state);
+					clause_vector.push_back(current_state + 1);
+					clause_vector.push_back(*state);
+					fnc->add_clause(Clause(clause_vector));
+
+					clause_vector.clear();
+					clause_vector.push_back(current_state);
+					clause_vector.push_back(-(current_state + 1));
+					fnc->add_clause(Clause(clause_vector));
+
+					clause_vector.clear();
+					clause_vector.push_back(current_state);
+					clause_vector.push_back(-(*state));
+					fnc->add_clause(Clause(clause_vector));
+
+					break;
+
+				case And:
+					clause_vector.push_back(-current_state);
+					clause_vector.push_back(current_state + 1);
+					fnc->add_clause(Clause(clause_vector));
+
+					clause_vector.clear();
+					clause_vector.push_back(-current_state);
+					clause_vector.push_back(*state);
+					fnc->add_clause(Clause(clause_vector));
+
+					clause_vector.clear();
+					clause_vector.push_back(current_state);
+					clause_vector.push_back(-(current_state + 1));
+					clause_vector.push_back(-(*state));
+					fnc->add_clause(Clause(clause_vector));
+					break;
+
+				default:
+					break;
+			}
+			this->_u.bin.right->formula_to_fnc_rec(fnc, state);
+			break;
+
+		default:
+			break;
+	}
+} // Formula::formula_to_fnc_rec
+
+Fnc * Formula::formula_to_fnc() const{
+	Fnc * fnc;
+	std::vector<int> first_clause_vector;
+	int n;
+
+	n   = 1;
+	fnc = new Fnc();
+	first_clause_vector.push_back(1);
+	fnc->add_clause(Clause(first_clause_vector));
+
+	this->formula_to_fnc_rec(fnc, &n);
+
+	return fnc;
+}
+
 void Formula::display(std::ostream & os) const{
 	switch (this->_type) {
 		case Var:
