@@ -9,6 +9,7 @@ struct RSat{
 	unsigned int nb_conflict {0};
 	unsigned int nb_init_clauses {0};
 	unsigned int nb_learnt_clauses {0};
+	unsigned int nb_restart {0};
 
 	RSat()         = default;
 	virtual~RSat() = default;

@@ -21,5 +21,6 @@ std::ostream &operator<<(std::ostream & os, const RSat & rsat) {
 	os << "-- Nb conflict : " << rsat.nb_conflict << std::endl;
 	os << "-- Nb init clauses : " << rsat.nb_init_clauses << std::endl;
 	os << "-- Nb learnt clauses : " << rsat.nb_learnt_clauses << std::endl;
+	os << "-- Nb restart : " << rsat.nb_restart << std::endl;
 	return (os);
 }

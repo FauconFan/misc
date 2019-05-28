@@ -1,6 +1,8 @@
 #include "libsat.hpp"
 
 #define	MAX_LEARN_CLAUSE_SIZE 7
+#define	RESTART_CONFLICT_INIT 1e4
+#define	RESTART_CONFLICT_MULT 2
 
 static void insert_stack(unsigned int current_level, std::stack<std::pair<unsigned int, std::pair<int,
   std::set<int> > > > & graph, std::list<std::pair<int, std::set<int> > > last_implications) {
@@ -50,13 +52,6 @@ static std::pair<std::set<int>, unsigned int> get_learn(Fnc & fnc, unsigned int 
 		graph.pop();
 	}
 
-	/*for (int litt_current_level : litts_current_level)
-	 *  INFO("litt current level : ", litt_current_level)
-	 *
-	 * for (int litt_others_level : litts_others_level)
-	 *  INFO("litt other level : ", litt_others_level)
-	 */
-
 	if (litts_current_level.size() > 1) {
 		WARN("Probleme cdcl not only one in current level")
 	}
@@ -67,7 +62,12 @@ static std::pair<std::set<int>, unsigned int> get_learn(Fnc & fnc, unsigned int 
 	return std::make_pair(litts_others_level, max_others_level);
 } // get_learn
 
-static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict, unsigned int & nb_learnt_clauses) {
+static bool cdcl_ite(
+  Fnc          & fnc,
+  unsigned int & nb_conflict,
+  unsigned int & nb_learnt_clauses,
+  bool         & do_restart,
+  unsigned int max_bound_conflict) {
 	unsigned int assign_value, decision_level;
 	std::stack<std::pair<unsigned int, std::pair<int, std::set<int> > > > graph;
 	std::stack<bool> first_assignment;
@@ -85,7 +85,13 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict, unsigned int & nb_le
 
 		if (res.ok == false) {
 			nb_conflict++;
+			max_bound_conflict--;
 			if (decision_level == 0) {
+				return (false);
+			}
+
+			if (max_bound_conflict == 0) {
+				do_restart = true;
 				return (false);
 			}
 
@@ -149,6 +155,10 @@ static bool cdcl_ite(Fnc & fnc, unsigned int & nb_conflict, unsigned int & nb_le
 
 RSat cdcl_solve(Fnc & fnc) {
 	RSat rsat;
+	bool res;
+	bool do_restart;
+	Fnc copy_original;
+	unsigned int restart_conflict = RESTART_CONFLICT_INIT;
 
 	INFO("CDCL algorithm")
 
@@ -157,7 +167,19 @@ RSat cdcl_solve(Fnc & fnc) {
 
 	rsat.nb_init_clauses = fnc.nb_clauses();
 
-	bool res = cdcl_ite(fnc, rsat.nb_conflict, rsat.nb_learnt_clauses);
+	copy_original = fnc;
+	do_restart    = false;
+
+	while (true) {
+		res = cdcl_ite(fnc, rsat.nb_conflict, rsat.nb_learnt_clauses, do_restart, restart_conflict);
+		if (do_restart == false)
+			break;
+		restart_conflict *= RESTART_CONFLICT_MULT;
+		fnc        = copy_original;
+		do_restart = false;
+		rsat.nb_restart++;
+		std::cout << "restarted " << restart_conflict << "\n";
+	}
 
 	INFO("Nb conflict : ", rsat.nb_conflict);
 
@@ -165,4 +187,4 @@ RSat cdcl_solve(Fnc & fnc) {
 	rsat.is_sat  = res;
 	rsat.distrib = fnc.get_distrib();
 	return (rsat);
-}
+} // cdcl_solve
