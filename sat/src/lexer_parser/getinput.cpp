@@ -6,6 +6,7 @@
 extern int yyparse();
 extern FILE * yyin;
 extern bool yy_ok;
+extern bool is_fnc;
 
 std::vector<std::string> buff_lines_yyin;
 
@@ -51,6 +52,13 @@ Fnc * getInputFNC(const char * path) {
 
 	if (yy_ok == false)
 		return (nullptr);
+
+	if (is_fnc == false) { // sat
+		Formula frml = Formula_builder::end_formula();
+		std::cerr << "sat captured\n";
+		std::cerr << frml;
+		return (nullptr);
+	}
 
 	res = FNC_builder::get().getClauses();
 	fclose(file);

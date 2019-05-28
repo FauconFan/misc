@@ -6,6 +6,7 @@
     #define YYMAXDEPTH 500000
 
     bool        yy_ok = true;
+    bool        is_fnc;
 
     extern int yylex();
 
@@ -22,6 +23,7 @@
 }
 
 %token CNF
+%token SAT
 %token ZERO
 %token UNKNOWN
 
@@ -30,10 +32,11 @@
 %%
 
 prog:
-    header cnf footer
+    header_cnf cnf footer { is_fnc = true; }
+    | header_sat sat { is_fnc = false; }
     ;
 
-header:
+header_cnf:
     'p' CNF INT INT endls {
         FNC_builder::get().setNbVar($3);
         FNC_builder::get().setNbClause($4);
@@ -54,13 +57,13 @@ fzero:
     ;
 
 fnzero:
-    var
-    | var endls
-    | fnzero var
-    | fnzero var endls
+    cnf_var
+    | cnf_var endls
+    | fnzero cnf_var
+    | fnzero cnf_var endls
     ;
 
-var:
+cnf_var:
     INT { FNC_builder::get().addVar($1); }
     ;
 
@@ -76,6 +79,38 @@ footer:
 endls:
     '\n'
     | endls '\n'
+    ;
+
+header_sat:
+    'p' SAT INT endls {}
+    ;
+
+sat:
+    begin_formula formula ')'
+    ;
+
+begin_formula:
+    '(' { Formula_builder::init_formula(); }
+    ;
+
+formula:
+    | '\n' formula
+    | var_sat formula
+    | begin_subformula formula end_subformula formula
+    ;
+
+begin_subformula:
+    '-' '(' { Formula_builder::init_subformula_neg(); }
+    | '*' '(' { Formula_builder::init_subformula_binop(And); }
+    | '+' '(' { Formula_builder::init_subformula_binop(Or); }
+    ;
+
+end_subformula:
+    ')' { Formula_builder::end_subformula(); }
+    ;
+
+var_sat:
+    INT { Formula_builder::add_litt($1); }
 
 %%
 

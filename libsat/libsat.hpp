@@ -27,6 +27,7 @@
 #include "src/model/core/Distrib.class.hpp"
 #include "src/model/core/Decision.class.hpp"
 #include "src/model/core/Fnc.class.hpp"
+#include "src/model/core/Formula.class.hpp"
 
 #include "src/model/model_builder/modelbuilder.ns.hpp"
 
