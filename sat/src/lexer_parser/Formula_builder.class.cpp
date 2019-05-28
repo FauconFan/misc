@@ -66,7 +66,7 @@ void Formula_builder::add_litt(int litt) {
 
 Formula_builder::UnknownErrorException::UnknownErrorException(UnknownErrorType uet) : uet(uet) {}
 
-const char * Formula_builder::UnknownErrorException::what() const throw() {
+const char * Formula_builder::UnknownErrorException::what() const noexcept {
 	switch (this->uet) {
 		case SNH: {
 			return ("Should never happened");
@@ -91,7 +91,7 @@ static Formula gen_balance_formula(BinOp binop, const std::vector<Formula> & vec
 	return (Formula::build_bin(binop, gen_balance_formula(binop, first), gen_balance_formula(binop, last)));
 }
 
-Formula Formula_builder::gen_formula(void) const{
+Formula Formula_builder::gen_formula() const{
 	switch (this->_type) {
 		case Neg: {
 			if (this->_litts.empty() == true || this->_sub_formulas.size() != 1)

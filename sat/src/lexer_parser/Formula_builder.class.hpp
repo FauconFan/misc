@@ -37,13 +37,13 @@ class Formula_builder final{
 		class UnknownErrorException: public std::exception {
 			public:
 				explicit UnknownErrorException(UnknownErrorType uet);
-				UnknownErrorException()         = delete;
-				virtual~UnknownErrorException() = default;
+				UnknownErrorException() = delete;
+				~UnknownErrorException() override = default;
 
 				UnknownErrorException(const UnknownErrorException &) = default;
 				UnknownErrorException &operator=(const UnknownErrorException &) = default;
 
-				const char * what() const noexcept;
+				const char * what() const noexcept override;
 
 			private:
 				UnknownErrorType uet;
