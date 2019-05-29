@@ -29,10 +29,11 @@
 
 %%
 [ \t]*              ;
-[p\n%]              { return yytext[0]; }
 "cnf"               { return CNF; }
+"sat"               { return SAT; }
 "0"                 { return ZERO; }
 -?[1-9]+[0-9]*      { yylval.ival = atoi(yytext); return INT; }
+[p\n%\(\)+*-]       { return yytext[0]; }
 "c ".*"\n"          ;
 "c\n"               ;
 .                   { return UNKNOWN; }

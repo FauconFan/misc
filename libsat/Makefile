@@ -33,6 +33,7 @@ SRC = \
 	$(CORE_FOLDER)Decision.class.cpp \
 	$(CORE_FOLDER)Occ_list.class.cpp \
 	$(CORE_FOLDER)Distrib.class.cpp \
+	$(CORE_FOLDER)Formula.class.cpp \
 	$(MODEL_BD_FOLDER)modelbuilder.ns.cpp \
 	$(UTILS_FOLDER)IPair.class.cpp \
 	$(UTILS_FOLDER)Logger.class.cpp \

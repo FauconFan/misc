@@ -31,6 +31,7 @@ FLAGS = $(CXX_FLAGS) $(CXX_STD) $(INC_FLAGS)
 SRC = \
 		$(SRC_FOLDER)main.cpp \
 		$(LEXER_PARSER_FOLDER)FNC_builder.class.cpp \
+		$(LEXER_PARSER_FOLDER)Formula_builder.class.cpp \
 		$(LEXER_PARSER_FOLDER)getinput.cpp \
 		$(PROBLEMS_FOLDER)queens.cpp \
 		$(PROBLEMS_FOLDER)einstein.cpp \

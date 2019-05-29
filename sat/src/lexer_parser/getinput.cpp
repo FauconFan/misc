@@ -6,6 +6,7 @@
 extern int yyparse();
 extern FILE * yyin;
 extern bool yy_ok;
+extern bool is_fnc;
 
 std::vector<std::string> buff_lines_yyin;
 
@@ -52,7 +53,19 @@ Fnc * getInputFNC(const char * path) {
 	if (yy_ok == false)
 		return (nullptr);
 
+	if (is_fnc == false) { // sat
+		try {
+			Formula frml = Formula_builder::end_formula();
+			fclose(file);
+			return frml.formula_to_fnc();
+		}
+		catch (const std::exception & exc) {
+			std::cout << "Exception happened when parsing... : " << exc.what() << std::endl;
+			return (nullptr);
+		}
+	}
+
 	res = FNC_builder::get().getClauses();
 	fclose(file);
 	return (new Fnc(res));
-}
+} // getInputFNC
