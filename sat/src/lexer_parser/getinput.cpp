@@ -56,8 +56,6 @@ Fnc * getInputFNC(const char * path) {
 	if (is_fnc == false) { // sat
 		try {
 			Formula frml = Formula_builder::end_formula();
-
-			std::cout << frml << std::endl;
 			fclose(file);
 			return frml.formula_to_fnc();
 		}
