@@ -68,8 +68,8 @@ Formula_builder::UnknownErrorException::UnknownErrorException(UnknownErrorType u
 
 const char * Formula_builder::UnknownErrorException::what() const noexcept {
 	switch (this->uet) {
-		case SNH: {
-			return ("Should never happened");
+		case NegFormat: {
+			return ("The neg format type has been disrespect");
 		}
 		case UnknownType: {
 			return ("Unknown Type error");
@@ -94,8 +94,16 @@ static Formula gen_balance_formula(BinOp binop, const std::vector<Formula> & vec
 Formula Formula_builder::gen_formula() const{
 	switch (this->_type) {
 		case Neg: {
-			if (this->_litts.empty() == true || this->_sub_formulas.size() != 1)
-				throw Formula_builder::UnknownErrorException(SNH);
+			if (this->_litts.empty() == false) {
+				std::cout << "You cannot specify litterals here" << std::endl;
+			}
+			else if (this->_sub_formulas.size() != 1) {
+				std::cout << "Negative formula can accept one unique sub formula" << std::endl;
+			}
+			if (this->_litts.empty() == false || this->_sub_formulas.size() != 1) {
+				std::cout << "Check the norm" << std::endl;
+				throw Formula_builder::UnknownErrorException(NegFormat);
+			}
 			return Formula::build_neg(this->_sub_formulas.front().gen_formula());
 		}
 		case Bin: {

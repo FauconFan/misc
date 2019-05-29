@@ -54,13 +54,20 @@ Fnc * getInputFNC(const char * path) {
 		return (nullptr);
 
 	if (is_fnc == false) { // sat
-		Formula frml = Formula_builder::end_formula();
-		std::cout << frml << std::endl;
-		fclose(file);
-		return frml.formula_to_fnc();
+		try {
+			Formula frml = Formula_builder::end_formula();
+
+			std::cout << frml << std::endl;
+			fclose(file);
+			return frml.formula_to_fnc();
+		}
+		catch (const std::exception & exc) {
+			std::cout << "Exception happened when parsing... : " << exc.what() << std::endl;
+			return (nullptr);
+		}
 	}
 
 	res = FNC_builder::get().getClauses();
 	fclose(file);
 	return (new Fnc(res));
-}
+} // getInputFNC

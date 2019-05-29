@@ -4,7 +4,7 @@
 #include "sat.hpp"
 
 enum UnknownErrorType{
-	SNH,
+	NegFormat,
 	UnknownType,
 };
 
