@@ -7,12 +7,14 @@
 #include <list>
 #include <set>
 #include <map>
+#include <queue>
 #include <unordered_map>
 #include <algorithm>
 #include <exception>
 #include <sstream>
 #include <iomanip>
 #include <optional>
+#include <functional>
 #include <random>
 
 #include "src/utils/macros.hpp"

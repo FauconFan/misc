@@ -53,21 +53,20 @@ class Fnc
 		int unassign();
 		void backjump(unsigned int level);
 		void polarity_check();
+		void remove_added_clause_if(std::function<bool(const Clause &)>);
 
 		UPresponse unit_propagation();
 
 		void display(std::ostream &) const;
 
 	private:
-		bool ready {false};
-		// List of clauses
-		std::vector<Clause> _clauses {};
-		// List of id of unit clauses
-		std::set<unsigned int> _unit_clauses_id {};
-		// variable distribution
-		Distrib _distrib;
-		// list of occurences (variables)
-		Occ_list _occ_list;
+		bool ready {false};                           // explicit
+		std::vector<Clause> _clauses {};              // List of clauses
+		std::set<unsigned int> _unit_clauses_id {};   // List of id of unit clauses
+		Distrib _distrib;                             // variable distribution
+		Occ_list _occ_list;                           // list of occurences (variables)
+		std::queue<unsigned int> _free_clauses_id {}; // List of clauses that are replacable by a new one (forgotten clauses)
+		unsigned int _default_nb_clauses {0};
 
 		// List of decisions
 		std::unordered_map<int, unsigned int> _map_litt_level_decision;

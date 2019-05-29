@@ -50,7 +50,7 @@ class Formula{
 
 		Formula(); // internal use only
 
-		void formula_to_fnc_rec(Fnc *, int *, const std::set<unsigned int> ) const;
+		void formula_to_fnc_rec(Fnc *, int *, const std::set<unsigned int>) const;
 		void fill_variables(std::set<unsigned int> &) const;
 };
 

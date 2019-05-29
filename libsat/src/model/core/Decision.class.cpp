@@ -50,6 +50,19 @@ e_sub_decision_type SubDecision::get_type() const{
 	return (this->type);
 }
 
+bool SubDecision::has_clause_id(unsigned int clause_id) const{
+	switch (this->type) {
+		case ASSIGN:
+			return (false);
+
+		case RM_CLAUSE:
+			return (this->u.rm_clause.clause_id == clause_id);
+
+		case RM_LITT:
+			return (this->u.rm_litt.clause_id == clause_id);
+	}
+}
+
 unsigned int SubDecision::assign_get_litt() const{
 	return (this->u.assign.litt_id);
 }
@@ -127,6 +140,15 @@ void Decision::add_subdecision(const SubDecision & sd) {
 
 unsigned int Decision::get_variable_id() const{
 	return (this->_variable_id);
+}
+
+void Decision::remove_subdecision_containing(unsigned int id_clause) {
+	std::remove_if(
+	  this->_consequences.begin(),
+	  this->_consequences.end(),
+	  [id_clause](SubDecision & subd) -> bool{
+		return (subd.has_clause_id(id_clause));
+	});
 }
 
 bool Decision::get_value() const{

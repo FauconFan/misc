@@ -18,6 +18,8 @@ class SubDecision{
 
 		e_sub_decision_type get_type() const;
 
+		bool has_clause_id(unsigned int) const;
+
 		static SubDecision decision_assign(unsigned int litt_id, bool value);
 		static SubDecision decision_rm_clause(unsigned int clause_id);
 		static SubDecision decision_rm_litt(unsigned int clause_id, int litt);
@@ -70,6 +72,8 @@ class Decision{
 
 		unsigned int get_variable_id() const;
 		bool get_value() const;
+
+		void remove_subdecision_containing(unsigned int id_clause);
 
 	private:
 		unsigned int _variable_id {0};
