@@ -86,7 +86,7 @@ RSat twosat_solve(Fnc & fnc) {
 	std::map<std::set<int>, int> m_con_did;
 	std::list<std::set<int> > tri_topo;
 
-	rsat.nb_init_clauses = fnc.nb_clauses();
+	rsat.set_init_clauses(fnc.nb_clauses());
 	INFO("Two sat Algorithm")
 	if (fnc.is_two_fnc() == false) {
 		INFO("The fnc fiven is not a 2 fnc")
@@ -105,8 +105,9 @@ RSat twosat_solve(Fnc & fnc) {
 	m_con_did = build_cc_ID_from_CFC(cfc);
 	tri_topo  = gst.getCFC_DAG(&cfc).getTriTopo();
 
-	rsat.is_sat  = true;
-	rsat.distrib = build_solution(m_con_did, tri_topo);
+	rsat.set_is_sat(true);
+	rsat.set_distrib(build_solution(m_con_did, tri_topo));
 
+	INFO(rsat)
 	return (rsat);
 }

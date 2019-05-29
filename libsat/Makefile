@@ -38,7 +38,7 @@ SRC = \
 	$(UTILS_FOLDER)Logger.class.cpp \
 	$(UTILS_FOLDER)cnull.cpp \
 	$(UTILS_FOLDER)combinatorics.ns.cpp \
-	$(ALGO_FOLDER)RSat.struct.cpp \
+	$(ALGO_FOLDER)RSat.class.cpp \
 	$(ALGO_FOLDER)CDCL.cpp \
 	$(ALGO_FOLDER)DPLL.cpp \
 	$(ALGO_FOLDER)bruteforcing.cpp \
