@@ -21,7 +21,7 @@ class RSat
 		unsigned int get_nb_learnt_clauses_tot() const;
 		unsigned int get_nb_restart() const;
 
-		void set_is_sat(bool sat);
+		void set_is_sat(bool isat);
 		void set_distrib(const Distrib & dist);
 		void set_init_clauses(unsigned int init_clauses);
 
