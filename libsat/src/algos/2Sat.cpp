@@ -107,5 +107,7 @@ RSat twosat_solve(Fnc & fnc) {
 
 	rsat.set_is_sat(true);
 	rsat.set_distrib(build_solution(m_con_did, tri_topo));
+
+	INFO(rsat)
 	return (rsat);
 }

@@ -180,10 +180,10 @@ RSat cdcl_solve(Fnc & fnc) {
 		rsat.restart();
 	}
 
-	INFO("Nb conflict : ", rsat.nb_conflict);
-
 	fnc.set_distrib_as_finished();
 	rsat.set_is_sat(res);
 	rsat.set_distrib(fnc.get_distrib());
+
+	INFO(rsat)
 	return (rsat);
 } // cdcl_solve

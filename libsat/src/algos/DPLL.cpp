@@ -61,5 +61,7 @@ RSat dpll_solve(Fnc & fnc) {
 	fnc.set_distrib_as_finished();
 	rsat.set_is_sat(res);
 	rsat.set_distrib(fnc.get_distrib());
+
+	INFO(rsat)
 	return (rsat);
 }
