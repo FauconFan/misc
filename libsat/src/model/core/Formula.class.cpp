@@ -96,68 +96,110 @@ Formula Formula::build_false() {
 	return (frml);
 }
 
-void Formula::formula_to_fnc_rec(Fnc * fnc, int * state) const{
-	std::vector<int> clause_vector;
-	int current_state;
+static int get_next_var_name (std::set<unsigned int> variables, int n){
+	n++;
+	while (variables.find(n) != variables.end()){
+		n++;
+	}
 
-	current_state = *state;
-	*state       += 1;
+	return n;
+}
+
+void Formula::fill_variables(std::set<unsigned int> & current_set) const {
+	switch(this->_type){
+		case Neg : 	this->_u.neg->fill_variables(current_set);
+					break;
+		case Bin :	this->_u.bin.left->fill_variables(current_set);
+					this->_u.bin.right->fill_variables(current_set);
+					break;
+		case Var :	current_set.insert(static_cast<unsigned int>(abs(this->_u.litt)));
+					break;
+		default :	break;
+	}
+}
+
+void Formula::formula_to_fnc_rec(Fnc * fnc, int * var_name_ptr, const std::set<unsigned int> variables) const {
+	std::vector<int> clause_vector;
+	int current_var_name;
+
+	current_var_name = *var_name_ptr;
+	*var_name_ptr = get_next_var_name(variables, *var_name_ptr);
+
 	switch (this->_type) {
 		case Neg:
-			this->_u.neg->formula_to_fnc_rec(fnc, state);
+			int var_name;
+			if (this->_u.neg->_type == Var){
+				var_name = this->_u.neg->_u.litt;
+			}else{
+				var_name = *var_name_ptr;
+				this->_u.neg->formula_to_fnc_rec(fnc, var_name_ptr, variables);
+			}
 
-			clause_vector.push_back(-current_state);
-			clause_vector.push_back(-(current_state + 1));
+			clause_vector.push_back(-current_var_name);
+			clause_vector.push_back(-var_name);
 			fnc->add_clause(Clause(clause_vector));
 			clause_vector.clear();
-			clause_vector.push_back(current_state);
-			clause_vector.push_back(current_state + 1);
+			clause_vector.push_back(current_var_name);
+			clause_vector.push_back(var_name);
 			fnc->add_clause(Clause(clause_vector));
 			break;
 
 		case Bin:
-			this->_u.bin.left->formula_to_fnc_rec(fnc, state);
+			int var_name_left, var_name_right;
+
+			if (this->_u.bin.left->_type == Var){
+				var_name_left = this->_u.bin.left->_u.litt;
+			}else{
+				var_name_left = *var_name_ptr;
+				this->_u.bin.left->formula_to_fnc_rec(fnc, var_name_ptr, variables);
+			}
+
+			if (this->_u.bin.right->_type == Var){
+				var_name_right = this->_u.bin.right->_u.litt;
+			}else{
+				var_name_right = *var_name_ptr;
+				this->_u.bin.right->formula_to_fnc_rec(fnc, var_name_ptr, variables);
+			}
 
 			switch (this->_u.bin.binop) {
 				case Or:
-					clause_vector.push_back(-current_state);
-					clause_vector.push_back(current_state + 1);
-					clause_vector.push_back(*state);
+					clause_vector.push_back(-current_var_name);
+					clause_vector.push_back(var_name_left);
+					clause_vector.push_back(var_name_right);
 					fnc->add_clause(Clause(clause_vector));
 
 					clause_vector.clear();
-					clause_vector.push_back(current_state);
-					clause_vector.push_back(-(current_state + 1));
+					clause_vector.push_back(current_var_name);
+					clause_vector.push_back(-var_name_left);
 					fnc->add_clause(Clause(clause_vector));
 
 					clause_vector.clear();
-					clause_vector.push_back(current_state);
-					clause_vector.push_back(-(*state));
+					clause_vector.push_back(current_var_name);
+					clause_vector.push_back(-var_name_right);
 					fnc->add_clause(Clause(clause_vector));
 
 					break;
 
 				case And:
-					clause_vector.push_back(-current_state);
-					clause_vector.push_back(current_state + 1);
+					clause_vector.push_back(-current_var_name);
+					clause_vector.push_back(var_name_left);
 					fnc->add_clause(Clause(clause_vector));
 
 					clause_vector.clear();
-					clause_vector.push_back(-current_state);
-					clause_vector.push_back(*state);
+					clause_vector.push_back(-current_var_name);
+					clause_vector.push_back(var_name_right);
 					fnc->add_clause(Clause(clause_vector));
 
 					clause_vector.clear();
-					clause_vector.push_back(current_state);
-					clause_vector.push_back(-(current_state + 1));
-					clause_vector.push_back(-(*state));
+					clause_vector.push_back(current_var_name);
+					clause_vector.push_back(-var_name_left);
+					clause_vector.push_back(-var_name_right);
 					fnc->add_clause(Clause(clause_vector));
 					break;
 
 				default:
 					break;
 			}
-			this->_u.bin.right->formula_to_fnc_rec(fnc, state);
 			break;
 
 		default:
@@ -168,14 +210,18 @@ void Formula::formula_to_fnc_rec(Fnc * fnc, int * state) const{
 Fnc * Formula::formula_to_fnc() const{
 	Fnc * fnc;
 	std::vector<int> first_clause_vector;
+	std::set<unsigned int> variables;
 	int n;
 
-	n   = 1;
+	n   = 0;
 	fnc = new Fnc();
-	first_clause_vector.push_back(1);
+
+	this->fill_variables(variables);
+	n = get_next_var_name (variables, n);
+	first_clause_vector.push_back(n);
 	fnc->add_clause(Clause(first_clause_vector));
 
-	this->formula_to_fnc_rec(fnc, &n);
+	this->formula_to_fnc_rec(fnc, &n, variables);
 
 	return fnc;
 }
