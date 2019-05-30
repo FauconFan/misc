@@ -14,6 +14,10 @@ unsigned int RSat::get_nb_learnt_clauses() const{return (this->nb_learnt_clauses
 
 unsigned int RSat::get_nb_learnt_clauses_tot() const{return (this->nb_learnt_clauses_tot);}
 
+unsigned int RSat::get_nb_forgotten_clauses() const{return (this->nb_forgotten_clauses);}
+
+unsigned int RSat::get_nb_forgotten_clauses_tot() const{return (this->nb_forgotten_clauses_tot);}
+
 unsigned int RSat::get_nb_restart() const{return (this->nb_restart);}
 
 void RSat::set_is_sat(bool isat) {
@@ -38,9 +42,15 @@ void RSat::increase_learnt_clauses() {
 	this->nb_learnt_clauses_tot++;
 }
 
+void RSat::increase_forgotten_clauses() {
+	this->nb_forgotten_clauses++;
+	this->nb_forgotten_clauses_tot++;
+}
+
 void RSat::restart() {
-	this->nb_conflict       = 0;
-	this->nb_learnt_clauses = 0;
+	this->nb_conflict          = 0;
+	this->nb_learnt_clauses    = 0;
+	this->nb_forgotten_clauses = 0;
 	this->nb_restart++;
 }
 
@@ -67,6 +77,8 @@ std::ostream &operator<<(std::ostream & os, const RSat & rsat) {
 	os << "-- Nb init clauses : " << rsat.get_nb_init_clauses() << std::endl;
 	os << "-- Nb learnt clauses : " << rsat.get_nb_learnt_clauses() << std::endl;
 	os << "-- Nb learnt clauses (tot) : " << rsat.get_nb_learnt_clauses_tot() << std::endl;
+	os << "-- Nb forgotten clauses : " << rsat.get_nb_forgotten_clauses() << std::endl;
+	os << "-- Nb forgotten clauses (tot) : " << rsat.get_nb_forgotten_clauses_tot() << std::endl;
 	os << "-- Nb restart : " << rsat.get_nb_restart() << std::endl;
 	return (os);
 }

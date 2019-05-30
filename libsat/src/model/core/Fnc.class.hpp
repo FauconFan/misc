@@ -69,7 +69,7 @@ class Fnc
 		unsigned int _default_nb_clauses {0};
 
 		// List of decisions
-		std::unordered_map<int, unsigned int> _map_litt_level_decision;
+		std::unordered_map<int, unsigned int> _map_litt_level_decision {};
 		std::vector<Decision> _decisions {};
 
 		// Simplification

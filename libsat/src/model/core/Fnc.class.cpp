@@ -252,14 +252,17 @@ void Fnc::polarity_check() {
 void Fnc::remove_added_clause_if(const std::function<bool(const Clause &)> & pred) {
 	for (unsigned int id_clause = this->_default_nb_clauses; id_clause < this->_clauses.size(); id_clause++) {
 		Clause & clause = this->_clauses[id_clause];
-		if (clause.is_satisfied())
+		if (clause.is_satisfied()) {
 			continue;
+		}
 
 		if (pred(clause)) {
+			INFO("Forgetting clause number ", id_clause)
 			this->_free_clauses_id.push(id_clause);
 			if (clause.is_unit_clause() != 0)
 				this->_unit_clauses_id.erase(id_clause);
 			this->_occ_list.remove_clause_id(clause.get_litts(), id_clause);
+			clause.set_satisfied(true);
 
 			for (Decision & decision : this->_decisions) {
 				decision.remove_subdecision_containing(id_clause);
@@ -284,7 +287,8 @@ Fnc::UPresponse Fnc::unit_propagation() {
 		val         = litt > 0;
 		res.litt_id = abs(litt);
 		res.li_implies.push_back(std::make_pair(litt, cl.get_absent_litts()));
-		INFO("new unit clause : ", litt);
+		INFO("new unit clause : ", litt, " from ", id_clause);
+		INFO("")
 
 		this->_distrib.set(res.litt_id, val);
 		this->add_sub_decision(SubDecision::decision_assign(res.litt_id, val));

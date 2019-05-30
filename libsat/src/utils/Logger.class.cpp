@@ -54,11 +54,13 @@ Logger Logger::logger;
 
 std::ostream &Logger::info() {
 	*(logger.log_file) << Logger::build_header_line("INFO");
+	logger.log_file->flush();
 	return *(logger.log_file);
 }
 
 std::ostream &Logger::warn() {
 	*(logger.log_file) << Logger::build_header_line("WARN");
+	logger.log_file->flush();
 	return *(logger.log_file);
 }
 

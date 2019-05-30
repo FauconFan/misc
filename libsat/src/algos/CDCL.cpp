@@ -1,8 +1,9 @@
 #include "libsat.hpp"
 
-#define	MAX_LEARN_CLAUSE_SIZE 7
+#define	MAX_LEARN_CLAUSE_SIZE 10
 #define	RESTART_CONFLICT_INIT 1e4
 #define	RESTART_CONFLICT_MULT 1.25
+#define	FORGET_CLAUSE_SIZE    5
 
 static void insert_stack(unsigned int current_level, std::stack<std::pair<unsigned int, std::pair<int,
   std::set<int> > > > & graph, std::list<std::pair<int, std::set<int> > > last_implications) {
@@ -72,7 +73,7 @@ static bool cdcl_ite(
 	std::stack<bool> first_assignment;
 	std::minstd_rand simple_rand;
 
-	simple_rand.seed(time(nullptr));
+	// simple_rand.seed(time(nullptr));
 	decision_level = 0;
 	fnc.polarity_check();
 
@@ -136,6 +137,14 @@ static bool cdcl_ite(
 
 		if (fnc.empty())
 			break;
+
+		fnc.remove_added_clause_if([&rsat](const Clause & cl) -> bool{
+			if (cl.get_litts().size() > FORGET_CLAUSE_SIZE) {
+				rsat.increase_forgotten_clauses();
+				return (true);
+			}
+			return (false);
+		});
 
 		assign_value = fnc.get_occ_list().stat_max_occu();
 		decision_level++;
