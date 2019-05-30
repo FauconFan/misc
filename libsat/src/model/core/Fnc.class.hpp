@@ -53,7 +53,7 @@ class Fnc
 		int unassign();
 		void backjump(unsigned int level);
 		void polarity_check();
-		void remove_added_clause_if(std::function<bool(const Clause &)>);
+		void remove_added_clause_if(const std::function<bool(const Clause &)> &);
 
 		UPresponse unit_propagation();
 
