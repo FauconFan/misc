@@ -143,12 +143,14 @@ unsigned int Decision::get_variable_id() const{
 }
 
 void Decision::remove_subdecision_containing(unsigned int id_clause) {
-	std::remove_if(
-	  this->_consequences.begin(),
-	  this->_consequences.end(),
-	  [id_clause](SubDecision & subd) -> bool{
+	auto p = std::remove_if(
+			this->_consequences.begin(),
+			this->_consequences.end(),
+			[id_clause](SubDecision & subd) -> bool{
 		return (subd.has_clause_id(id_clause));
 	});
+
+	(void) p;
 }
 
 bool Decision::get_value() const{

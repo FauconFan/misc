@@ -96,7 +96,7 @@ Formula Formula::build_false() {
 	return (frml);
 }
 
-static int get_next_var_name(std::set<unsigned int> variables, int n) {
+static int get_next_var_name(const std::set<unsigned int> & variables, int n) {
 	n++;
 	while (variables.find(n) != variables.end()) {
 		n++;
@@ -122,7 +122,7 @@ void Formula::fill_variables(std::set<unsigned int> & current_set) const{
 	}
 }
 
-void Formula::formula_to_fnc_rec(Fnc * fnc, int * var_name_ptr, const std::set<unsigned int> variables) const{
+void Formula::formula_to_fnc_rec(Fnc * fnc, int * var_name_ptr, const std::set<unsigned int> & variables) const{
 	std::vector<int> clause_vector;
 	int current_var_name;
 
