@@ -2,14 +2,26 @@
 
 import os
 import sys
+import math
 import subprocess
 import time
-import progressbar
 import argparse
 
 PATH_SAT = '../sat/sat'
 SATLIB_DIR = '../input_files/satlib'
 TIME_P = '/usr/bin/time -p'
+
+def show_progress_bar(bar_length, completed, total):
+    bar_length_unit_value = (total / bar_length)
+    completed_bar_part = math.ceil(completed / bar_length_unit_value)
+    progress = "*" * completed_bar_part
+    remaining = " " * (bar_length - completed_bar_part)
+    percent_done = "%.2f" % ((completed / total) * 100)
+    if completed is total:
+        print("%*s" % (bar_length + 30, ""), end='\r')
+    else:
+        print(f' [{progress}{remaining}] {percent_done}%', end='\r')
+
 
 def get_rnd3sat():
     dirs = os.listdir(SATLIB_DIR)
@@ -17,6 +29,7 @@ def get_rnd3sat():
     dirs.sort()
     dirs = [SATLIB_DIR + '/' + dir for dir in dirs]
     return (dirs)
+
 
 def get_all_files(dir):
     files = []
@@ -28,27 +41,29 @@ def get_all_files(dir):
     files.sort()
     return (files)
 
+
 def exec_time(file, algo):
     res = subprocess.run(PATH_SAT + ' ' + algo + ' ' + file, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     assert(res.returncode == 0)
 
+
 def bench_folder(dir, algo):
 
     files = get_all_files(dir)
-    pbar = progressbar.ProgressBar(widgets=[progressbar.Percentage(), progressbar.Bar()], maxval=len(files)).start()
     start_time = time.time()
 
     i = 0
     for file in files:
         exec_time(file, algo)
-        pbar.update(i + 1)
+        show_progress_bar(30, i, len(files))
         i = i + 1
 
     endtime = time.time()
-    pbar.finish()
     tot_time = endtime - start_time
-    tot_time = ("%.2f" % tot_time) + 's'
-    print(os.path.basename(dir), algo, tot_time)
+    tot_time = ("%.3f" % tot_time) + 's'
+    avg_time = (endtime - start_time) / float(len(files))
+    avg_time = ("%.3f" % avg_time) + 's'
+    print(os.path.basename(dir), algo, "(tot)", tot_time, "(avg)", avg_time)
 
 
 def main():
@@ -72,5 +87,6 @@ def main():
     for dir in subdir:
         bench_folder(dir, 'cdcl')
         bench_folder(dir, 'dpll')
+
 
 main()

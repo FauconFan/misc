@@ -25,6 +25,10 @@ size_t Fnc::nb_clauses() const{
 	return (this->_clauses.size());
 }
 
+size_t Fnc::nb_learnt_clauses() const{
+	return (this->_clauses.size() - this->_default_nb_clauses - this->_free_clauses_id.size());
+}
+
 std::optional<unsigned int> Fnc::get_level_decision_assigned_variable(int val) const{
 	auto it = this->_map_litt_level_decision.find(val);
 
@@ -92,8 +96,6 @@ void Fnc::add_falsy_clause(Clause cl) {
 	INFO("Adding falsy clause : ", cl)
 
 	std::sort(vec.begin(), vec.end(), func_comp);
-
-	INFO("printing info")
 
 	for (const auto & p : vec) {
 		if (p.second > this->_decisions.size())
@@ -287,8 +289,6 @@ Fnc::UPresponse Fnc::unit_propagation() {
 		val         = litt > 0;
 		res.litt_id = abs(litt);
 		res.li_implies.push_back(std::make_pair(litt, cl.get_absent_litts()));
-		INFO("new unit clause : ", litt, " from ", id_clause);
-		INFO("")
 
 		this->_distrib.set(res.litt_id, val);
 		this->add_sub_decision(SubDecision::decision_assign(res.litt_id, val));

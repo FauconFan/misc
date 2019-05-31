@@ -17,6 +17,7 @@ class Fnc
 		const Distrib & get_distrib() const;
 		const Occ_list & get_occ_list() const;
 		size_t nb_clauses() const;
+		size_t nb_learnt_clauses() const;
 
 		std::optional<unsigned int> get_level_decision_assigned_variable(int) const;
 
@@ -66,7 +67,7 @@ class Fnc
 		Distrib _distrib;                             // variable distribution
 		Occ_list _occ_list;                           // list of occurences (variables)
 		std::queue<unsigned int> _free_clauses_id {}; // List of clauses that are replacable by a new one (forgotten clauses)
-		unsigned int _default_nb_clauses {0};
+		unsigned int _default_nb_clauses {0};         // Default number of clauses when set_as_ready member function is called
 
 		// List of decisions
 		std::unordered_map<int, unsigned int> _map_litt_level_decision {};

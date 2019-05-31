@@ -1,9 +1,10 @@
 #include "libsat.hpp"
 
-#define	MAX_LEARN_CLAUSE_SIZE 10
-#define	RESTART_CONFLICT_INIT 1e4
-#define	RESTART_CONFLICT_MULT 1.25
-#define	FORGET_CLAUSE_SIZE    5
+#define	MAX_LEARN_CLAUSE_SIZE          10
+#define	RESTART_CONFLICT_INIT          1e4
+#define	RESTART_CONFLICT_MULT          1.25
+#define	FORGET_CLAUSE_SIZE             5
+#define	FORGET_CLAUSE_APPLY_SEUIL_MULT 1
 
 static void insert_stack(unsigned int current_level, std::stack<std::pair<unsigned int, std::pair<int,
   std::set<int> > > > & graph, std::list<std::pair<int, std::set<int> > > last_implications) {
@@ -67,7 +68,8 @@ static bool cdcl_ite(
   Fnc          & fnc,
   RSat         & rsat,
   bool         & do_restart,
-  unsigned int max_bound_conflict) {
+  unsigned int max_bound_conflict,
+  unsigned int & limit_forget_threshold) {
 	unsigned int assign_value, decision_level;
 	std::stack<std::pair<unsigned int, std::pair<int, std::set<int> > > > graph;
 	std::stack<bool> first_assignment;
@@ -130,21 +132,27 @@ static bool cdcl_ite(
 				fnc.add_falsy_clause(new_clause);
 				INFO(new_clause)
 				rsat.increase_learnt_clauses();
+				if (learn.first.size() <= FORGET_CLAUSE_SIZE)
+					limit_forget_threshold++;
 			}
+
+			if (fnc.nb_learnt_clauses() >= limit_forget_threshold) {
+				INFO("deleting useless clause if any")
+				fnc.remove_added_clause_if([&rsat](const Clause & cl) -> bool{
+					if (cl.get_litts().size() > FORGET_CLAUSE_SIZE) {
+						rsat.increase_forgotten_clauses();
+						return (true);
+					}
+					return (false);
+				});
+			}
+
 			INFO(fnc)
 			continue;
 		}
 
 		if (fnc.empty())
 			break;
-
-		fnc.remove_added_clause_if([&rsat](const Clause & cl) -> bool{
-			if (cl.get_litts().size() > FORGET_CLAUSE_SIZE) {
-				rsat.increase_forgotten_clauses();
-				return (true);
-			}
-			return (false);
-		});
 
 		assign_value = fnc.get_occ_list().stat_max_occu();
 		decision_level++;
@@ -165,8 +173,8 @@ RSat cdcl_solve(Fnc & fnc) {
 	RSat rsat;
 	bool res;
 	bool do_restart;
-	Fnc copy_original;
-	unsigned int restart_conflict = RESTART_CONFLICT_INIT;
+	unsigned int restart_conflict       = RESTART_CONFLICT_INIT;
+	unsigned int limit_forget_threshold = fnc.nb_clauses() * FORGET_CLAUSE_APPLY_SEUIL_MULT;
 
 	INFO("CDCL algorithm")
 
@@ -175,17 +183,18 @@ RSat cdcl_solve(Fnc & fnc) {
 
 	rsat.set_init_clauses(fnc.nb_clauses());
 
-	copy_original = fnc;
-	do_restart    = false;
+	do_restart = false;
 
 	while (true) {
-		res = cdcl_ite(fnc, rsat, do_restart, restart_conflict);
+		res = cdcl_ite(fnc, rsat, do_restart, restart_conflict, limit_forget_threshold);
 		if (do_restart == false)
 			break;
 		restart_conflict *= RESTART_CONFLICT_MULT;
-		fnc        = copy_original;
-		do_restart = false;
-		std::cout << "restarted " << restart_conflict << "\n";
+		do_restart        = false;
+		fnc.backjump(0);
+		std::cout << "CDCL restarted " << restart_conflict << "\n";
+		INFO("restarted with new restart conflict limit : ", restart_conflict)
+		INFO(fnc)
 		rsat.restart();
 	}
 
