@@ -73,7 +73,7 @@ static bool cdcl_ite(
 	std::stack<bool> first_assignment;
 	std::minstd_rand simple_rand;
 
-	// simple_rand.seed(time(nullptr));
+	simple_rand.seed(time(nullptr));
 	decision_level = 0;
 	fnc.polarity_check();
 
