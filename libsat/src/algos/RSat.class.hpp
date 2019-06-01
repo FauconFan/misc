@@ -19,6 +19,8 @@ class RSat
 		unsigned int get_nb_init_clauses() const;
 		unsigned int get_nb_learnt_clauses() const;
 		unsigned int get_nb_learnt_clauses_tot() const;
+		unsigned int get_nb_forgotten_clauses() const;
+		unsigned int get_nb_forgotten_clauses_tot() const;
 		unsigned int get_nb_restart() const;
 
 		void set_is_sat(bool isat);
@@ -27,6 +29,7 @@ class RSat
 
 		void increase_conflict();
 		void increase_learnt_clauses();
+		void increase_forgotten_clauses();
 
 		void restart();
 
@@ -38,6 +41,8 @@ class RSat
 		unsigned int nb_init_clauses {0};
 		unsigned int nb_learnt_clauses {0};
 		unsigned int nb_learnt_clauses_tot {0};
+		unsigned int nb_forgotten_clauses {0};
+		unsigned int nb_forgotten_clauses_tot {0};
 		unsigned int nb_restart {0};
 };
 

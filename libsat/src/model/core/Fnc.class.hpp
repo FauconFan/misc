@@ -17,6 +17,7 @@ class Fnc
 		const Distrib & get_distrib() const;
 		const Occ_list & get_occ_list() const;
 		size_t nb_clauses() const;
+		size_t nb_learnt_clauses() const;
 
 		std::optional<unsigned int> get_level_decision_assigned_variable(int) const;
 
@@ -53,24 +54,23 @@ class Fnc
 		int unassign();
 		void backjump(unsigned int level);
 		void polarity_check();
+		void remove_added_clause_if(const std::function<bool(const Clause &)> &);
 
 		UPresponse unit_propagation();
 
 		void display(std::ostream &) const;
 
 	private:
-		bool ready {false};
-		// List of clauses
-		std::vector<Clause> _clauses {};
-		// List of id of unit clauses
-		std::set<unsigned int> _unit_clauses_id {};
-		// variable distribution
-		Distrib _distrib;
-		// list of occurences (variables)
-		Occ_list _occ_list;
+		bool ready {false};                           // explicit
+		std::vector<Clause> _clauses {};              // List of clauses
+		std::set<unsigned int> _unit_clauses_id {};   // List of id of unit clauses
+		Distrib _distrib;                             // variable distribution
+		Occ_list _occ_list;                           // list of occurences (variables)
+		std::queue<unsigned int> _free_clauses_id {}; // List of clauses that are replacable by a new one (forgotten clauses)
+		unsigned int _default_nb_clauses {0};         // Default number of clauses when set_as_ready member function is called
 
 		// List of decisions
-		std::unordered_map<int, unsigned int> _map_litt_level_decision;
+		std::unordered_map<int, unsigned int> _map_litt_level_decision {};
 		std::vector<Decision> _decisions {};
 
 		// Simplification

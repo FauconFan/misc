@@ -25,6 +25,10 @@ size_t Fnc::nb_clauses() const{
 	return (this->_clauses.size());
 }
 
+size_t Fnc::nb_learnt_clauses() const{
+	return (this->_clauses.size() - this->_default_nb_clauses - this->_free_clauses_id.size());
+}
+
 std::optional<unsigned int> Fnc::get_level_decision_assigned_variable(int val) const{
 	auto it = this->_map_litt_level_decision.find(val);
 
@@ -67,9 +71,18 @@ void Fnc::add_falsy_clause(Clause cl) {
 
 	if (this->ready == false) {
 		WARN("Try adding falsy clause before setting as ready")
+		return;
 	}
-	unsigned int id_clause = this->_clauses.size();
+	unsigned int id_clause;
 	std::vector<std::pair<int, unsigned int> > vec;
+
+	if (this->_free_clauses_id.empty()) {
+		id_clause = this->_clauses.size();
+	}
+	else {
+		id_clause = this->_free_clauses_id.front();
+		this->_free_clauses_id.pop();
+	}
 
 	for (int litt : cl.get_litts()) {
 		unsigned int m = -1;
@@ -84,12 +97,6 @@ void Fnc::add_falsy_clause(Clause cl) {
 
 	std::sort(vec.begin(), vec.end(), func_comp);
 
-	INFO("printing info")
-
-	/*for (const auto & p : vec) {
-	 *  INFO("litt : ", p.first, ", level : ", p.second)
-	 * }*/
-
 	for (const auto & p : vec) {
 		if (p.second > this->_decisions.size())
 			break;
@@ -98,13 +105,12 @@ void Fnc::add_falsy_clause(Clause cl) {
 			this->_decisions[p.second - 1].add_subdecision(SubDecision::decision_rm_litt(id_clause, p.first));
 	}
 	this->_occ_list.add_clause_id(cl.get_litts(), id_clause);
-	this->_clauses.push_back(cl);
+	if (id_clause == this->_clauses.size())
+		this->_clauses.push_back(cl);
+	else
+		this->_clauses[id_clause] = cl;
 	if (cl.is_unit_clause() != 0)
 		this->_unit_clauses_id.insert(id_clause);
-
-	/*for (int abstent_litt : cl.get_absent_litts()) {
-	 *  INFO("abstent litts ", abstent_litt)
-	 * }*/
 } // Fnc::add_falsy_clause
 
 void Fnc::set_as_ready() {
@@ -112,6 +118,7 @@ void Fnc::set_as_ready() {
 		this->ready = true;
 		this->_occ_list.set_content(this->_clauses);
 		this->_distrib.set_presence_variables(this->_clauses);
+		this->_default_nb_clauses = this->_clauses.size();
 	}
 	else {
 		WARN("Setting fnc as ready when it is already ready");
@@ -244,6 +251,28 @@ void Fnc::polarity_check() {
 	}
 }
 
+void Fnc::remove_added_clause_if(const std::function<bool(const Clause &)> & pred) {
+	for (unsigned int id_clause = this->_default_nb_clauses; id_clause < this->_clauses.size(); id_clause++) {
+		Clause & clause = this->_clauses[id_clause];
+		if (clause.is_satisfied()) {
+			continue;
+		}
+
+		if (pred(clause)) {
+			INFO("Forgetting clause number ", id_clause)
+			this->_free_clauses_id.push(id_clause);
+			if (clause.is_unit_clause() != 0)
+				this->_unit_clauses_id.erase(id_clause);
+			this->_occ_list.remove_clause_id(clause.get_litts(), id_clause);
+			clause.set_satisfied(true);
+
+			for (Decision & decision : this->_decisions) {
+				decision.remove_subdecision_containing(id_clause);
+			}
+		}
+	}
+}
+
 Fnc::UPresponse Fnc::unit_propagation() {
 	UPresponse res;
 
@@ -260,7 +289,6 @@ Fnc::UPresponse Fnc::unit_propagation() {
 		val         = litt > 0;
 		res.litt_id = abs(litt);
 		res.li_implies.push_back(std::make_pair(litt, cl.get_absent_litts()));
-		INFO("new unit clause : ", litt);
 
 		this->_distrib.set(res.litt_id, val);
 		this->add_sub_decision(SubDecision::decision_assign(res.litt_id, val));
