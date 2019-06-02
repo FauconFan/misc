@@ -6,6 +6,9 @@
 #define	FORGET_CLAUSE_SIZE             5
 #define	FORGET_CLAUSE_APPLY_SEUIL_MULT 1
 
+#define	BOUNDED_LEARNING_ENABLED       true
+#define	RESTART_ENABLED                true
+
 static void insert_stack(unsigned int current_level, std::stack<std::pair<unsigned int, std::pair<int,
   std::set<int> > > > & graph, std::list<std::pair<int, std::set<int> > > last_implications) {
 	for (auto impl : last_implications) {
@@ -92,13 +95,14 @@ static bool cdcl_ite(
 				return (false);
 			}
 
-			if (max_bound_conflict == 0) {
+			(void) do_restart;
+			if (RESTART_ENABLED && max_bound_conflict == 0) {
 				do_restart = true;
 				return (false);
 			}
 
 			std::pair<std::set<int>, unsigned int> learn = get_learn(fnc, decision_level, graph, res.litt_id);
-			if (learn.first.size() > MAX_LEARN_CLAUSE_SIZE) {
+			if (BOUNDED_LEARNING_ENABLED && learn.first.size() > MAX_LEARN_CLAUSE_SIZE) {
 				int last_assignment_value;
 				while (decision_level > 0 && first_assignment.top() == false) {
 					decision_level--;
@@ -136,7 +140,7 @@ static bool cdcl_ite(
 					limit_forget_threshold++;
 			}
 
-			if (fnc.nb_learnt_clauses() >= limit_forget_threshold) {
+			if (BOUNDED_LEARNING_ENABLED && fnc.nb_learnt_clauses() >= limit_forget_threshold) {
 				INFO("deleting useless clause if any")
 				fnc.remove_added_clause_if([&rsat](const Clause & cl) -> bool{
 					if (cl.get_litts().size() > FORGET_CLAUSE_SIZE) {

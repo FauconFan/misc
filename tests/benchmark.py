@@ -52,6 +52,7 @@ def bench_folder(dir, algo):
     files = get_all_files(dir)
     start_time = time.time()
 
+    show_progress_bar(30, 0, len(files))
     i = 0
     for file in files:
         exec_time(file, algo)
@@ -63,7 +64,7 @@ def bench_folder(dir, algo):
     tot_time = ("%.3f" % tot_time) + 's'
     avg_time = (endtime - start_time) / float(len(files))
     avg_time = ("%.3f" % avg_time) + 's'
-    print(os.path.basename(dir), algo, "(tot)", tot_time, "(avg)", avg_time)
+    print(os.path.basename(dir), "nb :", len(files), algo, "(tot)", tot_time, "(avg)", avg_time)
 
 
 def main():
