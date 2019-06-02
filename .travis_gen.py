@@ -103,13 +103,26 @@ for (name, li) in SAT_CDCL:
 
 # Bench is a stage when we run bench with examples, without verifying
 
-CMDS_QUEENS = ["make -C sat fast"]
+BASE_CMD = "make -C sat fast"
 
-for i in range(1, 21 + 1):
+CMDS_QUEENS = [BASE_CMD]
+CMDS_PHP = [BASE_CMD]
+CMDS_EINSTEIN = [BASE_CMD]
+NB_QUEENS = 21
+NB_PHP = 8
+
+for i in range(1, NB_QUEENS + 1):
     CMDS_QUEENS.append("time sat/sat queens " + str(i))
 
+for i in range(1, NB_PHP + 1):
+    CMDS_PHP.append("time sat/sat PHP " + str(i))
+
+CMDS_EINSTEIN.append("sat/sat einstein")
+
 BENCH_TASKS = [
-    (J_BENCH, True, "queens", [], CMDS_QUEENS)
+    (J_BENCH, True, "queens 1 - " + str(NB_QUEENS), [], CMDS_QUEENS),
+    (J_BENCH, True, "PHP 1 - " + str(NB_PHP), [], CMDS_PHP),
+    (J_BENCH, True, "einstein", [], CMDS_EINSTEIN),
 ]
 
 DOCKER_EXEC_PREFIX = "docker exec -t cpp bash -c \""

@@ -189,7 +189,7 @@ matrix:
         - docker exec -t cpp bash -c " make -C tests test_sat FOLDER_CNFS=../input_files/satlib/_61_CBS__CBS_k3_n100_m449_b90 "
       after_script:
         - docker stop cpp
-    - name: queens
+    - name: queens 1 - 21
       stage: Benchmark
       before_install:
         - docker build -t cpp .
@@ -217,5 +217,32 @@ matrix:
         - docker exec -t cpp bash -c " time sat/sat queens 19 "
         - docker exec -t cpp bash -c " time sat/sat queens 20 "
         - docker exec -t cpp bash -c " time sat/sat queens 21 "
+      after_script:
+        - docker stop cpp
+    - name: PHP 1 - 8
+      stage: Benchmark
+      before_install:
+        - docker build -t cpp .
+        - docker run --rm --detach --volume `pwd`:/code --workdir /code --name cpp cpp tail -f /dev/null
+      script:
+        - docker exec -t cpp bash -c " make -C sat fast "
+        - docker exec -t cpp bash -c " time sat/sat PHP 1 "
+        - docker exec -t cpp bash -c " time sat/sat PHP 2 "
+        - docker exec -t cpp bash -c " time sat/sat PHP 3 "
+        - docker exec -t cpp bash -c " time sat/sat PHP 4 "
+        - docker exec -t cpp bash -c " time sat/sat PHP 5 "
+        - docker exec -t cpp bash -c " time sat/sat PHP 6 "
+        - docker exec -t cpp bash -c " time sat/sat PHP 7 "
+        - docker exec -t cpp bash -c " time sat/sat PHP 8 "
+      after_script:
+        - docker stop cpp
+    - name: einstein
+      stage: Benchmark
+      before_install:
+        - docker build -t cpp .
+        - docker run --rm --detach --volume `pwd`:/code --workdir /code --name cpp cpp tail -f /dev/null
+      script:
+        - docker exec -t cpp bash -c " make -C sat fast "
+        - docker exec -t cpp bash -c " sat/sat einstein "
       after_script:
         - docker stop cpp
