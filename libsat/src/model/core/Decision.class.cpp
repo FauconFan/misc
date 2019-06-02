@@ -143,14 +143,17 @@ unsigned int Decision::get_variable_id() const{
 }
 
 void Decision::remove_subdecision_containing(unsigned int id_clause) {
-	auto p = std::remove_if(
-			this->_consequences.begin(),
-			this->_consequences.end(),
-			[id_clause](SubDecision & subd) -> bool{
+	auto predf = [id_clause](SubDecision & subd) -> bool{
 		return (subd.has_clause_id(id_clause));
-	});
+	};
 
-	(void) p;
+	for (auto it = this->_consequences.begin(); it != this->_consequences.end();) {
+		if (predf(*it)) {
+			it = this->_consequences.erase(it);
+		}
+		else
+			++it;
+	}
 }
 
 bool Decision::get_value() const{

@@ -311,6 +311,8 @@ Fnc::UPresponse Fnc::unit_propagation() {
 void Fnc::display(std::ostream & os) const{
 	os << "FNC [\n";
 
+	os << "\tNb clauses " << this->nb_clauses() << "\n";
+	os << "\tNb clauses learnt " << this->nb_learnt_clauses() << "\n";
 	unsigned int clause_id = 0;
 	for (const auto & acl : this->_clauses) {
 		if (acl.is_satisfied() == false)
