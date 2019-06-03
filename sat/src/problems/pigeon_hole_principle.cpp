@@ -32,7 +32,7 @@ void    pigeon_hole_principle(int N) {
 		vec.clear();
 	}
 
-	auto p = cdcl_solve(fnc);
+	auto p = dpll_solve(fnc);
 
 	if (p.is_sat()) {
 		std::cout << "Found a solution\n";

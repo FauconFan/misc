@@ -1,7 +1,8 @@
 #include "libsat.hpp"
 
-static bool dpll_recu(Fnc & fnc, RSat & rsat) {
+static bool dpll_recu(Fnc & fnc, RSat & rsat, std::minstd_rand & simple_rand) {
 	unsigned int assign_value;
+	bool value;
 
 	INFO(fnc)
 
@@ -19,11 +20,13 @@ static bool dpll_recu(Fnc & fnc, RSat & rsat) {
 	INFO("assign value : ", assign_value)
 	INFO("Try true")
 
-	fnc.assign(assign_value, true);
+	value = (simple_rand() % 2 == 0);
+
+	fnc.assign(assign_value, value);
 
 	INFO(fnc)
 
-	if (dpll_recu(fnc, rsat))
+	if (dpll_recu(fnc, rsat, simple_rand))
 		return (true);
 
 	INFO("step back (", assign_value, ")")
@@ -31,10 +34,10 @@ static bool dpll_recu(Fnc & fnc, RSat & rsat) {
 
 	fnc.unassign();
 
-	fnc.assign(assign_value, false);
+	fnc.assign(assign_value, value == false);
 	INFO(fnc)
 
-	if (dpll_recu(fnc, rsat))
+	if (dpll_recu(fnc, rsat, simple_rand))
 		return (true);
 
 	rsat.increase_conflict();
@@ -45,7 +48,10 @@ static bool dpll_recu(Fnc & fnc, RSat & rsat) {
 
 RSat dpll_solve(Fnc & fnc) {
 	RSat rsat;
+	std::minstd_rand simple_rand;
 
+
+	simple_rand.seed(time(nullptr));
 	INFO("DPLL algorithm")
 
 	fnc.set_as_ready();
@@ -53,7 +59,7 @@ RSat dpll_solve(Fnc & fnc) {
 
 	rsat.set_init_clauses(fnc.nb_clauses());
 
-	bool res = dpll_recu(fnc, rsat);
+	bool res = dpll_recu(fnc, rsat, simple_rand);
 
 	INFO("Finale fnc\n", fnc)
 	INFO("Nb conflict : ", rsat.get_nb_conflict());
