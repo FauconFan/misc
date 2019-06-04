@@ -33,6 +33,8 @@ pub fn get_records(path: &String) -> Option<Vec<(f32, f32)>> {
         vec.push(car);
     }
 
+    vec.sort_by(|(a, _), (b, _)| a.partial_cmp(b).unwrap());
+
     return Some(vec);
 }
 
