@@ -11,6 +11,7 @@ name = "train"
 path = "src/bin/train.rs"
 
 [dependencies]
-csv = "1"
+csv = "1.0.7"
 textplots = "0.4.1"
 clap = "2.33.0"
+regex = "1.1.6"

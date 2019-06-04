@@ -29,18 +29,7 @@ fn main() {
         None => return,
     };
 
-    for car in cars.iter() {
-        println!("{:?}", car);
-    }
-
     let (norm_car, x_min, x_max, y_min, y_max) = utils::normalization::normalize_vec(&cars);
-
-    println!("x {} {}", x_min, x_max);
-    println!("y {} {}", y_min, y_max);
-
-    for car in norm_car.iter() {
-        println!("{:?}", car);
-    }
 
     let mut theta0: f32 = 0.;
     let mut theta1: f32 = 0.;
@@ -81,6 +70,8 @@ fn main() {
     println!("t0 {} t1 {}", theta0, theta1);
 
     utils::plot::plot_records_with_linear_line(&cars, Some((theta0, theta1)));
+
+    utils::thetas::save_thetas(&theta0, &theta1);
 }
 
 fn error_func(t0: &f32, t1: &f32, ve: &Vec<(f32, f32)>) -> f32 {
