@@ -1,20 +1,32 @@
-use std::env;
+extern crate clap;
+
 mod utils;
 
-const LEARNING_RATE : f32 = 0.1;
-const OBJECTIVE_ERROR : f32 = 0.0001;
+use clap::{App, Arg};
+
+const LEARNING_RATE: f32 = 0.1;
+const OBJECTIVE_ERROR: f32 = 0.0001;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let matches = App::new("ft_linear_regression")
+        .version("1.0")
+        .author("Joseph Priour <jpriou>")
+        .about("Do some linear regression based on csv input and save result in file")
+        .arg(
+            Arg::with_name("FILE")
+                .short("f")
+                .long("file")
+                .required(true)
+                .help("csv input file")
+                .takes_value(true),
+        )
+        .get_matches();
 
-    if args.len() != 2 {
-        println!("You must provide a filepath");
-        return
-    }
+    let pathfile = String::from(matches.values_of("FILE").unwrap().nth(0).unwrap());
 
-    let cars = match utils::csv::get_records(&args[1]) {
+    let cars = match utils::csv::get_records(&pathfile) {
         Some(cars) => cars,
-        None => return
+        None => return,
     };
 
     for car in cars.iter() {
@@ -30,10 +42,10 @@ fn main() {
         println!("{:?}", car);
     }
 
-    let mut theta0 : f32 = 0.;
-    let mut theta1 : f32 = 0.;
+    let mut theta0: f32 = 0.;
+    let mut theta1: f32 = 0.;
 
-    let mut prev : f32 = error_func(&theta0, &theta1, &norm_car);
+    let mut prev: f32 = error_func(&theta0, &theta1, &norm_car);
 
     let mut i = 0;
 
@@ -60,7 +72,7 @@ fn main() {
         }
         prev = new_error;
         i += 1;
-    }   
+    }
 
     theta0 = y_min + (y_max - y_min) * (theta0 - theta1 * (x_min) / (x_max - x_min));
     theta1 = theta1 * (y_max - y_min) / (x_max - x_min);
@@ -71,7 +83,7 @@ fn main() {
     utils::plot::plot_records_with_linear_line(&cars, Some((theta0, theta1)));
 }
 
-fn error_func(t0 : & f32, t1 : & f32, ve : & Vec<(f32, f32)>) -> f32 {
+fn error_func(t0: &f32, t1: &f32, ve: &Vec<(f32, f32)>) -> f32 {
     let mut res = 0.0;
 
     for (x, y) in ve {

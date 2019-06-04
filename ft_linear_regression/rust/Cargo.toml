@@ -13,3 +13,4 @@ path = "src/bin/train.rs"
 [dependencies]
 csv = "1"
 textplots = "0.4.1"
+clap = "2.33.0"

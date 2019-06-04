@@ -1,5 +1,4 @@
-
-pub fn normalize_vec(ve : & Vec<(f32, f32)>) -> (Vec<(f32, f32)>, f32, f32, f32, f32) {
+pub fn normalize_vec(ve: &Vec<(f32, f32)>) -> (Vec<(f32, f32)>, f32, f32, f32, f32) {
     let mut x_min = std::f32::MAX;
     let mut x_max = std::f32::MIN;
     let mut y_min = std::f32::MAX;
