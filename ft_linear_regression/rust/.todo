@@ -3,5 +3,7 @@ To do list...
 
 ✔ Use awesome cli parsers @done(19-06-04 13:25)
 ✔ Save and load thetas in a file @done(19-06-04 14:12)
-☐ Read the project pdf
+✔ Read the project pdf @done(19-06-04 14:25)
 ☐ Do the the predict program
+☐ Add some bonus with arguments (train & predict)
+☐ Find a way to unable warnings

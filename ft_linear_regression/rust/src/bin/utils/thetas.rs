@@ -31,8 +31,11 @@ pub fn load_thetas() -> Option<(f32, f32)> {
     let mut file = match File::open(FILE_SAVE) {
         Ok(f) => f,
         Err(_) => {
-            eprintln!("The file may not exist. Consider training before.");
-            return None;
+            eprintln!(
+                "The file {} may not exist. Consider training before.",
+                FILE_SAVE
+            );
+            return Some((DEF_THETA0, DEF_THETA1));
         }
     };
     let mut contents = String::new();

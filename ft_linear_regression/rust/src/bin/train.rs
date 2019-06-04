@@ -6,6 +6,7 @@ use clap::{App, Arg};
 
 const LEARNING_RATE: f32 = 0.1;
 const OBJECTIVE_ERROR: f32 = 0.0001;
+const LIMIT_ITER: u32 = 10000;
 
 fn main() {
     let matches = App::new("ft_linear_regression")
@@ -34,9 +35,9 @@ fn main() {
     let mut theta0: f32 = 0.;
     let mut theta1: f32 = 0.;
 
-    let mut prev: f32 = error_func(&theta0, &theta1, &norm_car);
+    let mut actu_error: f32 = error_func(&theta0, &theta1, &norm_car);
 
-    let mut i = 0;
+    let mut i: u32 = 0;
 
     loop {
         let mut tmp0 = 0.;
@@ -55,19 +56,28 @@ fn main() {
 
         theta0 -= tmp0;
         theta1 -= tmp1;
-        let new_error = error_func(&theta0, &theta1, &norm_car);
-        if (new_error - prev).abs() < OBJECTIVE_ERROR {
+        let next_error = error_func(&theta0, &theta1, &norm_car);
+        if (next_error - actu_error).abs() < OBJECTIVE_ERROR || i >= LIMIT_ITER {
+            actu_error = next_error;
             break;
         }
-        prev = new_error;
+        actu_error = next_error;
         i += 1;
+    }
+
+    if i >= LIMIT_ITER {
+        eprintln!("The function doesn't converge rapidly");
+        eprintln!("Consider changing the learning rate");
+        return;
     }
 
     theta0 = y_min + (y_max - y_min) * (theta0 - theta1 * (x_min) / (x_max - x_min));
     theta1 = theta1 * (y_max - y_min) / (x_max - x_min);
 
     println!("Nb tours : {}", i);
-    println!("t0 {} t1 {}", theta0, theta1);
+    println!("Precision : {}", actu_error);
+    println!("t0 : {}", theta0);
+    println!("t1 : {}", theta1);
 
     utils::plot::plot_records_with_linear_line(&cars, Some((theta0, theta1)));
 

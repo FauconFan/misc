@@ -8,5 +8,6 @@ fn main() {
         Some((t0, t1)) => (t0, t1),
     };
 
-    println!("{} {}", t0, t1);
+    println!("t0 : {}", t0);
+    println!("t1 : {}", t1);
 }
