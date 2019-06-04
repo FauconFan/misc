@@ -1,3 +1,5 @@
 rendu
 *.o
 *.class
+*.lock
+**/target

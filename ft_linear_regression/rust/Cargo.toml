@@ -1,0 +1,15 @@
+[package]
+name = "ft_linear_regression"
+version = "0.1.0"
+
+[[bin]]
+name = "predict"
+path = "src/bin/predict.rs"
+
+[[bin]]
+name = "train"
+path = "src/bin/train.rs"
+
+[dependencies]
+csv = "1"
+textplots = "0.4.1"
