@@ -5,10 +5,12 @@ use self::regex::Regex;
 use std::fs::File;
 use std::io::prelude::*;
 
+#[allow(dead_code)]
 const FILE_SAVE: &str = ".save_thetas.txt";
 const DEF_THETA0: f32 = 0.;
 const DEF_THETA1: f32 = 0.;
 
+#[allow(dead_code)]
 pub fn save_thetas(theta0: &f32, theta1: &f32) {
     let mut file = match File::create(FILE_SAVE) {
         Ok(f) => f,
@@ -27,6 +29,7 @@ pub fn save_thetas(theta0: &f32, theta1: &f32) {
     println!("Save thetas in the file {}", FILE_SAVE);
 }
 
+#[allow(dead_code)]
 pub fn load_thetas() -> Option<(f32, f32)> {
     let mut file = match File::open(FILE_SAVE) {
         Ok(f) => f,

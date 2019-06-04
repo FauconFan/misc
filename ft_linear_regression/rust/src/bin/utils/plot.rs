@@ -5,10 +5,12 @@ const HEIGHT_CHART: u32 = 100;
 
 use self::textplots::{Chart, Plot, Shape};
 
+#[allow(dead_code)]
 pub fn plot_records(ve: &Vec<(f32, f32)>) {
     hidden_plot_record(&ve, None);
 }
 
+#[allow(dead_code)]
 pub fn plot_records_with_linear_line(ve: &Vec<(f32, f32)>, thetas: Option<(f32, f32)>) {
     hidden_plot_record(&ve, thetas);
 }

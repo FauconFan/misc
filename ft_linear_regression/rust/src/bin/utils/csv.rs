@@ -3,6 +3,7 @@ use std::io::BufReader;
 
 extern crate csv;
 
+#[allow(dead_code)]
 pub fn get_records(path: &String) -> Option<Vec<(f32, f32)>> {
     let mut vec = Vec::new();
     let f = match File::open(path) {
