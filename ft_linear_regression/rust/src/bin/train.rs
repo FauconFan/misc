@@ -9,10 +9,10 @@ const OBJECTIVE_ERROR: f32 = 0.0001;
 const LIMIT_ITER: u32 = 10000;
 
 fn main() {
-    let matches = App::new("ft_linear_regression")
+    let matches = App::new("ft_linear_regression (train)")
         .version("1.0")
         .author("Joseph Priour <jpriou>")
-        .about("Do some linear regression based on csv input and save result in file")
+        .about("Do some linear regression training based on csv input and save result in file")
         .arg(
             Arg::with_name("FILE")
                 .short("f")
@@ -21,15 +21,47 @@ fn main() {
                 .help("csv input file")
                 .takes_value(true),
         )
+        .arg(
+            Arg::with_name("PLOT")
+                .short("p")
+                .long("plot")
+                .help("plot the input data file"),
+        )
+        .arg(
+            Arg::with_name("PLOT_LINE")
+                .short("l")
+                .long("line")
+                .help("plot the input data file with line"),
+        )
         .get_matches();
 
     let pathfile = String::from(matches.values_of("FILE").unwrap().nth(0).unwrap());
+    let do_plot = matches.is_present("PLOT");
+    let do_plot_line = matches.is_present("PLOT_LINE");
 
     let cars = match utils::csv::get_records(&pathfile) {
         Some(cars) => cars,
         None => return,
     };
 
+    let (theta0, theta1) = match train(&cars) {
+        None => {
+            return;
+        }
+        Some((t0, t1)) => (t0, t1),
+    };
+
+    if do_plot {
+        utils::plot::plot_records(&cars);
+    }
+    if do_plot_line {
+        utils::plot::plot_records_with_linear_line(&cars, &theta0, &theta1);
+    }
+
+    utils::thetas::save_thetas(&theta0, &theta1);
+}
+
+fn train(cars: &Vec<(f32, f32)>) -> Option<(f32, f32)> {
     let (norm_car, x_min, x_max, y_min, y_max) = utils::normalization::normalize_vec(&cars);
 
     let mut theta0: f32 = 0.;
@@ -68,7 +100,7 @@ fn main() {
     if i >= LIMIT_ITER {
         eprintln!("The function doesn't converge rapidly");
         eprintln!("Consider changing the learning rate");
-        return;
+        return None;
     }
 
     theta0 = y_min + (y_max - y_min) * (theta0 - theta1 * (x_min) / (x_max - x_min));
@@ -78,10 +110,7 @@ fn main() {
     println!("Precision : {}", actu_error);
     println!("t0 : {}", theta0);
     println!("t1 : {}", theta1);
-
-    utils::plot::plot_records_with_linear_line(&cars, Some((theta0, theta1)));
-
-    utils::thetas::save_thetas(&theta0, &theta1);
+    return Some((theta0, theta1));
 }
 
 fn error_func(t0: &f32, t1: &f32, ve: &Vec<(f32, f32)>) -> f32 {

@@ -30,8 +30,13 @@ pub fn save_thetas(theta0: &f32, theta1: &f32) {
 }
 
 #[allow(dead_code)]
-pub fn load_thetas() -> Option<(f32, f32)> {
-    let mut file = match File::open(FILE_SAVE) {
+pub fn load_thetas(thetas_file: Option<&str>) -> Option<(f32, f32)> {
+    let file_save = match thetas_file {
+        None => FILE_SAVE,
+        Some(f) => f,
+    };
+
+    let mut file = match File::open(&file_save) {
         Ok(f) => f,
         Err(_) => {
             eprintln!(

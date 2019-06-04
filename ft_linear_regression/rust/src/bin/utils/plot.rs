@@ -7,32 +7,19 @@ use self::textplots::{Chart, Plot, Shape};
 
 #[allow(dead_code)]
 pub fn plot_records(ve: &Vec<(f32, f32)>) {
-    hidden_plot_record(&ve, None);
-}
-
-#[allow(dead_code)]
-pub fn plot_records_with_linear_line(ve: &Vec<(f32, f32)>, thetas: Option<(f32, f32)>) {
-    hidden_plot_record(&ve, thetas);
-}
-
-fn hidden_plot_record(ve: &Vec<(f32, f32)>, thetas: Option<(f32, f32)>) {
     let (mi, ma) = get_min_max_of_x(&ve);
-
-    // default chart
     Chart::new(WIDTH_CHART, HEIGHT_CHART, mi, ma)
         .lineplot(Shape::Lines(&ve[..]))
         .display();
+}
 
-    // chart with line
-    match thetas {
-        None => (),
-        Some((t0, t1)) => {
-            Chart::new(WIDTH_CHART, HEIGHT_CHART, mi, ma)
-                .lineplot(Shape::Lines(&ve[..]))
-                .lineplot(Shape::Lines(&[(mi, t0 + t1 * mi), (ma, t0 + t1 * ma)]))
-                .display();
-        }
-    };
+#[allow(dead_code)]
+pub fn plot_records_with_linear_line(ve: &Vec<(f32, f32)>, t0: &f32, t1: &f32) {
+    let (mi, ma) = get_min_max_of_x(&ve);
+    Chart::new(WIDTH_CHART, HEIGHT_CHART, mi, ma)
+        .lineplot(Shape::Lines(&ve[..]))
+        .lineplot(Shape::Lines(&[(mi, t0 + t1 * mi), (ma, t0 + t1 * ma)]))
+        .display();
 }
 
 fn get_min_max_of_x(ve: &Vec<(f32, f32)>) -> (f32, f32) {

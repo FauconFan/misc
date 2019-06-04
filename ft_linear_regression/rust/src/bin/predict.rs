@@ -1,7 +1,26 @@
+extern crate clap;
+
 mod utils;
 
+use clap::{App, Arg};
+
 fn main() {
-    let (t0, t1) = match utils::thetas::load_thetas() {
+    let matches = App::new("ft_linear_regression (predict)")
+        .version("1.0")
+        .author("Joseph Priour <jpriou>")
+        .about("Do some linear regression prediction based on saved file and print result")
+        .arg(
+            Arg::with_name("THETAS")
+                .short("t")
+                .long("thetas")
+                .help("thetas file")
+                .takes_value(true),
+        )
+        .get_matches();
+
+    let thetas_file = matches.value_of("THETAS");
+
+    let (t0, t1) = match utils::thetas::load_thetas(thetas_file) {
         None => {
             return;
         }
