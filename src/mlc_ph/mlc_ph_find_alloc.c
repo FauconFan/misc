@@ -1,0 +1,8 @@
+#include "ft_malloc.h"
+
+void    *mlc_ph_find_alloc(t_mlc_ph * ph, size_t len) {
+    t_mlc_block *block;
+
+    block = (t_mlc_block *) (ph + 1);
+    return (mlc_block_find_alloc(block, ph->len_page - sizeof(t_mlc_ph), len));
+}

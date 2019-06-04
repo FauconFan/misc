@@ -9,11 +9,15 @@
 #define TRUE                1
 #define FALSE               0
 
+#define STR_OF_BOOL(b)      ((b) ? "TRUE" : "FALSE")
+
 #define TINY_MAX            64
 #define SMALL_MAX           3072
 
 #define DEFAULT_MIN_ALLOC   100
 // #define PAGE_BUFFER         10
+
+typedef unsigned char   t_bool;
 
 // mlc_block stands for malloc blocks
 typedef struct  s_mlc_block {
@@ -21,10 +25,12 @@ typedef struct  s_mlc_block {
     uint8_t     is_free;
 }               t_mlc_block;
 
+#define NEXT_BLOCK(blk) ((t_mlc_block *)((char *)blk + blk->len_block))
+
 // mlc_ph stands for malloc_page_header.
 typedef struct  s_mlc_ph {
-    size_t              len_page;
     struct s_mlc_ph     * next_page;
+    size_t              len_page;
 }               t_mlc_ph;
 
 // Global structures
@@ -41,8 +47,14 @@ extern t_mlc_main   * g_mlc_main;
 t_mlc_main  * mlc_main_get(void);
 
 t_mlc_ph    *mlc_ph_new(size_t size);
+void        mlc_print(t_mlc_ph * ph);
+void        *mlc_ph_find_alloc(t_mlc_ph * ph, size_t len);
+t_bool      mlc_ph_find_free(t_mlc_ph * ph, void * ptr);
 
 void        mlc_block_init(void * v, size_t remain_tot);
+void        mlc_block_print(t_mlc_block * block, size_t remain);
+void       *mlc_block_find_alloc(t_mlc_block * block, size_t remain, size_t size);
+t_bool      mlc_block_find_free(t_mlc_block * block, size_t remain, void * ptr);
 
 // Utils
 
@@ -51,6 +63,7 @@ void    * mmap_good_size(size_t * size);
 
 // print_utils.c
 void    ft_putstr(char * str);
-void    ft_put_uint(unsigned int nb);
+void    ft_put_uint(unsigned long int nb);
+void    ft_put_addr(void * v);
 
 #endif

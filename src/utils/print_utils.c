@@ -9,7 +9,7 @@ void    ft_putstr(char * str) {
     write(1, str, len);
 }
 
-void    ft_put_uint(unsigned int nb) {
+void    ft_put_uint(unsigned long int nb) {
     size_t l;
     size_t t;
     char buff[42];
@@ -30,4 +30,9 @@ void    ft_put_uint(unsigned int nb) {
     buff[l] = '\n';
     l++;
     write(1, buff, l);
+}
+
+void    ft_put_addr(void * v) {
+    ft_putstr("addr : ");
+    ft_put_uint((unsigned long int)v);
 }
