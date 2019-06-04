@@ -8,4 +8,3 @@ To do list...
 ✔ Add some bonus with arguments (train & predict) @done(19-06-04 15:18)
 ✔ Find a way to unable warnings @done(19-06-04 14:43)
 ✔ Find more dataset files @done(19-06-04 14:58)
-☐ Do some abstraction to avoid mileage,km in csv reader but also in thetas save/load process

@@ -10,7 +10,7 @@ pub fn plot_records(ve: &Vec<(f32, f32)>) {
     let (mi, ma) = get_min_max_of_x(&ve);
     Chart::new(WIDTH_CHART, HEIGHT_CHART, mi, ma)
         .lineplot(Shape::Lines(&ve[..]))
-        .display();
+        .nice();
 }
 
 #[allow(dead_code)]
@@ -19,7 +19,7 @@ pub fn plot_records_with_linear_line(ve: &Vec<(f32, f32)>, t0: &f32, t1: &f32) {
     Chart::new(WIDTH_CHART, HEIGHT_CHART, mi, ma)
         .lineplot(Shape::Lines(&ve[..]))
         .lineplot(Shape::Lines(&[(mi, t0 + t1 * mi), (ma, t0 + t1 * ma)]))
-        .display();
+        .nice();
 }
 
 fn get_min_max_of_x(ve: &Vec<(f32, f32)>) -> (f32, f32) {

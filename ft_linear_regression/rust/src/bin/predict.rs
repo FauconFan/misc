@@ -30,7 +30,7 @@ fn main() {
     println!("t0 : {}", t0);
     println!("t1 : {}", t1);
 
-    println!("What is your mileage ?");
+    println!("What is your mileage (input) ?");
 
     let mut buffer = String::new();
     match std::io::stdin().read_line(&mut buffer) {
@@ -57,8 +57,8 @@ fn main() {
     let price = t0 + t1 * mileage;
 
     if price > 0. {
-        println!("The price must be around {}", price);
+        println!("The price (output) must be around {}", price);
     } else {
-        println!("The car must be free !!! (or {})", price);
+        println!("The car must be free !!! (or the output is just {})", price);
     }
 }

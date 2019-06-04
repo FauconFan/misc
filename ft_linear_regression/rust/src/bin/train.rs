@@ -4,7 +4,7 @@ mod utils;
 
 use clap::{App, Arg};
 
-const LEARNING_RATE: f32 = 0.1;
+const DEF_LEARNING_RATE: f32 = 0.1;
 const OBJECTIVE_ERROR: f32 = 0.0001;
 const LIMIT_ITER: u32 = 10000;
 
@@ -33,18 +33,35 @@ fn main() {
                 .long("line")
                 .help("plot the input data file with line"),
         )
+        .arg(
+            Arg::with_name("LEARNING_RATE")
+                .short("r")
+                .long("learning-rate")
+                .help("set the learning rate")
+                .takes_value(true),
+        )
         .get_matches();
 
     let pathfile = String::from(matches.values_of("FILE").unwrap().nth(0).unwrap());
     let do_plot = matches.is_present("PLOT");
     let do_plot_line = matches.is_present("PLOT_LINE");
+    let learning_rate = match matches.value_of("LEARNING_RATE") {
+        None => DEF_LEARNING_RATE,
+        Some(st_f) => match st_f.parse::<f32>() {
+            Ok(f) => f,
+            Err(e) => {
+                eprintln!("Error when parsing learning rate {}", e);
+                return;
+            }
+        },
+    };
 
     let cars = match utils::csv::get_records(&pathfile) {
         Some(cars) => cars,
         None => return,
     };
 
-    let (theta0, theta1) = match train(&cars) {
+    let (theta0, theta1) = match train(&cars, &learning_rate) {
         None => {
             return;
         }
@@ -61,7 +78,7 @@ fn main() {
     utils::thetas::save_thetas(&theta0, &theta1);
 }
 
-fn train(cars: &Vec<(f32, f32)>) -> Option<(f32, f32)> {
+fn train(cars: &Vec<(f32, f32)>, learning_rate: &f32) -> Option<(f32, f32)> {
     let (norm_car, x_min, x_max, y_min, y_max) = utils::normalization::normalize_vec(&cars);
 
     let mut theta0: f32 = 0.;
@@ -70,6 +87,8 @@ fn train(cars: &Vec<(f32, f32)>) -> Option<(f32, f32)> {
     let mut actu_error: f32 = error_func(&theta0, &theta1, &norm_car);
 
     let mut i: u32 = 0;
+
+    println!("Learning rate : {}", learning_rate);
 
     loop {
         let mut tmp0 = 0.;
@@ -80,11 +99,8 @@ fn train(cars: &Vec<(f32, f32)>) -> Option<(f32, f32)> {
             tmp1 += (theta0 + theta1 * mileage - price) * mileage;
         }
 
-        tmp0 *= 1. / (norm_car.len() as f32);
-        tmp1 *= 1. / (norm_car.len() as f32);
-
-        tmp0 *= LEARNING_RATE;
-        tmp1 *= LEARNING_RATE;
+        tmp0 *= learning_rate * 1. / (norm_car.len() as f32);
+        tmp1 *= learning_rate * 1. / (norm_car.len() as f32);
 
         theta0 -= tmp0;
         theta1 -= tmp1;
@@ -98,7 +114,7 @@ fn train(cars: &Vec<(f32, f32)>) -> Option<(f32, f32)> {
     }
 
     if i >= LIMIT_ITER {
-        eprintln!("The function doesn't converge rapidly");
+        eprintln!("The function doesn't converge rapidly or doesn't converge at all");
         eprintln!("Consider changing the learning rate");
         return None;
     }
