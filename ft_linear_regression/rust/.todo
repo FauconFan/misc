@@ -7,4 +7,5 @@ To do list...
 ✔ Do the the predict program @done(19-06-04 14:43)
 ☐ Add some bonus with arguments (train & predict)
 ✔ Find a way to unable warnings @done(19-06-04 14:43)
-☐ Find more dataset files
+✔ Find more dataset files @done(19-06-04 14:58)
+☐ Do some abstraction to avoid mileage,km in csv reader but also in thetas save/load process
