@@ -1,0 +1,10 @@
+#include "ft_malloc.h"
+
+void    mlc_main_print(t_mlc_main * main) {
+    ft_put_str_ln("TINY:");
+    mlc_ph_print(main->tn_header);
+    ft_put_str_ln("SMALL:");
+    mlc_ph_print(main->sm_header);
+    ft_put_str_ln("LARGE:");
+    mlc_ph_print(main->lrg_header);
+}

@@ -56,6 +56,7 @@ SRC_FILES = \
 			api/calloc.c \
 			api/show_alloc_mem.c \
 			mlc_main/mlc_main_get.c \
+			mlc_main/mlc_main_print.c \
 			mlc_ph/mlc_ph_new.c \
 			mlc_ph/mlc_ph_find_alloc.c \
 			mlc_ph/mlc_ph_find_free.c \
@@ -64,8 +65,10 @@ SRC_FILES = \
 			mlc_block/mlc_block_find_alloc.c \
 			mlc_block/mlc_block_find_free.c \
 			mlc_block/mlc_block_print.c \
+			utils/print/ft_put_addr.c \
+			utils/print/ft_put_str.c \
+			utils/print/ft_put_uint.c \
 			utils/mmap_utils.c \
-			utils/print_utils.c \
 
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_FILES))
 

@@ -45,9 +45,10 @@ typedef struct  s_mlc_main {
 extern t_mlc_main   * g_mlc_main;
 
 t_mlc_main  * mlc_main_get(void);
+void          mlc_main_print(t_mlc_main * main);
 
 t_mlc_ph    *mlc_ph_new(size_t size);
-void        mlc_print(t_mlc_ph * ph);
+void        mlc_ph_print(t_mlc_ph * ph);
 void        *mlc_ph_find_alloc(t_mlc_ph * ph, size_t len);
 t_bool      mlc_ph_find_free(t_mlc_ph * ph, void * ptr);
 
@@ -61,9 +62,11 @@ t_bool      mlc_block_find_free(t_mlc_block * block, size_t remain, void * ptr);
 // mmap_utils.c
 void    * mmap_good_size(size_t * size);
 
-// print_utils.c
-void    ft_putstr(char * str);
+// print utils
+void    ft_put_str(char * str);
+void    ft_put_str_ln(char * str);
 void    ft_put_uint(unsigned long int nb);
+void    ft_put_uint16(unsigned long int nb);
 void    ft_put_addr(void * v);
 
 #endif

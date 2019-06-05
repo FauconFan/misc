@@ -3,18 +3,18 @@ Todo List
 
 Mandatory part:
     ☐ Faire un peu de documentation (dans le .h uniquement)
-    ☐ Faire l'implémentation de la liste simplement châiné pour tiny et small
-        ☐ Parcours (recherche dispo + existing)
-        ☐ Ajout
-        ☐ Suppression (remplacement correct)
+    ✔ Faire l'implémentation de la liste simplement châiné pour tiny et small @done(19-06-05 12:52)
+        ✔ Parcours (recherche dispo + existing) @done(19-06-05 12:41)
+        ✔ Ajout @done(19-06-05 12:41)
+        ✔ Suppression (remplacement correct) @done(19-06-05 12:41)
     ☐ Faire l'implémentation pour les larges
         ☐ Parcours (existing)
         ☐ Ajout
         ☐ Suppresion (juste rendre libre)
     ✔ Faire une abstraction pour allouer des pages, multiples de getpagesize... @done(19-05-12 18:18)
     ☐ Mise en place de la structure principale
-        ☐ getpagesize
-        ☐ vérification defines
+        ✔ getpagesize @done(19-06-05 12:52)
+        ✔ vérification defines @done(19-06-05 12:52)
         ☐ préallocation (calcul dynamique)
     ☐ Gestion de la bufferisation de pages
         ☐ get_min_of

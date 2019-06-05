@@ -23,6 +23,5 @@ void    * mlc_block_find_alloc(t_mlc_block * block, size_t remain, size_t size) 
     if (new_size % 16 != 0) {
         new_size += 16 - (new_size % 16);
     }
-    ft_put_uint(new_size);
     return (search(block, remain, new_size));
 }

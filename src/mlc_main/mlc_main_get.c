@@ -52,18 +52,18 @@ t_mlc_main  * mlc_main_get(void) {
         // for (int i = 0; i < PAGE_BUFFER; ++i)
         //     g_mlc_main->buffer[i] = NULL;
     }
-    mlc_print(g_mlc_main->tn_header);
+    mlc_main_print(g_mlc_main);
     void *v1 = mlc_ph_find_alloc(g_mlc_main->tn_header, 2);
     void *v2 = mlc_ph_find_alloc(g_mlc_main->tn_header, 2);
     void *v3 = mlc_ph_find_alloc(g_mlc_main->tn_header, 3985);
+    void *v4 = mlc_ph_find_alloc(g_mlc_main->tn_header, 3985);
     (void)v1;
     (void)v2;
     (void)v3;
-    mlc_print(g_mlc_main->tn_header);
-    mlc_ph_find_free(g_mlc_main->tn_header, v2);
-    mlc_print(g_mlc_main->tn_header);
-    mlc_ph_find_free(g_mlc_main->tn_header, v3);
-    mlc_print(g_mlc_main->tn_header);
+    (void)v4;
+    mlc_main_print(g_mlc_main);
+    mlc_ph_find_free(g_mlc_main->tn_header, v4);
+    mlc_main_print(g_mlc_main);
     return (g_mlc_main);
 }
 
