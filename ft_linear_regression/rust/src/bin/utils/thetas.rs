@@ -71,7 +71,7 @@ pub fn load_thetas(thetas_file: Option<&str>) -> Option<(f32, f32)> {
     }
 
     if vec.len() != 2 {
-        eprintln!("Too few/many values, read {}, required 2", vec.len());
+        eprintln!("Found few/many values, read {}, required 2", vec.len());
         return None;
     }
 
