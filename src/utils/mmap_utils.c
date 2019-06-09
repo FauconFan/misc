@@ -16,9 +16,7 @@ void    * mmap_good_size(size_t * size) {
     pgsize = getpagesize();
     if (pgsize <= 0 || size == NULL || *size == 0)
         return (NULL);
-    if (*size % pgsize != 0) {
-        *size += (pgsize - (*size % pgsize));
-    }
+    size_multiple_page(size);
     v = mmap_brut(*size);
     if (v == NULL)
         *size = 0;

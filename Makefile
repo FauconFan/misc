@@ -69,6 +69,7 @@ SRC_FILES = \
 			utils/print/ft_put_str.c \
 			utils/print/ft_put_uint.c \
 			utils/mmap_utils.c \
+			utils/size_utils.c \
 
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_FILES))
 

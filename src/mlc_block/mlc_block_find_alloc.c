@@ -20,8 +20,6 @@ void    * mlc_block_find_alloc(t_mlc_block * block, size_t remain, size_t size) 
     size_t new_size;
 
     new_size = size + sizeof(t_mlc_block);
-    if (new_size % 16 != 0) {
-        new_size += 16 - (new_size % 16);
-    }
+    size_multiple_16(&new_size);
     return (search(block, remain, new_size));
 }

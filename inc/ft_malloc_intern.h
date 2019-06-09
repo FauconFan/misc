@@ -62,6 +62,10 @@ t_bool      mlc_block_find_free(t_mlc_block * block, size_t remain, void * ptr);
 // mmap_utils.c
 void    * mmap_good_size(size_t * size);
 
+// size_utils.c
+void    size_multiple_16(size_t * new_len);
+void    size_multiple_page(size_t * new_len);
+
 // print utils
 void    ft_put_str(char * str);
 void    ft_put_str_ln(char * str);

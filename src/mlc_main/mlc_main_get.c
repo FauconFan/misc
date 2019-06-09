@@ -22,8 +22,14 @@ static void process_nb_pages_init(
                 int pgsize,
                 size_t * npage_tn,
                 size_t * npage_sm) {
-    *npage_tn = process_nb_pages_min(pgsize, 1) * pgsize;
-    *npage_sm = process_nb_pages_min(pgsize, TINY_MAX + 1) * pgsize;
+    size_t  min_size;
+
+    min_size = 1;
+    size_multiple_16(&min_size);
+    *npage_tn = process_nb_pages_min(pgsize, min_size) * pgsize;
+    min_size = TINY_MAX;
+    size_multiple_16(&min_size);
+    *npage_sm = process_nb_pages_min(pgsize, min_size) * pgsize;
 }
 
 t_mlc_main  * mlc_main_get(void) {
