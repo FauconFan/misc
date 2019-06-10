@@ -7,19 +7,21 @@ Mandatory part:
         ✔ Parcours (recherche dispo + existing) @done(19-06-05 12:41)
         ✔ Ajout @done(19-06-05 12:41)
         ✔ Suppression (remplacement correct) @done(19-06-05 12:41)
-    ☐ Faire l'implémentation pour les larges
-        ☐ Parcours (existing)
-        ☐ Ajout
-        ☐ Suppresion (juste rendre libre)
+    ✔ Faire l'implémentation pour les larges @done(19-06-10 16:27)
+        ✔ Parcours (existing) @done(19-06-10 16:27)
+        ✔ Ajout @done(19-06-10 16:27)
+        ✔ Suppresion (juste rendre libre) @done(19-06-10 16:27)
+    ☐ Faire le check de présence pour le free plutot que de tout parcourir
     ✔ Faire une abstraction pour allouer des pages, multiples de getpagesize... @done(19-05-12 18:18)
-    ☐ Mise en place de la structure principale
+    ✔ Mise en place de la structure principale @done(19-06-10 16:27)
         ✔ getpagesize @done(19-06-05 12:52)
         ✔ vérification defines @done(19-06-05 12:52)
-        ☐ préallocation (calcul dynamique)
+        ✔ préallocation (calcul dynamique) @done(19-06-10 16:27)
     ☐ Gestion de la bufferisation de pages
         ☐ get_min_of
         ☐ libérer quand trop
-    ☐ Faire le show_mem_alloc (en write only)
+    ✔ Faire le show_mem_alloc (en write only) @done(19-06-10 16:28)
 
 Bonus part:
     ☐ Faire le lock pour les pthreads (easy)
+    ☐ Faire un show mem hex alloc pas trop compliqué
