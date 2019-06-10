@@ -1,12 +1,12 @@
 #include "ft_malloc.h"
 
 void free(void * ptr) {
-    size_t  len;
-    void    *real;
+    t_mlc_main *env;
 
     if (ptr == NULL)
         return ;
-    real = ptr - sizeof(len);
-    len = *(size_t *)real;
-    munmap(real, len + sizeof(len));
+    env = mlc_main_get();
+    if (env == NULL)
+        return ;
+    mlc_main_find_free(env, ptr);    
 }

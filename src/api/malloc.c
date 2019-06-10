@@ -1,14 +1,16 @@
 #include "ft_malloc.h"
 
 void *malloc(size_t size) {
-    void    *v;
-    size_t  page;
+    t_mlc_main  *env;
+    t_mlc_block *blk;
 
     if (size == 0)
         return (NULL);
-    page = size + sizeof(size);
-    v = mmap_good_size(&page);
-    mlc_main_get();
-    *(size_t *)v = page - sizeof(size);
-    return (v + sizeof(size));
+    env = mlc_main_get();
+    if (env == NULL)
+        return (NULL);
+    blk = mlc_main_find_alloc(env, size);
+    if (blk == NULL)
+        return (NULL);
+    return (blk + 1);
 }

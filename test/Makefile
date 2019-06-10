@@ -32,6 +32,9 @@ FILES_NS = \
 # With Show
 FILES_WS = \
 			ws01_test5.c \
+			ws02_more.c \
+			ws03_free.c \
+			ws04_realloc.c \
 
 FILES_NS_ = $(addprefix files/, $(FILES_NS))
 FILES_WS_ = $(addprefix files/, $(FILES_WS))

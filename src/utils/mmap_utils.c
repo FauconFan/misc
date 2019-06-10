@@ -9,7 +9,7 @@ static void *mmap_brut(size_t size) {
     return (v);
 }
 
-void    * mmap_good_size(size_t * size) {
+void    * mmap_good_size(size_t * size, size_t mult) {
     int pgsize;
     void * v;
 
@@ -17,6 +17,8 @@ void    * mmap_good_size(size_t * size) {
     if (pgsize <= 0 || size == NULL || *size == 0)
         return (NULL);
     size_multiple_page(size);
+    if (mult > 1)
+        *size *= mult;
     v = mmap_brut(*size);
     if (v == NULL)
         *size = 0;

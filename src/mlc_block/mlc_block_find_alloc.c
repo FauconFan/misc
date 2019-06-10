@@ -1,6 +1,6 @@
 #include "ft_malloc.h"
 
-static void * search(t_mlc_block * block, size_t remain, size_t size) {
+static t_mlc_block * search(t_mlc_block * block, size_t remain, size_t size) {
     size_t len_next_block;
 
     if (block->is_free && size <= block->len_block) {
@@ -9,17 +9,13 @@ static void * search(t_mlc_block * block, size_t remain, size_t size) {
         block->len_block = size;
         if (len_next_block != 0)
             mlc_block_init((char *)block + block->len_block, len_next_block);
-        return (block + 1);
+        return (block);
     }
     if (remain > block->len_block)
         return (search(NEXT_BLOCK(block), remain - block->len_block, size));
     return (NULL);
 }
 
-void    * mlc_block_find_alloc(t_mlc_block * block, size_t remain, size_t size) {
-    size_t new_size;
-
-    new_size = size + sizeof(t_mlc_block);
-    size_multiple_16(&new_size);
-    return (search(block, remain, new_size));
+t_mlc_block    * mlc_block_find_alloc(t_mlc_block * block, size_t remain, size_t size) {
+    return (search(block, remain, size));
 }

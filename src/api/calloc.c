@@ -1,13 +1,11 @@
 #include "ft_malloc.h"
 
 void *calloc(size_t nmemb, size_t size) {
-    void * v;
-    size_t  len;
+    char * v;
     
-    len = nmemb * size;
-    v = malloc(len);
-    if (v == NULL)
-        return (NULL);
-    memset(v, 0, len);
+    v = malloc(nmemb * size);
+    for (size_t i = 0; i < nmemb * size; ++i) {
+        v[i] = 0;
+    }
     return (v);
 }

@@ -57,6 +57,8 @@ SRC_FILES = \
 			api/show_alloc_mem.c \
 			mlc_main/mlc_main_get.c \
 			mlc_main/mlc_main_print.c \
+			mlc_main/mlc_main_find_alloc.c \
+			mlc_main/mlc_main_find_free.c \
 			mlc_ph/mlc_ph_new.c \
 			mlc_ph/mlc_ph_find_alloc.c \
 			mlc_ph/mlc_ph_find_free.c \
@@ -120,8 +122,15 @@ test: $(NAME_LN)
 
 SINGLE = test/files/ns02_single
 SINGLE_DOWN = files/ns02_single
+COMPLEX = test/files/ws01_test5
+COMPLEX_DOWN = files/ws01_test5
 
 .PHONY: single
 single:
 	make -C test $(SINGLE_DOWN)
 	$(RUN_SH) $(SINGLE)
+
+.PHONY: complex
+complex:
+	make -C test $(COMPLEX_DOWN)
+	$(RUN_SH) $(COMPLEX)

@@ -24,10 +24,10 @@ static void process_nb_pages_init(
                 size_t * npage_sm) {
     size_t  min_size;
 
-    min_size = 1;
+    min_size = TINY_MAX - 1;
     size_multiple_16(&min_size);
     *npage_tn = process_nb_pages_min(pgsize, min_size) * pgsize;
-    min_size = TINY_MAX;
+    min_size = SMALL_MAX - 1;
     size_multiple_16(&min_size);
     *npage_sm = process_nb_pages_min(pgsize, min_size) * pgsize;
 }
@@ -41,11 +41,11 @@ t_mlc_main  * mlc_main_get(void) {
             return (NULL);
         process_nb_pages_init(getpagesize(), page_size + 0, page_size + 1);
         len = sizeof(*g_mlc_main);
-        if ((g_mlc_main = mmap_good_size(&len)) == NULL)
+        if ((g_mlc_main = mmap_good_size(&len, 1)) == NULL)
             return (NULL);
         g_mlc_main->len_main = len;
-        g_mlc_main->tn_header = mlc_ph_new(page_size[0]);
-        g_mlc_main->sm_header = mlc_ph_new(page_size[1]);
+        g_mlc_main->tn_header = mlc_ph_new(page_size[0], 1);
+        g_mlc_main->sm_header = mlc_ph_new(page_size[1], 1);
         g_mlc_main->lrg_header = NULL;
         if (g_mlc_main->tn_header == NULL || g_mlc_main->sm_header == NULL) {
             if (g_mlc_main->tn_header != NULL)
@@ -58,18 +58,6 @@ t_mlc_main  * mlc_main_get(void) {
         // for (int i = 0; i < PAGE_BUFFER; ++i)
         //     g_mlc_main->buffer[i] = NULL;
     }
-    mlc_main_print(g_mlc_main);
-    void *v1 = mlc_ph_find_alloc(g_mlc_main->tn_header, 2);
-    void *v2 = mlc_ph_find_alloc(g_mlc_main->tn_header, 2);
-    void *v3 = mlc_ph_find_alloc(g_mlc_main->tn_header, 3985);
-    void *v4 = mlc_ph_find_alloc(g_mlc_main->tn_header, 3985);
-    (void)v1;
-    (void)v2;
-    (void)v3;
-    (void)v4;
-    mlc_main_print(g_mlc_main);
-    mlc_ph_find_free(g_mlc_main->tn_header, v4);
-    mlc_main_print(g_mlc_main);
     return (g_mlc_main);
 }
 

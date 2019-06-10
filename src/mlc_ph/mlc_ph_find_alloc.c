@@ -1,6 +1,6 @@
 #include "ft_malloc.h"
 
-void    *mlc_ph_find_alloc(t_mlc_ph * ph, size_t len) {
+t_mlc_block  *mlc_ph_find_alloc(t_mlc_ph * ph, size_t len, size_t mult) {
     t_mlc_block *block;
     void    *v;
 
@@ -9,10 +9,10 @@ void    *mlc_ph_find_alloc(t_mlc_ph * ph, size_t len) {
     if (v != NULL)
         return (v);
     if (ph->next_page == NULL) {
-        ph->next_page = mlc_ph_new(len);
+        ph->next_page = mlc_ph_new(len, mult);
         if (ph->next_page == NULL) {
             return (NULL);
         }
     }
-    return (mlc_ph_find_alloc(ph->next_page, len));
+    return (mlc_ph_find_alloc(ph->next_page, len, mult));
 }
