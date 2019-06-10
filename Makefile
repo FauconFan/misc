@@ -40,14 +40,16 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 MAKEFLAGS += --no-print-directory
 
 CC = gcc
-RUN_SH = ./run.sh
 
 SRC_FOLDER = src/
 
 CFLAGS = -Wall -Wextra -Werror -fPIC
+SRC_CFLAGS = -fPIC
+BIN_CFLAGS = -shared
 IFLAGS = -I .
 LFLAGS =
-FLAGS = $(CFLAGS) $(IFLAGS)
+SRC_FLAGS = $(SRC_CFLAGS) $(CFLAGS) $(IFLAGS)
+BIN_FLAGS = $(BIN_CFLAGS) $(CFLAGS) $(IFLAGS)
 
 SRC_FILES = \
 			api/malloc.c \
@@ -84,7 +86,7 @@ all: $(NAME_LN)
 
 $(NAME): $(OBJ)
 	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
-	@$(CC) -shared -Wl,-soname,$(NAME) $(FLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
+	@$(CC) $(BIN_FLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
 	@printf "%s\\n" "$@"
 
 $(NAME_LN): $(NAME)
@@ -95,7 +97,7 @@ $(NAME_LN): $(NAME)
 
 %.o: %.c
 	@printf "\\t%sCC%s\\t" "$(_GREEN)" "$(_END)"
-	@$(CC) $(FLAGS) -c $? -o $@
+	@$(CC) $(SRC_FLAGS) -c $? -o $@
 	@printf "%s\\n" "$?"
 
 .PHONY: clean
@@ -119,18 +121,3 @@ re: fclean all
 .PHONY: test
 test: $(NAME_LN)
 	make -C test run
-
-SINGLE = test/files/ns02_single
-SINGLE_DOWN = files/ns02_single
-COMPLEX = test/files/ws01_test5
-COMPLEX_DOWN = files/ws01_test5
-
-.PHONY: single
-single:
-	make -C test $(SINGLE_DOWN)
-	$(RUN_SH) $(SINGLE)
-
-.PHONY: complex
-complex:
-	make -C test $(COMPLEX_DOWN)
-	$(RUN_SH) $(COMPLEX)

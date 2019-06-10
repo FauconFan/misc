@@ -6,7 +6,7 @@ size_t      mlc_ph_find_free(t_mlc_ph * ph, void * ptr) {
     size_t  res;
 
     if (ph == NULL || ptr == NULL)
-        return (9);
+        return (0);
     block = (t_mlc_block *) (ph + 1);
     remain = ph->len_page - sizeof(t_mlc_ph);
     res = mlc_block_find_free(block, remain, ptr);

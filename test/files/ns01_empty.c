@@ -1,7 +1,7 @@
 #include "test.h"
 
 int main(void) {
-    start_test();
-    end_test();
+    // start_test();
+    // end_test();
     return (0);
 }

@@ -10,8 +10,11 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 CC = gcc
 RUN_SH = ./run.sh
+RUN_PATH = ..
+MALLOC_PATH = ..
 
 SRC_FOLDER = src/
+BIN_FOLDER = bin/
 
 CFLAGS =
 IFLAGS = -I .
@@ -35,9 +38,11 @@ FILES_WS = \
 			ws02_more.c \
 			ws03_free.c \
 			ws04_realloc.c \
+			ws05_test2.c \
+			ws06_empty.c \
 
-FILES_NS_ = $(addprefix files/, $(FILES_NS))
-FILES_WS_ = $(addprefix files/, $(FILES_WS))
+FILES_NS_ = $(addprefix $(BIN_FOLDER), $(FILES_NS))
+FILES_WS_ = $(addprefix $(BIN_FOLDER), $(FILES_WS))
 
 PROGS_NS = $(FILES_NS_:%.c=%)
 PROGS_WS = $(FILES_WS_:%.c=%)
@@ -49,14 +54,16 @@ PROGS = $(PROGS_NS) $(PROGS_WS)
 .PHONY: all
 all: $(PROGS)
 
-files/ns%: files/ns%.c measuring.c
+$(BIN_FOLDER)ns%: files/ns%.c
+	@mkdir -p $(BIN_FOLDER)
 	@printf "\\t%sCC%s\\t" "$(_GREEN)" "$(_END)"
-	@$(CC) $(FLAGS) $? -o $@
+	@$(CC) $(FLAGS) $? measuring.c -o $@
 	@printf "%s\\n" "$<"
 
-files/ws%: files/ws%.c measuring.c
+$(BIN_FOLDER)ws%: files/ws%.c
+	@mkdir -p $(BIN_FOLDER)
 	@printf "\\t%sCC%s\\t" "$(_GREEN)" "$(_END)"
-	@$(CC) $(FLAGS) -I .. $? -o $@ -L.. -lft_malloc
+	@$(CC) $(FLAGS) -I $(MALLOC_PATH) $? measuring.c -o $@ -L$(MALLOC_PATH) -lft_malloc
 	@printf "%s\\n" "$<"
 
 .PHONY: clean
@@ -72,17 +79,17 @@ re: fclean all
 
 .PHONY: run
 run: all
-	@make ..
+	@make $(MALLOC_PATH)
 	@$(foreach prog, $(PROGS_NS), \
 		printf "\t===== %s =====\\n" "$(prog)"; \
 		printf "\tNormal\\n"; \
 		./$(prog); \
 		printf "\tFt_malloc\\n"; \
-		(cd ..; $(RUN_SH) ./test/$(prog)); \
+		(cd $(RUN_PATH); $(RUN_SH) ./test/$(prog)); \
 	)
 	@$(foreach prog, $(PROGS_WS), \
 		printf "\t===== %s =====\\n" "$(prog)"; \
 		printf "\tFt_malloc\\n"; \
-		(cd ..; $(RUN_SH) ./test/$(prog)); \
+		(cd $(RUN_PATH); $(RUN_SH) ./test/$(prog)); \
 	)
 

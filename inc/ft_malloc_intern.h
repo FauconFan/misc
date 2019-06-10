@@ -11,7 +11,7 @@
 
 #define STR_OF_BOOL(b)      ((b) ? "true" : "false")
 
-#define TINY_MAX            64
+#define TINY_MAX            512
 #define SMALL_MAX           3072
 
 #define DEFAULT_MIN_ALLOC   100
