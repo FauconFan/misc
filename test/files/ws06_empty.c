@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ws06_empty.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/10 14:57:19 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/10 14:57:19 by jpriou           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "test.h"
 #include <ft_malloc.h>
 
-int main()
+int	main(void)
 {
-    start_test();
-    show_alloc_mem();
-    end_test();
-    return (0);
+	start_test();
+	show_alloc_mem();
+	end_test();
+	return (0);
 }

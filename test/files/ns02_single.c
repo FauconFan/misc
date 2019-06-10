@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ns02_single.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/10 14:51:50 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/10 14:51:51 by jpriou           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "test.h"
 #include <stdlib.h>
 
-int main(void) {
-    start_test();
+int	main(void)
+{
+	void	*v;
 
-    void    *v;
-
-    v = malloc(1);
-    free(v);
-
-    end_test();
-    return (0);
+	start_test();
+	v = malloc(1);
+	free(v);
+	end_test();
+	return (0);
 }

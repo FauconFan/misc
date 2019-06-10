@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_put_addr.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/10 14:42:53 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/10 14:42:59 by jpriou           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_malloc.h"
 
-void    ft_put_addr(void * v) {
-    ft_put_str("0x");
-    ft_put_uint((unsigned long int)v);
+void	ft_put_addr(void *v)
+{
+	ft_put_str("0x");
+	ft_put_uint((unsigned long int)v);
 }
