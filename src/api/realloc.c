@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:48:18 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 12:04:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 13:42:20 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void		*realloc(void *ptr, size_t len_out)
 
 	if (ptr == NULL)
 		return (malloc(len_out));
+	if (len_out == 0)
+		len_out = 16;
 	env = ft_env_get();
 	next = NULL;
 	if (env != NULL)
@@ -42,7 +44,7 @@ void		*realloc(void *ptr, size_t len_out)
 		len_in = ft_env_find_free(env, ptr);
 		if (len_in == 0)
 			return (NULL);
-		blk = ft_env_find_alloc(env, len_out);
+		blk = ft_env_alloc(env, len_out);
 		if (blk != NULL)
 		{
 			next = (char *)(blk + 1);

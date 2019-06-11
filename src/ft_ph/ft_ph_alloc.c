@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ph_find_alloc.c                                 :+:      :+:    :+:   */
+/*   ft_ph_alloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:39:21 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 11:56:52 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 13:49:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-t_blk	*ft_ph_find_alloc(t_ph *ph, size_t len, size_t mult)
+t_blk	*ft_ph_alloc(t_ph *ph, size_t len, size_t mult)
 {
 	t_blk		*block;
 	void		*v;
 
 	block = (t_blk *)(ph + 1);
-	v = ft_blk_find_alloc(block, ph->len_page - sizeof(t_ph), len);
+	v = ft_blk_alloc(block, ph->len_page - sizeof(t_ph), len);
 	if (v != NULL)
 		return (v);
 	if (ph->next_page == NULL)
@@ -27,5 +27,5 @@ t_blk	*ft_ph_find_alloc(t_ph *ph, size_t len, size_t mult)
 		if (ph->next_page == NULL)
 			return (NULL);
 	}
-	return (ft_ph_find_alloc(ph->next_page, len, mult));
+	return (ft_ph_alloc(ph->next_page, len, mult));
 }

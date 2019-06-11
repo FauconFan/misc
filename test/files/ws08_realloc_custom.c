@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   ws08_realloc_custom.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:20:14 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 13:42:20 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/10 14:56:00 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/11 13:30:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_malloc.h"
+#include "test.h"
+#include <ft_malloc.h>
+#include <string.h>
 
-void	*malloc(size_t size)
+void	print(char *str)
 {
-	t_env		*env;
-	t_blk		*blk;
+	write(1, str, strlen(str));
+	write(1, "\n", 1);
+}
 
-	if (size == 0)
-		return (NULL);
-	env = ft_env_get();
-	if (env == NULL)
-		return (NULL);
-	blk = ft_env_alloc(env, size);
-	if (blk == NULL)
-		return (NULL);
-	return (blk + 1);
+int		main(void)
+{
+	char	*addr1;
+	char	*addr3;
+
+	start_test();
+	addr1 = malloc(16);
+	addr1[0] = 0;
+	strcpy(addr1, "Test");
+	print(addr1);
+	addr3 = realloc(addr1, 32);
+	strcat(addr3, " et de deux");
+	print(addr3);
+	end_test();
+	return (0);
 }

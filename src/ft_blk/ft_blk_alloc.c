@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_blk_find_alloc.c                                :+:      :+:    :+:   */
+/*   ft_blk_alloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:26:29 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 11:51:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 13:49:46 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ static t_blk	*search(t_blk *block, size_t remain, size_t size)
 	return (NULL);
 }
 
-t_blk			*ft_blk_find_alloc(
-						t_blk *block,
-						size_t remain,
-						size_t size)
+t_blk			*ft_blk_alloc(t_blk *block, size_t remain, size_t size)
 {
 	return (search(block, remain, size));
 }

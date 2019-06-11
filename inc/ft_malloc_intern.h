@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 11:59:14 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 13:52:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef unsigned char		t_bool;
 # define MULT_PAGE_LARGE	1
 
 /*
-**_block stands for the header of blocks
+**	t_blk stands for the header of blocks
 **	The actual space given to user if the multiple of 16 next to
 **	the pointer of this struct
 **	We generally returns block + 1
@@ -92,7 +92,7 @@ typedef struct				s_blk
 # define NEXT_BLOCK(blk)	((t_blk *)((char *)blk + blk->len_block))
 
 /*
-**	ph stands for malloc_page_header.
+**	t_ph stands for malloc_page_header.
 **
 **	It is managed as a simple linked list with the len of page
 **	in the front of the page.
@@ -111,7 +111,7 @@ typedef	struct				s_ph
 }							t_ph;
 
 /*
-**	Global structures
+**	Global structure
 */
 
 typedef struct				s_env {
@@ -129,7 +129,7 @@ extern t_env				*g_ft_env;
 **	get() returns an allocated t_env structure,
 **			and initialized it in first use.
 **	print() is used by show_alloc_mem
-**	find_alloc() find an empty space of siwe len in pages
+**	alloc() find an empty space of siwe len in pages
 **			and allocated new pages if there is no space
 **	find_free() find a pointer in all of the pages and free it
 **			returns 0 if no pointer has been found
@@ -138,7 +138,7 @@ extern t_env				*g_ft_env;
 
 t_env						*ft_env_get(void);
 void						ft_env_print(t_env *main);
-t_blk						*ft_env_find_alloc(t_env *main, size_t len);
+t_blk						*ft_env_alloc(t_env *main, size_t len);
 size_t						ft_env_find_free(t_env *main, void *ptr);
 
 /*
@@ -146,7 +146,7 @@ size_t						ft_env_find_free(t_env *main, void *ptr);
 **
 **	new() calls mmap
 **	print() for show_alloc_mem
-**	find_alloc() search free space to allocate
+**	alloc() search free space to allocate
 **	find_free() free space in the actual page.
 **			returns 0 if no pointer has been found
 **				or the size of the fresh free space
@@ -154,7 +154,7 @@ size_t						ft_env_find_free(t_env *main, void *ptr);
 
 t_ph						*ft_ph_new(size_t size, size_t mult);
 void						ft_ph_print(t_ph *ph);
-t_blk						*ft_ph_find_alloc(
+t_blk						*ft_ph_alloc(
 								t_ph *ph,
 								size_t len,
 								size_t mult);
@@ -165,7 +165,7 @@ size_t						ft_ph_find_free(t_ph *ph, void *ptr);
 **
 **	init() initiliawze fields in the given void * pointer
 **	print() for show_alloc_mem
-**	find_alloc() search free space to allocate
+**	alloc() search free space to allocate
 **	find_free() free space in the actual page.
 **			returns 0 if no pointer has been found
 **				or the size of the fresh free space
@@ -173,7 +173,7 @@ size_t						ft_ph_find_free(t_ph *ph, void *ptr);
 
 void						ft_blk_init(void *v, size_t remain_tot);
 void						ft_blk_print(t_blk *block, size_t remain);
-t_blk						*ft_blk_find_alloc(
+t_blk						*ft_blk_alloc(
 								t_blk *block,
 								size_t remain,
 								size_t size);

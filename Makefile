@@ -59,14 +59,14 @@ SRC_FILES = \
 			api/show_alloc_mem.c \
 			ft_env/ft_env_get.c \
 			ft_env/ft_env_print.c \
-			ft_env/ft_env_find_alloc.c \
+			ft_env/ft_env_alloc.c \
 			ft_env/ft_env_find_free.c \
 			ft_ph/ft_ph_new.c \
-			ft_ph/ft_ph_find_alloc.c \
+			ft_ph/ft_ph_alloc.c \
 			ft_ph/ft_ph_find_free.c \
 			ft_ph/ft_ph_print.c \
 			ft_blk/ft_blk_init.c \
-			ft_blk/ft_blk_find_alloc.c \
+			ft_blk/ft_blk_alloc.c \
 			ft_blk/ft_blk_find_free.c \
 			ft_blk/ft_blk_print.c \
 			utils/print/ft_put_addr.c \

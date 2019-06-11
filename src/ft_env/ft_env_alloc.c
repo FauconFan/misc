@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_find_alloc.c                                :+:      :+:    :+:   */
+/*   ft_env_alloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:30:15 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 11:59:35 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 13:49:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static t_blk	*alloc_page_then_search(
 		if (*page_ptr == NULL)
 			return (NULL);
 	}
-	return (ft_ph_find_alloc(*page_ptr, len, mult));
+	return (ft_ph_alloc(*page_ptr, len, mult));
 }
 
-t_blk			*ft_env_find_alloc(t_env *main, size_t len)
+t_blk			*ft_env_alloc(t_env *main, size_t len)
 {
 	len += sizeof(t_blk);
 	size_multiple_16(&len);

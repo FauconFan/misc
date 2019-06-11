@@ -42,6 +42,7 @@ FILES_WS = \
 			ws05_test2.c \
 			ws06_empty.c \
 			ws07_custom.c \
+			ws08_realloc_custom.c \
 
 FILES_NS_ = $(addprefix $(BIN_FOLDER), $(FILES_NS))
 FILES_WS_ = $(addprefix $(BIN_FOLDER), $(FILES_WS))

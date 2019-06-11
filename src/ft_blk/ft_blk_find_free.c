@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:28:01 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 11:51:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 13:48:47 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ static size_t	search_free(t_blk *prev, size_t remain, void *ptr)
 	return (search_free(NEXT_BLOCK(prev), remain - prev->len_block, ptr));
 }
 
-size_t			ft_blk_find_free(
-					t_blk *block,
-					size_t remain,
-					void *ptr)
+size_t			ft_blk_find_free(t_blk *block, size_t remain, void *ptr)
 {
 	size_t	res;
 
