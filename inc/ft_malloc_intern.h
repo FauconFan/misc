@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 14:16:13 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 16:57:09 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef unsigned char		t_bool;
 */
 
 # define TINY_MAX			512
-# define SMALL_MAX			3072
+# define SMALL_MAX			65536
 
 # define DEFAULT_MIN_ALLOC	100
 # define MULT_PAGE_TINY		4
