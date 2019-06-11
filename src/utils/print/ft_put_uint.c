@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:43:39 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 14:46:12 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 10:05:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,16 @@ void			ft_put_uint(unsigned long int nb)
 void			ft_put_uint16(unsigned long int nb)
 {
 	ft_put_uint_base(nb, "0123456789ABCDEF");
+}
+
+void			ft_put_uint_ln(unsigned long int nb)
+{
+	ft_put_uint(nb);
+	write(1, "\n", 1);
+}
+
+void			ft_put_uint16_ln(unsigned long int nb)
+{
+	ft_put_uint16(nb);
+	write(1, "\n", 1);
 }

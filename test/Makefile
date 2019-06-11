@@ -31,6 +31,7 @@ FILES_NS = \
 			ns06_test3.c \
 			ns07_test3bis.c \
 			ns08_test4.c \
+			ns09_custom.c \
 
 # With Show
 FILES_WS = \
@@ -40,6 +41,7 @@ FILES_WS = \
 			ws04_realloc.c \
 			ws05_test2.c \
 			ws06_empty.c \
+			ws07_custom.c \
 
 FILES_NS_ = $(addprefix $(BIN_FOLDER), $(FILES_NS))
 FILES_WS_ = $(addprefix $(BIN_FOLDER), $(FILES_WS))
