@@ -11,7 +11,7 @@ Mandatory part:
         ✔ Parcours (existing) @done(19-06-10 16:27)
         ✔ Ajout @done(19-06-10 16:27)
         ✔ Suppresion (juste rendre libre) @done(19-06-10 16:27)
-    ☐ Faire le check de présence pour le free plutot que de tout parcourir
+    ✔ Faire le check de présence pour le free plutot que de tout parcourir @done(19-06-11 10:52)
     ✔ Faire une abstraction pour allouer des pages, multiples de getpagesize... @done(19-05-12 18:18)
     ✔ Mise en place de la structure principale @done(19-06-10 16:27)
         ✔ getpagesize @done(19-06-05 12:52)
