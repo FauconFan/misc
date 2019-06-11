@@ -25,5 +25,5 @@ void			size_multiple_16(size_t *new_len)
 
 void			size_multiple_page(size_t *new_len)
 {
-	size_multiple_n(new_len, getpagesize());
+	size_multiple_n(new_len, (size_t)getpagesize());
 }

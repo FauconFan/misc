@@ -18,22 +18,19 @@ static int			verify_defines(void)
 		return (1);
 	if (TINY_MAX >= SMALL_MAX)
 		return (1);
-	if (TINY_MAX % 8 != 0)
-		return (1);
-	if (SMALL_MAX % 8 != 0)
-		return (1);
 	return (0);
 }
 
-static size_t		process_nb_pages_min(int pgsize, size_t min)
+static size_t		process_nb_pages_min(size_t pgsize, size_t min)
 {
-	return (1 +
-		(sizeof(t_blk) + min) * DEFAULT_MIN_ALLOC
-			/ (pgsize - sizeof(t_ph)));
+	size_t	denum;
+
+	denum = pgsize - sizeof(t_ph);
+	return (1 + (sizeof(t_blk) + min) * DEFAULT_MIN_ALLOC / denum);
 }
 
 static void			process_nb_pages_init(
-					int pgsize,
+					size_t pgsize,
 					size_t *npage_tn,
 					size_t *npage_sm)
 {
@@ -78,7 +75,7 @@ t_env				*ft_env_get(void)
 	{
 		if (verify_defines() == 1)
 			return (NULL);
-		process_nb_pages_init(getpagesize(), page_size + 0, page_size + 1);
+		process_nb_pages_init((size_t)getpagesize(), page_size + 0, page_size + 1);
 		len = sizeof(*g_ft_env);
 		g_ft_env = main_alloc(&len, page_size);
 	}

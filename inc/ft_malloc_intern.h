@@ -87,9 +87,10 @@ typedef struct				s_blk
 {
 	size_t			len_block;
 	uint8_t			is_free;
+	char			pad[7];
 }							t_blk;
 
-# define NEXT_BLOCK(blk)	((t_blk *)((char *)blk + blk->len_block))
+# define NEXT_BLOCK(blk)	((t_blk *)(((char *)blk) + blk->len_block))
 
 /*
 **	t_ph stands for malloc_page_header.
@@ -115,7 +116,7 @@ typedef	struct				s_ph
 */
 
 typedef struct				s_env {
-	int		len_main;
+	size_t	len_main;
 	t_ph	*tn_header;
 	t_ph	*sm_header;
 	t_ph	*lrg_header;

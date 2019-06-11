@@ -39,11 +39,11 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 MAKEFLAGS += --no-print-directory
 
-CC = gcc
+CC = clang
 
 SRC_FOLDER = src/
 
-CFLAGS = -Wall -Wextra -Werror -fPIC
+CFLAGS = -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align -fPIC
 SRC_CFLAGS = -fPIC
 BIN_CFLAGS = -shared
 IFLAGS = -I .
