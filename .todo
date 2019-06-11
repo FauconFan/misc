@@ -2,7 +2,8 @@
 Todo List
 
 Mandatory part:
-    ☐ Faire un peu de documentation (dans le .h uniquement)
+    ✔ Faire un peu de documentation (dans le .h uniquement) @done(19-06-11 12:01)
+        ✔ Changer les noms et faire un truc propre @done(19-06-11 12:01)
     ✔ Faire l'implémentation de la liste simplement châiné pour tiny et small @done(19-06-05 12:52)
         ✔ Parcours (recherche dispo + existing) @done(19-06-05 12:41)
         ✔ Ajout @done(19-06-05 12:41)

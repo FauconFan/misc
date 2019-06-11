@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:18:39 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 10:11:01 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 11:59:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	free(void *ptr)
 {
-	t_mlc_main	*env;
+	t_env	*env;
 
 	if (ptr == NULL)
 		return ;
-	env = mlc_main_get();
+	env = ft_env_get();
 	if (env == NULL)
 		return ;
-	mlc_main_find_free(env, ptr);
+	ft_env_find_free(env, ptr);
 }

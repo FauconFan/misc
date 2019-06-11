@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:25:32 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 14:25:37 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 11:59:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	show_alloc_mem(void)
 {
-	t_mlc_main		*env;
+	t_env		*env;
 
-	env = mlc_main_get();
+	env = ft_env_get();
 	if (env == NULL)
 		ft_put_str_ln("No env");
 	else
-		mlc_main_print(env);
+		ft_env_print(env);
 }

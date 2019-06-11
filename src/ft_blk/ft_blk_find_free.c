@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlc_block_find_free.c                              :+:      :+:    :+:   */
+/*   ft_blk_find_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:28:01 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 14:28:05 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 11:51:53 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-static t_bool	fusion_with_next(t_mlc_block *prev, size_t remain)
+static t_bool	fusion_with_next(t_blk *prev, size_t remain)
 {
 	if (remain <= prev->len_block)
 		return (FALSE);
@@ -22,7 +22,7 @@ static t_bool	fusion_with_next(t_mlc_block *prev, size_t remain)
 	return (TRUE);
 }
 
-static size_t	search_free(t_mlc_block *prev, size_t remain, void *ptr)
+static size_t	search_free(t_blk *prev, size_t remain, void *ptr)
 {
 	size_t	res;
 
@@ -36,13 +36,13 @@ static size_t	search_free(t_mlc_block *prev, size_t remain, void *ptr)
 			fusion_with_next(prev, remain);
 		else
 			fusion_with_next(NEXT_BLOCK(prev), remain - prev->len_block);
-		return (res - sizeof(t_mlc_block));
+		return (res - sizeof(t_blk));
 	}
 	return (search_free(NEXT_BLOCK(prev), remain - prev->len_block, ptr));
 }
 
-size_t			mlc_block_find_free(
-					t_mlc_block *block,
+size_t			ft_blk_find_free(
+					t_blk *block,
 					size_t remain,
 					void *ptr)
 {
@@ -60,7 +60,7 @@ size_t			mlc_block_find_free(
 		}
 		else
 			block->is_free = TRUE;
-		return (res - sizeof(t_mlc_block));
+		return (res - sizeof(t_blk));
 	}
 	return (search_free(block, remain, ptr));
 }

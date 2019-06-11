@@ -57,18 +57,18 @@ SRC_FILES = \
 			api/realloc.c \
 			api/calloc.c \
 			api/show_alloc_mem.c \
-			mlc_main/mlc_main_get.c \
-			mlc_main/mlc_main_print.c \
-			mlc_main/mlc_main_find_alloc.c \
-			mlc_main/mlc_main_find_free.c \
-			mlc_ph/mlc_ph_new.c \
-			mlc_ph/mlc_ph_find_alloc.c \
-			mlc_ph/mlc_ph_find_free.c \
-			mlc_ph/mlc_ph_print.c \
-			mlc_block/mlc_block_init.c \
-			mlc_block/mlc_block_find_alloc.c \
-			mlc_block/mlc_block_find_free.c \
-			mlc_block/mlc_block_print.c \
+			ft_env/ft_env_get.c \
+			ft_env/ft_env_print.c \
+			ft_env/ft_env_find_alloc.c \
+			ft_env/ft_env_find_free.c \
+			ft_ph/ft_ph_new.c \
+			ft_ph/ft_ph_find_alloc.c \
+			ft_ph/ft_ph_find_free.c \
+			ft_ph/ft_ph_print.c \
+			ft_blk/ft_blk_init.c \
+			ft_blk/ft_blk_find_alloc.c \
+			ft_blk/ft_blk_find_free.c \
+			ft_blk/ft_blk_print.c \
 			utils/print/ft_put_addr.c \
 			utils/print/ft_put_str.c \
 			utils/print/ft_put_uint.c \

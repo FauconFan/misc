@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlc_main_print.c                                   :+:      :+:    :+:   */
+/*   ft_ph_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:38:44 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 14:38:45 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/10 14:40:26 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/11 11:57:35 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-void	mlc_main_print(t_mlc_main *main)
+t_ph	*ft_ph_new(size_t size, size_t mult)
 {
-	ft_put_str_ln("TINY:");
-	mlc_ph_print(main->tn_header);
-	ft_put_str_ln("SMALL:");
-	mlc_ph_print(main->sm_header);
-	ft_put_str_ln("LARGE:");
-	mlc_ph_print(main->lrg_header);
+	t_ph	*res;
+
+	res = (t_ph *)mmap_good_size(&size, mult);
+	if (res == NULL)
+		return (NULL);
+	res->len_page = size;
+	res->next_page = NULL;
+	ft_blk_init(res + 1, res->len_page - sizeof(t_ph));
+	return (res);
 }

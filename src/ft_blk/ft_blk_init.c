@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlc_ph_new.c                                       :+:      :+:    :+:   */
+/*   ft_blk_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:40:26 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 14:40:27 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/10 14:28:38 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/11 11:51:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-t_mlc_ph	*mlc_ph_new(size_t size, size_t mult)
+void	ft_blk_init(void *v, size_t remain_tot)
 {
-	t_mlc_ph	*res;
+	t_blk		*head_block;
 
-	res = (t_mlc_ph *)mmap_good_size(&size, mult);
-	if (res == NULL)
-		return (NULL);
-	res->len_page = size;
-	res->next_page = NULL;
-	mlc_block_init(res + 1, res->len_page - sizeof(t_mlc_ph));
-	return (res);
+	head_block = (t_blk *)v;
+	head_block->len_block = remain_tot;
+	head_block->is_free = TRUE;
 }

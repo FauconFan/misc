@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlc_main_find_free.c                               :+:      :+:    :+:   */
+/*   ft_blk_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:30:32 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 14:30:40 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/10 14:29:17 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/11 11:51:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-size_t	mlc_main_find_free(t_mlc_main *main, void *ptr)
+void	ft_blk_print(t_blk *block, size_t remain)
 {
-	size_t	res;
+	t_blk		*next;
 
-	res = mlc_ph_find_free(main->tn_header, ptr);
-	if (res != 0)
-		return (res);
-	res = mlc_ph_find_free(main->sm_header, ptr);
-	if (res != 0)
-		return (res);
-	return (mlc_ph_find_free(main->lrg_header, ptr));
+	ft_put_str("\tBLOCK => LEN = ");
+	ft_put_uint(block->len_block);
+	ft_put_str(", IS FREE = ");
+	ft_put_str_ln(STR_OF_BOOL(block->is_free));
+	if (block->len_block == 0)
+		return ;
+	if (block->len_block < remain)
+	{
+		next = (t_blk *)((char *)block + block->len_block);
+		remain -= block->len_block;
+		ft_blk_print(next, remain);
+	}
 }

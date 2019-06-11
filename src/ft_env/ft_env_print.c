@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlc_ph_find_alloc.c                                :+:      :+:    :+:   */
+/*   ft_env_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:39:21 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 14:39:21 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/11 11:45:32 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/11 11:59:55 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-t_mlc_block	*mlc_ph_find_alloc(t_mlc_ph *ph, size_t len, size_t mult)
+void	ft_env_print(t_env *main)
 {
-	t_mlc_block	*block;
-	void		*v;
-
-	block = (t_mlc_block *)(ph + 1);
-	v = mlc_block_find_alloc(block, ph->len_page - sizeof(t_mlc_ph), len);
-	if (v != NULL)
-		return (v);
-	if (ph->next_page == NULL)
-	{
-		ph->next_page = mlc_ph_new(len, mult);
-		if (ph->next_page == NULL)
-			return (NULL);
-	}
-	return (mlc_ph_find_alloc(ph->next_page, len, mult));
+	ft_put_str_ln("TINY:");
+	ft_ph_print(main->tn_header);
+	ft_put_str_ln("SMALL:");
+	ft_ph_print(main->sm_header);
+	ft_put_str_ln("LARGE:");
+	ft_ph_print(main->lrg_header);
 }

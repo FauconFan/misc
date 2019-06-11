@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlc_main_get.c                                     :+:      :+:    :+:   */
+/*   ft_env_get.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:38:03 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 15:10:52 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/11 11:46:09 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/11 12:04:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static int			verify_defines(void)
 static size_t		process_nb_pages_min(int pgsize, size_t min)
 {
 	return (1 +
-		(sizeof(t_mlc_block) + min) * DEFAULT_MIN_ALLOC
-			/ (pgsize - sizeof(t_mlc_ph)));
+		(sizeof(t_blk) + min) * DEFAULT_MIN_ALLOC
+			/ (pgsize - sizeof(t_ph)));
 }
 
 static void			process_nb_pages_init(
@@ -47,15 +47,15 @@ static void			process_nb_pages_init(
 	*npage_sm = process_nb_pages_min(pgsize, min_size) * pgsize;
 }
 
-static t_mlc_main	*main_alloc(size_t *len, size_t page_size[2])
+static t_env		*main_alloc(size_t *len, size_t page_size[2])
 {
-	t_mlc_main	*env;
+	t_env	*env;
 
 	if ((env = mmap_good_size(len, 1)) == NULL)
 		return (NULL);
 	env->len_main = *len;
-	env->tn_header = mlc_ph_new(page_size[0], 1);
-	env->sm_header = mlc_ph_new(page_size[1], 1);
+	env->tn_header = ft_ph_new(page_size[0], 1);
+	env->sm_header = ft_ph_new(page_size[1], 1);
 	env->lrg_header = NULL;
 	if (env->tn_header == NULL || env->sm_header == NULL)
 	{
@@ -69,20 +69,20 @@ static t_mlc_main	*main_alloc(size_t *len, size_t page_size[2])
 	return (env);
 }
 
-t_mlc_main			*mlc_main_get(void)
+t_env				*ft_env_get(void)
 {
 	size_t	len;
 	size_t	page_size[2];
 
-	if (g_mlc_main == NULL)
+	if (g_ft_env == NULL)
 	{
 		if (verify_defines() == 1)
 			return (NULL);
 		process_nb_pages_init(getpagesize(), page_size + 0, page_size + 1);
-		len = sizeof(*g_mlc_main);
-		g_mlc_main = main_alloc(&len, page_size);
+		len = sizeof(*g_ft_env);
+		g_ft_env = main_alloc(&len, page_size);
 	}
-	return (g_mlc_main);
+	return (g_ft_env);
 }
 
-t_mlc_main			*g_mlc_main = NULL;
+t_env			*g_ft_env = NULL;

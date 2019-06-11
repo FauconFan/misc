@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:48:18 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 15:10:29 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/11 12:04:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,21 @@ static void	copy_buffer(void *ptr, char *next, size_t len_out, size_t len_in)
 
 void		*realloc(void *ptr, size_t len_out)
 {
-	t_mlc_block	*blk;
-	t_mlc_main	*env;
+	t_blk		*blk;
+	t_env		*env;
 	char		*next;
 	size_t		len_in;
 
 	if (ptr == NULL)
 		return (malloc(len_out));
-	env = mlc_main_get();
+	env = ft_env_get();
 	next = NULL;
 	if (env != NULL)
 	{
-		len_in = mlc_main_find_free(env, ptr);
+		len_in = ft_env_find_free(env, ptr);
 		if (len_in == 0)
 			return (NULL);
-		blk = mlc_main_find_alloc(env, len_out);
+		blk = ft_env_find_alloc(env, len_out);
 		if (blk != NULL)
 		{
 			next = (char *)(blk + 1);
