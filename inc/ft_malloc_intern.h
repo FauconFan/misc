@@ -6,14 +6,22 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 17:13:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 17:59:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MALLOC_INTERN_H
 # define FT_MALLOC_INTERN_H
 
+
 /*
+**              ____________   __  ______    __    __    ____  ______
+**             / ____/_  __/  /  |/  /   |  / /   / /   / __ \/ ____/
+**            / /_    / /    / /|_/ / /| | / /   / /   / / / / /
+**           / __/   / /    / /  / / ___ |/ /___/ /___/ /_/ / /___
+**          /_/     /_/____/_/  /_/_/  |_/_____/_____/\____/\____/
+**                   /_____/
+**
 **	This file is the center of my implementation of malloc
 **
 **	My implementation is based on simple linked list
@@ -27,13 +35,39 @@
 **	Large list : large sized alloc (size greater than SMALL_MAX)
 **
 **
+**			Preallocation:
+**
 **	The lib process some preallocation page that is done in the first use
-**	of any function in the malloc family (except show_alloc_mem)
+**	of any function in the malloc family
 **
 **	When a page must be allocated we ask more dependant of the type
 **	For tiny page: We ask MULT_PAGE_TIBY * getpagesize() bytes
 **	For small page: We ask MULT_PAGE_SMALL * getpagesize() bytes
 **	For large page: We ask MULT_PAGE_LARGE * getpagesize() bytes
+**
+**			Defragmentation
+**
+**	The lib on each call of a free method (free or realloc) auto defragment
+**	by default the memmory. It means that if there is 2 continuous block
+**	unused by the user. It will fusion that 2 blocks.
+**	This operation is done in the find_free functions family.
+**
+**			Multi-threaded
+**
+**	All function exposed to the api use a mutex lock and unlock for thread safe
+**	applications.
+**
+**			Presumptions
+**
+**	I supposed that the system can not allocate a contiguous memmory of size
+**	greater that 64 To (i.e. 2^56).
+**
+**			Depedencies
+**
+**		- sys/mman.h, for mmap, and munmap
+**		- unistd.h, for getpagesize
+**		- stdint.h, for uint* family type
+**		- pthread.h, for multi threaded management
 */
 
 # include <sys/mman.h>
@@ -235,6 +269,7 @@ void						*mmap_good_size(size_t *size, size_t mult);
 
 void						size_multiple_16(size_t *new_len);
 void						size_multiple_page(size_t *new_len);
+t_bool						size_ok(size_t l);
 
 /*
 **	print utils
