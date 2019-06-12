@@ -75,6 +75,10 @@ SRC_FILES = \
 			utils/mmap_utils.c \
 			utils/size_utils.c \
 
+HEADER_FILES = \
+			ft_malloc.h \
+			inc/ft_malloc_intern.h \
+
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_FILES))
 
 OBJ = $(SRC:%.c=%.o)
@@ -95,10 +99,10 @@ $(NAME_LN): $(NAME)
 	@ln -s $(NAME) $(NAME_LN)
 	@printf "%s\\n" "$(NAME_LN)"
 
-%.o: %.c
+%.o: %.c $(HEADER_FILES)
 	@printf "\\t%sCC%s\\t" "$(_GREEN)" "$(_END)"
-	@$(CC) $(SRC_FLAGS) -c $? -o $@
-	@printf "%s\\n" "$?"
+	@$(CC) $(SRC_FLAGS) -c $< -o $@
+	@printf "%s\\n" "$<"
 
 .PHONY: clean
 clean:

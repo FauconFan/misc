@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 11:46:09 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 12:04:58 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 08:14:53 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ t_env				*ft_env_get(void)
 	{
 		if (verify_defines() == 1)
 			return (NULL);
-		process_nb_pages_init((size_t)getpagesize(), page_size + 0, page_size + 1);
+		process_nb_pages_init((size_t)getpagesize(),
+			page_size + 0,
+			page_size + 1);
 		len = sizeof(*g_ft_env);
 		g_ft_env = main_alloc(&len, page_size);
 	}
