@@ -6,14 +6,14 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:46:19 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 15:09:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 16:36:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEST_H
 # define TEST_H
 
-void	start_test();
-void	end_test();
+void	start_test(void);
+void	end_test(void);
 
 #endif

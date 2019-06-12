@@ -4,6 +4,7 @@ Todo List
 Mandatory part:
     ✔ Faire un peu de documentation (dans le .h uniquement) @done(19-06-11 12:01)
         ✔ Changer les noms et faire un truc propre @done(19-06-11 12:01)
+        ☐ Defragmentation documentation
     ✔ Faire l'implémentation de la liste simplement châiné pour tiny et small @done(19-06-05 12:52)
         ✔ Parcours (recherche dispo + existing) @done(19-06-05 12:41)
         ✔ Ajout @done(19-06-05 12:41)
@@ -21,7 +22,10 @@ Mandatory part:
     ✔ Gestion de la bufferisation de pages @done(19-06-12 13:32)
         ✔ libérer quand trop @done(19-06-12 13:32)
     ✔ Faire le show_mem_alloc (en write only) @done(19-06-10 16:28)
+    ☐ Verifier les size en entrée (pas decriture sur les 8 derniers bits) (> 64 To)
 
 Bonus part:
     ✔ Faire le lock pour les pthreads (easy) @done(19-06-12 14:02)
     ☐ Faire un show mem hex alloc pas trop compliqué
+
+Archive:
