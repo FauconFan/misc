@@ -23,5 +23,5 @@ Mandatory part:
     ✔ Faire le show_mem_alloc (en write only) @done(19-06-10 16:28)
 
 Bonus part:
-    ☐ Faire le lock pour les pthreads (easy)
+    ✔ Faire le lock pour les pthreads (easy) @done(19-06-12 14:02)
     ☐ Faire un show mem hex alloc pas trop compliqué

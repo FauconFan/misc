@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/12 13:14:33 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/12 13:56:00 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,11 +55,11 @@ CC = clang
 
 SRC_FOLDER = src/
 
-CFLAGS = -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align -fPIC
+CFLAGS = -D_REENTRANT -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align -fPIC
 SRC_CFLAGS = -fPIC
 BIN_CFLAGS = -shared
 IFLAGS = -I .
-LFLAGS =
+LFLAGS = -lpthread
 SRC_FLAGS = $(SRC_CFLAGS) $(CFLAGS) $(IFLAGS)
 BIN_FLAGS = $(BIN_CFLAGS) $(CFLAGS) $(IFLAGS)
 
@@ -132,7 +132,6 @@ fclean: clean
 	@echo "Library $(NAME) removed"
 	@rm -rf $(NAME_LN)
 	@echo "Symbolic link $(NAME_LN) removed"
-	@make -C test fclean
 
 .PHONY: re
 re: fclean all

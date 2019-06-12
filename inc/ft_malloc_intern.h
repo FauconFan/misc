@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 13:20:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 13:51:09 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # include <sys/mman.h>
 # include <unistd.h>
 # include <stdint.h>
+# include <pthread.h>
 
 /*
 **	General defines
@@ -127,6 +128,7 @@ typedef struct				s_env {
 }							t_env;
 
 extern t_env				*g_ft_env;
+extern pthread_mutex_t		g_ft_env_mutex;
 
 /*
 **	Functions used for the global t_env structure

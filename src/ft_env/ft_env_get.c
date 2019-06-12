@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 11:46:09 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 13:30:12 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 13:52:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,3 +92,4 @@ t_env				*ft_env_get(void)
 }
 
 t_env			*g_ft_env = NULL;
+pthread_mutex_t	g_ft_env_mutex = PTHREAD_MUTEX_INITIALIZER;

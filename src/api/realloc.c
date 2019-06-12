@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:48:18 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 13:31:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 13:53:36 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,18 @@ void		*realloc(void *ptr, size_t len_out)
 		return (malloc(len_out));
 	if (len_out == 0)
 		len_out = 16;
-	env = ft_env_get();
+	pthread_mutex_lock(&g_ft_env_mutex);
 	next = NULL;
-	if (env != NULL)
+	if ((env = ft_env_get()) != NULL
+		&& (len_in = ft_env_find_free(env, ptr)) != 0)
 	{
-		len_in = ft_env_find_free(env, ptr);
-		if (len_in == 0)
-			return (NULL);
-		blk = ft_env_alloc(env, len_out);
-		if (blk != NULL)
+		if ((blk = ft_env_alloc(env, len_out)) != NULL)
 		{
 			next = (char *)(blk + 1);
 			copy_buffer(ptr, next, len_out, len_in);
 		}
 		ft_env_clear(env);
 	}
+	pthread_mutex_unlock(&g_ft_env_mutex);
 	return (next);
 }

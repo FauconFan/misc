@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:18:20 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/10 14:18:27 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 13:53:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,29 @@
 
 void	*calloc(size_t nmemb, size_t size)
 {
-	char	*v;
-	size_t	i;
+	t_env		*env;
+	t_blk		*blk;
+	char		*v;
+	size_t		i;
 
-	v = malloc(nmemb * size);
-	i = 0;
-	while (i < nmemb * size)
+	pthread_mutex_lock(&g_ft_env_mutex);
+	blk = NULL;
+	env = ft_env_get();
+	if (env != NULL)
 	{
-		v[i] = 0;
-		++i;
+		blk = ft_env_alloc(env, size * nmemb);
+		if (blk != NULL)
+		{
+			blk++;
+			v = (char *)blk;
+			i = 0;
+			while (i < nmemb * size)
+			{
+				v[i] = 0;
+				++i;
+			}
+		}
 	}
-	return (v);
+	pthread_mutex_unlock(&g_ft_env_mutex);
+	return (blk);
 }
