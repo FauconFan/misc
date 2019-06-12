@@ -17,6 +17,8 @@ void	*malloc(size_t size)
 	t_env		*env;
 	t_blk		*blk;
 
+	if (size_ok(size) == FALSE)
+		return (NULL);
 	pthread_mutex_lock(&g_ft_env_mutex);
 	blk = NULL;
 	env = ft_env_get();

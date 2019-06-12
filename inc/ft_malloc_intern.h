@@ -272,6 +272,12 @@ void						size_multiple_page(size_t *new_len);
 t_bool						size_ok(size_t l);
 
 /*
+**	math_check.c
+*/
+
+t_bool						do_mult_overflow(size_t a, size_t b);
+
+/*
 **	print utils
 **
 **	Some helpers to print stuff with write

@@ -95,6 +95,7 @@ SRC_FILES = \
 			utils/print/ft_put_uint.c \
 			utils/mmap_utils.c \
 			utils/size_utils.c \
+			utils/math_check.c \
 
 HEADER_FILES = \
 			ft_malloc.h \

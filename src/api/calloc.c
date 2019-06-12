@@ -19,6 +19,8 @@ void	*calloc(size_t nmemb, size_t size)
 	char		*v;
 	size_t		i;
 
+	if (do_mult_overflow(nmemb, size) || size_ok(nmemb * size) == FALSE)
+		return (NULL);
 	pthread_mutex_lock(&g_ft_env_mutex);
 	blk = NULL;
 	env = ft_env_get();

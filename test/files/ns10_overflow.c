@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   size_utils.c                                       :+:      :+:    :+:   */
+/*   ns10_overflow.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:41:57 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 17:57:17 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/10 14:54:42 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/11 10:09:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_malloc.h"
+#include "test.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 
-static void		size_multiple_n(size_t *new_len, size_t n)
+void		print(char *str)
 {
-	if (*new_len % n != 0)
-		*new_len += n - (*new_len % n);
+	write(1, str, strlen(str));
 }
 
-void			size_multiple_16(size_t *new_len)
+int			main(void)
 {
-	size_multiple_n(new_len, 16);
-}
-
-void			size_multiple_page(size_t *new_len)
-{
-	size_multiple_n(new_len, (size_t)getpagesize());
-}
-
-t_bool			size_ok(size_t l)
-{
-	return ((l >> 56) == 0);
+	start_test();
+	char *addr = calloc((size_t)(1) << 42, (size_t)(1) << 42);
+	if (addr == NULL)
+		print("This is ok\n");
+	else
+		print("This is terribly bad\n");
+	end_test();
 }

@@ -43,6 +43,7 @@ FILES_NS = \
 			ns07_test3bis.c \
 			ns08_test4.c \
 			ns09_custom.c \
+			ns10_overflow.c \
 
 # With Show
 FILES_WS = \

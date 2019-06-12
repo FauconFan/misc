@@ -42,7 +42,7 @@ void		*realloc(void *ptr, size_t len_out)
 	if ((env = ft_env_get()) != NULL
 		&& (len_in = ft_env_find_free(env, ptr)) != 0)
 	{
-		if ((blk = ft_env_alloc(env, len_out)) != NULL)
+		if (size_ok(len_out) && (blk = ft_env_alloc(env, len_out)) != NULL)
 		{
 			next = (char *)(blk + 1);
 			copy_buffer(ptr, next, len_out, len_in);
