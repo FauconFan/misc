@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
+#    Updated: 2019/06/12 13:14:33 by jpriou           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #                       (
 #                         )     (
 #                  ___...(-------)-....___
@@ -61,10 +73,15 @@ SRC_FILES = \
 			ft_env/ft_env_print.c \
 			ft_env/ft_env_alloc.c \
 			ft_env/ft_env_find_free.c \
+			ft_env/ft_env_clear.c \
+			ft_env/ft_env_cache_len.c \
+			ft_env/ft_env_cache_get.c \
+			ft_env/ft_env_cache_put.c \
 			ft_ph/ft_ph_new.c \
 			ft_ph/ft_ph_alloc.c \
 			ft_ph/ft_ph_find_free.c \
 			ft_ph/ft_ph_print.c \
+			ft_ph/ft_ph_empty.c \
 			ft_blk/ft_blk_init.c \
 			ft_blk/ft_blk_alloc.c \
 			ft_blk/ft_blk_find_free.c \

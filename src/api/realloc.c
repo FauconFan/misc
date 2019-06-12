@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:48:18 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 13:42:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 13:31:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void		*realloc(void *ptr, size_t len_out)
 			next = (char *)(blk + 1);
 			copy_buffer(ptr, next, len_out, len_in);
 		}
+		ft_env_clear(env);
 	}
 	return (next);
 }

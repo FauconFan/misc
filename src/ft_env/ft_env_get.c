@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 11:46:09 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 08:14:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 13:30:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,13 @@ static void			process_nb_pages_init(
 static t_env		*main_alloc(size_t *len, size_t page_size[2])
 {
 	t_env	*env;
+	size_t	i;
 
 	if ((env = mmap_good_size(len, 1)) == NULL)
 		return (NULL);
 	env->len_main = *len;
-	env->tn_header = ft_ph_new(page_size[0], 1);
-	env->sm_header = ft_ph_new(page_size[1], 1);
+	env->tn_header = ft_ph_new(page_size[0], 1, NULL);
+	env->sm_header = ft_ph_new(page_size[1], 1, NULL);
 	env->lrg_header = NULL;
 	if (env->tn_header == NULL || env->sm_header == NULL)
 	{
@@ -62,6 +63,12 @@ static t_env		*main_alloc(size_t *len, size_t page_size[2])
 			munmap(env->tn_header, page_size[0]);
 		munmap(env, *len);
 		return (NULL);
+	}
+	i = 0;
+	while (i < BUFF_PAGE_CACHE)
+	{
+		env->tn_cache[i] = NULL;
+		env->sm_cache[i++] = NULL;
 	}
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 08:13:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 13:20:28 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef unsigned char		t_bool;
 # define MULT_PAGE_TINY		4
 # define MULT_PAGE_SMALL	16
 # define MULT_PAGE_LARGE	1
+
+# define BUFF_PAGE_CACHE	8
 
 /*
 **	t_blk stands for the header of blocks
@@ -120,6 +122,8 @@ typedef struct				s_env {
 	t_ph	*tn_header;
 	t_ph	*sm_header;
 	t_ph	*lrg_header;
+	t_ph	*tn_cache[BUFF_PAGE_CACHE];
+	t_ph	*sm_cache[BUFF_PAGE_CACHE];
 }							t_env;
 
 extern t_env				*g_ft_env;
@@ -141,6 +145,10 @@ t_env						*ft_env_get(void);
 void						ft_env_print(t_env *main);
 t_blk						*ft_env_alloc(t_env *main, size_t len);
 size_t						ft_env_find_free(t_env *main, void *ptr);
+void						ft_env_clear(t_env *env);
+t_ph						*ft_env_cache_get(t_ph **cache, size_t len);
+t_bool						ft_env_cache_put(t_ph **cache, t_ph *ph);
+size_t						ft_env_cache_len(t_ph **cache);
 
 /*
 **	Functions used for t_ph structure
@@ -153,13 +161,15 @@ size_t						ft_env_find_free(t_env *main, void *ptr);
 **				or the size of the fresh free space
 */
 
-t_ph						*ft_ph_new(size_t size, size_t mult);
+t_ph						*ft_ph_new(size_t size, size_t mult, t_ph **cache);
 void						ft_ph_print(t_ph *ph);
 t_blk						*ft_ph_alloc(
 								t_ph *ph,
 								size_t len,
-								size_t mult);
+								size_t mult,
+								t_ph **cache);
 size_t						ft_ph_find_free(t_ph *ph, void *ptr);
+t_bool						ft_ph_empty(t_ph *ph);
 
 /*
 **	Functions used for t_blk
