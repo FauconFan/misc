@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:29:17 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/11 11:51:54 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 15:58:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,21 @@
 void	ft_blk_print(t_blk *block, size_t remain)
 {
 	t_blk		*next;
+	char		*begin;
+	size_t		len;
 
-	ft_put_str("\tBLOCK => LEN = ");
-	ft_put_uint(block->len_block);
-	ft_put_str(", IS FREE = ");
-	ft_put_str_ln(STR_OF_BOOL(block->is_free));
+	if (ft_blk_is_free(block) == FALSE)
+	{
+		len = ft_blk_get_len_asked(block);
+		begin = (char *)(block + 1);
+		ft_put_str("\t");
+		ft_put_addr(begin);
+		begin += len;
+		ft_put_str(" - ");
+		ft_put_addr(begin);
+		ft_put_str(" : ");
+		ft_put_uint_ln(len);
+	}
 	if (block->len_block == 0)
 		return ;
 	if (block->len_block < remain)

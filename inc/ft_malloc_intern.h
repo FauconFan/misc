@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 13:51:09 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 15:51:09 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,10 @@ typedef unsigned char		t_bool;
 typedef struct				s_blk
 {
 	size_t			len_block;
-	uint8_t			is_free;
-	char			pad[7];
+	uint8_t			free;
+	uint8_t			len_asked1;
+	uint16_t		len_asked2;
+	uint32_t		len_asked3;
 }							t_blk;
 
 # define NEXT_BLOCK(blk)	((t_blk *)(((char *)blk) + blk->len_block))
@@ -131,6 +133,17 @@ extern t_env				*g_ft_env;
 extern pthread_mutex_t		g_ft_env_mutex;
 
 /*
+**	Struct usefull to distinguish differences between length asked
+**	and length with padding
+*/
+
+typedef struct				s_len
+{
+	size_t		len_asked;
+	size_t		len;
+}							t_len;
+
+/*
 **	Functions used for the global t_env structure
 **
 **	get() returns an allocated t_env structure,
@@ -145,7 +158,7 @@ extern pthread_mutex_t		g_ft_env_mutex;
 
 t_env						*ft_env_get(void);
 void						ft_env_print(t_env *main);
-t_blk						*ft_env_alloc(t_env *main, size_t len);
+t_blk						*ft_env_alloc(t_env *main, size_t l);
 size_t						ft_env_find_free(t_env *main, void *ptr);
 void						ft_env_clear(t_env *env);
 t_ph						*ft_env_cache_get(t_ph **cache, size_t len);
@@ -163,11 +176,11 @@ size_t						ft_env_cache_len(t_ph **cache);
 **				or the size of the fresh free space
 */
 
-t_ph						*ft_ph_new(size_t size, size_t mult, t_ph **cache);
+t_ph						*ft_ph_new(size_t min, size_t mult, t_ph **cache);
 void						ft_ph_print(t_ph *ph);
 t_blk						*ft_ph_alloc(
 								t_ph *ph,
-								size_t len,
+								t_len *l,
 								size_t mult,
 								t_ph **cache);
 size_t						ft_ph_find_free(t_ph *ph, void *ptr);
@@ -189,11 +202,15 @@ void						ft_blk_print(t_blk *block, size_t remain);
 t_blk						*ft_blk_alloc(
 								t_blk *block,
 								size_t remain,
-								size_t size);
+								t_len *len);
 size_t						ft_blk_find_free(
 								t_blk *block,
 								size_t remain,
 								void *ptr);
+t_bool						ft_blk_is_free(t_blk *blk);
+void						ft_blk_set_free(t_blk *blk);
+size_t						ft_blk_get_len_asked(t_blk *blk);
+void						ft_blk_set_occupied(t_blk *blk, size_t size);
 
 /*
 **	Utils

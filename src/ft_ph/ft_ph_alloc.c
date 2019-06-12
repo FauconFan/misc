@@ -6,13 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:39:21 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 13:20:59 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/12 15:53:20 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-t_blk	*ft_ph_alloc(t_ph *ph, size_t len, size_t mult, t_ph **cache)
+t_blk	*ft_ph_alloc(t_ph *ph, t_len *len, size_t mult, t_ph **cache)
 {
 	t_blk		*block;
 	void		*v;
@@ -23,7 +23,7 @@ t_blk	*ft_ph_alloc(t_ph *ph, size_t len, size_t mult, t_ph **cache)
 		return (v);
 	if (ph->next_page == NULL)
 	{
-		ph->next_page = ft_ph_new(len, mult, cache);
+		ph->next_page = ft_ph_new(len->len, mult, cache);
 		if (ph->next_page == NULL)
 			return (NULL);
 	}

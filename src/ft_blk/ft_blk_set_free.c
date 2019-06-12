@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ph_empty.c                                      :+:      :+:    :+:   */
+/*   ft_blk_set_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/12 12:37:43 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 15:16:11 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/12 15:14:41 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/12 15:21:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_malloc.h>
 
-t_bool		ft_ph_empty(t_ph *ph)
+void	ft_blk_set_free(t_blk *blk)
 {
-	t_blk	*blk;
-
-	if (ph == NULL)
-		return (FALSE);
-	blk = (t_blk *)(ph + 1);
-	return ((ph->len_page - sizeof(t_ph) == blk->len_block)
-			&& ft_blk_is_free(blk));
+	blk->free = TRUE;
 }

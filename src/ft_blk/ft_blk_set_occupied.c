@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ph_empty.c                                      :+:      :+:    :+:   */
+/*   ft_blk_set_occupied.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/12 12:37:43 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 15:16:11 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/12 15:21:36 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/12 15:33:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_malloc.h>
 
-t_bool		ft_ph_empty(t_ph *ph)
+void	ft_blk_set_occupied(t_blk *blk, size_t size)
 {
-	t_blk	*blk;
-
-	if (ph == NULL)
-		return (FALSE);
-	blk = (t_blk *)(ph + 1);
-	return ((ph->len_page - sizeof(t_ph) == blk->len_block)
-			&& ft_blk_is_free(blk));
+	blk->free = FALSE;
+	blk->len_asked1 = (uint8_t)(size >> 48);
+	blk->len_asked2 = (uint16_t)(size >> 32);
+	blk->len_asked3 = (uint32_t)(size);
 }

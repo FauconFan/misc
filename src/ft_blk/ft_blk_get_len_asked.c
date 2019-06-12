@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ph_empty.c                                      :+:      :+:    :+:   */
+/*   ft_blk_get_len_asked.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/12 12:37:43 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 15:16:11 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/12 15:25:52 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/12 15:35:50 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_malloc.h>
 
-t_bool		ft_ph_empty(t_ph *ph)
+size_t		ft_blk_get_len_asked(t_blk *blk)
 {
-	t_blk	*blk;
+	size_t	l;
 
-	if (ph == NULL)
-		return (FALSE);
-	blk = (t_blk *)(ph + 1);
-	return ((ph->len_page - sizeof(t_ph) == blk->len_block)
-			&& ft_blk_is_free(blk));
+	l = (((size_t)blk->len_asked3))
+		| (((size_t)blk->len_asked2) << 32)
+		| (((size_t)blk->len_asked1) << 48);
+	return (l);
 }

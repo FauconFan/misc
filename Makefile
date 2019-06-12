@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/12 13:56:00 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/12 15:32:20 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,10 @@ SRC_FILES = \
 			ft_blk/ft_blk_alloc.c \
 			ft_blk/ft_blk_find_free.c \
 			ft_blk/ft_blk_print.c \
+			ft_blk/ft_blk_is_free.c \
+			ft_blk/ft_blk_set_free.c \
+			ft_blk/ft_blk_set_occupied.c \
+			ft_blk/ft_blk_get_len_asked.c \
 			utils/print/ft_put_addr.c \
 			utils/print/ft_put_str.c \
 			utils/print/ft_put_uint.c \
