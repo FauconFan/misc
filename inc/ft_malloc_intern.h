@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 13:55:30 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 15:22:17 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,17 @@
 **			Defragmentation
 **
 **	The lib on each call of a free method (free or realloc) auto defragment
-**	by default the memmory. It means that if there is 2 continuous block
-**	unused by the user. It will fusion that 2 blocks.
+**	by default the memmory. It means that if there is 2 continuous blocks
+**	unused by the user. These 2 blocks are merged.
 **	This operation is done in the find_free functions family.
+**
+**			Cache
+**
+**	If a page is free (without any block used by the user), we have two
+**	behaviours:
+**		- if the page is for large, we munmap the page
+**		- if the page is for tiny/small, we keep them in a cache
+**			and reuse them if necessary later.
 **
 **			Multi-threaded
 **
@@ -117,6 +125,11 @@ typedef unsigned char		t_bool;
 **	It is just a pedagogic project, we just have to understand how a libmalloc
 **	works. If i must do a real libmalloc for professional application.
 **	I would do this, and some more...
+**
+**	Finally, I used this solution to have in the header 3 informations :
+**		- the length of the block
+**		- if the block is free
+**		- the length asked by user
 */
 
 typedef struct				s_blk
@@ -185,12 +198,25 @@ typedef struct				s_len
 **
 **	get() returns an allocated t_env structure,
 **			and initialized it in first use.
+**	new() mmap and returns a fresh page
+**	munmap() munmap the page and munmap all subpages used in the env
+**
 **	print() is used by show_alloc_mem
 **	alloc() find an empty space of siwe len in pages
 **			and allocated new pages if there is no space
 **	find_free() find a pointer in all of the pages and free it
 **			returns 0 if no pointer has been found
 **				or the size of the fresh free space
+**	find() find the block that owned this pointer
+**
+**	clear() searches in list if there is some unused page to munmap them
+**			or to put them in the cache
+**	cache_get() searches a page with enough page
+**	cache_put() puts a page in the cache
+**	cache_len() processes the number of pages cached
+**
+**	mzone_lock() locks (for pthread) (usefull for malloc_zone)
+**	mzone_unlock() unlocks (for pthread) (usefull for malloc_zone)
 */
 
 t_env						*ft_env_get(void);
@@ -214,11 +240,17 @@ void						ft_env_mzone_unlock(t_env *env);
 **	Functions used for t_ph structure
 **
 **	new() calls mmap
+**	munmap() calls munmap
+**
 **	print() for show_alloc_mem
 **	alloc() search free space to allocate
 **	find_free() free space in the actual page.
 **			returns 0 if no pointer has been found
 **				or the size of the fresh free space
+**	find() searches the block that owned ptr
+**
+**	is_in_page() determines if a pointer is in the page O(1)
+**	empty() returns if the page is free
 */
 
 t_ph						*ft_ph_new(size_t min, size_t mult, t_ph **cache);
@@ -240,11 +272,18 @@ t_bool						ft_ph_empty(t_ph *ph);
 **	Functions used for t_blk
 **
 **	init() initiliawze fields in the given void * pointer
+**
 **	print() for show_alloc_mem
 **	alloc() search free space to allocate
 **	find_free() free space in the actual page.
 **			returns 0 if no pointer has been found
 **				or the size of the fresh free space
+**	find() searches the block that owned ptr
+**
+**	is_free() returns if the block is free
+**	set_free() set the block as free
+**	get_len_asked() returns the length asked by user
+**	set_occupied() set the block as occupied
 */
 
 void						ft_blk_init(void *v, size_t remain_tot);
@@ -316,6 +355,7 @@ void						print_dump(uint8_t *content, size_t len);
 
 void						ft_bzero(void *v, size_t l);
 void						ft_memcpy(void *dest, const void *src, size_t l);
+
 void						ft_put_str(char *str);
 void						ft_put_str_ln(char *str);
 void						ft_put_uint(unsigned long int nb);
