@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/13 13:23:31 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/13 17:11:07 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,4 +103,6 @@ fclean: clean
 	@echo "Symbolic link $(NAME_LN) removed"
 
 .PHONY: re
-re: fclean all
+re:
+	@make fclean
+	@make all
