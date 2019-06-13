@@ -5,7 +5,7 @@ Mandatory part:
     ✔ Faire un peu de documentation (dans le .h uniquement) @done(19-06-11 12:01)
         ✔ Changer les noms et faire un truc propre @done(19-06-11 12:01)
         ✔ Defragmentation documentation @done(19-06-12 17:56)
-        ☐ Fix doc ajout fonctions
+        ✔ Fix doc ajout fonctions @done(19-06-13 15:24)
     ✔ Faire l'implémentation de la liste simplement châiné pour tiny et small @done(19-06-05 12:52)
         ✔ Parcours (recherche dispo + existing) @done(19-06-05 12:41)
         ✔ Ajout @done(19-06-05 12:41)
