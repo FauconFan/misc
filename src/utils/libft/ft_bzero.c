@@ -6,13 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 08:19:26 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 08:20:22 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 12:32:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-void	ft_bzero(void *v, size_t l)
+inline void	ft_bzero(void *v, size_t l)
 {
 	char	*s;
 	size_t	i;

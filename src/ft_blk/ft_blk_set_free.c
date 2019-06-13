@@ -6,13 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 15:14:41 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 08:52:01 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 12:30:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-void	ft_blk_set_free(t_blk *blk)
+inline void		ft_blk_set_free(t_blk *blk)
 {
 	blk->free = TRUE;
 }
