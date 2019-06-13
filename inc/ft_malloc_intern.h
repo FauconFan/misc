@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 15:22:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 16:04:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@
 **		- if the page is for tiny/small, we keep them in a cache
 **			and reuse them if necessary later.
 **
+**			Environment
+**
+**	The user can define the ENV variable MALLOC_DUMP_AT_EXIT. If it is defined,
+**	the first use of the standard library will call atexit on a
+**	show_alloc_mem function.
+**	If the value of the variable is "HEX", then it will use show_alloc_mem_hex
+**	function, otherwise it will call show_alloc_mem.
+**
 **			Multi-threaded
 **
 **	All function exposed to the api use a mutex lock and unlock for thread safe
@@ -73,12 +81,14 @@
 **
 **		- sys/mman.h, for mmap, and munmap
 **		- unistd.h, for getpagesize
+**		- stdlib.h, for getenv
 **		- stdint.h, for uint* family type
 **		- pthread.h, for multi threaded management
 */
 
 # include <sys/mman.h>
 # include <unistd.h>
+# include <stdlib.h>
 # include <stdint.h>
 # include <pthread.h>
 
@@ -106,6 +116,9 @@ typedef unsigned char		t_bool;
 # define MULT_PAGE_LARGE	1
 
 # define BUFF_PAGE_CACHE	8
+
+# define AT_EXIT_TAG		"MALLOC_DUMP_AT_EXIT"
+# define AT_EXIT_TAG_HEX	"HEX"
 
 /*
 **	t_blk stands for the header of blocks
@@ -355,6 +368,7 @@ void						print_dump(uint8_t *content, size_t len);
 
 void						ft_bzero(void *v, size_t l);
 void						ft_memcpy(void *dest, const void *src, size_t l);
+t_bool						ft_strequ(char *s1, char *s2);
 
 void						ft_put_str(char *str);
 void						ft_put_str_ln(char *str);

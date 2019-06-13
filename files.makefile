@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/13 13:16:25 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/13 14:11:07 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/13 15:53:44 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ _UTILS_FILES = \
 	std/ft_put_uint.c \
 	std/ft_bzero.c \
 	std/ft_memcpy.c \
+	std/ft_strequ.c \
 	print_dump.c \
 	mmap_utils.c \
 	size_utils.c \

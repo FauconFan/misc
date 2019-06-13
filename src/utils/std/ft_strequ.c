@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put_str.c                                       :+:      :+:    :+:   */
+/*   ft_strequ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:43:06 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 15:47:53 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/13 15:50:32 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/13 15:53:09 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-void	ft_put_str(char *str)
+t_bool	ft_strequ(char *s1, char *s2)
 {
-	size_t	len;
-
-	if (str == NULL)
-		str = "(NULL)";
-	len = 0;
-	while (str[len])
-		len++;
-	write(1, str, len);
-}
-
-void	ft_put_str_ln(char *str)
-{
-	ft_put_str(str);
-	write(1, "\n", 1);
+	while (*s1 == *s2)
+	{
+		if (*s1 == 0)
+			break ;
+		s1++;
+		s2++;
+	}
+	return (*s1 == *s2);
 }
