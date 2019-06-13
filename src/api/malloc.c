@@ -6,28 +6,46 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:20:14 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 18:05:50 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 12:07:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-void	*malloc(size_t size)
+static void		*real_malloc(t_env *env, size_t size)
 {
-	t_env		*env;
 	t_blk		*blk;
 
 	if (size_ok(size) == FALSE)
 		return (NULL);
-	pthread_mutex_lock(&g_ft_env_mutex);
 	blk = NULL;
-	env = ft_env_get();
 	if (env != NULL)
 	{
 		blk = ft_env_alloc(env, size);
 		if (blk != NULL)
 			blk++;
 	}
-	pthread_mutex_unlock(&g_ft_env_mutex);
 	return (blk);
+}
+
+void			*malloc(size_t size)
+{
+	void		*res;
+
+	pthread_mutex_lock(&g_ft_env_mutex);
+	res = real_malloc(ft_env_get(), size);
+	pthread_mutex_unlock(&g_ft_env_mutex);
+	return (res);
+}
+
+void			*ft_malloc_zone_malloc(
+					t_malloc_zone *mzone,
+					size_t size)
+{
+	void	*res;
+
+	ft_env_mzone_lock(mzone);
+	res = real_malloc(mzone, size);
+	ft_env_mzone_unlock(mzone);
+	return (res);
 }

@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:25:32 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 12:00:30 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/13 10:01:43 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/13 10:09:56 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_malloc.h"
+#include <ft_malloc.h>
 
-void	show_alloc_mem(void)
+void	ft_memcpy(void *dest, const void *src, size_t l)
 {
-	t_env		*env;
+	char		*d1;
+	const char	*d2;
+	size_t		index;
 
-	pthread_mutex_lock(&g_ft_env_mutex);
-	env = ft_env_get();
-	if (env != NULL)
-		ft_env_print(env, FALSE);
-	pthread_mutex_unlock(&g_ft_env_mutex);
-}
-
-void	ft_malloc_zone_show_alloc_mem(t_malloc_zone *mzone)
-{
-	if (mzone != NULL)
+	index = 0;
+	d1 = (char *)dest;
+	d2 = (const char *)src;
+	while (index < l)
 	{
-		ft_env_mzone_lock(mzone);
-		ft_env_print(mzone, FALSE);
-		ft_env_mzone_unlock(mzone);
+		d1[index] = d2[index];
+		index++;
 	}
 }

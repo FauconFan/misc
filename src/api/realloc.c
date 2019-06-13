@@ -6,49 +6,63 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:48:18 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 18:05:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 12:07:31 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-static void	copy_buffer(void *ptr, char *next, size_t len_out, size_t len_in)
+static void	copy_buffer(void *ptr, char *next, size_t size, size_t len_in)
 {
-	size_t i;
-
-	if (len_out > len_in)
-		len_out = len_in;
-	i = 0;
-	while (i < len_out)
-	{
-		next[i] = ((char *)ptr)[i];
-		++i;
-	}
+	if (size > len_in)
+		size = len_in;
+	ft_memcpy(next, ptr, size);
 }
 
-void		*realloc(void *ptr, size_t len_out)
+static void	*real_realloc(t_env *env, void *ptr, size_t size)
 {
 	t_blk		*blk;
-	t_env		*env;
 	char		*next;
 	size_t		len_in;
 
-	if (ptr == NULL)
-		return (malloc(len_out));
-	if (len_out == 0)
-		len_out = 16;
-	pthread_mutex_lock(&g_ft_env_mutex);
+	if (size == 0)
+		size = 16;
 	next = NULL;
-	if ((env = ft_env_get()) != NULL
-		&& (len_in = ft_env_find_free(env, ptr)) != 0)
+	if (env != NULL && (len_in = ft_env_find_free(env, ptr)) != 0)
 	{
-		if (size_ok(len_out) && (blk = ft_env_alloc(env, len_out)) != NULL)
+		if (size_ok(size) && (blk = ft_env_alloc(env, size)) != NULL)
 		{
 			next = (char *)(blk + 1);
-			copy_buffer(ptr, next, len_out, len_in);
+			copy_buffer(ptr, next, size, len_in);
 		}
 		ft_env_clear(env);
 	}
-	pthread_mutex_unlock(&g_ft_env_mutex);
 	return (next);
+}
+
+void		*realloc(void *ptr, size_t size)
+{
+	void	*res;
+
+	if (ptr == NULL)
+		return (malloc(size));
+	pthread_mutex_lock(&g_ft_env_mutex);
+	res = real_realloc(ft_env_get(), ptr, size);
+	pthread_mutex_unlock(&g_ft_env_mutex);
+	return (res);
+}
+
+void		*ft_malloc_zone_realloc(
+				t_malloc_zone *mzone,
+				void *ptr,
+				size_t size)
+{
+	void	*res;
+
+	if (ptr == NULL)
+		return (ft_malloc_zone_malloc(mzone, size));
+	ft_env_mzone_lock(mzone);
+	res = real_realloc(mzone, ptr, size);
+	ft_env_mzone_unlock(mzone);
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 08:25:16 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 10:34:14 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,11 @@ typedef struct				s_env {
 	t_ph	*lrg_header;
 	t_ph	*tn_cache[BUFF_PAGE_CACHE];
 	t_ph	*sm_cache[BUFF_PAGE_CACHE];
+	t_bool	is_malloc_zone;
+	char	pad[7];
 }							t_env;
+
+typedef t_env				t_malloc_zone;
 
 extern t_env				*g_ft_env;
 extern pthread_mutex_t		g_ft_env_mutex;
@@ -190,13 +194,20 @@ typedef struct				s_len
 */
 
 t_env						*ft_env_get(void);
+t_env						*ft_env_new(t_bool is_malloc_zone);
+void						ft_env_munmap(t_env *env);
+
 void						ft_env_print(t_env *main, t_bool hexa);
 t_blk						*ft_env_alloc(t_env *main, size_t l);
 size_t						ft_env_find_free(t_env *main, void *ptr);
+
 void						ft_env_clear(t_env *env);
 t_ph						*ft_env_cache_get(t_ph **cache, size_t len);
 t_bool						ft_env_cache_put(t_ph **cache, t_ph *ph);
 size_t						ft_env_cache_len(t_ph **cache);
+
+void						ft_env_mzone_lock(t_env *env);
+void						ft_env_mzone_unlock(t_env *env);
 
 /*
 **	Functions used for t_ph structure
@@ -210,6 +221,7 @@ size_t						ft_env_cache_len(t_ph **cache);
 */
 
 t_ph						*ft_ph_new(size_t min, size_t mult, t_ph **cache);
+void						ft_ph_munmap(t_ph *ph, t_bool recu);
 void						ft_ph_print(t_ph *ph, t_bool hexa);
 t_blk						*ft_ph_alloc(
 								t_ph *ph,
@@ -292,6 +304,7 @@ void						print_dump(uint8_t *content, size_t len);
 */
 
 void						ft_bzero(void *v, size_t l);
+void						ft_memcpy(void *dest, const void *src, size_t l);
 void						ft_put_str(char *str);
 void						ft_put_str_ln(char *str);
 void						ft_put_uint(unsigned long int nb);

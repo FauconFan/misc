@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 16:34:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/13 08:30:12 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/13 12:04:34 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ FILES_WS = \
 			ws07_custom.c \
 			ws08_realloc_custom.c \
 			ws09_mem_alloc.c \
+			ws10_malloc_zone.c \
 
 FILES_NS_ = $(addprefix $(BIN_FOLDER), $(FILES_NS))
 FILES_WS_ = $(addprefix $(BIN_FOLDER), $(FILES_WS))

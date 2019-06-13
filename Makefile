@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/13 08:22:28 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/13 11:46:49 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,11 @@ SRC_FILES = \
 			api/calloc.c \
 			api/show_alloc_mem.c \
 			api/show_alloc_mem_hex.c \
+			api/ft_malloc_zone_create.c \
+			api/ft_malloc_zone_destroy.c \
 			ft_env/ft_env_get.c \
+			ft_env/ft_env_new.c \
+			ft_env/ft_env_munmap.c \
 			ft_env/ft_env_print.c \
 			ft_env/ft_env_alloc.c \
 			ft_env/ft_env_find_free.c \
@@ -78,7 +82,10 @@ SRC_FILES = \
 			ft_env/ft_env_cache_len.c \
 			ft_env/ft_env_cache_get.c \
 			ft_env/ft_env_cache_put.c \
+			ft_env/ft_env_mzone_lock.c \
+			ft_env/ft_env_mzone_unlock.c \
 			ft_ph/ft_ph_new.c \
+			ft_ph/ft_ph_munmap.c \
 			ft_ph/ft_ph_alloc.c \
 			ft_ph/ft_ph_find_free.c \
 			ft_ph/ft_ph_print.c \
@@ -95,6 +102,7 @@ SRC_FILES = \
 			utils/libft/ft_put_str.c \
 			utils/libft/ft_put_uint.c \
 			utils/libft/ft_bzero.c \
+			utils/libft/ft_memcpy.c \
 			utils/print_dump.c \
 			utils/mmap_utils.c \
 			utils/size_utils.c \
