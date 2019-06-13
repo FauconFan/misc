@@ -26,7 +26,7 @@ Mandatory part:
 
 Bonus part:
     ✔ Faire le lock pour les pthreads (easy) @done(19-06-12 14:02)
-    ☐ Faire un show mem hex alloc pas trop compliqué
+    ✔ Faire un show mem hex alloc pas trop compliqué @done(19-06-13 08:33)
     ☐ Gérer quelques variables d'environnement de debug
     ☐ malloc_zone
     ☐ size, good_size

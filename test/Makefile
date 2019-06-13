@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 16:34:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/12 16:34:20 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/13 08:30:12 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ _END=$(shell tput sgr0 2> /dev/null || echo "")
 
 CC = gcc
 RUN_SH = ./run.sh
-RUN_PATH = ..
-MALLOC_PATH = ..
+RUN_PATH = $(shell pwd)/..
+MALLOC_PATH = $(shell pwd)/..
 
 SRC_FOLDER = src/
 BIN_FOLDER = bin/
@@ -55,6 +55,7 @@ FILES_WS = \
 			ws06_empty.c \
 			ws07_custom.c \
 			ws08_realloc_custom.c \
+			ws09_mem_alloc.c \
 
 FILES_NS_ = $(addprefix $(BIN_FOLDER), $(FILES_NS))
 FILES_WS_ = $(addprefix $(BIN_FOLDER), $(FILES_WS))

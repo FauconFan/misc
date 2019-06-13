@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.h                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:46:42 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 08:18:22 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/13 08:19:26 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/13 08:20:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MALLOC_H
-# define FT_MALLOC_H
+#include "ft_malloc.h"
 
-# include "inc/ft_malloc_intern.h"
+void	ft_bzero(void *v, size_t l)
+{
+	char	*s;
+	size_t	i;
 
-void	*malloc(size_t size);
-void	free(void *ptr);
-void	*calloc(size_t nmemb, size_t size);
-void	*realloc(void *ptr, size_t size);
-
-void	show_alloc_mem(void);
-void	show_alloc_mem_hex(void);
-
-#endif
+	s = (char *)v;
+	i = 0;
+	while (i < l)
+		s[i++] = 0;
+}

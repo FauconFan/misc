@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ns10_overflow.c                                    :+:      :+:    :+:   */
+/*   ws09_mem_alloc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:54:42 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 08:25:43 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/10 14:56:00 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/13 08:28:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include <ft_malloc.h>
 #include <string.h>
 
-void		print(char *str)
+int		main(void)
 {
-	write(1, str, strlen(str));
-}
-
-int			main(void)
-{
-	char	*addr;
+	char	*addr[4];
+	size_t	i;
 
 	start_test();
-	addr = calloc((size_t)(1) << 42, (size_t)(1) << 42);
-	if (addr == NULL)
-		print("This is ok\n");
-	else
-		print("This is terribly bad\n");
+	addr[0] = malloc(40);
+	addr[0][0] = 0;
+	strcat(addr[0], "Coucou, je fais un premier test");
+	addr[1] = malloc(4);
+	ft_bzero(addr[1], 4);
+	addr[2] = malloc(1024);
+	i = 0;
+	while (i < 1024)
+	{
+		addr[2][i] = i % 256;
+		++i;
+	}
+	addr[3] = malloc(0);
+	show_alloc_mem();
+	show_alloc_mem_hex();
 	end_test();
+	return (0);
 }

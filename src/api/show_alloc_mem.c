@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:25:32 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 13:53:45 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 08:15:20 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void	show_alloc_mem(void)
 	if (env == NULL)
 		ft_put_str_ln("No env");
 	else
-		ft_env_print(env);
+		ft_env_print(env, FALSE);
 	pthread_mutex_unlock(&g_ft_env_mutex);
 }

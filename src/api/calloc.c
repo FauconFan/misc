@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:18:20 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 17:59:20 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 08:24:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	*calloc(size_t nmemb, size_t size)
 {
 	t_env		*env;
 	t_blk		*blk;
-	char		*v;
-	size_t		i;
 
 	if (do_mult_overflow(nmemb, size) || size_ok(nmemb * size) == FALSE)
 		return (NULL);
@@ -30,13 +28,7 @@ void	*calloc(size_t nmemb, size_t size)
 		if (blk != NULL)
 		{
 			blk++;
-			v = (char *)blk;
-			i = 0;
-			while (i < nmemb * size)
-			{
-				v[i] = 0;
-				++i;
-			}
+			ft_bzero(blk, nmemb * size);
 		}
 	}
 	pthread_mutex_unlock(&g_ft_env_mutex);

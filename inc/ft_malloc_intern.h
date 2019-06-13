@@ -6,13 +6,12 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 17:59:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 08:25:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MALLOC_INTERN_H
 # define FT_MALLOC_INTERN_H
-
 
 /*
 **              ____________   __  ______    __    __    ____  ______
@@ -191,7 +190,7 @@ typedef struct				s_len
 */
 
 t_env						*ft_env_get(void);
-void						ft_env_print(t_env *main);
+void						ft_env_print(t_env *main, t_bool hexa);
 t_blk						*ft_env_alloc(t_env *main, size_t l);
 size_t						ft_env_find_free(t_env *main, void *ptr);
 void						ft_env_clear(t_env *env);
@@ -211,7 +210,7 @@ size_t						ft_env_cache_len(t_ph **cache);
 */
 
 t_ph						*ft_ph_new(size_t min, size_t mult, t_ph **cache);
-void						ft_ph_print(t_ph *ph);
+void						ft_ph_print(t_ph *ph, t_bool hexa);
 t_blk						*ft_ph_alloc(
 								t_ph *ph,
 								t_len *l,
@@ -232,7 +231,10 @@ t_bool						ft_ph_empty(t_ph *ph);
 */
 
 void						ft_blk_init(void *v, size_t remain_tot);
-void						ft_blk_print(t_blk *block, size_t remain);
+void						ft_blk_print(
+								t_blk *block,
+								size_t remain,
+								t_bool hexa);
 t_blk						*ft_blk_alloc(
 								t_blk *block,
 								size_t remain,
@@ -278,11 +280,18 @@ t_bool						size_ok(size_t l);
 t_bool						do_mult_overflow(size_t a, size_t b);
 
 /*
-**	print utils
-**
-**	Some helpers to print stuff with write
+**	print_dump.c
 */
 
+void						print_dump(uint8_t *content, size_t len);
+
+/*
+**	libft part
+**
+**	These functions came from the libft or do some abstraction of write
+*/
+
+void						ft_bzero(void *v, size_t l);
 void						ft_put_str(char *str);
 void						ft_put_str_ln(char *str);
 void						ft_put_uint(unsigned long int nb);

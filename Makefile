@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/12 15:32:20 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/13 08:22:28 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ SRC_FILES = \
 			api/realloc.c \
 			api/calloc.c \
 			api/show_alloc_mem.c \
+			api/show_alloc_mem_hex.c \
 			ft_env/ft_env_get.c \
 			ft_env/ft_env_print.c \
 			ft_env/ft_env_alloc.c \
@@ -90,9 +91,11 @@ SRC_FILES = \
 			ft_blk/ft_blk_set_free.c \
 			ft_blk/ft_blk_set_occupied.c \
 			ft_blk/ft_blk_get_len_asked.c \
-			utils/print/ft_put_addr.c \
-			utils/print/ft_put_str.c \
-			utils/print/ft_put_uint.c \
+			utils/libft/ft_put_addr.c \
+			utils/libft/ft_put_str.c \
+			utils/libft/ft_put_uint.c \
+			utils/libft/ft_bzero.c \
+			utils/print_dump.c \
 			utils/mmap_utils.c \
 			utils/size_utils.c \
 			utils/math_check.c \

@@ -6,13 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:40:49 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 12:42:16 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 08:16:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-void	ft_ph_print(t_ph *ph)
+void	ft_ph_print(t_ph *ph, t_bool hexa)
 {
 	t_blk	*blk;
 
@@ -28,7 +28,7 @@ void	ft_ph_print(t_ph *ph)
 	else
 	{
 		blk = (t_blk *)(ph + 1);
-		ft_blk_print(blk, ph->len_page - sizeof(t_ph));
+		ft_blk_print(blk, ph->len_page - sizeof(t_ph), hexa);
 	}
-	ft_ph_print(ph->next_page);
+	ft_ph_print(ph->next_page, hexa);
 }
