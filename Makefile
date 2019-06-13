@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/13 11:46:49 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/13 13:23:31 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,61 +56,14 @@ CC = clang
 SRC_FOLDER = src/
 
 CFLAGS = -D_REENTRANT -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align -fPIC
-SRC_CFLAGS = -fPIC
+SRC_CFLAGS =
 BIN_CFLAGS = -shared
 IFLAGS = -I .
 LFLAGS = -lpthread
 SRC_FLAGS = $(SRC_CFLAGS) $(CFLAGS) $(IFLAGS)
 BIN_FLAGS = $(BIN_CFLAGS) $(CFLAGS) $(IFLAGS)
 
-SRC_FILES = \
-			api/malloc.c \
-			api/free.c \
-			api/realloc.c \
-			api/calloc.c \
-			api/show_alloc_mem.c \
-			api/show_alloc_mem_hex.c \
-			api/ft_malloc_zone_create.c \
-			api/ft_malloc_zone_destroy.c \
-			ft_env/ft_env_get.c \
-			ft_env/ft_env_new.c \
-			ft_env/ft_env_munmap.c \
-			ft_env/ft_env_print.c \
-			ft_env/ft_env_alloc.c \
-			ft_env/ft_env_find_free.c \
-			ft_env/ft_env_clear.c \
-			ft_env/ft_env_cache_len.c \
-			ft_env/ft_env_cache_get.c \
-			ft_env/ft_env_cache_put.c \
-			ft_env/ft_env_mzone_lock.c \
-			ft_env/ft_env_mzone_unlock.c \
-			ft_ph/ft_ph_new.c \
-			ft_ph/ft_ph_munmap.c \
-			ft_ph/ft_ph_alloc.c \
-			ft_ph/ft_ph_find_free.c \
-			ft_ph/ft_ph_print.c \
-			ft_ph/ft_ph_empty.c \
-			ft_blk/ft_blk_init.c \
-			ft_blk/ft_blk_alloc.c \
-			ft_blk/ft_blk_find_free.c \
-			ft_blk/ft_blk_print.c \
-			ft_blk/ft_blk_is_free.c \
-			ft_blk/ft_blk_set_free.c \
-			ft_blk/ft_blk_set_occupied.c \
-			ft_blk/ft_blk_get_len_asked.c \
-			utils/libft/ft_put_addr.c \
-			utils/libft/ft_put_str.c \
-			utils/libft/ft_put_uint.c \
-			utils/libft/ft_bzero.c \
-			utils/libft/ft_memcpy.c \
-			utils/print_dump.c \
-			utils/mmap_utils.c \
-			utils/size_utils.c \
-			utils/math_check.c \
-
-HEADER_FILES = \
-			ft_malloc.h \
-			inc/ft_malloc_intern.h \
+include files.makefile
 
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_FILES))
 
@@ -151,9 +104,3 @@ fclean: clean
 
 .PHONY: re
 re: fclean all
-
-#################################### TEST #####################################
-
-.PHONY: test
-test: $(NAME_LN)
-	make -C test run
