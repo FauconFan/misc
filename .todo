@@ -31,6 +31,6 @@ Bonus part:
     ✔ Faire un show mem hex alloc pas trop compliqué @done(19-06-13 08:33)
     ☐ Gérer quelques variables d'environnement de debug
     ✔ malloc_zone @done(19-06-13 12:06)
-    ☐ size, good_size
+    ✔ size, good_size @done(19-06-13 14:25)
 
 Archive:

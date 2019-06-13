@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ph_find_free.c                                  :+:      :+:    :+:   */
+/*   ft_blk_find.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:39:55 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 13:52:47 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/13 13:42:13 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/13 13:53:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-size_t			ft_ph_find_free(t_ph *ph, void *ptr)
+t_blk	*ft_blk_find(t_blk *block, size_t remain, const void *ptr)
 {
-	t_blk		*block;
-	size_t		remain;
-
-	if (ph == NULL || ptr == NULL)
-		return (0);
-	if (ft_ph_is_in_page(ph, ptr))
+	if (ptr == (void *)(block + 1))
 	{
-		block = (t_blk *)(ph + 1);
-		remain = ph->len_page - sizeof(t_ph);
-		return (ft_blk_find_free(block, remain, ptr));
+		if (ft_blk_is_free(block))
+			return (NULL);
+		return (block);
 	}
-	return (ft_ph_find_free(ph->next_page, ptr));
+	if (remain < block->len_block)
+		return (NULL);
+	return (ft_blk_find(NEXT_BLOCK(block), remain - block->len_block, ptr));
 }

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/13 13:16:25 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/13 13:22:40 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/13 14:11:07 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ _API_FILES = \
 	show_alloc_mem_hex.c \
 	ft_malloc_zone_create.c \
 	ft_malloc_zone_destroy.c \
+	malloc_size.c \
+	malloc_good_size.c \
 
 _ENV_FILES = \
 	ft_env_get.c \
@@ -33,6 +35,7 @@ _ENV_FILES = \
 	ft_env_print.c \
 	ft_env_alloc.c \
 	ft_env_find_free.c \
+	ft_env_find.c \
 	ft_env_clear.c \
 	ft_env_cache_len.c \
 	ft_env_cache_get.c \
@@ -45,13 +48,16 @@ _PH_FILES = \
 	ft_ph_munmap.c \
 	ft_ph_alloc.c \
 	ft_ph_find_free.c \
+	ft_ph_find.c \
 	ft_ph_print.c \
 	ft_ph_empty.c \
+	ft_ph_is_in_page.c \
 
 _BLK_FILES = \
 	ft_blk_init.c \
 	ft_blk_alloc.c \
 	ft_blk_find_free.c \
+	ft_blk_find.c \
 	ft_blk_print.c \
 	ft_blk_is_free.c \
 	ft_blk_set_free.c \

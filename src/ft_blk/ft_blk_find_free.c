@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:28:01 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/12 15:29:44 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 13:27:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static size_t	search_free(t_blk *prev, size_t remain, void *ptr)
 		return (0);
 	if (ptr == (void *)(NEXT_BLOCK(prev) + 1))
 	{
-		res = NEXT_BLOCK(prev)->len_block;
+		res = ft_blk_get_len_asked(NEXT_BLOCK(prev));
 		ft_blk_set_free(NEXT_BLOCK(prev));
 		if (fusion_with_next(prev, remain))
 			fusion_with_next(prev, remain);
 		else
 			fusion_with_next(NEXT_BLOCK(prev), remain - prev->len_block);
-		return (res - sizeof(t_blk));
+		return (res);
 	}
 	return (search_free(NEXT_BLOCK(prev), remain - prev->len_block, ptr));
 }
@@ -48,7 +48,7 @@ size_t			ft_blk_find_free(t_blk *block, size_t remain, void *ptr)
 
 	if (ptr == (void *)(block + 1))
 	{
-		res = block->len_block;
+		res = ft_blk_get_len_asked(block);
 		if (remain <= block->len_block)
 			ft_blk_set_free(block);
 		else if (ft_blk_is_free(NEXT_BLOCK(block)))
@@ -58,7 +58,7 @@ size_t			ft_blk_find_free(t_blk *block, size_t remain, void *ptr)
 		}
 		else
 			ft_blk_set_free(block);
-		return (res - sizeof(t_blk));
+		return (res);
 	}
 	return (search_free(block, remain, ptr));
 }

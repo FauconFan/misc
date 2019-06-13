@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 12:27:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/13 13:55:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ void						ft_env_munmap(t_env *env);
 void						ft_env_print(t_env *main, t_bool hexa);
 t_blk						*ft_env_alloc(t_env *main, size_t l);
 size_t						ft_env_find_free(t_env *main, void *ptr);
+t_blk						*ft_env_find(t_env *main, const void *ptr);
 
 void						ft_env_clear(t_env *env);
 t_ph						*ft_env_cache_get(t_ph **cache, size_t len);
@@ -222,6 +223,7 @@ void						ft_env_mzone_unlock(t_env *env);
 
 t_ph						*ft_ph_new(size_t min, size_t mult, t_ph **cache);
 void						ft_ph_munmap(t_ph *ph, t_bool recu);
+
 void						ft_ph_print(t_ph *ph, t_bool hexa);
 t_blk						*ft_ph_alloc(
 								t_ph *ph,
@@ -229,6 +231,9 @@ t_blk						*ft_ph_alloc(
 								size_t mult,
 								t_ph **cache);
 size_t						ft_ph_find_free(t_ph *ph, void *ptr);
+t_blk						*ft_ph_find(t_ph *ph, const void *ptr);
+
+t_bool						ft_ph_is_in_page(t_ph *ph, const void *ptr);
 t_bool						ft_ph_empty(t_ph *ph);
 
 /*
@@ -247,6 +252,7 @@ void						ft_blk_print(
 								t_blk *block,
 								size_t remain,
 								t_bool hexa);
+
 t_blk						*ft_blk_alloc(
 								t_blk *block,
 								size_t remain,
@@ -255,6 +261,11 @@ size_t						ft_blk_find_free(
 								t_blk *block,
 								size_t remain,
 								void *ptr);
+t_blk						*ft_blk_find(
+								t_blk *block,
+								size_t remain,
+								const void *ptr);
+
 t_bool						ft_blk_is_free(t_blk *blk);
 void						ft_blk_set_free(t_blk *blk);
 size_t						ft_blk_get_len_asked(t_blk *blk);
@@ -311,7 +322,7 @@ void						ft_put_uint(unsigned long int nb);
 void						ft_put_uint16(unsigned long int nb);
 void						ft_put_uint_ln(unsigned long int nb);
 void						ft_put_uint16_ln(unsigned long int nb);
-void						ft_put_addr(void *v);
-void						ft_put_addr_ln(void *v);
+void						ft_put_addr(const void *v);
+void						ft_put_addr_ln(const void *v);
 
 #endif
