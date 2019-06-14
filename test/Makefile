@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 16:34:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/13 13:52:19 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/14 08:27:51 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ MALLOC_PATH = $(shell pwd)/..
 SRC_FOLDER = src/
 BIN_FOLDER = bin/
 
-CFLAGS =
+CFLAGS = -Wall -Werror -Wextra
 IFLAGS = -I .
 LFLAGS =
 FLAGS = $(CFLAGS) $(IFLAGS)
@@ -52,7 +52,7 @@ FILES_WS = \
 			ws03_free.c \
 			ws04_realloc.c \
 			ws05_test2.c \
-			ws06_empty.c \
+			ws06_little.c \
 			ws07_custom.c \
 			ws08_realloc_custom.c \
 			ws09_mem_alloc.c \

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:56:00 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 08:52:01 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/14 08:28:31 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		main(void)
 	addr3 = realloc(addr1, 32);
 	strcat(addr3, " et de deux");
 	print(addr3);
+	show_alloc_mem();
 	end_test();
 	return (0);
 }

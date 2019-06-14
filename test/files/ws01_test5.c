@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:55:09 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 08:52:01 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/14 08:20:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 
 int	main(void)
 {
+	void	*v;
+
 	start_test();
-	malloc(1024);
-	malloc(1024 * 32);
-	malloc(1024 * 1024);
-	malloc(1024 * 1024 * 16);
-	malloc(1024 * 1024 * 128);
+	v = malloc(1024);
+	v = malloc(1024 * 32);
+	v = malloc(1024 * 1024);
+	v = malloc(1024 * 1024 * 16);
+	v = malloc(1024 * 1024 * 128);
 	show_alloc_mem();
 	end_test();
 	return (0);
