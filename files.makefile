@@ -55,6 +55,7 @@ _PH_FILES = \
 
 _BLK_FILES = \
 	ft_blk_init.c \
+	ft_blk_next.c \
 	ft_blk_alloc.c \
 	ft_blk_find_free.c \
 	ft_blk_find.c \

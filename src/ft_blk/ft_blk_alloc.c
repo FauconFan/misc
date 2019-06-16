@@ -29,7 +29,7 @@ static t_blk	*search(
 		return (block);
 	}
 	if (remain > block->len_block)
-		return (search(NEXT_BLOCK(block), remain - block->len_block, len));
+		return (search(ft_blk_next(block), remain - block->len_block, len));
 	return (NULL);
 }
 

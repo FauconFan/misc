@@ -12,20 +12,11 @@
 
 #include "ft_malloc.h"
 
-#define HEX_OF(c)	((c) < 10 ? (char)(c) + '0' : (char)c - 10 + 'a')
-
-static void	fill_hex(uint8_t c, char *line)
+static char	hex_of(char c)
 {
-	line[0] = HEX_OF(c / 16);
-	line[1] = HEX_OF(c % 16);
-}
-
-static void	fill_ascii(uint8_t c, char *line)
-{
-	if (c >= 32 && c <= 126)
-		*line = (char)c;
-	else
-		*line = '.';
+	if (c < 10)
+		return (c + '0');
+	return (c - 10 + 'a');
 }
 
 static void	fill_preline(uint8_t *content, size_t len, char pre_line[50])
@@ -38,7 +29,8 @@ static void	fill_preline(uint8_t *content, size_t len, char pre_line[50])
 	index = 0;
 	while (i < 16 && i < len)
 	{
-		fill_hex(content[i], pre_line + index);
+		pre_line[index] = hex_of(content[i] / 16);
+		pre_line[index + 1] = hex_of(content[i] % 16);
 		index += 2;
 		pre_line[index++] = ' ';
 		if (i == 7)
@@ -56,7 +48,10 @@ static void	fill_postline(uint8_t *content, size_t len, char post_line[17])
 	i = 0;
 	while (i < 16 && i < len)
 	{
-		fill_ascii(content[i], post_line + i);
+		if (content[i] >= 32 && content[i] <= 126)
+			post_line[i] = (char)content[i];
+		else
+			post_line[i] = '.';
 		++i;
 	}
 	post_line[i] = 0;

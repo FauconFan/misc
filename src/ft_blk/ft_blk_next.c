@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_blk_find.c                                      :+:      :+:    :+:   */
+/*   ft_blk_next.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/13 13:42:13 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 13:53:52 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/12 15:13:46 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/13 12:27:19 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-t_blk	*ft_blk_find(t_blk *block, size_t remain, const void *ptr)
+inline t_blk	*ft_blk_next(t_blk *blk)
 {
-	if (ptr == (void *)(block + 1))
-	{
-		if (ft_blk_is_free(block))
-			return (NULL);
-		return (block);
-	}
-	if (remain < block->len_block)
-		return (NULL);
-	return (ft_blk_find(ft_blk_next(block), remain - block->len_block, ptr));
+	t_blk	*next;
+
+	next = (t_blk *)(((char *)blk) + blk->len_block);
+	return (next);
 }

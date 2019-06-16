@@ -26,6 +26,8 @@ Mandatory part:
     ✔ Verifier les size en entrée (pas decriture sur les 8 derniers bits) (> 64 To) @done(19-06-12 22:49)
     ✔ inline functions @done(19-06-13 13:13)
 
+    ☐ Faire des tests de bon fonctionnement
+
 Bonus part:
     ✔ Faire le lock pour les pthreads (easy) @done(19-06-12 14:02)
     ✔ Faire un show mem hex alloc pas trop compliqué @done(19-06-13 08:33)

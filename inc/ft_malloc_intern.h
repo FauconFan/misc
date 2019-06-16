@@ -99,8 +99,6 @@
 # define TRUE				1
 # define FALSE				0
 
-# define STR_OF_BOOL(b)		((b) ? "true" : "false")
-
 typedef unsigned char		t_bool;
 
 /*
@@ -153,8 +151,6 @@ typedef struct				s_blk
 	uint16_t		len_asked2;
 	uint32_t		len_asked3;
 }							t_blk;
-
-# define NEXT_BLOCK(blk)	((t_blk *)(((char *)blk) + blk->len_block))
 
 /*
 **	t_ph stands for malloc_page_header.
@@ -284,9 +280,11 @@ t_bool						ft_ph_empty(t_ph *ph);
 /*
 **	Functions used for t_blk
 **
-**	init() initiliawze fields in the given void * pointer
-**
+**	init() initiliaze fields in the given void * pointer
 **	print() for show_alloc_mem
+**
+**	next() returns next block
+**
 **	alloc() search free space to allocate
 **	find_free() free space in the actual page.
 **			returns 0 if no pointer has been found
@@ -304,6 +302,8 @@ void						ft_blk_print(
 								t_blk *block,
 								size_t remain,
 								t_bool hexa);
+
+t_blk						*ft_blk_next(t_blk *blk);
 
 t_blk						*ft_blk_alloc(
 								t_blk *block,
