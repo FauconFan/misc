@@ -22,20 +22,20 @@ STEP1="1	-	Vérification que les dossiers et les fichiers sont en Unix Case."
 STEP2="2	-	Seuls les caractères de la table ascii sont autorisés."
 STEP3="3	-	Compter le nombre de variables globales."
 STEP4="4	-	Vérifier que le header est présent dans les Makefile."
-##	5	-	Vérifier que le sizeof est bien utilisé sans espace après.
-##	6	-	Indentation dans des formules booléennes dans les if/while.
-##	7	-	Vérifier qu'un opérateur est bien en début de ligne (et pas à la fin).
-##	8	-	Prototype de fonction sans argument avec void.
-##	9	-	Pas de define autre que pour des constantes (entières et string).
-##	10	-	Vérifier l'utilisation de headers interdit.
-##	11	-	Vérifier les VLAs.
-##	12	-	Vérifier que les 5 règles standards sont présents dans les Makefiles.
+STEP5="5	-	Vérifier que le sizeof est bien utilisé sans espace après."
+STEP6="6	-	Indentation dans des formules booléennes dans les if/while."
+STEP7="7	-	Vérifier qu'un opérateur est bien en début de ligne (et pas à la fin)."
+STEP8="8	-	Prototype de fonction sans argument avec void."
+STEP9="9	-	Pas de define autre que pour des constantes (entières et string)."
+STEP10="10	-	Vérifier l'utilisation de headers interdit."
+STEP11="11	-	Vérifier les VLAs."
+STEP12="12	-	Vérifier que les 5 règles standards sont présents dans les Makefiles."
 
 ## Colors
 _RED=$(tput setaf 1 2> /dev/null || echo "")
 _GREEN=$(tput setaf 2 2> /dev/null || echo "")
 _YELLOW=$(tput setaf 3 2> /dev/null || echo "")
-# _BLUE=$(tput setaf 4 2> /dev/null || echo "")
+_BLUE=$(tput setaf 4 2> /dev/null || echo "")
 # _PURPLE=$(tput setaf 5 2> /dev/null || echo "")
 # _CYAN=$(tput setaf 6 2> /dev/null || echo "")
 # _WHITE=$(tput setaf 7 2> /dev/null || echo "")
@@ -46,8 +46,6 @@ VERBOSE=""
 if [ "$#" = "1" ] && [ "$1" = "verbose" ]; then
 	VERBOSE="activated"
 fi
-
-##	Faire un test anti correction dans toutes les fonctions
 
 print_ok() {
 	printf "%s[ OK ]%s\\n" "$_GREEN" "$_END"
@@ -60,6 +58,15 @@ print_ko() {
 print_warn() {
 	printf "%s[WARN]%s\\n" "$_YELLOW" "$_END"
 }
+
+print_info() {
+	printf "%s[INFO]%s\\n" "$_BLUE" "$_END"
+}
+
+MAKEFILES=$(find . -name "Makefile" | sort)
+C_FILES=$(find . -name "*.c")
+H_FILES=$(find . -name "*.h")
+CH_FILES=$(find . -name "*.[ch]")
 
 step1() {
 	printf "%s\\n" "$STEP1"
@@ -79,8 +86,7 @@ step1() {
 step2() {
 	printf "%s\\n" "$STEP2"
 	IS_OK="0"
-	FILES=$(find . -name "*.c" -o -name "*.h")
-	for file in $FILES; do
+	for file in $CH_FILES; do
 		OUT=$(grep -P '[^\x00-\x7f$]' "${file}")
 		if [ "$OUT" ]; then
 			IS_OK="1"
@@ -94,7 +100,7 @@ step2() {
 	fi
 
 	if [ "$VERBOSE" ]; then
-		for file in $FILES; do
+		for file in $CH_FILES; do
 			OUT=$(grep -nP '[^\x00-\x7f$]' "${file}")
 			if [ "$OUT" ]; then
 				printf "On file %s\\n" "${file}"
@@ -106,7 +112,6 @@ step2() {
 
 step3() {
 	printf "%s\\n" "$STEP3"
-	C_FILES=$(find . -name "*.c")
 	GLOBALS=$(grep -oh '[^a-zA-Z0-9_]g_[a-zA-Z0-9_]*' $C_FILES | grep -oh 'g_[a-zA-Z0-9_]*' | sort | uniq)
 	NUMBER=$(echo "$GLOBALS" | wc -l)
 
@@ -126,7 +131,6 @@ step3() {
 
 step4() {
 	printf "%s\\n" "$STEP4"
-	MAKEFILES=$(find . -name "Makefile")
 	HEADERS=$(grep '#    Created' $MAKEFILES -l)
 	NM=$(echo "$MAKEFILES" | wc -l)
 	NH=$(echo "$HEADERS" | wc -l)
@@ -143,26 +147,105 @@ step4() {
 	fi
 }
 
+step5() {
+	printf "%s\\n" "$STEP5"
+	OUT=$(grep -h 'sizeof' $C_FILES | grep -v 'sizeof(')
+	if [ -z "$OUT" ]; then
+		print_ok
+	else
+		print_ko
+		if [ "$VERBOSE" ]; then
+			echo "$OUT"
+		fi
+	fi
+}
+
+step6() {
+	printf "%s\\n" "$STEP6"
+	print_info
+	printf "Cannot test this one, but you can test it by yourself, with this command:\\n"
+	printf "$> grep -G -C 10 'if\|while' **/*.c\\n"
+}
+
+step7() {
+	printf "%s\\n" "$STEP7"
+	print_info
+	printf "Cannot test this one, but you can test it by yourself, with this command:\\n"
+	printf "$> grep -E '[=+\-\*&\^%%><\/]$' **/*.c\\n"
+}
+
+step8() {
+	printf "%s\\n" "$STEP8"
+	OUT=$(grep '();' $H_FILES)
+	if [ -z "$OUT" ]; then
+		print_ok
+	else
+		print_ko
+		if [ "$VERBOSE" ]; then
+			echo "$OUT"
+		fi
+	fi
+}
+
+step9() {
+	printf "%s\\n" "$STEP9"
+	OUT=$(grep -hE '^# ?define ' $CH_FILES | grep -Ev "(_H|[0-9]|'|\")$")
+	if [ -z "$OUT" ]; then
+		print_ok
+	else
+		print_ko
+		print_info
+		printf "It may have some issues\\n"
+		if [ ! "$VERBOSE" ]; then
+			echo "Do vervose for more information"
+		else
+			echo "$OUT"
+		fi
+	fi
+}
+
+step10() {
+	printf "%s\\n" "$STEP10"
+	echo "$MAKEFILES" | sort > a
+	grep -l '#    Created' $MAKEFILES | sort > b
+	OUT=$(diff a b)
+	rm a b
+	if [ -z "$OUT" ]; then
+		print_ok
+	else
+		print_ko
+		if [ "$VERBOSE" ]; then
+			echo "$OUT"
+		fi
+	fi
+}
+
+step11() {
+	printf "%s\\n" "$STEP11"
+	print_info
+	printf "Cannot test this one, but you can test it by yourself, with this command:\\n"
+	printf "$> grep '];' **/*.[ch]\\n"
+}
+
+step12() {
+	printf "%s\\n" "$STEP12"
+	printf "Cannot test this one, but you can test it by yourself, with these commands:\\n"
+	printf "$> grep '\$(NAME)' **/Makefile\\n"
+	printf "$> grep 'clean' **/Makefie\\n"
+	printf "$> grep 'fclean' **/Makefile\\n"
+	printf "$> grep 're' **/Makefile\\n"
+	printf "$> grep 'all' **/Makefile\\n"
+}
+
 step1
 step2
 step3
 step4
-
-##	Premier jet
-
-# grep -E '[=+\-\*&\^%><\/]$' **/*.c
-# ls -1 *.[ch] **/Makefile | wc -l
-# grep Created *.[ch] **/Makefile | wc -l
-# grep sizeof **/*.[ch]
-# grep "()" **/*.[ch]
-# grep "return" **/*.c
-# grep define **/*.[ch]
-# grep -n10 -E 'enum' **/*.[ch]
-# grep "];" **/*.[ch]
-# grep "\$(NAME)" **/Makefile
-# grep "clean" **/Makefie
-# grep "fclean" **/Makefile
-# grep "re" **/Makefile
-# grep "all" **/Makefile
-# touch main.c && make && ls -la **/*.o
-# ls -la doom-nukem
+step5
+step6
+step7
+step8
+step9
+step10
+step11
+step12
