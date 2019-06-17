@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ldf_end.c                                       :+:      :+:    :+:   */
+/*   ft_strequ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/14 13:38:37 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/17 08:10:40 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/17 08:19:20 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/17 08:25:05 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-t_bool		ft_ldf_end(t_ldf *ld)
+t_bool		ft_strequ(const char *s1, const char *s2)
 {
-	if (munmap(ld->content, ld->len) < 0)
+	size_t	i;
+
+	i = 0;
+	while (s1[i] == s2[i])
 	{
-		ft_put_str("Failed to munmap the file : ");
-		ft_put_str_ln(ld->filepath);
-		return (FALSE);
+		if (s1[i] == 0)
+			break ;
+		++i;
 	}
-	return (TRUE);
+	return (s1[i] == s2[i]);
 }

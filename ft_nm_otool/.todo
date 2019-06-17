@@ -1,0 +1,15 @@
+
+To do list
+
+Core:
+	Gérer les architectures suivantes:
+		☐ macho 64 bit
+		☐ Archive ar
+		☐ fat 64
+	☐ Gérer le jump en dehors d'un fichier
+	☐ Verifier que les chaines de charactères sont biens des chaînes de charactères
+	☐ Bien tester tous les types de symboles
+
+Bonuses:
+	☐ macho 32 bits
+	☐ fat 32

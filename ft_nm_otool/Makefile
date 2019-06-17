@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/14 16:33:13 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/17 08:59:36 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,11 +38,16 @@ BIN_FLAGS = $(BIN_CFLAGS) $(CFLAGS) $(IFLAGS)
 
 SRC_FILES = \
 			main.c \
+			ft_nm.c \
+			ft_otool.c \
 			t_ldf/ft_ldf_init.c \
 			t_ldf/ft_ldf_end.c \
-			std/ft_put_addr.c \
+			std/ft_strequ.c \
+			std/ft_put_vm_addr.c \
+			std/ft_put_hex_char.c \
 			std/ft_put_str.c \
 			std/ft_put_uint.c \
+			std/ft_put_uint_base.c \
 
 HEADER_FILES = \
 			$(INC_FOLDER)ft_nm_otool.h \
