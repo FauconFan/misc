@@ -6,11 +6,13 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/17 08:59:36 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/17 12:25:03 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = test
+NAME = ft_o
+NAME_OTOOL = ft_otool
+NAME_NM = ft_nm
 
 _RED=$(shell tput setaf 1 2> /dev/null || echo "")
 _GREEN=$(shell tput setaf 2 2> /dev/null || echo "")
@@ -27,6 +29,9 @@ CC = clang
 
 SRC_FOLDER = src/
 INC_FOLDER = inc/
+COM_FOLDER = common/
+NM_FOLDER = ft_nm/
+OTOOL_FOLDER = ft_otool/
 
 CFLAGS = -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align
 SRC_CFLAGS =
@@ -36,34 +41,32 @@ LFLAGS =
 SRC_FLAGS = $(SRC_CFLAGS) $(CFLAGS) $(IFLAGS)
 BIN_FLAGS = $(BIN_CFLAGS) $(CFLAGS) $(IFLAGS)
 
-SRC_FILES = \
-			main.c \
-			ft_nm.c \
-			ft_otool.c \
-			t_ldf/ft_ldf_init.c \
-			t_ldf/ft_ldf_end.c \
-			std/ft_strequ.c \
-			std/ft_put_vm_addr.c \
-			std/ft_put_hex_char.c \
-			std/ft_put_str.c \
-			std/ft_put_uint.c \
-			std/ft_put_uint_base.c \
+include files.makefile
 
-HEADER_FILES = \
-			$(INC_FOLDER)ft_nm_otool.h \
+COMMON_OBJ = $(COMMON_FILES:%.c=%.o)
+NM_OBJ = $(NM_FILES:%.c=%.o)
+OTOOL_OBJ = $(OTOOL_FILES:%.c=%.o)
 
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_FILES))
-
-OBJ = $(SRC:%.c=%.o)
+OBJ = $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ)
 
 #################################### COMPILATION ###############################
 
 .PHONY: all
-all: $(NAME)
+all: $(NAME) $(NAME_NM) $(NAME_OTOOL)
 
-$(NAME): $(OBJ)
+$(NAME): $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ)
 	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
-	@$(CC) $(BIN_FLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
+	@$(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
+	@printf "%s\\n" "$@"
+
+$(NAME_NM): $(COMMON_OBJ) $(NM_OBJ)
+	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
+	@$(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
+	@printf "%s\\n" "$@"
+
+$(NAME_OTOOL): $(COMMON_OBJ) $(OTOOL_OBJ)
+	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
+	@$(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
 	@printf "%s\\n" "$@"
 
 %.o: %.c $(HEADER_FILES)

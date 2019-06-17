@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/17 09:59:06 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/17 11:15:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,19 @@ t_bool						ft_ldf_init(t_ldf *ld, char *path_file);
 t_bool						ft_ldf_end(t_ldf *ld);
 
 void						ft_otool(t_ldf *lfd);
+void						ft_nm(t_ldf *ldf);
+
+/*
+**	nm stuff
+*/
+
+void						nm_m64(t_ldf *ldf);
+
+/*
+**	otool stuff
+*/
+
+void						otool_m64(t_ldf *ldf);
 
 /*
 **	std utils functions

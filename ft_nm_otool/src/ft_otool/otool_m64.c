@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_otool.c                                         :+:      :+:    :+:   */
+/*   otool_m64.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:11:09 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/17 09:49:33 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/17 11:00:48 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/17 12:19:58 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	handle_segment_text(t_ldf *ldf, struct segment_command_64 *seg)
 	}
 }
 
-static void	otool_64(t_ldf *ldf)
+void		otool_m64(t_ldf *ldf)
 {
 	struct mach_header_64		*h64;
 	struct load_command			*lc;
@@ -88,17 +88,4 @@ static void	otool_64(t_ldf *ldf)
 		++i;
 		lc = (struct load_command *)((char *)lc + lc->cmdsize);
 	}
-}
-
-void		ft_otool(t_ldf *ldf)
-{
-	uint32_t	magic_number;
-
-	magic_number = *(uint32_t *)ldf->content;
-	if (magic_number != MH_MAGIC_64)
-	{
-		ft_put_str_ln("Not a 64 bit Mach-O");
-		return ;
-	}
-	otool_64(ldf);
 }
