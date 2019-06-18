@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 09:16:34 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 09:55:22 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/18 11:02:44 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static void	quicksort(t_sym *symbols, size_t beg, size_t end)
 		++i;
 	}
 	swap(symbols, frontier, end);
-	quicksort(symbols, beg, frontier - 1);
+	if (frontier != 0)
+		quicksort(symbols, beg, frontier - 1);
 	quicksort(symbols, frontier + 1, end);
 }
 

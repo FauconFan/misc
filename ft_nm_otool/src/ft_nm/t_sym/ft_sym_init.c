@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 07:55:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 09:09:10 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/18 10:59:31 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void		ft_sym_init2(
 		sym->c = 'a';
 	else if (type == N_SECT)
 		handle_sect(sym, meta, n_sect);
-	else if (type == N_PBUD)
-		ft_put_str_ln("ERROR ====================================== N_PBUD");
 	else if (type == N_INDR)
 		sym->c = 'i';
 	if (n_type & N_EXT)
