@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/17 11:15:10 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/18 09:46:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/stat.h>
-# include <sys/mman.h>
+# include <sys/mman.h> // better includes
 
 /*
 **	General defines
@@ -85,5 +86,12 @@ void						ft_put_uint_base(
 								char width_padded);
 
 t_bool						ft_strequ(const char *s1, const char *s2);
+int							ft_strcmp(const char *s1, const char *s2);
+
+void						ft_memcpy(
+								void *dest,
+								const void *src,
+								size_t len);
+char						ft_toupper(char c);
 
 #endif

@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nm.c                                            :+:      :+:    :+:   */
+/*   ft_meta_sect_init.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:17:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 08:06:20 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/18 08:03:17 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/18 08:05:18 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-void		ft_nm(t_ldf *ldf)
+void	ft_meta_sect_init(t_meta_sect *meta)
 {
-	uint32_t	magic_number;
-
-	magic_number = *(uint32_t *)ldf->content;
-	if (magic_number != MH_MAGIC_64)
-	{
-		ft_put_str_ln("Not a 64 bit Mach-O");
-		return ;
-	}
-	nm_m64(ldf);
+	meta->text_index = 0;
+	meta->data_index = 0;
+	meta->bss_index = 0;
 }

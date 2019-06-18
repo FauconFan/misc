@@ -1,19 +1,22 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    files.Makefile                                     :+:      :+:    :+:    #
+#    files.makefile                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/18 07:20:41 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/18 09:46:52 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 __COMMON_FILES = \
 			t_ldf/ft_ldf_init.c \
 			t_ldf/ft_ldf_end.c \
+			std/ft_toupper.c \
 			std/ft_strequ.c \
+			std/ft_strcmp.c \
+			std/ft_memcpy.c \
 			std/ft_put_vm_addr.c \
 			std/ft_put_hex_char.c \
 			std/ft_put_str.c \
@@ -25,6 +28,11 @@ _COMMON_FILES = $(addprefix $(COM_FOLDER), $(__COMMON_FILES))
 __NM_FILES = \
 			ft_nm.c \
 			nm_m64.c \
+			t_meta_sect/ft_meta_sect_init.c \
+			t_meta_sect/ft_meta_sect_load.c \
+			t_sym/ft_sym_init.c \
+			t_sym/ft_sym_print.c \
+			t_sym/ft_sym_sort_by_name.c \
 
 _NM_FILES = $(addprefix $(NM_FOLDER), $(__NM_FILES))
 

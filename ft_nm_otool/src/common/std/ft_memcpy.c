@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nm.c                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:17:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 08:06:20 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/18 09:20:22 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/18 09:22:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_nm_otool.h"
 
-void		ft_nm(t_ldf *ldf)
+void	ft_memcpy(void *dest, const void *src, size_t len)
 {
-	uint32_t	magic_number;
+	char		*sdest;
+	const char	*ssrc;
+	size_t		i;
 
-	magic_number = *(uint32_t *)ldf->content;
-	if (magic_number != MH_MAGIC_64)
+	sdest = (char *)dest;
+	ssrc = (const char *)src;
+	i = 0;
+	while (i < len)
 	{
-		ft_put_str_ln("Not a 64 bit Mach-O");
-		return ;
+		sdest[i] = ssrc[i];
+		++i;
 	}
-	nm_m64(ldf);
 }

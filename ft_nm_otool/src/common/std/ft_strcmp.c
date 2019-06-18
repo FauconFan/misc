@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nm.c                                            :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:17:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 08:06:20 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/18 09:32:30 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/18 09:46:16 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_nm_otool.h"
 
-void		ft_nm(t_ldf *ldf)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	uint32_t	magic_number;
+	size_t	i;
 
-	magic_number = *(uint32_t *)ldf->content;
-	if (magic_number != MH_MAGIC_64)
+	i = 0;
+	while (s1[i] == s2[i])
 	{
-		ft_put_str_ln("Not a 64 bit Mach-O");
-		return ;
+		if (s1[i] == 0)
+			break ;
+		++i;
 	}
-	nm_m64(ldf);
+	return (s1[i] - s2[i]);
 }

@@ -13,6 +13,7 @@ Core:
 	☐ Gérer le jump en dehors d'un fichier
 	☐ Verifier que les chaines de charactères sont biens des chaînes de charactères
 	☐ Bien tester tous les types de symboles
+	☐ Gerer quand pas d'arguments (a.out)
 
 Bonuses:
 	☐ macho 32 bits

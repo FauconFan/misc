@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nm.c                                            :+:      :+:    :+:   */
+/*   ft_sym_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:17:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 08:06:20 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/18 09:09:16 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/18 09:11:40 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-void		ft_nm(t_ldf *ldf)
+void	ft_sym_print(t_sym *sym)
 {
-	uint32_t	magic_number;
+	char	middle[4];
 
-	magic_number = *(uint32_t *)ldf->content;
-	if (magic_number != MH_MAGIC_64)
-	{
-		ft_put_str_ln("Not a 64 bit Mach-O");
-		return ;
-	}
-	nm_m64(ldf);
+	if (sym->print_value)
+		ft_put_vm_addr(sym->value);
+	else
+		ft_put_str("                ");
+	middle[0] = ' ';
+	middle[1] = sym->c;
+	middle[2] = ' ';
+	middle[3] = 0;
+	ft_put_str(middle);
+	ft_put_str_ln(sym->name);
 }
