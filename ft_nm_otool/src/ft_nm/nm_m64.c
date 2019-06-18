@@ -6,98 +6,108 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 10:59:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 09:56:24 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/18 13:55:53 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-static void	print_symbols(
-				void *v,
-				struct symtab_command *sym,
-				t_meta_sect *meta)
+static void		print_symbols(
+					t_ldf *ldf,
+					struct symtab_command *sym,
+					t_meta_sect *meta)
 {
 	uint32_t		i;
-	char			*stringtable;
-	struct nlist_64	*array;
+	struct nlist_64	*tab;
 	t_sym			*symbols;
+	char			*name;
+	size_t			offset_str;
 
-	array = (struct nlist_64 *)((char *)v + sym->symoff);
-	stringtable = (char *)((char *)v + sym->stroff);
+	tab = ft_ldf_jmp(ldf, sym->symoff, sizeof(*tab) * sym->nsyms);
 	if ((symbols = malloc(sizeof(t_sym) * sym->nsyms)) == NULL)
 		return ;
 	i = 0;
 	while (i < sym->nsyms)
 	{
-		ft_sym_init1(symbols + i, array[i].n_value,
-			stringtable + array[i].n_un.n_strx);
-		ft_sym_init2(symbols + i, meta, array[i].n_type, array[i].n_sect);
+		offset_str = sym->stroff + tab[i].n_un.n_strx;
+		if ((name = ft_ldf_jmp_str(ldf, offset_str)) == NULL)
+			return ;
+		ft_sym_init1(symbols + i, tab[i].n_value, name);
+		ft_sym_init2(symbols + i, meta, tab[i].n_type, tab[i].n_sect);
 		++i;
 	}
 	ft_sym_sort_by_name(symbols, sym->nsyms);
 	i = 0;
 	while (i < sym->nsyms)
-	{
-		ft_sym_print(symbols + i);
-		++i;
-	}
+		ft_sym_print(symbols + i++);
 	free(symbols);
 }
 
-static void	charge_meta(
-				t_meta_sect *meta,
-				struct load_command *lc,
-				uint32_t ncmds)
+static size_t	loff(size_t offset, uint32_t index)
 {
-	struct segment_command_64	*seg;
-	struct section_64			*sec;
+	offset += sizeof(struct segment_command_64);
+	offset += index * sizeof(struct section_64);
+	return (offset);
+}
+
+static t_bool	charge_meta(
+					t_ldf *ld,
+					t_meta_sect *meta,
+					size_t off,
+					uint32_t ncmds)
+{
+	struct load_command			*lc;
+	struct section_64			*se;
 	uint32_t					i;
 	uint32_t					j;
 	uint8_t						isect;
 
-	ft_meta_sect_init(meta);
 	i = 0;
 	isect = 1;
-	while (i < ncmds)
+	while (i++ < ncmds)
 	{
+		if ((lc = ft_ldf_jmp(ld, off, sizeof(*lc))) == NULL)
+			return (FALSE);
 		if (lc->cmd == LC_SEGMENT_64)
 		{
-			seg = (struct segment_command_64 *)lc;
-			sec = (struct section_64 *)((char *)seg + sizeof(*seg));
 			j = 0;
-			while (j++ < seg->nsects)
+			while (j < ((struct segment_command_64 *)lc)->nsects)
 			{
-				ft_meta_sect_load(meta, sec->segname, sec->sectname, isect++);
-				sec++;
+				if ((se = ft_ldf_jmp(ld, loff(off, j++), sizeof(*se))) == NULL)
+					return (FALSE);
+				ft_meta_sect_load(meta, se->segname, se->sectname, isect++);
 			}
 		}
-		++i;
-		lc = (struct load_command *)((char *)lc + lc->cmdsize);
+		off += lc->cmdsize;
 	}
+	return (TRUE);
 }
 
-void		nm_m64(t_ldf *ldf)
+void			nm_m64(t_ldf *ldf)
 {
 	struct mach_header_64	*h64;
 	struct load_command		*lc;
-	struct symtab_command	*sym;
 	uint32_t				i;
+	size_t					offset;
 	t_meta_sect				meta;
 
 	h64 = (struct mach_header_64 *)ldf->content;
 	i = 0;
-	lc = (struct load_command *)
-		((char *)ldf->content + sizeof(struct mach_header_64));
-	charge_meta(&meta, lc, h64->ncmds);
-	while (i < h64->ncmds)
+	offset = sizeof(struct mach_header_64);
+	lc = ft_ldf_jmp(ldf, offset, sizeof(*lc));
+	ft_meta_sect_init(&meta);
+	if (lc == NULL || charge_meta(ldf, &meta, offset, h64->ncmds) == FALSE)
+		return ;
+	while (i++ < h64->ncmds)
 	{
 		if (lc->cmd == LC_SYMTAB)
 		{
-			sym = (struct symtab_command *)lc;
-			print_symbols(ldf->content, sym, &meta);
+			print_symbols(ldf, (struct symtab_command *)lc, &meta);
 			break ;
 		}
-		++i;
-		lc = (struct load_command *)((char *)lc + lc->cmdsize);
+		offset += lc->cmdsize;
+		lc = ft_ldf_jmp(ldf, offset, sizeof(*lc));
+		if (lc == NULL)
+			return ;
 	}
 }

@@ -1,18 +1,20 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    files.makefile                                     :+:      :+:    :+:    #
+#    files.Makefile                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/18 09:46:52 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/18 13:54:52 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 __COMMON_FILES = \
 			t_ldf/ft_ldf_init.c \
 			t_ldf/ft_ldf_end.c \
+			t_ldf/ft_ldf_jmp.c \
+			t_ldf/ft_ldf_jmp_str.c \
 			std/ft_toupper.c \
 			std/ft_strequ.c \
 			std/ft_strcmp.c \

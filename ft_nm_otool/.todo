@@ -3,16 +3,18 @@ To do list
 
 Core:
 	Gérer les architectures suivantes:
-		☐ macho 64 bit
+		✔ macho 64 bit @done(19-06-18 17:14)
 		☐ Archive ar
 		☐ fat 64
 	☐ Abstraction du main et du Makefile
 		☐ Abtraction du main
 		✔ Abtraction du Makefile @done(19-06-18 07:25)
 		☐ Faire un $(NAME) de qualité
-	☐ Gérer le jump en dehors d'un fichier
-	☐ Verifier que les chaines de charactères sont biens des chaînes de charactères
+	✔ Gérer le jump en dehors d'un fichier @done(19-06-18 17:13)
+	✔ Verifier que les chaines de charactères sont biens des chaînes de charactères @done(19-06-18 17:13)
 	☐ Bien tester tous les types de symboles
+		✔ 1er ` @done(19-06-18 17:14)
+		☐ 2nd jet
 	☐ Gerer quand pas d'arguments (a.out)
 
 Bonuses:

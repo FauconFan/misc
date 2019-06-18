@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 09:46:30 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/18 13:54:43 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef unsigned char		t_bool;
 **	ldf => loader file
 */
 
+# define CORRUPTION_MSG		"The file given is corrupted"
+
 typedef struct				s_ldf
 {
 	char		*filepath;
@@ -47,6 +49,11 @@ typedef struct				s_ldf
 
 t_bool						ft_ldf_init(t_ldf *ld, char *path_file);
 t_bool						ft_ldf_end(t_ldf *ld);
+void						*ft_ldf_jmp(
+								t_ldf *ldf,
+								size_t offset,
+								size_t at_least);
+void						*ft_ldf_jmp_str(t_ldf *ldf, size_t offset);
 
 void						ft_otool(t_ldf *lfd);
 void						ft_nm(t_ldf *ldf);
