@@ -7,6 +7,9 @@ Core:
 		☐ Archive ar
 		☐ fat 64
 	☐ Abstraction du main et du Makefile
+		☐ Abtraction du main
+		✔ Abtraction du Makefile @done(19-06-18 07:25)
+		☐ Faire un $(NAME) de qualité
 	☐ Gérer le jump en dehors d'un fichier
 	☐ Verifier que les chaines de charactères sont biens des chaînes de charactères
 	☐ Bien tester tous les types de symboles

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/17 12:25:03 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/18 07:22:22 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,27 +44,30 @@ BIN_FLAGS = $(BIN_CFLAGS) $(CFLAGS) $(IFLAGS)
 include files.makefile
 
 COMMON_OBJ = $(COMMON_FILES:%.c=%.o)
+COMMON_MAIN_OBJ = $(COMMON_MAIN:%.c=%.o)
 NM_OBJ = $(NM_FILES:%.c=%.o)
+NM_MAIN_OBJ = $(NM_MAIN:%.c=%.o)
 OTOOL_OBJ = $(OTOOL_FILES:%.c=%.o)
+OTOOL_MAIN_OBJ = $(OTOOL_MAIN:%.c=%.o)
 
-OBJ = $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ)
+OBJ = $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ) $(COMMON_MAIN_OBJ) $(NM_MAIN_OBJ) $(OTOOL_MAIN_OBJ)
 
 #################################### COMPILATION ###############################
 
 .PHONY: all
 all: $(NAME) $(NAME_NM) $(NAME_OTOOL)
 
-$(NAME): $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ)
+$(NAME): $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ) $(COMMON_MAIN_OBJ)
 	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
 	@$(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
 	@printf "%s\\n" "$@"
 
-$(NAME_NM): $(COMMON_OBJ) $(NM_OBJ)
+$(NAME_NM): $(COMMON_OBJ) $(NM_OBJ) $(NM_MAIN_OBJ)
 	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
 	@$(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
 	@printf "%s\\n" "$@"
 
-$(NAME_OTOOL): $(COMMON_OBJ) $(OTOOL_OBJ)
+$(NAME_OTOOL): $(COMMON_OBJ) $(OTOOL_OBJ) $(OTOOL_MAIN_OBJ)
 	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
 	@$(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
 	@printf "%s\\n" "$@"
@@ -82,9 +85,11 @@ clean:
 .PHONY: fclean
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "Library $(NAME) removed"
-	@rm -rf $(NAME_LN)
-	@echo "Symbolic link $(NAME_LN) removed"
+	@echo "Executable $(NAME) removed"
+	@rm -rf $(NAME_NM)
+	@echo "Executable $(NAME_NM) removed"
+	@rm -rf $(NAME_OTOOL)
+	@echo "Executable $(NAME_OTOOL) removed"
 
 .PHONY: re
 re:

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/17 11:14:40 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/18 07:20:41 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,33 +20,31 @@ __COMMON_FILES = \
 			std/ft_put_uint.c \
 			std/ft_put_uint_base.c \
 
-__COMMON_ENTRY = main.c
-
-_COMMON_FILES = \
-			$(addprefix $(COM_FOLDER), $(__COMMON_FILES)) \
-			$(__COMMON_ENTRY) \
+_COMMON_FILES = $(addprefix $(COM_FOLDER), $(__COMMON_FILES))
 
 __NM_FILES = \
+			ft_nm.c \
 			nm_m64.c \
 
-__NM_ENTRY = ft_nm.c \
-
-_NM_FILES = \
-			$(addprefix $(NM_FOLDER), $(__NM_FILES)) \
-			$(__NM_ENTRY) \
+_NM_FILES = $(addprefix $(NM_FOLDER), $(__NM_FILES))
 
 __OTOOL_FILES = \
+			ft_otool.c \
 			otool_m64.c \
 
-__OTOOL_ENTRY = ft_otool.c \
+_OTOOL_FILES = $(addprefix $(OTOOL_FOLDER), $(__OTOOL_FILES))
 
-_OTOOL_FILES = \
-			$(addprefix $(OTOOL_FOLDER), $(__OTOOL_FILES)) \
-			$(__OTOOL_ENTRY) \
+_COMMON_MAIN = main_o.c
+_NM_MAIN = main_nm.c
+_OTOOL_MAIN = main_otool.c
 
 COMMON_FILES = $(addprefix $(SRC_FOLDER), $(_COMMON_FILES))
 NM_FILES = $(addprefix $(SRC_FOLDER), $(_NM_FILES))
 OTOOL_FILES = $(addprefix $(SRC_FOLDER), $(_OTOOL_FILES))
+
+COMMON_MAIN = $(addprefix $(SRC_FOLDER), $(_COMMON_MAIN))
+NM_MAIN = $(addprefix $(SRC_FOLDER), $(_NM_MAIN))
+OTOOL_MAIN = $(addprefix $(SRC_FOLDER), $(_OTOOL_MAIN))
 
 HEADER_FILES = \
 			$(INC_FOLDER)ft_nm_otool.h \
