@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/19 12:20:18 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/19 17:26:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef unsigned char		t_bool;
 
 # define CORRUPTION_MSG		"The file given is corrupted"
 # define ARCHI_MSG			"The architecture cannot be determined"
-# define ARCHI_NOTFOUND_MSG	"No architectures has been found"
 # define UNKNOWN_FILE		"Unkwnown file type"
 
 typedef struct				s_ldf
