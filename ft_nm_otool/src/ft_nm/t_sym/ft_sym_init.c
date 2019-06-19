@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 07:55:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 10:59:31 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/19 17:00:13 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void		ft_sym_init2(
 
 	sym->c = '?';
 	sym->print_value = TRUE;
+	if (n_type & N_STAB)
+		return ;
 	type = n_type & N_TYPE;
 	if (type == N_UNDF)
 	{
