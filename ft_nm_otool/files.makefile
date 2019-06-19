@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    files.Makefile                                     :+:      :+:    :+:    #
+#    files.makefile                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/18 13:54:52 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/19 09:05:06 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ __COMMON_FILES = \
 			t_ldf/ft_ldf_end.c \
 			t_ldf/ft_ldf_jmp.c \
 			t_ldf/ft_ldf_jmp_str.c \
+			fat/fat_cigam.c \
 			std/ft_toupper.c \
 			std/ft_strequ.c \
 			std/ft_strcmp.c \
@@ -24,6 +25,10 @@ __COMMON_FILES = \
 			std/ft_put_str.c \
 			std/ft_put_uint.c \
 			std/ft_put_uint_base.c \
+			std/ft_swap_int.c \
+			std/ft_swap_uint.c \
+			utils/ft_check_str.c \
+			get_arch.c \
 
 _COMMON_FILES = $(addprefix $(COM_FOLDER), $(__COMMON_FILES))
 

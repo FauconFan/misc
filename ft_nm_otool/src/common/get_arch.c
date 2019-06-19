@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_otool.c                                         :+:      :+:    :+:   */
+/*   get_arch.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:11:09 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/19 12:20:53 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/19 07:35:13 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/19 07:52:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-void		ft_otool(t_ldf *ldf)
+char	*get_arch(void)
 {
-	uint32_t	magic_number;
+	static t_arch_buffer	buffer = {FALSE, FALSE, {{0}, {0}, {0}, {0}, {0}}};
 
-	magic_number = *(uint32_t *)ldf->content;
-	if (magic_number == MH_MAGIC_64)
-		otool_m64(ldf);
-	else if (magic_number == FAT_CIGAM)
-		fat_cigam(ldf, ft_otool);
-	else
-		ft_put_str_ln(UNKNOWN_FILE);
+	if (buffer.fail)
+		return (NULL);
+	if (buffer.set == FALSE)
+	{
+		if (uname(&buffer.ust) < 0
+			|| ft_check_str(buffer.ust.machine, 256) == FALSE)
+		{
+			ft_put_str_ln(ARCHI_MSG);
+			buffer.fail = TRUE;
+			return (NULL);
+		}
+		buffer.set = TRUE;
+	}
+	return (buffer.ust.machine);
 }

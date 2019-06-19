@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 11:00:48 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 13:45:03 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/19 12:15:50 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void		otool_m64(t_ldf *ldf)
 	uint32_t					i;
 	size_t						offset;
 
-	h64 = (struct mach_header_64 *)ldf->content;
+	h64 = ft_ldf_jmp(ldf, 0, sizeof(*h64));
 	offset = sizeof(struct mach_header_64);
-	lc = (struct load_command *)ft_ldf_jmp(ldf, offset, sizeof(*lc));
-	if (lc == NULL)
+	lc = ft_ldf_jmp(ldf, offset, sizeof(*lc));
+	if (h64 == NULL || lc == NULL)
 		return ;
 	i = 0;
 	while (i++ < h64->ncmds)
@@ -96,7 +96,7 @@ void		otool_m64(t_ldf *ldf)
 				break ;
 		}
 		offset += lc->cmdsize;
-		lc = (struct load_command *)ft_ldf_jmp(ldf, offset, sizeof(*lc));
+		lc = ft_ldf_jmp(ldf, offset, sizeof(*lc));
 		if (lc == NULL)
 			return ;
 	}

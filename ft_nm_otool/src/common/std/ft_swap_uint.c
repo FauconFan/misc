@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_otool.c                                         :+:      :+:    :+:   */
+/*   ft_swap_uint.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:11:09 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/19 12:20:53 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/19 08:50:01 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/19 08:56:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-void		ft_otool(t_ldf *ldf)
+uint32_t	ft_swap_uint32(uint32_t val)
 {
-	uint32_t	magic_number;
+	val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0x00FF00FF);
+	return ((val << 16) | (val >> 16));
+}
 
-	magic_number = *(uint32_t *)ldf->content;
-	if (magic_number == MH_MAGIC_64)
-		otool_m64(ldf);
-	else if (magic_number == FAT_CIGAM)
-		fat_cigam(ldf, ft_otool);
-	else
-		ft_put_str_ln(UNKNOWN_FILE);
+uint64_t	ft_swap_uint64(uint64_t val)
+{
+	val = ((val << 8) & 0xFF00FF00FF00FF00ULL)
+		| ((val >> 8) & 0x00FF00FF00FF00FFULL);
+	val = ((val << 16) & 0xFFFF0000FFFF0000ULL)
+		| ((val >> 16) & 0x0000FFFF0000FFFFULL);
+	return ((val << 32) | (val >> 32));
 }

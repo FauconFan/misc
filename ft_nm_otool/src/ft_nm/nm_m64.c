@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 10:59:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 13:55:53 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/19 11:49:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		print_symbols(
 	size_t			offset_str;
 
 	tab = ft_ldf_jmp(ldf, sym->symoff, sizeof(*tab) * sym->nsyms);
-	if ((symbols = malloc(sizeof(t_sym) * sym->nsyms)) == NULL)
+	if (tab == NULL || (symbols = malloc(sizeof(t_sym) * sym->nsyms)) == NULL)
 		return ;
 	i = 0;
 	while (i < sym->nsyms)
@@ -91,12 +91,13 @@ void			nm_m64(t_ldf *ldf)
 	size_t					offset;
 	t_meta_sect				meta;
 
-	h64 = (struct mach_header_64 *)ldf->content;
+	h64 = ft_ldf_jmp(ldf, 0, sizeof(*h64));
 	i = 0;
 	offset = sizeof(struct mach_header_64);
 	lc = ft_ldf_jmp(ldf, offset, sizeof(*lc));
 	ft_meta_sect_init(&meta);
-	if (lc == NULL || charge_meta(ldf, &meta, offset, h64->ncmds) == FALSE)
+	if (h64 == NULL || lc == NULL
+		|| charge_meta(ldf, &meta, offset, h64->ncmds) == FALSE)
 		return ;
 	while (i++ < h64->ncmds)
 	{
@@ -106,8 +107,7 @@ void			nm_m64(t_ldf *ldf)
 			break ;
 		}
 		offset += lc->cmdsize;
-		lc = ft_ldf_jmp(ldf, offset, sizeof(*lc));
-		if (lc == NULL)
+		if ((lc = ft_ldf_jmp(ldf, offset, sizeof(*lc))) == NULL)
 			return ;
 	}
 }

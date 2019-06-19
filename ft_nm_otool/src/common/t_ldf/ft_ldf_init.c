@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:37:06 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 11:45:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/19 08:15:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ t_bool		ft_ldf_init(t_ldf *ld, char *path_file)
 	if (fstat(fd, &statbuff) < 0)
 	{
 		ft_put_str("Failed to fstat on file : ");
+		ft_put_str_ln(path_file);
+		close(fd);
+		return (FALSE);
+	}
+	if (statbuff.st_size < 4)
+	{
+		ft_put_str("The file is too small : ");
 		ft_put_str_ln(path_file);
 		close(fd);
 		return (FALSE);
