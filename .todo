@@ -23,9 +23,9 @@ Tests:
 	☐ Bien tester tous les types de symboles
 		✔ 1er ` @done(19-06-18 17:14)
 		☐ 2nd jet
-	☐ /bin
+	✔ /bin @done(19-06-20 11:19)
 	☐ /usr/bin
-	☐ /usr/lib
+	✔ /usr/lib @done(19-06-20 11:19)
 	☐ https://github.com/mguillau42/unit_test_nm_otool
 	☐ https://github.com/JonathanSalwan/binary-samples
 	☐ https://github.com/mmeisson/tests_nm
