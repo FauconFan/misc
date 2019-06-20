@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put_vm_addr.c                                   :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:46:37 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/17 08:52:46 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/20 11:45:43 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/20 11:46:45 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-void	ft_put_vm_addr(uint64_t addr)
+size_t		ft_strlen(const char *str)
 {
-	ft_put_uint_base(addr, BASE_HEX_LOW, 16, '0');
+	size_t	l;
+
+	l = 0;
+	while (str[l])
+		++l;
+	return (l);
 }

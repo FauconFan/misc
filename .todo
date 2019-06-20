@@ -18,7 +18,9 @@ Core:
 	✔ Verifier que les chaines de charactères sont biens des chaînes de charactères @done(19-06-18 17:13)
 	☐ Gerer quand pas d'arguments (a.out)
 	✔ Gere quand fichier vide @done(19-06-19 08:16)
-	
+	✔ Bufferiser la sortie pour optimisation @done(19-06-20 12:12)
+	☐ alloc seulement les symboles necessaires dans nm
+
 Tests:
 	☐ Bien tester tous les types de symboles
 		✔ 1er ` @done(19-06-18 17:14)

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/20 10:29:49 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/20 11:20:40 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/20 12:07:47 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,6 @@ test_usr_lib:
 	@ bash -c "diff <(nm $@) <($(NAME_NM) $@)"
 	@ printf "\\totool/ft_otool\\n"
 	@ bash -c "diff <(otool -t $@) <($(NAME_OTOOL) $@)"
-	@ sleep 1
 
 .PHONY: FORCE
 FORCE:

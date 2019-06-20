@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 07:21:18 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 10:30:43 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/20 12:06:35 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ int			main(int argc, char **argv)
 	{
 		if (ft_ldf_init(&ld, argv[i]) == FALSE)
 			continue ;
-		ft_put_str(ld.filepath);
-		ft_put_str_ln(":");
+		ft_bput_str(ld.filepath);
+		ft_bput_str_ln(":");
 		ft_otool(&ld);
 		if (ft_ldf_end(&ld) == FALSE)
 			continue ;
 	}
+	ft_buff_flush();
 	return (0);
 }

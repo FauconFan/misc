@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 09:09:16 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/18 10:59:56 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/20 12:05:53 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	ft_sym_print(t_sym *sym)
 	if (sym->c == '?')
 		return ;
 	if (sym->print_value)
-		ft_put_vm_addr(sym->value);
+		ft_bput_vm_addr(sym->value);
 	else
-		ft_put_str("                ");
+		ft_bput_str("                ");
 	middle[0] = ' ';
 	middle[1] = sym->c;
 	middle[2] = ' ';
 	middle[3] = 0;
-	ft_put_str(middle);
-	ft_put_str_ln(sym->name);
+	ft_bput_str(middle);
+	ft_bput_str_ln(sym->name);
 }

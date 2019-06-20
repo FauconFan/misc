@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_otool.c                                         :+:      :+:    :+:   */
+/*   ft_bput_hex_char.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:11:09 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 12:05:31 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/17 08:50:26 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/20 12:01:52 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-void		ft_otool(t_ldf *ldf)
+void	ft_bput_hex_char(uint8_t val)
 {
-	uint32_t	magic_number;
-
-	magic_number = *(uint32_t *)ldf->content;
-	if (magic_number == MH_MAGIC_64)
-		otool_m64(ldf);
-	else if (magic_number == FAT_CIGAM)
-		fat_cigam(ldf, ft_otool);
-	else
-		ft_bput_str_ln(UNKNOWN_FILE);
+	ft_bput_uint_base(val, BASE_HEX_LOW, 2, '0');
 }

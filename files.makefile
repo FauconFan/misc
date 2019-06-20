@@ -6,27 +6,46 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/19 09:05:06 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/20 12:11:02 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+___MEM_FOLDER = std/mem/
+___STR_FOLDER = std/str/
+___INT_FOLDER = std/int/
+___BUFF_FOLDER = std/ft_buff/
+
+___MEM_FILES = \
+			ft_memcpy.c \
+
+___STR_FILES = \
+			ft_strlen.c \
+			ft_strequ.c \
+			ft_strcmp.c \
+			ft_toupper.c \
+
+___INT_FILES = \
+			ft_swap_int.c \
+			ft_swap_uint.c \
+
+___BUFF_FILES = \
+			ft_bput_vm_addr.c \
+			ft_bput_hex_char.c \
+			ft_bput_str.c \
+			ft_bput_uint.c \
+			ft_bput_uint_base.c \
+			ft_buff.c \
+
 __COMMON_FILES = \
+			$(addprefix $(___MEM_FOLDER), $(___MEM_FILES)) \
+			$(addprefix $(___STR_FOLDER), $(___STR_FILES)) \
+			$(addprefix $(___INT_FOLDER), $(___INT_FILES)) \
+			$(addprefix $(___BUFF_FOLDER), $(___BUFF_FILES)) \
 			t_ldf/ft_ldf_init.c \
 			t_ldf/ft_ldf_end.c \
 			t_ldf/ft_ldf_jmp.c \
 			t_ldf/ft_ldf_jmp_str.c \
 			fat/fat_cigam.c \
-			std/ft_toupper.c \
-			std/ft_strequ.c \
-			std/ft_strcmp.c \
-			std/ft_memcpy.c \
-			std/ft_put_vm_addr.c \
-			std/ft_put_hex_char.c \
-			std/ft_put_str.c \
-			std/ft_put_uint.c \
-			std/ft_put_uint_base.c \
-			std/ft_swap_int.c \
-			std/ft_swap_uint.c \
 			utils/ft_check_str.c \
 			get_arch.c \
 
@@ -63,3 +82,5 @@ OTOOL_MAIN = $(addprefix $(SRC_FOLDER), $(_OTOOL_MAIN))
 
 HEADER_FILES = \
 			$(INC_FOLDER)ft_nm_otool.h \
+			$(INC_FOLDER)ft_nm.h \
+			$(INC_FOLDER)std.h \

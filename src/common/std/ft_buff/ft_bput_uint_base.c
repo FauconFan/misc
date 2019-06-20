@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put_uint_base.c                                 :+:      :+:    :+:   */
+/*   ft_bput_uint_base.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 08:37:38 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/17 08:44:26 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/20 12:01:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static void		handle_prefix(size_t width, size_t l, char c)
 		buff[i] = c;
 		++i;
 	}
-	write(1, buff, i);
+	buff[i] = 0;
+	ft_buff_put(buff);
 }
 
 static size_t	handle_base_length(const char *base)
@@ -45,7 +46,7 @@ static size_t	handle_base_length(const char *base)
 **	We also assume that width is no greater than 32
 */
 
-void			ft_put_uint_base(
+void			ft_bput_uint_base(
 					unsigned long int nb,
 					const char *base,
 					size_t width,
@@ -73,5 +74,6 @@ void			ft_put_uint_base(
 		nb /= lbase;
 	}
 	handle_prefix(width, l, width_padded);
-	write(1, buff, l);
+	buff[l] = 0;
+	ft_buff_put(buff);
 }

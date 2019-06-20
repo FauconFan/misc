@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put_hex_char.c                                  :+:      :+:    :+:   */
+/*   ft_bput_vm_addr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 08:50:26 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/17 08:53:17 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/17 08:46:37 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/20 12:02:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-void	ft_put_hex_char(uint8_t val)
+void	ft_bput_vm_addr(uint64_t addr)
 {
-	ft_put_uint_base(val, BASE_HEX_LOW, 2, '0');
+	ft_bput_uint_base(addr, BASE_HEX_LOW, 16, '0');
 }

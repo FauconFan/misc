@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 08:21:27 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/19 17:34:35 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/20 12:04:40 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ void			fat_cigam(t_ldf *ldf, void (*f)(t_ldf *ldf))
 
 	if (local == NULL)
 	{
-		ft_put_str_ln(ARCHI_MSG);
+		ft_bput_str_ln(ARCHI_MSG);
 		return ;
 	}
 	if ((hdr = ft_ldf_jmp(ldf, 0, sizeof(*hdr))) == NULL)
 		return ;
 	if (test_arch(ldf, f, local, hdr) == FALSE)
 	{
-		ft_put_str_ln("All print");
+		ft_bput_str_ln("All print");
 		do_all_arch(ldf, f, hdr);
 	}
 }

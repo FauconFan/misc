@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 11:00:48 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/19 12:15:50 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/20 12:06:09 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ static void		pretty_print(char *v, uint64_t vm_addr, size_t len)
 
 	if (len == 0)
 		return ;
-	ft_put_vm_addr(vm_addr);
-	ft_put_str("\t");
+	ft_bput_vm_addr(vm_addr);
+	ft_bput_str("\t");
 	i = 0;
 	while (i < 16 && i < len)
 	{
-		ft_put_hex_char((uint8_t)v[i]);
-		ft_put_str(" ");
+		ft_bput_hex_char((uint8_t)v[i]);
+		ft_bput_str(" ");
 		++i;
 	}
-	ft_put_str_ln("");
+	ft_bput_str_ln("");
 	if (i != len)
 		pretty_print(v + 16, vm_addr + 16, len - 16);
 }
@@ -39,7 +39,7 @@ static void		handle_section_text(t_ldf *ldf, struct section_64 *sec)
 	v = (char *)ft_ldf_jmp(ldf, sec->offset, sec->size);
 	if (v == NULL)
 		return ;
-	ft_put_str_ln("Contents of (__TEXT,__text) section");
+	ft_bput_str_ln("Contents of (__TEXT,__text) section");
 	pretty_print(v, sec->addr, sec->size);
 }
 
