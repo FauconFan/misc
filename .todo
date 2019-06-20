@@ -4,7 +4,7 @@ To do list
 Core:
 	Gérer les architectures suivantes:
 		✔ macho 64 bit @done(19-06-18 17:14)
-		☐ Archive ar
+		✔ Archive ar @done(19-06-20 18:09)
 		☐ fat
 			☐ fat 64 Big
 			☐ fat 64 Lit
