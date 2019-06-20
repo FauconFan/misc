@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ldf_jmp.c                                       :+:      :+:    :+:   */
+/*   ft_strcpos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/18 11:05:19 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 17:53:27 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/20 14:38:59 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/20 14:40:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-void	*ft_ldf_jmp(t_ldf *ldf, size_t offset, size_t at_least)
+int		ft_strcpos(const char *str, char c)
 {
-	char	*v;
+	int		i;
 
-	if (offset + at_least > ldf->len)
+	if (str == NULL)
+		return (-1);
+	i = 0;
+	while (str[i])
 	{
-		ft_bput_str_ln(CORRUPTION_MSG);
-		return (NULL);
+		if (str[i] == c)
+			return (i);
+		++i;
 	}
-	v = (char *)ldf->content;
-	v += offset;
-	return ((void *)v);
+	return (-1);
 }

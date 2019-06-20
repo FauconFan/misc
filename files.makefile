@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/20 12:16:24 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/20 17:24:29 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,22 @@ ___MEM_FILES = \
 			ft_memcpy.c \
 
 ___STR_FILES = \
+			ft_strdup.c \
+			ft_strndup.c \
 			ft_strlen.c \
 			ft_strequ.c \
 			ft_strcmp.c \
+			ft_strncmp.c \
+			ft_strcpy.c \
+			ft_strncpy.c \
 			ft_toupper.c \
+			ft_strcpos.c \
+			ft_strncpos.c \
 
 ___INT_FILES = \
 			ft_swap_int.c \
 			ft_swap_uint.c \
+			ft_antou.c \
 
 ___BUFF_FILES = \
 			ft_bput_vm_addr.c \
@@ -45,6 +53,7 @@ __COMMON_FILES = \
 			t_ldf/ft_ldf_end.c \
 			t_ldf/ft_ldf_jmp.c \
 			t_ldf/ft_ldf_jmp_str.c \
+			archive/archive.c \
 			fat/fat_cigam.c \
 			utils/ft_check_str.c \
 			get_arch.c \

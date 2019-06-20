@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 11:41:41 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/20 17:00:17 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
-// # include <ar.h>
 # include <mach-o/fat.h>
 # include <mach-o/arch.h>
+# include <ar.h>
 # include <sys/utsname.h>
+
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -71,6 +72,12 @@ char						*get_arch(void);
 */
 
 void						fat_cigam(t_ldf *ldf, void (*f)(t_ldf *ldf));
+
+/*
+**	archive stuff
+*/
+
+void						archive(t_ldf *ldf, void (*f)(t_ldf *ldf));
 
 /*
 **	nm stuff
