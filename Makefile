@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/19 12:26:42 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/20 18:08:16 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,8 @@ CC = clang
 SRC_FOLDER = src/
 INC_FOLDER = inc/
 COM_FOLDER = common/
-NM_FOLDER = ft_nm/
-OTOOL_FOLDER = ft_otool/
+NM_FOLDER = nm/
+OTOOL_FOLDER = otool/
 
 CFLAGS = -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align
 SRC_CFLAGS =
