@@ -55,8 +55,8 @@ CC = clang
 
 SRC_FOLDER = src/
 
-CFLAGS = -D_REENTRANT -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align -fPIC
-SRC_CFLAGS =
+CFLAGS = -D_REENTRANT -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align
+SRC_CFLAGS = -fPIC
 BIN_CFLAGS = -shared
 IFLAGS = -I .
 LFLAGS = -lpthread
