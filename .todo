@@ -10,6 +10,7 @@ Core:
 			☐ fat 64 Lit
 			✔ fat 32 Big @done(19-06-19 12:24)
 			☐ fat 32 Lit
+	☐ Pour fat afficher quand l'architecture courante n'est pas présente dans le fat
 	☐ Abstraction du main et du Makefile
 		☐ Abtraction du main
 		✔ Abtraction du Makefile @done(19-06-18 07:25)
@@ -26,6 +27,7 @@ Tests:
 		✔ 1er ` @done(19-06-18 17:14)
 		☐ 2nd jet
 	✔ /bin @done(19-06-20 11:19)
+	☐ /sbin
 	☐ /usr/bin
 	✔ /usr/lib @done(19-06-20 11:19)
 	☐ https://github.com/mguillau42/unit_test_nm_otool
