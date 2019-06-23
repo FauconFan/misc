@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:28:01 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 13:27:59 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/23 10:55:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,17 @@ size_t			ft_blk_find_free(t_blk *block, size_t remain, void *ptr)
 		res = ft_blk_get_len_asked(block);
 		if (remain <= block->len_block)
 			ft_blk_set_free(block);
-		actu = ft_blk_next(block);
-		if (ft_blk_is_free(actu))
-		{
-			ft_blk_set_free(block);
-			block->len_block += actu->len_block;
-		}
 		else
-			ft_blk_set_free(block);
+		{
+			actu = ft_blk_next(block);
+			if (ft_blk_is_free(actu))
+			{
+				ft_blk_set_free(block);
+				block->len_block += actu->len_block;
+			}
+			else
+				ft_blk_set_free(block);
+		}
 		return (res);
 	}
 	return (search_free(block, remain, ptr));
