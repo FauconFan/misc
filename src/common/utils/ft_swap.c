@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap_int.c                                      :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/19 09:02:41 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 18:04:00 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/25 18:04:06 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/25 18:27:04 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-int32_t	ft_swap_int32(int32_t val)
+static t_bool	*get_local_swap(void)
 {
-	uint32_t	v;
-	int32_t		sign;
+	static t_bool	value = FALSE;
 
-	sign = (val >= 0) ? 1 : -1;
-	v = (uint32_t)(val >= 0 ? val : -val);
-	v = ((v << 24) & 0xFF000000)
-		| ((v << 8) & 0x00FF0000)
-		| ((v >> 8) & 0x0000FF00)
-		| ((v >> 24) & 0x000000FF);
-	return ((int32_t)v * sign);
+	return (&value);
 }
 
-int64_t	ft_swap_int64(int64_t val)
+void			ft_swap_set(t_bool value)
 {
-	// todo
+	*get_local_swap() = value;
+}
+
+uint64_t		ft_gswap_64(uint64_t val)
+{
+	if (*get_local_swap())
+		return (ft_swap_uint64(val));
+	return (val);
+}
+
+uint32_t		ft_gswap_32(uint32_t val)
+{
+	if (*get_local_swap())
+		return (ft_swap_uint32(val));
 	return (val);
 }

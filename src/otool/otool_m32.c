@@ -6,47 +6,36 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 11:00:48 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 15:21:42 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 22:24:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm_otool.h"
+#include "ft_otool.h"
 
-static void		pretty_print(char *v, uint64_t vm_addr, size_t len)
+static void		handle_section_text(
+					t_ldf *ldf,
+					struct section *sec,
+					cpu_type_t cputype)
 {
-	size_t	i;
+	char			*v;
+	t_pprint_help	pprint_help;
 
-	if (len == 0)
-		return ;
-	ft_bput_vm_addr32(vm_addr);
-	ft_bput_str("\t");
-	i = 0;
-	while (i < 16 && i < len)
-	{
-		ft_bput_hex_char((uint8_t)v[i]);
-		ft_bput_str(" ");
-		++i;
-	}
-	ft_bput_str_ln("");
-	if (i != len)
-		pretty_print(v + 16, vm_addr + 16, len - 16);
-}
-
-static void		handle_section_text(t_ldf *ldf, struct section *sec)
-{
-	char	*v;
-
-	v = (char *)ft_ldf_jmp(ldf, sec->offset, sec->size);
+	v = ft_ldf_jmp(ldf, ft_gswap_32(sec->offset), ft_gswap_32(sec->size));
 	if (v == NULL)
 		return ;
-	ft_bput_str_ln("Contents of (__TEXT,__text) section");
-	pretty_print(v, sec->addr, sec->size);
+	pprint_help.v = v;
+	pprint_help.len = ft_gswap_32(sec->size);
+	pprint_help.vm_addr = ft_gswap_32(sec->addr);
+	pprint_help.is64 = FALSE;
+	pprint_help.cputype = ft_gswap_32(cputype);
+	otool_pretty_print(&pprint_help);
 }
 
 static t_bool	handle_segment_text(
 					t_ldf *ldf,
 					size_t offset,
-					struct segment_command *seg)
+					struct segment_command *seg,
+					cpu_type_t cputype)
 {
 	struct section		*sec;
 	size_t				i;
@@ -56,12 +45,12 @@ static t_bool	handle_segment_text(
 	sec = (struct section *)ft_ldf_jmp(ldf, offset, sizeof(*sec));
 	if (sec == NULL)
 		return (FALSE);
-	while (i < seg->nsects)
+	while (i < ft_gswap_32(seg->nsects))
 	{
 		if (ft_strequ(sec->segname, SEG_TEXT)
 			&& ft_strequ(sec->sectname, SECT_TEXT))
 		{
-			handle_section_text(ldf, sec);
+			handle_section_text(ldf, sec, cputype);
 			return (FALSE);
 		}
 		offset += sizeof(struct section);
@@ -73,7 +62,7 @@ static t_bool	handle_segment_text(
 	return (TRUE);
 }
 
-void			otool_m32(t_ldf *ldf)
+void			otool_m32(t_ldf *ldf, t_bool doswap)
 {
 	struct mach_header			*h32;
 	struct load_command			*lc;
@@ -81,23 +70,22 @@ void			otool_m32(t_ldf *ldf)
 	uint32_t					i;
 	size_t						offset;
 
+	ft_swap_set(doswap);
 	ft_ldf_print_name(ldf);
 	offset = sizeof(struct mach_header);
 	if ((h32 = ft_ldf_jmp(ldf, 0, sizeof(*h32))) == NULL
 		|| (lc = ft_ldf_jmp(ldf, offset, sizeof(*lc))) == NULL)
 		return ;
 	i = 0;
-	while (i++ < h32->ncmds)
+	while (i++ < ft_gswap_32(h32->ncmds)
+			&& (lc = ft_ldf_jmp(ldf, offset, sizeof(*lc))) != NULL)
 	{
-		if (lc->cmd == LC_SEGMENT)
+		if (ft_gswap_32(lc->cmd) == LC_SEGMENT)
 		{
 			seg = (struct segment_command *)lc;
-			if (handle_segment_text(ldf, offset, seg) == FALSE)
+			if (handle_segment_text(ldf, offset, seg, h32->cputype) == FALSE)
 				break ;
 		}
-		offset += lc->cmdsize;
-		lc = ft_ldf_jmp(ldf, offset, sizeof(*lc));
-		if (lc == NULL)
-			return ;
+		offset += ft_gswap_32(lc->cmdsize);
 	}
 }

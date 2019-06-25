@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 11:39:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 15:12:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 23:13:29 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void					ft_strcpy(char *dest, const char *src);
 void					ft_strncpy(char *dest, const char *src, size_t n);
 int						ft_strcpos(const char *str, char c);
 int						ft_strncpos(const char *str, size_t n, char c);
+int						ft_strnotcpos(const char *str, char c);
 char					ft_toupper(char c);
 
 char					*ft_strformat1(const char *format, const char *string);

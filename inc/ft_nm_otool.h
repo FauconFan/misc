@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 15:21:59 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 23:01:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,14 @@ void						fat_cigam(
 								void (*f)(t_ldf *ldf),
 								t_bool print_name);
 
+void						fat_do_all_arch(
+								t_fat_helper *fat_helper,
+								struct fat_header *hdr);
+
+char						*fat_bname_mult_arch(
+								t_fat_helper *fat_helper,
+								struct fat_arch *arch);
+
 /*
 **	archive stuff
 */
@@ -111,20 +119,23 @@ void						archive(t_ldf *ldf, void (*f)(t_ldf *ldf));
 **	nm stuff
 */
 
-void						nm_m64(t_ldf *ldf);
-void						nm_m32(t_ldf *ldf);
+void						nm_m64(t_ldf *ldf, t_bool doswap);
+void						nm_m32(t_ldf *ldf, t_bool doswap);
 
 /*
 **	otool stuff
 */
 
-void						otool_m32(t_ldf *ldf);
-void						otool_m64(t_ldf *ldf);
+void						otool_m32(t_ldf *ldf, t_bool doswap);
+void						otool_m64(t_ldf *ldf, t_bool doswap);
 
 /*
 **	utils functions
 */
 
 t_bool						ft_check_str(char *s, size_t remain);
+void						ft_swap_set(t_bool value);
+uint64_t					ft_gswap_64(uint64_t val);
+uint32_t					ft_gswap_32(uint32_t val);
 
 #endif

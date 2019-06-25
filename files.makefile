@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/25 18:02:12 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/25 23:13:44 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ ___STR_FILES = \
 			ft_toupper.c \
 			ft_strcpos.c \
 			ft_strncpos.c \
+			ft_strnotcpos.c \
 			ft_strformat1.c \
 			ft_strformat2.c \
 
@@ -61,7 +62,10 @@ __COMMON_FILES = \
 			t_ldf/ft_ldf_jmp.c \
 			t_ldf/ft_ldf_jmp_str.c \
 			utils/ft_check_str.c \
-			fat_cigam.c \
+			utils/ft_swap.c \
+			fat/fat_cigam.c \
+			fat/fat_bname_mult_arch.c \
+			fat/fat_do_all_arch.c \
 			archive.c \
 			get_arch.c \
 
@@ -83,6 +87,7 @@ __OTOOL_FILES = \
 			ft_otool.c \
 			otool_m64.c \
 			otool_m32.c \
+			otool_pretty_print.c \
 
 _OTOOL_FILES = $(addprefix $(OTOOL_FOLDER), $(__OTOOL_FILES))
 
@@ -101,4 +106,5 @@ OTOOL_MAIN = $(addprefix $(SRC_FOLDER), $(_OTOOL_MAIN))
 HEADER_FILES = \
 			$(INC_FOLDER)ft_nm_otool.h \
 			$(INC_FOLDER)ft_nm.h \
+			$(INC_FOLDER)ft_otool.h \
 			$(INC_FOLDER)std.h \

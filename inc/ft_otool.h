@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap_int.c                                      :+:      :+:    :+:   */
+/*   ft_otool.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/19 09:02:41 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 18:04:00 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/25 22:09:55 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/25 22:21:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm_otool.h"
+#ifndef FT_OTOOL_H
+# define FT_OTOOL_H
 
-int32_t	ft_swap_int32(int32_t val)
+# include "ft_nm_otool.h"
+
+typedef struct		s_pprint_help
 {
-	uint32_t	v;
-	int32_t		sign;
+	char		*v;
+	uint64_t	vm_addr;
+	size_t		len;
+	cpu_type_t	cputype;
+	t_bool		is64;
+	char		pad[3];
+}					t_pprint_help;
 
-	sign = (val >= 0) ? 1 : -1;
-	v = (uint32_t)(val >= 0 ? val : -val);
-	v = ((v << 24) & 0xFF000000)
-		| ((v << 8) & 0x00FF0000)
-		| ((v >> 8) & 0x0000FF00)
-		| ((v >> 24) & 0x000000FF);
-	return ((int32_t)v * sign);
-}
+void		otool_pretty_print(t_pprint_help *pphelp);
 
-int64_t	ft_swap_int64(int64_t val)
-{
-	// todo
-	return (val);
-}
+#endif

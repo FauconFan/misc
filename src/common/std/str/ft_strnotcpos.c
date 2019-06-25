@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap_int.c                                      :+:      :+:    :+:   */
+/*   ft_strnotcpos.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/19 09:02:41 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 18:04:00 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/25 23:12:03 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/25 23:21:55 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-int32_t	ft_swap_int32(int32_t val)
+int		ft_strnotcpos(const char *str, char c)
 {
-	uint32_t	v;
-	int32_t		sign;
+	int		i;
 
-	sign = (val >= 0) ? 1 : -1;
-	v = (uint32_t)(val >= 0 ? val : -val);
-	v = ((v << 24) & 0xFF000000)
-		| ((v << 8) & 0x00FF0000)
-		| ((v >> 8) & 0x0000FF00)
-		| ((v >> 24) & 0x000000FF);
-	return ((int32_t)v * sign);
-}
-
-int64_t	ft_swap_int64(int64_t val)
-{
-	// todo
-	return (val);
+	if (str == NULL)
+		return (-1);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != c)
+			return (i);
+		++i;
+	}
+	return (-1);
 }

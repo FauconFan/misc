@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 10:59:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 15:33:19 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 19:01:30 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,23 @@ static void		print_symbols(
 	char			*name;
 	size_t			offset_str;
 
-	tab = ft_ldf_jmp(ldf, sym->symoff, sizeof(*tab) * sym->nsyms);
-	if (tab == NULL || (symbols = malloc(sizeof(t_sym) * sym->nsyms)) == NULL)
+	tab = ft_ldf_jmp(ldf,
+		ft_gswap_32(sym->symoff), sizeof(*tab) * ft_gswap_32(sym->nsyms));
+	if (tab == NULL
+		|| (symbols = malloc(sizeof(t_sym) * ft_gswap_32(sym->nsyms))) == NULL)
 		return ;
-	i = 0;
-	while (i < sym->nsyms)
+	i = (uint32_t)-1;
+	while (++i < ft_gswap_32(sym->nsyms))
 	{
-		offset_str = sym->stroff + tab[i].n_un.n_strx;
+		offset_str = ft_gswap_32(sym->stroff) + ft_gswap_32(tab[i].n_un.n_strx);
 		if ((name = ft_ldf_jmp_str(ldf, offset_str)) == NULL)
 			return ;
-		ft_sym_init1(symbols + i, tab[i].n_value, name);
+		ft_sym_init1(symbols + i, ft_gswap_64(tab[i].n_value), name);
 		ft_sym_init2(symbols + i, meta, tab[i].n_type, tab[i].n_sect);
-		++i;
 	}
-	ft_sym_sort(symbols, sym->nsyms);
+	ft_sym_sort(symbols, ft_gswap_32(sym->nsyms));
 	i = 0;
-	while (i < sym->nsyms)
+	while (i < ft_gswap_32(sym->nsyms))
 		ft_sym_print_64(symbols + i++);
 	free(symbols);
 }
@@ -68,22 +69,22 @@ static t_bool	charge_meta(
 	{
 		if ((lc = ft_ldf_jmp(ld, off, sizeof(*lc))) == NULL)
 			return (FALSE);
-		if (lc->cmd == LC_SEGMENT_64)
+		if (ft_gswap_32(lc->cmd) == LC_SEGMENT_64)
 		{
 			j = 0;
-			while (j < ((struct segment_command_64 *)lc)->nsects)
+			while (j < ft_gswap_32(((struct segment_command_64 *)lc)->nsects))
 			{
 				if ((se = ft_ldf_jmp(ld, loff(off, j++), sizeof(*se))) == NULL)
 					return (FALSE);
 				ft_meta_sect_load(meta, se->segname, se->sectname, isect++);
 			}
 		}
-		off += lc->cmdsize;
+		off += ft_gswap_32(lc->cmdsize);
 	}
 	return (TRUE);
 }
 
-void			nm_m64(t_ldf *ldf)
+void			nm_m64(t_ldf *ldf, t_bool doswap)
 {
 	struct mach_header_64	*h64;
 	struct load_command		*lc;
@@ -91,23 +92,22 @@ void			nm_m64(t_ldf *ldf)
 	size_t					offset;
 	t_meta_sect				meta;
 
+	ft_swap_set(doswap);
 	ft_ldf_print_name(ldf);
 	offset = sizeof(struct mach_header_64);
 	ft_meta_sect_init(&meta);
 	if ((h64 = ft_ldf_jmp(ldf, 0, sizeof(*h64))) == NULL
-		|| (lc = ft_ldf_jmp(ldf, offset, sizeof(*lc))) == NULL
-		|| charge_meta(ldf, &meta, offset, h64->ncmds) == FALSE)
+		|| charge_meta(ldf, &meta, offset, ft_gswap_32(h64->ncmds)) == FALSE)
 		return ;
 	i = 0;
-	while (i++ < h64->ncmds)
+	while (i++ < ft_gswap_32(h64->ncmds)
+			&& (lc = ft_ldf_jmp(ldf, offset, sizeof(*lc))) != NULL)
 	{
-		if (lc->cmd == LC_SYMTAB)
+		if (ft_gswap_32(lc->cmd) == LC_SYMTAB)
 		{
 			print_symbols(ldf, (struct symtab_command *)lc, &meta);
 			break ;
 		}
-		offset += lc->cmdsize;
-		if ((lc = ft_ldf_jmp(ldf, offset, sizeof(*lc))) == NULL)
-			return ;
+		offset += ft_gswap_32(lc->cmdsize);
 	}
 }

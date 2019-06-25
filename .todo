@@ -11,7 +11,7 @@ Core:
 			☐ fat 64 Lit
 			✔ fat 32 Big @done(19-06-19 12:24)
 			☐ fat 32 Lit
-	☐ Pour fat afficher quand l'architecture courante n'est pas présente dans le fat
+	✔ Pour fat afficher quand l'architecture courante n'est pas présente dans le fat @done(19-06-25 23:37)
 	☐ Abstraction du main et du Makefile
 		☐ Abtraction du main
 		✔ Abtraction du Makefile @done(19-06-18 07:25)
@@ -29,7 +29,7 @@ Tests:
 		☐ 2nd jet
 	✔ /bin @done(19-06-20 11:19)
 	✔ /sbin @done(19-06-25 15:24)
-	☐ /usr/bin
+	✔ /usr/bin @done(19-06-25 23:26)
 	✔ /usr/lib @done(19-06-20 11:19)
 	☐ https://github.com/mguillau42/unit_test_nm_otool
 	☐ https://github.com/JonathanSalwan/binary-samples

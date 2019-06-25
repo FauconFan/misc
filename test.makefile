@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/20 10:29:49 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/25 15:26:46 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/25 23:23:40 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,31 @@ NAME_OTOOL = ./ft_otool
 
 FIND_PARAMS = -maxdepth 1 -type f -exec bash -c 'if [ ! "`file $$0 | grep ASCII`" -a -r "$$0" ]; then echo $$0; fi' {} \; | sort
 
-FILES_BIN = $(shell find /bin $(FIND_PARAMS))
-FILES_SBIN = $(shell find /sbin $(FIND_PARAMS))
-FILES_USR_BIN = $(shell find /usr/bin $(FIND_PARAMS))
-FILES_USR_LIB = $(shell find /usr/lib $(FIND_PARAMS))
+BLACK_LISTED = \
+			/bin/syslog.py \
+			/usr/bin/imptrace \
+			/usr/bin/json_pp5.16 \
+			/usr/bin/json_pp5.18 \
+			/usr/bin/phar.phar \
+			/usr/bin/net-snmp-config \
+			/usr/bin/net-snmp-cert \
+			/usr/bin/krb5-config \
+			/usr/bin/systriage \
+			/usr/bin/tkpp5.16 \
+			/usr/bin/tkpp5.18 \
+
+_FILES_BIN = $(shell find /bin $(FIND_PARAMS))
+_FILES_SBIN = $(shell find /sbin $(FIND_PARAMS))
+_FILES_USR_BIN = $(shell find /usr/bin $(FIND_PARAMS))
+_FILES_USR_LIB = $(shell find /usr/lib $(FIND_PARAMS))
+
+FILES_BIN = $(filter-out $(BLACK_LISTED), $(_FILES_BIN))
+FILES_SBIN = $(filter-out $(BLACK_LISTED), $(_FILES_SBIN))
+FILES_USR_BIN = $(filter-out $(BLACK_LISTED), $(_FILES_USR_BIN))
+FILES_USR_LIB = $(filter-out $(BLACK_LISTED), $(_FILES_USR_LIB))
 
 .PHONY: all
-all: test_bin test_sbin test_usr_bin test_usr_lib
+all: test_bin test_sbin test_usr_lib test_usr_bin
 
 $(NAME_NM):
 	make -f Makefile $(NAME_NM)
