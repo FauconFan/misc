@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/25 12:13:38 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/25 15:22:24 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ _COMMON_FILES = $(addprefix $(COM_FOLDER), $(__COMMON_FILES))
 __NM_FILES = \
 			ft_nm.c \
 			nm_m64.c \
+			nm_m32.c \
 			t_meta_sect/ft_meta_sect_init.c \
 			t_meta_sect/ft_meta_sect_load.c \
 			t_sym/ft_sym_init.c \
@@ -81,6 +82,7 @@ _NM_FILES = $(addprefix $(NM_FOLDER), $(__NM_FILES))
 __OTOOL_FILES = \
 			ft_otool.c \
 			otool_m64.c \
+			otool_m32.c \
 
 _OTOOL_FILES = $(addprefix $(OTOOL_FOLDER), $(__OTOOL_FILES))
 

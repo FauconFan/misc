@@ -4,6 +4,7 @@ To do list
 Core:
 	Gérer les architectures suivantes:
 		✔ macho 64 bit @done(19-06-18 17:14)
+		✔ macho 32 bits @done(19-06-25 15:25)
 		✔ Archive ar @done(19-06-20 18:09)
 		☐ fat
 			☐ fat 64 Big
@@ -27,13 +28,9 @@ Tests:
 		✔ 1er ` @done(19-06-18 17:14)
 		☐ 2nd jet
 	✔ /bin @done(19-06-20 11:19)
-	☐ /sbin
+	✔ /sbin @done(19-06-25 15:24)
 	☐ /usr/bin
 	✔ /usr/lib @done(19-06-20 11:19)
 	☐ https://github.com/mguillau42/unit_test_nm_otool
 	☐ https://github.com/JonathanSalwan/binary-samples
 	☐ https://github.com/mmeisson/tests_nm
-
-Bonuses:
-	☐ macho 32 bits
-	☐ fat 32

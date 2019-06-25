@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 14:15:31 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 15:21:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <mach-o/fat.h>
 # include <mach-o/arch.h>
 # include <ar.h>
-# include <sys/utsname.h>
+# include <sys/utsname.h> // to see
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -43,7 +43,7 @@ typedef struct				s_ldf
 	size_t		len;
 	t_bool		is_mmap;
 	t_bool		print_name;
-	char		_pad[6];
+	char		pad[6];
 }							t_ldf;
 
 t_bool						ft_ldf_init_mmap(
@@ -93,7 +93,7 @@ typedef struct				s_fat_helper
 	t_ldf				*origin;
 	void				(*fnext)(t_ldf *ldf);
 	t_bool				print_name;
-	char				_pad[7];
+	char				pad[7];
 }							t_fat_helper;
 
 void						fat_cigam(
@@ -112,11 +112,13 @@ void						archive(t_ldf *ldf, void (*f)(t_ldf *ldf));
 */
 
 void						nm_m64(t_ldf *ldf);
+void						nm_m32(t_ldf *ldf);
 
 /*
 **	otool stuff
 */
 
+void						otool_m32(t_ldf *ldf);
 void						otool_m64(t_ldf *ldf);
 
 /*

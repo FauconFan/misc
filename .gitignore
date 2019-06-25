@@ -52,6 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Custom
+.vscode/
 ft_nm
 ft_otool
 ft_o

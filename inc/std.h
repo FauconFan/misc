@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 11:39:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 12:13:27 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 15:12:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void					ft_buff_put(const char *str);
 
 void					ft_bput_hex_char(uint8_t val);
 
-void					ft_bput_vm_addr(uint64_t addr);
+void					ft_bput_vm_addr64(uint64_t addr);
+void					ft_bput_vm_addr32(uint64_t addr);
 
 void					ft_bput_str(const char *str);
 void					ft_bput_str_ln(const char *str);

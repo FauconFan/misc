@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nm_m64.c                                           :+:      :+:    :+:   */
+/*   nm_m32.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 10:59:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 15:16:28 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 15:16:32 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		print_symbols(
 					t_meta_sect *meta)
 {
 	uint32_t		i;
-	struct nlist_64	*tab;
+	struct nlist	*tab;
 	t_sym			*symbols;
 	char			*name;
 	size_t			offset_str;
@@ -39,14 +39,14 @@ static void		print_symbols(
 	ft_sym_sort(symbols, sym->nsyms);
 	i = 0;
 	while (i < sym->nsyms)
-		ft_sym_print_64(symbols + i++);
+		ft_sym_print_32(symbols + i++);
 	free(symbols);
 }
 
 static size_t	loff(size_t offset, uint32_t index)
 {
-	offset += sizeof(struct segment_command_64);
-	offset += index * sizeof(struct section_64);
+	offset += sizeof(struct segment_command);
+	offset += index * sizeof(struct section);
 	return (offset);
 }
 
@@ -57,7 +57,7 @@ static t_bool	charge_meta(
 					uint32_t ncmds)
 {
 	struct load_command			*lc;
-	struct section_64			*se;
+	struct section				*se;
 	uint32_t					i;
 	uint32_t					j;
 	uint8_t						isect;
@@ -68,10 +68,10 @@ static t_bool	charge_meta(
 	{
 		if ((lc = ft_ldf_jmp(ld, off, sizeof(*lc))) == NULL)
 			return (FALSE);
-		if (lc->cmd == LC_SEGMENT_64)
+		if (lc->cmd == LC_SEGMENT)
 		{
 			j = 0;
-			while (j < ((struct segment_command_64 *)lc)->nsects)
+			while (j < ((struct segment_command *)lc)->nsects)
 			{
 				if ((se = ft_ldf_jmp(ld, loff(off, j++), sizeof(*se))) == NULL)
 					return (FALSE);
@@ -83,23 +83,23 @@ static t_bool	charge_meta(
 	return (TRUE);
 }
 
-void			nm_m64(t_ldf *ldf)
+void			nm_m32(t_ldf *ldf)
 {
-	struct mach_header_64	*h64;
+	struct mach_header		*h32;
 	struct load_command		*lc;
 	uint32_t				i;
 	size_t					offset;
 	t_meta_sect				meta;
 
 	ft_ldf_print_name(ldf);
-	offset = sizeof(struct mach_header_64);
+	offset = sizeof(struct mach_header);
 	ft_meta_sect_init(&meta);
-	if ((h64 = ft_ldf_jmp(ldf, 0, sizeof(*h64))) == NULL
+	if ((h32 = ft_ldf_jmp(ldf, 0, sizeof(*h32))) == NULL
 		|| (lc = ft_ldf_jmp(ldf, offset, sizeof(*lc))) == NULL
-		|| charge_meta(ldf, &meta, offset, h64->ncmds) == FALSE)
+		|| charge_meta(ldf, &meta, offset, h32->ncmds) == FALSE)
 		return ;
 	i = 0;
-	while (i++ < h64->ncmds)
+	while (i++ < h32->ncmds)
 	{
 		if (lc->cmd == LC_SYMTAB)
 		{

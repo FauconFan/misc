@@ -6,11 +6,13 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 07:35:13 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 12:04:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 15:00:53 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
+
+// TODO see if i can use this
 
 char	*get_arch(void)
 {
