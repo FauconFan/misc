@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 17:00:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 14:15:31 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,26 @@
 
 typedef struct				s_ldf
 {
-	char		*filepath;
+	char		*name;
 	void		*content;
 	size_t		len;
+	t_bool		is_mmap;
+	t_bool		print_name;
+	char		_pad[6];
 }							t_ldf;
 
-t_bool						ft_ldf_init(t_ldf *ld, char *path_file);
+t_bool						ft_ldf_init_mmap(
+								t_ldf *ld,
+								char *path_file,
+								char *name,
+								t_bool print_name);
+void						ft_ldf_init_custom(
+								t_ldf *ld,
+								char *name,
+								void *v,
+								size_t len);
 t_bool						ft_ldf_end(t_ldf *ld);
+void						ft_ldf_print_name(t_ldf *ldf);
 void						*ft_ldf_jmp(
 								t_ldf *ldf,
 								size_t offset,
@@ -71,7 +84,22 @@ char						*get_arch(void);
 **	fat stuff
 */
 
-void						fat_cigam(t_ldf *ldf, void (*f)(t_ldf *ldf));
+/*
+**	This structure is just used internally to allow some abstraction
+*/
+
+typedef struct				s_fat_helper
+{
+	t_ldf				*origin;
+	void				(*fnext)(t_ldf *ldf);
+	t_bool				print_name;
+	char				_pad[7];
+}							t_fat_helper;
+
+void						fat_cigam(
+								t_ldf *ldf,
+								void (*f)(t_ldf *ldf),
+								t_bool print_name);
 
 /*
 **	archive stuff

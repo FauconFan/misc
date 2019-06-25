@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 16:35:39 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 17:59:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 14:01:25 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,21 @@ static void	archive_parcours(t_ldf *ldf, void (*f)(t_ldf *ldf), size_t offset)
 	struct ar_hdr	*actu;
 	void			*beg;
 	size_t			len[2];
-	char			*name;
+	char			*names[2];
 	t_ldf			in_file;
 
 	if (offset >= ldf->len)
 		return ;
 	if ((actu = ft_ldf_jmp(ldf, offset, sizeof(*actu))) == NULL)
 		return ;
-	if ((name = get_name_from_hdr(ldf, offset, actu, len + 1)) == NULL)
+	if ((names[0] = get_name_from_hdr(ldf, offset, actu, len + 1)) == NULL)
 		return ;
 	len[0] = ft_antou(actu->ar_size, sizeof(actu->ar_size));
 	if ((beg = ft_ldf_jmp(ldf, offset + sizeof(*actu) + len[1], len[0] - len[1])) == NULL)
 		return ;
-	ft_bput_str(ldf->filepath);
-	ft_bput_str("(");
-	ft_bput_str(name);
-	ft_bput_str_ln("):");
-	free(name);
-	in_file.filepath = NULL;
-	in_file.len = len[0] - len[1];
-	in_file.content = beg;
+	names[1] = ft_strformat2("%(%)", ldf->name, names[0]);
+	free(names[0]);
+	ft_ldf_init_custom(&in_file, names[1], beg, len[0] - len[1]);
 	f(&in_file);
 	archive_parcours(ldf, f, offset + sizeof(*actu) + len[0]);
 }

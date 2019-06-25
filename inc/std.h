@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 11:39:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 17:20:25 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 12:13:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void					ft_memcpy(
 							void *dest,
 							const void *src,
 							size_t len);
+void					ft_memset(void *dest, size_t len, char c);
+void					ft_bzero(void *dest, size_t len);
 
 /*
 **	int
@@ -56,6 +58,7 @@ size_t					ft_antou(const char *str, size_t n);
 
 char					*ft_strdup(const char *str);
 char					*ft_strndup(const char *str, size_t n);
+char					*ft_strnew(size_t len);
 
 size_t					ft_strlen(const char *str);
 t_bool					ft_strequ(const char *s1, const char *s2);
@@ -66,6 +69,12 @@ void					ft_strncpy(char *dest, const char *src, size_t n);
 int						ft_strcpos(const char *str, char c);
 int						ft_strncpos(const char *str, size_t n, char c);
 char					ft_toupper(char c);
+
+char					*ft_strformat1(const char *format, const char *string);
+char					*ft_strformat2(
+							const char *format,
+							const char *string1,
+							const char *string2);
 
 /*
 **	ft_buff

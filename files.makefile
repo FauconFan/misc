@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/20 17:24:29 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/25 12:13:38 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,11 @@ ___BUFF_FOLDER = std/ft_buff/
 
 ___MEM_FILES = \
 			ft_memcpy.c \
+			ft_memset.c \
+			ft_bzero.c \
 
 ___STR_FILES = \
+			ft_strnew.c \
 			ft_strdup.c \
 			ft_strndup.c \
 			ft_strlen.c \
@@ -30,6 +33,8 @@ ___STR_FILES = \
 			ft_toupper.c \
 			ft_strcpos.c \
 			ft_strncpos.c \
+			ft_strformat1.c \
+			ft_strformat2.c \
 
 ___INT_FILES = \
 			ft_swap_int.c \
@@ -49,8 +54,10 @@ __COMMON_FILES = \
 			$(addprefix $(___STR_FOLDER), $(___STR_FILES)) \
 			$(addprefix $(___INT_FOLDER), $(___INT_FILES)) \
 			$(addprefix $(___BUFF_FOLDER), $(___BUFF_FILES)) \
-			t_ldf/ft_ldf_init.c \
+			t_ldf/ft_ldf_init_mmap.c \
+			t_ldf/ft_ldf_init_custom.c \
 			t_ldf/ft_ldf_end.c \
+			t_ldf/ft_ldf_print_name.c \
 			t_ldf/ft_ldf_jmp.c \
 			t_ldf/ft_ldf_jmp_str.c \
 			archive/archive.c \

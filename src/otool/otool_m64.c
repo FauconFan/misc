@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 11:00:48 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 12:06:09 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 11:15:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static void		handle_section_text(t_ldf *ldf, struct section_64 *sec)
 	pretty_print(v, sec->addr, sec->size);
 }
 
-static t_bool		handle_segment_text(
-						t_ldf *ldf,
-						size_t offset,
-						struct segment_command_64 *seg)
+static t_bool	handle_segment_text(
+					t_ldf *ldf,
+					size_t offset,
+					struct segment_command_64 *seg)
 {
 	struct section_64	*sec;
 	size_t				i;
@@ -73,7 +73,7 @@ static t_bool		handle_segment_text(
 	return (TRUE);
 }
 
-void		otool_m64(t_ldf *ldf)
+void			otool_m64(t_ldf *ldf)
 {
 	struct mach_header_64		*h64;
 	struct load_command			*lc;
@@ -81,10 +81,10 @@ void		otool_m64(t_ldf *ldf)
 	uint32_t					i;
 	size_t						offset;
 
-	h64 = ft_ldf_jmp(ldf, 0, sizeof(*h64));
+	ft_ldf_print_name(ldf);
 	offset = sizeof(struct mach_header_64);
-	lc = ft_ldf_jmp(ldf, offset, sizeof(*lc));
-	if (h64 == NULL || lc == NULL)
+	if ((h64 = ft_ldf_jmp(ldf, 0, sizeof(*h64))) == NULL
+		|| (lc = ft_ldf_jmp(ldf, offset, sizeof(*lc))) == NULL)
 		return ;
 	i = 0;
 	while (i++ < h64->ncmds)

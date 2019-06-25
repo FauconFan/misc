@@ -1,44 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ldf_init.c                                      :+:      :+:    :+:   */
+/*   ft_ldf_init_mmap.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:37:06 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 12:03:55 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 11:52:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-t_bool		ft_ldf_init(t_ldf *ld, char *path_file)
+static t_bool	init_verif(char *path_file, int *fd, struct stat *statbuff)
 {
-	struct stat		statbuff;
-	int				fd;
-
-	ld->filepath = path_file;
-	if ((fd = open(path_file, O_RDONLY)) < 0)
+	if ((*fd = open(path_file, O_RDONLY)) < 0)
 	{
 		ft_bput_str("Failed to open file : ");
 		ft_bput_str_ln(path_file);
 		return (FALSE);
 	}
-	if (fstat(fd, &statbuff) < 0)
+	if (fstat(*fd, statbuff) < 0)
 	{
 		ft_bput_str("Failed to fstat on file : ");
 		ft_bput_str_ln(path_file);
-		close(fd);
+		close(*fd);
 		return (FALSE);
 	}
-	if (statbuff.st_size < 4)
+	if (statbuff->st_size < 4)
 	{
 		ft_bput_str("The file is too small : ");
 		ft_bput_str_ln(path_file);
-		close(fd);
+		close(*fd);
 		return (FALSE);
 	}
-	ld->len = (size_t)statbuff.st_size;
+	return (TRUE);
+}
+
+static t_bool	mmap_file(
+					t_ldf *ld,
+					char *path_file,
+					int fd,
+					struct stat *statbuff)
+{
+	ld->len = (size_t)statbuff->st_size;
 	if ((ld->content = mmap(NULL, ld->len, PROT_READ, MAP_PRIVATE, fd, 0))
 		== MAP_FAILED)
 	{
@@ -55,4 +60,22 @@ t_bool		ft_ldf_init(t_ldf *ld, char *path_file)
 		return (FALSE);
 	}
 	return (TRUE);
+}
+
+t_bool			ft_ldf_init_mmap(
+					t_ldf *ld,
+					char *path_file,
+					char *name,
+					t_bool print_name)
+{
+	struct stat		statbuff;
+	int				fd;
+
+	ft_bzero(ld, sizeof(*ld));
+	ld->is_mmap = TRUE;
+	ld->print_name = print_name;
+	ld->name = name;
+	if (init_verif(path_file, &fd, &statbuff) == FALSE)
+		return (FALSE);
+	return (mmap_file(ld, path_file, fd, &statbuff));
 }

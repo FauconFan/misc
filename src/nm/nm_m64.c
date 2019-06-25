@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 10:59:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/20 12:19:00 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 10:31:51 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ void			nm_m64(t_ldf *ldf)
 	size_t					offset;
 	t_meta_sect				meta;
 
-	h64 = ft_ldf_jmp(ldf, 0, sizeof(*h64));
-	i = 0;
+	ft_ldf_print_name(ldf);
 	offset = sizeof(struct mach_header_64);
-	lc = ft_ldf_jmp(ldf, offset, sizeof(*lc));
 	ft_meta_sect_init(&meta);
-	if (h64 == NULL || lc == NULL
+	if ((h64 = ft_ldf_jmp(ldf, 0, sizeof(*h64))) == NULL
+		|| (lc = ft_ldf_jmp(ldf, offset, sizeof(*lc))) == NULL
 		|| charge_meta(ldf, &meta, offset, h64->ncmds) == FALSE)
 		return ;
+	i = 0;
 	while (i++ < h64->ncmds)
 	{
 		if (lc->cmd == LC_SYMTAB)
