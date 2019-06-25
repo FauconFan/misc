@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 09:09:16 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 15:17:24 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/25 15:35:54 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static void	sym_print(t_sym *sym, void (*p)(uint64_t), char *fill)
 	ft_bput_str_ln(sym->name);
 }
 
-void	ft_sym_print_64(t_sym *sym)
+void		ft_sym_print_64(t_sym *sym)
 {
 	sym_print(sym, ft_bput_vm_addr64, "                ");
 }
 
-void	ft_sym_print_32(t_sym *sym)
+void		ft_sym_print_32(t_sym *sym)
 {
 	sym_print(sym, ft_bput_vm_addr32, "        ");
 }
