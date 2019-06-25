@@ -32,5 +32,6 @@ Tests:
 	✔ /usr/bin @done(19-06-25 23:26)
 	✔ /usr/lib @done(19-06-20 11:19)
 	☐ https://github.com/mguillau42/unit_test_nm_otool
+		☐ Gerer ./MachO-iOS-arm1176JZFS-bash (à savoir l'endianness dans l'affichage des 4)
 	☐ https://github.com/JonathanSalwan/binary-samples
 	☐ https://github.com/mmeisson/tests_nm
