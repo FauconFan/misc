@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/25 15:22:24 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/25 18:02:12 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,9 +60,9 @@ __COMMON_FILES = \
 			t_ldf/ft_ldf_print_name.c \
 			t_ldf/ft_ldf_jmp.c \
 			t_ldf/ft_ldf_jmp_str.c \
-			archive/archive.c \
-			fat/fat_cigam.c \
 			utils/ft_check_str.c \
+			fat_cigam.c \
+			archive.c \
 			get_arch.c \
 
 _COMMON_FILES = $(addprefix $(COM_FOLDER), $(__COMMON_FILES))
