@@ -37,3 +37,10 @@ uint32_t		ft_gswap_32(uint32_t val)
 		return (ft_swap_uint32(val));
 	return (val);
 }
+
+uint16_t		ft_gswap_16(uint16_t val)
+{
+	if (*get_local_swap())
+		return (ft_swap_uint16(val));
+	return (val);
+}

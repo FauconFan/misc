@@ -12,6 +12,11 @@
 
 #include "ft_nm_otool.h"
 
+uint16_t	ft_swap_uint16(uint16_t val)
+{
+	return ((val << 8) & 0xFF00 | (val >> 8) & 0x00FF);
+}
+
 uint32_t	ft_swap_uint32(uint32_t val)
 {
 	val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0x00FF00FF);

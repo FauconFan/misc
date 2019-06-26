@@ -44,7 +44,7 @@ ___INT_FILES = \
 
 ___BUFF_FILES = \
 			ft_bput_vm_addr.c \
-			ft_bput_hex_char.c \
+			ft_bput_hex.c \
 			ft_bput_str.c \
 			ft_bput_uint.c \
 			ft_bput_uint_base.c \
