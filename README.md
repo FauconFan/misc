@@ -8,14 +8,14 @@ All necessary informations needed to understand the project is available in the 
 
 ## To compile
 
-'''
+```
 make
-'''
+```
 
 ## To use
 
-'''
+```
 ./run.sh ls
-'''
+```
 
 The library works on Linux and on MacOs.
