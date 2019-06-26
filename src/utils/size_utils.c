@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:41:57 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 09:01:43 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/23 11:18:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void			size_multiple_page(size_t *new_len)
 
 t_bool			size_ok(size_t l)
 {
-	return ((l >> 56) == 0);
+	return ((l >> 63) == 0);
 }

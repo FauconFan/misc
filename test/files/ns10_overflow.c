@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:54:42 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 08:25:43 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/23 11:22:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void		print(char *str)
 
 int			main(void)
 {
-	char	*addr;
+	char	*addr1;
+	char	*addr2;
 
 	start_test();
-	addr = calloc((size_t)(1) << 42, (size_t)(1) << 42);
-	if (addr == NULL)
+	addr1 = calloc((size_t)(1) << 42, (size_t)(1) << 42);
+	addr2 = malloc((size_t)1 << 62);
+	if (addr1 == NULL && addr2 == NULL)
 		print("This is ok\n");
 	else
 		print("This is terribly bad\n");

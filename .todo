@@ -25,6 +25,7 @@ Mandatory part:
     ✔ Faire le show_mem_alloc (en write only) @done(19-06-10 16:28)
     ✔ Verifier les size en entrée (pas decriture sur les 8 derniers bits) (> 64 To) @done(19-06-12 22:49)
     ✔ inline functions @done(19-06-13 13:13)
+    ✔ Faire des tests de bon fonctionnement @done(19-06-23 10:34)
 
 Bonus part:
     ✔ Faire le lock pour les pthreads (easy) @done(19-06-12 14:02)

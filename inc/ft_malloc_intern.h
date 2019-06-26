@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 15:05:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/13 16:04:51 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/23 11:18:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 **			Presumptions
 **
 **	I supposed that the system can not allocate a contiguous memmory of size
-**	greater that 64 To (i.e. 2^56).
+**	greater or equal than 8 Eo (i.e. 2^63) (1Eo = 1024 * 1024 To).
 **
 **			Depedencies
 **
@@ -146,10 +146,8 @@ typedef unsigned char		t_bool;
 typedef struct				s_blk
 {
 	size_t			len_block;
-	uint8_t			free;
-	uint8_t			len_asked1;
-	uint16_t		len_asked2;
-	uint32_t		len_asked3;
+	size_t			len_asked:63;
+	uint8_t			free:1;
 }							t_blk;
 
 /*
