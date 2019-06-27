@@ -12,13 +12,10 @@ Core:
 			✔ fat 32 Big @done(19-06-19 12:24)
 			☐ fat 32 Lit
 	✔ Pour fat afficher quand l'architecture courante n'est pas présente dans le fat @done(19-06-25 23:37)
-	☐ Abstraction du main et du Makefile
-		☐ Abtraction du main
-		✔ Abtraction du Makefile @done(19-06-18 07:25)
-		☐ Faire un $(NAME) de qualité
+	✔ Abtraction du Makefile @done(19-06-18 07:25)
 	✔ Gérer le jump en dehors d'un fichier @done(19-06-18 17:13)
 	✔ Verifier que les chaines de charactères sont biens des chaînes de charactères @done(19-06-18 17:13)
-	☐ Gerer quand pas d'arguments (a.out)
+	✔ Gerer quand pas d'arguments (a.out) @done(19-06-27 09:39)
 	✔ Gere quand fichier vide @done(19-06-19 08:16)
 	✔ Bufferiser la sortie pour optimisation @done(19-06-20 12:12)
 	☐ alloc seulement les symboles necessaires dans nm

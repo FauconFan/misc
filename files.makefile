@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/25 23:13:44 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 09:34:33 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,6 @@ __OTOOL_FILES = \
 
 _OTOOL_FILES = $(addprefix $(OTOOL_FOLDER), $(__OTOOL_FILES))
 
-_COMMON_MAIN = main_o.c
 _NM_MAIN = main_nm.c
 _OTOOL_MAIN = main_otool.c
 
@@ -99,7 +98,6 @@ COMMON_FILES = $(addprefix $(SRC_FOLDER), $(_COMMON_FILES))
 NM_FILES = $(addprefix $(SRC_FOLDER), $(_NM_FILES))
 OTOOL_FILES = $(addprefix $(SRC_FOLDER), $(_OTOOL_FILES))
 
-COMMON_MAIN = $(addprefix $(SRC_FOLDER), $(_COMMON_MAIN))
 NM_MAIN = $(addprefix $(SRC_FOLDER), $(_NM_MAIN))
 OTOOL_MAIN = $(addprefix $(SRC_FOLDER), $(_OTOOL_MAIN))
 

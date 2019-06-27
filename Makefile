@@ -6,11 +6,10 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/25 19:28:04 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 09:34:24 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_o
 NAME_OTOOL = ft_otool
 NAME_NM = ft_nm
 
@@ -44,23 +43,17 @@ BIN_FLAGS = $(BIN_CFLAGS) $(CFLAGS) $(IFLAGS)
 include files.makefile
 
 COMMON_OBJ = $(COMMON_FILES:%.c=%.o)
-COMMON_MAIN_OBJ = $(COMMON_MAIN:%.c=%.o)
 NM_OBJ = $(NM_FILES:%.c=%.o)
 NM_MAIN_OBJ = $(NM_MAIN:%.c=%.o)
 OTOOL_OBJ = $(OTOOL_FILES:%.c=%.o)
 OTOOL_MAIN_OBJ = $(OTOOL_MAIN:%.c=%.o)
 
-OBJ = $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ) $(COMMON_MAIN_OBJ) $(NM_MAIN_OBJ) $(OTOOL_MAIN_OBJ)
+OBJ = $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ) $(NM_MAIN_OBJ) $(OTOOL_MAIN_OBJ)
 
 #################################### COMPILATION ###############################
 
 .PHONY: all
-all: $(NAME) $(NAME_NM) $(NAME_OTOOL)
-
-$(NAME): $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ) $(COMMON_MAIN_OBJ)
-	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
-	@$(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
-	@printf "%s\\n" "$@"
+all: $(NAME_NM) $(NAME_OTOOL)
 
 $(NAME_NM): $(COMMON_OBJ) $(NM_OBJ) $(NM_MAIN_OBJ)
 	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
