@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 23:01:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 08:04:15 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,6 @@ t_bool						ft_check_str(char *s, size_t remain);
 void						ft_swap_set(t_bool value);
 uint64_t					ft_gswap_64(uint64_t val);
 uint32_t					ft_gswap_32(uint32_t val);
+uint16_t					ft_gswap_16(uint16_t val);
 
 #endif

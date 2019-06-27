@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bput_hex_char.c                                 :+:      :+:    :+:   */
+/*   ft_bput_hex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,17 @@
 
 #include "ft_nm_otool.h"
 
-void	ft_bput_hex_char(uint8_t val)
+void	ft_bput_hex_8(uint8_t val)
 {
 	ft_bput_uint_base(val, BASE_HEX_LOW, 2, '0');
+}
+
+void	ft_bput_hex_16(uint16_t val)
+{
+	ft_bput_uint_base(val, BASE_HEX_LOW, 4, '0');
+}
+
+void	ft_bput_hex_32(uint32_t val)
+{
+	ft_bput_uint_base(val, BASE_HEX_LOW, 8, '0');
 }

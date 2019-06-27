@@ -47,6 +47,7 @@ void					ft_bzero(void *dest, size_t len);
 int32_t					ft_swap_int32(int32_t val);
 int64_t					ft_swap_int64(int64_t val);
 
+uint16_t				ft_swap_uint16(uint16_t val);
 uint32_t				ft_swap_uint32(uint32_t val);
 uint64_t				ft_swap_uint64(uint64_t val);
 
@@ -92,7 +93,9 @@ typedef struct			s_buff_str
 void					ft_buff_flush(void);
 void					ft_buff_put(const char *str);
 
-void					ft_bput_hex_char(uint8_t val);
+void					ft_bput_hex_8(uint8_t val);
+void					ft_bput_hex_16(uint16_t val);
+void					ft_bput_hex_32(uint32_t val);
 
 void					ft_bput_vm_addr64(uint64_t addr);
 void					ft_bput_vm_addr32(uint64_t addr);
