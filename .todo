@@ -21,15 +21,15 @@ Core:
 	☐ alloc seulement les symboles necessaires dans nm
 
 Tests:
-	☐ Bien tester tous les types de symboles
+	✔ Bien tester tous les types de symboles @done(19-06-27 12:22)
 		✔ 1er ` @done(19-06-18 17:14)
-		☐ 2nd jet
+		✔ 2nd jet @done(19-06-27 12:22)
 	✔ /bin @done(19-06-20 11:19)
 	✔ /sbin @done(19-06-25 15:24)
 	✔ /usr/bin @done(19-06-25 23:26)
 	✔ /usr/lib @done(19-06-20 11:19)
-	☐ /usr/local/{lib|bin}
-	☐ /usr/libexec
+	✔ /usr/local/{lib|bin} @done(19-06-27 12:22)
+	✔ /usr/libexec @done(19-06-27 12:22)
 	✔ https://github.com/mguillau42/unit_test_nm_otool @done(19-06-27 08:55)
 		✔ Gerer ./MachO-iOS-arm1176JZFS-bash (à savoir l'endianness dans l'affichage des 4) @done(19-06-27 08:55)
 	✔ https://github.com/JonathanSalwan/binary-samples @done(19-06-27 09:26)

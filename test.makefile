@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/20 10:29:49 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 11:54:19 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 12:17:39 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,26 +27,42 @@ BLACK_LISTED = \
 			/usr/bin/systriage \
 			/usr/bin/tkpp5.16 \
 			/usr/bin/tkpp5.18 \
+			/usr/sbin/smbdiagnose \
 
 _FILES_BIN = $(shell find /bin $(FIND_PARAMS))
 _FILES_SBIN = $(shell find /sbin $(FIND_PARAMS))
 _FILES_USR_BIN = $(shell find /usr/bin $(FIND_PARAMS))
+_FILES_USR_SBIN = $(shell find /usr/sbin $(FIND_PARAMS))
 _FILES_USR_LIB = $(shell find /usr/lib $(FIND_PARAMS))
+_FILES_USR_LIBEXEC = $(shell find /usr/libexec $(FIND_PARAMS))
+_FILES_USR_LOCAL_BIN = $(shell find /usr/local/bin $(FIND_PARAMS))
+_FILES_USR_LOCAL_LIB = $(shell find /usr/local/lib $(FIND_PARAMS))
 
 FILES_BIN = $(filter-out $(BLACK_LISTED), $(_FILES_BIN))
 FILES_SBIN = $(filter-out $(BLACK_LISTED), $(_FILES_SBIN))
 FILES_USR_BIN = $(filter-out $(BLACK_LISTED), $(_FILES_USR_BIN))
+FILES_USR_SBIN = $(filter-out $(BLACK_LISTED), $(_FILES_USR_SBIN))
 FILES_USR_LIB = $(filter-out $(BLACK_LISTED), $(_FILES_USR_LIB))
+FILES_USR_LIBEXEC = $(filter-out $(BLACK_LISTED), $(_FILES_USR_LIBEXEC))
+FILES_USR_LOCAL_BIN = $(filter-out $(BLACK_LISTED), $(_FILES_USR_LOCAL_BIN))
+FILES_USR_LOCAL_LIB = $(filter-out $(BLACK_LISTED), $(_FILES_USR_LOCAL_LIB))
 
-.PHONY: all
-all:
+.PHONY: main
+main:
 	@ make -f test.makefile test_bin
 	@ make -f test.makefile test_sbin
 	@ make -f test.makefile test_usr_lib
+	@ make -f test.makefile test_usr_libexec
 	@ make -f test.makefile test_usr_bin
+	@ make -f test.makefile test_usr_sbin
+	@ make -f test.makefile test_usr_local_lib
 	@ make -f test.makefile test_mguillau42_unit_test_nm_otool
 	@ make -f test.makefile test_salwan_binary_samples
 	@ make -f test.makefile test_mmeisson_tests_nm
+
+.PHONY: rude
+rude:
+	@ make -f test.makefile test_usr_local_bin
 
 $(NAME_NM):
 	make -f Makefile $(NAME_NM)
@@ -68,9 +84,26 @@ test_sbin:
 test_usr_bin:
 	@ make -f test.makefile $(FILES_USR_BIN)
 
+.PHONY: test_usr_sbin
+test_usr_sbin:
+	@ make -f test.makefile $(FILES_USR_SBIN)
+
 .PHONY: test_usr_lib
 test_usr_lib:
 	@ make -f test.makefile $(FILES_USR_LIB)
+
+.PHONY: test_usr_libexec
+test_usr_libexec:
+	@ make -f test.makefile $(FILES_USR_LIBEXEC)
+
+# rude one because of node
+.PHONY: test_usr_local_bin
+test_usr_local_bin:
+	@ make -f test.makefile $(FILES_USR_LOCAL_BIN)
+
+.PHONY: test_usr_local_lib
+test_usr_local_lib:
+	@ make -f test.makefile $(FILES_USR_LOCAL_LIB)
 
 ################################## REMOTE #####################################
 
