@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ldf_jmp_str.c                                   :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/18 13:50:33 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 18:40:58 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/27 15:49:01 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/27 17:58:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-void	*ft_ldf_jmp_str(t_ldf *ldf, size_t offset, size_t *size)
+t_bool	ft_isprint(char c)
 {
-	char	*v;
-
-	if (offset > ldf->len)
-	{
-		write(1, CORRUPTION_MSG "\n", sizeof(CORRUPTION_MSG) + 1);
-		ft_buff_disable();
-		return (NULL);
-	}
-	v = (char *)ldf->content;
-	v += offset;
-	ft_check_str(v, ldf->len - offset, size);
-	return (v);
+	if (c >= 32 && c < 127)
+		return (TRUE);
+	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\r')
+		return (TRUE);
+	return (FALSE);
 }

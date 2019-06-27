@@ -34,3 +34,6 @@ Tests:
 		✔ Gerer ./MachO-iOS-arm1176JZFS-bash (à savoir l'endianness dans l'affichage des 4) @done(19-06-27 08:55)
 	✔ https://github.com/JonathanSalwan/binary-samples @done(19-06-27 09:26)
 	✔ https://github.com/mmeisson/tests_nm @done(19-06-27 11:59)
+	✔ https://gitlab.com/louisportay/break-nm @done(19-06-27 15:07)
+	☐ https://gitlab.com/Yalaouf/mes-binaires-nm
+		☐ special/aha

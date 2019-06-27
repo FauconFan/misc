@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 13:58:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 18:39:37 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ void						*ft_ldf_jmp(
 								t_ldf *ldf,
 								size_t offset,
 								size_t at_least);
-void						*ft_ldf_jmp_str(t_ldf *ldf, size_t offset);
+void						*ft_ldf_jmp_str(
+								t_ldf *ldf,
+								size_t offset,
+								size_t *size);
 
 void						ft_otool(t_ldf *lfd);
 void						ft_nm(t_ldf *ldf);
@@ -119,7 +122,7 @@ void						otool_m64(t_ldf *ldf, t_bool doswap);
 **	utils functions
 */
 
-t_bool						ft_check_str(char *s, size_t remain);
+void						ft_check_str(char *s, size_t remain, size_t *size);
 void						ft_swap_set(t_bool value);
 uint64_t					ft_gswap_64(uint64_t val);
 uint32_t					ft_gswap_32(uint32_t val);

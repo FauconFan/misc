@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 07:55:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 08:50:38 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 17:52:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 void		ft_sym_init1(
 				t_sym *sym,
 				uint64_t value,
-				char *name)
+				char *name,
+				size_t len)
 {
 	sym->value = value;
-	sym->name = name;
+	sym->c = '?';
+	sym->print_value = TRUE;
+	sym->name = ft_strndup(name, len);
 }
 
 static void	handle_sect(t_sym *sym, t_meta_sect *meta, uint8_t n_sect)
@@ -41,8 +44,6 @@ void		ft_sym_init2(
 {
 	uint8_t	type;
 
-	sym->c = '?';
-	sym->print_value = TRUE;
 	if (n_type & N_STAB)
 		return ;
 	type = n_type & N_TYPE;

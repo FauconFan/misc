@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 10:59:35 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 13:34:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 18:20:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,24 @@ static void		print_symbols(
 	struct nlist_64	*tab;
 	t_sym			*symbols;
 	char			*name;
-	size_t			offset_str;
+	size_t			lstr;
 
 	tab = ft_ldf_jmp(ldf,
 		ft_gswap_32(sym->symoff), sizeof(*tab) * ft_gswap_32(sym->nsyms));
 	if (tab == NULL
-		|| (symbols = malloc(sizeof(t_sym) * ft_gswap_32(sym->nsyms))) == NULL)
+		|| (symbols = ft_syms_new(ft_gswap_32(sym->nsyms))) == NULL)
 		return ;
 	i = (uint32_t)-1;
 	while (++i < ft_gswap_32(sym->nsyms))
 	{
-		offset_str = ft_gswap_32(sym->stroff) + ft_gswap_32(tab[i].n_un.n_strx);
-		if ((name = ft_ldf_jmp_str(ldf, offset_str)) == NULL)
+		if ((name = ft_ldf_jmp_str(ldf, ft_gswap_32(sym->stroff)
+			+ ft_gswap_32(tab[i].n_un.n_strx), &lstr)) == NULL)
 			return ;
-		ft_sym_init1(symbols + i, ft_gswap_64(tab[i].n_value), name);
+		ft_sym_init1(symbols + i, ft_gswap_64(tab[i].n_value), name, lstr);
 		ft_sym_init2(symbols + i, meta, tab[i].n_type, tab[i].n_sect);
 	}
 	ft_syms_good_print(symbols, ft_gswap_32(sym->nsyms), ft_sym_print_64);
-	free(symbols);
+	ft_syms_free(symbols, ft_gswap_32(sym->nsyms));
 }
 
 static size_t	loff(size_t offset, uint32_t index)

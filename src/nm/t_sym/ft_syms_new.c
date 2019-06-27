@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ldf_jmp_str.c                                   :+:      :+:    :+:   */
+/*   ft_syms_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/18 13:50:33 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 18:40:58 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/27 15:41:33 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/27 19:06:59 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm_otool.h"
+#include "ft_nm.h"
 
-void	*ft_ldf_jmp_str(t_ldf *ldf, size_t offset, size_t *size)
+t_sym	*ft_syms_new(size_t nmemb)
 {
-	char	*v;
+	t_sym	*symbols;
+	size_t	tot_len;
 
-	if (offset > ldf->len)
-	{
-		write(1, CORRUPTION_MSG "\n", sizeof(CORRUPTION_MSG) + 1);
-		ft_buff_disable();
+	tot_len = sizeof(t_sym) * nmemb;
+	if ((symbols = malloc(tot_len)) == NULL)
 		return (NULL);
-	}
-	v = (char *)ldf->content;
-	v += offset;
-	ft_check_str(v, ldf->len - offset, size);
-	return (v);
+	ft_bzero(symbols, tot_len);
+	return (symbols);
 }

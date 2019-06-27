@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 13:57:09 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 15:52:03 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ ___MEM_FILES = \
 			ft_bzero.c \
 
 ___STR_FILES = \
+			ft_isprint.c \
 			ft_strnew.c \
 			ft_strdup.c \
 			ft_strndup.c \
@@ -86,6 +87,8 @@ __NM_FILES = \
 			t_meta_sect/ft_meta_sect_load.c \
 			t_sym/ft_sym_init.c \
 			t_sym/ft_sym_print.c \
+			t_sym/ft_syms_new.c \
+			t_sym/ft_syms_free.c \
 			t_sym/ft_syms_sort.c \
 			t_sym/ft_syms_swap.c \
 			t_sym/ft_syms_good_print.c \

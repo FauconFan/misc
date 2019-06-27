@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 11:39:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 13:54:34 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 15:54:39 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char					*ft_strformat2(
 							const char *format,
 							const char *string1,
 							const char *string2);
+
+t_bool					ft_isprint(char c);
 
 /*
 **	ft_buff

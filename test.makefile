@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/20 10:29:49 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 12:17:39 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 19:18:11 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ main:
 	@ make -f test.makefile test_mguillau42_unit_test_nm_otool
 	@ make -f test.makefile test_salwan_binary_samples
 	@ make -f test.makefile test_mmeisson_tests_nm
+	@ make -f test.makefile test_yalaouf_mes_binaires
 
 .PHONY: rude
 rude:
@@ -112,6 +113,8 @@ TMP_DIR = /tmp/_abcdefghij/
 MGUILLAU_GIT = https://github.com/mguillau42/unit_test_nm_otool.git
 SALWAN_GIT = https://github.com/JonathanSalwan/binary-samples.git
 MMEISSON_GIT = https://github.com/mmeisson/tests_nm.git
+LPORTAY_GIT = https://gitlab.com/louisportay/break-nm.git
+YALAOUF_GIT = https://gitlab.com/Yalaouf/mes-binaires-nm.git
 
 MGUILLAU_SUBDIR = \
 			custom_tests/32 \
@@ -134,6 +137,29 @@ SALWAN_FILES = $(filter-out $(SALWAN_BLACK_LISTED), $(shell find $(shell pwd)/te
 
 MMEISSON_CORR_FILES = $(shell find tests/mmeisson_tests_nm/corrupted_binaries -type f)
 
+LPORTAY_SUBDIR_CORR = \
+			corrupted_archive \
+			corrupted_binaries \
+			feed_the_nm \
+			weird_architecture \
+			weird_archive \
+			weird_binaries \
+
+LPORTAY_SUBDIR_CORR_REAL = $(addprefix tests/lportay_break_nm/, $(LPORTAY_SUBDIR_CORR))
+LPORTAY_CORR_FILES = $(shell find $(LPORTAY_SUBDIR_CORR_REAL) -type f)
+
+YALAOUF_SUBDIR = \
+			safe \
+
+YALAOUF_SUBDIR_CORR = \
+			bad_files \
+			hell \
+
+YALAOUF_SUBDIR_REAL = $(addprefix $(shell pwd)/tests/yalaouf_mes_binairs_nm/, $(YALAOUF_SUBDIR))
+YALAOUF_SUBDIR_CORR_REAL = $(addprefix tests/yalaouf_mes_binairs_nm/, $(YALAOUF_SUBDIR_CORR))
+YALAOUF_FILES = $(shell find $(YALAOUF_SUBDIR_REAL) -type f)
+YALAOUF_CORR_FILES = $(shell find $(YALAOUF_SUBDIR_CORR_REAL) -type f)
+
 .PHONY: test_mguillau42_unit_test_nm_otool
 test_mguillau42_unit_test_nm_otool: tests/mguillau42_unit_test_nm_otool
 	@ make -f test.makefile $(MGUILLAU_FILES)
@@ -146,6 +172,15 @@ test_salwan_binary_samples: tests/salwan_binary_sample
 .PHONY: test_mmeisson_tests_nm
 test_mmeisson_tests_nm: tests/mmeisson_tests_nm
 	@ make -f test.makefile $(MMEISSON_CORR_FILES)
+
+.PHONY: test_lportay_break_nm
+test_lportay_break_nm: tests/lportay_break_nm
+	@ make -f test.makefile $(LPORTAY_CORR_FILES)
+
+.PHONY: test_yalaouf_mes_binaires
+test_yalaouf_mes_binaires: tests/yalaouf_mes_binairs_nm
+	@ make -f test.makefile $(YALAOUF_FILES)
+	@ make -f test.makefile $(YALAOUF_CORR_FILES)
 
 tests/mguillau42_unit_test_nm_otool:
 	@ mkdir -p tests/
@@ -165,6 +200,18 @@ tests/mmeisson_tests_nm:
 	@ rm -rf $(TMP_DIR)/c/.git
 	@ mv $(TMP_DIR)/c $@
 
+tests/lportay_break_nm:
+	@ mkdir -p tests/
+	@ git clone --depth=1 --branch=master $(LPORTAY_GIT) $(TMP_DIR)d
+	@ rm -rf $(TMP_DIR)/d/.git
+	@ mv $(TMP_DIR)/d $@
+
+tests/yalaouf_mes_binairs_nm:
+	@ mkdir -p tests/
+	@ git clone --depth=1 --branch=master $(YALAOUF_GIT) $(TMP_DIR)e
+	@ rm -rf $(TMP_DIR)/e/.git
+	@ mv $(TMP_DIR)/e $@
+
 ##################################### TEST ####################################
 
 ## Normal check
@@ -181,3 +228,12 @@ tests/%: $(NAME_NM) $(NAME_OTOOL) FORCE
 
 .PHONY: FORCE
 FORCE:
+
+#################################### CLEAN ####################################
+
+.PHONY: clean
+clean:
+	rm -rf tests/
+
+.PHONY: fclean
+fclean: clean
