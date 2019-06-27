@@ -58,4 +58,4 @@ ft_nm
 ft_otool
 ft_o
 
-!tests/*
+tests/*

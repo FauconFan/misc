@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 07:55:31 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/19 17:00:13 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 08:50:38 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,13 @@ void		ft_sym_init2(
 	type = n_type & N_TYPE;
 	if (type == N_UNDF)
 	{
-		sym->c = 'u';
-		sym->print_value = FALSE;
+		if (n_type & N_PEXT || sym->value != 0)
+			sym->c = 'c';
+		else
+		{
+			sym->c = 'u';
+			sym->print_value = FALSE;
+		}
 	}
 	else if (type == N_ABS)
 		sym->c = 'a';

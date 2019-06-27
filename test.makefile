@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/20 10:29:49 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/25 23:23:40 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 09:24:53 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,13 +39,21 @@ FILES_USR_BIN = $(filter-out $(BLACK_LISTED), $(_FILES_USR_BIN))
 FILES_USR_LIB = $(filter-out $(BLACK_LISTED), $(_FILES_USR_LIB))
 
 .PHONY: all
-all: test_bin test_sbin test_usr_lib test_usr_bin
+all:
+	@ make -f test.makefile test_bin
+	@ make -f test.makefile test_sbin
+	@ make -f test.makefile test_usr_lib
+	@ make -f test.makefile test_usr_bin
+	@ make -f test.makefile test_mguillau42_unit_test_nm_otool
+	@ make -f test.makefile test_salwan_binary_samples
 
 $(NAME_NM):
 	make -f Makefile $(NAME_NM)
 
 $(NAME_OTOOL):
 	make -f Makefile $(NAME_OTOOL)
+
+################################## SYSTEM #####################################
 
 .PHONY: test_bin
 test_bin: 
@@ -62,6 +70,53 @@ test_usr_bin:
 .PHONY: test_usr_lib
 test_usr_lib:
 	@ make -f test.makefile $(FILES_USR_LIB)
+
+################################## REMOTE #####################################
+
+TMP_DIR = /tmp/_abcdefghij/
+
+MGUILLAU_GIT = https://github.com/mguillau42/unit_test_nm_otool.git
+SALWAN_GIT = https://github.com/JonathanSalwan/binary-samples.git
+
+MGUILLAU_SUBDIR = \
+			custom_tests/32 \
+			custom_tests/64 \
+			custom_tests/fat \
+			custom_tests/fat_lib \
+			custom_tests/lib_stat \
+
+MGUILLAU_BLACK_LISTED = \
+			$(shell pwd)/tests/mguillau42_unit_test_nm_otool/custom_tests/fat/MachO-OSX-ppc-and-i386-bash \
+
+MGUILLAU_SUBDIR_REAL = $(addprefix $(shell pwd)/tests/mguillau42_unit_test_nm_otool/, $(MGUILLAU_SUBDIR))
+MGUILLAU_FILES = $(filter-out $(MGUILLAU_BLACK_LISTED), $(shell find $(MGUILLAU_SUBDIR_REAL) -type f))
+
+SALWAN_BLACK_LISTED = \
+			$(shell pwd)/tests/salwan_binary_sample/MachO-OSX-ppc-and-i386-bash \
+
+SALWAN_FILES = $(filter-out $(SALWAN_BLACK_LISTED), $(shell find $(shell pwd)/tests/salwan_binary_sample -type f -name "MachO*"))
+
+.PHONY: test_mguillau42_unit_test_nm_otool
+test_mguillau42_unit_test_nm_otool: tests/mguillau42_unit_test_nm_otool
+	@ make -f test.makefile $(MGUILLAU_FILES)
+
+.PHONY: test_salwan_binary_samples
+test_salwan_binary_samples: tests/salwan_binary_sample
+	@ make -f test.makefile $(SALWAN_FILES)
+
+tests/mguillau42_unit_test_nm_otool:
+	@ mkdir -p tests/
+	@ git clone --depth=1 --branch=master $(MGUILLAU_GIT) $(TMP_DIR)a
+	@ rm -rf $(TMP_DIR)/a/.git
+	@ mv $(TMP_DIR)/a $@
+
+tests/salwan_binary_sample:
+	@ mkdir -p tests/
+	@ git clone --depth=1 --branch=master $(SALWAN_GIT) $(TMP_DIR)b
+	@ rm -rf $(TMP_DIR)/b/.git
+	@ mv $(TMP_DIR)/b $@
+
+##################################### TEST ####################################
 
 /%: $(NAME_NM) $(NAME_OTOOL) FORCE
 	@ printf "%s\\n" "$@"
