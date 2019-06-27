@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 23:00:29 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 23:00:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 11:14:48 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void			fat_do_all_arch(
 			v, ft_swap_uint32(arch->size));
 		in_file.print_name = TRUE;
 		fat_helper->fnext(&in_file);
+		ft_ldf_end(&in_file);
 		offset += sizeof(struct fat_arch);
 		++i;
 	}

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/20 10:29:49 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 09:24:53 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 11:54:19 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ all:
 	@ make -f test.makefile test_usr_bin
 	@ make -f test.makefile test_mguillau42_unit_test_nm_otool
 	@ make -f test.makefile test_salwan_binary_samples
+	@ make -f test.makefile test_mmeisson_tests_nm
 
 $(NAME_NM):
 	make -f Makefile $(NAME_NM)
@@ -77,6 +78,7 @@ TMP_DIR = /tmp/_abcdefghij/
 
 MGUILLAU_GIT = https://github.com/mguillau42/unit_test_nm_otool.git
 SALWAN_GIT = https://github.com/JonathanSalwan/binary-samples.git
+MMEISSON_GIT = https://github.com/mmeisson/tests_nm.git
 
 MGUILLAU_SUBDIR = \
 			custom_tests/32 \
@@ -90,19 +92,27 @@ MGUILLAU_BLACK_LISTED = \
 
 MGUILLAU_SUBDIR_REAL = $(addprefix $(shell pwd)/tests/mguillau42_unit_test_nm_otool/, $(MGUILLAU_SUBDIR))
 MGUILLAU_FILES = $(filter-out $(MGUILLAU_BLACK_LISTED), $(shell find $(MGUILLAU_SUBDIR_REAL) -type f))
+MGUILLAU_CORR_FILES = $(shell find tests/mguillau42_unit_test_nm_otool/custom_tests/corrupt)
 
 SALWAN_BLACK_LISTED = \
 			$(shell pwd)/tests/salwan_binary_sample/MachO-OSX-ppc-and-i386-bash \
 
 SALWAN_FILES = $(filter-out $(SALWAN_BLACK_LISTED), $(shell find $(shell pwd)/tests/salwan_binary_sample -type f -name "MachO*"))
 
+MMEISSON_CORR_FILES = $(shell find tests/mmeisson_tests_nm/corrupted_binaries -type f)
+
 .PHONY: test_mguillau42_unit_test_nm_otool
 test_mguillau42_unit_test_nm_otool: tests/mguillau42_unit_test_nm_otool
 	@ make -f test.makefile $(MGUILLAU_FILES)
+	@ make -f test.makefile $(MGUILLAU_CORR_FILES)
 
 .PHONY: test_salwan_binary_samples
 test_salwan_binary_samples: tests/salwan_binary_sample
 	@ make -f test.makefile $(SALWAN_FILES)
+
+.PHONY: test_mmeisson_tests_nm
+test_mmeisson_tests_nm: tests/mmeisson_tests_nm
+	@ make -f test.makefile $(MMEISSON_CORR_FILES)
 
 tests/mguillau42_unit_test_nm_otool:
 	@ mkdir -p tests/
@@ -116,12 +126,25 @@ tests/salwan_binary_sample:
 	@ rm -rf $(TMP_DIR)/b/.git
 	@ mv $(TMP_DIR)/b $@
 
+tests/mmeisson_tests_nm:
+	@ mkdir -p tests/
+	@ git clone --depth=1 --branch=master $(MMEISSON_GIT) $(TMP_DIR)c
+	@ rm -rf $(TMP_DIR)/c/.git
+	@ mv $(TMP_DIR)/c $@
+
 ##################################### TEST ####################################
 
+## Normal check
 /%: $(NAME_NM) $(NAME_OTOOL) FORCE
 	@ printf "%s\\n" "$@"
 	@ bash -c "diff <(nm $@) <($(NAME_NM) $@)"
 	@ bash -c "diff <(otool -t $@) <($(NAME_OTOOL) $@)"
+
+## Check corrupted
+tests/%: $(NAME_NM) $(NAME_OTOOL) FORCE
+	@ printf "check no abort\\t\\t%s\\n" "$@"
+	@ $(NAME_NM) $@ > /dev/null
+	@ $(NAME_OTOOL) $@ > /dev/null
 
 .PHONY: FORCE
 FORCE:

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 16:35:39 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 14:01:25 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 11:14:33 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	archive_parcours(t_ldf *ldf, void (*f)(t_ldf *ldf), size_t offset)
 	ft_ldf_init_custom(&in_file, names[1], beg, len[0] - len[1]);
 	f(&in_file);
 	archive_parcours(ldf, f, offset + sizeof(*actu) + len[0]);
+	ft_ldf_end(&in_file);
 }
 
 void		archive(t_ldf *ldf, void (*f)(t_ldf *ldf))

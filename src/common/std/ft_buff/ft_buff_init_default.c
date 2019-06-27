@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_nm.c                                          :+:      :+:    :+:   */
+/*   ft_buff_init_default.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/18 07:21:08 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 11:16:45 by jpriou           ###   ########.fr       */
+/*   Created: 2019/06/27 09:59:01 by jpriou            #+#    #+#             */
+/*   Updated: 2019/06/27 10:00:57 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm_otool.h"
 
-static void	do_main(char *argv, t_bool print_name)
+t_buff_inner	*ft_buff_init_default(void)
 {
-	t_ldf	ld;
-	char	*name;
+	t_buff_inner	*res;
 
-	name = ft_strformat1("\n%", argv);
-	if (ft_ldf_init_mmap(&ld, argv, name, print_name) == FALSE)
-		return ;
-	ft_nm(&ld);
-	if (ft_ldf_end(&ld) == FALSE)
-		return ;
-}
-
-int			main(int argc, char **argv)
-{
-	int		i;
-
-	if (argc < 2)
-		do_main("a.out", FALSE);
-	i = 0;
-	while (++i < argc)
+	if ((res = malloc(sizeof(t_buff_inner))) == NULL)
+		return (NULL);
+	if ((res->buff = malloc(BUFF_INIT_SIZE)) == NULL)
 	{
-		do_main(argv[i], argc != 2);
-		ft_buff_flush();
-		ft_buff_reset();
+		free(res);
+		return (NULL);
 	}
-	return (0);
+	res->len_actu = 0;
+	res->len_max = BUFF_INIT_SIZE;
+	res->next = NULL;
+	return (res);
 }

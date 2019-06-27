@@ -6,13 +6,14 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 09:34:33 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 11:00:45 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ___MEM_FOLDER = std/mem/
 ___STR_FOLDER = std/str/
 ___INT_FOLDER = std/int/
+___BPUT_FOLDER = std/ft_bput/
 ___BUFF_FOLDER = std/ft_buff/
 
 ___MEM_FILES = \
@@ -42,18 +43,26 @@ ___INT_FILES = \
 			ft_swap_uint.c \
 			ft_antou.c \
 
-___BUFF_FILES = \
+___BPUT_FILES = \
 			ft_bput_vm_addr.c \
 			ft_bput_hex.c \
 			ft_bput_str.c \
 			ft_bput_uint.c \
 			ft_bput_uint_base.c \
+
+___BUFF_FILES = \
 			ft_buff.c \
+			ft_buff_init_custom.c \
+			ft_buff_init_default.c \
+			ft_buff_free_recu.c \
+			ft_buff_print_recu.c \
+			ft_buff_put_last.c \
 
 __COMMON_FILES = \
 			$(addprefix $(___MEM_FOLDER), $(___MEM_FILES)) \
 			$(addprefix $(___STR_FOLDER), $(___STR_FILES)) \
 			$(addprefix $(___INT_FOLDER), $(___INT_FILES)) \
+			$(addprefix $(___BPUT_FOLDER), $(___BPUT_FILES)) \
 			$(addprefix $(___BUFF_FOLDER), $(___BUFF_FILES)) \
 			t_ldf/ft_ldf_init_mmap.c \
 			t_ldf/ft_ldf_init_custom.c \

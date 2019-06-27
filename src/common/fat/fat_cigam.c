@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 08:21:27 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 23:21:52 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 11:14:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void		do_single_arch(
 		beg, ft_swap_uint32(arch->size));
 	in_file.print_name = TRUE;
 	fat_helper->fnext(&in_file);
+	ft_ldf_end(&in_file);
 }
 
 static t_bool	test_arch(
@@ -58,6 +59,7 @@ static t_bool	test_arch(
 			beg, ft_swap_uint32(arch->size));
 		in_file.print_name = fat_helper->print_name;
 		fat_helper->fnext(&in_file);
+		ft_ldf_end(&in_file);
 		return (TRUE);
 	}
 	return (FALSE);
