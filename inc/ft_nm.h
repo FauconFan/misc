@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 07:57:27 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 15:16:04 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 13:34:26 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	ft_sym_init2(
 
 void	ft_sym_print_64(t_sym *sym);
 void	ft_sym_print_32(t_sym *sym);
-void	ft_sym_sort(t_sym *symbols, size_t len);
+void	ft_syms_sort(t_sym *symbols, size_t len);
+void	ft_syms_swap(t_sym *symbols, size_t i, size_t j);
+void	ft_syms_good_print(t_sym *symbols, size_t len, void (*psym)(t_sym *));
 
 #endif

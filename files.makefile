@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 11:00:45 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 13:31:41 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,9 @@ __NM_FILES = \
 			t_meta_sect/ft_meta_sect_load.c \
 			t_sym/ft_sym_init.c \
 			t_sym/ft_sym_print.c \
-			t_sym/ft_sym_sort.c \
+			t_sym/ft_syms_sort.c \
+			t_sym/ft_syms_swap.c \
+			t_sym/ft_syms_good_print.c \
 
 _NM_FILES = $(addprefix $(NM_FOLDER), $(__NM_FILES))
 

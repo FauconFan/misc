@@ -18,7 +18,7 @@ Core:
 	✔ Gerer quand pas d'arguments (a.out) @done(19-06-27 09:39)
 	✔ Gere quand fichier vide @done(19-06-19 08:16)
 	✔ Bufferiser la sortie pour optimisation @done(19-06-20 12:12)
-	☐ alloc seulement les symboles necessaires dans nm
+	✔ alloc seulement les symboles necessaires dans nm @done(19-06-27 13:49)
 
 Tests:
 	✔ Bien tester tous les types de symboles @done(19-06-27 12:22)
