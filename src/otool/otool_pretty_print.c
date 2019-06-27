@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 22:09:11 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 23:32:47 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 08:12:07 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void		real_print_16(
 			ft_bput_str(" ");
 		}
 		ft_bput_str_ln("");
-		if (i == pphelp->len)
+		if (2 * i == pphelp->len)
 			break ;
 		v += 8;
 		pphelp->vm_addr += 16;
@@ -91,7 +91,7 @@ static void		real_print_32(
 			ft_bput_str(" ");
 		}
 		ft_bput_str_ln("");
-		if (i == pphelp->len)
+		if (4 * i == pphelp->len)
 			break ;
 		v += 4;
 		pphelp->vm_addr += 16;
