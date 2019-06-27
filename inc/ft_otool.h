@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 22:09:55 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 22:21:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 13:57:39 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ typedef struct		s_pprint_help
 	char		pad[3];
 }					t_pprint_help;
 
-void		otool_pretty_print(t_pprint_help *pphelp);
+void				otool_pretty_print(t_pprint_help *pphelp);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 16:35:39 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 11:14:33 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 13:56:49 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,29 @@ static char	*get_name_from_hdr(
 	return (ft_strndup(actu->ar_name, (size_t)tmp));
 }
 
-static void	archive_parcours(t_ldf *ldf, void (*f)(t_ldf *ldf), size_t offset)
+static void	archive_parcours(t_ldf *ldf, void (*f)(t_ldf *ldf), size_t loff)
 {
 	struct ar_hdr	*actu;
 	void			*beg;
-	size_t			len[2];
+	size_t			len[3];
 	char			*names[2];
 	t_ldf			in_file;
 
-	if (offset >= ldf->len)
+	if (loff >= ldf->len)
 		return ;
-	if ((actu = ft_ldf_jmp(ldf, offset, sizeof(*actu))) == NULL)
+	if ((actu = ft_ldf_jmp(ldf, loff, sizeof(*actu))) == NULL)
 		return ;
-	if ((names[0] = get_name_from_hdr(ldf, offset, actu, len + 1)) == NULL)
+	if ((names[0] = get_name_from_hdr(ldf, loff, actu, len + 1)) == NULL)
 		return ;
 	len[0] = ft_antou(actu->ar_size, sizeof(actu->ar_size));
-	if ((beg = ft_ldf_jmp(ldf, offset + sizeof(*actu) + len[1], len[0] - len[1])) == NULL)
+	len[2] = len[0] - len[1];
+	if ((beg = ft_ldf_jmp(ldf, loff + sizeof(*actu) + len[1], len[2])) == NULL)
 		return ;
 	names[1] = ft_strformat2("%(%)", ldf->name, names[0]);
 	free(names[0]);
-	ft_ldf_init_custom(&in_file, names[1], beg, len[0] - len[1]);
+	ft_ldf_init_custom(&in_file, names[1], beg, len[2]);
 	f(&in_file);
-	archive_parcours(ldf, f, offset + sizeof(*actu) + len[0]);
+	archive_parcours(ldf, f, loff + sizeof(*actu) + len[0]);
 	ft_ldf_end(&in_file);
 }
 

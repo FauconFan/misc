@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 11:39:02 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 11:10:14 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 13:54:34 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ void					ft_bzero(void *dest, size_t len);
 /*
 **	int
 */
-
-int32_t					ft_swap_int32(int32_t val);
-int64_t					ft_swap_int64(int64_t val);
 
 uint16_t				ft_swap_uint16(uint16_t val);
 uint32_t				ft_swap_uint32(uint32_t val);

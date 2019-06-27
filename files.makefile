@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 13:31:41 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 13:57:09 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,6 @@ ___STR_FILES = \
 			ft_strformat2.c \
 
 ___INT_FILES = \
-			ft_swap_int.c \
 			ft_swap_uint.c \
 			ft_antou.c \
 
@@ -76,7 +75,6 @@ __COMMON_FILES = \
 			fat/fat_bname_mult_arch.c \
 			fat/fat_do_all_arch.c \
 			archive.c \
-			get_arch.c \
 
 _COMMON_FILES = $(addprefix $(COM_FOLDER), $(__COMMON_FILES))
 

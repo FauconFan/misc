@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 08:04:15 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 13:58:47 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@
 # include <mach-o/fat.h>
 # include <mach-o/arch.h>
 # include <ar.h>
-# include <sys/utsname.h> // to see
 
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/stat.h>
-# include <sys/mman.h> // better includes
+# include <sys/mman.h>
 
 # include "std.h"
 
@@ -66,19 +65,6 @@ void						*ft_ldf_jmp_str(t_ldf *ldf, size_t offset);
 
 void						ft_otool(t_ldf *lfd);
 void						ft_nm(t_ldf *ldf);
-
-/*
-**	arch stuff
-*/
-
-typedef struct				s_arch_buff
-{
-	t_bool			set;
-	t_bool			fail;
-	struct utsname	ust;
-}							t_arch_buffer;
-
-char						*get_arch(void);
 
 /*
 **	fat stuff

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 11:15:16 by jpriou           ###   ########.fr        #
+#    Updated: 2019/06/27 14:00:43 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,35 +56,45 @@ OBJ = $(COMMON_OBJ) $(NM_OBJ) $(OTOOL_OBJ) $(NM_MAIN_OBJ) $(OTOOL_MAIN_OBJ)
 all: $(NAME_NM) $(NAME_OTOOL)
 
 $(NAME_NM): $(COMMON_OBJ) $(NM_OBJ) $(NM_MAIN_OBJ)
-	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
-	@$(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
-	@printf "%s\\n" "$@"
+	@ printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
+	@ $(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
+	@ printf "%s\\n" "$@"
 
 $(NAME_OTOOL): $(COMMON_OBJ) $(OTOOL_OBJ) $(OTOOL_MAIN_OBJ)
-	@printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
-	@$(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
-	@printf "%s\\n" "$@"
+	@ printf "\\t%sLD%s\\t" "$(_CYAN)" "$(_END)"
+	@ $(CC) $(BIN_FLAGS) $^ -o $@ $(LFLAGS)
+	@ printf "%s\\n" "$@"
 
 %.o: %.c $(HEADER_FILES)
-	@printf "\\t%sCC%s\\t" "$(_GREEN)" "$(_END)"
-	@$(CC) $(SRC_FLAGS) -c $< -o $@
-	@printf "%s\\n" "$<"
+	@ printf "\\t%sCC%s\\t" "$(_GREEN)" "$(_END)"
+	@ $(CC) $(SRC_FLAGS) -c $< -o $@
+	@ printf "%s\\n" "$<"
 
 .PHONY: clean
 clean:
-	@rm -rf $(OBJ)
-	@echo "Objects removed"
+	@ rm -rf $(OBJ)
+	@ echo "Objects removed"
 
 .PHONY: fclean
 fclean: clean
-	@rm -rf $(NAME)
-	@echo "Executable $(NAME) removed"
-	@rm -rf $(NAME_NM)
-	@echo "Executable $(NAME_NM) removed"
-	@rm -rf $(NAME_OTOOL)
-	@echo "Executable $(NAME_OTOOL) removed"
+	@ rm -rf $(NAME)
+	@ echo "Executable $(NAME) removed"
+	@ rm -rf $(NAME_NM)
+	@ echo "Executable $(NAME_NM) removed"
+	@ rm -rf $(NAME_OTOOL)
+	@ echo "Executable $(NAME_OTOOL) removed"
 
 .PHONY: re
 re:
-	@make fclean
-	@make all
+	@ make fclean
+	@ make all
+
+##################################### TEST ####################################
+
+.PHONY: test
+test:
+	@ make -f test.makefile main -j
+
+.PHONY: test_rude
+test_rude:
+	@ make -f test.makefile rude

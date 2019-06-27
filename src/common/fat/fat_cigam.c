@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 08:21:27 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 11:14:10 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/06/27 13:53:02 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_bool	test_arch(
 	arch = ft_ldf_jmp(fat_helper->origin, offset, sizeof(*arch));
 	if (arch == NULL)
 		return (FALSE);
-	if (ft_swap_int32(arch->cputype) == CPU_TYPE_X86_64)
+	if (ft_swap_uint32((uint32_t)arch->cputype) == CPU_TYPE_X86_64)
 	{
 		if ((beg = ft_ldf_jmp(fat_helper->origin, ft_swap_uint32(arch->offset),
 			ft_swap_uint32(arch->size))) == NULL)
