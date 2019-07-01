@@ -7,8 +7,6 @@ Core:
 		✔ macho 32 bits @done(19-06-25 15:25)
 		✔ Archive ar @done(19-06-20 18:09)
 		☐ fat
-			☐ fat 64 Big
-			☐ fat 64 Lit
 			✔ fat 32 Big @done(19-06-19 12:24)
 			☐ fat 32 Lit
 	✔ Pour fat afficher quand l'architecture courante n'est pas présente dans le fat @done(19-06-25 23:37)
@@ -35,5 +33,5 @@ Tests:
 	✔ https://github.com/JonathanSalwan/binary-samples @done(19-06-27 09:26)
 	✔ https://github.com/mmeisson/tests_nm @done(19-06-27 11:59)
 	✔ https://gitlab.com/louisportay/break-nm @done(19-06-27 15:07)
-	☐ https://gitlab.com/Yalaouf/mes-binaires-nm
-		☐ special/aha
+	✔ https://gitlab.com/Yalaouf/mes-binaires-nm @done(19-07-01 09:41)
+		✔ special/aha @done(19-07-01 09:41)
