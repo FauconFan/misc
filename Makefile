@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/12 12:40:29 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/01 09:03:05 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/01 12:07:00 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ COM_FOLDER = common/
 NM_FOLDER = nm/
 OTOOL_FOLDER = otool/
 
-CFLAGS = -g -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align -Wno-sign-conversion
+CFLAGS = -Wall -Wextra -Werror -Weverything -pedantic -Wno-cast-align -Wno-sign-conversion
 SRC_CFLAGS =
 BIN_CFLAGS =
 IFLAGS = -I $(INC_FOLDER)
