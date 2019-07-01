@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 11:13:01 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 15:52:03 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/01 09:47:19 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ __COMMON_FILES = \
 			t_ldf/ft_ldf_jmp_str.c \
 			utils/ft_check_str.c \
 			utils/ft_swap.c \
-			fat/fat_cigam.c \
+			fat/fat.c \
 			fat/fat_bname_mult_arch.c \
 			fat/fat_do_all_arch.c \
 			archive.c \

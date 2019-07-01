@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/01 08:05:24 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/01 09:57:22 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,16 @@ typedef struct				s_fat_helper
 	char				pad[7];
 }							t_fat_helper;
 
-void						fat_cigam(
+void						fat(
 								t_ldf *ldf,
 								void (*f)(t_ldf *ldf),
-								t_bool print_name);
+								t_bool print_name,
+								t_bool doswap);
 
 void						fat_do_all_arch(
 								t_fat_helper *fat_helper,
-								struct fat_header *hdr);
+								struct fat_header *hdr,
+								t_bool doswap);
 
 char						*fat_bname_mult_arch(
 								t_fat_helper *fat_helper,

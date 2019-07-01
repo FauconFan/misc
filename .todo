@@ -6,9 +6,9 @@ Core:
 		✔ macho 64 bit @done(19-06-18 17:14)
 		✔ macho 32 bits @done(19-06-25 15:25)
 		✔ Archive ar @done(19-06-20 18:09)
-		☐ fat
+		✔ fat @done(19-07-01 10:09)
 			✔ fat 32 Big @done(19-06-19 12:24)
-			☐ fat 32 Lit
+			✔ fat 32 Lit @done(19-07-01 10:09)
 	✔ Pour fat afficher quand l'architecture courante n'est pas présente dans le fat @done(19-06-25 23:37)
 	✔ Abtraction du Makefile @done(19-06-18 07:25)
 	✔ Gérer le jump en dehors d'un fichier @done(19-06-18 17:13)

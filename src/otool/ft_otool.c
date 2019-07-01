@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 08:11:09 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/25 22:12:18 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/01 09:46:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void		ft_otool(t_ldf *ld)
 		otool_m64(ld, magic_number == MH_CIGAM_64);
 	else if (magic_number == MH_MAGIC || magic_number == MH_CIGAM)
 		otool_m32(ld, magic_number == MH_CIGAM);
-	else if (magic_number == FAT_CIGAM)
-		fat_cigam(ld, ft_otool, TRUE);
+	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
+		fat(ld, ft_otool, TRUE, magic_number == FAT_CIGAM);
 	else if (ld->len >= SARMAG && ft_strncmp(ld->content, ARMAG, SARMAG) == 0)
 	{
 		ft_bput_str("Archive : ");
