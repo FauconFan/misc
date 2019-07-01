@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 23:00:29 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 11:14:48 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/01 08:11:09 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void			fat_do_all_arch(
 	i = 0;
 	while (i < ft_swap_uint32(hdr->nfat_arch))
 	{
-		arch = ft_ldf_jmp(fat_helper->origin, offset, sizeof(*arch));
+		arch = ft_ldf_jmp(fat_helper->origin, NULL, offset, sizeof(*arch));
 		if (arch == NULL || ((v = ft_ldf_jmp(fat_helper->origin,
+				(char *)arch + sizeof(*arch),
 				ft_swap_uint32(arch->offset),
 				ft_swap_uint32(arch->size))) == NULL))
 			return ;

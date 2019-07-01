@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 13:25:50 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 18:39:37 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/01 08:05:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,12 @@ t_bool						ft_ldf_end(t_ldf *ld);
 void						ft_ldf_print_name(t_ldf *ldf);
 void						*ft_ldf_jmp(
 								t_ldf *ldf,
+								void *at_least,
 								size_t offset,
-								size_t at_least);
+								size_t remain);
 void						*ft_ldf_jmp_str(
 								t_ldf *ldf,
+								void *at_least,
 								size_t offset,
 								size_t *size);
 

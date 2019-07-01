@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/20 10:29:49 by jpriou            #+#    #+#              #
-#    Updated: 2019/06/27 19:18:11 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/01 07:46:51 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ main:
 	@ make -f test.makefile test_mguillau42_unit_test_nm_otool
 	@ make -f test.makefile test_salwan_binary_samples
 	@ make -f test.makefile test_mmeisson_tests_nm
+	@ make -f test.makefile test_lportay_break_nm
 	@ make -f test.makefile test_yalaouf_mes_binaires
 
 .PHONY: rude
@@ -115,6 +116,8 @@ SALWAN_GIT = https://github.com/JonathanSalwan/binary-samples.git
 MMEISSON_GIT = https://github.com/mmeisson/tests_nm.git
 LPORTAY_GIT = https://gitlab.com/louisportay/break-nm.git
 YALAOUF_GIT = https://gitlab.com/Yalaouf/mes-binaires-nm.git
+
+YALAOUF_SHA_COMMIT = 5f1dd6fc4966b0463299e0bc7e0ccfb4d083d4d8
 
 MGUILLAU_SUBDIR = \
 			custom_tests/32 \
@@ -209,8 +212,13 @@ tests/lportay_break_nm:
 tests/yalaouf_mes_binairs_nm:
 	@ mkdir -p tests/
 	@ git clone --depth=1 --branch=master $(YALAOUF_GIT) $(TMP_DIR)e
+	@ (cd $(TMP_DIR)e; git reset --hard $(YALAOUF_SHA_COMMIT))
 	@ rm -rf $(TMP_DIR)/e/.git
 	@ mv $(TMP_DIR)/e $@
+	@ rm -rf $@/safe/.DS_Store
+	@ mv $@/special/ahah $@/safe
+	@ mv $@/special/* $@/hell
+	@ rm -rf $@/special
 
 ##################################### TEST ####################################
 

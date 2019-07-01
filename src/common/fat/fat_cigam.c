@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 08:21:27 by jpriou            #+#    #+#             */
-/*   Updated: 2019/06/27 13:53:02 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/01 08:08:47 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void		do_single_arch(
 	void				*beg;
 
 	offset = sizeof(struct fat_header);
-	arch = ft_ldf_jmp(fat_helper->origin, offset, sizeof(*arch));
+	arch = ft_ldf_jmp(fat_helper->origin, NULL, offset, sizeof(*arch));
 	if (arch == NULL
 		|| ((not_nl = ft_strnotcpos(fat_helper->origin->name, '\n')) == -1))
 		return ;
-	if ((beg = ft_ldf_jmp(fat_helper->origin, ft_swap_uint32(arch->offset),
-		ft_swap_uint32(arch->size))) == NULL)
+	if ((beg = ft_ldf_jmp(fat_helper->origin, (char *)arch + sizeof(*arch),
+		ft_swap_uint32(arch->offset), ft_swap_uint32(arch->size))) == NULL)
 		return ;
 	ft_ldf_init_custom(&in_file,
 		ft_strdup(fat_helper->origin->name + not_nl),
@@ -47,13 +47,13 @@ static t_bool	test_arch(
 	void				*beg;
 
 	offset = sizeof(struct fat_header) + i * sizeof(*arch);
-	arch = ft_ldf_jmp(fat_helper->origin, offset, sizeof(*arch));
+	arch = ft_ldf_jmp(fat_helper->origin, NULL, offset, sizeof(*arch));
 	if (arch == NULL)
 		return (FALSE);
 	if (ft_swap_uint32((uint32_t)arch->cputype) == CPU_TYPE_X86_64)
 	{
-		if ((beg = ft_ldf_jmp(fat_helper->origin, ft_swap_uint32(arch->offset),
-			ft_swap_uint32(arch->size))) == NULL)
+		if ((beg = ft_ldf_jmp(fat_helper->origin, (char *)arch + sizeof(*arch),
+			ft_swap_uint32(arch->offset), ft_swap_uint32(arch->size))) == NULL)
 			return (FALSE);
 		ft_ldf_init_custom(&in_file, ft_strdup(fat_helper->origin->name),
 			beg, ft_swap_uint32(arch->size));
@@ -96,7 +96,7 @@ void			fat_cigam(t_ldf *ldf, void (*f)(t_ldf *ldf), t_bool print_name)
 	fat_helper.origin = ldf;
 	fat_helper.fnext = f;
 	fat_helper.print_name = print_name;
-	if ((hdr = ft_ldf_jmp(ldf, 0, sizeof(*hdr))) == NULL)
+	if ((hdr = ft_ldf_jmp(ldf, NULL, 0, sizeof(*hdr))) == NULL)
 		return ;
 	if (test_if_any_arch(&fat_helper, hdr) == FALSE)
 		fat_do_all_arch(&fat_helper, hdr);
