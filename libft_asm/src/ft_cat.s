@@ -21,14 +21,13 @@ _ft_cat:
 		mov		rax, SYS_READ
 		syscall
 		jc		end
-		mov		[rsp + 8], rax
 		cmp		rax, 0
 		je		end
 
 	write:
 		mov		rdi, STDOUT
 		lea		rsi, [rel buffer]
-		mov		rdx, [rsp + 8]
+		mov		rdx, rax
 		mov		rax, SYS_WRITE
 		syscall
 		cmp		rax, 0
