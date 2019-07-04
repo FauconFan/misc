@@ -19,5 +19,5 @@ core:
 	☐ ft_cat
 
 bonus:
-	☐ isupper
-	☐ islower
+	✔ isupper @done(19-07-04 16:36)
+	✔ islower @done(19-07-04 16:36)

@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:07:20 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/04 16:28:17 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/04 16:35:00 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,11 @@ static void	test_memcpy(void)
 			assert(ft_ ## name (c) == name (c));\
 	} \
 
-TEST_CHAR_FUNC(isalpha)
-TEST_CHAR_FUNC(isdigit)
 TEST_CHAR_FUNC(isalnum)
+TEST_CHAR_FUNC(isdigit)
+TEST_CHAR_FUNC(isalpha)
+TEST_CHAR_FUNC(isupper)
+TEST_CHAR_FUNC(islower)
 TEST_CHAR_FUNC(isascii)
 TEST_CHAR_FUNC(isprint)
 TEST_CHAR_FUNC(toupper)
@@ -154,9 +156,11 @@ int			main(void)
 	DO_TEST(bzero);
 	DO_TEST(memset);
 	DO_TEST(memcpy);
-	DO_TEST(isalpha);
-	DO_TEST(isdigit);
 	DO_TEST(isalnum);
+	DO_TEST(isdigit);
+	DO_TEST(isalpha);
+	DO_TEST(isupper);
+	DO_TEST(islower);
 	DO_TEST(isascii);
 	DO_TEST(isprint);
 	DO_TEST(toupper);

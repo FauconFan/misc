@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:05:29 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/04 13:42:39 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/04 16:34:41 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void	ft_bzero(void *v, size_t n);
 void	ft_memset(void *v, int c, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 
-int		ft_isalpha(int c);
-int		ft_isdigit(int c);
 int		ft_isalnum(int c);
+int		ft_isdigit(int c);
+int		ft_isalpha(int c);
+int		ft_isupper(int c);
+int		ft_islower(int c);
 
 int		ft_isascii(int c);
 int		ft_isprint(int c);

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/04 12:19:08 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/04 16:35:18 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ _AS_FILES = \
 			ft_memset.s \
 			ft_memcpy.s \
 			ft_isalpha.s \
+			ft_isupper.s \
+			ft_islower.s \
 			ft_isdigit.s \
 			ft_isalnum.s \
 			ft_isascii.s \

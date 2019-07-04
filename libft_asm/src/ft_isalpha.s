@@ -1,22 +1,15 @@
 
 section .text
 	global _ft_isalpha
+	extern _ft_isupper
+	extern _ft_islower
 
 _ft_isalpha:
-	mov		eax, 0
-	cmp		edi, `A`
-	jl		next
-	cmp		edi, `Z`
-	jg		next
-	mov		eax, 1
-	jmp		end
+	call	_ft_isupper
+	cmp		eax, 1
+	je		end
 
-next:
-	cmp		edi, `a`
-	jl		end
-	cmp		edi, `z`
-	jg		end
-	mov		eax, 1
+	call	_ft_islower
 
 end:
 	ret
