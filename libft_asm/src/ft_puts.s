@@ -1,46 +1,62 @@
 %include "sys.s"
 
 section .data
-	nl:			db 10
+null_st:
+	.string			db "(null)"
+	.len			equ $ - null_st.string
+
+nl:
+	.string			db 10
+	.len			equ $ - nl.string
 
 section .text
 	global _ft_puts
 	extern _ft_strlen
 
 _ft_puts:
-	push	rbp
-	mov		rbp, rsp
-	sub		rsp, 16
+		push	rbp
+		mov		rbp, rsp
+		sub		rsp, 16
 
-	mov		[rsp + 8], rdi ;saving pointer
-	
-	call	_ft_strlen
+		cmp		rdi, 0
+		jnz		normal
 
-	mov		rdi, STDOUT
-	mov		rsi, [rsp + 8]
-	mov		rdx, rax
-	mov		rax, SYS_WRITE
-	syscall ; printing given string
+	null:
+		lea		rsi, [rel null_st.string]
+		mov		rdx, null_st.len
+		jmp		print
 
-	cmp		rax, 0
-	jl		bad_end
+	normal:
+		mov		[rsp + 0], rdi
 
-	mov		rdi, STDOUT
-	lea		rsi, [rel nl]
-	mov		rdx, 1
-	mov		rax, SYS_WRITE
-	syscall ; print new line
+		call	_ft_strlen
+		mov		rsi, [rsp + 0]
+		mov		rdx, rax
 
-	cmp		rax, 0
-	jl		bad_end
+	print:
+		mov		rdi, STDOUT
+		mov		rax, SYS_WRITE
+		syscall ; printing given string
 
-	mov		rax, 1
-	jmp		end
+		cmp		rax, 0
+		jl		bad_end
 
-bad_end:
-	mov		rax, 0
+		mov		rdi, STDOUT
+		lea		rsi, [rel nl.string]
+		mov		rdx, nl.len
+		mov		rax, SYS_WRITE
+		syscall ; print new line
 
-end:
-	mov		rsp, rbp
-	pop		rbp
-	ret
+		cmp		rax, 0
+		jl		bad_end
+
+		mov		rax, 10
+		jmp		end
+
+	bad_end:
+		mov		rax, 0
+
+	end:
+		mov		rsp, rbp
+		pop		rbp
+		ret

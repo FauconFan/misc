@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:05:29 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/04 16:34:41 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/04 17:14:12 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ char	*ft_strcat(char *s1, const char *s2);
 char	*ft_strdup(const char *s);
 
 int		ft_puts(const char *string);
+
+void	ft_cat(int fd);
 
 #endif

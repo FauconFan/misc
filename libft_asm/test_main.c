@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:07:20 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/04 16:35:00 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/04 18:11:42 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "libfts.h"
 
 #include <stdio.h>
@@ -127,8 +129,8 @@ static void	test_strcat(void)
 }
 
 #define TEST_STRDUP(name) { \
-	char *str = ft_strdup(# name); \
-	assert(strcmp(str, # name) == 0); \
+	char *str = ft_strdup(name); \
+	assert(strcmp(str, name) == 0); \
 	free(str); \
 }
 
@@ -144,9 +146,26 @@ static void test_strdup(void)
 
 static void	test_tputs(void)
 {
+	ft_puts(NULL);
 	ft_puts("Je suis un premier message");
 	ft_puts("Je suis un second message");
 	ft_puts("Et finalement un dernier message");
+}
+
+#define TEST_CAT(name) { \
+	int	fd = open(name, O_RDONLY); \
+	ft_cat(fd); \
+	close(fd); \
+}
+
+static void test_cat(void)
+{
+	ft_cat(-42);
+	ft_cat(-1);
+	TEST_CAT("invalid file")
+	TEST_CAT(".todo")
+	TEST_CAT("auteur");
+	ft_cat(0);
 }
 
 #define DO_TEST(s)	ft_puts("==== TEST " # s ); test_ ## s ();
@@ -169,4 +188,5 @@ int			main(void)
 	DO_TEST(strcat);
 	DO_TEST(strdup);
 	DO_TEST(tputs);
+	DO_TEST(cat);
 }

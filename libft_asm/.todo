@@ -16,7 +16,7 @@ core:
 	✔ memcpy @done(19-07-04 12:13)
 	✔ strdup @done(19-07-04 16:30)
 
-	☐ ft_cat
+	✔ ft_cat @done(19-07-04 18:12)
 
 bonus:
 	✔ isupper @done(19-07-04 16:36)

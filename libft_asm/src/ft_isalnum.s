@@ -5,11 +5,11 @@ section .text
 	extern _ft_isalpha
 
 _ft_isalnum:
-	call	_ft_isalpha
-	cmp		eax, 1
-	je		end
+		call	_ft_isalpha
+		cmp		eax, 1
+		je		end
 
-	call	_ft_isdigit
+		call	_ft_isdigit
 
-end:
-	ret
+	end:
+		ret

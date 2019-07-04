@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/04 16:35:18 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/04 17:17:09 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ _AS_FILES = \
 			ft_strlen.s \
 			ft_strdup.s \
 			ft_puts.s \
+			ft_cat.s \
 
 AS_FILES = $(addprefix $(SRC_FOLDER), $(_AS_FILES))
 
