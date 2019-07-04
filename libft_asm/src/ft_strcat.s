@@ -1,8 +1,7 @@
 
 section .text
 	global _ft_strcat
-	; extern _ft_strlen
-	extern _strlen
+	extern _ft_strlen
 	extern _printf
 
 _ft_strcat:
@@ -22,7 +21,7 @@ _ft_strcat:
 	mov		[rsp + 16], rdi
 	mov		[rsp + 24], rsi
 	mov		rdi, rsi
-	call	_strlen
+	call	_ft_strlen
 
 	mov		rcx, rax
 	mov		rdi, [rsp + 16]

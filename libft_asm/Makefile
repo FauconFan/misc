@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/02 07:21:09 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/04 12:19:08 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,14 @@ AS_FLAG = -g -f macho64
 AR_FLAG = -rc
 
 SRC_FOLDER = src/
+INC_FOLDER = inc/
+
+INC_FLAGS = $(foreach dir, $(INC_FOLDER), -I $(dir))
 
 _AS_FILES = \
 			ft_bzero.s \
+			ft_memset.s \
+			ft_memcpy.s \
 			ft_isalpha.s \
 			ft_isdigit.s \
 			ft_isalnum.s \
@@ -42,10 +47,13 @@ _AS_FILES = \
 			ft_toupper.s \
 			ft_tolower.s \
 			ft_strcat.s \
-			ft_puts.s \
 			ft_strlen.s \
+			ft_strdup.s \
+			ft_puts.s \
 
 AS_FILES = $(addprefix $(SRC_FOLDER), $(_AS_FILES))
+
+TEST = test
 
 OBJ = $(AS_FILES:%.s=%.o)
 
@@ -62,7 +70,7 @@ $(NAME): $(OBJ)
 
 %.o: %.s
 	@ printf "\\t%sAS%s\\t" "$(_GREEN)" "$(_END)"
-	@ $(AS) $(AS_FLAG) $< -o $@
+	@ $(AS) $(AS_FLAG) $(INC_FLAGS) $< -o $@
 	@ printf "%s\\n" "$<"
 
 .PHONY: clean
@@ -73,7 +81,9 @@ clean:
 .PHONY: fclean
 fclean: clean
 	@ rm -rf $(NAME)
-	@ echo "Executable $(NAME) removed"
+	@ echo "Library $(NAME) removed"
+	@ rm -rf $(TEST)
+	@ echo "Executable $(TEST) removed"
 
 .PHONY: re
 re:
@@ -82,7 +92,7 @@ re:
 
 ##################################### TEST ####################################
 
-.PHONY: test
-test: $(NAME)
-	@ gcc tests/main.c -o $@ -L. -lfts -I inc 
+.PHONY: $(TEST)
+$(TEST): $(NAME)
+	@ gcc -g test_main.c -o $@ -L. -lfts -I inc 
 	@ ./$@

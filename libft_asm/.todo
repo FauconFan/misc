@@ -1,0 +1,23 @@
+
+core:
+	✔ bzero @done(19-07-04 12:13)
+	✔ strcat @done(19-07-04 12:13)
+	✔ isalpha @done(19-07-04 12:13)
+	✔ isdigit @done(19-07-04 12:13)
+	✔ isalnum @done(19-07-04 12:13)
+	✔ isascii @done(19-07-04 12:13)
+	✔ isprint @done(19-07-04 12:13)
+	✔ toupper @done(19-07-04 12:13)
+	✔ tolower @done(19-07-04 12:13)
+	✔ puts @done(19-07-04 12:13)
+
+	✔ strlen @done(19-07-04 12:13)
+	✔ memset @done(19-07-04 12:13)
+	✔ memcpy @done(19-07-04 12:13)
+	✔ strdup @done(19-07-04 16:30)
+
+	☐ ft_cat
+
+bonus:
+	☐ isupper
+	☐ islower

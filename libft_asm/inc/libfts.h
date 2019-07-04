@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:05:29 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/02 10:55:07 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/04 13:42:39 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <string.h>
 
 void	ft_bzero(void *v, size_t n);
+void	ft_memset(void *v, int c, size_t n);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -27,10 +29,10 @@ int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 
-char	*ft_strcat(char *s1, char *s2);
+size_t	ft_strlen(const char *string);
+char	*ft_strcat(char *s1, const char *s2);
+char	*ft_strdup(const char *s);
 
 int		ft_puts(const char *string);
-
-size_t	ft_strlen(const char *string);
 
 #endif

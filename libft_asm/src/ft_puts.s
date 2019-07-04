@@ -1,6 +1,4 @@
-%define SYS_MACHO(nb)		0x2000000 | nb
-%define SYS_WRITE			SYS_MACHO(4)
-%define STDOUT				1
+%include "sys.s"
 
 section .data
 	nl:			db 10
@@ -14,12 +12,12 @@ _ft_puts:
 	mov		rbp, rsp
 	sub		rsp, 16
 
-	mov		[rbp - 8], rdi ;saving pointer
+	mov		[rsp + 8], rdi ;saving pointer
 	
 	call	_ft_strlen
 
 	mov		rdi, STDOUT
-	mov		rsi, [rbp - 8]
+	mov		rsi, [rsp + 8]
 	mov		rdx, rax
 	mov		rax, SYS_WRITE
 	syscall ; printing given string
