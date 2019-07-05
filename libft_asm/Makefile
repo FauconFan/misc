@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/04 17:17:09 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/05 09:34:51 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ AR = ar
 AS = nasm
 RANLIB = ranlib
 
-AS_FLAG = -g -f macho64
+AS_FLAG = -f macho64
 AR_FLAG = -rc
 
 SRC_FOLDER = src/
@@ -57,6 +57,7 @@ _AS_FILES = \
 AS_FILES = $(addprefix $(SRC_FOLDER), $(_AS_FILES))
 
 TEST = test
+CAT = ft_cat
 
 OBJ = $(AS_FILES:%.s=%.o)
 
@@ -87,6 +88,8 @@ fclean: clean
 	@ echo "Library $(NAME) removed"
 	@ rm -rf $(TEST)
 	@ echo "Executable $(TEST) removed"
+	@ rm -rf $(CAT)
+	@ echo "Executable $(CAT) removed"
 
 .PHONY: re
 re:
@@ -97,5 +100,15 @@ re:
 
 .PHONY: $(TEST)
 $(TEST): $(NAME)
-	@ gcc -g test_main.c -o $@ -L. -lfts -I inc 
-	@ ./$@
+	@ printf "\\tProgram %s%s%s compiled\\n" "$(_PURPLE)" "$@" "$(_END)"
+	@ gcc tests/main.c -o $@ -L. -lfts -I inc
+
+##################################### CAT #####################################
+
+.PHONY: $(CAT)
+$(CAT): $(NAME)
+	@ printf "\\tProgram %s%s%s compiled\\n" "$(_PURPLE)" "$@" "$(_END)"
+	@ gcc tests/cat.c -o $@ -L. -lfts -I inc
+
+.PHONY: cat
+cat: $(CAT)

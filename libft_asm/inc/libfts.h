@@ -6,12 +6,12 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:05:29 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/04 17:14:12 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/05 09:29:24 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef LIBFTS_H
+# define LIBFTS_H
 
 # include <string.h>
 
