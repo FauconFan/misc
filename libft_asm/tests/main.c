@@ -79,7 +79,7 @@ static void	test_memcpy(void)
 #define	TEST_CHAR_FUNC(name) \
 	static void test_ ## name (void) { \
 		for (int c = 0; c < 256; ++c) \
-			assert(ft_ ## name (c) == name (c));\
+			assert((ft_ ## name (c) != 0) == (name (c) != 0));\
 	} \
 
 TEST_CHAR_FUNC(isalnum)
