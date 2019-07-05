@@ -1,3 +1,4 @@
+
 %include "sys.s"
 
 section .data
@@ -10,10 +11,10 @@ nl:
 	.len			equ $ - nl.string
 
 section .text
-	global _ft_puts
-	extern _ft_strlen
+	global ft_puts
+	extern ft_strlen
 
-_ft_puts:
+ft_puts:
 		push	rbp
 		mov		rbp, rsp
 		sub		rsp, 16
@@ -29,7 +30,7 @@ _ft_puts:
 	normal:
 		mov		[rsp + 0], rdi
 
-		call	_ft_strlen
+		call	ft_strlen
 		mov		rsi, [rsp + 0]
 		mov		rdx, rax
 

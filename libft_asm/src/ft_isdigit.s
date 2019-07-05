@@ -1,8 +1,8 @@
 
 section .text
-	global _ft_isdigit
+	global ft_isdigit
 
-_ft_isdigit:
+ft_isdigit:
 		mov		eax, 0
 		cmp		edi, `0`
 		jl		end

@@ -1,3 +1,4 @@
+
 %include "sys.s"
 %define BUFF_SIZE	1024 * 4
 
@@ -5,9 +6,9 @@ section .bss
 	buffer:	resb BUFF_SIZE
 
 section .text
-	global _ft_cat
+	global ft_cat
 
-_ft_cat:
+ft_cat:
 		push	rbp
 		mov		rbp, rsp
 		sub		rsp, 16

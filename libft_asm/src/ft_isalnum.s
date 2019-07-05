@@ -1,15 +1,15 @@
 
 section .text
-	global _ft_isalnum
-	extern _ft_isdigit
-	extern _ft_isalpha
+	global ft_isalnum
+	extern ft_isdigit
+	extern ft_isalpha
 
-_ft_isalnum:
-		call	_ft_isalpha
+ft_isalnum:
+		call	ft_isalpha
 		cmp		eax, 1
 		je		end
 
-		call	_ft_isdigit
+		call	ft_isdigit
 
 	end:
 		ret

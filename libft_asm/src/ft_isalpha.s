@@ -1,15 +1,15 @@
 
 section .text
-	global _ft_isalpha
-	extern _ft_isupper
-	extern _ft_islower
+	global ft_isalpha
+	extern ft_isupper
+	extern ft_islower
 
-_ft_isalpha:
-		call	_ft_isupper
+ft_isalpha:
+		call	ft_isupper
 		cmp		eax, 1
 		je		end
 
-		call	_ft_islower
+		call	ft_islower
 
 	end:
 		ret

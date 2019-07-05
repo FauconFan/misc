@@ -1,10 +1,9 @@
 
 section .text
-	global _ft_strcat
-	extern _ft_strlen
-	extern _printf
+	global ft_strcat
+	extern ft_strlen
 
-_ft_strcat:
+ft_strcat:
 		push	rbp
 		mov		rbp, rsp
 		sub		rsp, 32
@@ -21,7 +20,7 @@ _ft_strcat:
 		mov		[rsp + 16], rdi
 		mov		[rsp + 24], rsi
 		mov		rdi, rsi
-		call	_ft_strlen
+		call	ft_strlen
 
 		mov		rcx, rax
 		mov		rdi, [rsp + 16]

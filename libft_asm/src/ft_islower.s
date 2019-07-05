@@ -1,8 +1,8 @@
 
 section .text
-	global _ft_islower
+	global ft_islower
 
-_ft_islower:
+ft_islower:
 		mov		eax, 0
 		cmp		edi, `a`
 		jl		end

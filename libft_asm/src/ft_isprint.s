@@ -1,8 +1,8 @@
 
 section .text
-	global _ft_isprint
+	global ft_isprint
 
-_ft_isprint:
+ft_isprint:
 		mov		eax, 0
 		cmp		edi, ` `
 		jl		end

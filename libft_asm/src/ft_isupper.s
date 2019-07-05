@@ -1,8 +1,8 @@
 
 section .text
-	global _ft_isupper
+	global ft_isupper
 
-_ft_isupper:
+ft_isupper:
 		mov		eax, 0
 		cmp		edi, `A`
 		jl		end

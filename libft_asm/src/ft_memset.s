@@ -1,8 +1,8 @@
 
 section .text
-	global _ft_memset
+	global ft_memset
 
-_ft_memset:
+ft_memset:
 		mov		rcx, rdx
 		mov		rax, rsi
 

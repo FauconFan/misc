@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/05 09:34:51 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/05 11:14:51 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,12 @@ AR = ar
 AS = nasm
 RANLIB = ranlib
 
-AS_FLAG = -f macho64
+ifeq ($(shell uname -s), Darwin)
+	AS_FLAG = -f macho64 --prefix _
+else
+	AS_FLAG = -f elf64
+endif
+
 AR_FLAG = -rc
 
 SRC_FOLDER = src/

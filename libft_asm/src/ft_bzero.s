@@ -1,15 +1,15 @@
 
 section .text
-	global _ft_bzero
-	extern _ft_memset
+	global ft_bzero
+	extern ft_memset
 
-_ft_bzero:
+ft_bzero:
 		mov		rdx, rsi
 		mov		rsi, 0
-		call	_ft_memset
+		call	ft_memset
 		ret
 
-; _ft_bzero:
+; ft_bzero:
 ; loop:
 ; 	cmp		rsi, 0
 ; 	je		end

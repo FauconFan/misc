@@ -1,8 +1,8 @@
 
 section .text
-	global _ft_memcpy
+	global ft_memcpy
 
-_ft_memcpy:
+ft_memcpy:
 		push	rbp
 		mov		rbp, rsp
 		sub		rsp, 16
