@@ -2,7 +2,7 @@ sudo : true
 language : java
 
 install:
-  - curl https://ayera.dl.sourceforge.net/project/jflex/jflex/1.6.1/jflex-1.6.1.tar.gz --output jflex-1.6.1.tar.gz
+  - curl https://master.dl.sourceforge.net/project/jflex/jflex/1.6.1/jflex-1.6.1.tar.gz --output jflex-1.6.1.tar.gz
   - echo "921496537b70f80cdd7037087a34766c3e4adbf5  jflex-1.6.1.tar.gz" | sha1sum -c
   - sudo tar -C /usr/share -xvzf jflex-1.6.1.tar.gz
   - sudo ln -s /usr/share/jflex-1.6.1/bin/jflex /usr/bin/jflex
