@@ -1,20 +1,20 @@
 #include <stdio.h>
 
 /*
-   Returns the code of the current program.
+	Returns the code of the current program.
 */
-char *get_str()
+char	*get_str(void)
 {
-  return "#include <stdio.h>%c%c/*%c   Returns the code of the current program.%c*/%cchar *get_str()%c{%c  return %c%s%c;%c}%c%cint main()%c{%c  /*%c     Get the code of the current program.%c  */%c  char *s = get_str();%c%c  printf(s,10,10,10,10,10,10,10,34,s,34,10,10,10,10,10,10,10,10,10,10,10,10,10);%c  return (0);%c}%c";
+	return ("#include <stdio.h>%3$c%3$c/*%3$c%2$cReturns the code of the current program.%3$c*/%3$cchar%2$c*get_str(void)%3$c{%3$c%2$creturn (%4$c%1$s%4$c);%3$c}%3$c%3$cint%2$c%2$cmain(void)%3$c{%3$c%2$c/*%3$c%2$c%2$cGet the code of the current program.%3$c%2$c*/%3$c%2$cchar *s = get_str();%3$c%3$c%2$cprintf(s, s, 9, 10, 34);%3$c%2$creturn (0);%3$c}%3$c");
 }
 
-int main()
+int		main(void)
 {
-  /*
-     Get the code of the current program.
-  */
-  char *s = get_str();
+	/*
+		Get the code of the current program.
+	*/
+	char *s = get_str();
 
-  printf(s,10,10,10,10,10,10,10,34,s,34,10,10,10,10,10,10,10,10,10,10,10,10,10);
-  return (0);
+	printf(s, s, 9, 10, 34);
+	return (0);
 }

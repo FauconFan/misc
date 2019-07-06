@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pepe <pepe@student.42.fr>                  +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/27 09:05:22 by pepe              #+#    #+#              #
-#    Updated: 2018/09/27 16:25:00 by pepe             ###   ########.fr        #
+#    Updated: 2019/07/06 13:08:15 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ OBJ = $(FILE:%.c=%.o)
 
 CC = gcc
 
+.PHONY: all
 all: $(NAME)
 
 $(NAME): $(OBJ)
@@ -26,19 +27,21 @@ $(NAME): $(OBJ)
 %.o: %.c
 	$(CC) -c $? -o $@
 
+.PHONY: clean
 clean:
 	rm -rf $(OBJ)
 
+.PHONY: fclean
 fclean: clean
 	rm -rf $(NAME)
 	rm -rf $(KID)
 
+.PHONY: re
 re: fclean all
 
-testquine: all
+.PHONY: testquine
+testquine: $(NAME)
+	rm -rf $(KID)
 	./$(NAME)
-	cat $(KID)
 	diff $(FILE) $(KID)
 	rm -rf $(KID)
-
-.PHONY: all clean fclean re testquine

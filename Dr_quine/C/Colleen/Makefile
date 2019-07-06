@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pepe <pepe@student.42.fr>                  +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/27 09:05:22 by pepe              #+#    #+#              #
-#    Updated: 2018/09/27 16:25:07 by pepe             ###   ########.fr        #
+#    Updated: 2019/07/06 13:31:07 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ OBJ = $(FILE:%.c=%.o)
 
 CC = gcc
 
+.PHONY: all
 all: $(NAME)
 
 $(NAME): $(OBJ)
@@ -25,17 +26,17 @@ $(NAME): $(OBJ)
 %.o: %.c
 	$(CC) -c $? -o $@
 
+.PHONY: clean
 clean:
 	rm -rf $(OBJ)
 
+.PHONY: fclean
 fclean: clean
 	rm -rf $(NAME)
 
+.PHONY: re
 re: fclean all
 
-testquine: all
-	./$(NAME) | tee diff1
-	diff diff1 $(FILE) || true
-	rm diff1
-
-.PHONY: all clean fclean re testquine
+.PHONY: testquine
+testquine: $(NAME)
+	bash -c 'diff $(FILE) <(./$(NAME))'
