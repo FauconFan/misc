@@ -5,10 +5,10 @@ section .text
 ft_islower:
 		mov		eax, 0
 		cmp		edi, `a`
-		jl		end
+		jl		.end
 		cmp		edi, `z`
-		jg		end
+		jg		.end
 		mov		eax, 1
 
-	end:
+	.end:
 		ret

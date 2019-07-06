@@ -20,27 +20,27 @@ ft_puts:
 		sub		rsp, 16
 
 		cmp		rdi, 0
-		jnz		normal
+		jnz		.normal
 
-	null:
+	.null:
 		lea		rsi, [rel null_st.string]
 		mov		rdx, null_st.len
-		jmp		print
+		jmp		.print
 
-	normal:
+	.normal:
 		mov		[rsp + 0], rdi
 
 		call	ft_strlen
 		mov		rsi, [rsp + 0]
 		mov		rdx, rax
 
-	print:
+	.print:
 		mov		rdi, STDOUT
 		mov		rax, SYS_WRITE
 		syscall ; printing given string
 
 		cmp		rax, 0
-		jl		bad_end
+		jl		.bad_end
 
 		mov		rdi, STDOUT
 		lea		rsi, [rel nl.string]
@@ -49,15 +49,15 @@ ft_puts:
 		syscall ; print new line
 
 		cmp		rax, 0
-		jl		bad_end
+		jl		.bad_end
 
 		mov		rax, 10
-		jmp		end
+		jmp		.end
 
-	bad_end:
+	.bad_end:
 		mov		rax, 0
 
-	end:
+	.end:
 		mov		rsp, rbp
 		pop		rbp
 		ret

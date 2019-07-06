@@ -5,10 +5,10 @@ section .text
 ft_isascii:
 		mov		eax, 0
 		cmp		edi, 0
-		jl		end
+		jl		.end
 		cmp		edi, 127
-		jg		end
+		jg		.end
 		mov		eax, 1
 
-	end:
+	.end:
 		ret

@@ -7,9 +7,9 @@ section .text
 ft_isalnum:
 		call	ft_isalpha
 		cmp		eax, 1
-		je		end
+		je		.end
 
 		call	ft_isdigit
 
-	end:
+	.end:
 		ret

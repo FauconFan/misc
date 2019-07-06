@@ -5,11 +5,11 @@ section .text
 ft_tolower:
 		mov		eax, edi
 		cmp		edi, `A`
-		jl		end
+		jl		.end
 		cmp		edi, `Z`
-		jg		end
+		jg		.end
 		add		eax, `a`
 		sub		eax, `A`
 
-	end:
+	.end:
 		ret

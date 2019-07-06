@@ -10,31 +10,28 @@ section .text
 ft_strdup:
 		push	rbp
 		mov		rbp, rsp
-		sub		rsp, 32
+		sub		rsp, 16
 
-		mov		[rsp + 16], rdi
-		
+		mov		[rsp + 8], rdi
+
 		call	ft_strlen
 		inc		rax
-		mov		[rsp + 24], rax
 		mov		[rsp + 0], rax
 		call	malloc
 		test	rax, rax
-		je		fail
-		mov		[rsp + 8], rax
+		je		.fail
 
 		mov		rdi, rax
-		mov		rsi, [rsp + 16]
-		mov		rdx, [rsp + 24]
+		mov		rsi, [rsp + 8]
+		mov		rdx, [rsp + 0]
 		call	ft_memcpy
 
-		mov		rax, [rsp + 8]
-		jmp		end
+		jmp		.end
 
-	fail:
+	.fail:
 		mov		rax, 0
 
-	end:
+	.end:
 		mov		rsp, rbp
 		pop		rbp
 		ret

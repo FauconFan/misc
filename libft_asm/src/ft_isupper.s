@@ -5,10 +5,10 @@ section .text
 ft_isupper:
 		mov		eax, 0
 		cmp		edi, `A`
-		jl		end
+		jl		.end
 		cmp		edi, `Z`
-		jg		end
+		jg		.end
 		mov		eax, 1
 
-	end:
+	.end:
 		ret

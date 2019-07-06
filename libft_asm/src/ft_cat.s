@@ -15,27 +15,27 @@ ft_cat:
 
 		mov		[rsp + 0], rdi
 
-	read:
+	.read:
 		mov		rdi, [rsp + 0]
 		lea		rsi, [rel buffer]
 		mov		rdx, BUFF_SIZE
 		mov		rax, SYS_READ
 		syscall
-		jc		end
+		jc		.end
 		cmp		rax, 0
-		je		end
+		je		.end
 
-	write:
+	.write:
 		mov		rdi, STDOUT
 		lea		rsi, [rel buffer]
 		mov		rdx, rax
 		mov		rax, SYS_WRITE
 		syscall
 		cmp		rax, 0
-		jl		end
-		jmp		read
+		jl		.end
+		jmp		.read
 
-	end:
+	.end:
 		mov		rsp, rbp
 		pop		rbp
 		ret

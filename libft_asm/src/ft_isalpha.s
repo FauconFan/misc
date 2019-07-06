@@ -7,9 +7,9 @@ section .text
 ft_isalpha:
 		call	ft_isupper
 		cmp		eax, 1
-		je		end
+		je		.end
 
 		call	ft_islower
 
-	end:
+	.end:
 		ret

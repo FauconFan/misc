@@ -5,10 +5,10 @@ section .text
 ft_isprint:
 		mov		eax, 0
 		cmp		edi, ` `
-		jl		end
+		jl		.end
 		cmp		edi, `~`
-		jg		end
+		jg		.end
 		mov		eax, 1
 
-	end:
+	.end:
 		ret
