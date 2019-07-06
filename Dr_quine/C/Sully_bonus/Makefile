@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pepe <pepe@student.42.fr>                  +#+  +:+       +#+         #
+#    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/27 09:05:22 by pepe              #+#    #+#              #
-#    Updated: 2018/09/27 17:39:19 by pepe             ###   ########.fr        #
+#    Updated: 2019/07/06 14:27:16 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,9 @@ FILE := Sully.c
 
 OBJ = $(FILE:%.c=%.o)
 
-CC = gcc -g
+CC = gcc
 
+.PHONY: all
 all: $(NAME)
 
 $(NAME): $(OBJ)
@@ -25,17 +26,23 @@ $(NAME): $(OBJ)
 %.o: %.c
 	$(CC) -c $? -o $@
 
+.PHONY: clean
 clean:
 	rm -rf $(OBJ)
 
+.PHONY: fclean
 fclean: clean
 	rm -rf $(NAME)
 	rm -rf $(NAME)_*
 
+.PHONY: re
 re: fclean all
 
-testquine: all
-	./$(NAME)
-	cat $(Sully:%.c=%_5.c)
-
-.PHONY: all clean fclean re
+.PHONY: testsully
+testsully: $(NAME)
+	rm -rf testsully
+	mkdir -p testsully
+	cp $(NAME) testsully/$(NAME)
+	(cd testsully && ./$(NAME) 20)
+	ls -1 testsully | wc -l
+	rm -rf testsully
