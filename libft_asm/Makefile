@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/22 17:46:49 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/22 18:15:09 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,10 @@ _AS_FILES = \
 			str/ft_strcmp.s \
 			str/ft_strncmp.s \
 			str/ft_strequ.s \
+			ft_getrandom.s \
 			ft_cat.s \
 			ft_puts.s \
+			ft_abs.s \
 
 AS_FILES = $(addprefix $(SRC_FOLDER), $(_AS_FILES))
 

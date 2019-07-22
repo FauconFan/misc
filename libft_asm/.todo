@@ -21,11 +21,10 @@ core:
 bonus:
 	✔ isupper @done(19-07-04 16:36)
 	✔ islower @done(19-07-04 16:36)
-	☐ rand
-	☐ getrandom
+	✔ getrandom @done(19-07-22 18:22)
 	✔ memchr @done(19-07-22 16:00)
 	✔ memcmp @done(19-07-22 17:01)
 	✔ strcmp @done(19-07-22 17:40)
 	✔ strncmp @done(19-07-22 17:40)
 	✔ strequ @done(19-07-22 17:49)
-	☐ abs
+	✔ abs @done(19-07-22 18:07)

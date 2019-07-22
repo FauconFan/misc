@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:07:20 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/22 17:48:27 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/22 18:18:21 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,34 @@ static void test_cat(void)
 	// ft_cat(0); use ft_cat instead
 }
 
+static void test_abs(void)
+{
+	assert(ft_abs(1024) == 1024);
+	assert(ft_abs(2) == 2);
+	assert(ft_abs(1) == 1);
+	assert(ft_abs(0) == 0);
+	assert(ft_abs(-1) == 1);
+	assert(ft_abs(-2) == 2);
+	assert(ft_abs(-1024) == 1024);
+}
+
+static void test_getrandom(void)
+{
+	char		buff[10] = {0};
+
+	printf("Verify that the following looks random\n");
+	for (size_t i = 0; i < 5; ++i)
+	{
+		ft_getrandom(buff, 10);
+		for (size_t j = 0; j < sizeof(buff); ++j)
+		{
+			if (j != 0) printf(" ");
+			printf("%02x", buff[j] & 0xFF);
+		}
+		printf("\n");
+	}
+}
+
 #define DO_TEST(s)	ft_puts("==== TEST " # s ); test_ ## s ();
 
 int			main(void)
@@ -255,4 +283,6 @@ int			main(void)
 	DO_TEST(strequ);
 	DO_TEST(tputs);
 	DO_TEST(cat);
+	DO_TEST(abs);
+	DO_TEST(getrandom);
 }
