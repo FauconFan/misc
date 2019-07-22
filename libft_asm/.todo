@@ -24,7 +24,8 @@ bonus:
 	☐ rand
 	☐ getrandom
 	✔ memchr @done(19-07-22 16:00)
-	☐ strcmp
-	☐ strncmp
-	☐ strequ
+	✔ memcmp @done(19-07-22 17:01)
+	✔ strcmp @done(19-07-22 17:40)
+	✔ strncmp @done(19-07-22 17:40)
+	✔ strequ @done(19-07-22 17:49)
 	☐ abs

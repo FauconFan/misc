@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:07:20 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/22 16:00:10 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/22 17:48:27 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,20 @@ static void	test_memcpy(void)
 	}
 }
 
+static void	test_memcmp(void)
+{
+	unsigned char		addr1[256];
+	unsigned char		addr2[256];
+
+	for (size_t i = 0; i < 256; ++i)
+	{
+		addr1[i] = i;
+		addr2[i] = (i < 128) ? i : 0;
+	}
+	assert(ft_memcmp(addr1, addr2, 128) == 0);
+	assert(ft_memcmp(addr1, addr2, 129) == 128);
+}
+
 #define	TEST_CHAR_FUNC(name) \
 	static void test_ ## name (void) { \
 		for (int c = 0; c < 256; ++c) \
@@ -156,6 +170,41 @@ static void test_strdup(void)
 	TEST_STRDUP("abcdefghijklmnopqrstuvwxyz");
 }
 
+static void test_strcmp(void)
+{
+	assert(ft_strcmp("coucou", "coucou") == 0);
+	assert(ft_strcmp("", "") == 0);
+	assert(ft_strcmp("bouah", "bouah") == 0);
+	assert(ft_strcmp("bouaha", "bouah") == 'a');
+	assert(ft_strcmp("bouah", "bouaha") == - 'a');
+	assert(ft_strcmp("0", "") == '0');
+	assert(ft_strcmp("", "0") == - '0');
+	assert(ft_strcmp("4", "") == '4');
+	assert(ft_strcmp("", "4") == - '4');
+	assert(ft_strcmp("2", "") == '2');
+	assert(ft_strcmp("", "2") == - '2');
+}
+
+static void test_strncmp(void)
+{
+	assert(ft_strncmp("bonjour", "bonsoir", 0) == 0);
+	assert(ft_strncmp("bonjour", "bonsoir", 1) == 0);
+	assert(ft_strncmp("bonjour", "bonsoir", 2) == 0);
+	assert(ft_strncmp("bonjour", "bonsoir", 3) == 0);
+	assert(ft_strncmp("bonjour", "bonsoir", 4) == 'j' - 's');
+	assert(ft_strncmp("bonriendutout", "bonsoir", 4) == 'r' - 's');
+	assert(ft_strncmp("bonriendutout", "bonbon", 4) == 'r' - 'b');
+	assert(ft_strncmp("bonobo", "bonbon", 4) == 'o' - 'b');
+}
+
+static void test_strequ(void)
+{
+	assert(ft_strequ("coucou", "coucou") != 0);
+	assert(ft_strequ("coucou", "coucou2") == 0);
+	assert(ft_strequ("bonbon", "bonbon") != 0);
+	assert(ft_strequ("bonbon", "bonbon2") == 0);
+}
+
 static void	test_tputs(void)
 {
 	ft_puts(NULL);
@@ -177,7 +226,7 @@ static void test_cat(void)
 	TEST_CAT("invalid file")
 	TEST_CAT(".todo")
 	TEST_CAT("auteur");
-	ft_cat(0);
+	// ft_cat(0); use ft_cat instead
 }
 
 #define DO_TEST(s)	ft_puts("==== TEST " # s ); test_ ## s ();
@@ -188,6 +237,7 @@ int			main(void)
 	DO_TEST(memchr);
 	DO_TEST(memset);
 	DO_TEST(memcpy);
+	DO_TEST(memcmp);
 	DO_TEST(isalnum);
 	DO_TEST(isdigit);
 	DO_TEST(isalpha);
@@ -200,6 +250,9 @@ int			main(void)
 	DO_TEST(strlen);
 	DO_TEST(strcat);
 	DO_TEST(strdup);
+	DO_TEST(strcmp);
+	DO_TEST(strncmp);
+	DO_TEST(strequ);
 	DO_TEST(tputs);
 	DO_TEST(cat);
 }
