@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/22 08:09:05 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/22 15:34:39 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,23 +41,23 @@ INC_FOLDER = inc/
 INC_FLAGS = $(foreach dir, $(INC_FOLDER), -I $(dir))
 
 _AS_FILES = \
-			ft_bzero.s \
-			ft_memset.s \
-			ft_memcpy.s \
-			ft_isalpha.s \
-			ft_isupper.s \
-			ft_islower.s \
-			ft_isdigit.s \
-			ft_isalnum.s \
-			ft_isascii.s \
-			ft_isprint.s \
-			ft_toupper.s \
-			ft_tolower.s \
-			ft_strcat.s \
-			ft_strlen.s \
-			ft_strdup.s \
-			ft_puts.s \
+			ctype/ft_isalnum.s \
+			ctype/ft_isalpha.s \
+			ctype/ft_isascii.s \
+			ctype/ft_isdigit.s \
+			ctype/ft_islower.s \
+			ctype/ft_isprint.s \
+			ctype/ft_isupper.s \
+			ctype/ft_tolower.s \
+			ctype/ft_toupper.s \
+			mem/ft_bzero.s \
+			mem/ft_memcpy.s \
+			mem/ft_memset.s \
+			str/ft_strcat.s \
+			str/ft_strdup.s \
+			str/ft_strlen.s \
 			ft_cat.s \
+			ft_puts.s \
 
 AS_FILES = $(addprefix $(SRC_FOLDER), $(_AS_FILES))
 
