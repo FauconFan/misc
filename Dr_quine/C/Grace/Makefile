@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/27 09:05:22 by pepe              #+#    #+#              #
-#    Updated: 2019/07/22 18:41:13 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/22 19:21:14 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,8 @@ fclean: clean
 .PHONY: re
 re: fclean all
 
-.PHONY: testquine
-testquine: $(NAME)
+.PHONY: test
+test: $(NAME)
 	rm -rf $(KID)
 	./$(NAME)
 	diff $(FILE) $(KID)

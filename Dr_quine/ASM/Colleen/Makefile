@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 14:30:24 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/22 18:40:53 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/22 19:21:43 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,6 @@ fclean: clean
 .PHONY: re
 re: fclean all
 
-.PHONY: testquine
-testquine: $(NAME)
+.PHONY: test
+test: $(NAME)
 	bash -c 'diff $(FILE) <(./$(NAME))'
