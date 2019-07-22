@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/22 15:34:39 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/22 15:42:37 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ _AS_FILES = \
 			ctype/ft_tolower.s \
 			ctype/ft_toupper.s \
 			mem/ft_bzero.s \
+			mem/ft_memchr.s \
 			mem/ft_memcpy.s \
 			mem/ft_memset.s \
 			str/ft_strcat.s \

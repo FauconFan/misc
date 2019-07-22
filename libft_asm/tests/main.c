@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:07:20 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/05 09:32:46 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/22 16:00:10 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ static void	test_bzero(void)
 	ft_bzero(addr, 256);
 	for (size_t i = 0; i < 256; ++i)
 		assert(addr[i] == 0);
+}
+
+static void test_memchr(void)
+{
+	unsigned char		addr[128];
+
+	for (size_t i = 0; i < 128; ++i)
+		addr[i] = i;
+	for (size_t i = 0; i < 128; ++i)
+		assert(ft_memchr(addr, i, 1024 * 1024) == addr + i);
+	for (size_t i = 128; i < 256; ++i)
+		assert(ft_memchr(addr, i, 128) == NULL);
 }
 
 static void	test_memset(void)
@@ -173,6 +185,7 @@ static void test_cat(void)
 int			main(void)
 {
 	DO_TEST(bzero);
+	DO_TEST(memchr);
 	DO_TEST(memset);
 	DO_TEST(memcpy);
 	DO_TEST(isalnum);

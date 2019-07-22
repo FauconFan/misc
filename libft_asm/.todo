@@ -23,7 +23,7 @@ bonus:
 	✔ islower @done(19-07-04 16:36)
 	☐ rand
 	☐ getrandom
-	☐ memchr
+	✔ memchr @done(19-07-22 16:00)
 	☐ strcmp
 	☐ strncmp
 	☐ strequ
