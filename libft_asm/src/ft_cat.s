@@ -8,6 +8,8 @@ section .bss
 section .text
 	global ft_cat
 
+;;	void	ft_cat(int fd);
+
 ft_cat:
 		push	rbp
 		mov		rbp, rsp

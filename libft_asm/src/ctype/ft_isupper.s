@@ -2,6 +2,8 @@
 section .text
 	global ft_isupper
 
+;;	int		ft_isupper(int c);
+
 ft_isupper:
 		mov		eax, 0
 		cmp		edi, `A`

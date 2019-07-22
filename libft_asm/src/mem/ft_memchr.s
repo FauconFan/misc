@@ -2,6 +2,8 @@
 section .text
 	global ft_memchr
 
+;;	void	*ft_memchr(const void *s, int c, size_t n);
+
 ft_memchr:
 		mov		rbx, rdi
 		mov		ecx, edx

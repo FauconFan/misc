@@ -3,6 +3,8 @@ section .text
 	global ft_strcat
 	extern ft_strlen
 
+;;	char	*ft_strcat(char *s1, const char *s2);
+
 ft_strcat:
 		push	rbp
 		mov		rbp, rsp

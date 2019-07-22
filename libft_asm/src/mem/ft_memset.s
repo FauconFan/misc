@@ -2,6 +2,8 @@
 section .text
 	global ft_memset
 
+;;	void	ft_memset(void *v, int c, size_t n);
+
 ft_memset:
 		push	rbp
 		mov		rbp, rsp

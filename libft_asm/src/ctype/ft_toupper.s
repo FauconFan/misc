@@ -2,6 +2,8 @@
 section .text
 	global ft_toupper
 
+;;	int		ft_toupper(int c);
+
 ft_toupper:
 		mov		eax, edi
 		cmp		edi, `a`

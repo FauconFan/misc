@@ -2,6 +2,8 @@
 section .text
 	global ft_isascii
 
+;;	int		ft_isascii(int c);
+
 ft_isascii:
 		mov		eax, 0
 		cmp		edi, 0

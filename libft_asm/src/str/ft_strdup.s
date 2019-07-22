@@ -7,6 +7,8 @@ section .text
 	extern ft_strlen
 	extern ft_memcpy
 
+;;	char	*ft_strdup(const char *s);
+
 ft_strdup:
 		push	rbp
 		mov		rbp, rsp

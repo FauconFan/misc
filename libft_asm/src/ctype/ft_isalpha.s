@@ -4,6 +4,8 @@ section .text
 	extern ft_isupper
 	extern ft_islower
 
+;;	int		ft_isalpha(int c);
+
 ft_isalpha:
 		call	ft_isupper
 		cmp		eax, 1

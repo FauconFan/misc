@@ -14,6 +14,8 @@ section .text
 	global ft_puts
 	extern ft_strlen
 
+;;	int		ft_puts(const char *string);
+
 ft_puts:
 		push	rbp
 		mov		rbp, rsp

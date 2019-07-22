@@ -2,6 +2,8 @@
 section .text
 	global ft_memcpy
 
+;;	void	*ft_memcpy(void *dst, const void *src, size_t n);
+
 ft_memcpy:
 		push	rbp
 		mov		rbp, rsp

@@ -2,6 +2,8 @@
 section .text
 	global ft_tolower
 
+;;	int		ft_tolower(int c);
+
 ft_tolower:
 		mov		eax, edi
 		cmp		edi, `A`

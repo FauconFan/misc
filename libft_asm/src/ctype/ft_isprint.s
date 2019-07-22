@@ -2,6 +2,8 @@
 section .text
 	global ft_isprint
 
+;;	int		ft_isprint(int c);
+
 ft_isprint:
 		mov		eax, 0
 		cmp		edi, ` `

@@ -2,6 +2,8 @@
 section .text
 	global ft_isdigit
 
+;;	int		ft_isdigit(int c);
+
 ft_isdigit:
 		mov		eax, 0
 		cmp		edi, `0`
