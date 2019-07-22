@@ -17,6 +17,7 @@ ft_strdup:
 		call	ft_strlen
 		inc		rax
 		mov		[rsp + 0], rax
+		mov		rdi, rax
 		call	malloc
 		test	rax, rax
 		je		.fail
