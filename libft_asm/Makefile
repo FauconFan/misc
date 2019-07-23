@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/22 18:15:09 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/23 08:23:04 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,6 +130,6 @@ cat: $(CAT)
 MMEISSON_REMOTE = https://github.com/mmeisson/tests_libasm
 
 .PHONY: mmeisson
-mmeisson:
+mmeisson: $(NAME)
 	@ test -d $@ || git clone https://github.com/mmeisson/tests_libasm $@
 	@ make -C $@
