@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/23 08:23:04 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/30 16:57:47 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,15 +61,17 @@ _AS_FILES = \
 			str/ft_strcmp.s \
 			str/ft_strncmp.s \
 			str/ft_strequ.s \
-			ft_getrandom.s \
-			ft_cat.s \
-			ft_puts.s \
-			ft_abs.s \
+			other/ft_getrandom.s \
+			other/ft_cat.s \
+			other/ft_puts.s \
+			other/ft_abs.s \
+			other/ft_rc5.s \
 
 AS_FILES = $(addprefix $(SRC_FOLDER), $(_AS_FILES))
 
 TEST = test
 CAT = ft_cat
+RC5 = ft_rc5
 
 OBJ = $(AS_FILES:%.s=%.o)
 
@@ -102,6 +104,8 @@ fclean: clean
 	@ echo "Executable $(TEST) removed"
 	@ rm -rf $(CAT)
 	@ echo "Executable $(CAT) removed"
+	@ rm -rf $(RC5)
+	@ echo "Executable $(RC5) removed"
 
 .PHONY: re
 re:
@@ -117,13 +121,20 @@ $(TEST): $(NAME)
 
 ##################################### CAT #####################################
 
+.PHONY: cat
+cat: $(CAT)
+
 .PHONY: $(CAT)
 $(CAT): $(NAME)
 	@ printf "\\tProgram %s%s%s compiled\\n" "$(_PURPLE)" "$@" "$(_END)"
 	@ gcc tests/cat.c -o $@ -L. -lfts -I inc
 
-.PHONY: cat
-cat: $(CAT)
+##################################### RC5 #####################################
+
+.PHONY: $(RC5)
+$(RC5): $(NAME)
+	@ printf "\\tProgram %s%s%s compiled\\n" "$(_PURPLE)" "$@" "$(_END)"
+	@ gcc tests/rc5.c -o $@ -L. -lfts -I inc
 
 #################################### MMEISSON #################################
 
