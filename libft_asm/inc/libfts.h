@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:05:29 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/30 16:45:23 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/31 09:12:03 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void			ft_getrandom(void *mem, size_t n);
 void			ft_cat(int fd);
 int				ft_puts(const char *string);
 unsigned int	ft_abs(int a);
-void			ft_rc5_encrypt(void *ptr, size_t len, uint8_t key[16], uint32_t nb_rounds);
-void			ft_rc5_decrypt(void *ptr, size_t len, uint8_t key[16], uint32_t nb_rounds);
+void			ft_encrypt(void *ptr, size_t len, uint8_t key[16], uint32_t nb_rounds);
+void			ft_decrypt(void *ptr, size_t len, uint8_t key[16], uint32_t nb_rounds);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/31 08:50:29 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/31 09:46:35 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ AS = nasm
 RANLIB = ranlib
 
 ifeq ($(shell uname -s), Darwin)
-	AS_FLAG = -g -f macho64 --prefix _
+	AS_FLAG = -f macho64 --prefix _
 else
 	AS_FLAG = -f elf64
 endif
@@ -65,13 +65,13 @@ _AS_FILES = \
 			other/ft_cat.s \
 			other/ft_puts.s \
 			other/ft_abs.s \
-			other/ft_rc5.s \
+			other/ft_cipher.s \
 
 AS_FILES = $(addprefix $(SRC_FOLDER), $(_AS_FILES))
 
-TEST = test
+MAIN_TEST = ft_test
 CAT = ft_cat
-RC5 = ft_rc5
+CIPHER = ft_cipher
 
 OBJ = $(AS_FILES:%.s=%.o)
 
@@ -100,12 +100,14 @@ clean:
 fclean: clean
 	@ rm -rf $(NAME)
 	@ echo "Library $(NAME) removed"
-	@ rm -rf $(TEST)
-	@ echo "Executable $(TEST) removed"
+	@ rm -rf $(MAIN_TEST)
+	@ echo "Executable $(MAIN_TEST) removed"
 	@ rm -rf $(CAT)
 	@ echo "Executable $(CAT) removed"
-	@ rm -rf $(RC5)
-	@ echo "Executable $(RC5) removed"
+	@ rm -rf $(CIPHER)
+	@ echo "Executable $(CIPHER) removed"
+	@ rm -rf mmeisson
+	@ echo "Subfolder mmeisson/ removed"
 
 .PHONY: re
 re:
@@ -114,8 +116,13 @@ re:
 
 ##################################### TEST ####################################
 
-.PHONY: $(TEST)
-$(TEST): $(NAME)
+.PHONY: test
+test: $(MAIN_TEST) $(CAT) $(CIPHER)
+
+################################### MAIN_TEST #################################
+
+.PHONY: $(MAIN_TEST)
+$(MAIN_TEST): $(NAME)
 	@ printf "\\tProgram %s%s%s compiled\\n" "$(_PURPLE)" "$@" "$(_END)"
 	@ gcc tests/main.c -o $@ -L. -lfts -I inc
 
@@ -129,12 +136,12 @@ $(CAT): $(NAME)
 	@ printf "\\tProgram %s%s%s compiled\\n" "$(_PURPLE)" "$@" "$(_END)"
 	@ gcc tests/cat.c -o $@ -L. -lfts -I inc
 
-##################################### RC5 #####################################
+################################### CIPHER ####################################
 
-.PHONY: $(RC5)
-$(RC5): $(NAME)
+.PHONY: $(CIPHER)
+$(CIPHER): $(NAME)
 	@ printf "\\tProgram %s%s%s compiled\\n" "$(_PURPLE)" "$@" "$(_END)"
-	@ gcc tests/rc5.c -o $@ -L. -lfts -I inc
+	@ gcc tests/CIPHER.c -o $@ -L. -lfts -I inc
 
 #################################### MMEISSON #################################
 

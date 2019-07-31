@@ -5,30 +5,37 @@
 ; https://people.csail.mit.edu/rivest/Rivest-rc5rev.pdf
 ; https://www.geeksforgeeks.org/computer-network-rc5-encryption-algorithm/
 
+; The main algorithm is based on rc5 algorithm with chosen parameters
+;	There are 3 parameters in rc5
+;		- word size, 16 / 32 / 64 => 64
+;		- number of rounds => given as fourth parameters in call function
+;		- key size, between 0 and 255 => fixed to 16
+;	The end of the message is encrypted with the key using xor
+
 ; rdi	pointer
 ; rsi	len
 ; rdx	key pointer
 ; rcx	nb rounds
 
 section .text
-	global ft_rc5_encrypt
-	global ft_rc5_decrypt
+	global ft_encrypt
+	global ft_decrypt
 
-;;	void			ft_rc5_encrypt(void *ptr, size_t len, uint8_t key[16], uint32_t nb_rounds);
+;;	void			ft_encrypt(void *ptr, size_t len, uint8_t key[16], uint32_t nb_rounds);
 
-ft_rc5_encrypt:
+ft_encrypt:
 		mov		r8, 1
-		call	ft_rc5_core
+		call	ft_cipher_core
 		ret
 
-;;	void			ft_rc5_decrypt(void *ptr, size_t len, uint8_t key[16], uint32_t nb_rounds);
+;;	void			ft_decrypt(void *ptr, size_t len, uint8_t key[16], uint32_t nb_rounds);
 	
-ft_rc5_decrypt:
+ft_decrypt:
 		mov		r8, 0
-		call	ft_rc5_core
+		call	ft_cipher_core
 		ret
 
-ft_rc5_core:
+ft_cipher_core:
 		push	rbp
 		mov		rbp, rsp
 		sub		rsp, 0x20
