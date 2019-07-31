@@ -8,6 +8,11 @@ ft_memcmp:
 		xor		rax, rax
 		xor		rbx, rbx
 
+		cmp		rdi, 0
+		je		.end
+		cmp		rsi, 0
+		je		.end
+
 	.loop:
 		cmp		rdx, 0
 		je		.gend

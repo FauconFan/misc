@@ -6,7 +6,7 @@
 /*   By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 02:07:20 by jpriou            #+#    #+#             */
-/*   Updated: 2019/07/22 18:18:21 by jpriou           ###   ########.fr       */
+/*   Updated: 2019/07/31 10:39:55 by jpriou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	test_bzero(void)
 {
 	unsigned char		addr[256];
 
+	ft_bzero(NULL, 0);
+	ft_bzero(NULL, 1024 * 1024);
 	for (size_t i = 0; i < 256; ++i)
 		addr[i] = i;
 	ft_bzero(addr, 0);
@@ -41,6 +43,8 @@ static void test_memchr(void)
 {
 	unsigned char		addr[128];
 
+	assert(ft_memchr(NULL, 0, 1024) == 0);
+	assert(ft_memchr(NULL, 32, 1024) == 0);
 	for (size_t i = 0; i < 128; ++i)
 		addr[i] = i;
 	for (size_t i = 0; i < 128; ++i)
@@ -53,15 +57,16 @@ static void	test_memset(void)
 {
 	unsigned char		addr[256];
 
+	assert(ft_memset(NULL, 1, 1024) == NULL);
 	for (size_t i = 0; i < 256; ++i)
 		addr[i] = i;
-	ft_memset(addr, 42, 0);
+	assert(ft_memset(addr, 42, 0) == addr);
 	for (size_t i = 0; i < 256; ++i)
 		assert(addr[i] == i);
-	ft_memset(addr + 32, 16, 32);
+	assert(ft_memset(addr + 32, 16, 32) == addr + 32);
 	for (size_t i = 0; i < 256; ++i)
 		assert((i >= 32 && i < 64) ? addr[i] == 16 : addr[i] == i);
-	ft_memset(addr, 42, 256);
+	assert(ft_memset(addr, 42, 256) == addr);
 	for (size_t i = 0; i < 256; ++i)
 		assert(addr[i] == 42);
 }
@@ -76,12 +81,14 @@ static void	test_memcpy(void)
 		addr[i] = i;
 		temoin[i] = 255 - i;
 	}
-	ft_memcpy(addr + 16, temoin, 32);
+	assert(ft_memcpy(NULL, temoin, 256) == NULL);
+	assert(ft_memcpy(addr, NULL, 256) == addr);
+	assert(ft_memcpy(addr + 16, temoin, 32) == addr + 16);
 	for (size_t i = 0; i < 256; ++i)
 	{
 		assert((i >= 16 && i < 48) ? addr[i] == temoin[i - 16] : addr[i] == i);
 	}
-	ft_memcpy(addr, temoin, 256);
+	assert(ft_memcpy(addr, temoin, 256) == addr);
 	for (size_t i = 0; i < 256; ++i)
 	{
 		assert(addr[i] == temoin[i]);
@@ -98,6 +105,9 @@ static void	test_memcmp(void)
 		addr1[i] = i;
 		addr2[i] = (i < 128) ? i : 0;
 	}
+	assert(ft_memcmp(NULL, addr2, 32) == 0);
+	assert(ft_memcmp(addr1, NULL, 32) == 0);
+	assert(ft_memcmp(NULL, NULL, 32) == 0);
 	assert(ft_memcmp(addr1, addr2, 128) == 0);
 	assert(ft_memcmp(addr1, addr2, 129) == 128);
 }
@@ -143,6 +153,8 @@ static void	test_strcat(void)
 	char	addr[100];
 
 	addr[0] = 0;
+	assert(ft_strcat(NULL, "42") == NULL);
+	assert(ft_strcat(addr, NULL) == addr);
 	assert(strcmp(ft_strcat(addr, "42"), "42") == 0);
 	assert(strcmp(ft_strcat(addr, ""), "42") == 0);
 	assert(strcmp(ft_strcat(addr, "cest une ecole"), "42cest une ecole") == 0);
@@ -162,6 +174,7 @@ static void	test_strcat(void)
 
 static void test_strdup(void)
 {
+	assert(ft_strdup(NULL) == NULL);
 	TEST_STRDUP("coucou");
 	TEST_STRDUP("");
 	TEST_STRDUP("je");
@@ -172,6 +185,9 @@ static void test_strdup(void)
 
 static void test_strcmp(void)
 {
+	assert(ft_strcmp(NULL, "coucou") == 0);
+	assert(ft_strcmp("coucou", NULL) == 0);
+	assert(ft_strcmp(NULL, NULL) == 0);
 	assert(ft_strcmp("coucou", "coucou") == 0);
 	assert(ft_strcmp("", "") == 0);
 	assert(ft_strcmp("bouah", "bouah") == 0);
@@ -187,6 +203,9 @@ static void test_strcmp(void)
 
 static void test_strncmp(void)
 {
+	assert(ft_strncmp(NULL, "coucou", 6) == 0);
+	assert(ft_strncmp("coucou", NULL, 6) == 0);
+	assert(ft_strncmp(NULL, NULL, 6) == 0);
 	assert(ft_strncmp("bonjour", "bonsoir", 0) == 0);
 	assert(ft_strncmp("bonjour", "bonsoir", 1) == 0);
 	assert(ft_strncmp("bonjour", "bonsoir", 2) == 0);
@@ -199,6 +218,9 @@ static void test_strncmp(void)
 
 static void test_strequ(void)
 {
+	assert(ft_strequ(NULL, "coucou2") == 0);
+	assert(ft_strequ("coucou", NULL) == 0);
+	assert(ft_strequ(NULL, NULL) == 0);
 	assert(ft_strequ("coucou", "coucou") != 0);
 	assert(ft_strequ("coucou", "coucou2") == 0);
 	assert(ft_strequ("bonbon", "bonbon") != 0);

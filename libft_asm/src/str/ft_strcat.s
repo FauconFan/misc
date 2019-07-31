@@ -10,7 +10,11 @@ ft_strcat:
 		mov		rbp, rsp
 		sub		rsp, 32
 
-		mov		[rsp + 8], rdi
+		mov		[rsp + 0], rdi
+		cmp		rdi, 0
+		je		.end
+		cmp		rsi, 0
+		je		.end
 
 		mov		ecx, -1
 		xor		al, al
@@ -19,20 +23,21 @@ ft_strcat:
 
 		dec		rdi
 
-		mov		[rsp + 16], rdi
-		mov		[rsp + 24], rsi
+		mov		[rsp + 0x8], rdi
+		mov		[rsp + 0x10], rsi
 		mov		rdi, rsi
 		call	ft_strlen
 
 		mov		rcx, rax
-		mov		rdi, [rsp + 16]
-		mov		rsi, [rsp + 24]
+		mov		rdi, [rsp + 0x8]
+		mov		rsi, [rsp + 0x10]
 		cld
 		rep		movsb
 
 		mov		byte [rdi], 0
 
-		mov		rax, [rsp + 8]
+	.end:
+		mov		rax, [rsp + 0]
 		mov		rsp, rbp
 		pop		rbp
 		ret

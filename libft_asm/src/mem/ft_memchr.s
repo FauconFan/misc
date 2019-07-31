@@ -5,6 +5,9 @@ section .text
 ;;	void	*ft_memchr(const void *s, int c, size_t n);
 
 ft_memchr:
+		cmp		rdi, 0
+		je		.fail
+
 		mov		rbx, rdi
 		mov		ecx, edx
 		mov		ax, si

@@ -9,12 +9,17 @@ ft_memcpy:
 		mov		rbp, rsp
 		sub		rsp, 16
 
-		mov		[rsp + 8], rdi
+		mov		[rsp + 0], rdi
+		cmp		rdi, 0
+		je		.end
+		cmp		rsi, 0
+		je		.end
 		mov		rcx, rdx
 		cld
 		rep		movsb
 
-		mov		rax, [rsp + 8]
+	.end:
+		mov		rax, [rsp + 0]
 		mov		rsp, rbp
 		pop		rbp
 		ret
