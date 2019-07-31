@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "libfts.h"
 
-#define DATA_SIZE	64
+#define DATA_SIZE	42
 #define NB_ROUNDS	32
 
 static void		print_data(uint8_t *data, size_t len)
@@ -29,12 +29,16 @@ static void		print_data(uint8_t *data, size_t len)
 int				main(void)
 {
 	uint8_t		data[DATA_SIZE];
+	uint8_t		copy_original[DATA_SIZE];
 	uint8_t		key[16];
 
-	for (size_t i = 0; i < DATA_SIZE; ++i)
-		data[i] = i;
-	for (size_t i = 0; i < 16; ++i)
-		key[i] = i;
+	ft_getrandom(data, DATA_SIZE);
+	ft_getrandom(key, 16);
+	ft_memcpy(copy_original, data, DATA_SIZE);
+	printf("Key:\n");
+	print_data(key, 16);
+	printf("\n");
+
 	printf("Init:\n");
 	print_data(data, DATA_SIZE);
 	printf("\n");
@@ -48,5 +52,11 @@ int				main(void)
 	printf("After decryption:\n");
 	print_data(data, DATA_SIZE);
 	printf("\n");
-	return (0);
+
+	int		ret = ft_memcmp(data, copy_original, DATA_SIZE);
+	if (ret == 0)
+		printf("RC5 OK all good\n");
+	else
+		printf("================= SOMETHING WENT WRONG =================\n");
+	return (ret);
 }

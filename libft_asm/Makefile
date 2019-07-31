@@ -6,7 +6,7 @@
 #    By: jpriou <jpriou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 01:43:15 by jpriou            #+#    #+#              #
-#    Updated: 2019/07/30 16:57:47 by jpriou           ###   ########.fr        #
+#    Updated: 2019/07/31 08:50:29 by jpriou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ AS = nasm
 RANLIB = ranlib
 
 ifeq ($(shell uname -s), Darwin)
-	AS_FLAG = -f macho64 --prefix _
+	AS_FLAG = -g -f macho64 --prefix _
 else
 	AS_FLAG = -f elf64
 endif

@@ -229,12 +229,71 @@ ft_rc5_core:
 		je		.loop4_decrypt
 
 	.loop4_encrypt:
-	.loop4_encrypt_bis:
+		mov		rax, [rsp + 0x58]
+		cmp		rax, 16
+		jl		.end_loop4_decrypt
 
+		mov		qword [rsp + 0x0], 1
+
+		mov		rax, [rsp + 0x50]
+		mov		rax, [rax]
+		add		rax, [rsp + 0x110]
+		mov		[rsp + 0x10], rax
+
+		mov		rbx, [rsp + 0x50]
+		add		rbx, 8
+		mov		rbx, [rbx]
+		add		rbx, [rsp + 0x118]
+		mov		[rsp + 0x18], rbx
+
+	.loop4_encrypt_bis:
+		mov		rdx, [rsp + 0x0]
+		mov		rcx, [rsp + 0x68]
+		cmp		rdx, rcx
+		jg		.end_loop4_encrypt_bis
+
+		mov		rax, [rsp + 0x10]
+		mov		rcx, [rsp + 0x18]
+		xor		rax, rcx
+		rol		rax, cl
+		mov		rdx, [rsp + 0x0]
+		shl		rdx, 4
+		add		rax, [rsp + rdx + 0x110]
+		mov		[rsp + 0x10], rax
+
+		mov		rax, [rsp + 0x18]
+		mov		rcx, [rsp + 0x10]
+		mov		rdx, [rsp + 0x0]
+		xor		rax, rcx
+		rol		rax, cl
+		shl		rdx, 1
+		inc		rdx
+		shl		rdx, 3
+		add		rax, [rsp + rdx + 0x110]
+		mov		[rsp + 0x18], rax
+
+		mov		rdx, [rsp + 0x0]
+		inc		rdx
+		mov		[rsp + 0x0], rdx
+		jmp		.loop4_encrypt_bis
 	.end_loop4_encrypt_bis:
+		mov		rax, [rsp + 0x50]
+		mov		rbx, [rsp + 0x10]
+		mov		[rax], rbx
+		add		rax, 8
+		mov		rbx, [rsp + 0x18]
+		mov		[rax], rbx
+		add		rax, 8
+		mov		[rsp + 0x50], rax
+
+		mov		rax, [rsp + 0x58]
+		sub		rax, 16
+		mov		[rsp + 0x58], rax
+
+		jmp		.loop4_encrypt
 	.end_loop4_encrypt:
 
-		jmp		.end
+		jmp		.end_cipher
 
 	.loop4_decrypt:
 		mov		rax, [rsp + 0x58]
@@ -262,32 +321,21 @@ ft_rc5_core:
 		shl		rdx, 1
 		inc		rdx
 		shl		rdx, 3
-		add		rdx, rsp
-		add		rdx, 0x110
-		mov		rdx, [rdx]
-
+		mov		rdx, [rsp + rdx + 0x110]
 		mov		rax, [rsp + 0x18]
 		sub		rax, rdx
-
 		mov		rcx, [rsp + 0x10]
 		ror		rax, cl
 		xor		rax, rcx
-
 		mov		[rsp + 0x18], rax
 
 		mov		rdx, [rsp + 0x0]
 		shl		rdx, 4
-		add		rdx, rsp
-		add		rdx, 0x110
-		mov		rdx, [rdx]
-
 		mov		rax, [rsp + 0x10]
-		sub		rax, rdx
-
+		sub		rax, [rsp + rdx + 0x110]
 		mov		rcx, [rsp + 0x18]
 		ror		rax, cl
 		xor		rax, rcx
-
 		mov		[rsp + 0x10], rax
 
 		mov		rdx, [rsp + 0x0]
@@ -315,7 +363,28 @@ ft_rc5_core:
 
 		jmp		.loop4_decrypt
 	.end_loop4_decrypt:
+	.end_cipher:
 
-	.end:
+	.end_cipher_begin:
+		cmp		qword [rsp + 0x58], 0
+		je		.end_cipher_end
+
+		mov		rdx, [rsp + 0x60]		; key
+		mov		rbx, [rsp + 0x50]		; ptr
+		mov		al, [rbx]
+		xor		al, [rdx]
+		mov		[rbx], al
+		inc		rbx
+		mov		[rsp + 0x50], rbx
+		inc		rdx
+		mov		[rsp + 0x60], rdx
+
+		mov		rbx, [rsp + 0x58]
+		dec		rbx
+		mov		[rsp + 0x58], rbx
+
+		jmp		.end_cipher_begin
+	.end_cipher_end:
+
 		leave
 		ret
