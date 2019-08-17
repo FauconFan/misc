@@ -19,12 +19,32 @@ stages:
 jobs:
   include:
     - os: linux
-      jdk: oraclejdk8
+      jdk: oraclejdk9
       stage: Base Compilation
       env:
          - NAME="Linux"
     - os: linux
-      jdk: oraclejdk9
+      jdk: oraclejdk10
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: oraclejdk11
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: oraclejdk12
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: oraclejdk13
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: oraclejdk14
       stage: Base Compilation
       env:
          - NAME="Linux"
@@ -34,13 +54,7 @@ jobs:
       env:
          - NAME="Linux"
     - os: linux
-      jdk: oraclejdk8
-      stage: Unit Test
-      script : make basic_test
-      env :
-         - NAME="Basic test"
-    - os: linux
-      jdk: oraclejdk9
+      jdk: openjdk8
       stage: Unit Test
       script : make basic_test
       env :
@@ -48,39 +62,9 @@ jobs:
     - os: linux
       jdk: openjdk8
       stage: Unit Test
-      script : make basic_test
-      env :
-         - NAME="Basic test"
-    - os: linux
-      jdk: oraclejdk8
-      stage: Unit Test
       script : make sys_test
       env :
          - NAME="Sys test"
-    - os: linux
-      jdk: oraclejdk9
-      stage: Unit Test
-      script : make sys_test
-      env :
-         - NAME="Sys test"
-    - os: linux
-      jdk: openjdk8
-      stage: Unit Test
-      script : make sys_test
-      env :
-         - NAME="Sys test"
-    - os: linux
-      jdk: oraclejdk8
-      stage: Unit Test
-      script : make bonus_test
-      env :
-         - NAME="Bonus test"
-    - os: linux
-      jdk: oraclejdk9
-      stage: Unit Test
-      script : make bonus_test
-      env :
-         - NAME="Bonus test"
     - os: linux
       jdk: openjdk8
       stage: Unit Test
@@ -88,19 +72,7 @@ jobs:
       env :
          - NAME="Bonus test"
     - os: linux
-      jdk: oraclejdk8
-      stage: Final
-      script : make test
-      env :
-         - NAME="Full Build All"
-    - os: linux
-      jdk: oraclejdk9
-      stage: Final
-      script : make test
-      env :
-         - NAME="Full Build All"
-    - os: linux
-      jdk: oraclejdk8
+      jdk: openjdk8
       stage: Final
       script : make test
       env :
