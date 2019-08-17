@@ -24,11 +24,6 @@ jobs:
       env:
          - NAME="Linux"
     - os: linux
-      jdk: oraclejdk10
-      stage: Base Compilation
-      env:
-         - NAME="Linux"
-    - os: linux
       jdk: oraclejdk11
       stage: Base Compilation
       env:
@@ -54,6 +49,37 @@ jobs:
       env:
          - NAME="Linux"
     - os: linux
+      jdk: openjdk9
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: openjdk10
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: openjdk11
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: openjdk12
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: openjdk13
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+    - os: linux
+      jdk: openjdk14
+      stage: Base Compilation
+      env:
+         - NAME="Linux"
+
+    - os: linux
       jdk: openjdk8
       stage: Unit Test
       script : make basic_test
@@ -71,6 +97,7 @@ jobs:
       script : make bonus_test
       env :
          - NAME="Bonus test"
+
     - os: linux
       jdk: openjdk8
       stage: Final
