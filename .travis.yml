@@ -65,7 +65,7 @@ jobs:
     - os: linux
       jdk: openjdk14
       stage: Base Compilation
-      name: openjdk14Linux"
+      name: openjdk14
 
     - os: linux
       jdk: openjdk8
