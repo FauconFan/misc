@@ -1,0 +1,9 @@
+
+# setting prompt to name
+# settings set prompt '(jpriou) '
+
+# setting disassembly to intel
+settings set target.x86-disassembly-flavor intel
+
+# print banner
+command script import banner_init.py

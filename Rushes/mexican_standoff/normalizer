@@ -1,0 +1,20 @@
+<fn> + <f1> -> header
+17G -> mv to line 17
+d3d -> cut 3 lines from line 17
+14G -> mv to line 14
+p -> paste the copy buffer
+18G -> mv to line 18
+5l -> mv 5 char to the right
+i -> insert mode
+<space>
+<ctrl> + <[> -> back to normal mode
+29G
+5l
+i
+<space>
+<ctrl> + <[>
+3j -> mv down of 3 lines
+l -> mv right
+<shift> + <d> -> put the end of the line in copy buffer
+G=gg -> indent from the end to the begining of the file
+ZZ -> save and quit

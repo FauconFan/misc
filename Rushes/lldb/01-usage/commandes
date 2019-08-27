@@ -1,0 +1,12 @@
+
+##	Main file to fix the source.cpp file
+##		md5 = 43e31615e66730734a2e9d1eb55a36e1
+
+breakpoint set --address 0x100000d39 --condition 'count != 2'
+breakpoint command add --one-liner 'expression count == 0 ? tab[0] = tab[1] : tab[2] = tab[1]'
+breakpoint set --address 0x100000d52 --one-shot
+breakpoint command add --one-liner 'expression count = tab[1]; tab[1] = tab[2]; tab[2] = count; count = 0'
+breakpoint set --address 0x10000103b
+breakpoint command add --one-liner 'expression tmp = min[0] + min[1] + min[2]'
+breakpoint set --address 0x1000010a5
+breakpoint command add --one-liner 'expression biggest = min[0] > ( min[1] > min[2] ? min[1] : min[2] ) ? min[0] : ( min[1] > min[2] ? min[1] : min[2] );'
