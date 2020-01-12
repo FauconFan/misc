@@ -5,7 +5,8 @@ import {
 	IonHeader,
 	IonPage,
 	IonTitle,
-	IonToolbar
+	IonToolbar,
+	IonButton
 } from '@ionic/react';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
@@ -13,7 +14,7 @@ import { RouteComponentProps } from 'react-router';
 import { getData } from '../modules/Connection';
 import { errorPage } from '../modules/Helpers';
 
-// import { CallNumber } from '@ionic-native/call-number/ngx';
+import { CallNumber } from '@ionic-native/call-number/ngx';
 
 // constructor(private callNumber: CallNumber) { }
 
@@ -40,9 +41,9 @@ const AlloSpec: React.FC<AlloSpecPageProps> = ({match}) => {
 	let dataRemote = getData();
 	console.log(dataRemote);
 
-	// let callNumber = function (num : string) {
-	// 	(new CallNumber()).callNumber(num, true);
-	// }
+	let callNumber = function (num : string) {
+		(new CallNumber()).callNumber(num, true);
+	}
 	return (
 		<IonPage>
 		<IonHeader>
@@ -57,9 +58,9 @@ const AlloSpec: React.FC<AlloSpecPageProps> = ({match}) => {
 			<div>{data['description']}</div>
 		</IonContent>
 		<IonContent>
-			{/* <IonButton onClick={function(e) {callNumber("+33 6 88 18 64 31")}}>
+			<IonButton onClick={function(e) {callNumber("+33 6 88 18 64 31")}}>
 				Appeler
-			</IonButton> */}
+			</IonButton>
 		</IonContent>
 
 		
