@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package fr.kerdesetoiles;
 
 import android.os.Bundle;
 
