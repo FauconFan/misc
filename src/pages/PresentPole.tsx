@@ -90,7 +90,7 @@ const PresentPole: React.FC<PresentPolePageProps> = ({match}) => {
 		<IonHeader>
 		  <IonToolbar>
 			<IonButtons slot="start">
-				<IonBackButton defaultHref="/home" />
+				<IonBackButton defaultHref="/present" />
 			</IonButtons>
 			<IonTitle>Présentation du pôle {data['nom']}</IonTitle>
 		  </IonToolbar>

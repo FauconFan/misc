@@ -18,7 +18,7 @@ const PresentGeneral: React.FC = () => {
 		<IonHeader>
 		  <IonToolbar>
 			<IonButtons slot="start">
-				<IonBackButton defaultHref="/home" />
+				<IonBackButton defaultHref="/" />
 			</IonButtons>
 			<IonTitle>Présentation de la liste</IonTitle>
 		  </IonToolbar>

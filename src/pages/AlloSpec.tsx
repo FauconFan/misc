@@ -49,7 +49,7 @@ const AlloSpec: React.FC<AlloSpecPageProps> = ({match}) => {
 		<IonHeader>
 			<IonToolbar>
 			<IonButtons slot="start">
-				<IonBackButton defaultHref="/home" />
+				<IonBackButton defaultHref="/allos" />
 			</IonButtons>
 			<IonTitle>{data['nom']}</IonTitle>
 			</IonToolbar>

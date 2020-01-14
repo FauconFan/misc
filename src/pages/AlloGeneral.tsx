@@ -19,7 +19,7 @@ const AlloGeneral: React.FC = () => {
 		<IonHeader>
 			<IonToolbar>
 			<IonButtons slot="start">
-				<IonBackButton defaultHref="/home" />
+				<IonBackButton defaultHref="/" />
 			</IonButtons>
 			<IonTitle>Les Allôs</IonTitle>
 			</IonToolbar>
