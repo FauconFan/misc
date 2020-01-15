@@ -7,7 +7,9 @@ import {
   IonCard,
   IonButton,
   IonRefresher,
-  IonRefresherContent} from '@ionic/react';
+  IonRefresherContent,
+  IonText,
+  IonToggle} from '@ionic/react';
 import React from 'react';
 import { RouteComponentProps } from "react-router-dom";
 import { CallNumber } from '@ionic-native/call-number/ngx';
@@ -68,11 +70,26 @@ function genAlloDomainDisplay(_alloDomain : any, index : number) {
   );
 }
 
+function switchDarkMode(def: boolean = false) {
+  const _el = document.querySelector('#root');
+  const el = _el as HTMLInputElement;
+  if (def || el.style.getPropertyValue('--ion-background-color') != "black") {
+    el.style.setProperty('--ion-background-color', 'black');
+    el.style.setProperty('--ion-text-color', 'white');
+  }
+  else {
+    el.style.setProperty('--ion-background-color', 'white');
+    el.style.setProperty('--ion-text-color', 'black');
+  }
+}
+
 const Home: React.FC<RouteComponentProps> = () => {
   let _data = getData();
   if (_data == undefined) {
     return (errorPage());
   }
+
+  switchDarkMode(true);
 
   let data = _data as Map<string, any>;
 
@@ -86,23 +103,28 @@ const Home: React.FC<RouteComponentProps> = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-
-        <IonCard>
-          <img src="assets/images/background_home.jpg" alt=""></img>
-        </IonCard>
-
-        <div>
-          <p>Bonjour à tous.</p>
-          <p>Nous avons le plaisir de vous présenter notre application afin de pouvoir nous appeler sans avoir à chercher notre numéro à chaque fois 😄.</p>
-          <p>Nous vous invitons à choisir votre allo. Vous pouvez appuyez sur le bouton 'Appeler le +33...', cela appellera directement le numéro.</p>
-          <p>Si vous avez ouvert l'application depuis longtemps (plus de 15 min), vous avez la possibilité de recharger les numéros de téléphone en slidant l'application vers le bas (de la même manière qu'une page web).</p>
-          <p>Note paiement : le paiement des allos (si il y en a) se fera sur Lydia à réception du colis.</p>
-        </div>
           
         <IonRefresher slot="fixed" onIonRefresh={() => {window.location.reload()}}>
           <IonRefresherContent pullingIcon="arrow-dropdown" pullingText="Tirer vers le bas pour mettre à jour" refreshingText="Mise à jour">
           </IonRefresherContent>
         </IonRefresher>
+
+        <IonCard>
+          <img src="assets/images/background_home.jpg" alt=""></img>
+        </IonCard>
+
+      <IonText>
+        <div>
+          <p>Bonjour à tous.</p>
+          <p>Nous avons le plaisir de vous présenter notre application afin de pouvoir nous appeler sans avoir à chercher notre numéro à chaque fois 😄.</p>
+          <p>Nous vous invitons à choisir votre allo. Vous pouvez appuyez sur le bouton 'Appeler le 0...', cela appellera directement le numéro.</p>
+          <p>Pour le paiement des allos (si il y a), cela se fera sur Lydia à réception de la livraison.</p>
+          <h2>Notes sur l'application</h2>
+          <p>Si vous avez ouvert l'application depuis longtemps (plus de 15 min), vous avez la possibilité de recharger les numéros de téléphone en slidant l'application vers le bas (de la même manière qu'une page web).</p>
+        </div>
+      </IonText>
+
+        <IonButton color="secondary" expand="full" onClick={() => {switchDarkMode();}}>Switch Dark Mode</IonButton>
   
         {
           data.get('allos').map((alloDomain : any, index : number) => {
