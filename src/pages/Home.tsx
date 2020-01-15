@@ -139,7 +139,7 @@ const Home: React.FC<RouteComponentProps> = () => {
       <IonContent className="ion-padding">
           
         <IonRefresher slot="fixed" onIonRefresh={() => {window.location.reload()}}>
-          <IonRefresherContent pullingIcon="arrow-dropdown" pullingText="Tirer vers le bas pour mettre à jour" refreshingText="Mise à jour">
+          <IonRefresherContent key="refresher" pullingIcon="arrow-dropdown" pullingText="Tirer vers le bas pour mettre à jour" refreshingText="Mise à jour">
           </IonRefresherContent>
         </IonRefresher>
 
@@ -147,7 +147,7 @@ const Home: React.FC<RouteComponentProps> = () => {
           <img src="assets/images/background_home.jpg" alt=""></img>
         </IonCard>
 
-        <div key="text_bienvenur">
+        <div key="text_bienvenue">
           <p>Bonjour à tous.</p>
           <p>Nous avons le plaisir de vous présenter notre application afin de pouvoir nous appeler sans avoir à chercher notre numéro à chaque fois 😄.</p>
           <p>Nous vous invitons à choisir votre allo. Vous pouvez appuyez sur le bouton 'Appeler le 0...', cela appellera directement le numéro.</p>
