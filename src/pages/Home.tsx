@@ -29,11 +29,17 @@ function callThisNumber(number : string) {
 }
 
 function genAlloDisplay(allo : any) {
+  let contentButton = "Appeler (le " + allo.numero + ")";
+
+  if (allo.prix > 0) {
+    contentButton += " - " + allo.prix.toString() + " €";
+  }
+
   return (
     <div key={allo.name}>
       <h2>{allo.name}</h2>
       <p>{allo.description}</p>
-      <IonButton expand="full" onClick={function() {callThisNumber(allo.numero)}}>Appeler (le {allo.numero})</IonButton>
+      <IonButton expand="full" onClick={function() {callThisNumber(allo.numero)}}>{contentButton}</IonButton>
     </div>
   );
 }
@@ -81,13 +87,16 @@ const Home: React.FC<RouteComponentProps> = () => {
       </IonHeader>
       <IonContent className="ion-padding">
 
-        <img src="assets/images/background_home.jpg" alt=""></img>
+        <IonCard>
+          <img src="assets/images/background_home.jpg" alt=""></img>
+        </IonCard>
 
         <div>
           <p>Bonjour à tous.</p>
           <p>Nous avons le plaisir de vous présenter notre application afin de pouvoir nous appeler sans avoir à chercher notre numéro à chaque fois 😄.</p>
           <p>Nous vous invitons à choisir votre allo. Vous pouvez appuyez sur le bouton 'Appeler le +33...', cela appellera directement le numéro.</p>
           <p>Si vous avez ouvert l'application depuis longtemps (plus de 15 min), vous avez la possibilité de recharger les numéros de téléphone en slidant l'application vers le bas (de la même manière qu'une page web).</p>
+          <p>Note paiement : le paiement des allos (si il y en a) se fera sur Lydia à réception du colis.</p>
         </div>
           
         <IonRefresher slot="fixed" onIonRefresh={() => {window.location.reload()}}>
