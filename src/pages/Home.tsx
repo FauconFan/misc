@@ -8,7 +8,9 @@ import {
   IonItem,
   IonLabel,
   IonCard,
-  IonButton} from '@ionic/react';
+  IonButton,
+  IonRefresher,
+  IonRefresherContent} from '@ionic/react';
 import React from 'react';
 import { RouteComponentProps } from "react-router-dom";
 import { CallNumber } from '@ionic-native/call-number/ngx';
@@ -40,7 +42,6 @@ function genAlloDomainDisplay(_alloDomain : any, index : number) {
   let key = "_alloDomain" + index.toString();
 
   let alloDomain = objToStrMap(_alloDomain);
-  console.log(alloDomain);
 
   let pahtToDomainPhoto = "assets/images/allo_" + index.toString() + ".jpg";
 
@@ -64,8 +65,6 @@ const Home: React.FC<RouteComponentProps> = (props) => {
 
   let data = _data as Map<string, any>;
 
-  console.log(data.get('allos'));
-
   return (
     <IonPage>
       <IonHeader>
@@ -77,13 +76,19 @@ const Home: React.FC<RouteComponentProps> = (props) => {
       </IonHeader>
       <IonContent className="ion-padding">
 
-        <IonCard>
-          <img src="assets/images/background_home.jpg" alt=""></img>
-        </IonCard>
+        <img src="assets/images/background_home.jpg" alt=""></img>
 
         <div>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Non temporibus libero odit velit, cupiditate natus quidem accusamus ab consequuntur ullam? Ipsam, cumque quibusdam. Impedit quia voluptate distinctio quis, minima velit?
+          <p>Bonjour à tous.</p>
+          <p>Nous avons le plaisir de vous présenter notre application afin de pouvoir nous appeler sans avoir à chercher notre numéro à chaque fois 😄.</p>
+          <p>Nous vous invitons à choisir votre allo. Vous pouvez appuyez sur le bouton 'Appeler le +33...', cela appellera directement le numéro.</p>
+          <p>Si vous avez ouvert l'application depuis longtemps (plus de 15 min), vous avez la possibilité de recharger les numéros de téléphone en slidant l'application vers le bas (de la même manière qu'une page web).</p>
         </div>
+          
+        <IonRefresher slot="fixed" onIonRefresh={() => {window.location.reload()}}>
+          <IonRefresherContent pullingIcon="arrow-dropdown" pullingText="Tirer vers le bas pour mettre à jour" refreshingText="Mise à jour">
+          </IonRefresherContent>
+        </IonRefresher>
   
         {
           data.get('allos').map((alloDomain : any, index : number) => {

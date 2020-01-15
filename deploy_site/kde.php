@@ -29,7 +29,7 @@
 	];
 
 	$data['allos'][2]['allolaterre'] = [
-		'name' => 'Allo La Terre',
+		'name' => 'Allo La Lune',
 		'description' => 'Lorem ipsum.',
 		'numero' => '+33 6 88 18 64 31'
 	];
