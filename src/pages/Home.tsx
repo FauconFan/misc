@@ -42,17 +42,17 @@ function scrollTo(element : string) {
 }
 
 function genAlloDisplay(allo : any) {
-  let contentButton = "Appeler (le " + allo.numero + ")";
+  let title = allo.name;
 
   if (allo.prix > 0) {
-    contentButton += " - " + allo.prix.toString() + " €";
+    title += " (" + allo.prix.toString() + " €)";
   }
 
   return (
-    <div key={allo.name}>
-      <h2>{allo.name}</h2>
+    <div key={allo.name} className="ion-padding-top">
+      <h2>{title}</h2>
       <p>{allo.description}</p>
-      <IonButton expand="full" onClick={function() {callThisNumber(allo.numero)}}>{contentButton}</IonButton>
+      <IonButton expand="full" onClick={function() {callThisNumber(allo.numero)}}>Appeler (le {allo.numero})</IonButton>
     </div>
   );
 }
