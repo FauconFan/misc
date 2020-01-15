@@ -59,6 +59,11 @@ function genAlloDomainDisplay(_alloDomain : any, index : number) {
   for (let key in _alloDomain) {
     names_allos.push(key);
   }
+
+  if (names_allos.length == 0) {
+    return (<> </>);
+  }
+
   let key = "_alloDomain" + index.toString();
 
   let alloDomain = objToStrMap(_alloDomain);
@@ -76,6 +81,27 @@ function genAlloDomainDisplay(_alloDomain : any, index : number) {
       })}
     </div>
   );
+}
+
+function genActivitiesDisplay(activities : any) {
+  let genActivityDisplay = (activity : any) => {
+    return (
+      <div key={activity.name}>
+        <h2>{activity.name}</h2>
+        <p>{activity.description}</p>
+      </div>
+    );
+  }
+
+  if (activities.length == 0) {
+    return (
+      <p key="no_activities">Pas d'activité prévue pour l'instant.</p>
+    );
+  }
+
+  return (activities.map((activity : any, index : number) => {
+    return (genActivityDisplay(activity));
+  }));
 }
 
 function switchDarkMode(def: boolean = false) {
@@ -150,7 +176,7 @@ const Home: React.FC<RouteComponentProps> = () => {
 
         <h1 id="II-activite">II - Activités</h1>
 
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. In debitis similique quo amet perspiciatis doloremque, atque saepe laboriosam ipsa officia. Dolorem sit fuga dicta, numquam aut error optio amet nam.</p>
+        {genActivitiesDisplay(data.get('activities'))}
 
         <h1 id="III-apropos">III - À propos</h1>
 
