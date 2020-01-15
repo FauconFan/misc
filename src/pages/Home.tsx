@@ -154,7 +154,10 @@ const Home: React.FC<RouteComponentProps> = () => {
 
         <h1 id="III-apropos">III - À propos</h1>
 
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet aspernatur deleniti veniam quas iste delectus nesciunt. Minima molestias dolor quasi at nemo nostrum est odio, hic beatae, quia iure ducimus!</p>
+        <p>Cette application a été développé par la liste 'La Ker des Étoiles' avec pour développeur principal Joseph Priou, avec l'aide de Corentin Hubert, ainsi que toute l'équipe technique de la liste.</p>
+        <p>Nous aimerions nous excuser pour la gène occasionnée par l'installation de l'application qui n'a pas pu se faire sur Google Play ou sur l'App Store dû à un manque de temps.</p>
+        <p></p>
+        <p>Force à 'La Ker des Étoiles'</p>
         
         
       </IonContent>
