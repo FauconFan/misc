@@ -154,10 +154,10 @@
 	 */
 
 	$data['activities'] = array(
-		// [
-		// 	'name' => 'La Cantina',
-		// 	'description' => 'La Cantina de \'Ker des Étoiles\' est ouverte au I12-10. Il s\'agit d\'un espace convivial où tout le monde peuvent profiter de la nourriture proposé par la liste.'
-		// ],
+		[
+			'name' => 'La Cantina',
+			'description' => 'La Cantina de \'Ker des Étoiles\' est ouverte au I12-10. Il s\'agit d\'un espace convivial où tout le monde peuvent profiter de la nourriture proposé par la liste.'
+		],
 	);
 
 
