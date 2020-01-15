@@ -4,9 +4,6 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonList,
-  IonItem,
-  IonLabel,
   IonCard,
   IonButton,
   IonRefresher,
@@ -19,6 +16,14 @@ import errorPage from '../modules/errorPage';
 import getData from '../modules/getData';
 import objToStrMap from '../modules/objToStrMap';
 
+const namesOfIndex : string[] = [
+  "Les allos shotguns",
+  "Les allos éphémères",
+  "Les allos funs",
+  "Les allos bouffe",
+  "Les allos force"
+];
+
 function callThisNumber(number : string) {
   (new CallNumber()).callNumber(number, true);
 }
@@ -28,13 +33,12 @@ function genAlloDisplay(allo : any) {
     <div key={allo.name}>
       <h2>{allo.name}</h2>
       <p>{allo.description}</p>
-      <IonButton expand="full" onClick={function(e) {callThisNumber(allo.numero)}}>Appeler (le {allo.numero})</IonButton>
+      <IonButton expand="full" onClick={function() {callThisNumber(allo.numero)}}>Appeler (le {allo.numero})</IonButton>
     </div>
   );
 }
 
 function genAlloDomainDisplay(_alloDomain : any, index : number) {
-
   let names_allos = [];
   for (let key in _alloDomain) {
     names_allos.push(key);
@@ -47,6 +51,7 @@ function genAlloDomainDisplay(_alloDomain : any, index : number) {
 
   return (
     <div key={key}>
+      <h1 className="ion-text-center">{namesOfIndex[index]}</h1>
       <IonCard>
         <img src={pahtToDomainPhoto} alt=""></img>
       </IonCard>
@@ -57,7 +62,7 @@ function genAlloDomainDisplay(_alloDomain : any, index : number) {
   );
 }
 
-const Home: React.FC<RouteComponentProps> = (props) => {
+const Home: React.FC<RouteComponentProps> = () => {
   let _data = getData();
   if (_data == undefined) {
     return (errorPage());
