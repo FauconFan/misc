@@ -9,7 +9,10 @@ import {
   IonRefresher,
   IonRefresherContent,
   IonText,
-  IonToggle} from '@ionic/react';
+  IonToggle,
+  IonRouterLink,
+  IonLabel,
+  IonItemDivider} from '@ionic/react';
 import React from 'react';
 import { RouteComponentProps } from "react-router-dom";
 import { CallNumber } from '@ionic-native/call-number/ngx';
@@ -28,6 +31,11 @@ const namesOfIndex : string[] = [
 
 function callThisNumber(number : string) {
   (new CallNumber()).callNumber(number, true);
+}
+
+function scrollTo(element : string) {
+  let htmlEl = document.getElementById(element)!;
+  htmlEl.scrollIntoView(true);
 }
 
 function genAlloDisplay(allo : any) {
@@ -113,8 +121,7 @@ const Home: React.FC<RouteComponentProps> = () => {
           <img src="assets/images/background_home.jpg" alt=""></img>
         </IonCard>
 
-      <IonText>
-        <div>
+        <div key="text_bienvenur">
           <p>Bonjour à tous.</p>
           <p>Nous avons le plaisir de vous présenter notre application afin de pouvoir nous appeler sans avoir à chercher notre numéro à chaque fois 😄.</p>
           <p>Nous vous invitons à choisir votre allo. Vous pouvez appuyez sur le bouton 'Appeler le 0...', cela appellera directement le numéro.</p>
@@ -122,16 +129,34 @@ const Home: React.FC<RouteComponentProps> = () => {
           <h2>Notes sur l'application</h2>
           <p>Si vous avez ouvert l'application depuis longtemps (plus de 15 min), vous avez la possibilité de recharger les numéros de téléphone en slidant l'application vers le bas (de la même manière qu'une page web).</p>
         </div>
-      </IonText>
-
+  
         <IonButton color="secondary" expand="full" onClick={() => {switchDarkMode();}}>Switch Dark Mode</IonButton>
   
+        <h1>Sommaire</h1>
+
+        <div key="summary">
+          <h2><IonLabel onClick={() => {scrollTo('I-allos');}}>I - Allos</IonLabel></h2>
+          <h2><IonLabel onClick={() => {scrollTo('II-activite');}}>II - Activités</IonLabel></h2>
+          <h2><IonLabel onClick={() => {scrollTo('III-apropos');}}>III - À propos</IonLabel></h2>
+        </div>
+
+        <h1 id="I-allos">I - Allos</h1>
+
         {
           data.get('allos').map((alloDomain : any, index : number) => {
             return genAlloDomainDisplay(alloDomain, index);
           })
         }
 
+        <h1 id="II-activite">II - Activités</h1>
+
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. In debitis similique quo amet perspiciatis doloremque, atque saepe laboriosam ipsa officia. Dolorem sit fuga dicta, numquam aut error optio amet nam.</p>
+
+        <h1 id="III-apropos">III - À propos</h1>
+
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet aspernatur deleniti veniam quas iste delectus nesciunt. Minima molestias dolor quasi at nemo nostrum est odio, hic beatae, quia iure ducimus!</p>
+        
+        
       </IonContent>
     </IonPage>
   );
