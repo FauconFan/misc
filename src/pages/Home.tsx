@@ -57,6 +57,28 @@ function genAlloDisplay(allo : any) {
   );
 }
 
+function genSubMenu(allos : any) {
+
+  return (
+    <div key="summary_allo">
+      <IonList>
+        {allos.map((allo : any, index : number) => {
+          if (Object.keys(allo).length > 0) {
+            let nameOnClick = "alloDomain_" + index.toString();
+            console.log(nameOnClick);
+            return (
+              <IonItem>
+                <IonLabel onClick={() => {scrollTo(nameOnClick);}}>
+                  <IonTitle>{namesOfIndex[index]}</IonTitle>
+                </IonLabel>
+              </IonItem>);
+          }
+          return (<> </>);
+        })}
+      </IonList>
+    </div>);
+}
+
 function genAlloDomainDisplay(_alloDomain : any, index : number) {
   let names_allos = [];
   for (let key in _alloDomain) {
@@ -67,14 +89,14 @@ function genAlloDomainDisplay(_alloDomain : any, index : number) {
     return (<> </>);
   }
 
-  let key = "_alloDomain" + index.toString();
+  let key = "alloDomain_" + index.toString();
 
   let alloDomain = objToStrMap(_alloDomain);
 
   let pahtToDomainPhoto = "assets/images/allo_" + index.toString() + ".jpg";
 
   return (
-    <div key={key}>
+    <div key={key} id={key}>
       <h1 className="ion-text-center">{namesOfIndex[index]}</h1>
       <IonCard>
         <img src={pahtToDomainPhoto} alt=""></img>
@@ -189,6 +211,10 @@ const Home: React.FC<RouteComponentProps> = () => {
             Les allos
           </IonLabel>
         </IonItemDivider>
+
+        {
+          genSubMenu(data.get('allos'))
+        }
 
         {
           data.get('allos').map((alloDomain : any, index : number) => {

@@ -1,5 +1,3 @@
-import React from 'react';
-
 function objToStrMap(obj : any) {
 	let strMap = new Map();
 	for (let k of Object.keys(obj)) {

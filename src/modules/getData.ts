@@ -1,5 +1,3 @@
-import React from 'react';
-
 import objToStrMap from './objToStrMap';
 
 // function delay(ms: number) {
@@ -28,7 +26,7 @@ function getData() : Map<string, any> | undefined {
 	try {
 		let r2 = JSON.parse(r1);
 
-		if (r2.key == "0xb69e83cecc4bcbd6") {
+		if (r2.key === "0xb69e83cecc4bcbd6") {
 			return (objToStrMap(r2));
 		}
 	} catch (error) {}

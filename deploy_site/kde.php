@@ -28,12 +28,12 @@
 		4 => []
 	);
 
-	$data['allos'][0]['allococktail'] = [
-		'name' => 'AlloCocktail',
-		'description' => 'Comment ça ?! Tu es à sec ?',
-		'prix' => 0,
-		'numero' => '06 88 18 64 31'
-	];
+	// $data['allos'][0]['allococktail'] = [
+	// 	'name' => 'AlloCocktail',
+	// 	'description' => 'Comment ça ?! Tu es à sec ?',
+	// 	'prix' => 0,
+	// 	'numero' => '06 88 18 64 31'
+	// ];
 
 	// $data['allos'][0]['alloraclette'] = [
 	// 	'name' => 'AlloRaclette',
