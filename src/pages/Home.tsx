@@ -8,9 +8,6 @@ import {
   IonButton,
   IonRefresher,
   IonRefresherContent,
-  IonText,
-  IonToggle,
-  IonRouterLink,
   IonLabel,
   IonItemDivider,
   IonIcon,
@@ -85,7 +82,7 @@ function genAlloDomainDisplay(_alloDomain : any, index : number) {
     names_allos.push(key);
   }
 
-  if (names_allos.length == 0) {
+  if (names_allos.length === 0) {
     return (<> </>);
   }
 
@@ -118,20 +115,20 @@ function genActivitiesDisplay(activities : any) {
     );
   }
 
-  if (activities.length == 0) {
+  if (activities.length === 0) {
     return (
       <p key="no_activities">Pas d'activité prévue pour l'instant.</p>
     );
   }
 
-  return (activities.map((activity : any, index : number) => {
+  return (activities.map((activity : any) => {
     return (genActivityDisplay(activity));
   }));
 }
 
 const Home: React.FC<RouteComponentProps> = () => {
   let _data = getData();
-  if (_data == undefined) {
+  if (_data === undefined) {
     return (errorPage());
   }
 
