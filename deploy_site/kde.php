@@ -37,14 +37,14 @@
 
 	// $data['allos'][0]['alloraclette'] = [
 	// 	'name' => 'AlloRaclette',
-	// 	'description' => 'Si le premier à appeler tu es, l\'appareil à raclette tu auras.',
+	// 	'description' => 'Si le premier à appeler tu es, l\'appareil à raclette et les ingrédients tu gagneras.',
 	// 	'prix' => 0,
 	// 	'numero' => '06 88 18 64 31'
 	// ];
 
 	$data['allos'][1]['allolaterre'] = [
 		'name' => 'Allo La Terre',
-		'description' => 'Lorem ipsum.',
+		'description' => 'Tu as un ami fan de jardinage ? Appelle et on remplira sa chambre de terre.',
 		'prix' => 0,
 		'numero' => '06 88 18 64 31'
 	];
@@ -58,42 +58,35 @@
 
 	$data['allos'][1]['allolamer'] = [
 		'name' => 'AlloLaMer',
-		'description' => 'A remplir',
+		'description' => 'Il fait chaud non ? On vient renverser de l\'eau de mer sur la personne de ton choix.',
 		'prix' => 0,
 		'numero' => '06 88 18 64 31'
 	];
 
 	$data['allos'][1]['allosagesse'] = [
 		'name' => 'AlloSagesse',
-		'description' => 'A remplir',
+		'description' => 'On t\'envoie maître Yoda pour philosopher avec toi.',
 		'prix' => 0,
 		'numero' => '06 88 18 64 31'
 	];
 
 	$data['allos'][2]['alloambiance'] = [
 		'name' => 'AlloAmbiance',
-		'description' => 'Tu t\'ennuies ? Appelle-nous, notre équipe saura te divertir.',
+		'description' => 'Tu t\'ennuies ? Appelle-nous, notre équipe saura te divertir et apaiser ta soif.',
 		'prix' => 0,
 		'numero' => '06 88 18 64 31'
 	];
 
 	$data['allos'][2]['alloforce'] = [
 		'name' => 'AlloForce',
-		'description' => 'Quand quelqu\'un a la flemme pour se lever et prendre un objet, il utilise la force de la liste pour le lui apporter.',
-		'prix' => 0,
-		'numero' => '06 88 18 64 31'
-	];
-
-	$data['allos'][2]['allochasseurdeprimes'] = [
-		'name' => 'AlloChasseurDePrimes',
-		'description' => 'A remplir',
+		'description' => 'Si tu as la flemme de te lever pour prendre un objet, utilise la force de la liste pour te l\'apporter.',
 		'prix' => 0,
 		'numero' => '06 88 18 64 31'
 	];
 
 	$data['allos'][2]['alloeauchaude'] = [
 		'name' => 'AlloEauChaude',
-		'description' => 'A remplir',
+		'description' => 'On t\'amène de la tisane, du chocolat et un plaid.',
 		'prix' => 0,
 		'numero' => '06 88 18 64 31'
 	];
@@ -114,7 +107,7 @@
 
 	$data['allos'][3]['allocrêpe'] = [
 		'name' => 'AlloCrêpe',
-		'description' => 'La seule vrai question est de savoir si tu la veux au chocolat, au sucre ou à la confiture.',
+		'description' => 'La seule vraie question est de savoir si tu la veux au chocolat, au sucre ou à la confiture.',
 		'prix' => 0,
 		'numero' => '06 88 18 64 31'
 	];
@@ -159,7 +152,6 @@
 			'description' => 'La Cantina de \'Ker des Étoiles\' est ouverte au I12-10. Il s\'agit d\'un espace convivial où tout le monde peuvent profiter de la nourriture proposé par la liste.'
 		],
 	);
-
 
 	/**
 	 * ==============================================================

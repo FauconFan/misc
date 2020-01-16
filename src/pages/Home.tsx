@@ -197,13 +197,13 @@ const Home: React.FC<RouteComponentProps> = () => {
         </IonItemDivider>
 
         <div key="text_bienvenue">
-          <p>Bonjour à tous.</p>
-          <p>Nous avons le plaisir de vous présenter notre application afin de pouvoir nous appeler sans avoir à chercher notre numéro à chaque fois 😄.</p>
-          <p>Nous vous invitons à choisir votre allo. Vous pouvez appuyez sur le bouton 'Appeler le 0...', cela appellera directement le numéro.</p>
-          <p>Pour le paiement des allos (si il y a), cela se fera sur Lydia à réception de la livraison.</p>
-          <p>Cette application est fortement interactive, certains numéros ou allos peuvent ne plus être à jour, </p>
-          <h2>Notes sur l'application</h2>
-          <p>Si vous avez ouvert l'application depuis longtemps (plus de 15 min), vous avez la possibilité de recharger les numéros de téléphone en slidant l'application vers le bas (de la même manière qu'une page web).</p>
+          <p>Bonjour jeune Jedi.</p>
+          <p>Tu as réussi l’install party, que les campagnes commencent ! Et qui dit campagnes, dit allo.</p>
+          <p>Cette application te permet de manier la force, ne la sens-tu pas ? La force de nous appeler en cliquant juste sur le bouton du allô que tu souhaites ?</p>
+          <p>Mais prends garde jeune jedi, tu n’arrives pas encore à maîtriser ta force, un simple clique sur le bouton et ton téléphone appèlera. <br></br>Alors ton allô à toi arrivera et sur Lydia tu payeras.</p>
+          <p>Le côté obsker se permet parfois d’empêcher les mises à jour. Pour les faire, il te suffit de swiper vers le bas comme une page web. Seulement les mises à jour sont parfois fébriles, les numéros ne seront plus toujours d’actualité, ne sois pas surpris.</p>
+          <p>Bonne campagne,</p>
+          <p>La ker des étoiles</p>
         </div>
   
         <IonItemDivider>
