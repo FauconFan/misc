@@ -29,6 +29,14 @@ const namesOfIndex : string[] = [
   "Les allos force"
 ];
 
+const textIntroductionOfAlloDomain : string[] = [
+  "Soit très réactif, pour les allos shotgun qui sont des éditions limitées.",
+  "Reste éveillé jeune jedi, ne loupe pas nos allos éphémères, ces allos apparaissent et disparaissent quelques heures après.",
+  "",
+  "",
+  ""
+];
+
 function callThisNumber(number : string) {
   (new CallNumber()).callNumber(number, true);
 }
@@ -98,6 +106,7 @@ function genAlloDomainDisplay(_alloDomain : any, index : number) {
       <IonCard>
         <img src={pahtToDomainPhoto} alt=""></img>
       </IonCard>
+      <p>{textIntroductionOfAlloDomain[index]}</p>
       {names_allos.map((allo) => {
         return genAlloDisplay(alloDomain.get(allo));
       })}
@@ -174,7 +183,7 @@ const Home: React.FC<RouteComponentProps> = () => {
             </IonItem>
             <IonItem>
               <IonLabel onClick={() => {scrollTo('II-activite');}}>
-                <IonTitle>Les activités</IonTitle>
+                <IonTitle>Les Activités</IonTitle>
               </IonLabel>
             </IonItem>
             <IonItem>
@@ -197,7 +206,7 @@ const Home: React.FC<RouteComponentProps> = () => {
           <p>Bonjour jeune Jedi.</p>
           <p>Tu as réussi l’install party, que les campagnes commencent ! Et qui dit campagnes, dit allo.</p>
           <p>Cette application te permet de manier la force, ne la sens-tu pas ? La force de nous appeler en cliquant juste sur le bouton du allô que tu souhaites ?</p>
-          <p>Mais prends garde jeune jedi, tu n’arrives pas encore à maîtriser ta force, un simple clique sur le bouton et ton téléphone appèlera. <br></br>Alors ton allô à toi arrivera et sur Lydia tu payeras.</p>
+          <p>Mais prends garde jeune Jedi, tu n’arrives pas encore à maîtriser ta force, un simple clique sur le bouton et ton téléphone appellera. <br></br>Alors ton allô à toi arrivera et sur Lydia tu payeras.</p>
           <p>Le côté obsker se permet parfois d’empêcher les mises à jour. Pour les faire, il te suffit de swiper vers le bas comme une page web. Seulement les mises à jour sont parfois fébriles, les numéros ne seront plus toujours d’actualité, ne sois pas surpris.</p>
           <p>Bonne campagne,</p>
           <p>La ker des étoiles</p>
@@ -205,7 +214,7 @@ const Home: React.FC<RouteComponentProps> = () => {
   
         <IonItemDivider>
           <IonLabel id="I-allos">
-            Les allos
+            Les Allos
           </IonLabel>
         </IonItemDivider>
 
@@ -218,15 +227,23 @@ const Home: React.FC<RouteComponentProps> = () => {
             return genAlloDomainDisplay(alloDomain, index);
           })
         }
-
-        <h1 id="II-activite">II - Activités</h1>
+  
+        <IonItemDivider>
+          <IonLabel id="II-activite">
+            Les Activités
+          </IonLabel>
+        </IonItemDivider>
 
         {genActivitiesDisplay(data.get('activities'))}
+  
+        <IonItemDivider>
+          <IonLabel id="III-apropos">
+            À propos
+          </IonLabel>
+        </IonItemDivider>
 
-        <h1 id="III-apropos">III - À propos</h1>
-
-        <p>Cette application a été développé par la liste 'La Ker des Étoiles' avec pour développeur principal Joseph Priou, avec l'aide de Corentin Hubert, ainsi que toute l'équipe technique de la liste.</p>
-        <p>Nous aimerions nous excuser pour la gène occasionnée par l'installation de l'application qui n'a pas pu se faire sur Google Play ou sur l'App Store dû à un manque de temps.</p>
+        <p>Cette application a été développée par la liste 'La Ker des Étoiles' avec pour développeur principal Joseph Priou, avec pour co-designer Corentin Hubert, ainsi que Suzanne Guitton et Emma Cariou en tant que rédactrices, sans oublier toute l'équipe technique de la liste.</p>
+        <p>Nous aimerions nous excuser pour la gêne occasionnée par l'installation de l'application qui n'a pas pu se faire sur Google Play ou sur l'App Store dû à un manque de temps.</p>
         <p></p>
         <p>Force à 'La Ker des Étoiles'</p>
         
