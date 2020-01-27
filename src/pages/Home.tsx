@@ -64,6 +64,23 @@ function genAlloDisplay(allo : any) {
 
 function genSubMenu(allos : any) {
 
+  let isEmpty = true;
+
+  for (let _allo in allos) {
+    let allo = allos[_allo];
+    if (allo.length !== 0) {
+      isEmpty = false;
+    }
+  }
+
+  if (isEmpty) {
+    return (
+      <div key="summary_allo">
+        <p>Nos allos sont disponibles du samedi 18 à 10h jusqu'au samedi 25 dans la soirée. Afin de respecter les soirées organisées, nos allos sont indisponibles de 22h à 2h tous les soirs.</p>
+      </div>
+    );
+  }
+
   return (
     <div key="summary_allo">
       <IonList>
@@ -126,7 +143,7 @@ function genActivitiesDisplay(activities : any) {
 
   if (activities.length === 0) {
     return (
-      <p key="no_activities">Pas d'activité prévue pour l'instant.</p>
+      <p key="no_activities">Activités à venir. Restez connectés.</p>
     );
   }
 
@@ -243,7 +260,7 @@ const Home: React.FC<RouteComponentProps> = () => {
         </IonItemDivider>
 
         <p>Cette application a été développée par la liste 'La Ker des Étoiles' avec pour développeur principal Joseph Priou, avec pour co-designer Corentin Hubert, ainsi que Suzanne Guitton et Emma Cariou en tant que rédactrices, sans oublier toute l'équipe technique de la liste.</p>
-        <p>Nous aimerions nous excuser pour la gêne occasionnée par l'installation de l'application qui n'a pas pu se faire sur Google Play ou sur l'App Store dû à un manque de temps.</p>
+        <p>Nous aimerions nous excuser pour la gêne occasionnée par l'installation de l'application qui n'a pas pu se faire sur Google Play ou sur l'App Store due à un manque de temps.</p>
         <p></p>
         <p>Force à 'La Ker des Étoiles'</p>
         

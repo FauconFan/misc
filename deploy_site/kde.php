@@ -28,125 +28,6 @@
 		4 => []
 	);
 
-	// $data['allos'][0]['allococktail'] = [
-	// 	'name' => 'AlloCocktail',
-	// 	'description' => 'Comment ça ?! Tu es à sec ?',
-	// 	'prix' => 0,
-	// 	'numero' => ''
-	// ];
-
-	// $data['allos'][0]['alloraclette'] = [
-	// 	'name' => 'AlloRaclette',
-	// 	'description' => 'Si le premier à appeler tu es, l\'appareil à raclette et les ingrédients tu gagneras.',
-	// 	'prix' => 0,
-	// 	'numero' => ''
-	// ];
-
-	// $data['allos'][1]['allolaterre'] = [
-	// 	'name' => 'Allo La Terre',
-	// 	'description' => 'Tu as un ami fan de jardinage ? Appelle et on remplira sa chambre de terre.',
-	// 	'prix' => 0,
-	// 	'numero' => ''
-	// ];
-
-	// $data['allos'][1]['allolotterie'] = [
-	// 	'name' => 'AlloLotterie',
-	// 	'description' => 'Pour chaque burger acheté, tu as une chance supplémentaire de gagner le gros lot.',
-	// 	'prix' => 0,
-	// 	'numero' => ''
-	// ];
-
-	// $data['allos'][1]['allolamer'] = [
-	// 	'name' => 'AlloLaMer',
-	// 	'description' => 'Il fait chaud non ? On vient renverser de l\'eau de mer sur la personne de ton choix.',
-	// 	'prix' => 0,
-	// 	'numero' => ''
-	// ];
-
-	// $data['allos'][1]['allosagesse'] = [
-	// 	'name' => 'AlloSagesse',
-	// 	'description' => 'On t\'envoie maître Yoda pour philosopher avec toi.',
-	// 	'prix' => 0,
-	// 	'numero' => ''
-	// ];
-
-	$data['allos'][2]['alloambiance'] = [
-		'name' => 'AlloAmbiance',
-		'description' => 'Tu t\'ennuies ? Appelle-nous, notre équipe saura te divertir et apaiser ta soif.',
-		'prix' => 0,
-		'numero' => '06 13 50 80 67'
-	];
-
-	// $data['allos'][2]['alloforce'] = [
-	// 	'name' => 'AlloForce',
-	// 	'description' => 'Si tu as la flemme de te lever pour prendre un objet, utilise la force de la liste pour te l\'apporter.',
-	// 	'prix' => 0,
-	// 	'numero' => ''
-	// ];
-
-	// $data['allos'][2]['alloaube'] = [
-	// 	'name' => 'À l\'aube',
-	// 	'description' => 'Pour tes beaux yeux.',
-	// 	'prix' => 1000,
-	// 	'numero' => ''
-	// ];
-
-	$data['allos'][2]['alloeauchaude'] = [
-		'name' => 'AlloEauChaude',
-		'description' => 'On t\'amène de la tisane, du chocolat et un plaid.',
-		'prix' => 0,
-		'numero' => '07 70 65 60 88'
-	];
-
-	// $data['allos'][2]['alloreveildelaforce'] = [
-	// 	'name' => 'AlloReveilDeLaForce',
-	// 	'description' => 'Difficile de se lever un lendemain de soirée... Nous te proposons le meilleur des réveils pour y remédier.',
-	// 	'prix' => 0,
-	// 	'numero' => ''
-	// ];
-
-	$data['allos'][3]['alloburger'] = [
-		'name' => 'AlloBurger',
-		'description' => 'Un petit creux ? La Ker des étoiles vous propose son délicieux burger livré chez vous.',
-		'prix' => 1,
-		'numero' => '07 82 14 27 24'
-	];
-
-	$data['allos'][3]['allocrêpe'] = [
-		'name' => 'AlloCrêpe',
-		'description' => 'La seule vraie question est de savoir si tu la veux au chocolat, au sucre ou à la confiture.',
-		'prix' => 0,
-		'numero' => '06 52 52 17 47'
-	];
-
-	$data['allos'][3]['allohotdog'] = [
-		'name' => 'AlloHotdog',
-		'description' => 'Encore faim ?',
-		'prix' => 0,
-		'numero' => '07 70 65 60 88'
-	];
-
-	$data['allos'][4]['allohyperespace'] = [
-		'name' => 'AlloHyperEspace',
-		'description' => 'Si tu as besoin de te déplacer, nos chauffeurs se feront un plaisir de te conduire dans leur X-wing.',
-		'prix' => 0,
-		'numero' => '06 82 37 81 24'
-	];
-
-	$data['allos'][4]['alloménage'] = [
-		'name' => 'AlloMénage',
-		'description' => 'Un coup de balai à passer ? Pas de problème : on s\'en occupe.',
-		'prix' => 0,
-		'numero' => '06 82 37 81 24'
-	];
-
-	$data['allos'][4]['allovaisselle'] = [
-		'name' => 'AlloVaisselle',
-		'description' => 'Pourquoi faire sa vaisselle lorsque d\'autres peuvent le faire à notre place...',
-		'prix' => 0,
-		'numero' => '06 82 37 81 24'
-	];
-
 	/**
 	 * ==============================================================
 	 * ======================= ACTIVITIES ===========================
@@ -154,10 +35,10 @@
 	 */
 
 	$data['activities'] = array(
-		[
-			'name' => 'La Cantina',
-			'description' => 'La Cantina de \'Ker des Étoiles\' est ouverte au I12-10. Il s\'agit d\'un espace convivial où tout le monde peuvent profiter de la nourriture proposé par la liste.'
-		],
+		// [
+		// 	'name' => 'La Cantina',
+		// 	'description' => 'La Cantina de \'Ker des Étoiles\' est ouverte au I12-10. Il s\'agit d\'un espace convivial où tout le monde peuvent profiter de la nourriture proposé par la liste.'
+		// ],
 	);
 
 	/**
