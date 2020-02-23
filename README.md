@@ -4,8 +4,8 @@ Here, you can find my version of the python challenges on HackerRank
 
 ![Photo ranking](photo_ranking.png)
 
-All challenges were made in the month of January 2018
-Except 'Bebugging'. Is was made in the month of February 2020
+All challenges were made in the month of January 2018.  
+Except 'Bebugging'. Is was made in the month of February 2020.  
 
 Here some links:
  - [HackerRank link](https://www.hackerrank.com/domains/python/)
