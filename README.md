@@ -16,27 +16,67 @@ Tree on directory. (All folders contains a main.py file, they are not listed bel
 ```
 $> tree . --dirsfirst | grep -v main.py
 .
-├── Basic Data Types
+├── 01_Introduction
+│   ├── Arithmetic Operators
+│   ├── Loops
+│   ├── Print Function
+│   ├── Python: Division
+│   ├── Python If-Else
+│   ├── Say "Hello, World" With Python
+│   └── Write a function
+├── 02_Basic Data Types
 │   ├── Finding the percentage
 │   ├── Find the Runner-Up Score!
 │   ├── List Comprehensions
 │   ├── Lists
 │   ├── Nested Lists
 │   └── Tuples
-├── Built-Ins
-│   ├── Any or All
-│   ├── Athlete Sort
-│   ├── ginortS
-│   ├── Input()
-│   ├── Python Evaluation
-│   └── Zipped!
-├── Classes
-│   ├── Class 2 - Find the Torsional Angle
-│   └── Classes: Dealing with Complex Numbers
-├── Closures and Decorators
-│   ├── Decorators 2 - Name Directory
-│   └── Standardize Mobile Number Using Decorators
-├── Collections
+├── 03_Strings
+│   ├── Alphabet Rangoli
+│   ├── Capitalize
+│   ├── Designer Door Mat
+│   ├── Find a string
+│   ├── Merge the Tools!
+│   ├── Mutations
+│   ├── String Formatting
+│   ├── String Split and Join
+│   ├── String Validators
+│   ├── sWAP cASE
+│   ├── Text Alignment
+│   ├── Text Wrap
+│   ├── The Minion Game
+│   └── What's Your Name?
+├── 04_Sets
+│   ├── Check Strict Superset
+│   ├── Check Subset
+│   ├── Introduction to Sets
+│   ├── No Idea!
+│   ├── Set .add()
+│   ├── Set .difference() Operation
+│   ├── Set .discard(), .remove() & .pop()
+│   ├── Set .intersection() Operation
+│   ├── Set Mutations
+│   ├── Set .symmetric_difference() Operation
+│   ├── Set .union() Operation
+│   ├── Symmetric Difference
+│   └── The Captain's Room
+├── 05_Math
+│   ├── Find Angle MBC
+│   ├── Integers Come In All Sizes
+│   ├── Mod Divmod
+│   ├── Polar Coordinates
+│   ├── Power - Mod Power
+│   ├── Triangle Quest
+│   └── Triangle Quest 2
+├── 06_IterTools
+│   ├── Compress the String!
+│   ├── Iterables and Iterators
+│   ├── itertools.combinations()
+│   ├── itertools.combinations_with_replacement()
+│   ├── itertools.permutations()
+│   ├── itertools.product()
+│   └── Maximize It!
+├── 07_Collections
 │   ├── collections.Counter()
 │   ├── Collections.deque()
 │   ├── Collections.namedtuple()
@@ -45,60 +85,27 @@ $> tree . --dirsfirst | grep -v main.py
 │   ├── DefaultDict Tutorial
 │   ├── Piling Up!
 │   └── Word Order
-├── Date and Time
+├── 08_Date and Time
 │   ├── Calendar Module
 │   └── Time Delta
-├── Debugging
-│   ├── Default Arguments
-│   └── Words Score
-├── Errors and Exceptions
+├── 09_Errors and Exceptions
 │   ├── Exceptions
 │   └── Incorrect Regex
-├── Introduction
-│   ├── Arithmetic Operators
-│   ├── Loops
-│   ├── Print Function
-│   ├── Python: Division
-│   ├── Python If-Else
-│   ├── Say "Hello, World" With Python
-│   └── Write a function
-├── IterTools
-│   ├── Compress the String!
-│   ├── Iterables and Iterators
-│   ├── itertools.combinations()
-│   ├── itertools.combinations_with_replacement()
-│   ├── itertools.permutations()
-│   ├── itertools.product()
-│   └── Maximize It!
-├── Math
-│   ├── Find Angle MBC
-│   ├── Integers Come In All Sizes
-│   ├── Mod Divmod
-│   ├── Polar Coordinates
-│   ├── Power - Mod Power
-│   ├── Triangle Quest
-│   └── Triangle Quest 2
-├── Numpy
-│   ├── Array Mathematics
-│   ├── Arrays
-│   ├── Concatenate
-│   ├── Dot and Cross
-│   ├── Eye and Identity
-│   ├── Floor, Ceil and Rint
-│   ├── Inner and Outer
-│   ├── Linear Algebra
-│   ├── Mean, Var, and Std
-│   ├── Min and Max
-│   ├── Polynomials
-│   ├── Shape and Reshape
-│   ├── Sum and Prod
-│   ├── Transpose and Flatten
-│   └── Zeros and Ones
-├── Python Functionals
+├── 10_Classes
+│   ├── Class 2 - Find the Torsional Angle
+│   └── Classes: Dealing with Complex Numbers
+├── 11_Built-Ins
+│   ├── Any or All
+│   ├── Athlete Sort
+│   ├── ginortS
+│   ├── Input()
+│   ├── Python Evaluation
+│   └── Zipped!
+├── 12_Python Functionals
 │   ├── Map and Lambda Function
 │   ├── Reduce Function
 │   └── Validating Email Addresses With a Filter
-├── Regex and Parsing
+├── 13_Regex and Parsing
 │   ├── Detect HTML Tags, Attributes and Attribute Values
 │   ├── Group(), Groups() & Groupdict()
 │   ├── Hex Color Code
@@ -116,39 +123,34 @@ $> tree . --dirsfirst | grep -v main.py
 │   ├── Validating Postal Codes
 │   ├── Validating Roman Numerals
 │   └── Validating UID
-├── Sets
-│   ├── Check Strict Superset
-│   ├── Check Subset
-│   ├── Introduction to Sets
-│   ├── No Idea!
-│   ├── Set .add()
-│   ├── Set .difference() Operation
-│   ├── Set .discard(), .remove() & .pop()
-│   ├── Set .intersection() Operation
-│   ├── Set Mutations
-│   ├── Set .symmetric_difference() Operation
-│   ├── Set .union() Operation
-│   ├── Symmetric Difference
-│   └── The Captain's Room
-├── Strings
-│   ├── Alphabet Rangoli
-│   ├── Capitalize
-│   ├── Designer Door Mat
-│   ├── Find a string
-│   ├── Merge the Tools!
-│   ├── Mutations
-│   ├── String Formatting
-│   ├── String Split and Join
-│   ├── String Validators
-│   ├── sWAP cASE
-│   ├── Text Alignment
-│   ├── Text Wrap
-│   ├── The Minion Game
-│   └── What's Your Name?
-├── XML
+├── 14_XML
 │   ├── XML 1 - Find the Score
 │   └── XML2 - Find the Maximum Depth
+├── 15_Closures and Decorators
+│   ├── Decorators 2 - Name Directory
+│   └── Standardize Mobile Number Using Decorators
+├── 16_Numpy
+│   ├── Array Mathematics
+│   ├── Arrays
+│   ├── Concatenate
+│   ├── Dot and Cross
+│   ├── Eye and Identity
+│   ├── Floor, Ceil and Rint
+│   ├── Inner and Outer
+│   ├── Linear Algebra
+│   ├── Mean, Var, and Std
+│   ├── Min and Max
+│   ├── Polynomials
+│   ├── Shape and Reshape
+│   ├── Sum and Prod
+│   ├── Transpose and Flatten
+│   └── Zeros and Ones
+├── 17_Debugging
+│   ├── Default Arguments
+│   └── Words Score
 ├── LICENSE
 ├── photo_ranking.png
 └── README.md
+
+132 directories, 118 files
 ```
