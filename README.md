@@ -5,6 +5,7 @@ Here, you can find my version of the python challenges on HackerRank
 ![Photo ranking](photo_ranking.png)
 
 All challenges were made in the month of January 2018
+Except 'Bebugging'. Is was made in the month of February 2020
 
 Here some links:
  - [HackerRank link](https://www.hackerrank.com/domains/python/)
@@ -13,10 +14,8 @@ Here some links:
 Tree on directory. (All folders contains a main.py file, they are not listed below)
 
 ```
+$> tree . --dirsfirst | grep -v main.py
 .
-├── LICENSE
-├── README.md
-├── photo_ranking.png
 ├── Basic Data Types
 │   ├── Finding the percentage
 │   ├── Find the Runner-Up Score!
@@ -49,6 +48,9 @@ Tree on directory. (All folders contains a main.py file, they are not listed bel
 ├── Date and Time
 │   ├── Calendar Module
 │   └── Time Delta
+├── Debugging
+│   ├── Default Arguments
+│   └── Words Score
 ├── Errors and Exceptions
 │   ├── Exceptions
 │   └── Incorrect Regex
@@ -80,7 +82,7 @@ Tree on directory. (All folders contains a main.py file, they are not listed bel
 │   ├── Array Mathematics
 │   ├── Arrays
 │   ├── Concatenate
-│   ├── Dot and Cross\012
+│   ├── Dot and Cross
 │   ├── Eye and Identity
 │   ├── Floor, Ceil and Rint
 │   ├── Inner and Outer
@@ -143,7 +145,10 @@ Tree on directory. (All folders contains a main.py file, they are not listed bel
 │   ├── Text Wrap
 │   ├── The Minion Game
 │   └── What's Your Name?
-└── XML
-    ├── XML 1 - Find the Score
-    └── XML2 - Find the Maximum Depth
+├── XML
+│   ├── XML 1 - Find the Score
+│   └── XML2 - Find the Maximum Depth
+├── LICENSE
+├── photo_ranking.png
+└── README.md
 ```
