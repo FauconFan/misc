@@ -1,5 +1,5 @@
 
-CXX = clang++
+CXX = clang++ -std=c++17 -O2
 
 SRC_FILE = main.cpp
 OUT = output
