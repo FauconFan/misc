@@ -1,0 +1,4 @@
+Println("Coucou");
+Println('C\'est déric');
+Println("Qui te parle de ");
+Println('la plage !');

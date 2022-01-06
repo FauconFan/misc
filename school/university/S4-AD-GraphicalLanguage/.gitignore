@@ -1,0 +1,10 @@
+GraphTXT.jar
+MANIFEST.MF
+bin/
+src/lexer_parser/LexerFlex.java
+
+*.tex
+*.pdf
+*.aux
+*.log
+*.synctex.gz

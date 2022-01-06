@@ -1,0 +1,38 @@
+package src.lexer_parser;
+
+public enum Sym
+{
+	NUMBER,
+	COLOR,
+	OPERATOR,
+	COMPAREOP,
+	BOOLOP,
+	STRING,
+	TRUE,
+	FALSE,
+	IDENTIFIER,
+	COMMA,
+	SEMICOLON,
+	LPAR,
+	RPAR,
+	LBRA,
+	RBRA,
+	BEGIN,
+	END,
+	WHILE,
+	DO,
+	FOR,
+	EXIT,
+	PRINTLN,
+	IF,
+	ELIF,
+	THEN,
+	ELSE,
+	CONST,
+	VAR,
+	EQUALS,
+	DRAWCIRCLE,
+	FILLCIRCLE,
+	DRAWRECT,
+	FILLRECT;
+}

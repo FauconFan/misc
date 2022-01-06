@@ -1,0 +1,90 @@
+sudo : true
+language : java
+
+install:
+  - curl https://master.dl.sourceforge.net/project/jflex/jflex/1.6.1/jflex-1.6.1.tar.gz --output jflex-1.6.1.tar.gz
+  - echo "921496537b70f80cdd7037087a34766c3e4adbf5  jflex-1.6.1.tar.gz" | sha1sum -c
+  - sudo tar -C /usr/share -xvzf jflex-1.6.1.tar.gz
+  - sudo ln -s /usr/share/jflex-1.6.1/bin/jflex /usr/bin/jflex
+  - rm -rf jflex-1.6.1.tar.gz
+
+script : make
+after_script : make fclean
+
+stages:
+  - Base Compilation
+  - Unit Test
+  - Final
+
+jobs:
+  include:
+    - os: linux
+      jdk: oraclejdk9
+      stage: Base Compilation
+      name: oraclejdk9
+    - os: linux
+      jdk: oraclejdk11
+      stage: Base Compilation
+      name: oraclejdk11
+    - os: linux
+      jdk: oraclejdk12
+      stage: Base Compilation
+      name: oraclejdk12
+    - os: linux
+      jdk: oraclejdk13
+      stage: Base Compilation
+      name: oraclejdk13
+    - os: linux
+      jdk: oraclejdk14
+      stage: Base Compilation
+      name: oraclejdk14
+    - os: linux
+      jdk: openjdk8
+      stage: Base Compilation
+      name: openjdk8
+    - os: linux
+      jdk: openjdk9
+      stage: Base Compilation
+      name: openjdk9
+    - os: linux
+      jdk: openjdk10
+      stage: Base Compilation
+      name: openjdk10
+    - os: linux
+      jdk: openjdk11
+      stage: Base Compilation
+      name: openjdk11
+    - os: linux
+      jdk: openjdk12
+      stage: Base Compilation
+      name: openjdk12
+    - os: linux
+      jdk: openjdk13
+      stage: Base Compilation
+      name: openjdk13
+    - os: linux
+      jdk: openjdk14
+      stage: Base Compilation
+      name: openjdk14
+
+    - os: linux
+      jdk: openjdk8
+      stage: Unit Test
+      script : make basic_test
+      name: Basic Test
+    - os: linux
+      jdk: openjdk8
+      stage: Unit Test
+      script : make sys_test
+      name: Sys test
+    - os: linux
+      jdk: openjdk8
+      stage: Unit Test
+      script : make bonus_test
+      name: Bonus Test
+
+    - os: linux
+      jdk: openjdk8
+      stage: Final
+      script : make test
+      name: Full Build All
