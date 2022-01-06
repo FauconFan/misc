@@ -1,0 +1,38 @@
+
+Todo List
+
+Mandatory part:
+    ✔ Faire un peu de documentation (dans le .h uniquement) @done(19-06-11 12:01)
+        ✔ Changer les noms et faire un truc propre @done(19-06-11 12:01)
+        ✔ Defragmentation documentation @done(19-06-12 17:56)
+        ✔ Fix doc ajout fonctions @done(19-06-13 15:24)
+    ✔ Faire l'implémentation de la liste simplement châiné pour tiny et small @done(19-06-05 12:52)
+        ✔ Parcours (recherche dispo + existing) @done(19-06-05 12:41)
+        ✔ Ajout @done(19-06-05 12:41)
+        ✔ Suppression (remplacement correct) @done(19-06-05 12:41)
+    ✔ Faire l'implémentation pour les larges @done(19-06-10 16:27)
+        ✔ Parcours (existing) @done(19-06-10 16:27)
+        ✔ Ajout @done(19-06-10 16:27)
+        ✔ Suppresion (juste rendre libre) @done(19-06-10 16:27)
+    ✔ Faire le check de présence pour le free plutot que de tout parcourir @done(19-06-11 10:52)
+    ✔ Faire une abstraction pour allouer des pages, multiples de getpagesize... @done(19-05-12 18:18)
+    ✔ Mise en place de la structure principale @done(19-06-10 16:27)
+        ✔ getpagesize @done(19-06-05 12:52)
+        ✔ vérification defines @done(19-06-05 12:52)
+        ✔ préallocation (calcul dynamique) @done(19-06-10 16:27)
+    ✔ Gestion de la bufferisation de pages @done(19-06-12 13:32)
+        ✔ libérer quand trop @done(19-06-12 13:32)
+    ✔ Faire le show_mem_alloc (en write only) @done(19-06-10 16:28)
+    ✔ Verifier les size en entrée (pas decriture sur les 8 derniers bits) (> 64 To) @done(19-06-12 22:49)
+    ✔ inline functions @done(19-06-13 13:13)
+    ✔ Faire des tests de bon fonctionnement @done(19-06-23 10:34)
+
+Bonus part:
+    ✔ Faire le lock pour les pthreads (easy) @done(19-06-12 14:02)
+    ✔ Faire un show mem hex alloc pas trop compliqué @done(19-06-13 08:33)
+    ✔ Gérer quelques variables d'environnement de debug @done(19-06-13 16:01)
+        ✔ La variable d'environnement DUMP AT EXIT @done(19-06-13 16:01)
+    ✔ malloc_zone @done(19-06-13 12:06)
+    ✔ size, good_size @done(19-06-13 14:25)
+
+Archive:
