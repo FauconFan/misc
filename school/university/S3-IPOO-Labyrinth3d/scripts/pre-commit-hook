@@ -1,0 +1,37 @@
+#!/bin/sh
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+# $1 is a name
+# $2 is a first command to be ran
+# $3 is a second one
+
+doit()
+{
+  echo -e "${RED}[$1...]${NC}"
+  $2
+  if [ $? -ne 0 ]; then
+    echo -e "${RED}$1 FAILED${NC}"
+    exit 1;
+  fi
+  $3
+  echo -e "${GREEN}[$1 SUCCESSED]${NC}"
+}
+
+make fclean
+
+doit "NORMALISE" "make norm" ""
+doit "MAKE" "make" ""
+doit "MAKE TESTGEN" "make testgen" ""
+doit "MAKE TESTPARSER" "make testparser" ""
+doit "MAKE RUN (TESTPARSER)" "make run" ""
+doit "GENDOC" "make doc" "" 
+
+for i in `git diff --cached --name-only`
+do
+	git add $i
+done
+
+make fclean

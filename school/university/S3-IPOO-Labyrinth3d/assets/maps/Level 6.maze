@@ -1,0 +1,1078 @@
+{
+  "cm": [
+    {
+      "specialCases": [
+        {
+          "type": "StartCase",
+          "properties": {
+            "x": 0,
+            "y": 0,
+            "type": "START"
+          }
+        },
+        {
+          "type": "EndCase",
+          "properties": {
+            "x": 0,
+            "y": 199,
+            "type": "END"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 1,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 2,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 3,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 4,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 5,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 6,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 7,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 8,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 9,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 10,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 11,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 12,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 13,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 14,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 15,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 16,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 17,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 18,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 19,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 20,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 21,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 22,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 23,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 24,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 25,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 26,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 27,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 28,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 29,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 30,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 31,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 32,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 33,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 34,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 35,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 36,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 37,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 38,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 39,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 40,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 41,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 42,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 43,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 44,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 45,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 46,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 47,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 48,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 1.3,
+            "activated": false,
+            "x": 0,
+            "y": 49,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 100,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 101,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 102,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 103,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 104,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 105,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 106,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 107,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 108,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 109,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 110,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 111,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 112,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 113,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 114,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 115,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 116,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 117,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 118,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 119,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 120,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 121,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 122,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 123,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 124,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 125,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 126,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 127,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 128,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 129,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 130,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 131,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 132,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 133,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 134,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 135,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 136,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 137,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 138,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 139,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 140,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 141,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 142,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 143,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 144,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 145,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 146,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 147,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 148,
+            "type": "SPEED"
+          }
+        },
+        {
+          "type": "SpeedCase",
+          "properties": {
+            "speedModif": 0.8,
+            "activated": false,
+            "x": 0,
+            "y": 149,
+            "type": "SPEED"
+          }
+        }
+      ],
+      "linewalls": [
+        {
+          "x1": 0,
+          "y1": 0,
+          "x2": 0,
+          "y2": 200,
+          "e": 0.1
+        },
+        {
+          "x1": 1,
+          "y1": 0,
+          "x2": 1,
+          "y2": 200,
+          "e": 0.1
+        },
+        {
+          "x1": 0,
+          "y1": 0,
+          "x2": 1,
+          "y2": 0,
+          "e": 0.1
+        },
+        {
+          "x1": 0,
+          "y1": 200,
+          "x2": 1,
+          "y2": 200,
+          "e": 0.1
+        }
+      ],
+      "mazeDim": {
+        "list_rectmaze": [
+          {
+            "x1": 0,
+            "y1": 0,
+            "x2": 1,
+            "y2": 200
+          }
+        ],
+        "hasPhysicalDimension": true
+      }
+    }
+  ],
+  "p": {
+    "ghostMode": false,
+    "hitBoxCircle": 0.05,
+    "hitBoxTop": 0.1,
+    "hitBoxBottom": 0.4,
+    "posX": 0.5,
+    "posY": 0.5,
+    "posZ": 0.4,
+    "horizontalAngle": 0.0,
+    "verticalAngle": 0.0,
+    "hasWin": false,
+    "isDead": false,
+    "speed": 1.0,
+    "isRunning": false,
+    "time": 0,
+    "rot": 2.0,
+    "velocity": 0.0,
+    "velocityZ": 0.0,
+    "lastDepAngle": 0,
+    "dirs": []
+  },
+  "current_level": 0,
+  "flyMode": false
+}

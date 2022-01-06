@@ -1,0 +1,108 @@
+{
+  "cm": [
+    {
+      "specialCases": [
+        {
+          "type": "StartCase",
+          "properties": {
+            "x": 3,
+            "y": 2,
+            "type": "START"
+          }
+        },
+        {
+          "type": "EndCase",
+          "properties": {
+            "x": 3,
+            "y": 13,
+            "type": "END"
+          }
+        },
+        {
+          "type": "TimeCase",
+          "properties": {
+            "timeNano": 10000,
+            "activated": false,
+            "x": 1,
+            "y": 6,
+            "type": "TIME"
+          }
+        },
+        {
+          "type": "TimeCase",
+          "properties": {
+            "timeNano": -10000,
+            "activated": false,
+            "x": 5,
+            "y": 6,
+            "type": "TIME"
+          }
+        }
+      ],
+      "linewalls": [
+        {
+          "x1": 0,
+          "y1": 0,
+          "x2": 0,
+          "y2": 15,
+          "e": 0.1
+        },
+        {
+          "x1": 7,
+          "y1": 0,
+          "x2": 7,
+          "y2": 15,
+          "e": 0.1
+        },
+        {
+          "x1": 0,
+          "y1": 0,
+          "x2": 7,
+          "y2": 0,
+          "e": 0.1
+        },
+        {
+          "x1": 0,
+          "y1": 15,
+          "x2": 7,
+          "y2": 15,
+          "e": 0.1
+        }
+      ],
+      "mazeDim": {
+        "list_rectmaze": [
+          {
+            "x1": 0,
+            "y1": 0,
+            "x2": 7,
+            "y2": 15
+          }
+        ],
+        "hasPhysicalDimension": true
+      }
+    }
+  ],
+  "p": {
+    "ghostMode": false,
+    "hitBoxCircle": 0.05,
+    "hitBoxTop": 0.1,
+    "hitBoxBottom": 0.4,
+    "posX": 3.5,
+    "posY": 2.5,
+    "posZ": 0.4,
+    "horizontalAngle": 0.0,
+    "verticalAngle": 0.0,
+    "hasWin": false,
+    "isDead": false,
+    "speed": 1.0,
+    "isRunning": false,
+    "time": 0,
+    "rot": 2.0,
+    "velocity": 0.0,
+    "velocityZ": 0.0,
+    "lastDepAngle": 0,
+    "dirs": []
+  },
+  "current_level": 0,
+  "flyMode": false
+}
