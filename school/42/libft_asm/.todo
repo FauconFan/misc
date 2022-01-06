@@ -1,0 +1,31 @@
+
+core:
+	✔ bzero @done(19-07-04 12:13)
+	✔ strcat @done(19-07-04 12:13)
+	✔ isalpha @done(19-07-04 12:13)
+	✔ isdigit @done(19-07-04 12:13)
+	✔ isalnum @done(19-07-04 12:13)
+	✔ isascii @done(19-07-04 12:13)
+	✔ isprint @done(19-07-04 12:13)
+	✔ toupper @done(19-07-04 12:13)
+	✔ tolower @done(19-07-04 12:13)
+	✔ puts @done(19-07-04 12:13)
+
+	✔ strlen @done(19-07-04 12:13)
+	✔ memset @done(19-07-04 12:13)
+	✔ memcpy @done(19-07-04 12:13)
+	✔ strdup @done(19-07-04 16:30)
+
+	✔ ft_cat @done(19-07-04 18:12)
+
+bonus:
+	✔ isupper @done(19-07-04 16:36)
+	✔ islower @done(19-07-04 16:36)
+	✔ getrandom @done(19-07-22 18:22)
+	✔ memchr @done(19-07-22 16:00)
+	✔ memcmp @done(19-07-22 17:01)
+	✔ strcmp @done(19-07-22 17:40)
+	✔ strncmp @done(19-07-22 17:40)
+	✔ strequ @done(19-07-22 17:49)
+	✔ abs @done(19-07-22 18:07)
+	✔ ft_cipher @done(19-07-31 10:52)

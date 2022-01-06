@@ -1,0 +1,32 @@
+sudo : disabled
+language : c
+compiler :
+  - gcc
+  - cc
+  - clang
+
+script : make
+after_script : make fclean
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+      env:
+         - MATRIX_EVAL="CC=gcc"
+         - NAME="Single Compile test"
+    - os: linux
+      script : make -C tests/build_custom/ 01
+      env :
+         - NAME="Build Custom 01"
+    - os: linux
+      script : make -C tests/build_custom/ 02
+      env :
+         - NAME="Build Custom 02"
+    - os: linux
+      script : make -C tests/build_custom/ 21
+      env :
+         - NAME="Build Custom 21"

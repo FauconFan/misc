@@ -1,0 +1,29 @@
+cat > app.py << EOF
+from flask import Flask
+import os
+import socket
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "<h1>Hello World ! </h1>"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=3000)
+EOF
+
+docker-machine ssh Char "mkdir -p /home/docker/Abathur"
+docker-machine scp app.py Char:/home/docker/Abathur/app.py
+
+rm -f app.py
+
+docker run -d -t \
+    --name Abathur \
+	-p 3000:3000 \
+    --volume /home/docker/Abathur:/root \
+    python:2-slim
+
+docker exec Abathur pip install flask
+
+docker exec -d Abathur python2 /root/app.py

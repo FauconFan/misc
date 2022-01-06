@@ -1,0 +1,13 @@
+int32(42)
+push
+push
+add int32(33)
+push float(44.55)
+mul
+push
+push
+dump double(42.42)
+pop
+assert
+exit int32(42)
+double(42.42)

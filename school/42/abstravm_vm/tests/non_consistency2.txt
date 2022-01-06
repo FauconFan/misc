@@ -1,0 +1,8 @@
+push int32(42)
+add
+push int32(8)
+mul
+push int8(1)
+div
+pop
+exit

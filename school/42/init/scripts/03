@@ -1,0 +1,10 @@
+#!/bin/bash
+
+ERROR="You must specify one folder"
+
+if [ ! $# = 1 -o ! -d $1 ]; then
+	echo $ERROR
+	exit 1
+fi
+
+ls -hlS $1

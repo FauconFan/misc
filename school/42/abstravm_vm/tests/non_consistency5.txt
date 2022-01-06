@@ -1,0 +1,8 @@
+
+; Oui ceci est un commentaire
+push float(32)
+push double(0)
+mul
+pop
+assert double(0)
+exit
