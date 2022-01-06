@@ -1,0 +1,37 @@
+
+To do list
+
+Core:
+	Gérer les architectures suivantes:
+		✔ macho 64 bit @done(19-06-18 17:14)
+		✔ macho 32 bits @done(19-06-25 15:25)
+		✔ Archive ar @done(19-06-20 18:09)
+		✔ fat @done(19-07-01 10:09)
+			✔ fat 32 Big @done(19-06-19 12:24)
+			✔ fat 32 Lit @done(19-07-01 10:09)
+	✔ Pour fat afficher quand l'architecture courante n'est pas présente dans le fat @done(19-06-25 23:37)
+	✔ Abtraction du Makefile @done(19-06-18 07:25)
+	✔ Gérer le jump en dehors d'un fichier @done(19-06-18 17:13)
+	✔ Verifier que les chaines de charactères sont biens des chaînes de charactères @done(19-06-18 17:13)
+	✔ Gerer quand pas d'arguments (a.out) @done(19-06-27 09:39)
+	✔ Gere quand fichier vide @done(19-06-19 08:16)
+	✔ Bufferiser la sortie pour optimisation @done(19-06-20 12:12)
+	✔ alloc seulement les symboles necessaires dans nm @done(19-06-27 13:49)
+
+Tests:
+	✔ Bien tester tous les types de symboles @done(19-06-27 12:22)
+		✔ 1er ` @done(19-06-18 17:14)
+		✔ 2nd jet @done(19-06-27 12:22)
+	✔ /bin @done(19-06-20 11:19)
+	✔ /sbin @done(19-06-25 15:24)
+	✔ /usr/bin @done(19-06-25 23:26)
+	✔ /usr/lib @done(19-06-20 11:19)
+	✔ /usr/local/{lib|bin} @done(19-06-27 12:22)
+	✔ /usr/libexec @done(19-06-27 12:22)
+	✔ https://github.com/mguillau42/unit_test_nm_otool @done(19-06-27 08:55)
+		✔ Gerer ./MachO-iOS-arm1176JZFS-bash (à savoir l'endianness dans l'affichage des 4) @done(19-06-27 08:55)
+	✔ https://github.com/JonathanSalwan/binary-samples @done(19-06-27 09:26)
+	✔ https://github.com/mmeisson/tests_nm @done(19-06-27 11:59)
+	✔ https://gitlab.com/louisportay/break-nm @done(19-06-27 15:07)
+	✔ https://gitlab.com/Yalaouf/mes-binaires-nm @done(19-07-01 09:41)
+		✔ special/aha @done(19-07-01 09:41)
