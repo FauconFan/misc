@@ -1,0 +1,7 @@
+{
+  "name": "KerDesÉtoiles",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
